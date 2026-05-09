@@ -56,11 +56,12 @@ HTML5 Canvas + JS vanilla, nessun framework. Font: Press Start 2P (Google Fonts)
 
 ## CONFIG (js/config.js)
 
-Unico punto per modificare layout, colori, immagini, audio:
+Unico punto per modificare layout, colori, immagini, audio, gameplay:
 - `CONFIG.layout` — W, H, PW, PH, GY, MY, TY, BW, BH
 - `CONFIG.colors` — palette C64 (alias `C` in game.js)
 - `CONFIG.images` — percorsi immagini
 - `CONFIG.audio` — volumi (placeholder per task #9)
+- `CONFIG.levelTimer` — secondi per completare il livello (0 = disabilitato)
 
 Le costanti `W`, `H`, `PW`, `PH`, `GY`, `MY`, `TY`, `BW`, `BH`, `C` sono alias verso CONFIG per compatibilità.
 
