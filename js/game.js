@@ -68,7 +68,7 @@ const player = {
 function resetLevel() {
   BOARDS   = BOARDS_DEF.map(function(b) { return {x:b.x, y:b.y, done:false}; });
   bags     = BAGS_DEF.map(function(b)   { return {x:b.x, y:b.y, collected:false}; });
-  BELL     = {x:296, y:TY+4, ringing:false, done:false, ringT:0};
+  BELL     = {x:296, y:TY-20, ringing:false, done:false, ringT:0};
   teachers = TEACHERS_DEF.map(function(t) {
     return {x:t.x, y:t.y, dir:t.dir, minX:t.minX, maxX:t.maxX,
             speed:t.speed, animT:0, color:t.color, name:t.name,
@@ -285,9 +285,9 @@ function updatePlayer() {
 
   // Auto-ring bell on proximity (no button needed)
   if (allBoards && !BELL.ringing && !BELL.done) {
-    const bdx = Math.abs(player.x + PW/2 - BELL.x - 6);
-    const bdy = Math.abs(player.y + PH/2 - BELL.y - 8);
-    if (bdx < 22 && bdy < 24) ringBell();
+    const bdx = Math.abs(player.x + PW/2 - BELL.x - 4);
+    const bdy = Math.abs(player.y + PH/2 - BELL.y - 6);
+    if (bdx < 20 && bdy < 22) ringBell();
   }
 
   if (actionPressed) { actionPressed = false; tryAction(); }
@@ -338,7 +338,7 @@ function ringBell() {
   BELL.ringing = true;
   BELL.ringT = 120;
   score += 1000;
-  addFloating(BELL.x - 20, BELL.y - 10, '+1000!', C.gold);
+  addFloating(BELL.x - 20, BELL.y - 6, '+1000!', C.gold);
   addParticles(BELL.x, BELL.y, C.gold, 30);
   setMsg('🔔 DRIIIN! Livello completato! +1000 punti!');
   setTimeout(function() { BELL.done = true; state = 'win'; }, 2000);
@@ -502,39 +502,40 @@ function drawBoards() {
 
 function drawBell() {
   const bx = BELL.x, by = BELL.y;
-  const swing = BELL.ringing ? Math.sin(frame * 0.6) * 4 : 0;
+  const swing = BELL.ringing ? Math.sin(frame * 0.6) * 3 : 0;
 
-  ctx.fillStyle = C.dgray; ctx.fillRect(bx+3, by, 6, 4);
+  // Staffa a muro
+  ctx.fillStyle = C.dgray; ctx.fillRect(bx+2, by, 4, 3);
 
   ctx.save();
-  ctx.translate(bx+6+swing, by+4);
+  ctx.translate(bx+4+swing, by+3);
   ctx.fillStyle = BELL.ringing ? '#FFE000' : C.bell;
   ctx.beginPath();
-  ctx.arc(0, 0, 6, Math.PI, 0);
-  ctx.lineTo(6, 4);
-  ctx.arc(0, 4, 6, 0, Math.PI);
+  ctx.arc(0, 0, 4, Math.PI, 0);
+  ctx.lineTo(4, 3);
+  ctx.arc(0, 3, 4, 0, Math.PI);
   ctx.closePath();
   ctx.fill();
   ctx.fillStyle = 'rgba(255,255,200,0.45)';
-  ctx.beginPath(); ctx.arc(-2, -2, 2, 0, Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.arc(-1, -1, 1.5, 0, Math.PI*2); ctx.fill();
   ctx.fillStyle = C.brown;
-  ctx.fillRect(-1, 3, 2, 4);
-  ctx.beginPath(); ctx.arc(0, 7, 2, 0, Math.PI*2); ctx.fill();
+  ctx.fillRect(-0.5, 2, 1, 3);
+  ctx.beginPath(); ctx.arc(0, 5, 1.5, 0, Math.PI*2); ctx.fill();
   ctx.restore();
 
   if (allBoards && !BELL.done) {
     const pulse = 0.12 + 0.08 * Math.sin(frame * 0.15);
     ctx.fillStyle = 'rgba(255,215,0,' + pulse + ')';
-    ctx.beginPath(); ctx.arc(bx+6, by+8, 14, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(bx+4, by+6, 9, 0, Math.PI*2); ctx.fill();
     ctx.fillStyle = C.gold; ctx.font = '5px "Press Start 2P"';
-    ctx.fillText('🔔', bx-8, by+22);
+    ctx.fillText('🔔', bx-6, by+16);
   }
 
   if (BELL.ringing) {
     for (let i = 1; i <= 3; i++) {
       ctx.strokeStyle = 'rgba(255,215,0,' + (0.6 - i*0.15) + ')';
       ctx.lineWidth = 1;
-      ctx.beginPath(); ctx.arc(bx+6, by+8, 8+i*5, 0, Math.PI*2); ctx.stroke();
+      ctx.beginPath(); ctx.arc(bx+4, by+6, 5+i*4, 0, Math.PI*2); ctx.stroke();
     }
   }
 }
