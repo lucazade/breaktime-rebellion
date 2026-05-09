@@ -227,7 +227,7 @@ function updatePlayer() {
     const s0 = stairResult.stair, t0 = stairResult.t;
     const nearBottom = t0 < 0.15;
     const nearTop    = t0 > 0.85;
-    if ((nearBottom && K.right && !K.left) || (nearTop && K.left && !K.right)) {
+    if ((nearBottom && K.up && K.right && !K.left) || (nearTop && K.down && K.left && !K.right)) {
       player.onStair = true;
       player.currentStair = s0;
     }
