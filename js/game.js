@@ -15,15 +15,14 @@ const stairs = [
   {x1:60,  y1:MY,    x2:110, y2:TY,   dir:1},
   {x1:210, y1:MY,    x2:260, y2:TY,   dir:1},
 ];
-const ladders = [];
 
-const BOARDS = [
-  {x:14,  y:TY-22, done:false},
-  {x:142, y:TY-22, done:false},
-  {x:274, y:TY-22, done:false},
-  {x:14,  y:MY-22, done:false},
-  {x:142, y:MY-22, done:false},
-  {x:274, y:MY-22, done:false},
+const BOARDS_DEF = [
+  {x:14,  y:TY-22},
+  {x:142, y:TY-22},
+  {x:274, y:TY-22},
+  {x:14,  y:MY-22},
+  {x:142, y:MY-22},
+  {x:274, y:MY-22},
 ];
 
 const DESKS = [
@@ -35,16 +34,27 @@ const DESKS = [
   {x:172, y:TY-12}, {x:200, y:TY-12},
 ];
 
-const BELL = {x:296, y:TY+4, ringing:false, done:false, ringT:0};
-
-let bags = [
-  {x:130, y:GY-10, collected:false},
-  {x:228, y:MY-10, collected:false},
-  {x:108, y:TY-10, collected:false},
+const BAGS_DEF = [
+  {x:130, y:GY-10},
+  {x:228, y:MY-10},
+  {x:108, y:TY-10},
 ];
 
+const TEACHERS_DEF = [
+  {x:200, y:GY-PH, dir:1,  minX:10, maxX:305, speed:0.55, color:C.red,   name:'Prof.Rossi', sight:90 },
+  {x:80,  y:MY-PH, dir:-1, minX:10, maxX:305, speed:0.50, color:C.green, name:'Prof.Verdi', sight:80 },
+  {x:230, y:TY-PH, dir:1,  minX:10, maxX:275, speed:0.60, color:C.mgray, name:'Prof.Neri',  sight:100},
+];
+
+// Mutable level state — resettato da resetLevel()
+let BOARDS, bags, BELL, teachers;
+let lives, score, state, frame;
+let particles, floatingTexts;
+let msgText, msgT;
+let actionPressed, allBoards;
+
 const player = {
-  x:40, y:GY-PH, vy:0,
+  x:0, y:0, vy:0,
   dir:1, animT:0,
   onGround:false, onLadder:false,
   onStair:false, currentStair:null,
@@ -52,17 +62,29 @@ const player = {
   speed:1.5,
 };
 
-const teachers = [
-  {x:200, y:GY-PH, dir:1,  minX:10, maxX:305, speed:0.55, animT:0, color:C.red,   name:'Prof.Rossi', sight:90,  alertT:0, chasing:false, chaseX:0},
-  {x:80,  y:MY-PH, dir:-1, minX:10, maxX:305, speed:0.50, animT:0, color:C.green, name:'Prof.Verdi', sight:80,  alertT:0, chasing:false, chaseX:0},
-  {x:230, y:TY-PH, dir:1,  minX:10, maxX:275, speed:0.60, animT:0, color:C.mgray, name:'Prof.Neri',  sight:100, alertT:0, chasing:false, chaseX:0},
-];
+function resetLevel() {
+  BOARDS   = BOARDS_DEF.map(function(b) { return {x:b.x, y:b.y, done:false}; });
+  bags     = BAGS_DEF.map(function(b)   { return {x:b.x, y:b.y, collected:false}; });
+  BELL     = {x:296, y:TY+4, ringing:false, done:false, ringT:0};
+  teachers = TEACHERS_DEF.map(function(t) {
+    return {x:t.x, y:t.y, dir:t.dir, minX:t.minX, maxX:t.maxX,
+            speed:t.speed, animT:0, color:t.color, name:t.name,
+            sight:t.sight, alertT:0, chasing:false, chaseX:0};
+  });
+  player.x = 40; player.y = GY - PH; player.vy = 0;
+  player.dir = 1; player.animT = 0;
+  player.onGround = false; player.onLadder = false;
+  player.onStair = false; player.currentStair = null;
+  player.stunT = 0; player.spraying = false; player.sprayT = 0;
+  particles = []; floatingTexts = [];
+  msgText = ''; msgT = 0;
+  actionPressed = false; allBoards = false;
+  frame = 0;
+}
 
-let lives = 3, score = 0, state = 'title', frame = 0;
-let particles = [], floatingTexts = [];
-let msgText = '', msgT = 0;
-let actionPressed = false;
-let allBoards = false;
+// Initialise
+lives = 3; score = 0; state = 'title';
+resetLevel();
 
 function setMsg(t, d) { msgText = t; msgT = d || 220; }
 
@@ -86,29 +108,29 @@ document.addEventListener('keyup', function(e) {
 });
 
 function bindBtn(id, key) {
-  var el = document.getElementById(id);
+  const el = document.getElementById(id);
   if (!el) return;
-  function on(e) { e.preventDefault(); K[key] = true; if (key === 'action') actionPressed = true; el.classList.add('pressed'); }
+  function on(e)  { e.preventDefault(); K[key] = true;  if (key === 'action') actionPressed = true; el.classList.add('pressed'); }
   function off(e) { e.preventDefault(); K[key] = false; el.classList.remove('pressed'); }
-  el.addEventListener('touchstart', on, {passive:false});
-  el.addEventListener('touchend',   off, {passive:false});
-  el.addEventListener('touchcancel',off, {passive:false});
-  el.addEventListener('mousedown',  on);
-  el.addEventListener('mouseup',    off);
-  el.addEventListener('mouseleave', off);
+  el.addEventListener('touchstart',  on,  {passive:false});
+  el.addEventListener('touchend',    off, {passive:false});
+  el.addEventListener('touchcancel', off, {passive:false});
+  el.addEventListener('mousedown',   on);
+  el.addEventListener('mouseup',     off);
+  el.addEventListener('mouseleave',  off);
 }
 bindBtn('bL','left'); bindBtn('bR','right');
 bindBtn('bU','up');   bindBtn('bD','down');
 
-var bA = document.getElementById('btn-action');
-function onA(e) { e.preventDefault(); K.action = true; actionPressed = true; bA.classList.add('pressed'); }
+const bA = document.getElementById('btn-action');
+function onA(e)  { e.preventDefault(); K.action = true;  actionPressed = true; bA.classList.add('pressed'); }
 function offA(e) { e.preventDefault(); K.action = false; bA.classList.remove('pressed'); }
-bA.addEventListener('touchstart', onA, {passive:false});
-bA.addEventListener('touchend',   offA, {passive:false});
-bA.addEventListener('touchcancel',offA, {passive:false});
-bA.addEventListener('mousedown',  onA);
-bA.addEventListener('mouseup',    offA);
-bA.addEventListener('mouseleave', offA);
+bA.addEventListener('touchstart',  onA,  {passive:false});
+bA.addEventListener('touchend',    offA, {passive:false});
+bA.addEventListener('touchcancel', offA, {passive:false});
+bA.addEventListener('mousedown',   onA);
+bA.addEventListener('mouseup',     offA);
+bA.addEventListener('mouseleave',  offA);
 
 document.getElementById('overlay').addEventListener('click', startGame);
 document.getElementById('overlay').addEventListener('touchstart', function(e) { e.preventDefault(); startGame(); }, {passive:false});
@@ -120,26 +142,24 @@ function startGame() {
 
 // PHYSICS
 function getFloorBelow(px, py) {
-  var b = py + PH;
-  for (var i = 0; i < floors.length; i++) {
-    var f = floors[i];
+  const b = py + PH;
+  for (let i = 0; i < floors.length; i++) {
+    const f = floors[i];
     if (b >= f.y-1 && b <= f.y+6 && px+PW > f.x+2 && px < f.x+f.w-2) return f.y;
   }
   return null;
 }
 
-function getNearestLadder(px, py) { return null; }
-
 function getStairAt(px, py) {
-  var cx = px + PW/2, cy = py + PH;
-  for (var i = 0; i < stairs.length; i++) {
-    var s = stairs[i];
-    var minX = Math.min(s.x1,s.x2)-6, maxX = Math.max(s.x1,s.x2)+6;
-    var minY = Math.min(s.y1,s.y2)-4, maxY = Math.max(s.y1,s.y2)+4;
+  const cx = px + PW/2, cy = py + PH;
+  for (let i = 0; i < stairs.length; i++) {
+    const s = stairs[i];
+    const minX = Math.min(s.x1,s.x2)-6, maxX = Math.max(s.x1,s.x2)+6;
+    const minY = Math.min(s.y1,s.y2)-4, maxY = Math.max(s.y1,s.y2)+4;
     if (cx >= minX && cx <= maxX && cy >= minY && cy <= maxY) {
-      var t = (cx - s.x1) / (s.x2 - s.x1);
+      let t = (cx - s.x1) / (s.x2 - s.x1);
       t = Math.max(0, Math.min(1, t));
-      var expectedY = s.y1 + (s.y2 - s.y1) * t;
+      const expectedY = s.y1 + (s.y2 - s.y1) * t;
       if (Math.abs(cy - expectedY) < 14) return {stair:s, t:t};
     }
   }
@@ -154,12 +174,12 @@ function updatePlayer() {
   if (player.stunT > 0) { player.stunT--; return; }
   if (player.spraying) { player.sprayT--; if (player.sprayT <= 0) player.spraying = false; return; }
 
-  var stairResult = getStairAt(player.x, player.y);
+  const stairResult = getStairAt(player.x, player.y);
 
   if (!player.onStair && stairResult) {
-    var s0 = stairResult.stair, t0 = stairResult.t;
-    var nearBottom = t0 < 0.15;
-    var nearTop    = t0 > 0.85;
+    const s0 = stairResult.stair, t0 = stairResult.t;
+    const nearBottom = t0 < 0.15;
+    const nearTop    = t0 > 0.85;
     if ((nearBottom && K.up) || (nearTop && K.down) || (!nearBottom && !nearTop && (K.up || K.down))) {
       player.onStair = true;
       player.currentStair = s0;
@@ -167,12 +187,12 @@ function updatePlayer() {
   }
 
   if (player.onStair) {
-    var s = player.currentStair;
+    const s = player.currentStair;
     player.vy = 0;
     if (K.left)  { player.x -= player.speed * 0.85; player.dir = -1; player.animT += 0.25; }
     if (K.right) { player.x += player.speed * 0.85; player.dir =  1; player.animT += 0.25; }
     player.x = clampX(player.x);
-    var t2 = (player.x + PW/2 - s.x1) / (s.x2 - s.x1);
+    let t2 = (player.x + PW/2 - s.x1) / (s.x2 - s.x1);
     t2 = Math.max(0, Math.min(1, t2));
     player.y = s.y1 + (s.y2 - s.y1) * t2 - PH;
     player.onGround = true;
@@ -188,7 +208,7 @@ function updatePlayer() {
     if (K.left)  { player.x -= player.speed; player.dir = -1; player.animT += 0.25; }
     if (K.right) { player.x += player.speed; player.dir =  1; player.animT += 0.25; }
     player.x = clampX(player.x);
-    var gFy = getFloorBelow(player.x, player.y);
+    const gFy = getFloorBelow(player.x, player.y);
     if (gFy !== null && player.vy >= 0) { player.y = gFy - PH; player.vy = 0; player.onGround = true; }
     else { player.onGround = false; }
   }
@@ -196,8 +216,8 @@ function updatePlayer() {
   if (player.y < 2) player.y = 2;
 
   // Collect bags
-  for (var bi = 0; bi < bags.length; bi++) {
-    var bag = bags[bi];
+  for (let bi = 0; bi < bags.length; bi++) {
+    const bag = bags[bi];
     if (bag.collected) continue;
     if (Math.abs(player.x - bag.x) < 14 && Math.abs(player.y - bag.y) < 14) {
       bag.collected = true;
@@ -209,10 +229,10 @@ function updatePlayer() {
   }
 
   // Auto-ring bell on proximity (no button needed)
-  if (allBoards && !BELL.done) {
-    var bdx = Math.abs(player.x + PW/2 - BELL.x - 6);
-    var bdy = Math.abs(player.y + PH/2 - BELL.y - 8);
-    if (bdx < 22 && bdy < 24) { ringBell(); }
+  if (allBoards && !BELL.ringing && !BELL.done) {
+    const bdx = Math.abs(player.x + PW/2 - BELL.x - 6);
+    const bdy = Math.abs(player.y + PH/2 - BELL.y - 8);
+    if (bdx < 22 && bdy < 24) ringBell();
   }
 
   if (actionPressed) { actionPressed = false; tryAction(); }
@@ -221,11 +241,11 @@ function updatePlayer() {
 function tryAction() {
   if (state !== 'playing') return;
 
-  var nearest = null, nd = 9999;
-  for (var i = 0; i < BOARDS.length; i++) {
-    var b = BOARDS[i];
+  let nearest = null, nd = 9999;
+  for (let i = 0; i < BOARDS.length; i++) {
+    const b = BOARDS[i];
     if (b.done) continue;
-    var d = Math.abs(player.x + PW/2 - b.x - BW/2) + Math.abs(player.y - b.y - BH);
+    const d = Math.abs(player.x + PW/2 - b.x - BW/2) + Math.abs(player.y - b.y - BH);
     if (d < nd) { nd = d; nearest = b; }
   }
 
@@ -233,7 +253,7 @@ function tryAction() {
     player.spraying = true;
     player.sprayT = 70;
     player.dir = (player.x + PW/2 < nearest.x + BW/2) ? 1 : -1;
-    var capturedBoard = nearest;
+    const capturedBoard = nearest;
     setTimeout(function() {
       if (!capturedBoard.done) {
         capturedBoard.done = true;
@@ -241,8 +261,8 @@ function tryAction() {
         addFloating(capturedBoard.x + BW/2, capturedBoard.y, '+500', C.chalk);
         addParticles(capturedBoard.x + BW/2, capturedBoard.y + BH, C.chalk, 14);
         alertTeachers(capturedBoard.x + BW/2, capturedBoard.y);
-        var done = 0;
-        for (var j = 0; j < BOARDS.length; j++) if (BOARDS[j].done) done++;
+        let done = 0;
+        for (let j = 0; j < BOARDS.length; j++) if (BOARDS[j].done) done++;
         if (done === BOARDS.length) {
           allBoards = true;
           setMsg('Tutte le lavagne! Suona la campanella a destra! 🔔');
@@ -259,6 +279,7 @@ function tryAction() {
 }
 
 function ringBell() {
+  if (BELL.ringing || BELL.done) return;
   BELL.ringing = true;
   BELL.ringT = 120;
   score += 1000;
@@ -269,8 +290,8 @@ function ringBell() {
 }
 
 function alertTeachers(bx, by) {
-  for (var i = 0; i < teachers.length; i++) {
-    var t = teachers[i];
+  for (let i = 0; i < teachers.length; i++) {
+    const t = teachers[i];
     if (Math.abs(t.y - player.y) < 20 && Math.abs(t.x - bx) < t.sight) {
       t.alertT = 120; t.chasing = true; t.chaseX = player.x;
     }
@@ -279,12 +300,12 @@ function alertTeachers(bx, by) {
 
 function updateTeachers() {
   if (state !== 'playing') return;
-  for (var i = 0; i < teachers.length; i++) {
-    var t = teachers[i];
+  for (let i = 0; i < teachers.length; i++) {
+    const t = teachers[i];
     t.animT += 0.12;
     if (t.chasing) {
       t.alertT = Math.max(0, t.alertT - 1);
-      var dx = t.chaseX - t.x;
+      const dx = t.chaseX - t.x;
       t.dir = dx > 0 ? 1 : -1;
       t.x += t.dir * t.speed * 1.8;
       t.animT += 0.1;
@@ -305,7 +326,7 @@ function caughtBy(t) {
   score = Math.max(0, score - 300);
   player.stunT = 160; player.spraying = false;
   addParticles(player.x + PW/2, player.y, C.red, 20);
-  var msg = t.name + ' ti ha preso! -300 punti! ';
+  let msg = t.name + ' ti ha preso! -300 punti! ';
   msg += lives > 0 ? '♥'.repeat(lives) : 'GAME OVER!';
   setMsg(msg);
   player.x = 40; player.y = GY - PH; player.vy = 0;
@@ -317,7 +338,7 @@ function updateBell() {
 }
 
 function addParticles(x, y, color, n) {
-  for (var i = 0; i < n; i++) {
+  for (let i = 0; i < n; i++) {
     particles.push({x:x, y:y,
       vx:(Math.random()-.5)*2.5, vy:(Math.random()-.5)*2-1,
       color:color, life:45, max:45});
@@ -331,31 +352,31 @@ function addFloating(x, y, text, color) {
 // DRAW
 function drawBg() {
   ctx.fillStyle = '#1a1a4a'; ctx.fillRect(0, 0, W, H);
-  ctx.fillStyle = 'rgba(30,20,60,0.5)'; ctx.fillRect(0, 0, W, TY);
-  ctx.fillStyle = 'rgba(20,15,50,0.4)'; ctx.fillRect(0, TY, W, MY-TY);
+  ctx.fillStyle = 'rgba(30,20,60,0.5)';  ctx.fillRect(0, 0,  W, TY);
+  ctx.fillStyle = 'rgba(20,15,50,0.4)';  ctx.fillRect(0, TY, W, MY-TY);
   ctx.fillStyle = 'rgba(15,10,40,0.35)'; ctx.fillRect(0, MY, W, GY-MY);
 }
 
 function drawFloors() {
-  for (var i = 0; i < floors.length; i++) {
-    var f = floors[i];
+  for (let i = 0; i < floors.length; i++) {
+    const f = floors[i];
     ctx.fillStyle = C.floorlt; ctx.fillRect(f.x, f.y, f.w, 3);
     ctx.fillStyle = C.floor;   ctx.fillRect(f.x, f.y+3, f.w, 8);
     ctx.fillStyle = C.brown;
-    for (var px = 0; px < f.w; px += 18) ctx.fillRect(f.x+px, f.y+2, 1, 6);
+    for (let px = 0; px < f.w; px += 18) ctx.fillRect(f.x+px, f.y+2, 1, 6);
   }
 }
 
-function drawLadders() {
-  for (var i = 0; i < stairs.length; i++) {
-    var s = stairs[i];
-    var steps = 10;
-    for (var st = 0; st < steps; st++) {
-      var t0 = st / steps, t1 = (st+1) / steps;
-      var x0 = s.x1 + (s.x2-s.x1)*t0, y0 = s.y1 + (s.y2-s.y1)*t0;
-      var x1 = s.x1 + (s.x2-s.x1)*t1, y1 = s.y1 + (s.y2-s.y1)*t1;
-      var stepW = Math.round(x1-x0);
-      var stepY = Math.round(y0);
+function drawStairs() {
+  for (let i = 0; i < stairs.length; i++) {
+    const s = stairs[i];
+    const steps = 10;
+    for (let st = 0; st < steps; st++) {
+      const t0 = st / steps;
+      const x0 = s.x1 + (s.x2-s.x1)*t0;
+      const y0 = s.y1 + (s.y2-s.y1)*t0;
+      const stepW = Math.round((s.x2-s.x1)/steps);
+      const stepY = Math.round(y0);
       ctx.fillStyle = C.floorlt;
       ctx.fillRect(Math.round(x0), stepY-2, stepW+1, 3);
       ctx.fillStyle = C.floor;
@@ -369,9 +390,9 @@ function drawLadders() {
     ctx.moveTo(s.x1, s.y1-4);
     ctx.lineTo(s.x2, s.y2-4);
     ctx.stroke();
-    var pcx = player.x+PW/2, pcy = player.y+PH;
-    var nearX = pcx >= Math.min(s.x1,s.x2)-10 && pcx <= Math.max(s.x1,s.x2)+10;
-    var nearY = pcy >= Math.min(s.y1,s.y2)-10 && pcy <= Math.max(s.y1,s.y2)+10;
+    const pcx = player.x+PW/2, pcy = player.y+PH;
+    const nearX = pcx >= Math.min(s.x1,s.x2)-10 && pcx <= Math.max(s.x1,s.x2)+10;
+    const nearY = pcy >= Math.min(s.y1,s.y2)-10 && pcy <= Math.max(s.y1,s.y2)+10;
     if (nearX && nearY) {
       ctx.strokeStyle = 'rgba(184,199,111,0.3)';
       ctx.lineWidth = 6;
@@ -381,28 +402,28 @@ function drawLadders() {
 }
 
 function drawDesks() {
-  for (var i = 0; i < DESKS.length; i++) {
-    var d = DESKS[i];
+  for (let i = 0; i < DESKS.length; i++) {
+    const d = DESKS[i];
     ctx.fillStyle = C.desklt; ctx.fillRect(d.x, d.y, 20, 6);
     ctx.fillStyle = C.desk;   ctx.fillRect(d.x, d.y+5, 20, 2);
     ctx.fillStyle = C.brown;
     ctx.fillRect(d.x+1, d.y+6, 2, 5);
     ctx.fillRect(d.x+17, d.y+6, 2, 5);
-    ctx.fillStyle = C.red; ctx.fillRect(d.x+5, d.y-2, 8, 3);
+    ctx.fillStyle = C.red;   ctx.fillRect(d.x+5, d.y-2, 8, 3);
     ctx.fillStyle = C.white; ctx.fillRect(d.x+6, d.y-2, 6, 2);
   }
 }
 
 function drawBoards() {
-  var nearestIdx = -1, nd = 9999;
-  for (var i = 0; i < BOARDS.length; i++) {
+  let nearestIdx = -1, nd = 9999;
+  for (let i = 0; i < BOARDS.length; i++) {
     if (BOARDS[i].done) continue;
-    var d = Math.abs(player.x+PW/2 - BOARDS[i].x-BW/2) + Math.abs(player.y - BOARDS[i].y-BH);
+    const d = Math.abs(player.x+PW/2 - BOARDS[i].x-BW/2) + Math.abs(player.y - BOARDS[i].y-BH);
     if (d < nd) { nd = d; nearestIdx = i; }
   }
-  for (var i = 0; i < BOARDS.length; i++) {
-    var b = BOARDS[i];
-    ctx.fillStyle = C.brown; ctx.fillRect(b.x-1, b.y-1, BW+2, BH+2);
+  for (let i = 0; i < BOARDS.length; i++) {
+    const b = BOARDS[i];
+    ctx.fillStyle = C.brown;   ctx.fillRect(b.x-1, b.y-1, BW+2, BH+2);
     ctx.fillStyle = C.chalkbg; ctx.fillRect(b.x, b.y, BW, BH);
     if (!b.done) {
       ctx.fillStyle = 'rgba(200,220,200,0.18)';
@@ -413,21 +434,20 @@ function drawBoards() {
         ctx.setLineDash([2,2]);
         ctx.strokeRect(b.x-2, b.y-2, BW+4, BH+4);
         ctx.setLineDash([]);
-        ctx.fillStyle = C.yellow;
-        ctx.font = '5px "Press Start 2P"';
+        ctx.fillStyle = C.yellow; ctx.font = '5px "Press Start 2P"';
         ctx.fillText('✏', b.x+BW/2-4, b.y+BH+8);
       }
     } else {
-      ctx.fillStyle = C.pink;    ctx.font = '4px "Press Start 2P"'; ctx.fillText('MARCO', b.x+2, b.y+6);
-      ctx.fillStyle = C.yellow;  ctx.fillRect(b.x+1, b.y+7, BW-2, 1);
-      ctx.fillStyle = C.lgreen;  ctx.font = '4px "Press Start 2P"'; ctx.fillText('WAS HERE', b.x+1, b.y+12);
+      ctx.fillStyle = C.pink;   ctx.font = '4px "Press Start 2P"'; ctx.fillText('MARCO', b.x+2, b.y+6);
+      ctx.fillStyle = C.yellow; ctx.fillRect(b.x+1, b.y+7, BW-2, 1);
+      ctx.fillStyle = C.lgreen; ctx.font = '4px "Press Start 2P"'; ctx.fillText('WAS HERE', b.x+1, b.y+12);
     }
   }
 }
 
 function drawBell() {
-  var bx = BELL.x, by = BELL.y;
-  var swing = BELL.ringing ? Math.sin(frame * 0.6) * 4 : 0;
+  const bx = BELL.x, by = BELL.y;
+  const swing = BELL.ringing ? Math.sin(frame * 0.6) * 4 : 0;
 
   ctx.fillStyle = C.dgray; ctx.fillRect(bx+3, by, 6, 4);
 
@@ -448,7 +468,7 @@ function drawBell() {
   ctx.restore();
 
   if (allBoards && !BELL.done) {
-    var pulse = 0.12 + 0.08 * Math.sin(frame * 0.15);
+    const pulse = 0.12 + 0.08 * Math.sin(frame * 0.15);
     ctx.fillStyle = 'rgba(255,215,0,' + pulse + ')';
     ctx.beginPath(); ctx.arc(bx+6, by+8, 14, 0, Math.PI*2); ctx.fill();
     ctx.fillStyle = C.gold; ctx.font = '5px "Press Start 2P"';
@@ -456,7 +476,7 @@ function drawBell() {
   }
 
   if (BELL.ringing) {
-    for (var i = 1; i <= 3; i++) {
+    for (let i = 1; i <= 3; i++) {
       ctx.strokeStyle = 'rgba(255,215,0,' + (0.6 - i*0.15) + ')';
       ctx.lineWidth = 1;
       ctx.beginPath(); ctx.arc(bx+6, by+8, 8+i*5, 0, Math.PI*2); ctx.stroke();
@@ -465,8 +485,8 @@ function drawBell() {
 }
 
 function drawBags() {
-  for (var i = 0; i < bags.length; i++) {
-    var b = bags[i];
+  for (let i = 0; i < bags.length; i++) {
+    const b = bags[i];
     if (b.collected) continue;
     ctx.fillStyle = C.brown;  ctx.fillRect(b.x, b.y, 14, 10);
     ctx.fillStyle = C.orange; ctx.fillRect(b.x+1, b.y+1, 12, 8);
@@ -481,9 +501,9 @@ function drawBags() {
 }
 
 function drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, stunned, chasing) {
-  var bx = Math.round(x), by = Math.round(y);
+  const bx = Math.round(x), by = Math.round(y);
   if (stunned && Math.floor(frame/5)%2 === 1) return;
-  var leg = Math.sin(animT) * 2.5;
+  const leg = Math.sin(animT) * 2.5;
 
   ctx.fillStyle = 'rgba(0,0,0,0.2)'; ctx.fillRect(bx-1, by+PH, PW, 2);
 
@@ -512,9 +532,9 @@ function drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, stunned, chasi
   if (isTeacher) { ctx.fillStyle = C.black; ctx.fillRect(bx+1, by-5, 3, 1); ctx.fillRect(bx+5, by-5, 3, 1); }
 
   if (spraying) {
-    var sx = dir>0 ? bx+PW : bx-5;
+    const sx = dir>0 ? bx+PW : bx-5;
     ctx.fillStyle = C.cyan; ctx.fillRect(sx, by+4, 4, 6);
-    for (var i = 0; i < 4; i++) {
+    for (let i = 0; i < 4; i++) {
       ctx.fillStyle = 'rgba(180,230,180,' + (0.4+Math.random()*0.3) + ')';
       ctx.fillRect(sx + (dir>0 ? 4+i*3 : -i*3-3), by+4+i%3, 3, 3);
     }
@@ -522,7 +542,7 @@ function drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, stunned, chasi
   if (!isTeacher) { ctx.fillStyle = C.blue; ctx.fillRect(dir>0 ? bx-3 : bx+PW, by+4, 3, 6); }
 
   if (chasing) {
-    var bub = dir>0 ? bx+PW : bx-26;
+    const bub = dir>0 ? bx+PW : bx-26;
     ctx.fillStyle = C.yellow; ctx.fillRect(bub, by-14, 26, 10);
     ctx.fillStyle = C.black; ctx.font = '5px "Press Start 2P"';
     ctx.fillText('EHI!!', bub+1, by-7);
@@ -530,19 +550,19 @@ function drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, stunned, chasi
 }
 
 function drawSight() {
-  for (var i = 0; i < teachers.length; i++) {
-    var t = teachers[i];
+  for (let i = 0; i < teachers.length; i++) {
+    const t = teachers[i];
     if (t.chasing) continue;
     ctx.fillStyle = 'rgba(255,200,0,0.05)';
-    var rx = t.dir>0 ? t.x+PW : t.x-t.sight;
+    const rx = t.dir>0 ? t.x+PW : t.x-t.sight;
     ctx.fillRect(rx, t.y-2, t.sight, PH+4);
   }
 }
 
 function drawParticles() {
   particles = particles.filter(function(p) { return p.life > 0; });
-  for (var i = 0; i < particles.length; i++) {
-    var p = particles[i];
+  for (let i = 0; i < particles.length; i++) {
+    const p = particles[i];
     ctx.globalAlpha = p.life/p.max;
     ctx.fillStyle = p.color;
     ctx.fillRect(Math.round(p.x), Math.round(p.y), 2, 2);
@@ -553,8 +573,8 @@ function drawParticles() {
 
 function drawFloating() {
   floatingTexts = floatingTexts.filter(function(t) { return t.life > 0; });
-  for (var i = 0; i < floatingTexts.length; i++) {
-    var t = floatingTexts[i];
+  for (let i = 0; i < floatingTexts.length; i++) {
+    const t = floatingTexts[i];
     ctx.globalAlpha = Math.min(1, t.life/20);
     ctx.fillStyle = t.color; ctx.font = '6px "Press Start 2P"';
     ctx.fillText(t.text, t.x - ctx.measureText(t.text).width/2, t.y);
@@ -566,7 +586,7 @@ function drawFloating() {
 function drawEndScreen() {
   if (state === 'win') {
     ctx.fillStyle = 'rgba(0,0,60,0.88)'; ctx.fillRect(20, 60, 280, 80);
-    ctx.fillStyle = C.gold; ctx.font = '8px "Press Start 2P"';
+    ctx.fillStyle = C.gold;  ctx.font = '8px "Press Start 2P"';
     ctx.fillText('LEGGENDA DELLA SCUOLA!', 38, 85);
     ctx.fillStyle = C.white; ctx.font = '7px "Press Start 2P"';
     ctx.fillText('PUNTEGGIO: ' + String(score).padStart(5,'0'), 108, 103);
@@ -577,7 +597,7 @@ function drawEndScreen() {
   }
   if (state === 'gameover') {
     ctx.fillStyle = 'rgba(60,0,0,0.88)'; ctx.fillRect(40, 65, 240, 70);
-    ctx.fillStyle = C.red; ctx.font = '10px "Press Start 2P"';
+    ctx.fillStyle = C.red;   ctx.font = '10px "Press Start 2P"';
     ctx.fillText('ESPULSO!', 112, 92);
     ctx.fillStyle = C.white; ctx.font = '7px "Press Start 2P"';
     ctx.fillText('PUNTEGGIO: ' + String(score).padStart(5,'0'), 105, 110);
@@ -590,8 +610,8 @@ function drawEndScreen() {
 
 function updateHUD() {
   document.getElementById('hL').textContent = '♥'.repeat(Math.max(0, lives));
-  var done = 0;
-  for (var i = 0; i < BOARDS.length; i++) if (BOARDS[i].done) done++;
+  let done = 0;
+  for (let i = 0; i < BOARDS.length; i++) if (BOARDS[i].done) done++;
   document.getElementById('hW').textContent = done + '/' + BOARDS.length;
   document.getElementById('hS').textContent = String(score).padStart(5,'0');
   if (msgT > 0) { msgT--; document.getElementById('msg').textContent = msgText; }
@@ -606,7 +626,7 @@ function loop() {
   }
 
   drawBg();
-  drawLadders();
+  drawStairs();
   drawDesks();
   drawFloors();
   drawBoards();
@@ -614,8 +634,8 @@ function loop() {
   drawBags();
   drawSight();
 
-  for (var i = 0; i < teachers.length; i++) {
-    var t = teachers[i];
+  for (let i = 0; i < teachers.length; i++) {
+    const t = teachers[i];
     drawChar(t.x, t.y, t.dir, t.animT, t.color, true, false, false, t.chasing);
   }
   if (!(player.stunT > 0 && Math.floor(frame/5)%2 === 1)) {
