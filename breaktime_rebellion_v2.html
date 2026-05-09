@@ -263,9 +263,9 @@ const player = {
 };
 
 const teachers = [
-  {x:200, y:GY-PH, dir:1,  minX:10, maxX:305, speed:0.55, animT:0, color:C.purple, name:'Prof.Rossi',  sight:90,  alertT:0, chasing:false, chaseX:0},
-  {x:80,  y:MY-PH, dir:-1, minX:10, maxX:305, speed:0.50, animT:0, color:C.red,    name:'Prof.Verdi',  sight:80,  alertT:0, chasing:false, chaseX:0},
-  {x:230, y:TY-PH, dir:1,  minX:10, maxX:305, speed:0.60, animT:0, color:C.orange, name:'Prof.Neri',   sight:100, alertT:0, chasing:false, chaseX:0},
+  {x:200, y:GY-PH, dir:1,  minX:10, maxX:305, speed:0.55, animT:0, color:C.red,   name:'Prof.Rossi',  sight:90,  alertT:0, chasing:false, chaseX:0},
+  {x:80,  y:MY-PH, dir:-1, minX:10, maxX:305, speed:0.50, animT:0, color:C.green, name:'Prof.Verdi',  sight:80,  alertT:0, chasing:false, chaseX:0},
+  {x:230, y:TY-PH, dir:1,  minX:10, maxX:305, speed:0.60, animT:0, color:C.mgray, name:'Prof.Neri',   sight:100, alertT:0, chasing:false, chaseX:0},
 ];
 
 let lives = 3, score = 0, state = 'title', frame = 0;
@@ -730,7 +730,7 @@ function drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, stunned, chasi
 
   ctx.fillStyle = 'rgba(0,0,0,0.2)'; ctx.fillRect(bx-1, by+PH, PW, 2);
 
-  ctx.fillStyle = isTeacher ? C.dgray : C.mgray;
+  ctx.fillStyle = isTeacher ? C.blue : C.mgray;
   ctx.fillRect(bx+1, by+10, 3, 4+leg);
   ctx.fillRect(bx+4, by+10, 3, 4-leg);
   ctx.fillStyle = C.black;
@@ -738,12 +738,16 @@ function drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, stunned, chasi
   ctx.fillRect(bx+3, by+13-leg, 4, 2);
 
   ctx.fillStyle = bodyCol; ctx.fillRect(bx, by+4, PW, 8);
-  if (isTeacher) { ctx.fillStyle = C.red; ctx.fillRect(bx+3, by+5, 2, 6); }
+  if (isTeacher) { ctx.fillStyle = C.yellow; ctx.fillRect(bx+3, by+5, 2, 6); }
   else { ctx.fillStyle = C.lblue; ctx.fillRect(bx+1, by+4, 1, 8); ctx.fillRect(bx+5, by+4, 1, 8); }
 
   ctx.fillStyle = C.pink;
   ctx.fillRect(dir>0 ? bx-2 : bx+PW, by+5, 2, 4);
   ctx.fillRect(dir>0 ? bx+PW : bx-2, by+5, 2, 4);
+  if (isTeacher) {
+    ctx.fillStyle = C.brown;
+    ctx.fillRect(dir>0 ? bx-4 : bx+PW+1, by+7, 3, 4);
+  }
 
   ctx.fillStyle = C.pink; ctx.fillRect(bx+1, by-7, PW-2, 8);
   ctx.fillStyle = isTeacher ? C.lgray : C.brown; ctx.fillRect(bx+1, by-8, PW-2, 2);
