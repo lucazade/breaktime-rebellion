@@ -12,8 +12,18 @@ Protagonista: **Marco**.
 ## Asset e stile
 
 - **Font:** Press Start 2P (Google Fonts)
-- **Palette colori:** C64 autentica
-- **Logo title screen:** `misc/Gemini_Generated_Image_bbqu47bbqu47bbqu.png` (inlinato come base64 nel file HTML)
+- **Palette colori:** C64 autentica — definita in `CONFIG.colors` (alias `const C`)
+- **Logo title screen:** `assets/logo.png` (caricato via `<img src>`, non più base64)
+
+## Struttura script
+
+All'inizio dello `<script>` c'è un blocco `CONFIG` con tutte le impostazioni modificabili:
+- `CONFIG.layout` — dimensioni canvas, personaggi, pavimenti (W, H, PW, PH, GY, MY, TY, BW, BH)
+- `CONFIG.colors` — palette C64 (alias `C`)
+- `CONFIG.images` — percorsi immagini
+- `CONFIG.audio` — volumi (placeholder per task #9)
+
+Le costanti `W`, `H`, `PW`, `PH`, `GY`, `MY`, `TY`, `BW`, `BH`, `C` sono alias verso CONFIG per compatibilità col resto del codice.
 
 ## Piano di lavoro
 
