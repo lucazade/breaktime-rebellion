@@ -185,9 +185,6 @@ document.getElementById('overlay').addEventListener('touchstart', function(e) { 
 function startGame() {
   document.getElementById('overlay').style.display = 'none';
   state = 'playing';
-  var el = document.documentElement;
-  if (el.requestFullscreen) el.requestFullscreen().catch(function(){});
-  else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
 }
 
 // PHYSICS
