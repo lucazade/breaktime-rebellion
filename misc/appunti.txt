@@ -18,7 +18,7 @@ Obiettivo: rendere il gioco giocabile e stabile prima di aggiungere contenuto.
 Obiettivo: meccaniche di gioco complete e controlli definitivi.
 
 - [ ] #10 Timer a barra che si scarica per livello
-- [ ] #2  Layout orizzontale ottimizzato
+- [x] #2  Layout orizzontale ottimizzato
 - [ ] #1  Joypad analogico on-screen (sostituisce pannello attuale)
 - [ ] #4  Bidello (nuovo personaggio ostile)
 
