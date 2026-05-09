@@ -2,13 +2,15 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 <title>BREAKTIME REBELLION</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+
+<div id="portrait-msg">↺<br>RUOTA IL<br>DISPOSITIVO</div>
 
 <div id="overlay">
   <img id="logo-img" src="assets/logo.png" alt="Breaktime Rebellion" style="width:min(460px,95vw);display:block;margin:0 auto 10px;border-radius:4px;image-rendering:pixelated;">
@@ -27,30 +29,16 @@
     </div>
   </div>
   <div id="msg">Imbratta tutte le lavagne, poi suona la campanella!</div>
-  <div id="cabinet">
-    <div id="cab-screws"><div class="screw"></div><div class="screw"></div><div class="screw"></div><div class="screw"></div></div>
-    <div id="cab-panel">
-      <div id="joystick-area">
-        <div id="joystick-label">JOYSTICK</div>
-        <div id="dpad">
-          <div class="dp dp-blank"></div><div class="dp" id="bU">▲</div><div class="dp dp-blank"></div>
-          <div class="dp" id="bL">◄</div><div class="dp dp-blank"></div><div class="dp" id="bR">►</div>
-          <div class="dp dp-blank"></div><div class="dp" id="bD">▼</div><div class="dp dp-blank"></div>
-        </div>
-        <div id="stick-base"><div id="stick-ball"></div></div>
-      </div>
-      <div id="cab-center">
-        <div id="cab-title">BREAKTIME<br>REBELLION</div>
-        <div id="cab-screen-mini">🏫</div>
-        <div id="cab-lights"><div class="cab-light"></div><div class="cab-light"></div><div class="cab-light"></div></div>
-      </div>
-      <div id="action-area">
-        <div id="action-label">AZIONE</div>
-        <div id="btn-action">✏<br>SCRIVI<br><span class="btn-key">[Z]</span></div>
-      </div>
-    </div>
-    <div id="cab-screws"><div class="screw"></div><div class="screw"></div><div class="screw"></div><div class="screw"></div></div>
+</div>
+
+<div id="ctrl-joy">
+  <div id="joy-base">
+    <div id="joy-knob"></div>
   </div>
+</div>
+
+<div id="ctrl-action">
+  <div id="btn-action">✏</div>
 </div>
 
 <script src="js/config.js"></script>

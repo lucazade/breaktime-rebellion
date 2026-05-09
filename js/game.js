@@ -132,6 +132,53 @@ bA.addEventListener('mousedown',   onA);
 bA.addEventListener('mouseup',     offA);
 bA.addEventListener('mouseleave',  offA);
 
+// JOYSTICK ANALOGICO
+(function() {
+  const zone = document.getElementById('ctrl-joy');
+  const knob = document.getElementById('joy-knob');
+  if (!zone || !knob) return;
+
+  var active = false, cx = 0, cy = 0;
+  var RADIUS = 33, DEAD = 10;
+
+  function joyStart(e) {
+    e.preventDefault();
+    active = true;
+    var r = zone.getBoundingClientRect();
+    cx = r.left + r.width  / 2;
+    cy = r.top  + r.height / 2;
+    joyUpdate(e);
+  }
+  function joyMove(e) { if (active) { e.preventDefault(); joyUpdate(e); } }
+  function joyEnd(e) {
+    e.preventDefault();
+    active = false;
+    knob.style.transform = '';
+    K.left = K.right = K.up = K.down = false;
+  }
+  function joyUpdate(e) {
+    var t = e.touches ? e.touches[0] : e;
+    var dx = t.clientX - cx;
+    var dy = t.clientY - cy;
+    var dist = Math.sqrt(dx * dx + dy * dy);
+    var c = Math.min(dist, RADIUS) / (dist || 1);
+    knob.style.transform = 'translate(' + (dx * c) + 'px,' + (dy * c) + 'px)';
+    K.left  = dx < -DEAD;
+    K.right = dx >  DEAD;
+    K.up    = dy < -DEAD;
+    K.down  = dy >  DEAD;
+  }
+
+  zone.addEventListener('touchstart',  joyStart, {passive:false});
+  zone.addEventListener('touchmove',   joyMove,  {passive:false});
+  zone.addEventListener('touchend',    joyEnd,   {passive:false});
+  zone.addEventListener('touchcancel', joyEnd,   {passive:false});
+  zone.addEventListener('mousedown',   joyStart);
+  zone.addEventListener('mousemove',   joyMove);
+  zone.addEventListener('mouseup',     joyEnd);
+  zone.addEventListener('mouseleave',  joyEnd);
+})();
+
 document.getElementById('overlay').addEventListener('click', startGame);
 document.getElementById('overlay').addEventListener('touchstart', function(e) { e.preventDefault(); startGame(); }, {passive:false});
 
