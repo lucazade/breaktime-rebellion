@@ -1,5 +1,6 @@
 const CV = document.getElementById('c');
 const ctx = CV.getContext('2d');
+ctx.scale(2, 2); // 2× resolution: 640×400 canvas, 320×200 logical coordinates
 
 const C = CONFIG.colors;
 
@@ -56,10 +57,10 @@ const BOARDS_DEF = [
 ];
 
 const DESKS = [
-  // GY: stair1 x=30-85, stair2 x=240-295 → safe zone x≈90-230
+  // GY: stair1 x=30-80, stair2 x=240-290 → safe zone x≈90-230
   {x:92,  y:GY-12}, {x:116, y:GY-12}, {x:140, y:GY-12},
   {x:168, y:GY-12}, {x:192, y:GY-12}, {x:216, y:GY-12},
-  // MY: stair1top x=80, stair3bottom x=60-115, stair4bottom x=210-265 → safe zone x=120-188
+  // MY: stair1top x=30, stair3bottom x=60-110, stair4bottom x=210-260 → safe zone x=120-188
   {x:120, y:MY-12}, {x:144, y:MY-12},
   {x:164, y:MY-12}, {x:184, y:MY-12},
   // TY: stair3top x=110, stair4top x=260 → left x<100, right x=120-248
