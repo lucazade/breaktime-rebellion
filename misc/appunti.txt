@@ -9,7 +9,7 @@ Obiettivo: rendere il gioco giocabile e stabile prima di aggiungere contenuto.
 - [x] #8  Fix punteggio automatico (scorre senza senso)
 - [x] #3  Prof/professoresse meno poliziotti (sprite più scolastiche)
 - [x] #7  Architettura asset modificabile (cartella assets/, config JSON separato per audio, immagini, layout)
-- [ ] #12 La campanella non si riesce ancora a suonare bene (è difficile)
+- [x] #12 La campanella non si riesce ancora a suonare bene (è difficile)
 
 ---
 

@@ -284,7 +284,7 @@ const player = {
 const teachers = [
   {x:200, y:GY-PH, dir:1,  minX:10, maxX:305, speed:0.55, animT:0, color:C.red,   name:'Prof.Rossi',  sight:90,  alertT:0, chasing:false, chaseX:0},
   {x:80,  y:MY-PH, dir:-1, minX:10, maxX:305, speed:0.50, animT:0, color:C.green, name:'Prof.Verdi',  sight:80,  alertT:0, chasing:false, chaseX:0},
-  {x:230, y:TY-PH, dir:1,  minX:10, maxX:305, speed:0.60, animT:0, color:C.mgray, name:'Prof.Neri',   sight:100, alertT:0, chasing:false, chaseX:0},
+  {x:230, y:TY-PH, dir:1,  minX:10, maxX:275, speed:0.60, animT:0, color:C.mgray, name:'Prof.Neri',   sight:100, alertT:0, chasing:false, chaseX:0},
 ];
 
 let lives = 3, score = 0, state = 'title', frame = 0;
@@ -455,18 +455,18 @@ function updatePlayer() {
     }
   }
 
+  // Auto-ring bell on proximity (no button needed)
+  if (allBoards && !BELL.done) {
+    var bdx = Math.abs(player.x + PW/2 - BELL.x - 6);
+    var bdy = Math.abs(player.y + PH/2 - BELL.y - 8);
+    if (bdx < 22 && bdy < 24) { ringBell(); }
+  }
+
   if (actionPressed) { actionPressed = false; tryAction(); }
 }
 
 function tryAction() {
   if (state !== 'playing') return;
-
-  // Bell check first — generous radius
-  if (allBoards && !BELL.done) {
-    var bdx = Math.abs(player.x + PW/2 - BELL.x - 6);
-    var bdy = Math.abs(player.y + PH/2 - BELL.y - 8);
-    if (bdx < 50 && bdy < 40) { ringBell(); return; }
-  }
 
   // Spray nearest board
   var nearest = null, nd = 9999;
