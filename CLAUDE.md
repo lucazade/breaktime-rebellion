@@ -7,7 +7,7 @@ Protagonista: **Marco**.
 
 ## File principale
 
-`breaktime_rebellion_v2.html` — tutto in un file unico (HTML5 Canvas + JS vanilla, nessun framework).
+`breaktime-rebellion.html` — tutto in un file unico (HTML5 Canvas + JS vanilla, nessun framework).
 
 ## Asset e stile
 
@@ -30,10 +30,10 @@ Usare sempre messaggi descrittivi:
 
 ## Validazione JS — obbligatoria prima di ogni modifica
 
-Prima di ogni modifica a `breaktime_rebellion_v2.html`, estrarre il blocco `<script>` e validarlo:
+Prima di ogni modifica a `breaktime-rebellion.html`, estrarre il blocco `<script>` e validarlo:
 
 ```bash
-node -e "const fs=require('fs');const c=fs.readFileSync('breaktime_rebellion_v2.html','utf8');const m=c.match(/<script>([\s\S]*?)<\/script>/);try{new Function(m[1]);console.log('JS OK');}catch(e){console.log('ERRORE:',e.message);}"
+node -e "const fs=require('fs');const c=fs.readFileSync('breaktime-rebellion.html','utf8');const m=c.match(/<script>([\s\S]*?)<\/script>/);try{new Function(m[1]);console.log('JS OK');}catch(e){console.log('ERRORE:',e.message);}"
 ```
 
 **Non fare mai deploy se il test restituisce `ERRORE`.**
