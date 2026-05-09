@@ -26,21 +26,21 @@ const BOARDS_DEF = [
 ];
 
 const DESKS = [
-  // GY: scala1 x=30-85, scala2 x=240-295 → zona sicura x≈90-230
+  // GY: stair1 x=30-85, stair2 x=240-295 → safe zone x≈90-230
   {x:92,  y:GY-12}, {x:116, y:GY-12}, {x:140, y:GY-12},
   {x:168, y:GY-12}, {x:192, y:GY-12}, {x:216, y:GY-12},
-  // MY: scala1top x=80, scala3bottom x=60-115, scala4bottom x=210-265 → zona sicura x=120-188
+  // MY: stair1top x=80, stair3bottom x=60-115, stair4bottom x=210-265 → safe zone x=120-188
   {x:120, y:MY-12}, {x:144, y:MY-12},
   {x:164, y:MY-12}, {x:184, y:MY-12},
-  // TY: scala3top x=110, scala4top x=260 → sinistra x<100, destra x=120-248
+  // TY: stair3top x=110, stair4top x=260 → left x<100, right x=120-248
   {x:52,  y:TY-12}, {x:76,  y:TY-12},
   {x:168, y:TY-12}, {x:196, y:TY-12},
 ];
 
 const BAGS_DEF = [
-  {x:130, y:GY-10},  // GY - zona sicura
-  {x:184, y:MY-10},  // MY - spostata da 228 (scala4 x=210-265)
-  {x:136, y:TY-10},  // TY - spostata da 108 (vicino scala3top x=110)
+  {x:130, y:GY-10},  // GY - safe zone
+  {x:184, y:MY-10},  // MY - moved from 228 (stair4 x=210-265)
+  {x:136, y:TY-10},  // TY - moved from 108 (near stair3top x=110)
 ];
 
 const TEACHERS_DEF = [
@@ -49,7 +49,7 @@ const TEACHERS_DEF = [
   {x:230, y:TY-PH, dir:1,  minX:10, maxX:275, speed:0.60, color:C.mgray, name:'Prof.Neri',  sight:100},
 ];
 
-// Mutable level state — resettato da resetLevel()
+// Mutable level state — reset by resetLevel()
 let BOARDS, bags, BELL, teachers;
 let lives, score, state, frame;
 let particles, floatingTexts;
@@ -240,7 +240,7 @@ function updatePlayer() {
   if (player.onStair) {
     const s = player.currentStair;
     player.vy = 0;
-    // K.up/K.down hanno priorità su K.left/K.right per evitare oscillazione all'ingresso
+    // K.up/K.down take priority over K.left/K.right to avoid oscillation at stair entry
     var sm = 0;
     if      (K.up   && !K.down)  sm =  1;
     else if (K.down && !K.up)    sm = -1;
@@ -280,7 +280,7 @@ function updatePlayer() {
       score += 200;
       addFloating(bag.x, bag.y, '+200', C.gold);
       addParticles(bag.x, bag.y, C.gold, 10);
-      setMsg('Cartella raccolta! +200 punti!');
+      setMsg(STRINGS.bagCollected);
     }
   }
 
@@ -321,16 +321,16 @@ function tryAction() {
         for (let j = 0; j < BOARDS.length; j++) if (BOARDS[j].done) done++;
         if (done === BOARDS.length) {
           allBoards = true;
-          setMsg('Tutte le lavagne! Suona la campanella a destra! 🔔');
+          setMsg(STRINGS.allBoards);
         } else {
-          setMsg('Muro imbrattato! +500 (' + done + '/' + BOARDS.length + ') — Scappa!');
+          setMsg(STRINGS.boardTagged(done, BOARDS.length));
         }
       }
       player.spraying = false;
     }, 750);
   } else {
-    if (allBoards && !BELL.done) setMsg('Vai alla campanella (in alto a destra)!');
-    else setMsg('Avvicinati a una lavagna! (bordo giallo = raggiungibile)');
+    if (allBoards && !BELL.done) setMsg(STRINGS.goBell);
+    else setMsg(STRINGS.getCloser);
   }
 }
 
@@ -341,7 +341,7 @@ function ringBell() {
   score += 1000;
   addFloating(BELL.x - 20, BELL.y - 6, '+1000!', C.gold);
   addParticles(BELL.x, BELL.y, C.gold, 30);
-  setMsg('🔔 DRIIIN! Livello completato! +1000 punti!');
+  setMsg(STRINGS.ringMsg);
   setTimeout(function() { BELL.done = true; state = 'win'; }, 2000);
 }
 
@@ -382,7 +382,7 @@ function caughtBy(t) {
   score = Math.max(0, score - 300);
   player.stunT = 160; player.spraying = false;
   addParticles(player.x + PW/2, player.y, C.red, 20);
-  let msg = t.name + ' ti ha preso! -300 punti! ';
+  let msg = STRINGS.caughtBy(t.name);
   msg += lives > 0 ? '♥'.repeat(lives) : 'GAME OVER!';
   setMsg(msg);
   player.x = 40; player.y = GY - PH; player.vy = 0;
@@ -401,7 +401,7 @@ function updateTimer() {
     timerTicks = 0;
     lives--;
     addParticles(player.x + PW/2, player.y, C.red, 20);
-    var msg = 'TEMPO SCADUTO! ';
+    var msg = STRINGS.timesUp;
     msg += lives > 0 ? '♥'.repeat(lives) : 'GAME OVER!';
     setMsg(msg);
     player.stunT = 160; player.spraying = false;
@@ -527,21 +527,20 @@ function drawBell() {
   const sx = BELL.ringing ? Math.round(Math.sin(frame * 0.6) * 2) : 0;
   const gold = BELL.ringing ? '#FFE000' : C.bell;
 
-  // Staffa a muro
+  // Wall bracket
   ctx.fillStyle = C.dgray;
   ctx.fillRect(bx+1, by, 3, 2);
 
-  // Corpo campanella dimezzato (oscilla con sx)
+  // Bell body (oscillates with sx)
   ctx.fillStyle = gold;
-  ctx.fillRect(bx+0+sx, by+2, 5, 1); // spalla
-  ctx.fillRect(bx-1+sx, by+3, 7, 2); // corpo
-  ctx.fillRect(bx-2+sx, by+5, 9, 1); // bordo svasato
+  ctx.fillRect(bx+0+sx, by+2, 5, 1);
+  ctx.fillRect(bx-1+sx, by+3, 7, 2);
+  ctx.fillRect(bx-2+sx, by+5, 9, 1);
 
-  // Lucina
   ctx.fillStyle = 'rgba(255,255,200,0.6)';
   ctx.fillRect(bx+1+sx, by+3, 1, 1);
 
-  // Batacchio
+  // Clapper
   ctx.fillStyle = C.brown;
   ctx.fillRect(bx+2+sx, by+6, 1, 2);
   ctx.fillRect(bx+1+sx, by+8, 3, 1);
@@ -624,7 +623,7 @@ function drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, stunned, chasi
     const bub = dir>0 ? bx+PW : bx-26;
     ctx.fillStyle = C.yellow; ctx.fillRect(bub, by-14, 26, 10);
     ctx.fillStyle = C.black; ctx.font = '5px "Press Start 2P"';
-    ctx.fillText('EHI!!', bub+1, by-7);
+    ctx.fillText(STRINGS.hey, bub+1, by-7);
   }
 }
 
@@ -666,23 +665,23 @@ function drawEndScreen() {
   if (state === 'win') {
     ctx.fillStyle = 'rgba(0,0,60,0.88)'; ctx.fillRect(20, 60, 280, 80);
     ctx.fillStyle = C.gold;  ctx.font = '8px "Press Start 2P"';
-    ctx.fillText('LEGGENDA DELLA SCUOLA!', 38, 85);
+    ctx.fillText(STRINGS.winTitle, 38, 85);
     ctx.fillStyle = C.white; ctx.font = '7px "Press Start 2P"';
-    ctx.fillText('PUNTEGGIO: ' + String(score).padStart(5,'0'), 108, 103);
+    ctx.fillText(STRINGS.scoreLabel + String(score).padStart(5,'0'), 108, 103);
     if (Math.floor(frame/20)%2 === 0) {
       ctx.fillStyle = C.lgreen; ctx.font = '6px "Press Start 2P"';
-      ctx.fillText('[ RICARICA PER GIOCARE ANCORA ]', 48, 124);
+      ctx.fillText(STRINGS.reloadWin, 48, 124);
     }
   }
   if (state === 'gameover') {
     ctx.fillStyle = 'rgba(60,0,0,0.88)'; ctx.fillRect(40, 65, 240, 70);
     ctx.fillStyle = C.red;   ctx.font = '10px "Press Start 2P"';
-    ctx.fillText('ESPULSO!', 112, 92);
+    ctx.fillText(STRINGS.gameoverTitle, 112, 92);
     ctx.fillStyle = C.white; ctx.font = '7px "Press Start 2P"';
-    ctx.fillText('PUNTEGGIO: ' + String(score).padStart(5,'0'), 105, 110);
+    ctx.fillText(STRINGS.scoreLabel + String(score).padStart(5,'0'), 105, 110);
     if (Math.floor(frame/20)%2 === 0) {
       ctx.fillStyle = C.yellow; ctx.font = '6px "Press Start 2P"';
-      ctx.fillText('[ RICARICA PER RIPROVARE ]', 70, 128);
+      ctx.fillText(STRINGS.reloadLose, 70, 128);
     }
   }
 }
@@ -706,13 +705,13 @@ function updateHUD() {
 
 var _lastLoopTime = 0;
 var _accumulator  = 0;
-var _STEP         = 1000 / 60; // ~16.67ms — tick fisico fisso a 60Hz
+var _STEP         = 1000 / 60; // ~16.67ms — fixed physics tick at 60Hz
 
 function loop(ts) {
   if (_lastLoopTime === 0) _lastLoopTime = ts;
   var elapsed = ts - _lastLoopTime;
   _lastLoopTime = ts;
-  if (elapsed > 250) elapsed = _STEP; // cap: tab nascosta / lag
+  if (elapsed > 250) elapsed = _STEP; // cap: hidden tab / lag
   _accumulator += elapsed;
 
   while (_accumulator >= _STEP) {

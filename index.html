@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -16,12 +16,12 @@
 </head>
 <body>
 
-<div id="portrait-msg">↺<br>RUOTA IL<br>DISPOSITIVO</div>
+<div id="portrait-msg">↺<br>ROTATE<br>DEVICE</div>
 
 <div id="overlay">
   <img id="logo-img" src="assets/logo.png" alt="Breaktime Rebellion" style="width:min(460px,95vw);display:block;margin:0 auto 10px;border-radius:4px;image-rendering:pixelated;">
   <br><br>
-  <div class="go">[ TOCCA PER INIZIARE ]</div>
+  <div class="go">[ TAP TO START ]</div>
   <!--<div class="rules">◄ ► muovi &nbsp;|&nbsp; ▲▼ scala &nbsp;|&nbsp; ✏ imbratta</div>
   <div class="bonus">+500 lavagna &nbsp;·&nbsp; +200 cartella &nbsp;·&nbsp; +1000 campanella</div>-->
 </div>
@@ -38,7 +38,7 @@
       <div id="timer-bar-wrap"><div id="timer-bar"></div></div>
     </div>
   </div>
-  <div id="msg">Imbratta tutte le lavagne, poi suona la campanella!</div>
+  <div id="msg">Tag all boards, then ring the bell!</div>
 </div>
 
 <div id="ctrl-joy">
@@ -52,6 +52,7 @@
 </div>
 
 <script src="js/config.js"></script>
+<script src="js/i18n.js"></script>
 <script src="js/game.js"></script>
 <script>
 if (CONFIG.levelTimer === 0) {

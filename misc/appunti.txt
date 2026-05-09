@@ -34,7 +34,7 @@ Obiettivo: meccaniche di gioco complete e controlli definitivi.
 
 Obiettivo: Cambiamenti importanti del gioco
 
-- [ ] #18 Lingua base del gioco è inglese (includere lingue extra come italiano che vengono caricate in auto in base al locale del device. Anche tutti i commenti del programma o altre scritte in giro devono essere di base in inglese. Non tradurre appunti.txt)
+- [x] #18 Lingua base del gioco è inglese (includere lingue extra come italiano che vengono caricate in auto in base al locale del device. Anche tutti i commenti del programma o altre scritte in giro devono essere di base in inglese. Non tradurre appunti.txt)
 - [ ] #19 Ho modificato il logo.png iniziale nella cartella assets. In essa ci sono anche altre variazioni di prova da mantenere. Vanno aggiornati anche icon-192.png e icon-512.png
 - [ ] #20 Traslare i 3 piani dell'edificio verso il basso. Il piano terra parte sopra il footer, il piano più in alto finisce prima dell'header.
 - [ ] #21 Le icone e le scritte dell'header sono di grandezza diversa. Cerchiamo di uniformarle tutte. L'icona dello spray non è comprensibile, troviamo sostituto.

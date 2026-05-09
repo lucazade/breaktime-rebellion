@@ -15,7 +15,8 @@ robots.txt          ← noindex pre-release
 css/
   style.css         ← tutti gli stili
 js/
-  config.js         ← CONFIG (caricato prima di game.js)
+  config.js         ← CONFIG (caricato prima di i18n.js e game.js)
+  i18n.js           ← stringhe localizzate; definisce window.STRINGS (EN default, IT auto)
   game.js           ← logica di gioco, physics, draw, loop
 assets/
   logo.png          ← logo title screen (1408×768)
@@ -53,6 +54,14 @@ HTML5 Canvas + JS vanilla, nessun framework. Font: Press Start 2P (Google Fonts)
 - Aggiungere la definizione in un `*_DEF` array
 - Clonare in `resetLevel()` con `.map()`
 - Non modificare mai i `*_DEF` direttamente
+
+## i18n (js/i18n.js)
+
+Tutte le stringhe visibili all'utente sono in `window.STRINGS`. Default inglese, italiano se `navigator.language` inizia con `it`. Override locale con `?lang=en` o `?lang=it` nell'URL (utile per test).
+
+Per aggiungere una stringa: aggiungerla in `en` e `it`, poi usare `STRINGS.chiave` in `game.js` o `index.html`.
+
+Ordine di caricamento obbligatorio: `config.js` → `i18n.js` → `game.js`.
 
 ## CONFIG (js/config.js)
 
