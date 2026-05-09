@@ -670,17 +670,24 @@ function updateHUD() {
 }
 
 var _lastLoopTime = 0;
+var _accumulator  = 0;
+var _STEP         = 1000 / 60; // ~16.67ms — tick fisico fisso a 60Hz
+
 function loop(ts) {
-  var dt = ts - _lastLoopTime;
+  if (_lastLoopTime === 0) _lastLoopTime = ts;
+  var elapsed = ts - _lastLoopTime;
   _lastLoopTime = ts;
-  // Salta la fisica se il frame è anomalo (tab nascosta, throttling, ecc.)
-  if (dt < 100) {
+  if (elapsed > 250) elapsed = _STEP; // cap: tab nascosta / lag
+  _accumulator += elapsed;
+
+  while (_accumulator >= _STEP) {
     frame++;
     if (state === 'playing') {
       updatePlayer();
       updateTeachers();
       updateBell();
     }
+    _accumulator -= _STEP;
   }
 
   drawBg();
