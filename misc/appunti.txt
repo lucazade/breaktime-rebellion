@@ -48,7 +48,7 @@ Obiettivo: riempire il gioco con livelli, ambienti e audio.
 - [x] #22  Implementare scale che vanno anche nell'altra direzione e conseguente gestione dei movimenti di marco. Mischiamo le scale in un verso e nell'altro.
 - [ ] #5  Aggiungere muri e creare quindi delle stanze. Le porte sono aperte e tutti possono passare. Aule tematiche (biblioteca, presidenza, bagno) con alunni e lezioni
 - [x] #4  Bidello (nuovo personaggio ostile)
-- [ ] #9  Musica 8-bit + effetti sonori
+- [x] #9  Musica 8-bit + effetti sonori
 
 ### 10 livelli
 

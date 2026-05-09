@@ -69,7 +69,7 @@ Unico punto per modificare layout, colori, immagini, audio, gameplay:
 - `CONFIG.layout` — W, H, PW, PH, GY, MY, TY, BW, BH
 - `CONFIG.colors` — palette C64 (alias `C` in game.js)
 - `CONFIG.images` — percorsi immagini
-- `CONFIG.audio` — volumi (placeholder per task #9)
+- `CONFIG.audio` — `musicVolume`, `sfxVolume`, `music` path, `sfx` map (spray/bell/caught/bag/win/gameover)
 - `CONFIG.levelTimer` — secondi per completare il livello (0 = disabilitato)
 
 Le costanti `W`, `H`, `PW`, `PH`, `GY`, `MY`, `TY`, `BW`, `BH`, `C` sono alias verso CONFIG per compatibilità.

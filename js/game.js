@@ -3,6 +3,36 @@ const ctx = CV.getContext('2d');
 
 const C = CONFIG.colors;
 
+// Audio manager — silent fallback when files are missing
+const GameAudio = (function() {
+  var bgMusic = null;
+
+  function playMusic() {
+    if (!CONFIG.audio.music) return;
+    if (!bgMusic) {
+      bgMusic = new Audio(CONFIG.audio.music);
+      bgMusic.loop = true;
+      bgMusic.volume = CONFIG.audio.musicVolume;
+    }
+    bgMusic.currentTime = 0;
+    bgMusic.play().catch(function() {});
+  }
+
+  function stopMusic() {
+    if (bgMusic) { bgMusic.pause(); bgMusic.currentTime = 0; }
+  }
+
+  function playSfx(name) {
+    var src = CONFIG.audio.sfx[name];
+    if (!src) return;
+    var s = new Audio(src);
+    s.volume = CONFIG.audio.sfxVolume;
+    s.play().catch(function() {});
+  }
+
+  return { playMusic: playMusic, stopMusic: stopMusic, playSfx: playSfx };
+})();
+
 const floors = [
   {x:0, y:GY, w:320},
   {x:0, y:MY, w:320},
@@ -197,6 +227,7 @@ document.getElementById('overlay').addEventListener('touchstart', function(e) { 
 function startGame() {
   document.getElementById('overlay').style.display = 'none';
   state = 'playing';
+  GameAudio.playMusic();
 }
 
 // PHYSICS
@@ -297,6 +328,7 @@ function updatePlayer() {
       addFloating(bag.x, bag.y, '+200', C.gold);
       addParticles(bag.x, bag.y, C.gold, 10);
       setMsg(STRINGS.bagCollected);
+      GameAudio.playSfx('bag');
     }
   }
 
@@ -325,6 +357,7 @@ function tryAction() {
     player.spraying = true;
     player.sprayT = 70;
     player.dir = (player.x + PW/2 < nearest.x + BW/2) ? 1 : -1;
+    GameAudio.playSfx('spray');
     const capturedBoard = nearest;
     setTimeout(function() {
       if (!capturedBoard.done) {
@@ -358,7 +391,8 @@ function ringBell() {
   addFloating(BELL.x - 20, BELL.y - 6, '+1000!', C.gold);
   addParticles(BELL.x, BELL.y, C.gold, 30);
   setMsg(STRINGS.ringMsg);
-  setTimeout(function() { BELL.done = true; state = 'win'; }, 2000);
+  GameAudio.playSfx('bell');
+  setTimeout(function() { BELL.done = true; state = 'win'; GameAudio.stopMusic(); GameAudio.playSfx('win'); }, 2000);
 }
 
 function alertTeachers(bx, by) {
@@ -402,7 +436,8 @@ function caughtBy(t) {
   msg += lives > 0 ? '♥'.repeat(lives) : 'GAME OVER!';
   setMsg(msg);
   player.x = 40; player.y = GY - PH; player.vy = 0;
-  if (lives <= 0) setTimeout(function() { state = 'gameover'; }, 1800);
+  GameAudio.playSfx('caught');
+  if (lives <= 0) setTimeout(function() { state = 'gameover'; GameAudio.stopMusic(); GameAudio.playSfx('gameover'); }, 1800);
 }
 
 function updateJanitors() {
@@ -436,8 +471,9 @@ function updateTimer() {
     setMsg(msg);
     player.stunT = 160; player.spraying = false;
     player.x = 40; player.y = GY - PH; player.vy = 0;
+    GameAudio.playSfx('caught');
     if (lives <= 0) {
-      setTimeout(function() { state = 'gameover'; }, 1800);
+      setTimeout(function() { state = 'gameover'; GameAudio.stopMusic(); GameAudio.playSfx('gameover'); }, 1800);
     } else {
       timerTicks = CONFIG.levelTimer * 60;
     }

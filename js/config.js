@@ -14,6 +14,15 @@ const CONFIG = {
   audio: {
     musicVolume: 0.5,
     sfxVolume:   0.8,
+    music: 'assets/audio/music.mp3',
+    sfx: {
+      spray:    'assets/audio/spray.mp3',
+      bell:     'assets/audio/bell.mp3',
+      caught:   'assets/audio/caught.mp3',
+      bag:      'assets/audio/bag.mp3',
+      win:      'assets/audio/win.mp3',
+      gameover: 'assets/audio/gameover.mp3',
+    },
   },
   levelTimer: 60,  // seconds to complete the level (0 = disabled)
   colors: {
