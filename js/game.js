@@ -1,225 +1,3 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-<title>BREAKTIME REBELLION</title>
-<style>
-* { margin:0; padding:0; box-sizing:border-box; }
-body {
-  background:#0a0a0a;
-  display:flex; flex-direction:column;
-  align-items:center; justify-content:center;
-  min-height:100vh;
-  font-family:'Press Start 2P',monospace;
-  overflow:hidden; touch-action:none;
-  user-select:none; -webkit-user-select:none;
-}
-#wrap { display:flex; flex-direction:column; align-items:center; width:min(480px,100vw); }
-#game-area { position:relative; width:min(480px,100vw); aspect-ratio:16/10; }
-canvas {
-  display:block; width:100%; height:100%;
-  image-rendering:pixelated; background:#1a1a4a;
-}
-#hud-overlay {
-  position:absolute; top:0; left:0; right:0;
-  padding:3px 7px;
-  display:flex; justify-content:space-between; align-items:center;
-  background:rgba(0,0,0,0.5);
-  color:#aaa; font-size:clamp(7px,2vw,11px); letter-spacing:1px;
-  pointer-events:none;
-}
-#hud-overlay .hl { color:#ff6b6b; }
-#hud-overlay .hg { color:#9ad284; }
-#hud-overlay span { color:#fff; }
-#msg {
-  width:min(480px,100vw);
-  background:rgba(0,0,128,0.92); color:#ff0;
-  font-size:clamp(7px,2vw,11px); padding:2px 6px;
-  min-height:16px; text-align:center; letter-spacing:1px;
-  border-top:1px solid #352879;
-}
-/* CABINATO */
-#cabinet {
-  width:min(480px,100vw);
-  background:linear-gradient(180deg,#1a0a00,#2d1500 40%,#1a0a00);
-  border-top:3px solid #8B4513;
-  padding:5px 10px 8px;
-  display:flex; flex-direction:column; align-items:center; gap:5px;
-}
-#cab-screws { display:flex; justify-content:space-between; width:100%; padding:0 4px; }
-.screw { width:7px; height:7px; background:radial-gradient(circle at 35% 30%,#777,#333); border-radius:50%; border:1px solid #555; }
-#cab-panel {
-  width:100%;
-  background:linear-gradient(135deg,#2a0e00,#1a0800);
-  border:2px solid #6B3A00; border-radius:4px;
-  padding:6px 10px;
-  display:flex; flex-direction:row; align-items:center; justify-content:space-between; gap:8px;
-  box-shadow:inset 0 0 12px rgba(255,100,0,0.08), 0 2px 8px rgba(0,0,0,0.6);
-}
-#joystick-area { display:flex; flex-direction:column; align-items:center; gap:2px; }
-#joystick-label { color:#8B6914; font-size:clamp(6px,1.5vw,9px); letter-spacing:2px; margin-bottom:2px; }
-#dpad {
-  display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:repeat(3,1fr);
-  gap:2px; width:clamp(88px,21vw,108px); height:clamp(88px,21vw,108px);
-}
-.dp {
-  background:#2a2a6a;
-  border-top:3px solid #6c6ccc;
-  border-left:3px solid #6c6ccc;
-  border-right:3px solid #111133;
-  border-bottom:3px solid #111133;
-  color:#fff;
-  font-size:clamp(12px,3.5vw,18px);
-  display:flex; align-items:center; justify-content:center;
-  cursor:pointer; -webkit-tap-highlight-color:transparent; touch-action:none;
-  image-rendering:pixelated;
-}
-.dp:active,.dp.pressed {
-  background:#1a1a4a;
-  border-top:3px solid #111133;
-  border-left:3px solid #111133;
-  border-right:3px solid #6c6ccc;
-  border-bottom:3px solid #6c6ccc;
-  transform:translate(1px,1px);
-}
-.dp-blank { background:transparent!important; border:none!important; cursor:default!important; }
-#stick-base {
-  width:clamp(26px,6.5vw,34px); height:clamp(26px,6.5vw,34px);
-  background:radial-gradient(circle at 40% 35%,#444,#111);
-  border-radius:50%; border:2px solid #333;
-  display:flex; align-items:center; justify-content:center;
-  margin-top:3px; box-shadow:0 3px 6px rgba(0,0,0,0.6);
-}
-#stick-ball { width:clamp(14px,3.5vw,18px); height:clamp(14px,3.5vw,18px); background:radial-gradient(circle at 35% 30%,#888,#222); border-radius:50%; border:1px solid #555; }
-#cab-center { display:flex; flex-direction:column; align-items:center; gap:4px; }
-#cab-title { color:#CD853F; font-size:clamp(7px,1.8vw,10px); letter-spacing:2px; text-shadow:0 0 6px rgba(205,133,63,0.5); text-align:center; line-height:1.4; }
-#cab-screen-mini {
-  width:clamp(46px,11vw,64px); height:clamp(34px,8.5vw,48px);
-  background:#0a0a1a; border:2px solid #444; border-radius:3px;
-  display:flex; align-items:center; justify-content:center;
-  box-shadow:inset 0 0 8px rgba(100,150,255,0.15); font-size:clamp(14px,3.5vw,22px);
-}
-#cab-lights { display:flex; gap:5px; }
-.cab-light { width:6px; height:6px; border-radius:50%; animation:lb 1.2s ease-in-out infinite; }
-.cab-light:nth-child(1){background:#ff3333;animation-delay:0s;}
-.cab-light:nth-child(2){background:#ffaa00;animation-delay:0.4s;}
-.cab-light:nth-child(3){background:#33ff33;animation-delay:0.8s;}
-@keyframes lb{0%,100%{opacity:1}50%{opacity:0.3}}
-#action-area { display:flex; flex-direction:column; align-items:center; gap:3px; }
-#action-label { color:#8B6914; font-size:clamp(6px,1.5vw,9px); letter-spacing:2px; margin-bottom:2px; }
-#btn-action {
-  width:clamp(54px,13vw,70px); height:clamp(54px,13vw,70px);
-  background:radial-gradient(circle at 35% 30%,#8B1A00,#4A0E00);
-  border:3px solid #CD3200; border-radius:50%;
-  color:#ffcc88; font-size:clamp(10px,2.5vw,14px); font-family:'Press Start 2P',monospace;
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
-  cursor:pointer; -webkit-tap-highlight-color:transparent; touch-action:none;
-  line-height:1.3; text-align:center;
-  box-shadow:0 4px 8px rgba(0,0,0,0.6),inset 0 1px rgba(255,100,0,0.2);
-}
-#btn-action:active,#btn-action.pressed { background:radial-gradient(circle at 35% 30%,#5A1000,#2A0800); transform:translateY(2px); box-shadow:0 2px 4px rgba(0,0,0,0.6); }
-.btn-key { font-size:clamp(6px,1.4vw,8px); color:#885533; margin-top:1px; }
-
-/* OVERLAY */
-#overlay {
-  position:fixed; inset:0;
-  background:linear-gradient(180deg,#000080,#000040);
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
-  z-index:99; cursor:pointer; gap:8px; padding:10px;
-}
-#overlay .go { color:#ffd700; font-size:clamp(8px,2.5vw,14px); letter-spacing:2px; animation:blink .8s step-end infinite; text-align:center; }
-#overlay .rules { color:#6c5eb5; font-size:clamp(6px,1.5vw,9px); line-height:2.2; text-align:center; }
-#overlay .bonus { color:#b8c76f; font-size:clamp(6px,1.4vw,8px); line-height:2; text-align:center; }
-@keyframes blink{50%{opacity:0}}
-</style>
-</head>
-<body>
-
-<div id="overlay">
-  <img id="logo-img" src="assets/logo.png" alt="Breaktime Rebellion" style="width:min(460px,95vw);display:block;margin:0 auto 10px;border-radius:4px;image-rendering:pixelated;">
-  <div class="go">[ TOCCA PER INIZIARE ]</div>
-  <div class="rules">◄ ► muovi &nbsp;|&nbsp; ▲▼ scala &nbsp;|&nbsp; ✏ imbratta</div>
-  <div class="bonus">+500 lavagna &nbsp;·&nbsp; +200 cartella &nbsp;·&nbsp; +1000 campanella</div>
-</div>
-
-<div id="wrap">
-  <div id="game-area">
-    <canvas id="c" width="320" height="200"></canvas>
-    <div id="hud-overlay">
-      <div class="hl">♥ <span id="hL">♥♥♥</span></div>
-      <div>✏ <span class="hg" id="hW">0/6</span></div>
-      <div>⭐ <span id="hS">00000</span></div>
-    </div>
-  </div>
-  <div id="msg">Imbratta tutte le lavagne, poi suona la campanella!</div>
-  <div id="cabinet">
-    <div id="cab-screws"><div class="screw"></div><div class="screw"></div><div class="screw"></div><div class="screw"></div></div>
-    <div id="cab-panel">
-      <div id="joystick-area">
-        <div id="joystick-label">JOYSTICK</div>
-        <div id="dpad">
-          <div class="dp dp-blank"></div><div class="dp" id="bU">▲</div><div class="dp dp-blank"></div>
-          <div class="dp" id="bL">◄</div><div class="dp dp-blank"></div><div class="dp" id="bR">►</div>
-          <div class="dp dp-blank"></div><div class="dp" id="bD">▼</div><div class="dp dp-blank"></div>
-        </div>
-        <div id="stick-base"><div id="stick-ball"></div></div>
-      </div>
-      <div id="cab-center">
-        <div id="cab-title">BREAKTIME<br>REBELLION</div>
-        <div id="cab-screen-mini">🏫</div>
-        <div id="cab-lights"><div class="cab-light"></div><div class="cab-light"></div><div class="cab-light"></div></div>
-      </div>
-      <div id="action-area">
-        <div id="action-label">AZIONE</div>
-        <div id="btn-action">✏<br>SCRIVI<br><span class="btn-key">[Z]</span></div>
-      </div>
-    </div>
-    <div id="cab-screws"><div class="screw"></div><div class="screw"></div><div class="screw"></div><div class="screw"></div></div>
-  </div>
-</div>
-
-<script>
-
-// ═══════════════════════════════════════════════════════════
-//  CONFIG — modifica qui layout, immagini, audio
-// ═══════════════════════════════════════════════════════════
-const CONFIG = {
-  layout: {
-    W: 320, H: 200,
-    PW: 8, PH: 16,
-    GY: 175, MY: 110, TY: 45,
-    BW: 22, BH: 14,
-  },
-  images: {
-    logo: 'assets/logo.png',
-  },
-  audio: {
-    musicVolume: 0.5,
-    sfxVolume:   0.8,
-  },
-  colors: {
-    black:'#000000', white:'#FFFFFF',
-    blue:'#352879', lblue:'#6C5EB5',
-    red:'#68372B', pink:'#9A6759',
-    green:'#588D43', lgreen:'#9AD284',
-    brown:'#433900', orange:'#6F4F25',
-    yellow:'#B8C76F', gold:'#FFD700',
-    dgray:'#444444', mgray:'#6C6C6C', lgray:'#959595',
-    floor:'#6B4C11', floorlt:'#A07040',
-    chalk:'#D8E8D0', chalkbg:'#1A4A1A',
-    purple:'#6F3D86', cyan:'#70A4B2',
-    desk:'#5C3D11', desklt:'#8B5E2A',
-    bell:'#DAA520',
-  },
-};
-const W = CONFIG.layout.W, H = CONFIG.layout.H;
-const PW = CONFIG.layout.PW, PH = CONFIG.layout.PH;
-const GY = CONFIG.layout.GY, MY = CONFIG.layout.MY, TY = CONFIG.layout.TY;
-const BW = CONFIG.layout.BW, BH = CONFIG.layout.BH;
-
 const CV = document.getElementById('c');
 const ctx = CV.getContext('2d');
 
@@ -231,18 +9,14 @@ const floors = [
   {x:0, y:TY, w:320},
 ];
 
-// Diagonal stairs: {x1,y1,x2,y2} from bottom-left to top-right (like Skool Daze)
-// Player rides them by walking into them horizontally
 const stairs = [
-  {x1:30,  y1:GY,    x2:80,  y2:MY,   dir:1},   // left stair ground->mid (goes right-up)
-  {x1:240, y1:GY,    x2:290, y2:MY,   dir:1},   // right stair ground->mid
-  {x1:60,  y1:MY,    x2:110, y2:TY,   dir:1},   // left stair mid->top
-  {x1:210, y1:MY,    x2:260, y2:TY,   dir:1},   // right stair mid->top
+  {x1:30,  y1:GY,    x2:80,  y2:MY,   dir:1},
+  {x1:240, y1:GY,    x2:290, y2:MY,   dir:1},
+  {x1:60,  y1:MY,    x2:110, y2:TY,   dir:1},
+  {x1:210, y1:MY,    x2:260, y2:TY,   dir:1},
 ];
-// Keep ladders empty (not used)
 const ladders = [];
 
-// Boards: well above floor so no desk overlap
 const BOARDS = [
   {x:14,  y:TY-22, done:false},
   {x:142, y:TY-22, done:false},
@@ -252,7 +26,6 @@ const BOARDS = [
   {x:274, y:MY-22, done:false},
 ];
 
-// Desks: in between boards (boards at x=14,142,274 — desks at x=60-120 and x=170-240)
 const DESKS = [
   {x:60,  y:GY-12}, {x:88,  y:GY-12}, {x:116, y:GY-12},
   {x:172, y:GY-12}, {x:200, y:GY-12}, {x:228, y:GY-12},
@@ -262,10 +35,8 @@ const DESKS = [
   {x:172, y:TY-12}, {x:200, y:TY-12},
 ];
 
-// Bell: mounted on right wall of top floor
 const BELL = {x:296, y:TY+4, ringing:false, done:false, ringT:0};
 
-// Bonus bags: clear of desks and boards
 let bags = [
   {x:130, y:GY-10, collected:false},
   {x:228, y:MY-10, collected:false},
@@ -282,9 +53,9 @@ const player = {
 };
 
 const teachers = [
-  {x:200, y:GY-PH, dir:1,  minX:10, maxX:305, speed:0.55, animT:0, color:C.red,   name:'Prof.Rossi',  sight:90,  alertT:0, chasing:false, chaseX:0},
-  {x:80,  y:MY-PH, dir:-1, minX:10, maxX:305, speed:0.50, animT:0, color:C.green, name:'Prof.Verdi',  sight:80,  alertT:0, chasing:false, chaseX:0},
-  {x:230, y:TY-PH, dir:1,  minX:10, maxX:275, speed:0.60, animT:0, color:C.mgray, name:'Prof.Neri',   sight:100, alertT:0, chasing:false, chaseX:0},
+  {x:200, y:GY-PH, dir:1,  minX:10, maxX:305, speed:0.55, animT:0, color:C.red,   name:'Prof.Rossi', sight:90,  alertT:0, chasing:false, chaseX:0},
+  {x:80,  y:MY-PH, dir:-1, minX:10, maxX:305, speed:0.50, animT:0, color:C.green, name:'Prof.Verdi', sight:80,  alertT:0, chasing:false, chaseX:0},
+  {x:230, y:TY-PH, dir:1,  minX:10, maxX:275, speed:0.60, animT:0, color:C.mgray, name:'Prof.Neri',  sight:100, alertT:0, chasing:false, chaseX:0},
 ];
 
 let lives = 3, score = 0, state = 'title', frame = 0;
@@ -346,9 +117,6 @@ function startGame() {
   document.getElementById('overlay').style.display = 'none';
   state = 'playing';
 }
-// Load logo into overlay img
-(function() {
-})();
 
 // PHYSICS
 function getFloorBelow(px, py) {
@@ -360,17 +128,15 @@ function getFloorBelow(px, py) {
   return null;
 }
 
-function getNearestLadder(px, py) { return null; } // unused
+function getNearestLadder(px, py) { return null; }
 
 function getStairAt(px, py) {
-  // Returns stair and progress (0=bottom,1=top) if player is on a stair
   var cx = px + PW/2, cy = py + PH;
   for (var i = 0; i < stairs.length; i++) {
     var s = stairs[i];
     var minX = Math.min(s.x1,s.x2)-6, maxX = Math.max(s.x1,s.x2)+6;
     var minY = Math.min(s.y1,s.y2)-4, maxY = Math.max(s.y1,s.y2)+4;
     if (cx >= minX && cx <= maxX && cy >= minY && cy <= maxY) {
-      // Progress along stair (0=bottom, 1=top)
       var t = (cx - s.x1) / (s.x2 - s.x1);
       t = Math.max(0, Math.min(1, t));
       var expectedY = s.y1 + (s.y2 - s.y1) * t;
@@ -388,18 +154,10 @@ function updatePlayer() {
   if (player.stunT > 0) { player.stunT--; return; }
   if (player.spraying) { player.sprayT--; if (player.sprayT <= 0) player.spraying = false; return; }
 
-  // STAIR LOGIC: player must press UP (to go up stair) or DOWN (to go down stair)
-  // to enter a stair. Once on stair, moves with left/right following the slope.
-  // Exits automatically at top/bottom, or if they walk onto a flat floor.
-
   var stairResult = getStairAt(player.x, player.y);
 
-  // Try to enter a stair: only if pressing UP or DOWN
   if (!player.onStair && stairResult) {
     var s0 = stairResult.stair, t0 = stairResult.t;
-    // Bottom of stair (t near 0) → need UP to enter going up
-    // Top of stair (t near 1) → need DOWN to enter going down
-    // Middle of stair: allow entry if pressing either
     var nearBottom = t0 < 0.15;
     var nearTop    = t0 > 0.85;
     if ((nearBottom && K.up) || (nearTop && K.down) || (!nearBottom && !nearTop && (K.up || K.down))) {
@@ -411,30 +169,25 @@ function updatePlayer() {
   if (player.onStair) {
     var s = player.currentStair;
     player.vy = 0;
-    // Move horizontally along stair
     if (K.left)  { player.x -= player.speed * 0.85; player.dir = -1; player.animT += 0.25; }
     if (K.right) { player.x += player.speed * 0.85; player.dir =  1; player.animT += 0.25; }
     player.x = clampX(player.x);
-    // Y follows stair slope
     var t2 = (player.x + PW/2 - s.x1) / (s.x2 - s.x1);
     t2 = Math.max(0, Math.min(1, t2));
     player.y = s.y1 + (s.y2 - s.y1) * t2 - PH;
     player.onGround = true;
     player.onLadder = true;
-    // Exit stair at top or bottom
     if (t2 <= 0.02 || t2 >= 0.98) {
       player.onStair = false;
       player.currentStair = null;
     }
   } else {
     player.onLadder = false;
-    // Gravity + normal movement
     player.vy += 0.35;
     player.y  += player.vy;
     if (K.left)  { player.x -= player.speed; player.dir = -1; player.animT += 0.25; }
     if (K.right) { player.x += player.speed; player.dir =  1; player.animT += 0.25; }
     player.x = clampX(player.x);
-    // Floor collision
     var gFy = getFloorBelow(player.x, player.y);
     if (gFy !== null && player.vy >= 0) { player.y = gFy - PH; player.vy = 0; player.onGround = true; }
     else { player.onGround = false; }
@@ -468,7 +221,6 @@ function updatePlayer() {
 function tryAction() {
   if (state !== 'playing') return;
 
-  // Spray nearest board
   var nearest = null, nd = 9999;
   for (var i = 0; i < BOARDS.length; i++) {
     var b = BOARDS[i];
@@ -501,7 +253,7 @@ function tryAction() {
       player.spraying = false;
     }, 750);
   } else {
-    if (allBoards && !BELL.done) setMsg('Vai alla campanella (in alto a destra) e premi ✏!');
+    if (allBoards && !BELL.done) setMsg('Vai alla campanella (in alto a destra)!');
     else setMsg('Avvicinati a una lavagna! (bordo giallo = raggiungibile)');
   }
 }
@@ -595,7 +347,6 @@ function drawFloors() {
 }
 
 function drawLadders() {
-  // Draw diagonal stairs (Skool Daze style)
   for (var i = 0; i < stairs.length; i++) {
     var s = stairs[i];
     var steps = 10;
@@ -605,23 +356,19 @@ function drawLadders() {
       var x1 = s.x1 + (s.x2-s.x1)*t1, y1 = s.y1 + (s.y2-s.y1)*t1;
       var stepW = Math.round(x1-x0);
       var stepY = Math.round(y0);
-      // Tread (horizontal plank)
       ctx.fillStyle = C.floorlt;
       ctx.fillRect(Math.round(x0), stepY-2, stepW+1, 3);
       ctx.fillStyle = C.floor;
       ctx.fillRect(Math.round(x0), stepY+1, stepW+1, 3);
-      // Riser (vertical)
       ctx.fillStyle = C.brown;
       ctx.fillRect(Math.round(x0), stepY-2, 2, Math.round((s.y1-s.y2)/steps)+3);
     }
-    // Side rail
     ctx.strokeStyle = C.orange;
     ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.moveTo(s.x1, s.y1-4);
     ctx.lineTo(s.x2, s.y2-4);
     ctx.stroke();
-    // Glow if player nearby
     var pcx = player.x+PW/2, pcy = player.y+PH;
     var nearX = pcx >= Math.min(s.x1,s.x2)-10 && pcx <= Math.max(s.x1,s.x2)+10;
     var nearY = pcy >= Math.min(s.y1,s.y2)-10 && pcy <= Math.max(s.y1,s.y2)+10;
@@ -647,7 +394,6 @@ function drawDesks() {
 }
 
 function drawBoards() {
-  // Find nearest
   var nearestIdx = -1, nd = 9999;
   for (var i = 0; i < BOARDS.length; i++) {
     if (BOARDS[i].done) continue;
@@ -683,10 +429,8 @@ function drawBell() {
   var bx = BELL.x, by = BELL.y;
   var swing = BELL.ringing ? Math.sin(frame * 0.6) * 4 : 0;
 
-  // Wall bracket
   ctx.fillStyle = C.dgray; ctx.fillRect(bx+3, by, 6, 4);
 
-  // Bell dome (pixel art style, small)
   ctx.save();
   ctx.translate(bx+6+swing, by+4);
   ctx.fillStyle = BELL.ringing ? '#FFE000' : C.bell;
@@ -696,16 +440,13 @@ function drawBell() {
   ctx.arc(0, 4, 6, 0, Math.PI);
   ctx.closePath();
   ctx.fill();
-  // Shine
   ctx.fillStyle = 'rgba(255,255,200,0.45)';
   ctx.beginPath(); ctx.arc(-2, -2, 2, 0, Math.PI*2); ctx.fill();
-  // Clapper
   ctx.fillStyle = C.brown;
   ctx.fillRect(-1, 3, 2, 4);
   ctx.beginPath(); ctx.arc(0, 7, 2, 0, Math.PI*2); ctx.fill();
   ctx.restore();
 
-  // Pulse glow when ready
   if (allBoards && !BELL.done) {
     var pulse = 0.12 + 0.08 * Math.sin(frame * 0.15);
     ctx.fillStyle = 'rgba(255,215,0,' + pulse + ')';
@@ -714,7 +455,6 @@ function drawBell() {
     ctx.fillText('🔔', bx-8, by+22);
   }
 
-  // Sound waves when ringing
   if (BELL.ringing) {
     for (var i = 1; i <= 3; i++) {
       ctx.strokeStyle = 'rgba(255,215,0,' + (0.6 - i*0.15) + ')';
@@ -863,7 +603,6 @@ function loop() {
     updatePlayer();
     updateTeachers();
     updateBell();
-
   }
 
   drawBg();
@@ -893,6 +632,3 @@ function loop() {
 }
 
 loop();
-</script>
-</body>
-</html>

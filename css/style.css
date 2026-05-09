@@ -1,0 +1,128 @@
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background:#0a0a0a;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  min-height:100vh;
+  font-family:'Press Start 2P',monospace;
+  overflow:hidden; touch-action:none;
+  user-select:none; -webkit-user-select:none;
+}
+#wrap { display:flex; flex-direction:column; align-items:center; width:min(480px,100vw); }
+#game-area { position:relative; width:min(480px,100vw); aspect-ratio:16/10; }
+canvas {
+  display:block; width:100%; height:100%;
+  image-rendering:pixelated; background:#1a1a4a;
+}
+#hud-overlay {
+  position:absolute; top:0; left:0; right:0;
+  padding:3px 7px;
+  display:flex; justify-content:space-between; align-items:center;
+  background:rgba(0,0,0,0.5);
+  color:#aaa; font-size:clamp(7px,2vw,11px); letter-spacing:1px;
+  pointer-events:none;
+}
+#hud-overlay .hl { color:#ff6b6b; }
+#hud-overlay .hg { color:#9ad284; }
+#hud-overlay span { color:#fff; }
+#msg {
+  width:min(480px,100vw);
+  background:rgba(0,0,128,0.92); color:#ff0;
+  font-size:clamp(7px,2vw,11px); padding:2px 6px;
+  min-height:16px; text-align:center; letter-spacing:1px;
+  border-top:1px solid #352879;
+}
+
+/* CABINATO */
+#cabinet {
+  width:min(480px,100vw);
+  background:linear-gradient(180deg,#1a0a00,#2d1500 40%,#1a0a00);
+  border-top:3px solid #8B4513;
+  padding:5px 10px 8px;
+  display:flex; flex-direction:column; align-items:center; gap:5px;
+}
+#cab-screws { display:flex; justify-content:space-between; width:100%; padding:0 4px; }
+.screw { width:7px; height:7px; background:radial-gradient(circle at 35% 30%,#777,#333); border-radius:50%; border:1px solid #555; }
+#cab-panel {
+  width:100%;
+  background:linear-gradient(135deg,#2a0e00,#1a0800);
+  border:2px solid #6B3A00; border-radius:4px;
+  padding:6px 10px;
+  display:flex; flex-direction:row; align-items:center; justify-content:space-between; gap:8px;
+  box-shadow:inset 0 0 12px rgba(255,100,0,0.08), 0 2px 8px rgba(0,0,0,0.6);
+}
+#joystick-area { display:flex; flex-direction:column; align-items:center; gap:2px; }
+#joystick-label { color:#8B6914; font-size:clamp(6px,1.5vw,9px); letter-spacing:2px; margin-bottom:2px; }
+#dpad {
+  display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:repeat(3,1fr);
+  gap:2px; width:clamp(88px,21vw,108px); height:clamp(88px,21vw,108px);
+}
+.dp {
+  background:#2a2a6a;
+  border-top:3px solid #6c6ccc;
+  border-left:3px solid #6c6ccc;
+  border-right:3px solid #111133;
+  border-bottom:3px solid #111133;
+  color:#fff;
+  font-size:clamp(12px,3.5vw,18px);
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; -webkit-tap-highlight-color:transparent; touch-action:none;
+  image-rendering:pixelated;
+}
+.dp:active,.dp.pressed {
+  background:#1a1a4a;
+  border-top:3px solid #111133;
+  border-left:3px solid #111133;
+  border-right:3px solid #6c6ccc;
+  border-bottom:3px solid #6c6ccc;
+  transform:translate(1px,1px);
+}
+.dp-blank { background:transparent!important; border:none!important; cursor:default!important; }
+#stick-base {
+  width:clamp(26px,6.5vw,34px); height:clamp(26px,6.5vw,34px);
+  background:radial-gradient(circle at 40% 35%,#444,#111);
+  border-radius:50%; border:2px solid #333;
+  display:flex; align-items:center; justify-content:center;
+  margin-top:3px; box-shadow:0 3px 6px rgba(0,0,0,0.6);
+}
+#stick-ball { width:clamp(14px,3.5vw,18px); height:clamp(14px,3.5vw,18px); background:radial-gradient(circle at 35% 30%,#888,#222); border-radius:50%; border:1px solid #555; }
+#cab-center { display:flex; flex-direction:column; align-items:center; gap:4px; }
+#cab-title { color:#CD853F; font-size:clamp(7px,1.8vw,10px); letter-spacing:2px; text-shadow:0 0 6px rgba(205,133,63,0.5); text-align:center; line-height:1.4; }
+#cab-screen-mini {
+  width:clamp(46px,11vw,64px); height:clamp(34px,8.5vw,48px);
+  background:#0a0a1a; border:2px solid #444; border-radius:3px;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:inset 0 0 8px rgba(100,150,255,0.15); font-size:clamp(14px,3.5vw,22px);
+}
+#cab-lights { display:flex; gap:5px; }
+.cab-light { width:6px; height:6px; border-radius:50%; animation:lb 1.2s ease-in-out infinite; }
+.cab-light:nth-child(1){background:#ff3333;animation-delay:0s;}
+.cab-light:nth-child(2){background:#ffaa00;animation-delay:0.4s;}
+.cab-light:nth-child(3){background:#33ff33;animation-delay:0.8s;}
+@keyframes lb{0%,100%{opacity:1}50%{opacity:0.3}}
+#action-area { display:flex; flex-direction:column; align-items:center; gap:3px; }
+#action-label { color:#8B6914; font-size:clamp(6px,1.5vw,9px); letter-spacing:2px; margin-bottom:2px; }
+#btn-action {
+  width:clamp(54px,13vw,70px); height:clamp(54px,13vw,70px);
+  background:radial-gradient(circle at 35% 30%,#8B1A00,#4A0E00);
+  border:3px solid #CD3200; border-radius:50%;
+  color:#ffcc88; font-size:clamp(10px,2.5vw,14px); font-family:'Press Start 2P',monospace;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  cursor:pointer; -webkit-tap-highlight-color:transparent; touch-action:none;
+  line-height:1.3; text-align:center;
+  box-shadow:0 4px 8px rgba(0,0,0,0.6),inset 0 1px rgba(255,100,0,0.2);
+}
+#btn-action:active,#btn-action.pressed { background:radial-gradient(circle at 35% 30%,#5A1000,#2A0800); transform:translateY(2px); box-shadow:0 2px 4px rgba(0,0,0,0.6); }
+.btn-key { font-size:clamp(6px,1.4vw,8px); color:#885533; margin-top:1px; }
+
+/* OVERLAY */
+#overlay {
+  position:fixed; inset:0;
+  background:linear-gradient(180deg,#000080,#000040);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  z-index:99; cursor:pointer; gap:8px; padding:10px;
+}
+#overlay .go { color:#ffd700; font-size:clamp(8px,2.5vw,14px); letter-spacing:2px; animation:blink .8s step-end infinite; text-align:center; }
+#overlay .rules { color:#6c5eb5; font-size:clamp(6px,1.5vw,9px); line-height:2.2; text-align:center; }
+#overlay .bonus { color:#b8c76f; font-size:clamp(6px,1.4vw,8px); line-height:2; text-align:center; }
+@keyframes blink{50%{opacity:0}}

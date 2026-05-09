@@ -5,33 +5,43 @@
 Gioco HTML5 stile Skool Daze, ambientazione liceo italiano anni 80/90.
 Protagonista: **Marco**.
 
-## File principale
+## Struttura file
 
-`breaktime-rebellion.html` — tutto in un file unico (HTML5 Canvas + JS vanilla, nessun framework).
+```
+index.html          ← HTML scheletro + link a css/ e js/
+css/
+  style.css         ← tutti gli stili
+js/
+  config.js         ← CONFIG (caricato prima di game.js)
+  game.js           ← logica di gioco, physics, draw, loop
+assets/
+  logo.png          ← logo title screen (1408×768)
+misc/
+  appunti.txt       ← piano di implementazione a fasi
+```
 
-## Asset e stile
+## Stack
 
-- **Font:** Press Start 2P (Google Fonts)
-- **Palette colori:** C64 autentica — definita in `CONFIG.colors` (alias `const C`)
-- **Logo title screen:** `assets/logo.png` (caricato via `<img src>`, non più base64)
+HTML5 Canvas + JS vanilla, nessun framework. Font: Press Start 2P (Google Fonts). Palette: C64 autentica.
 
-## Struttura script
+## CONFIG (js/config.js)
 
-All'inizio dello `<script>` c'è un blocco `CONFIG` con tutte le impostazioni modificabili:
-- `CONFIG.layout` — dimensioni canvas, personaggi, pavimenti (W, H, PW, PH, GY, MY, TY, BW, BH)
-- `CONFIG.colors` — palette C64 (alias `C`)
+Unico punto per modificare layout, colori, immagini, audio:
+- `CONFIG.layout` — W, H, PW, PH, GY, MY, TY, BW, BH
+- `CONFIG.colors` — palette C64 (alias `C` in game.js)
 - `CONFIG.images` — percorsi immagini
 - `CONFIG.audio` — volumi (placeholder per task #9)
 
-Le costanti `W`, `H`, `PW`, `PH`, `GY`, `MY`, `TY`, `BW`, `BH`, `C` sono alias verso CONFIG per compatibilità col resto del codice.
+Le costanti `W`, `H`, `PW`, `PH`, `GY`, `MY`, `TY`, `BW`, `BH`, `C` sono alias verso CONFIG per compatibilità.
 
-## Piano di lavoro
+## Teacher sprites
 
-Vedi `misc/appunti.txt` per il piano di implementazione a fasi.
+- **Prof.Rossi** (piano terra): giacca rossa, pantaloni blu, cravatta gialla
+- **Prof.Verdi** (piano medio): giacca verde, pantaloni blu, cravatta gialla
+- **Prof.Neri** (piano alto, maxX=275): giacca grigia, pantaloni blu, cravatta gialla
 
 ## Convenzioni commit
 
-Usare sempre messaggi descrittivi:
 - `feat: ...` — nuova funzionalità
 - `fix: ...` — correzione bug
 - `chore: ...` — manutenzione, configurazione
@@ -40,10 +50,13 @@ Usare sempre messaggi descrittivi:
 
 ## Validazione JS — obbligatoria prima di ogni modifica
 
-Prima di ogni modifica a `breaktime-rebellion.html`, estrarre il blocco `<script>` e validarlo:
-
 ```bash
-node -e "const fs=require('fs');const c=fs.readFileSync('breaktime-rebellion.html','utf8');const m=c.match(/<script>([\s\S]*?)<\/script>/);try{new Function(m[1]);console.log('JS OK');}catch(e){console.log('ERRORE:',e.message);}"
+node -e "
+const fs=require('fs');
+const cfg=fs.readFileSync('js/config.js','utf8');
+const game=fs.readFileSync('js/game.js','utf8');
+try{new Function(cfg+'\n'+game);console.log('JS OK');}catch(e){console.log('ERRORE:',e.message);}
+"
 ```
 
 **Non fare mai deploy se il test restituisce `ERRORE`.**
