@@ -20,11 +20,10 @@ Obiettivo: meccaniche di gioco complete e controlli definitivi.
 - [x] #2  Layout orizzontale ottimizzato
 - [x] #1  Joypad analogico on-screen (sostituisce pannello attuale)
 - [x] PWA installabile su Android (manifest, service worker, icone, fullscreen landscape)
-- [ ] #10 Timer a barra che si scarica per livello (60 secondi? dove lo posso impostare? 0 per disabilitare tempo)
-- [ ] #11 I personaggi sembrano accellerare non appena Marco si muove, non è corretto, si devono muovere a prescindere e sempre alla stessa velocità
-- [ ] #12 è giusto che robots.txt e sw.js siano nelle root del gioco? servono per il PWA?
-- [ ] #13 Implementare schermata di caricamento iniziale in stile ZX Spectrum: barre laterali che si muovono velocemente come se caricasse da cassetta e immagine logo.png che appare a linee durante il caricamento (progressive image forse si chiama). Il tutto dura pochi secondi e poi alla fine appare "Tocca per iniziare"
-- [ ] #14 nel gioco la barra in basso con le didascalie sono troppo piccole. Aumentiamo di poco font e altezza barra
+- [x] #10 robots.txt e sw.js nella root — confermato, deve essere così per scope PWA e standard HTTP
+- [ ] #12 nel gioco la barra in basso con le didascalie è troppo piccola. Aumentiamo di poco font e altezza barra
+- [ ] #13 Nella barra superiore inseriamo un timer, fatto a barra che si scarica. Il livello va superato entro tale timer altrimenti vita persa o gameover se 0 vite (60 secondi massimo? dove lo posso impostare? 0 per disabilitare tempo)
+- [x] #14 I personaggi sembrano accellerare non appena Marco si muove, non è corretto, si devono muovere a prescindere e sempre alla stessa velocità
 
 ---
 
@@ -58,3 +57,4 @@ Obiettivo: riempire il gioco con livelli, ambienti e audio.
 Obiettivo: lucidare l'esperienza prima del rilascio.
 
 - [ ] #6  Logo (Luca lo genera su Gemini e lo integriamo)
+- [ ] #11 Schermata caricamento stile ZX Spectrum (barre laterali animate + logo progressivo a linee)

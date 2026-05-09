@@ -669,12 +669,18 @@ function updateHUD() {
   if (msgT > 0) { msgT--; document.getElementById('msg').textContent = msgText; }
 }
 
-function loop() {
-  frame++;
-  if (state === 'playing') {
-    updatePlayer();
-    updateTeachers();
-    updateBell();
+var _lastLoopTime = 0;
+function loop(ts) {
+  var dt = ts - _lastLoopTime;
+  _lastLoopTime = ts;
+  // Salta la fisica se il frame è anomalo (tab nascosta, throttling, ecc.)
+  if (dt < 100) {
+    frame++;
+    if (state === 'playing') {
+      updatePlayer();
+      updateTeachers();
+      updateBell();
+    }
   }
 
   drawBg();
@@ -703,4 +709,4 @@ function loop() {
   requestAnimationFrame(loop);
 }
 
-loop();
+requestAnimationFrame(loop);
