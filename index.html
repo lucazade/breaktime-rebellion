@@ -30,9 +30,12 @@
   <div id="game-area">
     <canvas id="c" width="320" height="200"></canvas>
     <div id="hud-overlay">
-      <div class="hl">♥ <span id="hL">♥♥♥</span></div>
-      <div>✏ <span class="hg" id="hW">0/6</span></div>
-      <div>⭐ <span id="hS">00000</span></div>
+      <div id="hud-row">
+        <div class="hl">♥ <span id="hL">♥♥♥</span></div>
+        <div>✏ <span class="hg" id="hW">0/6</span></div>
+        <div>⭐ <span id="hS">00000</span></div>
+      </div>
+      <div id="timer-bar-wrap"><div id="timer-bar"></div></div>
     </div>
   </div>
   <div id="msg">Imbratta tutte le lavagne, poi suona la campanella!</div>
@@ -50,6 +53,12 @@
 
 <script src="js/config.js"></script>
 <script src="js/game.js"></script>
+<script>
+if (CONFIG.levelTimer === 0) {
+  var tw = document.getElementById('timer-bar-wrap');
+  if (tw) tw.style.display = 'none';
+}
+</script>
 <script>
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js');

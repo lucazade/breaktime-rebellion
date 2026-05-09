@@ -26,6 +26,7 @@ Obiettivo: meccaniche di gioco complete e controlli definitivi.
 - [x] #14 I personaggi sembrano accellerare non appena Marco si muove, non è corretto, si devono muovere a prescindere e sempre alla stessa velocità
 - [x] #15 i banchi non devono sovrapporsi alle scale
 - [x] #16 la campanella si vede male (troppo grande) e si suona dal piano superiore. mi aspetto che sia all'altezza della lavagna o poco più su e si suoni dallo stesso piano.
+- [x] #17 alziamo le lavagne e la campanella in modo che siano un pò sopra i banchi
 
 ---
 

@@ -17,12 +17,12 @@ const stairs = [
 ];
 
 const BOARDS_DEF = [
-  {x:14,  y:TY-22},
-  {x:142, y:TY-22},
-  {x:274, y:TY-22},
-  {x:14,  y:MY-22},
-  {x:142, y:MY-22},
-  {x:274, y:MY-22},
+  {x:14,  y:TY-34},
+  {x:142, y:TY-34},
+  {x:274, y:TY-34},
+  {x:14,  y:MY-34},
+  {x:142, y:MY-34},
+  {x:274, y:MY-34},
 ];
 
 const DESKS = [
@@ -54,7 +54,7 @@ let BOARDS, bags, BELL, teachers;
 let lives, score, state, frame;
 let particles, floatingTexts;
 let msgText, msgT;
-let actionPressed, allBoards;
+let actionPressed, allBoards, timerTicks;
 
 const player = {
   x:0, y:0, vy:0,
@@ -68,7 +68,7 @@ const player = {
 function resetLevel() {
   BOARDS   = BOARDS_DEF.map(function(b) { return {x:b.x, y:b.y, done:false}; });
   bags     = BAGS_DEF.map(function(b)   { return {x:b.x, y:b.y, collected:false}; });
-  BELL     = {x:304, y:TY-20, ringing:false, done:false, ringT:0};
+  BELL     = {x:304, y:TY-32, ringing:false, done:false, ringT:0};
   teachers = TEACHERS_DEF.map(function(t) {
     return {x:t.x, y:t.y, dir:t.dir, minX:t.minX, maxX:t.maxX,
             speed:t.speed, animT:0, color:t.color, name:t.name,
@@ -82,6 +82,7 @@ function resetLevel() {
   particles = []; floatingTexts = [];
   msgText = ''; msgT = 0;
   actionPressed = false; allBoards = false;
+  timerTicks = CONFIG.levelTimer * 60;
   frame = 0;
 }
 
@@ -285,9 +286,9 @@ function updatePlayer() {
 
   // Auto-ring bell on proximity (no button needed)
   if (allBoards && !BELL.ringing && !BELL.done) {
-    const bdx = Math.abs(player.x + PW/2 - BELL.x - 4);
-    const bdy = Math.abs(player.y + PH/2 - BELL.y - 6);
-    if (bdx < 20 && bdy < 22) ringBell();
+    const bdx = Math.abs(player.x + PW/2 - BELL.x - 3);
+    const bdy = Math.abs(player.y + PH/2 - BELL.y - 5);
+    if (bdx < 18 && bdy < 22) ringBell();
   }
 
   if (actionPressed) { actionPressed = false; tryAction(); }
@@ -390,6 +391,27 @@ function caughtBy(t) {
 
 function updateBell() {
   if (BELL.ringing && BELL.ringT > 0) { BELL.ringT--; if (BELL.ringT === 0) BELL.ringing = false; }
+}
+
+function updateTimer() {
+  if (CONFIG.levelTimer === 0 || BELL.done) return;
+  if (player.stunT > 0) return;
+  timerTicks--;
+  if (timerTicks <= 0) {
+    timerTicks = 0;
+    lives--;
+    addParticles(player.x + PW/2, player.y, C.red, 20);
+    var msg = 'TEMPO SCADUTO! ';
+    msg += lives > 0 ? '♥'.repeat(lives) : 'GAME OVER!';
+    setMsg(msg);
+    player.stunT = 160; player.spraying = false;
+    player.x = 40; player.y = GY - PH; player.vy = 0;
+    if (lives <= 0) {
+      setTimeout(function() { state = 'gameover'; }, 1800);
+    } else {
+      timerTicks = CONFIG.levelTimer * 60;
+    }
+  }
 }
 
 function addParticles(x, y, color, n) {
@@ -505,38 +527,38 @@ function drawBell() {
   const sx = BELL.ringing ? Math.round(Math.sin(frame * 0.6) * 2) : 0;
   const gold = BELL.ringing ? '#FFE000' : C.bell;
 
-  // Staffa a muro (pixel art, solo fillRect)
+  // Staffa a muro
   ctx.fillStyle = C.dgray;
-  ctx.fillRect(bx+2, by,   4, 2);
+  ctx.fillRect(bx+1, by, 3, 2);
 
-  // Corpo campanella (oscilla con sx)
+  // Corpo campanella dimezzato (oscilla con sx)
   ctx.fillStyle = gold;
-  ctx.fillRect(bx+1+sx, by+2, 6, 2);  // spalla
-  ctx.fillRect(bx+0+sx, by+4, 8, 3);  // corpo
-  ctx.fillRect(bx-1+sx, by+7, 10, 2); // bordo svasato
+  ctx.fillRect(bx+0+sx, by+2, 5, 1); // spalla
+  ctx.fillRect(bx-1+sx, by+3, 7, 2); // corpo
+  ctx.fillRect(bx-2+sx, by+5, 9, 1); // bordo svasato
 
   // Lucina
   ctx.fillStyle = 'rgba(255,255,200,0.6)';
-  ctx.fillRect(bx+2+sx, by+3, 2, 2);
+  ctx.fillRect(bx+1+sx, by+3, 1, 1);
 
   // Batacchio
   ctx.fillStyle = C.brown;
-  ctx.fillRect(bx+3+sx, by+9,  2, 3);
-  ctx.fillRect(bx+2+sx, by+11, 4, 2);
+  ctx.fillRect(bx+2+sx, by+6, 1, 2);
+  ctx.fillRect(bx+1+sx, by+8, 3, 1);
 
   if (allBoards && !BELL.done) {
     const pulse = 0.12 + 0.08 * Math.sin(frame * 0.15);
     ctx.fillStyle = 'rgba(255,215,0,' + pulse + ')';
-    ctx.beginPath(); ctx.arc(bx+4, by+7, 10, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(bx+3, by+5, 7, 0, Math.PI*2); ctx.fill();
     ctx.fillStyle = C.gold; ctx.font = '5px "Press Start 2P"';
-    ctx.fillText('🔔', bx-6, by+20);
+    ctx.fillText('🔔', bx-5, by+14);
   }
 
   if (BELL.ringing) {
     for (let i = 1; i <= 3; i++) {
       ctx.strokeStyle = 'rgba(255,215,0,' + (0.6 - i*0.15) + ')';
       ctx.lineWidth = 1;
-      ctx.beginPath(); ctx.arc(bx+4, by+7, 6+i*4, 0, Math.PI*2); ctx.stroke();
+      ctx.beginPath(); ctx.arc(bx+3, by+5, 4+i*3, 0, Math.PI*2); ctx.stroke();
     }
   }
 }
@@ -672,6 +694,14 @@ function updateHUD() {
   document.getElementById('hW').textContent = done + '/' + BOARDS.length;
   document.getElementById('hS').textContent = String(score).padStart(5,'0');
   if (msgT > 0) { msgT--; document.getElementById('msg').textContent = msgText; }
+  if (CONFIG.levelTimer > 0) {
+    var pct = Math.max(0, timerTicks / (CONFIG.levelTimer * 60));
+    var bar = document.getElementById('timer-bar');
+    if (bar) {
+      bar.style.width = (pct * 100) + '%';
+      bar.style.background = pct > 0.6 ? C.lgreen : pct > 0.3 ? C.yellow : C.red;
+    }
+  }
 }
 
 var _lastLoopTime = 0;
@@ -691,6 +721,7 @@ function loop(ts) {
       updatePlayer();
       updateTeachers();
       updateBell();
+      updateTimer();
     }
     _accumulator -= _STEP;
   }

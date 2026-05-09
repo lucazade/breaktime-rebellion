@@ -15,6 +15,7 @@ const CONFIG = {
     musicVolume: 0.5,
     sfxVolume:   0.8,
   },
+  levelTimer: 60,  // secondi per completare il livello (0 = disabilitato)
   colors: {
     black:'#000000', white:'#FFFFFF',
     blue:'#352879', lblue:'#6C5EB5',
