@@ -10,10 +10,10 @@ const floors = [
 ];
 
 const stairs = [
-  {x1:30,  y1:GY,    x2:80,  y2:MY,   dir:1},
-  {x1:240, y1:GY,    x2:290, y2:MY,   dir:1},
-  {x1:60,  y1:MY,    x2:110, y2:TY,   dir:1},
-  {x1:210, y1:MY,    x2:260, y2:TY,   dir:1},
+  {x1:80,  y1:GY,  x2:30,  y2:MY},  // left-going
+  {x1:240, y1:GY,  x2:290, y2:MY},  // right-going
+  {x1:60,  y1:MY,  x2:110, y2:TY},  // right-going
+  {x1:210, y1:MY,  x2:260, y2:TY},  // right-going
 ];
 
 const BOARDS_DEF = [
@@ -231,7 +231,10 @@ function updatePlayer() {
     const s0 = stairResult.stair, t0 = stairResult.t;
     const nearBottom = t0 < 0.15;
     const nearTop    = t0 > 0.85;
-    if ((nearBottom && K.up && K.right && !K.left) || (nearTop && K.down && K.left && !K.right)) {
+    const gr = s0.x2 > s0.x1;
+    const okUp   = gr ? (K.right && !K.left) : (K.left && !K.right);
+    const okDown = gr ? (K.left && !K.right) : (K.right && !K.left);
+    if ((nearBottom && K.up && okUp) || (nearTop && K.down && okDown)) {
       player.onStair = true;
       player.currentStair = s0;
     }
@@ -239,14 +242,19 @@ function updatePlayer() {
 
   if (player.onStair) {
     const s = player.currentStair;
+    const goesRight = s.x2 > s.x1;
     player.vy = 0;
     // K.up/K.down take priority over K.left/K.right to avoid oscillation at stair entry
     var sm = 0;
     if      (K.up   && !K.down)  sm =  1;
     else if (K.down && !K.up)    sm = -1;
-    else if (K.right && !K.left) sm =  1;
-    else if (K.left  && !K.right) sm = -1;
-    if (sm !== 0) { player.x += sm * player.speed * 0.85; player.dir = sm; player.animT += 0.25; }
+    else if (K.right && !K.left) sm = goesRight ?  1 : -1;
+    else if (K.left  && !K.right) sm = goesRight ? -1 :  1;
+    if (sm !== 0) {
+      player.x += sm * player.speed * 0.85 * (goesRight ? 1 : -1);
+      player.dir = sm * (goesRight ? 1 : -1);
+      player.animT += 0.25;
+    }
     player.x = clampX(player.x);
     let t2 = (player.x + PW/2 - s.x1) / (s.x2 - s.x1);
     t2 = Math.max(0, Math.min(1, t2));

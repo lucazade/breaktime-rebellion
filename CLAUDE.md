@@ -34,7 +34,7 @@ HTML5 Canvas + JS vanilla, nessun framework. Font: Press Start 2P (Google Fonts)
 
 - **Desktop**: frecce direzionali + Z/Spazio
 - **Mobile**: joystick analogico overlay `#ctrl-joy` (bottom-left) + bottone `#btn-action` (bottom-right)
-- **Scala**: ingresso richiede diagonale che corrisponde alla direzione della scala. Le scale vanno tutte su-destra → K.up+K.right per salire, K.down+K.left per scendere. Una volta sulla scala K.up/K.down hanno priorità su K.left/K.right.
+- **Scala**: ingresso richiede diagonale corrispondente alla direzione. Scala destra (x2>x1): K.up+K.right salire, K.down+K.left scendere. Scala sinistra (x2<x1): K.up+K.left salire, K.down+K.right scendere. Una volta sulla scala K.up/K.down hanno priorità. Direzione calcolata da `Math.sign(s.x2-s.x1)` — non hardcoded.
 
 ## PWA / Mobile
 
