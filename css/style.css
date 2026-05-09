@@ -24,8 +24,8 @@ body {
   max-width: 100vw;
 }
 
-/* Mobile landscape: canvas a tutto schermo senza fasce nere */
-@media (orientation: landscape) and (max-height: 500px) {
+/* Fullscreen (PWA o requestFullscreen): canvas a tutto schermo senza fasce nere */
+@media (display-mode: fullscreen) and (orientation: landscape) {
   #wrap { width: 100vw; }
   #game-area {
     width: 100%;
