@@ -26,18 +26,21 @@ const BOARDS_DEF = [
 ];
 
 const DESKS = [
-  {x:60,  y:GY-12}, {x:88,  y:GY-12}, {x:116, y:GY-12},
-  {x:172, y:GY-12}, {x:200, y:GY-12}, {x:228, y:GY-12},
-  {x:60,  y:MY-12}, {x:88,  y:MY-12},
-  {x:172, y:MY-12}, {x:200, y:MY-12},
-  {x:60,  y:TY-12}, {x:88,  y:TY-12},
-  {x:172, y:TY-12}, {x:200, y:TY-12},
+  // GY: scala1 x=30-85, scala2 x=240-295 → zona sicura x≈90-230
+  {x:92,  y:GY-12}, {x:116, y:GY-12}, {x:140, y:GY-12},
+  {x:168, y:GY-12}, {x:192, y:GY-12}, {x:216, y:GY-12},
+  // MY: scala1top x=80, scala3bottom x=60-115, scala4bottom x=210-265 → zona sicura x≈120-200
+  {x:120, y:MY-12}, {x:148, y:MY-12},
+  {x:172, y:MY-12}, {x:196, y:MY-12},
+  // TY: scala3top x=110, scala4top x=260 → sinistra x<100, destra x=120-248
+  {x:52,  y:TY-12}, {x:76,  y:TY-12},
+  {x:168, y:TY-12}, {x:196, y:TY-12},
 ];
 
 const BAGS_DEF = [
-  {x:130, y:GY-10},
-  {x:228, y:MY-10},
-  {x:108, y:TY-10},
+  {x:130, y:GY-10},  // GY - zona sicura
+  {x:184, y:MY-10},  // MY - spostata da 228 (scala4 x=210-265)
+  {x:136, y:TY-10},  // TY - spostata da 108 (vicino scala3top x=110)
 ];
 
 const TEACHERS_DEF = [
