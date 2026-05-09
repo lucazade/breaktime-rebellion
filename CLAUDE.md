@@ -3,12 +3,15 @@
 ## Progetto
 
 Gioco HTML5 stile Skool Daze, ambientazione liceo italiano anni 80/90.
-Protagonista: **Marco**.
+Protagonista: **Marco**. Gioco **landscape-only** (portrait mostra schermata "Ruota il dispositivo").
 
 ## Struttura file
 
 ```
 index.html          ← HTML scheletro + link a css/ e js/
+manifest.json       ← PWA manifest (display:fullscreen, orientation:landscape)
+sw.js               ← Service worker minimale per PWA Chrome Android
+robots.txt          ← noindex pre-release
 css/
   style.css         ← tutti gli stili
 js/
@@ -16,6 +19,8 @@ js/
   game.js           ← logica di gioco, physics, draw, loop
 assets/
   logo.png          ← logo title screen (1408×768)
+  icon-192.png      ← icona PWA 192×192 (logo centrato su sfondo blu C64)
+  icon-512.png      ← icona PWA 512×512
 misc/
   appunti.txt       ← piano di implementazione a fasi
 ```
@@ -23,6 +28,19 @@ misc/
 ## Stack
 
 HTML5 Canvas + JS vanilla, nessun framework. Font: Press Start 2P (Google Fonts). Palette: C64 autentica.
+
+## Controlli
+
+- **Desktop**: frecce direzionali + Z/Spazio
+- **Mobile**: joystick analogico overlay `#ctrl-joy` (bottom-left) + bottone `#btn-action` (bottom-right)
+- **Scala**: ingresso richiede diagonale che corrisponde alla direzione della scala. Le scale vanno tutte su-destra → K.up+K.right per salire, K.down+K.left per scendere. Una volta sulla scala K.up/K.down hanno priorità su K.left/K.right.
+
+## PWA / Mobile
+
+- Installabile come app Android via "Aggiungi a schermata Home" su Chrome
+- In `display-mode: fullscreen` o `standalone`: canvas si stretcha a riempire tutto lo schermo
+- In browser normale: aspect ratio 16:10 mantenuto
+- Firefox mobile supporta fullscreen PWA; Safari iOS supporta standalone via meta tag Apple
 
 ## Architettura game.js
 

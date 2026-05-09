@@ -20,6 +20,7 @@ Obiettivo: meccaniche di gioco complete e controlli definitivi.
 - [ ] #10 Timer a barra che si scarica per livello
 - [x] #2  Layout orizzontale ottimizzato
 - [x] #1  Joypad analogico on-screen (sostituisce pannello attuale)
+- [x] PWA installabile su Android (manifest, service worker, icone, fullscreen landscape)
 - [ ] #4  Bidello (nuovo personaggio ostile)
 
 ---
