@@ -74,6 +74,16 @@ Unico punto per modificare layout, colori, immagini, audio, gameplay:
 
 Le costanti `W`, `H`, `PW`, `PH`, `GY`, `MY`, `TY`, `BW`, `BH`, `C` sono alias verso CONFIG per compatibilità.
 
+## Janitor (Bidello)
+
+Defined in `JANITORS_DEF` (same pattern as `TEACHERS_DEF`). Cloned in `resetLevel()`.
+- **Behavior**: short-range patrol only, no chasing, no sight — catches Marco on proximity (<14px x, <12px y)
+- **Sprite**: `drawJanitor()` — calls `drawChar` with `C.mgray` body, then overlays navy cap (`C.blue`) and mop (brown handle + gray head)
+- **Fields**: `x, y, dir, minX, maxX, speed, animT, name`
+- **Name**: `'Bidello'` (works in both locales via `STRINGS.caughtBy`)
+
+To add more janitors or change patrol zones, edit `JANITORS_DEF`.
+
 ## Teacher sprites
 
 - **Prof.Rossi** (piano terra): giacca rossa, pantaloni blu, cravatta gialla

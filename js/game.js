@@ -49,8 +49,13 @@ const TEACHERS_DEF = [
   {x:230, y:TY-PH, dir:1,  minX:10, maxX:275, speed:0.60, color:C.mgray, name:'Prof.Neri',  sight:100},
 ];
 
+const JANITORS_DEF = [
+  {x:160, y:GY-PH, dir:1,  minX:128, maxX:192, speed:0.65, name:'Bidello'},
+  {x:140, y:MY-PH, dir:-1, minX:120, maxX:164, speed:0.55, name:'Bidello'},
+];
+
 // Mutable level state — reset by resetLevel()
-let BOARDS, bags, BELL, teachers;
+let BOARDS, bags, BELL, teachers, janitors;
 let lives, score, state, frame;
 let particles, floatingTexts;
 let msgText, msgT;
@@ -73,6 +78,9 @@ function resetLevel() {
     return {x:t.x, y:t.y, dir:t.dir, minX:t.minX, maxX:t.maxX,
             speed:t.speed, animT:0, color:t.color, name:t.name,
             sight:t.sight, alertT:0, chasing:false, chaseX:0};
+  });
+  janitors = JANITORS_DEF.map(function(j) {
+    return {x:j.x, y:j.y, dir:j.dir, minX:j.minX, maxX:j.maxX, speed:j.speed, animT:0, name:j.name};
   });
   player.x = 40; player.y = GY - PH; player.vy = 0;
   player.dir = 1; player.animT = 0;
@@ -397,6 +405,20 @@ function caughtBy(t) {
   if (lives <= 0) setTimeout(function() { state = 'gameover'; }, 1800);
 }
 
+function updateJanitors() {
+  if (state !== 'playing') return;
+  for (let i = 0; i < janitors.length; i++) {
+    const j = janitors[i];
+    j.animT += 0.15;
+    j.x += j.dir * j.speed;
+    if (j.x >= j.maxX) { j.x = j.maxX; j.dir = -1; }
+    if (j.x <= j.minX) { j.x = j.minX; j.dir =  1; }
+    if (Math.abs(j.y - player.y) < 12 && Math.abs(j.x - player.x) < 14 && player.stunT === 0) {
+      caughtBy(j);
+    }
+  }
+}
+
 function updateBell() {
   if (BELL.ringing && BELL.ringT > 0) { BELL.ringT--; if (BELL.ringT === 0) BELL.ringing = false; }
 }
@@ -635,6 +657,24 @@ function drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, stunned, chasi
   }
 }
 
+function drawJanitor(x, y, dir, animT) {
+  drawChar(x, y, dir, animT, C.mgray, false, false, false, false);
+  const bx = Math.round(x), by = Math.round(y);
+  // Cap (navy blue, over the brown hair)
+  ctx.fillStyle = C.blue;
+  ctx.fillRect(bx+1, by-9, PW-2, 3);
+  ctx.fillRect(dir>0 ? bx+PW-1 : bx-1, by-7, 3, 1);
+  // Mop handle (on facing side, from arm to floor)
+  const mx = dir > 0 ? bx+PW : bx-1;
+  ctx.fillStyle = C.brown;
+  ctx.fillRect(mx, by+4, 1, 12);
+  // Mop head
+  ctx.fillStyle = C.lgray;
+  ctx.fillRect(mx-1, by+14, 3, 2);
+  ctx.fillStyle = C.white;
+  ctx.fillRect(mx-2, by+16, 5, 1);
+}
+
 function drawSight() {
   for (let i = 0; i < teachers.length; i++) {
     const t = teachers[i];
@@ -727,6 +767,7 @@ function loop(ts) {
     if (state === 'playing') {
       updatePlayer();
       updateTeachers();
+      updateJanitors();
       updateBell();
       updateTimer();
     }
@@ -745,6 +786,10 @@ function loop(ts) {
   for (let i = 0; i < teachers.length; i++) {
     const t = teachers[i];
     drawChar(t.x, t.y, t.dir, t.animT, t.color, true, false, false, t.chasing);
+  }
+  for (let i = 0; i < janitors.length; i++) {
+    const j = janitors[i];
+    drawJanitor(j.x, j.y, j.dir, j.animT);
   }
   if (!(player.stunT > 0 && Math.floor(frame/5)%2 === 1)) {
     drawChar(player.x, player.y, player.dir, player.animT, C.blue, false, player.spraying, false, false);
