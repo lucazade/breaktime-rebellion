@@ -236,8 +236,13 @@ function updatePlayer() {
   if (player.onStair) {
     const s = player.currentStair;
     player.vy = 0;
-    if (K.left)  { player.x -= player.speed * 0.85; player.dir = -1; player.animT += 0.25; }
-    if (K.right) { player.x += player.speed * 0.85; player.dir =  1; player.animT += 0.25; }
+    // K.up/K.down hanno priorità su K.left/K.right per evitare oscillazione all'ingresso
+    var sm = 0;
+    if      (K.up   && !K.down)  sm =  1;
+    else if (K.down && !K.up)    sm = -1;
+    else if (K.right && !K.left) sm =  1;
+    else if (K.left  && !K.right) sm = -1;
+    if (sm !== 0) { player.x += sm * player.speed * 0.85; player.dir = sm; player.animT += 0.25; }
     player.x = clampX(player.x);
     let t2 = (player.x + PW/2 - s.x1) / (s.x2 - s.x1);
     t2 = Math.max(0, Math.min(1, t2));
