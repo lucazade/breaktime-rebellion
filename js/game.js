@@ -1,8 +1,18 @@
 const CV = document.getElementById('c');
 const ctx = CV.getContext('2d');
 ctx.scale(2, 2); // 2× resolution: 640×400 canvas, 320×200 logical coordinates
+ctx.imageSmoothingEnabled = false; // crisp pixel scaling for images
 
 const C = CONFIG.colors;
+
+// Optional hand-drawn background (640×400). Loaded async; falls back to drawBg() code.
+let bgImage = null;
+(function() {
+  if (!CONFIG.images.background) return;
+  var img = new Image();
+  img.onload = function() { bgImage = img; };
+  img.src = CONFIG.images.background;
+})();
 
 // Audio manager — silent fallback when files are missing
 const GameAudio = (function() {
@@ -495,18 +505,91 @@ function addFloating(x, y, text, color) {
 
 // DRAW
 function drawBg() {
-  ctx.fillStyle = '#1a1a4a'; ctx.fillRect(0, 0, W, H);
-  ctx.fillStyle = 'rgba(30,20,60,0.5)';  ctx.fillRect(0, 0,  W, TY);
-  ctx.fillStyle = 'rgba(20,15,50,0.4)';  ctx.fillRect(0, TY, W, MY-TY);
-  ctx.fillStyle = 'rgba(15,10,40,0.35)'; ctx.fillRect(0, MY, W, GY-MY);
+  // Hand-drawn background: 640×400px, drawn at 1:1 canvas pixels (bypasses ctx.scale)
+  if (bgImage && bgImage.complete && bgImage.naturalWidth > 0) {
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.drawImage(bgImage, 0, 0);
+    ctx.setTransform(2, 0, 0, 2, 0, 0);
+    return;
+  }
+  // Fallback: programmatic background
+  // Dark exterior void
+  ctx.fillStyle = '#0a0818'; ctx.fillRect(0, 0, W, H);
+
+  // Room sections per floor — 3 rooms × 3 floors
+  // Each room visible from room_ceiling to floorY-FD (the floor top face covers the rest)
+  const rooms = [
+    {x:0,   w:107, wall: C.room1},  // left room (teal)
+    {x:107, w:106, wall: C.room2},  // center room (purple)
+    {x:213, w:107, wall: C.room3},  // right room (amber)
+  ];
+  const floorDefs = [
+    {y: TY, ceiling: 0},
+    {y: MY, ceiling: TY + 11},
+    {y: GY, ceiling: MY + 11},
+  ];
+  for (let fi = 0; fi < floorDefs.length; fi++) {
+    const fd = floorDefs[fi];
+    for (let ri = 0; ri < rooms.length; ri++) {
+      const r = rooms[ri];
+      ctx.fillStyle = r.wall;
+      ctx.fillRect(r.x, fd.ceiling, r.w, fd.y - fd.ceiling);
+    }
+  }
+}
+
+function drawRoomDividers() {
+  const divX = [107, 213];
+  const floorDefs = [
+    {y: TY, ceiling: 0},
+    {y: MY, ceiling: TY + 11},
+    {y: GY, ceiling: MY + 11},
+  ];
+  for (let fi = 0; fi < floorDefs.length; fi++) {
+    const fd = floorDefs[fi];
+    const roomH = fd.y - fd.ceiling;
+    for (let di = 0; di < divX.length; di++) {
+      const dx = divX[di];
+      ctx.fillStyle = '#1a1428'; ctx.fillRect(dx - 2, fd.ceiling, 4, roomH);
+      ctx.fillStyle = C.brown;   ctx.fillRect(dx - 2, fd.ceiling, 1, roomH);
+    }
+  }
 }
 
 function drawFloors() {
   for (let i = 0; i < floors.length; i++) {
     const f = floors[i];
-    ctx.fillStyle = C.floorlt; ctx.fillRect(f.x, f.y, f.w, 3);
-    ctx.fillStyle = C.floor;   ctx.fillRect(f.x, f.y+3, f.w, 8);
-    ctx.fillStyle = C.brown;
+
+    // Collect stair openings at this floor line
+    var openings = [];
+    for (let si = 0; si < stairs.length; si++) {
+      const s = stairs[si];
+      if (s.y2 === f.y) {
+        openings.push({x0: Math.min(s.x1,s.x2)-2, x1: Math.max(s.x1,s.x2)+4});
+      }
+    }
+    openings.sort(function(a,b){ return a.x0-b.x0; });
+
+    // Top face — gray stone/concrete, drawn in segments skipping stair openings
+    // (skipped areas show the stair below = transparent opening effect)
+    var curX = f.x;
+    for (var oi = 0; oi <= openings.length; oi++) {
+      var segEnd = oi < openings.length ? openings[oi].x0 : f.x + f.w;
+      var segW = segEnd - curX;
+      if (segW > 0) {
+        ctx.fillStyle = '#808888'; ctx.fillRect(curX, f.y-FD, segW, FD);
+        ctx.fillStyle = '#686e6e';
+        for (var py = 3; py < FD; py += 4) ctx.fillRect(curX, f.y-FD+py, segW, 1);
+        ctx.fillStyle = '#505555';
+        for (var px = curX; px < curX+segW; px += 14) ctx.fillRect(px, f.y-FD, 1, FD);
+      }
+      if (oi < openings.length) curX = openings[oi].x1;
+    }
+
+    // Front face (vertical structural edge, gray)
+    ctx.fillStyle = '#787878'; ctx.fillRect(f.x, f.y,   f.w, 3);
+    ctx.fillStyle = '#585858'; ctx.fillRect(f.x, f.y+3, f.w, 8);
+    ctx.fillStyle = '#404040';
     for (let px = 0; px < f.w; px += 18) ctx.fillRect(f.x+px, f.y+2, 1, 6);
   }
 }
@@ -812,9 +895,9 @@ function loop(ts) {
   }
 
   drawBg();
-  drawStairs();
+  var usingBg = bgImage && bgImage.complete && bgImage.naturalWidth > 0;
+  if (!usingBg) { drawStairs(); drawFloors(); drawRoomDividers(); }
   drawDesks();
-  drawFloors();
   drawBoards();
   drawBell();
   drawBags();

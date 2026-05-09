@@ -63,6 +63,22 @@ Per aggiungere una stringa: aggiungerla in `en` e `it`, poi usare `STRINGS.chiav
 
 Ordine di caricamento obbligatorio: `config.js` → `i18n.js` → `game.js`.
 
+## Canvas e background
+
+**Risoluzione 2×:** canvas element `640×400`, `ctx.scale(2,2)` → coordinate logiche invariate a `320×200`. `ctx.imageSmoothingEnabled = false`.
+
+**Background disegnato a mano** (`assets/bg.png`, 640×400px):
+- Se presente, `drawBg()` lo disegna a 1:1 (bypass `ctx.scale` con `setTransform`)
+- Quando attivo, vengono soppressi: `drawStairs`, `drawFloors`, `drawRoomDividers`
+- Se assente: fallback al background programmativo (room colors + floor obliquo)
+- Coordinate di riferimento nel PNG: TY=y116, MY=y246, GY=y376, dividers x214/x426
+
+**Spaccato obliquo (branch feat/rooms-depth):**
+- `CONFIG.layout.FD=12` — altezza top-face pavimento grigio
+- `drawFloors()` — top-face segmentata con aperture dove passano le scale (s.y2)
+- `drawRoomDividers()` — pilastri a x=107/213 per tre stanze per piano
+- `drawBg()` — 3 stanze colorate: `C.room1` teal, `C.room2` viola, `C.room3` ambra
+
 ## CONFIG (js/config.js)
 
 Unico punto per modificare layout, colori, immagini, audio, gameplay:
