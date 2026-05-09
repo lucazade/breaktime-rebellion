@@ -17,11 +17,14 @@ Obiettivo: rendere il gioco giocabile e stabile prima di aggiungere contenuto.
 
 Obiettivo: meccaniche di gioco complete e controlli definitivi.
 
-- [ ] #10 Timer a barra che si scarica per livello
 - [x] #2  Layout orizzontale ottimizzato
 - [x] #1  Joypad analogico on-screen (sostituisce pannello attuale)
 - [x] PWA installabile su Android (manifest, service worker, icone, fullscreen landscape)
-- [ ] #4  Bidello (nuovo personaggio ostile)
+- [ ] #10 Timer a barra che si scarica per livello (60 secondi? dove lo posso impostare? 0 per disabilitare tempo)
+- [ ] #11 I personaggi sembrano accellerare non appena Marco si muove, non è corretto, si devono muovere a prescindere e sempre alla stessa velocità
+- [ ] #12 è giusto che robots.txt e sw.js siano nelle root del gioco? servono per il PWA?
+- [ ] #13 Implementare schermata di caricamento iniziale in stile ZX Spectrum: barre laterali che si muovono velocemente come se caricasse da cassetta e immagine logo.png che appare a linee durante il caricamento (progressive image forse si chiama). Il tutto dura pochi secondi e poi alla fine appare "Tocca per iniziare"
+- [ ] #14 nel gioco la barra in basso con le didascalie sono troppo piccole. Aumentiamo di poco font e altezza barra
 
 ---
 
@@ -29,6 +32,7 @@ Obiettivo: meccaniche di gioco complete e controlli definitivi.
 
 Obiettivo: riempire il gioco con livelli, ambienti e audio.
 
+- [ ] #4  Bidello (nuovo personaggio ostile)
 - [ ] #5  Aule tematiche con muri diversi (biblioteca, presidenza, bagno) con alunni e lezioni
 - [ ] #9  Musica 8-bit + effetti sonori
 
