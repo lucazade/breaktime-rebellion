@@ -80,6 +80,15 @@ Le costanti `W`, `H`, `PW`, `PH`, `GY`, `MY`, `TY`, `BW`, `BH`, `C` sono alias v
 - **Prof.Verdi** (piano medio): giacca verde, pantaloni blu, cravatta gialla
 - **Prof.Neri** (piano alto, maxX=275): giacca grigia, pantaloni blu, cravatta gialla
 
+## HUD icons
+
+Icons in `#hud-row` use **Font Awesome 6 Solid** (CDN). Loaded via `solid.min.css` + `fontawesome.min.css` in `<head>`.
+- Lives: `♥` repeated (Press Start 2P, class `.hl`, color `#ff6b6b`)
+- Boards: `fa-spray-can` (green `#9ad284`) + `0/6` counter
+- Score: `fa-star` (gold `#ffd700`) + score number
+
+Classes: `.hud-icon` (size), `.hud-spray` (color), `.hud-star` (color).
+
 ## Convenzioni commit
 
 - `feat: ...` — nuova funzionalità

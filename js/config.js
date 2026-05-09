@@ -5,7 +5,7 @@ const CONFIG = {
   layout: {
     W: 320, H: 200,
     PW: 8, PH: 16,
-    GY: 175, MY: 110, TY: 45,
+    GY: 188, MY: 123, TY: 58,
     BW: 22, BH: 14,
   },
   images: {

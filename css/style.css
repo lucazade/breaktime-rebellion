@@ -56,9 +56,14 @@ canvas {
   background: rgba(0,0,0,0.2);
 }
 #timer-bar { height: 3px; width: 100%; background: #9AD284; }
-#hud-overlay .hl { color: #ff6b6b; }
+#hud-row > div   { display: flex; align-items: center; gap: 4px; }
+#hud-overlay .hl { color: #ff6b6b; font-size: 1.2em; }
+#hud-overlay .hl span { color: #ff6b6b; }
 #hud-overlay .hg { color: #9ad284; }
 #hud-overlay span { color: #fff; }
+.hud-icon  { font-size: 1em; }
+.hud-spray { color: #9ad284; }
+.hud-star  { color: #ffd700; }
 
 #msg {
   width: 100%;
