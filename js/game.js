@@ -29,9 +29,9 @@ const DESKS = [
   // GY: scala1 x=30-85, scala2 x=240-295 → zona sicura x≈90-230
   {x:92,  y:GY-12}, {x:116, y:GY-12}, {x:140, y:GY-12},
   {x:168, y:GY-12}, {x:192, y:GY-12}, {x:216, y:GY-12},
-  // MY: scala1top x=80, scala3bottom x=60-115, scala4bottom x=210-265 → zona sicura x≈120-200
-  {x:120, y:MY-12}, {x:148, y:MY-12},
-  {x:172, y:MY-12}, {x:196, y:MY-12},
+  // MY: scala1top x=80, scala3bottom x=60-115, scala4bottom x=210-265 → zona sicura x=120-188
+  {x:120, y:MY-12}, {x:144, y:MY-12},
+  {x:164, y:MY-12}, {x:184, y:MY-12},
   // TY: scala3top x=110, scala4top x=260 → sinistra x<100, destra x=120-248
   {x:52,  y:TY-12}, {x:76,  y:TY-12},
   {x:168, y:TY-12}, {x:196, y:TY-12},
@@ -68,7 +68,7 @@ const player = {
 function resetLevel() {
   BOARDS   = BOARDS_DEF.map(function(b) { return {x:b.x, y:b.y, done:false}; });
   bags     = BAGS_DEF.map(function(b)   { return {x:b.x, y:b.y, collected:false}; });
-  BELL     = {x:296, y:TY-20, ringing:false, done:false, ringT:0};
+  BELL     = {x:304, y:TY-20, ringing:false, done:false, ringT:0};
   teachers = TEACHERS_DEF.map(function(t) {
     return {x:t.x, y:t.y, dir:t.dir, minX:t.minX, maxX:t.maxX,
             speed:t.speed, animT:0, color:t.color, name:t.name,
@@ -502,40 +502,41 @@ function drawBoards() {
 
 function drawBell() {
   const bx = BELL.x, by = BELL.y;
-  const swing = BELL.ringing ? Math.sin(frame * 0.6) * 3 : 0;
+  const sx = BELL.ringing ? Math.round(Math.sin(frame * 0.6) * 2) : 0;
+  const gold = BELL.ringing ? '#FFE000' : C.bell;
 
-  // Staffa a muro
-  ctx.fillStyle = C.dgray; ctx.fillRect(bx+2, by, 4, 3);
+  // Staffa a muro (pixel art, solo fillRect)
+  ctx.fillStyle = C.dgray;
+  ctx.fillRect(bx+2, by,   4, 2);
 
-  ctx.save();
-  ctx.translate(bx+4+swing, by+3);
-  ctx.fillStyle = BELL.ringing ? '#FFE000' : C.bell;
-  ctx.beginPath();
-  ctx.arc(0, 0, 4, Math.PI, 0);
-  ctx.lineTo(4, 3);
-  ctx.arc(0, 3, 4, 0, Math.PI);
-  ctx.closePath();
-  ctx.fill();
-  ctx.fillStyle = 'rgba(255,255,200,0.45)';
-  ctx.beginPath(); ctx.arc(-1, -1, 1.5, 0, Math.PI*2); ctx.fill();
+  // Corpo campanella (oscilla con sx)
+  ctx.fillStyle = gold;
+  ctx.fillRect(bx+1+sx, by+2, 6, 2);  // spalla
+  ctx.fillRect(bx+0+sx, by+4, 8, 3);  // corpo
+  ctx.fillRect(bx-1+sx, by+7, 10, 2); // bordo svasato
+
+  // Lucina
+  ctx.fillStyle = 'rgba(255,255,200,0.6)';
+  ctx.fillRect(bx+2+sx, by+3, 2, 2);
+
+  // Batacchio
   ctx.fillStyle = C.brown;
-  ctx.fillRect(-0.5, 2, 1, 3);
-  ctx.beginPath(); ctx.arc(0, 5, 1.5, 0, Math.PI*2); ctx.fill();
-  ctx.restore();
+  ctx.fillRect(bx+3+sx, by+9,  2, 3);
+  ctx.fillRect(bx+2+sx, by+11, 4, 2);
 
   if (allBoards && !BELL.done) {
     const pulse = 0.12 + 0.08 * Math.sin(frame * 0.15);
     ctx.fillStyle = 'rgba(255,215,0,' + pulse + ')';
-    ctx.beginPath(); ctx.arc(bx+4, by+6, 9, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(bx+4, by+7, 10, 0, Math.PI*2); ctx.fill();
     ctx.fillStyle = C.gold; ctx.font = '5px "Press Start 2P"';
-    ctx.fillText('🔔', bx-6, by+16);
+    ctx.fillText('🔔', bx-6, by+20);
   }
 
   if (BELL.ringing) {
     for (let i = 1; i <= 3; i++) {
       ctx.strokeStyle = 'rgba(255,215,0,' + (0.6 - i*0.15) + ')';
       ctx.lineWidth = 1;
-      ctx.beginPath(); ctx.arc(bx+4, by+6, 5+i*4, 0, Math.PI*2); ctx.stroke();
+      ctx.beginPath(); ctx.arc(bx+4, by+7, 6+i*4, 0, Math.PI*2); ctx.stroke();
     }
   }
 }
