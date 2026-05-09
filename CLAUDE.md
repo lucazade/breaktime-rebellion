@@ -24,6 +24,18 @@ misc/
 
 HTML5 Canvas + JS vanilla, nessun framework. Font: Press Start 2P (Google Fonts). Palette: C64 autentica.
 
+## Architettura game.js
+
+**Template vs stato mutabile:**
+- `BOARDS_DEF`, `BAGS_DEF`, `TEACHERS_DEF` — dati immutabili del livello
+- `resetLevel()` — clona i template e resetta tutto lo stato; chiamare per ogni nuovo livello
+- `lives` e `score` sono separati da `resetLevel()` (persistono tra livelli)
+
+**Pattern da seguire aggiungendo oggetti:**
+- Aggiungere la definizione in un `*_DEF` array
+- Clonare in `resetLevel()` con `.map()`
+- Non modificare mai i `*_DEF` direttamente
+
 ## CONFIG (js/config.js)
 
 Unico punto per modificare layout, colori, immagini, audio:
