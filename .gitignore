@@ -1,2 +1,3 @@
-# Personal configs and notes
-misc/
+# Personal configs and notes — immagini escluse, .txt tracciati
+misc/*.jpg
+misc/*.png

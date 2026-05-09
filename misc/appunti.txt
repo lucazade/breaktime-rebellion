@@ -1,0 +1,55 @@
+# Breaktime Rebellion — Piano di implementazione
+
+---
+
+## FASE 1 — Base solida
+
+Obiettivo: rendere il gioco giocabile e stabile prima di aggiungere contenuto.
+
+- [ ] #8  Fix punteggio automatico (scorre senza senso)
+- [ ] #3  Prof/professoresse meno poliziotti (sprite più scolastiche)
+- [ ] #7  Architettura asset modificabile (cartella assets/, config JSON separato per audio, immagini, layout)
+- [ ] #12 La campanella non si riesce ancora a suonare
+
+---
+
+## FASE 2 — Gameplay core
+
+Obiettivo: meccaniche di gioco complete e controlli definitivi.
+
+- [ ] #10 Timer a barra che si scarica per livello
+- [ ] #2  Layout orizzontale ottimizzato
+- [ ] #1  Joypad analogico on-screen (sostituisce pannello attuale)
+- [ ] #4  Bidello (nuovo personaggio ostile)
+
+---
+
+## FASE 3 — Contenuto
+
+Obiettivo: riempire il gioco con livelli, ambienti e audio.
+
+- [ ] #5  Aule tematiche con muri diversi (biblioteca, presidenza, bagno) con alunni e lezioni
+- [ ] #9  Musica 8-bit + effetti sonori
+
+### 10 livelli
+
+| # | Nome | Stato |
+|---|------|-------|
+| L1 | Scrivere sulle lavagne | implementato |
+| L2 | Rubare cartelle/merende dai compagni | da fare |
+| L3 | Far cadere libri in biblioteca | da fare |
+| L4 | Fare casino in palestra (pallonate) | da fare |
+| L5 | Disturbare la lezione (strillare) | da fare |
+| L6 | Scrivere sulle porte dei bagni / allagare | da fare |
+| L7 | Agitare il distributore merende | da fare |
+| L8 | da definire | — |
+| L9 | da definire | — |
+| L10 | Scappare da scuola (boss finale) | da fare |
+
+---
+
+## FASE 4 — Rifinitura
+
+Obiettivo: lucidare l'esperienza prima del rilascio.
+
+- [ ] #6  Logo (Luca lo genera su Gemini e lo integriamo)
