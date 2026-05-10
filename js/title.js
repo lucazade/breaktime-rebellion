@@ -55,7 +55,7 @@
 
     function refreshLevel() {
       currentLevel = Math.max(1, Math.min(CONFIG.levels.length, currentLevel));
-      lvlName.textContent = fmt(STRINGS.missionLabel, currentLevel);
+      lvlName.textContent = currentLevel;
     }
     refreshLevel();
 
