@@ -40,11 +40,7 @@ var LEVELS = (function() {
         {x:14,  y:L.MY-34}, {x:142, y:L.MY-34}, {x:274, y:L.MY-34},
       ],
 
-      bags: [
-        {x:130, y:L.GY-10},
-        {x:184, y:L.MY-10},
-        {x:136, y:L.TY-10},
-      ],
+      bags: [],
 
       desks: [
         // GY floor — clear of stairs (x30-80, x240-290)
@@ -66,10 +62,7 @@ var LEVELS = (function() {
         {x:230, y:L.TY-L.PH, dir:1,  minX:10, maxX:275, speed:0.60, color:C.mgray, name:'Prof.Neri',  sight:100},
       ],
 
-      janitors: [
-        {x:160, y:L.GY-L.PH, dir:1,  minX:128, maxX:192, speed:0.65, name:'Bidello'},
-        {x:140, y:L.MY-L.PH, dir:-1, minX:120, maxX:164, speed:0.55, name:'Bidello'},
-      ],
+      janitors: [],
     },
 
   ];

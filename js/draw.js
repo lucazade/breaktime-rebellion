@@ -157,9 +157,9 @@ function drawBoards() {
         ctx.fillText('✏', b.x+BW/2-4, b.y+BH+8);
       }
     } else {
-      ctx.fillStyle = C.pink;   ctx.font = '4px "Press Start 2P"'; ctx.fillText('MARCO', b.x+2, b.y+6);
-      ctx.fillStyle = C.yellow; ctx.fillRect(b.x+1, b.y+7, BW-2, 1);
-      ctx.fillStyle = C.lgreen; ctx.font = '4px "Press Start 2P"'; ctx.fillText('WAS HERE', b.x+1, b.y+12);
+      ctx.fillStyle = C.pink; ctx.font = '4px "Press Start 2P"';
+      ctx.fillText('MARCO', b.x+2, b.y+9);
+      ctx.fillStyle = C.yellow; ctx.fillRect(b.x+1, b.y+10, BW-2, 1);
     }
   }
 }
