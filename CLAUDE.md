@@ -142,7 +142,7 @@ Icons in `#hud-row` usano **Font Awesome 6 Solid** (CDN).
 ```bash
 node -e "
 const fs=require('fs');
-const files=['js/config.js','js/i18n.js','js/audio.js','js/state.js','js/input.js','js/physics.js','js/entities.js','js/draw.js','js/game.js'];
+const files=['js/config.js','js/i18n.js','js/audio.js','js/state.js','js/input.js','js/physics.js','js/entities.js','js/draw.js','js/game.js','js/title.js'];
 const src=files.map(f=>fs.readFileSync(f,'utf8')).join('\n');
 try{new Function(src);console.log('JS OK');}catch(e){console.log('ERRORE:',e.message);}
 "
