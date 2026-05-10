@@ -23,7 +23,7 @@ var LEVELS = (function() {
         ringBell:    true,
       },
 
-      rooms: [],
+
       bags: [],
 
       teachers: [
@@ -45,7 +45,7 @@ var LEVELS = (function() {
         ringBell:    true,
       },
 
-      rooms: [],
+
 
       bags: [
         {x:100, y:GY-10}, {x:220, y:GY-10},

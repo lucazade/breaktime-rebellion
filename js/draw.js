@@ -105,9 +105,8 @@ function drawBags() {
   }
 }
 
-function drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, stunned, chasing) {
+function drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, chasing) {
   const bx = Math.round(x), by = Math.round(y);
-  if (stunned && Math.floor(frame/5)%2 === 1) return;
   const leg = Math.sin(animT) * 2.5;
 
   ctx.fillStyle = 'rgba(0,0,0,0.2)'; ctx.fillRect(bx-1, by+PH, PW, 2);
@@ -155,7 +154,7 @@ function drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, stunned, chasi
 }
 
 function drawJanitor(x, y, dir, animT) {
-  drawChar(x, y, dir, animT, C.mgray, false, false, false, false);
+  drawChar(x, y, dir, animT, C.mgray, false, false, false);
   const bx = Math.round(x), by = Math.round(y);
   ctx.fillStyle = C.blue;
   ctx.fillRect(bx+1, by-9, PW-2, 3);

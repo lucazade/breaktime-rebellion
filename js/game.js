@@ -46,7 +46,7 @@ function loop(ts) {
 
   for (let i = 0; i < teachers.length; i++) {
     const t = teachers[i];
-    drawChar(t.x, t.y, t.dir, t.animT, t.color, true, false, false, t.chasing);
+    drawChar(t.x, t.y, t.dir, t.animT, t.color, true, false, t.chasing);
   }
   if (!CONFIG.debug.disableJanitors) {
     for (let i = 0; i < janitors.length; i++) {
@@ -55,7 +55,7 @@ function loop(ts) {
     }
   }
   if (!(player.stunT > 0 && Math.floor(frame/5)%2 === 1)) {
-    drawChar(player.x, player.y, player.dir, player.animT, C.blue, false, player.spraying, false, false);
+    drawChar(player.x, player.y, player.dir, player.animT, C.blue, false, player.spraying, false);
   }
 
   if (player.stunT > 120) { ctx.fillStyle = 'rgba(255,0,0,0.18)'; ctx.fillRect(0,0,W,H); }
