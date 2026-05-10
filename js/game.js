@@ -103,6 +103,7 @@ let particles, floatingTexts;
 let msgText, msgT;
 let actionPressed, allBoards, timerTicks;
 let missionBannerT;
+let currentLevel = 1;
 
 const player = {
   x:0, y:0, vy:0,
@@ -486,6 +487,7 @@ function updateBell() {
 
 function updateTimer() {
   if (CONFIG.levelTimer === 0 || BELL.done) return;
+  if (missionBannerT > 0) return;
   if (player.stunT > 0) return;
   timerTicks--;
   if (timerTicks <= 0) {
@@ -845,28 +847,31 @@ function drawFloating() {
 }
 
 function drawEndScreen() {
+  ctx.save();
+  ctx.textAlign = 'center';
   if (state === 'win') {
     ctx.fillStyle = 'rgba(0,0,60,0.88)'; ctx.fillRect(20, 60, 280, 80);
     ctx.fillStyle = C.gold;  ctx.font = '8px "Press Start 2P"';
-    ctx.fillText(STRINGS.winTitle, 38, 85);
+    ctx.fillText(STRINGS.winTitle, 160, 85);
     ctx.fillStyle = C.white; ctx.font = '7px "Press Start 2P"';
-    ctx.fillText(STRINGS.scoreLabel + String(score).padStart(5,'0'), 108, 103);
+    ctx.fillText(STRINGS.scoreLabel + String(score).padStart(5,'0'), 160, 103);
     if (Math.floor(frame/20)%2 === 0) {
       ctx.fillStyle = C.lgreen; ctx.font = '6px "Press Start 2P"';
-      ctx.fillText(STRINGS.reloadWin, 48, 124);
+      ctx.fillText(STRINGS.reloadWin, 160, 124);
     }
   }
   if (state === 'gameover') {
     ctx.fillStyle = 'rgba(60,0,0,0.88)'; ctx.fillRect(40, 65, 240, 70);
     ctx.fillStyle = C.red;   ctx.font = '10px "Press Start 2P"';
-    ctx.fillText(STRINGS.gameoverTitle, 112, 92);
+    ctx.fillText(STRINGS.gameoverTitle, 160, 92);
     ctx.fillStyle = C.white; ctx.font = '7px "Press Start 2P"';
-    ctx.fillText(STRINGS.scoreLabel + String(score).padStart(5,'0'), 105, 110);
+    ctx.fillText(STRINGS.scoreLabel + String(score).padStart(5,'0'), 160, 110);
     if (Math.floor(frame/20)%2 === 0) {
       ctx.fillStyle = C.yellow; ctx.font = '6px "Press Start 2P"';
-      ctx.fillText(STRINGS.reloadLose, 70, 128);
+      ctx.fillText(STRINGS.reloadLose, 160, 128);
     }
   }
+  ctx.restore();
 }
 
 function updateHUD() {
@@ -954,7 +959,7 @@ function drawMissionBanner() {
   ctx.strokeRect(21, 73, 278, 54);
   ctx.font = '6px "Press Start 2P"'; ctx.textAlign = 'center';
   ctx.fillStyle = C.gold;
-  ctx.fillText(STRINGS.missionLabel, 160, 91);
+  ctx.fillText(STRINGS.missionLabel(currentLevel), 160, 91);
   ctx.fillStyle = C.white; ctx.font = '5px "Press Start 2P"';
   var words = STRINGS.initMsg.split(' '), line = '', lines = [];
   for (var i = 0; i < words.length; i++) {
@@ -965,8 +970,6 @@ function drawMissionBanner() {
   if (line) lines.push(line);
   for (var li = 0; li < lines.length; li++)
     ctx.fillText(lines[li], 160, 107 + li * 10);
-  ctx.fillStyle = C.lgray; ctx.font = '4px "Press Start 2P"';
-  ctx.fillText('[ TAP TO DISMISS ]', 160, 120);
   ctx.textAlign = 'left';
   ctx.restore();
 }
