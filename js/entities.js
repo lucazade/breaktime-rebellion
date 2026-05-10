@@ -72,7 +72,19 @@ function updateJanitors() {
   }
 }
 
+function bagWin() {
+  if (allBags) return;
+  allBags = true;
+  score += 1000;
+  addFloating(player.x + PW/2, player.y - 8, '+1000!', C.gold);
+  addParticles(player.x + PW/2, player.y, C.gold, 30);
+  setMsg(STRINGS.allBagsStolen);
+  GameAudio.playSfx('win');
+  setTimeout(function() { state = 'win'; GameAudio.stopMusic(); }, 2000);
+}
+
 function updateBell() {
+  if (!levelMechanics.ringBell) return;
   if (BELL.ringing && BELL.ringT > 0) { BELL.ringT--; if (BELL.ringT === 0) BELL.ringing = false; }
 }
 

@@ -40,7 +40,7 @@ function loop(ts) {
   drawBg();
   drawDesks();
   drawBoards();
-  drawBell();
+  if (levelMechanics.ringBell) drawBell();
   drawBags();
   drawSight();
 

@@ -95,8 +95,20 @@ function updatePlayer() {
       score += 200;
       addFloating(bag.x, bag.y, '+200', C.gold);
       addParticles(bag.x, bag.y, C.gold, 10);
-      setMsg(STRINGS.bagCollected);
       GameAudio.playSfx('bag');
+      if (levelMechanics.stealBags) {
+        alertTeachers(bag.x, bag.y);
+        let remaining = 0;
+        for (let bj = 0; bj < bags.length; bj++) if (!bags[bj].collected) remaining++;
+        if (remaining === 0) {
+          bagWin();
+        } else {
+          let collected = bags.length - remaining;
+          setMsg(fmt(STRINGS.bagStolen, collected, bags.length));
+        }
+      } else {
+        setMsg(STRINGS.bagCollected);
+      }
     }
   }
 

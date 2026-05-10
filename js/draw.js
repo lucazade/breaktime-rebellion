@@ -343,6 +343,16 @@ function updateHUD() {
   document.getElementById('hW').textContent = done + '/' + BOARDS.length;
   document.getElementById('hS').textContent = String(score).padStart(5,'0');
   if (msgT > 0) { msgT--; document.getElementById('msg').textContent = msgText; }
+  // Objective counter — boards (L1) or bags (L2)
+  var objDone = 0, objTotal = 0;
+  if (levelMechanics.stealBags) {
+    for (let i = 0; i < bags.length; i++) if (bags[i].collected) objDone++;
+    objTotal = bags.length;
+  } else {
+    for (let i = 0; i < BOARDS.length; i++) if (BOARDS[i].done) objDone++;
+    objTotal = BOARDS.length;
+  }
+  document.getElementById('hW').textContent = objDone + '/' + objTotal;
   if (maxTimerTicks > 0) {
     var pct = Math.max(0, timerTicks / maxTimerTicks);
     var bar = document.getElementById('timer-bar');

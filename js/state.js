@@ -22,7 +22,7 @@ let BOARDS, bags, BELL, teachers, janitors;
 let lives, score, state, frame;
 let particles, floatingTexts;
 let msgText, msgT;
-let actionPressed, allBoards, timerTicks, maxTimerTicks;
+let actionPressed, allBoards, allBags, timerTicks, maxTimerTicks;
 let missionBannerT;
 let currentLevel = 1;
 let bgImage = null;
@@ -59,7 +59,7 @@ function resetLevel() {
   player.stunT = 0; player.spraying = false; player.sprayT = 0;
   particles = []; floatingTexts = [];
   msgText = ''; msgT = 0;
-  actionPressed = false; allBoards = false;
+  actionPressed = false; allBoards = false; allBags = false;
   timerTicks = maxTimerTicks = (lv.timer !== undefined ? lv.timer : CONFIG.levelTimer) * 60;
   missionBannerT = 210;
   levelMechanics = Object.assign({ writeBoards:true, ringBell:true, stealBags:false }, lv.mechanics);
