@@ -38,8 +38,6 @@ function loop(ts) {
   }
 
   drawBg();
-  var usingBg = bgImage && bgImage.complete && bgImage.naturalWidth > 0;
-  if (!usingBg) { drawStairs(); drawFloors(); drawRoomDividers(); }
   drawDesks();
   drawBoards();
   drawBell();

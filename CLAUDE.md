@@ -107,10 +107,10 @@ Le coordinate usano `L.GY`, `L.MY`, `L.TY`, `L.PH` (da `CONFIG.layout`) per rest
 
 **Risoluzione 2×:** canvas element `640×400`, `ctx.scale(2,2)` → coordinate logiche invariate a `320×200`. `ctx.imageSmoothingEnabled = false`.
 
-**Background disegnato a mano** (`assets/bg.png`, 640×400px):
-- Se presente, `drawBg()` lo disegna a 1:1 (bypass `ctx.scale` con `setTransform`)
-- Quando attivo, vengono soppressi: `drawStairs`, `drawFloors`, `drawRoomDividers`
-- Se assente: fallback al background programmativo (room colors + floor obliquo)
+**Background bitmap** (`assets/bg.png`, 640×400px, sempre presente):
+- `drawBg()` lo disegna a 1:1 (bypass `ctx.scale` con `setTransform`)
+- Muri, pavimenti, scale sono nel PNG — non esistono funzioni draw per questi elementi
+- Oggetti interattivi (banchi, lavagne, campanella, cartelle) sono sempre disegnati via codice sopra il PNG
 - Coordinate di riferimento nel PNG: TY=y116, MY=y246, GY=y376, dividers x214/x426
 
 **Debug overlay (`?debug=1`):**
