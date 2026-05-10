@@ -74,8 +74,7 @@ CV.addEventListener('click', function() {
     if (currentLevel < LEVELS.length) nextLevel(); else restartGame();
     return;
   }
-  if (state === 'gameover') { restartGame(); return; }
-  if (missionBannerT > 0) missionBannerT = 0;
+  if (state === 'gameover') { restartGame(); }
 });
 
 requestAnimationFrame(loop);
