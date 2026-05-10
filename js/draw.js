@@ -133,10 +133,12 @@ function drawDesks() {
 
 function drawBoards() {
   let nearestIdx = -1, nd = 9999;
-  for (let i = 0; i < BOARDS.length; i++) {
-    if (BOARDS[i].done) continue;
-    const d = Math.abs(player.x+PW/2 - BOARDS[i].x-BW/2) + Math.abs(player.y - BOARDS[i].y-BH);
-    if (d < nd) { nd = d; nearestIdx = i; }
+  if (levelMechanics.writeBoards) {
+    for (let i = 0; i < BOARDS.length; i++) {
+      if (BOARDS[i].done) continue;
+      const d = Math.abs(player.x+PW/2 - BOARDS[i].x-BW/2) + Math.abs(player.y - BOARDS[i].y-BH);
+      if (d < nd) { nd = d; nearestIdx = i; }
+    }
   }
   for (let i = 0; i < BOARDS.length; i++) {
     const b = BOARDS[i];
@@ -451,8 +453,8 @@ function updateHUD() {
   document.getElementById('hW').textContent = done + '/' + BOARDS.length;
   document.getElementById('hS').textContent = String(score).padStart(5,'0');
   if (msgT > 0) { msgT--; document.getElementById('msg').textContent = msgText; }
-  if (CONFIG.levelTimer > 0) {
-    var pct = Math.max(0, timerTicks / (CONFIG.levelTimer * 60));
+  if (maxTimerTicks > 0) {
+    var pct = Math.max(0, timerTicks / maxTimerTicks);
     var bar = document.getElementById('timer-bar');
     if (bar) {
       bar.style.width = (pct * 100) + '%';

@@ -49,62 +49,8 @@ const CONFIG = {
   },
 };
 
-// Level definitions — edit here to change layout, enemies, objects per level.
-// L = layout constants, C = color palette (both already resolved when this runs).
-CONFIG.levels = (function() {
-  var L = CONFIG.layout;
-  var C = CONFIG.colors;
-  return [
-    // ── LEVEL 1 — Tag all boards, ring the bell ──────────────────────────────
-    {
-      timer: 60,
-      playerStart: { x: 40, y: L.GY - L.PH },
-
-      stairs: [
-        {x1:80,  y1:L.GY, x2:30,  y2:L.MY},  // GY→MY left
-        {x1:240, y1:L.GY, x2:290, y2:L.MY},  // GY→MY right
-        {x1:60,  y1:L.MY, x2:110, y2:L.TY},  // MY→TY left
-        {x1:210, y1:L.MY, x2:260, y2:L.TY},  // MY→TY right
-      ],
-
-      boards: [
-        {x:14,  y:L.TY-34}, {x:142, y:L.TY-34}, {x:274, y:L.TY-34},
-        {x:14,  y:L.MY-34}, {x:142, y:L.MY-34}, {x:274, y:L.MY-34},
-      ],
-
-      bags: [
-        {x:130, y:L.GY-10},
-        {x:184, y:L.MY-10},
-        {x:136, y:L.TY-10},
-      ],
-
-      desks: [
-        // GY floor — clear of stairs (x30-80, x240-290)
-        {x:92,  y:L.GY-12}, {x:116, y:L.GY-12}, {x:140, y:L.GY-12},
-        {x:168, y:L.GY-12}, {x:192, y:L.GY-12}, {x:216, y:L.GY-12},
-        // MY floor — clear of stairs (x30, x60-110, x210-260)
-        {x:120, y:L.MY-12}, {x:144, y:L.MY-12},
-        {x:164, y:L.MY-12}, {x:184, y:L.MY-12},
-        // TY floor — clear of stairs (x110, x260)
-        {x:52,  y:L.TY-12}, {x:76,  y:L.TY-12},
-        {x:168, y:L.TY-12}, {x:196, y:L.TY-12},
-      ],
-
-      bell: { x: 304, y: L.TY - 32 },
-
-      teachers: [
-        {x:200, y:L.GY-L.PH, dir:1,  minX:10, maxX:305, speed:0.55, color:C.red,   name:'Prof.Rossi', sight:90 },
-        {x:80,  y:L.MY-L.PH, dir:-1, minX:10, maxX:305, speed:0.50, color:C.green, name:'Prof.Verdi', sight:80 },
-        {x:230, y:L.TY-L.PH, dir:1,  minX:10, maxX:275, speed:0.60, color:C.mgray, name:'Prof.Neri',  sight:100},
-      ],
-
-      janitors: [
-        {x:160, y:L.GY-L.PH, dir:1,  minX:128, maxX:192, speed:0.65, name:'Bidello'},
-        {x:140, y:L.MY-L.PH, dir:-1, minX:120, maxX:164, speed:0.55, name:'Bidello'},
-      ],
-    },
-  ];
-})();
+// Level definitions are in js/levels.js — loaded after this file.
+// CONFIG.levels is assigned there.
 
 const W = CONFIG.layout.W, H = CONFIG.layout.H;
 const PW = CONFIG.layout.PW, PH = CONFIG.layout.PH;

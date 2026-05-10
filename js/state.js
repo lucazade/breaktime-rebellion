@@ -22,10 +22,11 @@ let BOARDS, bags, BELL, teachers, janitors;
 let lives, score, state, frame;
 let particles, floatingTexts;
 let msgText, msgT;
-let actionPressed, allBoards, timerTicks;
+let actionPressed, allBoards, timerTicks, maxTimerTicks;
 let missionBannerT;
 let currentLevel = 1;
 let bgImage = null;
+let levelMechanics;
 
 const player = {
   x:0, y:0, vy:0,
@@ -37,7 +38,7 @@ const player = {
 };
 
 function resetLevel() {
-  var lv = CONFIG.levels[currentLevel - 1];
+  var lv = LEVELS[currentLevel - 1];
   stairs   = lv.stairs;
   DESKS    = lv.desks;
   BOARDS   = lv.boards.map(function(b)   { return {x:b.x, y:b.y, done:false}; });
@@ -59,8 +60,9 @@ function resetLevel() {
   particles = []; floatingTexts = [];
   msgText = ''; msgT = 0;
   actionPressed = false; allBoards = false;
-  timerTicks = (lv.timer !== undefined ? lv.timer : CONFIG.levelTimer) * 60;
+  timerTicks = maxTimerTicks = (lv.timer !== undefined ? lv.timer : CONFIG.levelTimer) * 60;
   missionBannerT = 210;
+  levelMechanics = Object.assign({ writeBoards:true, ringBell:true, stealBags:false }, lv.mechanics);
   frame = 0;
 }
 

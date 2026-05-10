@@ -101,7 +101,7 @@ function updatePlayer() {
   }
 
   // Auto-ring bell on proximity
-  if (allBoards && !BELL.ringing && !BELL.done) {
+  if (levelMechanics.ringBell && allBoards && !BELL.ringing && !BELL.done) {
     const bdx = Math.abs(player.x + PW/2 - BELL.x - 3);
     const bdy = Math.abs(player.y + PH/2 - BELL.y - 5);
     if (bdx < 18 && bdy < 22) ringBell();
@@ -113,40 +113,44 @@ function updatePlayer() {
 function tryAction() {
   if (state !== 'playing') return;
 
-  let nearest = null, nd = 9999;
-  for (let i = 0; i < BOARDS.length; i++) {
-    const b = BOARDS[i];
-    if (b.done) continue;
-    const d = Math.abs(player.x + PW/2 - b.x - BW/2) + Math.abs(player.y - b.y - BH);
-    if (d < nd) { nd = d; nearest = b; }
-  }
+  if (levelMechanics.writeBoards) {
+    let nearest = null, nd = 9999;
+    for (let i = 0; i < BOARDS.length; i++) {
+      const b = BOARDS[i];
+      if (b.done) continue;
+      const d = Math.abs(player.x + PW/2 - b.x - BW/2) + Math.abs(player.y - b.y - BH);
+      if (d < nd) { nd = d; nearest = b; }
+    }
 
-  if (nearest && nd < 36) {
-    player.spraying = true;
-    player.sprayT = 70;
-    player.dir = (player.x + PW/2 < nearest.x + BW/2) ? 1 : -1;
-    GameAudio.playSfx('spray');
-    const capturedBoard = nearest;
-    setTimeout(function() {
-      if (!capturedBoard.done) {
-        capturedBoard.done = true;
-        score += 500;
-        addFloating(capturedBoard.x + BW/2, capturedBoard.y, '+500', C.chalk);
-        addParticles(capturedBoard.x + BW/2, capturedBoard.y + BH, C.chalk, 14);
-        alertTeachers(capturedBoard.x + BW/2, capturedBoard.y);
-        let done = 0;
-        for (let j = 0; j < BOARDS.length; j++) if (BOARDS[j].done) done++;
-        if (done === BOARDS.length) {
-          allBoards = true;
-          setMsg(STRINGS.allBoards);
-        } else {
-          setMsg(fmt(STRINGS.boardTagged, done, BOARDS.length));
+    if (nearest && nd < 36) {
+      player.spraying = true;
+      player.sprayT = 70;
+      player.dir = (player.x + PW/2 < nearest.x + BW/2) ? 1 : -1;
+      GameAudio.playSfx('spray');
+      const capturedBoard = nearest;
+      setTimeout(function() {
+        if (!capturedBoard.done) {
+          capturedBoard.done = true;
+          score += 500;
+          addFloating(capturedBoard.x + BW/2, capturedBoard.y, '+500', C.chalk);
+          addParticles(capturedBoard.x + BW/2, capturedBoard.y + BH, C.chalk, 14);
+          alertTeachers(capturedBoard.x + BW/2, capturedBoard.y);
+          let done = 0;
+          for (let j = 0; j < BOARDS.length; j++) if (BOARDS[j].done) done++;
+          if (done === BOARDS.length) {
+            allBoards = true;
+            setMsg(STRINGS.allBoards);
+          } else {
+            setMsg(fmt(STRINGS.boardTagged, done, BOARDS.length));
+          }
         }
-      }
-      player.spraying = false;
-    }, 750);
+        player.spraying = false;
+      }, 750);
+    } else {
+      if (allBoards && !BELL.done) setMsg(STRINGS.goBell);
+      else setMsg(STRINGS.getCloser);
+    }
   } else {
-    if (allBoards && !BELL.done) setMsg(STRINGS.goBell);
-    else setMsg(STRINGS.getCloser);
+    setMsg(STRINGS.getCloser);
   }
 }

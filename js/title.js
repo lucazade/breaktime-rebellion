@@ -2,7 +2,7 @@
 (function() {
 
   // ── Timer bar visibility ────────────────────────────────────────────────────
-  if (CONFIG.levelTimer === 0) {
+  if (maxTimerTicks === 0) {
     var tw = document.getElementById('timer-bar-wrap');
     if (tw) tw.style.display = 'none';
   }
@@ -54,18 +54,18 @@
     [prevBtn, lvlName, nextBtn].forEach(function(el) { el.style.visibility = 'visible'; });
 
     function refreshLevel() {
-      currentLevel = Math.max(1, Math.min(CONFIG.levels.length, currentLevel));
+      currentLevel = Math.max(1, Math.min(LEVELS.length, currentLevel));
       lvlName.textContent = currentLevel;
     }
     refreshLevel();
 
-    if (CONFIG.levels.length > 1) {
+    if (LEVELS.length > 1) {
       prevBtn.addEventListener('click', function() {
-        currentLevel = currentLevel > 1 ? currentLevel - 1 : CONFIG.levels.length;
+        currentLevel = currentLevel > 1 ? currentLevel - 1 : LEVELS.length;
         refreshLevel();
       });
       nextBtn.addEventListener('click', function() {
-        currentLevel = currentLevel < CONFIG.levels.length ? currentLevel + 1 : 1;
+        currentLevel = currentLevel < LEVELS.length ? currentLevel + 1 : 1;
         refreshLevel();
       });
     } else {

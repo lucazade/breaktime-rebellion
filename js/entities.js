@@ -52,7 +52,8 @@ function caughtBy(t) {
   let msg = fmt(STRINGS.caughtBy, t.name);
   msg += lives > 0 ? '♥'.repeat(lives) : 'GAME OVER!';
   setMsg(msg);
-  player.x = 40; player.y = GY - PH; player.vy = 0;
+  var ps = LEVELS[currentLevel - 1].playerStart;
+  player.x = ps.x; player.y = ps.y; player.vy = 0;
   GameAudio.playSfx('caught');
   if (lives <= 0) setTimeout(function() { state = 'gameover'; GameAudio.stopMusic(); GameAudio.playSfx('gameover'); }, 1800);
 }
@@ -76,7 +77,7 @@ function updateBell() {
 }
 
 function updateTimer() {
-  if (CONFIG.levelTimer === 0 || BELL.done) return;
+  if (maxTimerTicks === 0 || BELL.done) return;
   if (missionBannerT > 0) return;
   if (player.stunT > 0) return;
   timerTicks--;
@@ -88,12 +89,13 @@ function updateTimer() {
     msg += lives > 0 ? '♥'.repeat(lives) : 'GAME OVER!';
     setMsg(msg);
     player.stunT = 160; player.spraying = false;
-    player.x = 40; player.y = GY - PH; player.vy = 0;
+    var ps = LEVELS[currentLevel - 1].playerStart;
+    player.x = ps.x; player.y = ps.y; player.vy = 0;
     GameAudio.playSfx('caught');
     if (lives <= 0) {
       setTimeout(function() { state = 'gameover'; GameAudio.stopMusic(); GameAudio.playSfx('gameover'); }, 1800);
     } else {
-      timerTicks = CONFIG.levelTimer * 60;
+      timerTicks = maxTimerTicks;
     }
   }
 }

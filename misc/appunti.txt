@@ -77,10 +77,10 @@ mi piacerebbe il più flessibile possibile e non hardcoded. magari in livelli su
 Obiettivo: nuovi ambienti, nuovi livelli, NPC aggiuntivi.
 
 - [ ] #23 Prevedere aule tematiche (biblioteca, presidenza, bagno) con alunni e lezioni (utili per livelli successivi)
-- [ ] #31 Scorporare le logiche dei livelli in un file js separato? In modo che sia espandibile nel tempo?
+- [x] #31 Scorporare le logiche dei livelli in un file js separato? In modo che sia espandibile nel tempo?
 - [ ] #29 Sistemare livello 1: rimuovere cartelle e bidelli, modificare scritta sulla lavagna in solo "Marco" perchè non entra tutto
 - [ ] #30 Implementare Livello 2: aggiungere bidelli e cartelle. Non si può scrivere sulla lavagna (fa parte solo del livello 1 questo capacità di Marco)
-- [ ] #31 Controllare che il level chooser funziona
+- [ ] #33 Controllare che il level chooser funziona
 
 ### 10 livelli
 

@@ -15,8 +15,9 @@ robots.txt          ← noindex pre-release
 css/
   style.css         ← tutti gli stili
 js/                 ← ordine di caricamento obbligatorio:
-  config.js         ← CONFIG + CONFIG.levels[] (primo)
-  i18n.js           ← STRINGS EN/IT (secondo)
+  config.js         ← CONFIG (layout, colors, audio, debug) — primo
+  levels.js         ← LEVELS[] + CONFIG.levels alias — secondo
+  i18n.js           ← STRINGS EN/IT (terzo)
   audio.js          ← GameAudio (music + sfx manager)
   state.js          ← variabili condivise, player, resetLevel, startGame, fmt()
   input.js          ← tastiera, touch buttons, joystick analogico
@@ -54,7 +55,7 @@ HTML5 Canvas + JS vanilla, nessun framework. Font: Press Start 2P (Google Fonts)
 Il codice è diviso in moduli distinti che comunicano via variabili globali condivise (no ES modules).
 
 **Per aggiungere un oggetto di gioco:**
-- Aggiungere i dati in `CONFIG.levels[n]` dentro `config.js`
+- Aggiungere i dati nel livello corretto in `LEVELS[]` dentro `js/levels.js`
 - `resetLevel()` in `state.js` li legge e clona automaticamente
 - Non modificare mai `lv.stairs`, `lv.boards` ecc. direttamente durante il gioco
 
@@ -62,16 +63,28 @@ Il codice è diviso in moduli distinti che comunicano via variabili globali cond
 - `C` — alias `CONFIG.colors`
 - `player`, `teachers`, `janitors`, `BOARDS`, `bags`, `BELL`, `DESKS`, `stairs`
 - `lives`, `score`, `state`, `frame`, `currentLevel`
+- `levelMechanics` — mechanics attive nel livello corrente (da `lv.mechanics`)
 - `fmt(s, ...args)` — formatta stringhe con placeholder `{0}`, `{1}`
 
-## CONFIG.levels (js/config.js)
+## LEVELS (js/levels.js)
 
-Tutti i dati di ogni livello sono in `CONFIG.levels[]`, definito come IIFE in fondo a config.js.
+Tutti i dati di ogni livello sono in `LEVELS[]` (e `CONFIG.levels` è un alias).
 Ogni livello contiene:
 ```js
 {
   timer: 60,               // secondi (override CONFIG.levelTimer)
   playerStart: {x, y},
+
+  mechanics: {             // quali azioni/obiettivi sono attivi in questo livello
+    writeBoards: true,     // spray boards → allBoards → campanella
+    stealBags:   false,    // raccogliere tutte le cartelle (obiettivo L2)
+    ringBell:    true,     // suonare la campanella completa il livello
+  },
+
+  rooms: [                 // zone con azioni contestuali (vuoto se non servono)
+    { id, name, x, y, w, h, actions: [] }
+  ],
+
   stairs:   [{x1,y1,x2,y2}, ...],
   boards:   [{x,y}, ...],
   bags:     [{x,y}, ...],
@@ -113,7 +126,7 @@ Le coordinate usano `L.GY`, `L.MY`, `L.TY`, `L.PH` (da `CONFIG.layout`) per rest
 - `CONFIG.levelTimer` — timer globale in secondi (0 = disabilitato); override con `lv.timer`
 - `CONFIG.debug.disableMusic` — `true` per silenziare musica durante testing
 - `CONFIG.debug.disableJanitors` — `true` per rimuovere bidelli durante testing
-- `CONFIG.levels[]` — array di livelli (vedi sezione sopra)
+- `CONFIG.levels` — non più usato; i livelli sono in `LEVELS[]` di `js/levels.js`
 
 ## Teacher sprites
 
@@ -142,7 +155,7 @@ Icons in `#hud-row` usano **Font Awesome 6 Solid** (CDN).
 ```bash
 node -e "
 const fs=require('fs');
-const files=['js/config.js','js/i18n.js','js/audio.js','js/state.js','js/input.js','js/physics.js','js/entities.js','js/draw.js','js/game.js','js/title.js'];
+const files=['js/config.js','js/levels.js','js/i18n.js','js/audio.js','js/state.js','js/input.js','js/physics.js','js/entities.js','js/draw.js','js/game.js','js/title.js'];
 const src=files.map(f=>fs.readFileSync(f,'utf8')).join('\n');
 try{new Function(src);console.log('JS OK');}catch(e){console.log('ERRORE:',e.message);}
 "
