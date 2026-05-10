@@ -116,7 +116,9 @@ Obiettivo: lucidare l'esperienza prima del rilascio.
 - [X] #6  Logo (Luca lo genera su Gemini e lo integriamo)
 - [ ] # Prevedere aule tematiche (biblioteca, presidenza, bagno) con alunni e lezioni (utili per livelli successivi)
 - [ ] # Mostrare collo personaggi (collo basso)
+- [ ] # Schermata storia del personaggio
 - [ ] # Schermata caricamento stile ZX Spectrum (barre laterali animate + logo progressivo a linee)
 - [ ] # Schermata migliori punteggi con livello raggiunto (non serve inserire il nome)
 - [ ] # Schermata scelta livello per utente (con lucchetto i livelli non ancora sbloccati e non accessibili)
 - [ ] # Transizione tra schermate (fade in/out?)
+- [ ] # Tocca per giocare ancora ti fa ripartire da livello 1 invece che lo stesso
