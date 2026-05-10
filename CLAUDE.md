@@ -73,6 +73,11 @@ Ordine di caricamento obbligatorio: `config.js` → `i18n.js` → `game.js`.
 - Se assente: fallback al background programmativo (room colors + floor obliquo)
 - Coordinate di riferimento nel PNG: TY=y116, MY=y246, GY=y376, dividers x214/x426
 
+**Debug overlay (`?debug=1`):**
+- Attivo solo con il parametro URL `?debug=1` — non tocca il gioco normale
+- Mostra: floor lines (TY/MY/GY giallo tratteggiato), room dividers (x=107/213 ciano), stair boxes arancioni con coordinate endpoint, hitbox bag/board/desk/bell/player
+- Utile per allineare `bg.png` con la logica di gioco: apri con `?debug=1`, screenshot, sovrapponi in editor grafico
+
 **Spaccato obliquo (branch feat/rooms-depth):**
 - `CONFIG.layout.FD=12` — altezza top-face pavimento grigio
 - `drawFloors()` — top-face segmentata con aperture dove passano le scale (s.y2)
@@ -87,6 +92,8 @@ Unico punto per modificare layout, colori, immagini, audio, gameplay:
 - `CONFIG.images` — percorsi immagini
 - `CONFIG.audio` — `musicVolume`, `sfxVolume`, `music` path, `sfx` map (spray/bell/caught/bag/win/gameover)
 - `CONFIG.levelTimer` — secondi per completare il livello (0 = disabilitato)
+- `CONFIG.debug.disableMusic` — `true` per silenziare la musica durante il testing
+- `CONFIG.debug.disableJanitors` — `true` per rimuovere i bidelli durante il testing
 
 Le costanti `W`, `H`, `PW`, `PH`, `GY`, `MY`, `TY`, `BW`, `BH`, `C` sono alias verso CONFIG per compatibilità.
 
