@@ -169,7 +169,7 @@ canvas {
   touch-action: manipulation; line-height: 1;
 }
 #lvl-prev:active, #lvl-next:active { background: #6c5eb5; color: #000; }
-#lvl-prev:disabled, #lvl-next:disabled { opacity: 0.3; cursor: default; }
+#lvl-prev:disabled, #lvl-next:disabled { cursor: default; }
 
 /* Language buttons */
 #lang-chooser { gap: 8px; }
