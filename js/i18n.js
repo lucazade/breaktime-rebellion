@@ -1,4 +1,5 @@
 // i18n — default language: English; auto-override based on device locale
+// Only plain strings here — formatting with {0}, {1}… placeholders done in game.js via fmt()
 (function() {
   var urlLang = new URLSearchParams(window.location.search).get('lang');
   var lang = (urlLang || navigator.language || 'en').slice(0, 2).toLowerCase();
@@ -7,15 +8,15 @@
   var en = {
     bagCollected:  'Bag collected! +200 points!',
     allBoards:     'All boards done! Ring the bell on the right! 🔔',
-    boardTagged:   function(done, total) { return 'Wall tagged! +500 (' + done + '/' + total + ') — Run!'; },
+    boardTagged:   'Wall tagged! +500 ({0}/{1}) — Run!',
     goBell:        'Go to the bell (top right)!',
     getCloser:     'Get closer to a board! (yellow = reachable)',
-    timesUp:       "TIME'S UP! ",
-    caughtBy:      function(name) { return name + ' caught you! -300 points! '; },
+    timesUp:       "TIME'S UP!",
+    caughtBy:      '{0} caught you! -300 points!',
     tapToStart:    '[ TAP TO START ]',
-    missionLabel:  function(n) { return 'LEVEL ' + n; },
-    missions:      ['Tag all boards, then ring the bell!'],
-    initMsg:       'Tag all boards, then ring the bell!',
+    missionLabel:  'LEVEL {0}',
+    mission1:      'Tag all boards, then ring the bell!',
+    mission2:      "Steal your classmates' bags!",
     winTitle:      'SCHOOL LEGEND!',
     scoreLabel:    'SCORE: ',
     reloadWin:     '[ TAP TO PLAY AGAIN ]',
@@ -29,15 +30,15 @@
   var it = {
     bagCollected:  'Cartella raccolta! +200 punti!',
     allBoards:     'Tutte le lavagne! Suona la campanella! 🔔',
-    boardTagged:   function(done, total) { return 'Muro imbrattato! +500 (' + done + '/' + total + ') — Scappa!'; },
+    boardTagged:   'Muro imbrattato! +500 ({0}/{1}) — Scappa!',
     goBell:        'Vai alla campanella (in alto a destra)!',
     getCloser:     'Avvicinati a una lavagna! (giallo = raggiungibile)',
-    timesUp:       'TEMPO SCADUTO! ',
-    caughtBy:      function(name) { return name + ' ti ha preso! -300 punti! '; },
+    timesUp:       'TEMPO SCADUTO!',
+    caughtBy:      '{0} ti ha preso! -300 punti!',
     tapToStart:    '[ TOCCA PER INIZIARE ]',
-    missionLabel:  function(n) { return 'LIVELLO ' + n; },
-    missions:      ['Imbratta tutte le lavagne, poi suona la campanella!'],
-    initMsg:       'Imbratta tutte le lavagne, poi suona la campanella!',
+    missionLabel:  'LIVELLO {0}',
+    mission1:      'Imbratta tutte le lavagne, poi suona la campanella!',
+    mission2:      'Ruba le cartelle dei tuoi compagni!',
     winTitle:      'LEGGENDA DELLA SCUOLA!',
     scoreLabel:    'PUNTEGGIO: ',
     reloadWin:     '[ TOCCA PER GIOCARE ANCORA ]',
@@ -55,5 +56,5 @@
   var go = document.querySelector('.go');
   if (go) go.textContent = STRINGS.tapToStart;
   var msgEl = document.getElementById('msg');
-  if (msgEl) msgEl.textContent = STRINGS.initMsg;
+  if (msgEl) msgEl.textContent = STRINGS.mission1;
 })();
