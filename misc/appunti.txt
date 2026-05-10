@@ -45,8 +45,6 @@ Obiettivo: Cambiamenti importanti del gioco
 
 Obiettivo: sistemare mappa e audio
 
-riempire il gioco con livelli, ambienti e audio.
-
 - [x] #22  Implementare scale che vanno anche nell'altra direzione e conseguente gestione dei movimenti di marco. Mischiamo le scale in un verso e nell'altro.
 - [X] #5  Aggiungere muri e creare quindi delle stanze. Le porte sono aperte e tutti possono passare. 
 - [x] #4  Bidello (nuovo personaggio ostile)
@@ -56,17 +54,18 @@ riempire il gioco con livelli, ambienti e audio.
 
 ## FASE 5 — Contenuto
 
-Obiettivo: riempire il gioco con livelli, ambienti e audio.
+Obiettivo: Rifiniture pre imple livelli.
+
 - [ ] #27 nella schermato iniziale con il logo metterei sotto la scritta "tocca per iniziare" delle azioni: 
 1. a sinistra un level chooser (solo per dev abilitabile nel config)
 2. al centro la selezione della lingua con delle bandiere della lingua (la prima è quella del locale del device ed è evidenziata)
 3. a destra un icona a tre stati (audio completo con Musica, audio solo effetti, muto)
 non so se fare un overide di config disableMusic.
 queste tre configurazioni le salviamo a livello del browser (vediamo insieme in che modo.)
-- [ ] #25 A inizio livello mostriamo banner al centro dello schermo con la descrizione della missione e sparisce dopo pochi secondi o al tap (sono indeciso).
-Il banner è del tipo "Scrivi su tutte le lavagne e poi suona la campanella". 
+- [x] #25 A inizio livello mostriamo banner al centro dello schermo con la descrizione della missione e sparisce dopo pochi secondi o al tap (sono indeciso).
+Il banner è del tipo "Scrivi su tutte le lavagne e poi suona la campanella".
 Questo sarà utile per missioni successive.
-- [ ] #24 A fine livello (forse anche quando muori) dice di ricaricare per iniziare ma in PWA non esiste il ricarica. Facciamo tap to restart
+- [x] #24 A fine livello (forse anche quando muori) dice di ricaricare per iniziare ma in PWA non esiste il ricarica. Facciamo tap to restart
 - [ ] #26 Il config.layout non mi è chiaro.
 Cosa posso spostare a mano nel config? scale, banchi, borse?
 mi piacerebbe il più flessibile possibile e non hardcoded. magari in livelli successivi spostiamo o togliamo oggetti
@@ -101,4 +100,5 @@ Obiettivo: nuovi ambienti, nuovi livelli, NPC aggiuntivi.
 Obiettivo: lucidare l'esperienza prima del rilascio.
 
 - [X] #6  Logo (Luca lo genera su Gemini e lo integriamo)
+- [ ] #28 Mostrare collo personaggi (collo basso)
 - [ ] #11 Schermata caricamento stile ZX Spectrum (barre laterali animate + logo progressivo a linee)
