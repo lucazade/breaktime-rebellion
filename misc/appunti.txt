@@ -56,7 +56,7 @@ Obiettivo: sistemare mappa e audio
 
 Obiettivo: Rifiniture pre imple livelli.
 
-- [ ] #27 nella schermato iniziale con il logo metterei sotto la scritta "tocca per iniziare" delle azioni: 
+- [x] #27 nella schermato iniziale con il logo metterei sotto la scritta "tocca per iniziare" delle azioni: 
 1. a sinistra un level chooser (solo per dev abilitabile nel config)
 2. al centro la selezione della lingua con delle bandiere della lingua (la prima è quella del locale del device ed è evidenziata)
 3. a destra un icona a tre stati (audio completo con Musica, audio solo effetti, muto)
