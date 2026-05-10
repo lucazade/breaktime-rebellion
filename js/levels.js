@@ -18,7 +18,7 @@ var LEVELS = (function() {
     // ── LEVEL 1 — Tag all boards, ring the bell ──────────────────────────────
     {
       timer: 60,
-      playerStart: { x: 40, y: L.GY - L.PH },
+      playerStart: { x: 30, y: L.GY - L.PH },
 
       mechanics: {
         writeBoards: true,
@@ -29,29 +29,30 @@ var LEVELS = (function() {
       rooms: [],
 
       stairs: [
-        {x1:80,  y1:L.GY, x2:30,  y2:L.MY},  // GY→MY left
-        {x1:240, y1:L.GY, x2:290, y2:L.MY},  // GY→MY right
+        {x1:83,  y1:L.GY, x2:33,  y2:L.MY},  // GY→MY left
+        {x1:239, y1:L.GY, x2:289, y2:L.MY},  // GY→MY right
         {x1:60,  y1:L.MY, x2:110, y2:L.TY},  // MY→TY left
         {x1:210, y1:L.MY, x2:260, y2:L.TY},  // MY→TY right
       ],
 
-      boards: [
-        {x:14,  y:L.TY-34}, {x:142, y:L.TY-34}, {x:274, y:L.TY-34},
-        {x:14,  y:L.MY-34}, {x:142, y:L.MY-34}, {x:274, y:L.MY-34},
+      boards: [ 
+        {x:142, y:L.GY-43},
+        {x:14,  y:L.MY-39}, {x:142, y:L.MY-39}, {x:274, y:L.MY-39},
+        {x:14,  y:L.TY-35}, {x:142, y:L.TY-35},
       ],
 
       bags: [],
 
       desks: [
         // GY floor — clear of stairs (x30-80, x240-290)
-        {x:92,  y:L.GY-12}, {x:116, y:L.GY-12}, {x:140, y:L.GY-12},
-        {x:168, y:L.GY-12}, {x:192, y:L.GY-12}, {x:216, y:L.GY-12},
+        {x:116, y:L.GY-16}, {x:140, y:L.GY-16},
+        {x:164, y:L.GY-16}, {x:188, y:L.GY-16},
         // MY floor — clear of stairs (x30, x60-110, x210-260)
-        {x:120, y:L.MY-12}, {x:144, y:L.MY-12},
-        {x:164, y:L.MY-12}, {x:184, y:L.MY-12},
+        {x:128, y:L.MY-14}, {x:152, y:L.MY-14},
+        {x:176, y:L.MY-14},
         // TY floor — clear of stairs (x110, x260)
-        {x:52,  y:L.TY-12}, {x:76,  y:L.TY-12},
-        {x:168, y:L.TY-12}, {x:196, y:L.TY-12},
+        {x:42,  y:L.TY-13}, {x:66,  y:L.TY-13},
+        {x:162, y:L.TY-13}, {x:186, y:L.TY-13},
       ],
 
       bell: { x: 304, y: L.TY - 32 },
@@ -68,7 +69,7 @@ var LEVELS = (function() {
     // ── LEVEL 2 — Steal all classmates' bags ────────────────────────────────
     {
       timer: 75,
-      playerStart: { x: 40, y: L.GY - L.PH },
+      playerStart: { x: 30, y: L.GY - L.PH },
 
       mechanics: {
         writeBoards: false,
@@ -79,15 +80,16 @@ var LEVELS = (function() {
       rooms: [],
 
       stairs: [
-        {x1:80,  y1:L.GY, x2:30,  y2:L.MY},
-        {x1:240, y1:L.GY, x2:290, y2:L.MY},
-        {x1:60,  y1:L.MY, x2:110, y2:L.TY},
-        {x1:210, y1:L.MY, x2:260, y2:L.TY},
+        {x1:83,  y1:L.GY, x2:33,  y2:L.MY},  // GY→MY left
+        {x1:239, y1:L.GY, x2:289, y2:L.MY},  // GY→MY right
+        {x1:60,  y1:L.MY, x2:110, y2:L.TY},  // MY→TY left
+        {x1:210, y1:L.MY, x2:260, y2:L.TY},  // MY→TY right
       ],
 
-      boards: [
-        {x:14,  y:L.TY-34}, {x:142, y:L.TY-34}, {x:274, y:L.TY-34},
-        {x:14,  y:L.MY-34}, {x:142, y:L.MY-34}, {x:274, y:L.MY-34},
+      boards: [ 
+        {x:142, y:L.GY-43},
+        {x:14,  y:L.MY-39}, {x:142, y:L.MY-39}, {x:274, y:L.MY-39},
+        {x:14,  y:L.TY-35}, {x:142, y:L.TY-35},
       ],
 
       bags: [
@@ -100,12 +102,15 @@ var LEVELS = (function() {
       ],
 
       desks: [
-        {x:92,  y:L.GY-12}, {x:116, y:L.GY-12}, {x:140, y:L.GY-12},
-        {x:168, y:L.GY-12}, {x:192, y:L.GY-12}, {x:216, y:L.GY-12},
-        {x:120, y:L.MY-12}, {x:144, y:L.MY-12},
-        {x:164, y:L.MY-12}, {x:184, y:L.MY-12},
-        {x:52,  y:L.TY-12}, {x:76,  y:L.TY-12},
-        {x:168, y:L.TY-12}, {x:196, y:L.TY-12},
+        // GY floor — clear of stairs (x30-80, x240-290)
+        {x:116, y:L.GY-16}, {x:140, y:L.GY-16},
+        {x:164, y:L.GY-16}, {x:188, y:L.GY-16},
+        // MY floor — clear of stairs (x30, x60-110, x210-260)
+        {x:128, y:L.MY-14}, {x:152, y:L.MY-14},
+        {x:176, y:L.MY-14},
+        // TY floor — clear of stairs (x110, x260)
+        {x:42,  y:L.TY-13}, {x:66,  y:L.TY-13},
+        {x:162, y:L.TY-13}, {x:186, y:L.TY-13},
       ],
 
       bell: { x: 304, y: L.TY - 32 },

@@ -76,36 +76,47 @@ mi piacerebbe il più flessibile possibile e non hardcoded. magari in livelli su
 
 Obiettivo: nuovi ambienti, nuovi livelli, NPC aggiuntivi.
 
-- [ ] #23 Prevedere aule tematiche (biblioteca, presidenza, bagno) con alunni e lezioni (utili per livelli successivi)
 - [x] #31 Scorporare le logiche dei livelli in un file js separato? In modo che sia espandibile nel tempo?
 - [x] #29 Sistemare livello 1: rimuovere cartelle e bidelli, modificare scritta sulla lavagna in solo "Marco" perchè non entra tutto
 - [x] #30 Implementare Livello 2: aggiungere bidelli e cartelle. Non si può scrivere sulla lavagna (fa parte solo del livello 1 questo capacità di Marco)
 - [x] #33 Controllare che il level chooser funziona
-
-### 10 livelli
-
-| # | Nome | Stato |
-|---|------|-------|
-| L1 | Scrivere sulle lavagne | implementato |
-| L2 | Rubare cartelle dai compagni | da fare |
-| L3 | Far cadere libri in biblioteca | da fare |
-| L4 | Fare casino in palestra (pallonate) | da fare |
-| L5 | Disturbare la lezione (strillare) | da fare |
-| L6 | Scrivere sulle porte dei bagni / allagare | da fare |
-| L7 | Agitare il distributore merende | da fare |
-| L8 | da definire | — |
-| L9 | da definire | — |
-| L10 | Scappare da scuola (boss finale) | da fare |
+- [x] #34 Fix primi 2 livelli:
+    1. quando finisci il livello 1 ti fa rifare lo stesso livello e non il successivo
+    2. quando completi di imbrattare le lavagne compare una seconda campanella più piccola che non serve
+    3. dalla schermata iniziale bisogna mappare anche invio per iniziare partita (utile da desktop)
+    4. la campanella va suonata ad ogni fine livello (aggiungiamola anche nei testi della missione)
+    5. le lavagne, scale e banchi devono stare in ogni livello forse conviene rimuovere dalla definizioni di ogni livello. anche marco parte sempre nello stesso punti. nota le lavagne sono scrivibili solo nel primo livello.
+    6. la velocità dei professori e dei livelli è troppo maggiore nel secondo livello. per i primi livelli teniamola uguale al primo livello
 
 ---
 
-## FASE 7 — Rifinitura
+## FASE 7 — Implementare altri livelli (10 in totale)
+
+Obiettivo: nuovi ambienti, nuovi livelli, NPC aggiuntivi.
+
+|  #  | Stato | Nome |
+|-----|-------|------|
+| L1  |   X   | Scrivere sulle lavagne
+| L2  |   X   | Rubare cartelle dai compagni
+| L3  |       | Far cadere libri in biblioteca
+| L4  |       | Fare casino in palestra (pallonate?)
+| L5  |       | Disturbare la lezione (strillare?)
+| L6  |       | Scrivere sulle porte dei bagni (oppure allagare?)
+| L7  |       | Agitare il distributore merende
+| L8  |       | da definire
+| L9  |       | da definire
+| L10 |       | Scappare da scuola (boss finale)
+
+---
+
+## FASE 8 — Rifinitura
 
 Obiettivo: lucidare l'esperienza prima del rilascio.
 
 - [X] #6  Logo (Luca lo genera su Gemini e lo integriamo)
-- [ ] #28 Mostrare collo personaggi (collo basso)
-- [ ] #11 Schermata caricamento stile ZX Spectrum (barre laterali animate + logo progressivo a linee)
-- [ ] #32 Schermata migliori punteggi con livello raggiunto (non serve inserire il nome)
-- [ ] #33 Schermata scelta livello per utente (con lucchetto i livelli non ancora sbloccati e non accessibili)
-- [ ] #34 Transizione tra schermate (fade in/out?)
+- [ ] # Prevedere aule tematiche (biblioteca, presidenza, bagno) con alunni e lezioni (utili per livelli successivi)
+- [ ] # Mostrare collo personaggi (collo basso)
+- [ ] # Schermata caricamento stile ZX Spectrum (barre laterali animate + logo progressivo a linee)
+- [ ] # Schermata migliori punteggi con livello raggiunto (non serve inserire il nome)
+- [ ] # Schermata scelta livello per utente (con lucchetto i livelli non ancora sbloccati e non accessibili)
+- [ ] # Transizione tra schermate (fade in/out?)
