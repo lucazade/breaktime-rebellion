@@ -66,7 +66,7 @@ queste tre configurazioni le salviamo a livello del browser (vediamo insieme in 
 Il banner è del tipo "Scrivi su tutte le lavagne e poi suona la campanella".
 Questo sarà utile per missioni successive.
 - [x] #24 A fine livello (forse anche quando muori) dice di ricaricare per iniziare ma in PWA non esiste il ricarica. Facciamo tap to restart
-- [ ] #26 Il config.layout non mi è chiaro.
+- [x] #26 Il config.layout non mi è chiaro.
 Cosa posso spostare a mano nel config? scale, banchi, borse?
 mi piacerebbe il più flessibile possibile e non hardcoded. magari in livelli successivi spostiamo o togliamo oggetti
 

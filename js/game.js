@@ -51,52 +51,8 @@ const floors = [
   {x:0, y:TY, w:320},
 ];
 
-const stairs = [
-  {x1:80,  y1:GY,  x2:30,  y2:MY},  // left-going
-  {x1:240, y1:GY,  x2:290, y2:MY},  // right-going
-  {x1:60,  y1:MY,  x2:110, y2:TY},  // right-going
-  {x1:210, y1:MY,  x2:260, y2:TY},  // right-going
-];
-
-const BOARDS_DEF = [
-  {x:14,  y:TY-34},
-  {x:142, y:TY-34},
-  {x:274, y:TY-34},
-  {x:14,  y:MY-34},
-  {x:142, y:MY-34},
-  {x:274, y:MY-34},
-];
-
-const DESKS = [
-  // GY: stair1 x=30-80, stair2 x=240-290 → safe zone x≈90-230
-  {x:92,  y:GY-12}, {x:116, y:GY-12}, {x:140, y:GY-12},
-  {x:168, y:GY-12}, {x:192, y:GY-12}, {x:216, y:GY-12},
-  // MY: stair1top x=30, stair3bottom x=60-110, stair4bottom x=210-260 → safe zone x=120-188
-  {x:120, y:MY-12}, {x:144, y:MY-12},
-  {x:164, y:MY-12}, {x:184, y:MY-12},
-  // TY: stair3top x=110, stair4top x=260 → left x<100, right x=120-248
-  {x:52,  y:TY-12}, {x:76,  y:TY-12},
-  {x:168, y:TY-12}, {x:196, y:TY-12},
-];
-
-const BAGS_DEF = [
-  {x:130, y:GY-10},  // GY - safe zone
-  {x:184, y:MY-10},  // MY - moved from 228 (stair4 x=210-265)
-  {x:136, y:TY-10},  // TY - moved from 108 (near stair3top x=110)
-];
-
-const TEACHERS_DEF = [
-  {x:200, y:GY-PH, dir:1,  minX:10, maxX:305, speed:0.55, color:C.red,   name:'Prof.Rossi', sight:90 },
-  {x:80,  y:MY-PH, dir:-1, minX:10, maxX:305, speed:0.50, color:C.green, name:'Prof.Verdi', sight:80 },
-  {x:230, y:TY-PH, dir:1,  minX:10, maxX:275, speed:0.60, color:C.mgray, name:'Prof.Neri',  sight:100},
-];
-
-const JANITORS_DEF = [
-  {x:160, y:GY-PH, dir:1,  minX:128, maxX:192, speed:0.65, name:'Bidello'},
-  {x:140, y:MY-PH, dir:-1, minX:120, maxX:164, speed:0.55, name:'Bidello'},
-];
-
 // Mutable level state — reset by resetLevel()
+let stairs, DESKS;
 let BOARDS, bags, BELL, teachers, janitors;
 let lives, score, state, frame;
 let particles, floatingTexts;
@@ -115,18 +71,21 @@ const player = {
 };
 
 function resetLevel() {
-  BOARDS   = BOARDS_DEF.map(function(b) { return {x:b.x, y:b.y, done:false}; });
-  bags     = BAGS_DEF.map(function(b)   { return {x:b.x, y:b.y, collected:false}; });
-  BELL     = {x:304, y:TY-32, ringing:false, done:false, ringT:0};
-  teachers = TEACHERS_DEF.map(function(t) {
+  var lv = CONFIG.levels[currentLevel - 1];
+  stairs   = lv.stairs;
+  DESKS    = lv.desks;
+  BOARDS   = lv.boards.map(function(b)   { return {x:b.x, y:b.y, done:false}; });
+  bags     = lv.bags.map(function(b)     { return {x:b.x, y:b.y, collected:false}; });
+  BELL     = {x:lv.bell.x, y:lv.bell.y, ringing:false, done:false, ringT:0};
+  teachers = lv.teachers.map(function(t) {
     return {x:t.x, y:t.y, dir:t.dir, minX:t.minX, maxX:t.maxX,
             speed:t.speed, animT:0, color:t.color, name:t.name,
             sight:t.sight, alertT:0, chasing:false, chaseX:0};
   });
-  janitors = JANITORS_DEF.map(function(j) {
+  janitors = lv.janitors.map(function(j) {
     return {x:j.x, y:j.y, dir:j.dir, minX:j.minX, maxX:j.maxX, speed:j.speed, animT:0, name:j.name};
   });
-  player.x = 40; player.y = GY - PH; player.vy = 0;
+  player.x = lv.playerStart.x; player.y = lv.playerStart.y; player.vy = 0;
   player.dir = 1; player.animT = 0;
   player.onGround = false; player.onLadder = false;
   player.onStair = false; player.currentStair = null;
@@ -134,7 +93,7 @@ function resetLevel() {
   particles = []; floatingTexts = [];
   msgText = ''; msgT = 0;
   actionPressed = false; allBoards = false;
-  timerTicks = CONFIG.levelTimer * 60;
+  timerTicks = (lv.timer !== undefined ? lv.timer : CONFIG.levelTimer) * 60;
   missionBannerT = 210;
   frame = 0;
 }
@@ -961,7 +920,8 @@ function drawMissionBanner() {
   ctx.fillStyle = C.gold;
   ctx.fillText(STRINGS.missionLabel(currentLevel), 160, 91);
   ctx.fillStyle = C.white; ctx.font = '5px "Press Start 2P"';
-  var words = STRINGS.initMsg.split(' '), line = '', lines = [];
+  var missionText = (STRINGS.missions && STRINGS.missions[currentLevel-1]) || STRINGS.initMsg;
+  var words = missionText.split(' '), line = '', lines = [];
   for (var i = 0; i < words.length; i++) {
     var test = line + (line ? ' ' : '') + words[i];
     if (ctx.measureText(test).width > 240) { lines.push(line); line = words[i]; }
