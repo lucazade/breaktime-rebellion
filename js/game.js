@@ -40,7 +40,7 @@ function loop(ts) {
   drawBg();
   drawDesks();
   drawBoards();
-  if (levelMechanics.ringBell) drawBell();
+  if (levelMechanics.ringBell && !BELL.done) drawBell();
   drawBags();
   drawSight();
 
@@ -70,7 +70,11 @@ function loop(ts) {
 }
 
 CV.addEventListener('click', function() {
-  if (state === 'win' || state === 'gameover') { restartGame(); return; }
+  if (state === 'win') {
+    if (currentLevel < LEVELS.length) nextLevel(); else restartGame();
+    return;
+  }
+  if (state === 'gameover') { restartGame(); return; }
   if (missionBannerT > 0) missionBannerT = 0;
 });
 

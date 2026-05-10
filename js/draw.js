@@ -74,7 +74,7 @@ function drawBell() {
   ctx.fillRect(bx+2+sx, by+6, 1, 2);
   ctx.fillRect(bx+1+sx, by+8, 3, 1);
 
-  if (allBoards && !BELL.done) {
+  if ((allBoards || allBags) && !BELL.done) {
     const pulse = 0.12 + 0.08 * Math.sin(frame * 0.15);
     ctx.fillStyle = 'rgba(255,215,0,' + pulse + ')';
     ctx.beginPath(); ctx.arc(bx+3, by+5, 7, 0, Math.PI*2); ctx.fill();
@@ -216,7 +216,8 @@ function drawEndScreen() {
     ctx.fillText(STRINGS.scoreLabel + String(score).padStart(5,'0'), 160, 103);
     if (Math.floor(frame/20)%2 === 0) {
       ctx.fillStyle = C.lgreen; ctx.font = '6px "Press Start 2P"';
-      ctx.fillText(STRINGS.reloadWin, 160, 124);
+      var tapText = currentLevel < LEVELS.length ? STRINGS.reloadNext : STRINGS.reloadWin;
+      ctx.fillText(tapText, 160, 124);
     }
   }
   if (state === 'gameover') {

@@ -10,6 +10,11 @@
   // ── Service worker ──────────────────────────────────────────────────────────
   if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
 
+  // ── Enter key to start game ─────────────────────────────────────────────────
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && state === 'title') startGame();
+  });
+
   // ── Stop tap propagation (controls must not trigger startGame) ──────────────
   var controls = document.getElementById('title-controls');
   controls.addEventListener('click',      function(e) { e.stopPropagation(); });

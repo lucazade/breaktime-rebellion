@@ -79,8 +79,15 @@ function startGame() {
   GameAudio.playMusic();
 }
 
+function nextLevel() {
+  currentLevel++;
+  resetLevel();
+  state = 'playing';
+  GameAudio.playMusic();
+}
+
 function restartGame() {
-  lives = 3; score = 0;
+  lives = 3; score = 0; currentLevel = 1;
   resetLevel();
   state = 'playing';
   GameAudio.playMusic();

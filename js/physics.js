@@ -112,8 +112,8 @@ function updatePlayer() {
     }
   }
 
-  // Auto-ring bell on proximity
-  if (levelMechanics.ringBell && allBoards && !BELL.ringing && !BELL.done) {
+  // Auto-ring bell on proximity — triggers when level objective is complete
+  if (levelMechanics.ringBell && (allBoards || allBags) && !BELL.ringing && !BELL.done) {
     const bdx = Math.abs(player.x + PW/2 - BELL.x - 3);
     const bdy = Math.abs(player.y + PH/2 - BELL.y - 5);
     if (bdx < 18 && bdy < 22) ringBell();
@@ -159,7 +159,7 @@ function tryAction() {
         player.spraying = false;
       }, 750);
     } else {
-      if (allBoards && !BELL.done) setMsg(STRINGS.goBell);
+      if ((allBoards || allBags) && !BELL.done) setMsg(STRINGS.goBell);
       else setMsg(STRINGS.getCloser);
     }
   } else {
