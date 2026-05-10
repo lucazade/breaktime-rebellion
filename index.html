@@ -18,11 +18,11 @@
 </head>
 <body>
 
-<div id="portrait-msg">↺<br>ROTATE<br>DEVICE</div>
+<div id="portrait-msg"></div>
 
 <div id="overlay">
   <img id="logo-img" src="assets/logo.png" alt="Breaktime Rebellion">
-  <div class="go">[ TAP TO START ]</div>
+  <div class="go"></div>
 
   <div id="title-controls">
     <div id="lvl-chooser">
@@ -34,7 +34,9 @@
       <button class="lang-btn" data-lang="en">EN</button>
       <button class="lang-btn" data-lang="it">IT</button>
     </div>
-    <button id="audio-toggle"></button>
+    <div id="audio-wrap">
+      <button id="audio-toggle"></button>
+    </div>
   </div>
 </div>
 
@@ -72,69 +74,6 @@
 <script src="js/entities.js"></script>
 <script src="js/draw.js"></script>
 <script src="js/game.js"></script>
-<script>
-// Title screen controls — level chooser, language, audio
-(function() {
-  var controls = document.getElementById('title-controls');
-
-  // Stop propagation so taps on controls don't start the game
-  controls.addEventListener('click',      function(e) { e.stopPropagation(); });
-  controls.addEventListener('touchstart', function(e) { e.stopPropagation(); }, {passive: false});
-
-  // ── Audio toggle ────────────────────────────────────────────────────────────
-  var audioModes = ['full', 'sfx', 'mute'];
-  var audioIcons = {
-    full: '<i class="fa-solid fa-volume-high"></i>',
-    sfx:  '<i class="fa-solid fa-volume-low"></i>',
-    mute: '<i class="fa-solid fa-volume-xmark"></i>',
-  };
-  var audioBtn = document.getElementById('audio-toggle');
-  function refreshAudio() { audioBtn.innerHTML = audioIcons[GameAudio.getMode()]; }
-  refreshAudio();
-  audioBtn.addEventListener('click', function() {
-    var modes = audioModes;
-    var next = modes[(modes.indexOf(GameAudio.getMode()) + 1) % modes.length];
-    GameAudio.setMode(next);
-    refreshAudio();
-  });
-
-  // ── Language selector ───────────────────────────────────────────────────────
-  var currentLang = document.documentElement.lang;
-  document.querySelectorAll('.lang-btn').forEach(function(btn) {
-    if (btn.dataset.lang === currentLang) btn.classList.add('active');
-    btn.addEventListener('click', function() {
-      localStorage.setItem('btr_lang', btn.dataset.lang);
-      location.href = location.pathname + '?lang=' + btn.dataset.lang;
-    });
-  });
-
-  // ── Level chooser (dev only) ────────────────────────────────────────────────
-  var lvlChooser = document.getElementById('lvl-chooser');
-  if (CONFIG.debug.showLevelChooser && CONFIG.levels.length > 1) {
-    lvlChooser.style.display = 'flex';
-    var lvlNameEl = document.getElementById('lvl-name');
-    function refreshLevel() {
-      lvlNameEl.textContent = fmt(STRINGS.missionLabel, currentLevel);
-    }
-    refreshLevel();
-    document.getElementById('lvl-prev').addEventListener('click', function() {
-      currentLevel = currentLevel > 1 ? currentLevel - 1 : CONFIG.levels.length;
-      refreshLevel();
-    });
-    document.getElementById('lvl-next').addEventListener('click', function() {
-      currentLevel = currentLevel < CONFIG.levels.length ? currentLevel + 1 : 1;
-      refreshLevel();
-    });
-  }
-
-  // ── Timer bar visibility ────────────────────────────────────────────────────
-  if (CONFIG.levelTimer === 0) {
-    var tw = document.getElementById('timer-bar-wrap');
-    if (tw) tw.style.display = 'none';
-  }
-})();
-
-if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
-</script>
+<script src="js/title.js"></script>
 </body>
 </html>
