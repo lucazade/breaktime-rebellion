@@ -28,8 +28,8 @@ const CONFIG = {
   },
   levelTimer: 60,  // seconds to complete the level (0 = disabled)
   debug: {
-    disableMusic:    false,  // set true to skip background music during testing
-    disableJanitors: false,  // set true to remove janitors during testing
+    disableJanitors:  false,  // set true to remove janitors during testing
+    showLevelChooser: false,  // set true to show level chooser on title screen
   },
   colors: {
     black:'#000000', white:'#FFFFFF',

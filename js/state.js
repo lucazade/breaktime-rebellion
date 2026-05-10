@@ -72,13 +72,14 @@ function setMsg(t, d) { msgText = t; msgT = d || 220; }
 
 function startGame() {
   document.getElementById('overlay').style.display = 'none';
+  resetLevel();
   state = 'playing';
-  if (!CONFIG.debug.disableMusic) GameAudio.playMusic();
+  GameAudio.playMusic();
 }
 
 function restartGame() {
   lives = 3; score = 0;
   resetLevel();
   state = 'playing';
-  if (!CONFIG.debug.disableMusic) GameAudio.playMusic();
+  GameAudio.playMusic();
 }
