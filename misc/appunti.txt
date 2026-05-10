@@ -41,16 +41,25 @@ Obiettivo: Cambiamenti importanti del gioco
 
 ---
 
-## FASE 4 — Contenuto
+## FASE 4 — Scuola
 
-Obiettivo: riempire il gioco con livelli, ambienti e audio.
+Obiettivo: sistemare mappa e audio
+
+riempire il gioco con livelli, ambienti e audio.
 
 - [x] #22  Implementare scale che vanno anche nell'altra direzione e conseguente gestione dei movimenti di marco. Mischiamo le scale in un verso e nell'altro.
 - [X] #5  Aggiungere muri e creare quindi delle stanze. Le porte sono aperte e tutti possono passare. 
 - [x] #4  Bidello (nuovo personaggio ostile)
 - [x] #9  Musica 8-bit + effetti sonori
+
+---
+
+## FASE 5 — Contenuto
+
+Obiettivo: riempire il gioco con livelli, ambienti e audio.
 - [ ] #23 Aule tematiche (biblioteca, presidenza, bagno) con alunni e lezioni
 - [ ] #24 A fine livello dice di ricaricare per iniziare ma in PWA non esiste il ricarica. Facciamo tap to restart
+- [ ] #25 A inizio livello mostriamo banner con la descrizione della missione.. tipo scrivi su tutte le lavagne e poi suona la campanella (utile per missioni successive)
 
 ### 10 livelli
 
@@ -69,7 +78,7 @@ Obiettivo: riempire il gioco con livelli, ambienti e audio.
 
 ---
 
-## FASE 5 — Rifinitura
+## FASE 6 — Rifinitura
 
 Obiettivo: lucidare l'esperienza prima del rilascio.
 
