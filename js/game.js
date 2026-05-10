@@ -102,6 +102,7 @@ let lives, score, state, frame;
 let particles, floatingTexts;
 let msgText, msgT;
 let actionPressed, allBoards, timerTicks;
+let missionBannerT;
 
 const player = {
   x:0, y:0, vy:0,
@@ -133,6 +134,7 @@ function resetLevel() {
   msgText = ''; msgT = 0;
   actionPressed = false; allBoards = false;
   timerTicks = CONFIG.levelTimer * 60;
+  missionBannerT = 210;
   frame = 0;
 }
 
@@ -241,6 +243,18 @@ function startGame() {
   state = 'playing';
   if (!CONFIG.debug.disableMusic) GameAudio.playMusic();
 }
+
+function restartGame() {
+  lives = 3; score = 0;
+  resetLevel();
+  state = 'playing';
+  if (!CONFIG.debug.disableMusic) GameAudio.playMusic();
+}
+
+CV.addEventListener('click', function() {
+  if (state === 'win' || state === 'gameover') { restartGame(); return; }
+  if (missionBannerT > 0) missionBannerT = 0;
+});
 
 // PHYSICS
 function getFloorBelow(px, py) {
@@ -886,6 +900,7 @@ function loop(ts) {
   while (_accumulator >= _STEP) {
     frame++;
     if (state === 'playing') {
+      if (missionBannerT > 0) missionBannerT--;
       updatePlayer();
       updateTeachers();
       if (!CONFIG.debug.disableJanitors) updateJanitors();
@@ -923,9 +938,37 @@ function loop(ts) {
   drawParticles();
   drawFloating();
   drawEndScreen();
+  drawMissionBanner();
   drawDebugOverlay();
   updateHUD();
   requestAnimationFrame(loop);
+}
+
+function drawMissionBanner() {
+  if (missionBannerT <= 0) return;
+  var alpha = missionBannerT < 40 ? missionBannerT / 40 : 1;
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  ctx.fillStyle = 'rgba(0,0,40,0.88)'; ctx.fillRect(20, 72, 280, 56);
+  ctx.strokeStyle = C.gold; ctx.lineWidth = 1;
+  ctx.strokeRect(21, 73, 278, 54);
+  ctx.font = '6px "Press Start 2P"'; ctx.textAlign = 'center';
+  ctx.fillStyle = C.gold;
+  ctx.fillText(STRINGS.missionLabel, 160, 91);
+  ctx.fillStyle = C.white; ctx.font = '5px "Press Start 2P"';
+  var words = STRINGS.initMsg.split(' '), line = '', lines = [];
+  for (var i = 0; i < words.length; i++) {
+    var test = line + (line ? ' ' : '') + words[i];
+    if (ctx.measureText(test).width > 240) { lines.push(line); line = words[i]; }
+    else line = test;
+  }
+  if (line) lines.push(line);
+  for (var li = 0; li < lines.length; li++)
+    ctx.fillText(lines[li], 160, 107 + li * 10);
+  ctx.fillStyle = C.lgray; ctx.font = '4px "Press Start 2P"';
+  ctx.fillText('[ TAP TO DISMISS ]', 160, 120);
+  ctx.textAlign = 'left';
+  ctx.restore();
 }
 
 function drawDebugOverlay() {
