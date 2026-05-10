@@ -80,7 +80,7 @@ Obiettivo: nuovi ambienti, nuovi livelli, NPC aggiuntivi.
 - [x] #31 Scorporare le logiche dei livelli in un file js separato? In modo che sia espandibile nel tempo?
 - [x] #29 Sistemare livello 1: rimuovere cartelle e bidelli, modificare scritta sulla lavagna in solo "Marco" perchè non entra tutto
 - [x] #30 Implementare Livello 2: aggiungere bidelli e cartelle. Non si può scrivere sulla lavagna (fa parte solo del livello 1 questo capacità di Marco)
-- [ ] #33 Controllare che il level chooser funziona
+- [x] #33 Controllare che il level chooser funziona
 
 ### 10 livelli
 
