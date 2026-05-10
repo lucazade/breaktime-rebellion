@@ -163,6 +163,6 @@ function tryAction() {
       else setMsg(STRINGS.getCloser);
     }
   } else {
-    setMsg(STRINGS.getCloser);
+    setMsg(STRINGS['mission' + currentLevel] || STRINGS.getCloser);
   }
 }

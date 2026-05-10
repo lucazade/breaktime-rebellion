@@ -85,7 +85,10 @@ var LEVELS = (function() {
         {x1:210, y1:L.MY, x2:260, y2:L.TY},
       ],
 
-      boards: [],
+      boards: [
+        {x:14,  y:L.TY-34}, {x:142, y:L.TY-34}, {x:274, y:L.TY-34},
+        {x:14,  y:L.MY-34}, {x:142, y:L.MY-34}, {x:274, y:L.MY-34},
+      ],
 
       bags: [
         // GY floor
