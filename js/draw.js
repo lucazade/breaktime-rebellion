@@ -342,7 +342,9 @@ function updateHUD() {
   for (let i = 0; i < BOARDS.length; i++) if (BOARDS[i].done) done++;
   document.getElementById('hW').textContent = done + '/' + BOARDS.length;
   document.getElementById('hS').textContent = String(score).padStart(5,'0');
-  if (msgT > 0) { msgT--; document.getElementById('msg').textContent = msgText; }
+  var msgEl = document.getElementById('msg');
+  if (msgT > 0) { msgT--; msgEl.textContent = msgText; }
+  else { msgEl.textContent = STRINGS['mission' + currentLevel] || ''; }
   // Objective counter and icon — bags (stealBags) or boards (writeBoards)
   var objDone = 0, objTotal = 0;
   if (levelMechanics.stealBags) {

@@ -60,6 +60,4 @@
   if (pm) pm.innerHTML = STRINGS.rotateHtml;
   var go = document.querySelector('.go');
   if (go) go.textContent = STRINGS.tapToStart;
-  var msgEl = document.getElementById('msg');
-  if (msgEl) msgEl.textContent = STRINGS.mission1;
 })();
