@@ -15,9 +15,10 @@ robots.txt          ← noindex pre-release
 css/
   style.css         ← tutti gli stili
 js/                 ← ordine di caricamento obbligatorio:
-  config.js         ← CONFIG (layout, colors, audio, debug) — primo
-  levels.js         ← LEVELS[] + CONFIG.levels alias — secondo
-  i18n.js           ← STRINGS EN/IT (terzo)
+  config.js         ← CONFIG (images, audio, levelTimer, debug) — primo
+  layout.js         ← CONFIG.layout, CONFIG.colors, shortcut constants, SHARED_LAYOUT
+  levels.js         ← LEVELS[] con mechanics + rooms per livello
+  i18n.js           ← STRINGS EN/IT
   audio.js          ← GameAudio (music + sfx manager)
   state.js          ← variabili condivise, player, resetLevel, startGame, fmt()
   input.js          ← tastiera, touch buttons, joystick analogico
@@ -155,7 +156,7 @@ Icons in `#hud-row` usano **Font Awesome 6 Solid** (CDN).
 ```bash
 node -e "
 const fs=require('fs');
-const files=['js/config.js','js/levels.js','js/i18n.js','js/audio.js','js/state.js','js/input.js','js/physics.js','js/entities.js','js/draw.js','js/game.js','js/title.js'];
+const files=['js/config.js','js/layout.js','js/levels.js','js/i18n.js','js/audio.js','js/state.js','js/input.js','js/physics.js','js/entities.js','js/draw.js','js/game.js','js/title.js'];
 const src=files.map(f=>fs.readFileSync(f,'utf8')).join('\n');
 try{new Function(src);console.log('JS OK');}catch(e){console.log('ERRORE:',e.message);}
 "

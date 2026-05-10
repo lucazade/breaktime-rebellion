@@ -1,17 +1,11 @@
 // ═══════════════════════════════════════════════════════════
-//  CONFIG — edit layout, images, audio here
+//  CONFIG — assets, audio, timer and debug flags
+//  Layout, palette and scene structure are in js/layout.js
 // ═══════════════════════════════════════════════════════════
 const CONFIG = {
-  layout: {
-    W: 320, H: 200,
-    PW: 8, PH: 16,
-    GY: 188, MY: 123, TY: 58,
-    BW: 22, BH: 14,
-    FD: 12,  // floor depth — visible top-face height (oblique cross-section effect)
-  },
   images: {
-    logo: 'assets/logo.png',
-    background: 'assets/bg.png',  // optional hand-drawn background (640×400px)
+    logo:       'assets/logo.png',
+    background: 'assets/bg.png',
   },
   audio: {
     musicVolume: 0.5,
@@ -26,34 +20,9 @@ const CONFIG = {
       gameover: 'assets/audio/gameover.mp3',
     },
   },
-  levelTimer: 60,  // seconds to complete the level (0 = disabled)
+  levelTimer: 60,  // default seconds per level (0 = disabled); override with lv.timer
   debug: {
-    disableJanitors:  false,  // set true to remove janitors during testing
-    showLevelChooser: true,  // set true to show level chooser on title screen
-  },
-  colors: {
-    black:'#000000', white:'#FFFFFF',
-    blue:'#352879', lblue:'#6C5EB5',
-    red:'#68372B', pink:'#9A6759',
-    green:'#588D43', lgreen:'#9AD284',
-    brown:'#433900', orange:'#6F4F25',
-    yellow:'#B8C76F', gold:'#FFD700',
-    dgray:'#444444', mgray:'#6C6C6C', lgray:'#959595',
-    floor:'#6B4C11', floorlt:'#A07040',
-    chalk:'#D8E8D0', chalkbg:'#1A4A1A',
-    purple:'#6F3D86', cyan:'#70A4B2',
-    desk:'#2C1800', desklt:'#4E2A00',
-    bagbody:'#4A3D8F', bagborder:'#2A1F5E',
-    bell:'#DAA520',
-    room1:'#2e5048', room2:'#4a2e50', room3:'#50420e', // room wall colors (teal/purple/amber)
+    disableJanitors:  false,
+    showLevelChooser: true,
   },
 };
-
-// Level definitions are in js/levels.js — loaded after this file.
-// CONFIG.levels is assigned there.
-
-const W = CONFIG.layout.W, H = CONFIG.layout.H;
-const PW = CONFIG.layout.PW, PH = CONFIG.layout.PH;
-const GY = CONFIG.layout.GY, MY = CONFIG.layout.MY, TY = CONFIG.layout.TY;
-const BW = CONFIG.layout.BW, BH = CONFIG.layout.BH;
-const FD = CONFIG.layout.FD;

@@ -78,8 +78,6 @@ function drawBell() {
     const pulse = 0.12 + 0.08 * Math.sin(frame * 0.15);
     ctx.fillStyle = 'rgba(255,215,0,' + pulse + ')';
     ctx.beginPath(); ctx.arc(bx+3, by+5, 7, 0, Math.PI*2); ctx.fill();
-    ctx.fillStyle = C.gold; ctx.font = '5px "Press Start 2P"';
-    ctx.fillText('🔔', bx-5, by+14);
   }
 
   if (BELL.ringing) {
