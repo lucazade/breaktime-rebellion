@@ -76,14 +76,18 @@ mi piacerebbe il più flessibile possibile e non hardcoded. magari in livelli su
 
 Obiettivo: nuovi ambienti, nuovi livelli, NPC aggiuntivi.
 
-- [ ] #23 Aule tematiche (biblioteca, presidenza, bagno) con alunni e lezioni
+- [ ] #23 Prevedere aule tematiche (biblioteca, presidenza, bagno) con alunni e lezioni (utili per livelli successivi)
+- [ ] #31 Scorporare le logiche dei livelli in un file js separato? In modo che sia espandibile nel tempo?
+- [ ] #29 Sistemare livello 1: rimuovere cartelle e bidelli, modificare scritta sulla lavagna in solo "Marco" perchè non entra tutto
+- [ ] #30 Implementare Livello 2: aggiungere bidelli e cartelle. Non si può scrivere sulla lavagna (fa parte solo del livello 1 questo capacità di Marco)
+- [ ] #31 Controllare che il level chooser funziona
 
 ### 10 livelli
 
 | # | Nome | Stato |
 |---|------|-------|
 | L1 | Scrivere sulle lavagne | implementato |
-| L2 | Rubare cartelle/merende dai compagni | da fare |
+| L2 | Rubare cartelle dai compagni | da fare |
 | L3 | Far cadere libri in biblioteca | da fare |
 | L4 | Fare casino in palestra (pallonate) | da fare |
 | L5 | Disturbare la lezione (strillare) | da fare |
@@ -102,3 +106,6 @@ Obiettivo: lucidare l'esperienza prima del rilascio.
 - [X] #6  Logo (Luca lo genera su Gemini e lo integriamo)
 - [ ] #28 Mostrare collo personaggi (collo basso)
 - [ ] #11 Schermata caricamento stile ZX Spectrum (barre laterali animate + logo progressivo a linee)
+- [ ] #32 Schermata migliori punteggi con livello raggiunto (non serve inserire il nome)
+- [ ] #33 Schermata scelta livello per utente (con lucchetto i livelli non ancora sbloccati e non accessibili)
+- [ ] #34 Transizione tra schermate (fade in/out?)
