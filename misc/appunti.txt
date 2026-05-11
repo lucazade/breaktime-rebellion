@@ -114,25 +114,40 @@ Obiettivo: nuovi ambienti, nuovi livelli, NPC aggiuntivi.
 Obiettivo: lucidare l'esperienza prima del rilascio.
 
 - [X] #6  Logo (Luca lo genera su Gemini e lo integriamo)
-- [ ] # Prevedere aule tematiche (biblioteca, presidenza, bagno) con alunni e lezioni (utili per livelli successivi)
-- [ ] # Aggiungere favicon
-- [ ] # Tocca per giocare ancora ti fa ripartire da livello 1 invece che lo stesso
 - [ ] # Schermata storia del personaggio
 - [ ] # Schermata caricamento stile ZX Spectrum (barre laterali animate + logo progressivo a linee)
 - [ ] # Schermata migliori punteggi con livello raggiunto (non serve inserire il nome)
 - [ ] # Schermata scelta livello per utente (con lucchetto i livelli non ancora sbloccati e non accessibili)
 - [ ] # Transizione tra schermate (fade in/out?)
 - [ ] # Mostrare collo personaggi (collo basso)
-- [ ] # rimuovere occhiali ai professori
+- [ ] # Rimuovere occhiali ai professori
 - [ ] # il radar dei professori si vede poco, aumentare opacità
-- [ ] # rimuovere cuori da msg come in tempo scaduto
-- [ ] # rimuovere matita da sotto lavagna
-- [ ] # lavoro su branch outline
+- [ ] # Rimuovere cuori da msg come in tempo scaduto
+- [ ] # Rimuovere matita da sotto lavagna
+
+---
+
+## FASE 9 — Fixes
+
+Obiettivo: non ci piacciono i bachi.
+
 - [ ] # Dopo il game over, la musica di sottofondo del finale non si interrompe all'avvio di una nuova partita, sovrapponendosi alla traccia iniziale
 - [ ] # Nel primo livello ogni tanto non si sente la musica di sottofondo anche se attiva. Poi nel secondo riprende correttamente.
+- [ ] # Tocca per giocare ancora ti fa ripartire da livello 1 invece che lo stesso
 
------
-Appunti per modificare a mano lo stile:
+---
+
+## FASE 10 — Varie ed eventuali
+
+Obiettivo: ancora in dubbio.
+
+- [ ] # Lavoro su branch outline personaggi
+- [ ] # Prevedere aule tematiche (biblioteca, presidenza, bagno) con alunni e lezioni (utili per livelli successivi)
+- [ ] # Aggiungere favicon?
+
+---
+
+## Appunti per modificare a mano lo stile:
 
 Header (barra HUD in alto) — style.css:46
 background: rgba(0,0,0,0.5);
