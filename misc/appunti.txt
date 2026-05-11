@@ -125,7 +125,8 @@ Obiettivo: lucidare l'esperienza prima del rilascio.
 - [ ] # Mostrare collo personaggi (collo basso)
 - [ ] # rimuovere occhiali ai professori
 - [ ] # il radar dei professori si vede poco, aumentare opacità
-
+- [ ] # rimuovere cuori da msg come in tempo scaduto
+- [ ] # rimuovere matita da sotto lavagna
 
 -----
 Appunti per modificare a mano lo stile:
