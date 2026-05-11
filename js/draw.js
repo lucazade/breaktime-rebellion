@@ -339,7 +339,7 @@ function drawDebugOverlay() {
   ctx.restore();
 }
 
-var _HEART_SVG = '<svg width="14" height="12" viewBox="0 0 14 12" xmlns="http://www.w3.org/2000/svg" style="shape-rendering:crispEdges;display:inline-block;vertical-align:middle;margin-right:2px"><rect x="2" y="0" width="4" height="2" fill="currentColor"/><rect x="8" y="0" width="4" height="2" fill="currentColor"/><rect x="0" y="2" width="14" height="2" fill="currentColor"/><rect x="0" y="4" width="14" height="2" fill="currentColor"/><rect x="2" y="6" width="10" height="2" fill="currentColor"/><rect x="4" y="8" width="6" height="2" fill="currentColor"/><rect x="6" y="10" width="2" height="2" fill="currentColor"/></svg>';
+var _HEART_SVG = '<svg width="14" height="12" viewBox="0 0 14 12" xmlns="http://www.w3.org/2000/svg" style="shape-rendering:crispEdges;display:inline-block;vertical-align:middle;margin-right:2px;filter:drop-shadow(1px 1px 1px rgba(0,0,0,0.2))"><rect x="2" y="0" width="4" height="2" fill="currentColor"/><rect x="8" y="0" width="4" height="2" fill="currentColor"/><rect x="0" y="2" width="14" height="2" fill="currentColor"/><rect x="0" y="4" width="14" height="2" fill="currentColor"/><rect x="2" y="6" width="10" height="2" fill="currentColor"/><rect x="4" y="8" width="6" height="2" fill="currentColor"/><rect x="6" y="10" width="2" height="2" fill="currentColor"/></svg>';
 
 function updateHUD() {
   var h = ''; for (var _i = 0; _i < Math.max(0, lives); _i++) h += _HEART_SVG;

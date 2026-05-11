@@ -60,10 +60,10 @@ canvas {
 #hud-row > div   { display: flex; align-items: center; gap: 6px; }
 #hud-overlay .hl { color: #ff6b6b; font-size: 1.2em; transform: translateY(-2px); }
 #hud-overlay .hl span { color: #ff6b6b; }
-#hud-overlay .hg { color: #9ad284; font-size: 11px;}
-#hud-overlay #hS { font-size: 11px; transform: translateY(1px);}
+#hud-overlay .hg { color: #9ad284; font-size: 11px; text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);}
+#hud-overlay #hS { font-size: 11px; transform: translateY(1px); text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);}
 #hud-overlay span { color: #fff; }
-.hud-icon  { font-size: 1.1em; }
+.hud-icon  { font-size: 1.1em; text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3); }
 .hud-spray { color: #9ad284; }
 .hud-star  { color: #ffd700; display: none; }
 
