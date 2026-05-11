@@ -114,15 +114,15 @@ Obiettivo: nuovi ambienti, nuovi livelli, NPC aggiuntivi.
 Obiettivo: lucidare l'esperienza prima del rilascio.
 
 - [X] #6  Logo (Luca lo genera su Gemini e lo integriamo)
-- [ ] # Schermata storia del personaggio
+- [ ] # Schermata storia del personaggio all'inizio del gioco
 - [ ] # Schermata caricamento stile ZX Spectrum (barre laterali animate + logo progressivo a linee)
 - [ ] # Schermata migliori punteggi con livello raggiunto (non serve inserire il nome)
-- [ ] # Schermata scelta livello per utente (con lucchetto i livelli non ancora sbloccati e non accessibili)
+- [ ] # Rendere la scelta dei livelli accessibile agli utenti in base a quelli sbloccati (come dev tutti accessibili)
 - [ ] # Transizione tra schermate (fade in/out?)
-- [ ] # Mostrare collo personaggi (collo basso)
+- [ ] # Mostrare collo personaggi (fare un collo basso)
 - [ ] # Rimuovere occhiali ai professori
-- [ ] # il radar dei professori si vede poco, aumentare opacità
-- [ ] # Rimuovere cuori da msg come in tempo scaduto
+- [ ] # Il radar dei professori si vede poco, aumentare opacità
+- [ ] # Rimuovere cuori da msg
 - [ ] # Rimuovere matita da sotto lavagna
 
 ---
