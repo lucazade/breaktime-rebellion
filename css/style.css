@@ -70,8 +70,8 @@ canvas {
 #msg {
   position: absolute; bottom: 0; left: 0; right: 0;
   background: rgba(0,0,128,0.92); color: #ff0;
-  font-size: clamp(8px,2vw,9px); padding: 4px 8px;
-  height: 20px; text-align: center; letter-spacing: 1px;
+  font-size: clamp(8px,2vw,9px); padding: 5px 8px;
+  height: 20px; text-align: center; letter-spacing: 0px;
   border-top: 1px solid #352879;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   pointer-events: none;
