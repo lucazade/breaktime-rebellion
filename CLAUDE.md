@@ -31,8 +31,8 @@ assets/
   icon-192.png      ← icona PWA 192×192
   icon-512.png      ← icona PWA 512×512
   bg.png            ← background disegnato a mano (640×400px, opzionale)
-misc/
-  appunti.txt       ← piano di implementazione a fasi
+dev/
+  todo.txt          ← piano di implementazione a fasi
 ```
 
 ## Stack

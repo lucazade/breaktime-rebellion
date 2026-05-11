@@ -109,7 +109,19 @@ Obiettivo: nuovi ambienti, nuovi livelli, NPC aggiuntivi.
 
 ---
 
-## FASE 8 — Rifinitura
+## FASE 8 — Fixes
+
+Obiettivo: non ci piacciono i bachi.
+
+- [ ] # Dopo il game over, la musica di sottofondo del finale non si interrompe all'avvio di una nuova partita, sovrapponendosi alla traccia iniziale
+- [ ] # Nel primo livello ogni tanto non si sente la musica di sottofondo anche se attiva. Poi nel secondo riprende correttamente.
+- [ ] # Tocca per giocare ancora ti fa ripartire da livello 1 invece che dallo stesso
+- [ ] # La scritta avvicinati alla lavagna compare dopo che hai già scritto, non ha senso così. rimuoviamola o cerchiamo alternative.
+- [ ] # Il radar dei professori si vede poco, aumentare opacità. Compromette giocabilità
+
+---
+
+## FASE 9 — Rifinitura
 
 Obiettivo: lucidare l'esperienza prima del rilascio.
 
@@ -121,19 +133,9 @@ Obiettivo: lucidare l'esperienza prima del rilascio.
 - [ ] # Transizione tra schermate (fade in/out?)
 - [ ] # Mostrare collo personaggi (fare un collo basso)
 - [ ] # Rimuovere occhiali ai professori
-- [ ] # Il radar dei professori si vede poco, aumentare opacità
 - [ ] # Rimuovere cuori da msg
 - [ ] # Rimuovere matita da sotto lavagna
-
----
-
-## FASE 9 — Fixes
-
-Obiettivo: non ci piacciono i bachi.
-
-- [ ] # Dopo il game over, la musica di sottofondo del finale non si interrompe all'avvio di una nuova partita, sovrapponendosi alla traccia iniziale
-- [ ] # Nel primo livello ogni tanto non si sente la musica di sottofondo anche se attiva. Poi nel secondo riprende correttamente.
-- [ ] # Tocca per giocare ancora ti fa ripartire da livello 1 invece che lo stesso
+- [ ] # Sistemare banner missione e fine livello
 
 ---
 
