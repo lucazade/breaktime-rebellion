@@ -1,5 +1,5 @@
-# Personal configs and notes — immagini escluse, .txt tracciati
-dev/*
+# Personal notes
+#dev/*
 
 # Claude Code local settings
 .claude/

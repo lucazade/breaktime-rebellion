@@ -1,0 +1,146 @@
+# Breaktime Rebellion — Piano di implementazione
+
+---
+
+## FASE 1 — Base solida
+
+Obiettivo: rendere il gioco giocabile e stabile prima di aggiungere contenuto.
+
+- [x] #8  Fix punteggio automatico (scorre senza senso)
+- [x] #3  Prof/professoresse meno poliziotti (sprite più scolastiche)
+- [x] #7  Architettura asset modificabile (cartella assets/, config JSON separato per audio, immagini, layout)
+- [x] #12 La campanella non si riesce ancora a suonare bene (è difficile)
+
+---
+
+## FASE 2 — Gameplay core
+
+Obiettivo: meccaniche di gioco complete e controlli definitivi.
+
+- [x] #2  Layout orizzontale ottimizzato
+- [x] #1  Joypad analogico on-screen (sostituisce pannello attuale)
+- [x] PWA installabile su Android (manifest, service worker, icone, fullscreen landscape)
+- [x] #10 robots.txt e sw.js nella root — confermato, deve essere così per scope PWA e standard HTTP
+- [x] #12 nel gioco la barra in basso con le didascalie è troppo piccola. Aumentiamo di poco font e altezza barra
+- [x] #13 Timer a barra che si scarica (CONFIG.levelTimer in secondi, 0=off). Vita persa allo scadere, game over se 0 vite
+- [x] #14 I personaggi sembrano accellerare non appena Marco si muove, non è corretto, si devono muovere a prescindere e sempre alla stessa velocità
+- [x] #15 i banchi non devono sovrapporsi alle scale
+- [x] #16 la campanella si vede male (troppo grande) e si suona dal piano superiore. mi aspetto che sia all'altezza della lavagna o poco più su e si suoni dallo stesso piano.
+- [x] #17 alziamo le lavagne e la campanella in modo che siano un pò sopra i banchi
+
+---
+
+## FASE 3 — Internal fixes
+
+Obiettivo: Cambiamenti importanti del gioco
+
+- [x] #18 Lingua base del gioco è inglese (includere lingue extra come italiano che vengono caricate in auto in base al locale del device. Anche tutti i commenti del programma o altre scritte in giro devono essere di base in inglese. Non tradurre appunti.txt)
+- [x] #19 Ho modificato il logo.png iniziale nella cartella assets. In essa ci sono anche altre variazioni di prova da mantenere. Vanno aggiornati anche icon-192.png e icon-512.png
+- [x] #20 Traslare i 3 piani dell'edificio verso il basso. Il piano terra parte sopra il footer, il piano più in alto finisce prima dell'header.
+- [x] #21 Le icone e le scritte dell'header sono di grandezza diversa. Cerchiamo di uniformarle tutte. L'icona dello spray non è comprensibile, troviamo sostituto.
+
+---
+
+## FASE 4 — Scuola
+
+Obiettivo: sistemare mappa e audio
+
+- [x] #22  Implementare scale che vanno anche nell'altra direzione e conseguente gestione dei movimenti di marco. Mischiamo le scale in un verso e nell'altro.
+- [X] #5  Aggiungere muri e creare quindi delle stanze. Le porte sono aperte e tutti possono passare. 
+- [x] #4  Bidello (nuovo personaggio ostile)
+- [x] #9  Musica 8-bit + effetti sonori
+
+---
+
+## FASE 5 — Contenuto
+
+Obiettivo: Rifiniture pre imple livelli.
+
+- [x] #27 nella schermato iniziale con il logo metterei sotto la scritta "tocca per iniziare" delle azioni: 
+1. a sinistra un level chooser (solo per dev abilitabile nel config)
+2. al centro la selezione della lingua con delle bandiere della lingua (la prima è quella del locale del device ed è evidenziata)
+3. a destra un icona a tre stati (audio completo con Musica, audio solo effetti, muto)
+non so se fare un overide di config disableMusic.
+queste tre configurazioni le salviamo a livello del browser (vediamo insieme in che modo.)
+- [x] #25 A inizio livello mostriamo banner al centro dello schermo con la descrizione della missione e sparisce dopo pochi secondi o al tap (sono indeciso).
+Il banner è del tipo "Scrivi su tutte le lavagne e poi suona la campanella".
+Questo sarà utile per missioni successive.
+- [x] #24 A fine livello (forse anche quando muori) dice di ricaricare per iniziare ma in PWA non esiste il ricarica. Facciamo tap to restart
+- [x] #26 Il config.layout non mi è chiaro.
+Cosa posso spostare a mano nel config? scale, banchi, borse?
+mi piacerebbe il più flessibile possibile e non hardcoded. magari in livelli successivi spostiamo o togliamo oggetti
+
+---
+
+## FASE 6 — Contenuto avanzato
+
+Obiettivo: nuovi ambienti, nuovi livelli, NPC aggiuntivi.
+
+- [x] #31 Scorporare le logiche dei livelli in un file js separato? In modo che sia espandibile nel tempo?
+- [x] #29 Sistemare livello 1: rimuovere cartelle e bidelli, modificare scritta sulla lavagna in solo "Marco" perchè non entra tutto
+- [x] #30 Implementare Livello 2: aggiungere bidelli e cartelle. Non si può scrivere sulla lavagna (fa parte solo del livello 1 questo capacità di Marco)
+- [x] #33 Controllare che il level chooser funziona
+- [x] #34 Fix primi 2 livelli e definizione livelli in generale:
+    1. quando finisci il livello 1 ti fa rifare lo stesso livello e non passa al successivo
+    2. quando completi il livello compare una seconda campanella più piccola che non serve
+    3. dalla schermata iniziale bisogna mappare anche invio per iniziare partita (utile da desktop)
+    4. la campanella va suonata ad ogni fine livello (aggiungiamola anche nei testi della missione)
+    5. le lavagne, scale e banchi devono stare in ogni livello forse conviene rimuoverle dalla definizioni di ogni singolo livello. anche marco parte sempre nello stesso punto. nota le lavagne sono scrivibili solo nel primo livello.
+    6. la velocità dei professori e dei livelli è troppo maggiore nel secondo livello. per i primi livelli teniamola uguale al primo livello
+
+---
+
+## FASE 7 — Implementare altri livelli (10 in totale)
+
+Obiettivo: nuovi ambienti, nuovi livelli, NPC aggiuntivi.
+
+|  #  | Stato | Nome |
+|-----|-------|------|
+| L1  |   X   | Scrivere sulle lavagne
+| L2  |   X   | Rubare cartelle dai compagni
+| L3  |       | Far cadere libri in biblioteca
+| L4  |       | Fare casino in palestra (pallonate?)
+| L5  |       | Disturbare la lezione (strillare?)
+| L6  |       | Scrivere sulle porte dei bagni (oppure allagare?)
+| L7  |       | Agitare il distributore merende
+| L8  |       | da definire
+| L9  |       | da definire
+| L10 |       | Scappare da scuola (boss finale)
+
+---
+
+## FASE 8 — Rifinitura
+
+Obiettivo: lucidare l'esperienza prima del rilascio.
+
+- [X] #6  Logo (Luca lo genera su Gemini e lo integriamo)
+- [ ] # Schermata storia del personaggio
+- [ ] # Schermata caricamento stile ZX Spectrum (barre laterali animate + logo progressivo a linee)
+- [ ] # Schermata migliori punteggi con livello raggiunto (non serve inserire il nome)
+- [ ] # Schermata scelta livello per utente (con lucchetto i livelli non ancora sbloccati e non accessibili)
+- [ ] # Transizione tra schermate (fade in/out?)
+- [ ] # Mostrare collo personaggi (collo basso)
+- [ ] # Rimuovere occhiali ai professori
+- [ ] # il radar dei professori si vede poco, aumentare opacità
+- [ ] # Rimuovere cuori da msg come in tempo scaduto
+- [ ] # Rimuovere matita da sotto lavagna
+
+---
+
+## FASE 9 — Fixes
+
+Obiettivo: non ci piacciono i bachi.
+
+- [ ] # Dopo il game over, la musica di sottofondo del finale non si interrompe all'avvio di una nuova partita, sovrapponendosi alla traccia iniziale
+- [ ] # Nel primo livello ogni tanto non si sente la musica di sottofondo anche se attiva. Poi nel secondo riprende correttamente.
+- [ ] # Tocca per giocare ancora ti fa ripartire da livello 1 invece che lo stesso
+
+---
+
+## FASE 10 — Varie ed eventuali
+
+Obiettivo: ancora in dubbio.
+
+- [ ] # Lavoro su branch outline personaggi
+- [ ] # Prevedere aule tematiche (biblioteca, presidenza, bagno) con alunni e lezioni (utili per livelli successivi)
+- [ ] # Aggiungere favicon?
