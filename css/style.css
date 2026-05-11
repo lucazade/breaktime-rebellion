@@ -18,7 +18,7 @@ body {
 
 #game-area {
   position: relative;
-  height: min(calc(100dvh - 22px), 600px);
+  /*height: min(calc(100dvh - 22px), 600px);*/
   aspect-ratio: 16/10;
   width: auto;
   max-width: 100vw;
