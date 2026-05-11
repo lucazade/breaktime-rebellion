@@ -9,7 +9,7 @@ function ringBell() {
   addParticles(BELL.x, BELL.y, C.gold, 30);
   setMsg(STRINGS.ringMsg);
   GameAudio.playSfx('bell');
-  setTimeout(function() { BELL.done = true; state = 'win'; GameAudio.stopMusic(); GameAudio.playSfx('win'); }, 2000);
+  pendingTransition = { t: 120, fn: function() { BELL.done = true; state = 'win'; GameAudio.stopMusic(); GameAudio.playSfx('win'); } };
 }
 
 function alertTeachers(bx, by) {
@@ -52,10 +52,10 @@ function caughtBy(t) {
   let msg = fmt(STRINGS.caughtBy, t.name);
   msg += lives > 0 ? '♥'.repeat(lives) : 'GAME OVER!';
   setMsg(msg);
-  var ps = LEVELS[currentLevel - 1].playerStart;
+  const ps = LEVELS[currentLevel - 1].playerStart;
   player.x = ps.x; player.y = ps.y; player.vy = 0;
   GameAudio.playSfx('caught');
-  if (lives <= 0) setTimeout(function() { state = 'gameover'; GameAudio.stopMusic(); GameAudio.playSfx('gameover'); }, 1800);
+  if (lives <= 0) pendingTransition = { t: 108, fn: function() { state = 'gameover'; GameAudio.stopMusic(); GameAudio.playSfx('gameover'); } };
 }
 
 function updateJanitors() {
@@ -92,15 +92,15 @@ function updateTimer() {
     timerTicks = 0;
     lives--;
     addParticles(player.x + PW/2, player.y, C.red, 20);
-    var msg = STRINGS.timesUp;
+    let msg = STRINGS.timesUp;
     msg += lives > 0 ? '♥'.repeat(lives) : 'GAME OVER!';
     setMsg(msg);
     player.stunT = 160; player.spraying = false;
-    var ps = LEVELS[currentLevel - 1].playerStart;
+    const ps = LEVELS[currentLevel - 1].playerStart;
     player.x = ps.x; player.y = ps.y; player.vy = 0;
     GameAudio.playSfx('caught');
     if (lives <= 0) {
-      setTimeout(function() { state = 'gameover'; GameAudio.stopMusic(); GameAudio.playSfx('gameover'); }, 1800);
+      pendingTransition = { t: 108, fn: function() { state = 'gameover'; GameAudio.stopMusic(); GameAudio.playSfx('gameover'); } };
     } else {
       timerTicks = maxTimerTicks;
     }
@@ -117,4 +117,9 @@ function addParticles(x, y, color, n) {
 
 function addFloating(x, y, text, color) {
   floatingTexts.push({x:x, y:y, text:text, color:color, life:80, max:80});
+}
+
+function tickTransition() {
+  if (!pendingTransition) return;
+  if (--pendingTransition.t <= 0) { pendingTransition.fn(); pendingTransition = null; }
 }

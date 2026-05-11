@@ -233,7 +233,20 @@ function drawEndScreen() {
 
 function drawMissionBanner() {
   if (missionBannerT <= 0) return;
-  var alpha = missionBannerT < 40 ? missionBannerT / 40 : 1;
+  if (!missionBannerLines) {
+    ctx.font = '5px "Press Start 2P"';
+    const text = STRINGS['mission' + currentLevel] || STRINGS.mission1;
+    const words = text.split(' ');
+    let line = '', lines = [];
+    for (let i = 0; i < words.length; i++) {
+      const test = line + (line ? ' ' : '') + words[i];
+      if (ctx.measureText(test).width > 240) { lines.push(line); line = words[i]; }
+      else line = test;
+    }
+    if (line) lines.push(line);
+    missionBannerLines = lines;
+  }
+  const alpha = missionBannerT < 40 ? missionBannerT / 40 : 1;
   ctx.save();
   ctx.globalAlpha = alpha;
   ctx.fillStyle = 'rgba(0,0,40,0.88)'; ctx.fillRect(20, 72, 280, 56);
@@ -243,16 +256,8 @@ function drawMissionBanner() {
   ctx.fillStyle = C.gold;
   ctx.fillText(fmt(STRINGS.missionLabel, currentLevel), 160, 91);
   ctx.fillStyle = C.white; ctx.font = '5px "Press Start 2P"';
-  var missionText = STRINGS['mission' + currentLevel] || STRINGS.mission1;
-  var words = missionText.split(' '), line = '', lines = [];
-  for (var i = 0; i < words.length; i++) {
-    var test = line + (line ? ' ' : '') + words[i];
-    if (ctx.measureText(test).width > 240) { lines.push(line); line = words[i]; }
-    else line = test;
-  }
-  if (line) lines.push(line);
-  for (var li = 0; li < lines.length; li++)
-    ctx.fillText(lines[li], 160, 107 + li * 10);
+  for (let li = 0; li < missionBannerLines.length; li++)
+    ctx.fillText(missionBannerLines[li], 160, 107 + li * 10);
   ctx.textAlign = 'left';
   ctx.restore();
 }

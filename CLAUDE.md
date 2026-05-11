@@ -65,6 +65,8 @@ Il codice è diviso in moduli distinti che comunicano via variabili globali cond
 - `player`, `teachers`, `janitors`, `BOARDS`, `bags`, `BELL`, `DESKS`, `stairs`
 - `lives`, `score`, `state`, `frame`, `currentLevel`
 - `levelMechanics` — mechanics attive nel livello corrente (da `lv.mechanics`)
+- `pendingTransition` — `{ t: frames, fn: callback }` o `null`; usato al posto di `setTimeout` per transizioni di stato (win/gameover). Resettato da `resetLevel()`, decrementato da `tickTransition()` nel loop.
+- `missionBannerLines` — array di righe pre-calcolate per il banner missione; `null` = da ricalcolare. Resettato da `resetLevel()`, calcolato al primo frame da `drawMissionBanner()`.
 - `fmt(s, ...args)` — formatta stringhe con placeholder `{0}`, `{1}`
 
 ## LEVELS (js/levels.js)

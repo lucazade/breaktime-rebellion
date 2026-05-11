@@ -33,6 +33,7 @@ function loop(ts) {
       if (!CONFIG.debug.disableJanitors) updateJanitors();
       updateBell();
       updateTimer();
+      tickTransition();
     }
     _accumulator -= _STEP;
   }

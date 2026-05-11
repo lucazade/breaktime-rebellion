@@ -5,7 +5,7 @@ const DEBUG = new URLSearchParams(location.search).get('debug') === '1';
 
 // String formatter: fmt('Hello {0}, score {1}!', name, score)
 function fmt(s) {
-  var a = arguments;
+  const a = arguments;
   return s.replace(/{(\d+)}/g, function(_, i) { return a[+i + 1]; });
 }
 
@@ -23,7 +23,8 @@ let lives, score, state, frame;
 let particles, floatingTexts;
 let msgText, msgT;
 let actionPressed, allBoards, allBags, timerTicks, maxTimerTicks;
-let missionBannerT;
+let missionBannerT, missionBannerLines;
+let pendingTransition = null;
 let currentLevel = 1;
 let bgImage = null;
 let levelMechanics;
@@ -38,7 +39,7 @@ const player = {
 };
 
 function resetLevel() {
-  var lv = LEVELS[currentLevel - 1];
+  const lv = LEVELS[currentLevel - 1];
   stairs   = lv.stairs;
   DESKS    = lv.desks;
   BOARDS   = lv.boards.map(function(b)   { return {x:b.x, y:b.y, done:false}; });
@@ -62,6 +63,8 @@ function resetLevel() {
   actionPressed = false; allBoards = false; allBags = false;
   timerTicks = maxTimerTicks = (lv.timer !== undefined ? lv.timer : CONFIG.levelTimer) * 60;
   missionBannerT = 210;
+  missionBannerLines = null;
+  pendingTransition = null;
   levelMechanics = Object.assign({ writeBoards:true, ringBell:true, stealBags:false }, lv.mechanics);
   frame = 0;
 }
