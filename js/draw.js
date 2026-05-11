@@ -396,22 +396,23 @@ function updateHUD() {
   var msgEl = document.getElementById('msg');
   if (msgT > 0) { msgT--; msgEl.textContent = msgText; }
   else { msgEl.textContent = ''; }
-  // Objective counter and icon — bags (stealBags) or boards (writeBoards)
-  var objDone = 0, objTotal = 0;
+  // Objective counter and icon — switches per active mechanic
+  var objDone = 0, objTotal = 0, iconClass = 'fa-spray-can';
   if (levelMechanics.stealBags) {
     for (let i = 0; i < bags.length; i++) if (bags[i].collected) objDone++;
     objTotal = bags.length;
-    var icon = document.getElementById('hud-obj-icon');
-    if (icon && !icon.classList.contains('fa-bag-shopping')) {
-      icon.className = 'fa-solid fa-bag-shopping hud-icon hud-spray';
-    }
+    iconClass = 'fa-bag-shopping';
+  } else if (levelMechanics.shakeMachines) {
+    for (let i = 0; i < machines.length; i++) if (machines[i].broken) objDone++;
+    objTotal = machines.length;
+    iconClass = 'fa-box';
   } else {
     for (let i = 0; i < BOARDS.length; i++) if (BOARDS[i].done) objDone++;
     objTotal = BOARDS.length;
-    var icon = document.getElementById('hud-obj-icon');
-    if (icon && !icon.classList.contains('fa-spray-can')) {
-      icon.className = 'fa-solid fa-spray-can hud-icon hud-spray';
-    }
+  }
+  var icon = document.getElementById('hud-obj-icon');
+  if (icon && !icon.classList.contains(iconClass)) {
+    icon.className = 'fa-solid ' + iconClass + ' hud-icon hud-spray';
   }
   document.getElementById('hW').textContent = objDone + '/' + objTotal;
   if (maxTimerTicks > 0) {
