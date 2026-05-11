@@ -128,6 +128,8 @@ Obiettivo: lucidare l'esperienza prima del rilascio.
 - [ ] # rimuovere cuori da msg come in tempo scaduto
 - [ ] # rimuovere matita da sotto lavagna
 - [ ] # lavoro su branch outline
+- [ ] # Dopo il game over, la musica di sottofondo del finale non si interrompe all'avvio di una nuova partita, sovrapponendosi alla traccia iniziale
+- [ ] # Nel primo livello ogni tanto non si sente la musica di sottofondo anche se attiva. Poi nel secondo riprende correttamente.
 
 -----
 Appunti per modificare a mano lo stile:
