@@ -127,6 +127,7 @@ Obiettivo: lucidare l'esperienza prima del rilascio.
 - [ ] # il radar dei professori si vede poco, aumentare opacità
 - [ ] # rimuovere cuori da msg come in tempo scaduto
 - [ ] # rimuovere matita da sotto lavagna
+- [ ] # lavoro su branch outline
 
 -----
 Appunti per modificare a mano lo stile:
