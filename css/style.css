@@ -29,7 +29,7 @@ body {
   #wrap { width: 100vw; }
   #game-area {
     width: 100%;
-    height: calc(100dvh - 22px);
+    height: 100dvh;
     aspect-ratio: unset;
     max-width: none;
   }
@@ -44,34 +44,36 @@ canvas {
   position: absolute; top: 0; left: 0; right: 0;
   display: flex; flex-direction: column;
   background: rgba(0,0,0,0.5);
-  color: #aaa; font-size: clamp(7px,2vw,11px); letter-spacing: 1px;
+  color: #aaa; font-size: clamp(7px,2vw,10px); letter-spacing: 1px;
   pointer-events: none;
 }
 #hud-row {
   display: flex; justify-content: space-between; align-items: center;
-  padding: 3px 7px;
+  padding: 2px 7px;
 }
 #timer-bar-wrap {
   width: 100%; height: 3px;
   background: rgba(0,0,0,0.2);
 }
 #timer-bar { height: 3px; width: 100%; background: #9AD284; }
-#hud-row > div   { display: flex; align-items: center; gap: 4px; }
-#hud-overlay .hl { color: #ff6b6b; font-size: 1.2em; transform: translateY(-2px); }
+#hud-row > div   { display: flex; align-items: center; gap: 6px; }
+#hud-overlay .hl { color: #ff6b6b; font-size: 1.2em; transform: translateY(-1px); }
 #hud-overlay .hl span { color: #ff6b6b; }
-#hud-overlay .hg { color: #9ad284; }
+#hud-overlay .hg { color: #9ad284; font-size: 11px;}
+#hud-overlay #hS { font-size: 11px; transform: translateY(1px);}
 #hud-overlay span { color: #fff; }
-.hud-icon  { font-size: 1em; }
+.hud-icon  { font-size: 1.1em; }
 .hud-spray { color: #9ad284; }
 .hud-star  { color: #ffd700; display: none; }
 
 #msg {
-  width: 100%;
+  position: absolute; bottom: 0; left: 0; right: 0;
   background: rgba(0,0,128,0.92); color: #ff0;
-  font-size: clamp(8px,2vw,11px); padding: 3px 8px;
-  height: 22px; text-align: center; letter-spacing: 1px;
+  font-size: clamp(8px,2vw,8px); padding: 4px 8px;
+  height: 20px; text-align: center; letter-spacing: 1px;
   border-top: 1px solid #352879;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  pointer-events: none;
 }
 
 /* ─── JOYSTICK OVERLAY ─── */
