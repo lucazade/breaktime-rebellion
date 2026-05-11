@@ -122,3 +122,4 @@ Obiettivo: lucidare l'esperienza prima del rilascio.
 - [ ] # Schermata scelta livello per utente (con lucchetto i livelli non ancora sbloccati e non accessibili)
 - [ ] # Transizione tra schermate (fade in/out?)
 - [ ] # Tocca per giocare ancora ti fa ripartire da livello 1 invece che lo stesso
+- [ ] # Aggiungere favicon
