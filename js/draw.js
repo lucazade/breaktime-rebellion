@@ -350,7 +350,7 @@ function updateHUD() {
   document.getElementById('hS').textContent = String(score).padStart(5,'0');
   var msgEl = document.getElementById('msg');
   if (msgT > 0) { msgT--; msgEl.textContent = msgText; }
-  else { msgEl.textContent = STRINGS['mission' + currentLevel] || ''; }
+  else { msgEl.textContent = ''; }
   // Objective counter and icon — bags (stealBags) or boards (writeBoards)
   var objDone = 0, objTotal = 0;
   if (levelMechanics.stealBags) {
