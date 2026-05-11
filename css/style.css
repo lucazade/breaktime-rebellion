@@ -37,7 +37,8 @@ body {
 
 canvas {
   display: block; width: 100%; height: 100%;
-  image-rendering: pixelated; background: #1a1a4a;
+  image-rendering: pixelated; 
+  background: #1a1a4a;
 }
 
 #hud-overlay {
@@ -49,7 +50,7 @@ canvas {
 }
 #hud-row {
   display: flex; justify-content: space-between; align-items: center;
-  padding: 2px 7px;
+  padding: 2px 16px;
 }
 #timer-bar-wrap {
   width: 100%; height: 3px;
@@ -57,7 +58,7 @@ canvas {
 }
 #timer-bar { height: 3px; width: 100%; background: #9AD284; }
 #hud-row > div   { display: flex; align-items: center; gap: 6px; }
-#hud-overlay .hl { color: #ff6b6b; font-size: 1.2em; transform: translateY(-1px); }
+#hud-overlay .hl { color: #ff6b6b; font-size: 1.2em; transform: translateY(-2px); }
 #hud-overlay .hl span { color: #ff6b6b; }
 #hud-overlay .hg { color: #9ad284; font-size: 11px;}
 #hud-overlay #hS { font-size: 11px; transform: translateY(1px);}
@@ -69,7 +70,7 @@ canvas {
 #msg {
   position: absolute; bottom: 0; left: 0; right: 0;
   background: rgba(0,0,128,0.92); color: #ff0;
-  font-size: clamp(8px,2vw,8px); padding: 4px 8px;
+  font-size: clamp(8px,2vw,9px); padding: 4px 8px;
   height: 20px; text-align: center; letter-spacing: 1px;
   border-top: 1px solid #352879;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
@@ -79,8 +80,8 @@ canvas {
 /* ─── JOYSTICK OVERLAY ─── */
 #ctrl-joy {
   position: fixed;
-  bottom: calc(15px + env(safe-area-inset-bottom, 0px));
-  left: 15px;
+  bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+  left: 10px;
   width: 110px;
   height: 110px;
   z-index: 50;
