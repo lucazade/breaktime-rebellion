@@ -105,6 +105,51 @@ function drawBags() {
   }
 }
 
+function drawMachines() {
+  for (let i = 0; i < machines.length; i++) {
+    const m = machines[i];
+    const wobble = (!m.broken && m.shakeT > 0) ? Math.round(Math.sin(frame * 1.5) * 1) : 0;
+    const mx = Math.round(m.x) + wobble, my = Math.round(m.y);
+
+    ctx.fillStyle = C.blue;   ctx.fillRect(mx,   my,    10, 18); // body
+    ctx.fillStyle = m.broken ? C.dgray : C.lgreen;
+                              ctx.fillRect(mx+1, my+1,   8,  6); // screen
+    if (!m.broken) {
+      ctx.fillStyle = C.blue; ctx.fillRect(mx+4, my+2,   2,  4); // can icon on screen
+    }
+    ctx.fillStyle = C.mgray;  ctx.fillRect(mx,   my+7,  10,  1); // divider
+    ctx.fillStyle = C.lblue;  ctx.fillRect(mx+1, my+8,   8,  6); // button panel bg
+    ctx.fillStyle = C.red;    ctx.fillRect(mx+2, my+9,   2,  2); // button A
+    ctx.fillStyle = C.yellow; ctx.fillRect(mx+5, my+9,   2,  2); // button B
+    ctx.fillStyle = C.lgreen; ctx.fillRect(mx+2, my+12,  2,  2); // button C
+    ctx.fillStyle = C.black;  ctx.fillRect(mx+3, my+15,  4,  1); // coin slot
+    if (m.broken) {
+      ctx.fillStyle = C.black; ctx.fillRect(mx+2, my+14, 5, 3);  // open hatch
+    }
+
+    // Progress bar while shaking
+    if (!m.broken && m.shakeT > 0) {
+      const pct = m.shakeT / CONFIG.shakeTime;
+      ctx.fillStyle = 'rgba(0,0,0,0.55)';
+      ctx.fillRect(mx-1, my-5, 12, 3);
+      ctx.fillStyle = C.yellow;
+      ctx.fillRect(mx-1, my-5, Math.round(12 * pct), 3);
+    }
+
+    // Proximity highlight (dashed border)
+    if (!m.broken && !allMachines) {
+      const pdx = Math.abs(player.x + PW/2 - m.x - 5);
+      const pdy = Math.abs(player.y + PH  - m.y - 18);
+      if (pdx < 14 && pdy < 8) {
+        ctx.strokeStyle = C.yellow; ctx.lineWidth = 1;
+        ctx.setLineDash([2, 2]);
+        ctx.strokeRect(mx-2, my-2, 14, 22);
+        ctx.setLineDash([]);
+      }
+    }
+  }
+}
+
 function drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, chasing) {
   const bx = Math.round(x), by = Math.round(y);
   const leg = Math.sin(animT) * 2.5;

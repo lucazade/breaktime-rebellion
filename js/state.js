@@ -22,7 +22,8 @@ let BOARDS, bags, BELL, teachers, janitors;
 let lives, score, state, frame;
 let particles, floatingTexts;
 let msgText, msgT;
-let actionPressed, allBoards, allBags, timerTicks, maxTimerTicks;
+let actionPressed, allBoards, allBags, allMachines, timerTicks, maxTimerTicks;
+let machines;
 let missionBannerT, missionBannerLines;
 let pendingTransition = null;
 let currentLevel = 1;
@@ -34,7 +35,7 @@ const player = {
   dir:1, animT:0,
   onGround:false, onLadder:false,
   onStair:false, currentStair:null,
-  stunT:0, spraying:false, sprayT:0,
+  stunT:0, spraying:false, sprayT:0, shaking:false,
   speed:1.5,
 };
 
@@ -57,10 +58,11 @@ function resetLevel() {
   player.dir = 1; player.animT = 0;
   player.onGround = false; player.onLadder = false;
   player.onStair = false; player.currentStair = null;
-  player.stunT = 0; player.spraying = false; player.sprayT = 0;
+  player.stunT = 0; player.spraying = false; player.sprayT = 0; player.shaking = false;
   particles = []; floatingTexts = [];
   msgText = ''; msgT = 0;
-  actionPressed = false; allBoards = false; allBags = false;
+  actionPressed = false; allBoards = false; allBags = false; allMachines = false;
+  machines = (lv.machines || []).map(function(m) { return {x:m.x, y:m.y, broken:false, shakeT:0}; });
   timerTicks = maxTimerTicks = (lv.timer !== undefined ? lv.timer : CONFIG.levelTimer) * 60;
   missionBannerT = 210;
   missionBannerLines = null;

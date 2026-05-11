@@ -72,6 +72,12 @@ function updateJanitors() {
   }
 }
 
+function machineWin() {
+  if (allMachines) return;
+  allMachines = true;
+  setMsg(STRINGS.allMachines);
+}
+
 function bagWin() {
   if (allBags) return;
   allBags = true;

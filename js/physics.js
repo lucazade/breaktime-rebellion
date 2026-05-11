@@ -32,6 +32,38 @@ function updatePlayer() {
   if (player.stunT > 0) { player.stunT--; return; }
   if (player.spraying) { player.sprayT--; if (player.sprayT <= 0) player.spraying = false; return; }
 
+  // Vending machine shake — hold action near machine to smash it
+  player.shaking = false;
+  if (levelMechanics.shakeMachines && K.action && !player.onStair) {
+    for (let mi = 0; mi < machines.length; mi++) {
+      const m = machines[mi];
+      if (m.broken) continue;
+      const dx = Math.abs(player.x + PW/2 - m.x - 5);
+      const dy = Math.abs(player.y + PH  - m.y - 18);
+      if (dx < 14 && dy < 8) {
+        player.shaking = true;
+        player.dir = (player.x + PW/2 < m.x + 5) ? 1 : -1;
+        m.shakeT++;
+        if (m.shakeT >= CONFIG.shakeTime) {
+          m.broken = true;
+          score += 500;
+          addFloating(m.x + 5, m.y, '+500', C.yellow);
+          addParticles(m.x + 5, m.y + 9, C.yellow, 18);
+          alertTeachers(m.x + 5, m.y + 9);
+          let broken = 0;
+          for (let j = 0; j < machines.length; j++) if (machines[j].broken) broken++;
+          if (broken === machines.length) {
+            machineWin();
+          } else {
+            setMsg(fmt(STRINGS.machineBroken, broken, machines.length));
+          }
+        }
+        break;
+      }
+    }
+  }
+  if (player.shaking) return;
+
   const stairResult = getStairAt(player.x, player.y);
 
   if (!player.onStair && stairResult) {
@@ -113,7 +145,7 @@ function updatePlayer() {
   }
 
   // Auto-ring bell on proximity — triggers when level objective is complete
-  if (levelMechanics.ringBell && (allBoards || allBags) && !BELL.ringing && !BELL.done) {
+  if (levelMechanics.ringBell && (allBoards || allBags || allMachines) && !BELL.ringing && !BELL.done) {
     const bdx = Math.abs(player.x + PW/2 - BELL.x - 3);
     const bdy = Math.abs(player.y + PH/2 - BELL.y - 5);
     if (bdx < 18 && bdy < 22) ringBell();

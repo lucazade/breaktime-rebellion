@@ -63,4 +63,6 @@ var SHARED_LAYOUT = {
   ],
 
   bell: { x: 306, y: TY - 30 },
+
+  machines: [],  // override per-level; default empty
 };

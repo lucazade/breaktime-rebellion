@@ -43,6 +43,7 @@ function loop(ts) {
   drawBoards();
   if (levelMechanics.ringBell && !BELL.done) drawBell();
   drawBags();
+  drawMachines();
   drawSight();
 
   for (let i = 0; i < teachers.length; i++) {
