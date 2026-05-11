@@ -80,9 +80,9 @@ var LEVELS = (function() {
       bags: [],
 
       machines: [
-        {x:5,   y:GY-18},  // ground floor, left room (x < 107)
-        {x:297, y:GY-18},  // ground floor, right room (x > 213)
-        {x:297, y:MY-18},  // middle floor, right room (x > 213)
+        {x:16,  y:GY-25},  // ground floor, left room (x < 107)
+        {x:293, y:GY-25},  // ground floor, right room (x > 213)
+        {x:293, y:MY-25},  // middle floor, right room (x > 213)
       ],
 
       teachers: [

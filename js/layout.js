@@ -38,7 +38,7 @@ const BW = CONFIG.layout.BW, BH = CONFIG.layout.BH;
 // Only mechanics (what Marco can do) and NPCs change per level.
 
 var SHARED_LAYOUT = {
-  playerStart: { x: 30, y: GY - PH },
+  playerStart: { x: 35, y: GY - PH },
 
   stairs: [
     {x1:87,  y1:GY, x2:27,  y2:MY},  // GY→MY left
