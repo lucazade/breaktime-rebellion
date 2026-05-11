@@ -123,3 +123,37 @@ Obiettivo: lucidare l'esperienza prima del rilascio.
 - [ ] # Transizione tra schermate (fade in/out?)
 - [ ] # Tocca per giocare ancora ti fa ripartire da livello 1 invece che lo stesso
 - [ ] # Aggiungere favicon
+
+
+-----
+Appunti per modificare a mano lo stile:
+
+Header (barra HUD in alto) — style.css:46
+background: rgba(0,0,0,0.5);
+
+
+Banner missione (appare all'inizio del livello) — draw.js:252-254
+ctx.fillStyle = 'rgba(0,0,40,0.88)';   // sfondo blu scuro
+ctx.fillRect(20, 72, 280, 56);
+ctx.strokeStyle = C.gold;               // bordo dorato
+ctx.strokeRect(21, 73, 278, 54);
+
+
+Banner fine livello — draw.js:209 e draw.js:221
+// Win
+ctx.fillStyle = 'rgba(0,0,60,0.88)';   // blu scuro
+ctx.fillRect(20, 60, 280, 80);
+
+// Game over
+ctx.fillStyle = 'rgba(60,0,0,0.88)';   // rosso scuro
+ctx.fillRect(40, 65, 240, 70);
+Tutti e tre i banner del canvas usano rgba direttamente in JS — cambia il colore lì. L'header è solo CSS.
+
+
+il footer È #msg in style.css:68-75:
+#msg {
+  background: rgba(0,0,128,0.92);  /* ← sfondo blu scuro */
+  color: #ff0;                      /* ← testo giallo */
+  border-top: 1px solid #352879;   /* ← bordo superiore */
+  ...
+}
