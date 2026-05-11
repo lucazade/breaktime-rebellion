@@ -98,7 +98,7 @@ Obiettivo: nuovi ambienti, nuovi livelli, NPC aggiuntivi.
 |-----|-------|------|
 | L1  |   X   | Scrivere sulle lavagne
 | L2  |   X   | Rubare cartelle dai compagni
-| L3  |       | Agitare il distributore merende
+| L3  |   X    | Agitare il distributore merende
 | L4  |       | Far cadere libri in biblioteca
 | L5  |       | Fare casino in palestra (pallonate?)
 | L6  |       | Disturbare la lezione (strillare?)
@@ -136,6 +136,7 @@ Obiettivo: lucidare l'esperienza prima del rilascio.
 - [ ] # Rimuovere cuori da msg
 - [ ] # Rimuovere matita da sotto lavagna
 - [ ] # Sistemare banner missione e fine livello
+- [ ] # Gestire Marco quando sale e scende le scale coprendo parte non visibile dietro al pavimento
 
 ---
 
