@@ -98,7 +98,7 @@ Obiettivo: nuovi ambienti, nuovi livelli, NPC aggiuntivi.
 |-----|-------|------|
 | L1  |   X   | Scrivere sulle lavagne
 | L2  |   X   | Rubare cartelle dai compagni
-| L3  |   X    | Agitare il distributore merende
+| L3  |   X   | Agitare il distributore merende
 | L4  |       | Far cadere libri in biblioteca
 | L5  |       | Fare casino in palestra (pallonate?)
 | L6  |       | Disturbare la lezione (strillare?)
@@ -113,7 +113,7 @@ Obiettivo: nuovi ambienti, nuovi livelli, NPC aggiuntivi.
 
 Obiettivo: non ci piacciono i bachi.
 
-- [ ] # Sistemare il posizionamento di banchi, lavagne, cartelle e la campanella (Luca)
+- [ ] # Sistemare il posizionamento di banchi, lavagne, cartelle, campanella, distributori e secchi. Lavandino? (Luca)
 - [ ] # Dopo il game over, la musica di sottofondo del finale non si interrompe all'avvio di una nuova partita, sovrapponendosi alla traccia iniziale
 - [ ] # Nel primo livello ogni tanto non si sente la musica di sottofondo anche se attiva. Poi nel secondo riprende correttamente.
 - [ ] # Tocca per giocare ancora ti fa ripartire da livello 1 invece che dallo stesso
@@ -146,6 +146,8 @@ Obiettivo: lucidare l'esperienza prima del rilascio.
 
 Obiettivo: ancora in dubbio.
 
+- [ ] # Perchè il gioco è tutto in 320x200 e poi upscalato. Non è meglio direttamente in 640x400?
 - [ ] # Lavoro su branch outline personaggi
 - [ ] # Prevedere aule tematiche (biblioteca, presidenza, bagno) con alunni e lezioni (utili per livelli successivi)
 - [ ] # Aggiungere favicon?
+- [ ] # Rifare immagine iniziale con chatgpt

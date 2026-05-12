@@ -1,0 +1,8 @@
+LucazadeSoft Team:
+-------------------
+
+- Luca Forina (Orchestrator)
+- Claude by Anthropic (Lead Developer)
+- Dall-E 3 and ChatGPT (Graphics)
+- OpenGameArt (Music and effects)
+- Family (BetaTesting and Ideas!)
