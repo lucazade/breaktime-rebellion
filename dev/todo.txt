@@ -94,15 +94,18 @@ Obiettivo: nuovi ambienti, nuovi livelli, NPC aggiuntivi.
 
 Obiettivo: nuovi ambienti, nuovi livelli, NPC aggiuntivi.
 
-|  #  | Stato | Nome |
-|-----|-------|------|
+- [ ] # Implementare lavandino con specchio in bagno e secchi nell'ingresso e palestra (per nuovi livelli)
+- [ ] # Implementare alunni seduti al banco e professori che fanno lezione vicino alla lavagna (per nuovi livelli)
+
+|  #  | Stato | Nome                                    |
+|-----|-------|-----------------------------------------|
 | L1  |   X   | Scrivere sulle lavagne
 | L2  |   X   | Rubare cartelle dai compagni
 | L3  |   X   | Agitare il distributore merende
-| L4  |       | Far cadere libri in biblioteca
+| L4  |       | Far cadere libri in presidenza
 | L5  |       | Fare casino in palestra (pallonate?)
 | L6  |       | Disturbare la lezione (strillare?)
-| L7  |       | Scrivere sulle porte dei bagni (oppure allagare?)
+| L7  |       | Allagare il bagno (oppure allagare?)
 | L8  |       | da definire
 | L9  |       | da definire
 | L10 |       | Scappare da scuola (boss finale)
@@ -113,13 +116,12 @@ Obiettivo: nuovi ambienti, nuovi livelli, NPC aggiuntivi.
 
 Obiettivo: non ci piacciono i bachi.
 
-- [ ] # Sistemare interazione con campanella e distributori
-- [ ] # Implementare lavandino con specchio e secchi (per nuovi livelli)
+- [ ] # Sistemare interazione con campanella e distributori (ora sono più in alto e non funzionano, non spostare oggetti)
 - [ ] # Dopo il game over, la musica di sottofondo del finale non si interrompe all'avvio di una nuova partita, sovrapponendosi alla traccia iniziale
 - [ ] # Nel primo livello ogni tanto non si sente la musica di sottofondo anche se attiva. Poi nel secondo riprende correttamente.
 - [ ] # Tocca per giocare ti fa ripartire da livello 1 invece che dallo stesso
-- [ ] # La scritta "avvicinati alla lavagna" o "spacca il distributore" compaiono dopo che stai già facendo l'azione, non ha senso così. rimuoviamola o mostrimola in prossimità del target.
-- [ ] # Il radar dei professori si vede poco, aumentare opacità. Compromette giocabilità
+- [ ] # La scritta "avvicinati alla lavagna" o "spacca il distributore" compaiono dopo che stai già facendo l'azione, mostrimolo in prossimità del target.
+- [ ] # Il radar dei professori si vede poco, aumentare opacità.
 
 ---
 
@@ -127,19 +129,18 @@ Obiettivo: non ci piacciono i bachi.
 
 Obiettivo: lucidare l'esperienza prima del rilascio.
 
-- [X] #6  Logo (Luca lo genera su Gemini e lo integriamo)
+- [X] #6  Logo (Luca lo genera e lo integriamo)
 - [ ] # Schermata storia del personaggio all'inizio del gioco
 - [ ] # Schermata caricamento stile ZX Spectrum (barre laterali animate + logo progressivo a linee)
 - [ ] # Schermata migliori punteggi con livello raggiunto (non serve inserire il nome)
-- [ ] # Schermata crediti (Cluade lead dev, Luca Project Manager, Gemini Art?)
-- [ ] # Rendere la scelta dei livelli accessibile agli utenti in base a quelli sbloccati (come dev tutti accessibili)
+- [ ] # Schermata crediti (vedi credits.txt)
+- [ ] # Rendere la scelta dei livelli accessibile agli utenti in base a quelli sbloccati (per i dev tutti accessibili)
 - [ ] # Transizione tra schermate (fade in/out?)
-- [ ] # Mostrare collo personaggi (fare un collo basso)
 - [ ] # Rimuovere occhiali ai professori
 - [ ] # Rimuovere cuori da msg
-- [ ] # Rimuovere matita da sotto lavagna
-- [ ] # Sistemare banner missione e fine livello
+- [ ] # Sistemare graficamente banner missione e fine livello (css?)
 - [ ] # Gestire Marco quando sale e scende le scale coprendo parte non visibile dietro al pavimento
+- [ ] # Rifare immagine iniziale con chatgpt senza problemi di licenza (prima definire meglio homepage)
 
 ---
 
@@ -147,10 +148,8 @@ Obiettivo: lucidare l'esperienza prima del rilascio.
 
 Obiettivo: ancora in dubbio.
 
-- [ ] # Perchè il gioco è tutto in 320x200 e poi upscalato. Non è meglio direttamente in 640x400?
-- [ ] # Perchè in index ci sono delle cose hardcoded tipo i cuori? o riferimenti allo spray?
+- [ ] # Perchè il gioco è tutto in 320x200 e poi upscalato? Non è meglio direttamente in 640x400?
+- [ ] # Mostrare collo personaggi (fare un collo basso)
 - [ ] # Lavoro su branch outline personaggi
-- [ ] # Prevedere aule tematiche (biblioteca, presidenza, bagno) con alunni e lezioni (utili per livelli successivi)
-- [ ] # Aggiungere favicon?
-- [ ] # Rifare immagine iniziale con chatgpt senza problemi di gemini (prima definire meglio homepage)
-- [ ] # ngrok: 17:38:17.361 CEST GET /.well-known/assetlinks.json 404 File not found     
+- [ ] # Aggiungere favicon? serve nel gioco finale? Utile se si gioca sul browser su pc
+- [ ] # ngrok errore? 17:38:17.361 CEST GET /.well-known/assetlinks.json 404 File not found     
