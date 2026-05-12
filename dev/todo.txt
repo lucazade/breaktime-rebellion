@@ -100,14 +100,14 @@ Obiettivo: nuovi ambienti, nuovi livelli, NPC aggiuntivi.
 |  #  | Stato | Nome                                    |
 |-----|-------|-----------------------------------------|
 | L1  |   X   | Scrivere sulle lavagne
-| L2  |   X   | Rubare cartelle dai compagni
+| L2  |   X   | Rubare cartelle dei compagni
 | L3  |   X   | Agitare il distributore merende
-| L4  |       | Far cadere libri in presidenza
-| L5  |       | Fare casino in palestra (pallonate?)
-| L6  |       | Disturbare la lezione (strillare?)
-| L7  |       | Allagare il bagno (oppure allagare?)
-| L8  |       | da definire
-| L9  |       | da definire
+| L4  |       | Fare casino in palestra (pallonate?)
+| L5  |       | Disturbare la lezione (strillare?)
+| L6  |       | Far cadere libri in presidenza
+| L7  |       | Allagare il bagno
+| L8  |       | Inserire petardi nei secchi della spazzatura
+| L9  |       | Far scattare l'allarme anti-incendio
 | L10 |       | Scappare da scuola (boss finale)
 
 ---
