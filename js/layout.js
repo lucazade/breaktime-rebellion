@@ -3,11 +3,19 @@
 //  Edit here to change the look of the school building.
 // ═══════════════════════════════════════════════════════════
 
-CONFIG.layout = {
+/*CONFIG.layout = {
   W: 320, H: 200,
   PW: 8, PH: 16,
   GY: 186, MY: 123, TY: 58,
   BW: 22, BH: 14,
+};*/
+
+CONFIG.layout = {
+  W: 320, H: 200,
+  PW: 8, PH: 16,
+  GY: 185, MY: 127, TY: 70,
+  BW: 22, BH: 14,
+  walkOffset: 6,
 };
 
 CONFIG.colors = {
@@ -31,6 +39,7 @@ const W = CONFIG.layout.W, H = CONFIG.layout.H;
 const PW = CONFIG.layout.PW, PH = CONFIG.layout.PH;
 const GY = CONFIG.layout.GY, MY = CONFIG.layout.MY, TY = CONFIG.layout.TY;
 const BW = CONFIG.layout.BW, BH = CONFIG.layout.BH;
+const walkOffset = CONFIG.layout.walkOffset;
 
 // ── Shared scene ─────────────────────────────────────────────────────────────
 // Stairs, boards, desks, bell and player start are the same in every level —
@@ -38,13 +47,20 @@ const BW = CONFIG.layout.BW, BH = CONFIG.layout.BH;
 // Only mechanics (what Marco can do) and NPCs change per level.
 
 var SHARED_LAYOUT = {
-  playerStart: { x: 35, y: GY - PH },
+  playerStart: { x: 35, y: GY - PH - walkOffset },
 
-  stairs: [
+  /*stairs: [
     {x1:87,  y1:GY, x2:27,  y2:MY},  // GY→MY left
     {x1:235, y1:GY, x2:285, y2:MY},  // GY→MY right
     {x1:95,  y1:MY, x2:35, y2:TY},  // MY→TY left
     {x1:225, y1:MY, x2:285, y2:TY},  // MY→TY right
+  ],*/
+
+  stairs: [
+    {x1:88,  y1:GY-walkOffset, x2:35,  y2:MY-walkOffset},  // GY→MY sx
+    {x1:232, y1:GY-walkOffset, x2:285, y2:MY-walkOffset},  // GY→MY dx
+    {x1:90,  y1:MY-walkOffset, x2:33,  y2:TY-walkOffset},  // MY→TY sx
+    {x1:232, y1:MY-walkOffset, x2:285, y2:TY-walkOffset},  // MY→TY dx
   ],
 
   boards: [

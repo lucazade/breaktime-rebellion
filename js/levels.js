@@ -28,9 +28,9 @@ var LEVELS = (function() {
       bags: [],
 
       teachers: [
-        {x:200, y:GY-PH, dir:1,  minX:10, maxX:305, speed:0.55, color:C.redprof, name:'Prof.Rossi', sight:90 },
-        {x:80,  y:MY-PH, dir:-1, minX:10, maxX:305, speed:0.50, color:C.cyanprof, name:'Prof.Celeste', sight:80 },
-        {x:230, y:TY-PH, dir:1,  minX:10, maxX:275, speed:0.60, color:C.grayprof, name:'Prof.Neri',  sight:100},
+        {x:200, y:GY-PH-walkOffset, dir:1,  minX:10, maxX:305, speed:0.55, color:C.redprof, name:'Prof.Rossi', sight:90 },
+        {x:80,  y:MY-PH-walkOffset, dir:-1, minX:10, maxX:305, speed:0.50, color:C.cyanprof, name:'Prof.Celeste', sight:80 },
+        {x:230, y:TY-PH-walkOffset, dir:1,  minX:10, maxX:275, speed:0.60, color:C.grayprof, name:'Prof.Neri',  sight:100},
       ],
 
       janitors: [],
@@ -55,14 +55,14 @@ var LEVELS = (function() {
       ],
 
       teachers: [
-        {x:200, y:GY-PH, dir:1,  minX:10, maxX:305, speed:0.55, color:C.redprof, name:'Prof.Rossi', sight:90 },
-        {x:80,  y:MY-PH, dir:-1, minX:10, maxX:305, speed:0.50, color:C.cyanprof, name:'Prof.Celeste', sight:80 },
-        {x:230, y:TY-PH, dir:1,  minX:10, maxX:275, speed:0.60, color:C.grayprof, name:'Prof.Neri',  sight:100},
+        {x:200, y:GY-PH-walkOffset, dir:1,  minX:10, maxX:305, speed:0.55, color:C.redprof, name:'Prof.Rossi', sight:90 },
+        {x:80,  y:MY-PH-walkOffset, dir:-1, minX:10, maxX:305, speed:0.50, color:C.cyanprof, name:'Prof.Celeste', sight:80 },
+        {x:230, y:TY-PH-walkOffset, dir:1,  minX:10, maxX:275, speed:0.60, color:C.grayprof, name:'Prof.Neri',  sight:100},
       ],
 
       janitors: [
-        {x:160, y:GY-PH, dir:1,  minX:90,  maxX:230, speed:0.65, name:'Bidello'},
-        {x:140, y:TY-PH, dir:-1, minX:115, maxX:200, speed:0.65, name:'Bidello'},
+        {x:160, y:GY-PH-walkOffset, dir:1,  minX:90,  maxX:230, speed:0.65, name:'Bidello'},
+        {x:140, y:TY-PH-walkOffset, dir:-1, minX:115, maxX:200, speed:0.65, name:'Bidello'},
       ],
     }),
 
@@ -86,14 +86,14 @@ var LEVELS = (function() {
       ],
 
       teachers: [
-        {x:200, y:GY-PH, dir:1,  minX:10, maxX:305, speed:0.55, color:C.redprof,  name:'Prof.Rossi',    sight:90 },
-        {x:80,  y:MY-PH, dir:-1, minX:10, maxX:305, speed:0.50, color:C.cyanprof, name:'Prof.Celeste',  sight:80 },
-        {x:230, y:TY-PH, dir:1,  minX:10, maxX:275, speed:0.60, color:C.grayprof, name:'Prof.Neri',     sight:100},
+        {x:200, y:GY-PH-walkOffset, dir:1,  minX:10, maxX:305, speed:0.55, color:C.redprof,  name:'Prof.Rossi',    sight:90 },
+        {x:80,  y:MY-PH-walkOffset, dir:-1, minX:10, maxX:305, speed:0.50, color:C.cyanprof, name:'Prof.Celeste',  sight:80 },
+        {x:230, y:TY-PH-walkOffset, dir:1,  minX:10, maxX:275, speed:0.60, color:C.grayprof, name:'Prof.Neri',     sight:100},
       ],
 
       janitors: [
-        {x:160, y:GY-PH, dir:1,  minX:90,  maxX:230, speed:0.65, name:'Bidello'},
-        {x:140, y:TY-PH, dir:-1, minX:115, maxX:200, speed:0.65, name:'Bidello'},
+        {x:160, y:GY-PH-walkOffset, dir:1,  minX:90,  maxX:230, speed:0.65, name:'Bidello'},
+        {x:140, y:TY-PH-walkOffset, dir:-1, minX:115, maxX:200, speed:0.65, name:'Bidello'},
       ],
     }),
 

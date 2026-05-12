@@ -11,9 +11,9 @@ function fmt(s) {
 
 // Building structure — same across all levels, derived from layout constants
 const floors = [
-  {x:0, y:GY, w:320},
-  {x:0, y:MY, w:320},
-  {x:0, y:TY, w:320},
+  {x:0, y:GY - walkOffset, w:320},
+  {x:0, y:MY - walkOffset, w:320},
+  {x:0, y:TY - walkOffset, w:320},
 ];
 
 // Mutable level state — all reset by resetLevel()
