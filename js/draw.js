@@ -43,8 +43,6 @@ function drawBoards() {
         ctx.setLineDash([2,2]);
         ctx.strokeRect(b.x-2, b.y-2, BW+4, BH+4);
         ctx.setLineDash([]);
-        ctx.fillStyle = C.yellow; ctx.font = '5px "Press Start 2P"';
-        ctx.fillText('✏', b.x+BW/2-4, b.y+BH+8);
       }
     } else {
       ctx.fillStyle = C.pink; ctx.font = '4px "Press Start 2P"';
