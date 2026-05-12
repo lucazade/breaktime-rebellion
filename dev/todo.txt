@@ -152,3 +152,4 @@ Obiettivo: ancora in dubbio.
 - [ ] # Prevedere aule tematiche (biblioteca, presidenza, bagno) con alunni e lezioni (utili per livelli successivi)
 - [ ] # Aggiungere favicon?
 - [ ] # Rifare immagine iniziale con chatgpt senza problemi di gemini (prima definire meglio homepage)
+- [ ] # ngrok: 17:38:17.361 CEST GET /.well-known/assetlinks.json 404 File not found     
