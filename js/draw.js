@@ -48,7 +48,7 @@ function drawBoards() {
       }
     } else {
       ctx.fillStyle = C.pink; ctx.font = '4px "Press Start 2P"';
-      ctx.fillText('MARCO', b.x+2, b.y+9);
+      ctx.fillText('MARCO', b.x+1, b.y+9);
       ctx.fillStyle = C.yellow; ctx.fillRect(b.x+1, b.y+10, BW-2, 1);
     }
   }
