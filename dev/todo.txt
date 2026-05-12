@@ -147,7 +147,8 @@ Obiettivo: lucidare l'esperienza prima del rilascio.
 Obiettivo: ancora in dubbio.
 
 - [ ] # Perchè il gioco è tutto in 320x200 e poi upscalato. Non è meglio direttamente in 640x400?
+- [ ] # Perchè in index ci sono delle cose hardcoded tipo i cuori? o riferimenti allo spray?
 - [ ] # Lavoro su branch outline personaggi
 - [ ] # Prevedere aule tematiche (biblioteca, presidenza, bagno) con alunni e lezioni (utili per livelli successivi)
 - [ ] # Aggiungere favicon?
-- [ ] # Rifare immagine iniziale con chatgpt
+- [ ] # Rifare immagine iniziale con chatgpt senza problemi di gemini (prima definire meglio homepage)
