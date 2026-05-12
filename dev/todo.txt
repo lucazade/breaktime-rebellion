@@ -113,11 +113,12 @@ Obiettivo: nuovi ambienti, nuovi livelli, NPC aggiuntivi.
 
 Obiettivo: non ci piacciono i bachi.
 
-- [ ] # Sistemare il posizionamento di banchi, lavagne, cartelle, campanella, distributori e secchi. Lavandino? (Luca)
+- [ ] # Sistemare interazione con campanella e distributori
+- [ ] # Implementare lavandino con specchio e secchi (per nuovi livelli)
 - [ ] # Dopo il game over, la musica di sottofondo del finale non si interrompe all'avvio di una nuova partita, sovrapponendosi alla traccia iniziale
 - [ ] # Nel primo livello ogni tanto non si sente la musica di sottofondo anche se attiva. Poi nel secondo riprende correttamente.
-- [ ] # Tocca per giocare ancora ti fa ripartire da livello 1 invece che dallo stesso
-- [ ] # La scritta "avvicinati alla lavagna" o "spacca il distributore" compaiono dopo che stai già facendo l'azione, non ha senso così. rimuoviamola o cerchiamo alternative.
+- [ ] # Tocca per giocare ti fa ripartire da livello 1 invece che dallo stesso
+- [ ] # La scritta "avvicinati alla lavagna" o "spacca il distributore" compaiono dopo che stai già facendo l'azione, non ha senso così. rimuoviamola o mostrimola in prossimità del target.
 - [ ] # Il radar dei professori si vede poco, aumentare opacità. Compromette giocabilità
 
 ---
