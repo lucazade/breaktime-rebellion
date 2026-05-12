@@ -1,7 +1,7 @@
 {
   "name": "Breaktime Rebellion",
   "short_name": "Breaktime",
-  "description": "Gioco arcade stile anni 80 ambientato in un liceo italiano",
+  "description": "80s-style arcade game set in a high school",
   "display": "fullscreen",
   "orientation": "landscape",
   "start_url": ".",
@@ -9,13 +9,13 @@
   "theme_color": "#000014",
   "icons": [
     {
-      "src": "assets/icon-192.png",
+      "src": "assets/icons/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "assets/icon-512.png",
+      "src": "assets/icons/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
