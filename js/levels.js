@@ -80,7 +80,7 @@ var LEVELS = (function() {
       bags: [],
 
       machines: [
-        {x:91,  y:GY-39},
+        {x:91,  y:GY-38},
         {x:279, y:MY-38},
         {x:36, y:TY-36},
       ],
