@@ -48,20 +48,19 @@ function playerDied() {
   player.spraying = false; player.shaking = false; player.vy = 0;
   addParticles(player.x + PW/2, player.y, C.red, 20);
   GameAudio.playSfx('caught');
-  deathFreeze = true;
   if (lives <= 0) {
+    // Game over: freeze everything, then show banner
+    deathFreeze = true;
     pendingTransition = { t: 108, fn: function() {
       state = 'gameover'; GameAudio.stopMusic(); GameAudio.playJingle('gameover');
     }};
   } else {
-    pendingTransition = { t: 80, fn: function() {
-      const ps = LEVELS[currentLevel - 1].playerStart;
-      player.x = ps.x; player.y = ps.y; player.vy = 0;
-      player.onStair = false; player.currentStair = null;
-      player.stunT = 120;
-      timerTicks = maxTimerTicks;
-      deathFreeze = false;
-    }};
+    // Lost a life but game continues: immediate respawn, teachers keep moving
+    const ps = LEVELS[currentLevel - 1].playerStart;
+    player.x = ps.x; player.y = ps.y; player.vy = 0;
+    player.onStair = false; player.currentStair = null;
+    player.stunT = 120;
+    timerTicks = maxTimerTicks;
   }
 }
 
