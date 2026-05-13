@@ -79,7 +79,7 @@ var SHARED_LAYOUT = {
   ],
   //{x:131, y:MY-22}, 
 
-  bell: { x: 14, y: GY - 51 },
+  bell: { x: 13, y: GY - 52 },
 
   machines: [],  // override per-level; default empty
 };

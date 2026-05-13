@@ -94,8 +94,9 @@ Obiettivo: nuovi ambienti, nuovi livelli, NPC aggiuntivi.
 
 Obiettivo: nuovi ambienti, nuovi livelli, NPC aggiuntivi.
 
-- [ ] # Implementare lavandino con specchio in bagno e secchi nell'ingresso e palestra (per nuovi livelli)
-- [ ] # Implementare alunni seduti al banco e professori che fanno lezione vicino alla lavagna (per nuovi livelli)
+- [ ] # Disegnare lavandino con specchio in bagno (L7)
+- [ ] # Disegnare secchi spazzatura nell'ingresso e palestra (L8)
+- [ ] # Disegnare alunni seduti al banco e professori che fanno lezione vicino alla lavagna (L5)
 
 |  #  | Stato | Nome                                    |
 |-----|-------|-----------------------------------------|
@@ -116,12 +117,14 @@ Obiettivo: nuovi ambienti, nuovi livelli, NPC aggiuntivi.
 
 Obiettivo: non ci piacciono i bachi.
 
+- [ ] # Ridurre la grandezza della campanella di un 30%
 - [ ] # Sistemare interazione con campanella e distributori (ora sono più in alto e non funzionano, non spostare oggetti)
 - [ ] # Dopo il game over, la musica di sottofondo del finale non si interrompe all'avvio di una nuova partita, sovrapponendosi alla traccia iniziale
 - [ ] # Nel primo livello ogni tanto non si sente la musica di sottofondo anche se attiva. Poi nel secondo riprende correttamente.
 - [ ] # Tocca per giocare ti fa ripartire da livello 1 invece che dallo stesso
 - [ ] # La scritta "avvicinati alla lavagna" o "spacca il distributore" compaiono dopo che stai già facendo l'azione, mostrimolo in prossimità del target.
 - [ ] # Il radar dei professori si vede poco, aumentare opacità.
+- [ ] # Perchè il gioco è tutto in 320x200 nel codice? Non è meglio lavorare direttamente in 640x400? Inoltre abbiamo anche il bg unresized disponibile a 1586 × 992 (magari per giocare da browser desktop)
 
 ---
 
@@ -147,8 +150,6 @@ Obiettivo: lucidare l'esperienza prima del rilascio.
 ## FASE 10 — Varie ed eventuali
 
 Obiettivo: ancora in dubbio.
-
-- [ ] # Perchè il gioco è tutto in 320x200 e poi upscalato? Non è meglio direttamente in 640x400?
 - [ ] # Mostrare collo personaggi (fare un collo basso)
 - [ ] # Lavoro su branch outline personaggi
 - [ ] # Aggiungere favicon? serve nel gioco finale? Utile se si gioca sul browser su pc
