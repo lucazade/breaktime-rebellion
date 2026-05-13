@@ -48,35 +48,40 @@
     });
   });
 
-  // ── Level chooser (dev only) ────────────────────────────────────────────────
-  // #lvl-chooser always occupies flex space; children are visible only in dev mode
-  if (CONFIG.debug.showLevelChooser) {
+  // ── Level chooser ────────────────────────────────────────────────────────────
+  // Visible to all users when there are multiple levels.
+  // Debug mode unlocks every level; normal mode unlocks progressively via localStorage.
+  if (LEVELS.length > 1) {
+    var debug = CONFIG.debug.showLevelChooser;
+    var btrMax = debug
+      ? LEVELS.length
+      : Math.min(LEVELS.length, Math.max(1, parseInt(localStorage.getItem('btr_max_level') || '1')));
+
     var lvlName = document.getElementById('lvl-name');
     var prevBtn = document.getElementById('lvl-prev');
     var nextBtn = document.getElementById('lvl-next');
-
-    // Make children visible
     [prevBtn, lvlName, nextBtn].forEach(function(el) { el.style.visibility = 'visible'; });
 
+    // Restore last chosen level within the unlocked range
+    currentLevel = Math.max(1, Math.min(btrMax, parseInt(localStorage.getItem('btr_last_level') || '1')));
+
     function refreshLevel() {
-      currentLevel = Math.max(1, Math.min(LEVELS.length, currentLevel));
       lvlName.textContent = currentLevel;
+      prevBtn.disabled = currentLevel <= 1;
+      var atCeiling = currentLevel >= btrMax;
+      var moreExist  = btrMax < LEVELS.length;
+      nextBtn.innerHTML = (atCeiling && moreExist) ? '<i class="fa-solid fa-lock"></i>' : '&#8250;';
+      nextBtn.disabled  = atCeiling && !moreExist;
+      nextBtn.classList.toggle('lvl-locked', atCeiling && moreExist);
     }
     refreshLevel();
 
-    if (LEVELS.length > 1) {
-      prevBtn.addEventListener('click', function() {
-        currentLevel = currentLevel > 1 ? currentLevel - 1 : LEVELS.length;
-        refreshLevel();
-      });
-      nextBtn.addEventListener('click', function() {
-        currentLevel = currentLevel < LEVELS.length ? currentLevel + 1 : 1;
-        refreshLevel();
-      });
-    } else {
-      prevBtn.disabled = true;
-      nextBtn.disabled = true;
-    }
+    prevBtn.addEventListener('click', function() {
+      if (currentLevel > 1) { currentLevel--; refreshLevel(); }
+    });
+    nextBtn.addEventListener('click', function() {
+      if (currentLevel < btrMax) { currentLevel++; refreshLevel(); }
+    });
   }
 
 })();

@@ -80,6 +80,7 @@ resetLevel();
 function setMsg(t, d) { msgText = t; msgT = d || 220; }
 
 function startGame() {
+  localStorage.setItem('btr_last_level', currentLevel);
   document.getElementById('overlay').style.display = 'none';
   resetLevel();
   state = 'playing';
@@ -88,6 +89,8 @@ function startGame() {
 
 function nextLevel() {
   currentLevel++;
+  var savedMax = parseInt(localStorage.getItem('btr_max_level') || '1');
+  if (currentLevel > savedMax) localStorage.setItem('btr_max_level', currentLevel);
   resetLevel();
   state = 'playing';
   GameAudio.playMusic();

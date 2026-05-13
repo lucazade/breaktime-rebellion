@@ -117,8 +117,7 @@ Obiettivo: nuovi ambienti, nuovi livelli, NPC aggiuntivi.
 
 Obiettivo: non ci piacciono i bachi.
 
-- [ ] # Chiarire perchè il gioco è mappato in 320x200 nel codice? Non è meglio lavorare a risoluzioni maggiori? Abbiamo lo sfondo disponibile anche a 1280x800 e 1024x640 oltre che al 640x400.
-Non escludiamo oltre al mobile la possibilità di giocare da browser desktop.
+- [x] # Chiarire perchè il gioco è mappato in 320x200 nel codice? Scelta intenzionale: canvas 640×400 + ctx.scale(2,2) = coordinate logiche 320×200, pixel-art pulita. Il CSS scala a qualsiasi risoluzione con image-rendering:pixelated. Cambiare risoluzione logica sarebbe refactor invasivo senza beneficio.
 - [x] # Quando si gioca sul browser desktop nascondiamo il joypad e il button
 - [x] # Finchè non scompare il banner della missione il gioco dietro deve essere fermo
 - [x] # Quando perdi tutti i cuori la hud barra diventa più bassa/piccola
@@ -130,7 +129,7 @@ Non escludiamo oltre al mobile la possibilità di giocare da browser desktop.
 - [x] # Tocca per giocare ti fa ripartire da livello 1 invece che dallo stesso
 - [x] # La scritta "avvicinati alla lavagna" o "spacca il distributore" compaiono mentre stai facendo l'azione, mostriamo il messaggio in prossimità del target.
 - [x] # Il radar dei professori si vede poco, aumentare opacità.
-- [ ] # Rendere la scelta dei livelli accessibile agli utenti in base a quelli già sbloccati (con opzione di debug sono invece tutti accessibili). Ricordiamo l'ultimo livello scelto.
+- [x] # Rendere la scelta dei livelli accessibile agli utenti in base a quelli già sbloccati (con opzione di debug sono invece tutti accessibili). Ricordiamo l'ultimo livello scelto.
 
 ---
 
