@@ -40,8 +40,9 @@ function updatePlayer() {
       if (m.broken) continue;
       const dx = Math.abs(player.x + PW/2 - m.x - 5);
       const dy = Math.abs(player.y + PH  - m.y - 18);
-      if (dx < 14 && dy < 8) {
+      if (dx < 14 && dy < 20) {
         player.shaking = true;
+        actionPressed = false;
         player.dir = (player.x + PW/2 < m.x + 5) ? 1 : -1;
         m.shakeT++;
         if (m.shakeT >= CONFIG.shakeTime) {
@@ -144,14 +145,37 @@ function updatePlayer() {
     }
   }
 
-  // Auto-ring bell on proximity — triggers when level objective is complete
+  // Auto-ring bell on proximity — triggers when level objective is complete.
+  // player.y > MY ensures the bell can only be rung from the ground floor,
+  // not from the floor above where the player passes directly overhead.
   if (levelMechanics.ringBell && (allBoards || allBags || allMachines) && !BELL.ringing && !BELL.done) {
-    const bdx = Math.abs(player.x + PW/2 - BELL.x - 3);
-    const bdy = Math.abs(player.y + PH/2 - BELL.y - 5);
-    if (bdx < 18 && bdy < 22) ringBell();
+    const bdx = Math.abs(player.x + PW/2 - BELL.x - 2);
+    const bdy = Math.abs(player.y + PH/2 - BELL.y - 3);
+    if (bdx < 22 && bdy < 40 && player.y > MY) ringBell();
   }
 
   if (actionPressed) { actionPressed = false; tryAction(); }
+
+  // Proximity hints — show only when the message bar is clear
+  if (!player.spraying && !player.shaking && player.stunT === 0 && msgT <= 10) {
+    if (levelMechanics.writeBoards && !allBoards) {
+      let nd = 9999;
+      for (let i = 0; i < BOARDS.length; i++) {
+        if (BOARDS[i].done) continue;
+        const d = Math.abs(player.x + PW/2 - BOARDS[i].x - BW/2) + Math.abs(player.y - BOARDS[i].y - BH);
+        if (d < nd) nd = d;
+      }
+      if (nd < 36) setMsg(STRINGS.getCloser, 60);
+    } else if (levelMechanics.shakeMachines && !allMachines) {
+      for (let mi = 0; mi < machines.length; mi++) {
+        const m = machines[mi];
+        if (m.broken) continue;
+        const mdx = Math.abs(player.x + PW/2 - m.x - 5);
+        const mdy = Math.abs(player.y + PH  - m.y - 18);
+        if (mdx < 14 && mdy < 20) { setMsg(STRINGS.machineHint, 60); break; }
+      }
+    }
+  }
 }
 
 function tryAction() {
@@ -188,6 +212,7 @@ function tryAction() {
             setMsg(fmt(STRINGS.boardTagged, done, BOARDS.length));
           }
         }
+        actionPressed = false;
         player.spraying = false;
       }, 750);
     } else {
@@ -195,6 +220,6 @@ function tryAction() {
       else setMsg(STRINGS.getCloser);
     }
   } else {
-    setMsg(STRINGS['mission' + currentLevel] || STRINGS.getCloser);
+    if ((allBoards || allBags || allMachines) && !BELL.done) setMsg(STRINGS.goBell);
   }
 }

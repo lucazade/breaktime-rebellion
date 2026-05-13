@@ -9,7 +9,7 @@ function ringBell() {
   addParticles(BELL.x, BELL.y, C.gold, 30);
   setMsg(STRINGS.ringMsg);
   GameAudio.playSfx('bell');
-  pendingTransition = { t: 120, fn: function() { BELL.done = true; state = 'win'; GameAudio.stopMusic(); GameAudio.playSfx('win'); } };
+  pendingTransition = { t: 120, fn: function() { BELL.done = true; state = 'win'; GameAudio.stopMusic(); GameAudio.playJingle('win'); } };
 }
 
 function alertTeachers(bx, by) {
@@ -55,7 +55,7 @@ function caughtBy(t) {
   const ps = LEVELS[currentLevel - 1].playerStart;
   player.x = ps.x; player.y = ps.y; player.vy = 0;
   GameAudio.playSfx('caught');
-  if (lives <= 0) pendingTransition = { t: 108, fn: function() { state = 'gameover'; GameAudio.stopMusic(); GameAudio.playSfx('gameover'); } };
+  if (lives <= 0) pendingTransition = { t: 108, fn: function() { state = 'gameover'; GameAudio.stopMusic(); GameAudio.playJingle('gameover'); } };
 }
 
 function updateJanitors() {
@@ -106,7 +106,7 @@ function updateTimer() {
     player.x = ps.x; player.y = ps.y; player.vy = 0;
     GameAudio.playSfx('caught');
     if (lives <= 0) {
-      pendingTransition = { t: 108, fn: function() { state = 'gameover'; GameAudio.stopMusic(); GameAudio.playSfx('gameover'); } };
+      pendingTransition = { t: 108, fn: function() { state = 'gameover'; GameAudio.stopMusic(); GameAudio.playJingle('gameover'); } };
     } else {
       timerTicks = maxTimerTicks;
     }

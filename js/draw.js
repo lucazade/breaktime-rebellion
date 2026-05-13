@@ -58,31 +58,31 @@ function drawBell() {
   const gold = BELL.ringing ? '#FFE000' : C.bell;
 
   ctx.fillStyle = C.dgray;
-  ctx.fillRect(bx+1, by, 3, 2);
+  ctx.fillRect(bx+1, by, 2, 1);
 
   ctx.fillStyle = gold;
-  ctx.fillRect(bx+0+sx, by+2, 5, 1);
-  ctx.fillRect(bx-1+sx, by+3, 7, 2);
-  ctx.fillRect(bx-2+sx, by+5, 9, 1);
+  ctx.fillRect(bx+0+sx, by+1, 4, 1);
+  ctx.fillRect(bx-1+sx, by+2, 6, 2);
+  ctx.fillRect(bx-1+sx, by+4, 7, 1);
 
   ctx.fillStyle = 'rgba(255,255,200,0.6)';
-  ctx.fillRect(bx+1+sx, by+3, 1, 1);
+  ctx.fillRect(bx+1+sx, by+2, 1, 1);
 
   ctx.fillStyle = C.brown;
-  ctx.fillRect(bx+2+sx, by+6, 1, 2);
-  ctx.fillRect(bx+1+sx, by+8, 3, 1);
+  ctx.fillRect(bx+2+sx, by+5, 1, 1);
+  ctx.fillRect(bx+1+sx, by+6, 2, 1);
 
   if ((allBoards || allBags) && !BELL.done) {
     const pulse = 0.12 + 0.08 * Math.sin(frame * 0.15);
     ctx.fillStyle = 'rgba(255,215,0,' + pulse + ')';
-    ctx.beginPath(); ctx.arc(bx+3, by+5, 7, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(bx+2, by+3, 6, 0, Math.PI*2); ctx.fill();
   }
 
   if (BELL.ringing) {
     for (let i = 1; i <= 3; i++) {
       ctx.strokeStyle = 'rgba(255,215,0,' + (0.6 - i*0.15) + ')';
       ctx.lineWidth = 1;
-      ctx.beginPath(); ctx.arc(bx+3, by+5, 4+i*3, 0, Math.PI*2); ctx.stroke();
+      ctx.beginPath(); ctx.arc(bx+2, by+3, 3+i*2, 0, Math.PI*2); ctx.stroke();
     }
   }
 }
@@ -138,7 +138,7 @@ function drawMachines() {
     if (!m.broken && !allMachines) {
       const pdx = Math.abs(player.x + PW/2 - m.x - 5);
       const pdy = Math.abs(player.y + PH  - m.y - 18);
-      if (pdx < 14 && pdy < 8) {
+      if (pdx < 14 && pdy < 20) {
         ctx.strokeStyle = C.yellow; ctx.lineWidth = 1;
         ctx.setLineDash([2, 2]);
         ctx.strokeRect(mx-2, my-2, 14, 22);
@@ -215,7 +215,7 @@ function drawSight() {
   for (let i = 0; i < teachers.length; i++) {
     const t = teachers[i];
     if (t.chasing) continue;
-    ctx.fillStyle = 'rgba(255,200,0,0.05)';
+    ctx.fillStyle = 'rgba(255,200,0,0.18)';
     const rx = t.dir>0 ? t.x+PW : t.x-t.sight;
     ctx.fillRect(rx, t.y-2, t.sight, PH+4);
   }
@@ -416,8 +416,8 @@ function drawDebugOverlay() {
 
   ctx.strokeStyle = 'rgba(255,215,0,0.9)';
   ctx.lineWidth = 0.5;
-  ctx.strokeRect(BELL.x-4, BELL.y-4, 14, 14);
-  ctx.fillStyle = '#FFD700'; ctx.fillText('bell', BELL.x-4, BELL.y-5);
+  ctx.strokeRect(BELL.x-2, BELL.y-1, 10, 9);
+  ctx.fillStyle = '#FFD700'; ctx.fillText('bell', BELL.x-2, BELL.y-2);
 
   ctx.strokeStyle = 'rgba(255,80,255,0.9)';
   ctx.lineWidth = 0.5;

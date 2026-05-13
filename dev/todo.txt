@@ -119,17 +119,17 @@ Obiettivo: non ci piacciono i bachi.
 
 - [ ] # Chiarire perchè il gioco è mappato in 320x200 nel codice? Non è meglio lavorare a risoluzioni maggiori? Abbiamo lo sfondo disponibile anche a 1280x800 e 1024x640 oltre che al 640x400.
 Non escludiamo oltre al mobile la possibilità di giocare da browser desktop.
-- [ ] # Quando si gioca sul browser desktop nascondiamo il joypad e il button
-- [ ] # Finchè non scompare il banner della missione il gioco dietro deve essere fermo
-- [ ] # Quando perdi tutti i cuori la hud barra diventa più bassa/piccola
-- [ ] # Quando completi il primo livello ogni tanto in msg mostra goBell invece di allBoards (servono entrambi?) Controllare tutti msg se ok.
-- [ ] # Ridurre la grandezza della campanella di un 20-30%
-- [ ] # Sistemare interazione con campanella e distributori. Ora sono più in alto e non si riesce più ad interagire.
-- [ ] # Dopo il game over, la musica di sottofondo del finale non si interrompe all'avvio di una nuova partita, sovrapponendosi alla traccia iniziale
-- [ ] # Nel primo livello ogni tanto non si sente la musica di sottofondo anche se attiva. Poi nel secondo livello riprende correttamente.
-- [ ] # Tocca per giocare ti fa ripartire da livello 1 invece che dallo stesso
-- [ ] # La scritta "avvicinati alla lavagna" o "spacca il distributore" compaiono mentre stai facendo l'azione, mostriamo il messaggio in prossimità del target.
-- [ ] # Il radar dei professori si vede poco, aumentare opacità.
+- [x] # Quando si gioca sul browser desktop nascondiamo il joypad e il button
+- [x] # Finchè non scompare il banner della missione il gioco dietro deve essere fermo
+- [x] # Quando perdi tutti i cuori la hud barra diventa più bassa/piccola
+- [x] # Quando completi il primo livello ogni tanto in msg mostra goBell invece di allBoards (servono entrambi?) Controllare tutti msg se ok.
+- [x] # Ridurre la grandezza della campanella di un 20-30%
+- [x] # Sistemare interazione con campanella e distributori. Ora sono più in alto e non si riesce più ad interagire.
+- [x] # Dopo il game over, la musica di sottofondo del finale non si interrompe all'avvio di una nuova partita, sovrapponendosi alla traccia iniziale
+- [x] # Nel primo livello ogni tanto non si sente la musica di sottofondo anche se attiva. Poi nel secondo livello riprende correttamente.
+- [x] # Tocca per giocare ti fa ripartire da livello 1 invece che dallo stesso
+- [x] # La scritta "avvicinati alla lavagna" o "spacca il distributore" compaiono mentre stai facendo l'azione, mostriamo il messaggio in prossimità del target.
+- [x] # Il radar dei professori si vede poco, aumentare opacità.
 - [ ] # Rendere la scelta dei livelli accessibile agli utenti in base a quelli già sbloccati (con opzione di debug sono invece tutti accessibili). Ricordiamo l'ultimo livello scelto.
 
 ---

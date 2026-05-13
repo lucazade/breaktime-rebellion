@@ -27,13 +27,16 @@ function loop(ts) {
   while (_accumulator >= _STEP) {
     frame++;
     if (state === 'playing') {
-      if (missionBannerT > 0) missionBannerT--;
-      updatePlayer();
-      updateTeachers();
-      if (!CONFIG.debug.disableJanitors) updateJanitors();
-      updateBell();
-      updateTimer();
-      tickTransition();
+      if (missionBannerT > 0) {
+        missionBannerT--;
+      } else {
+        updatePlayer();
+        updateTeachers();
+        if (!CONFIG.debug.disableJanitors) updateJanitors();
+        updateBell();
+        updateTimer();
+        tickTransition();
+      }
     }
     _accumulator -= _STEP;
   }
@@ -72,8 +75,10 @@ function loop(ts) {
 }
 
 CV.addEventListener('click', function() {
+  if (missionBannerT > 0) { missionBannerT = 0; return; }
   if (state === 'win') {
-    if (currentLevel < LEVELS.length) nextLevel(); else restartGame();
+    if (currentLevel < LEVELS.length) nextLevel();
+    else { currentLevel = 1; restartGame(); }
     return;
   }
   if (state === 'gameover') { restartGame(); }

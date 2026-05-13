@@ -32,6 +32,7 @@
     mission3:      'Smash all vending machines!',
     machineBroken: 'Machine smashed! ({0}/{1})',
     allMachines:   'All machines smashed! Ring the bell! 🔔',
+    machineHint:   'Hold action to smash!',
   };
 
   var it = {
@@ -60,6 +61,7 @@
     mission3:      'Spacca tutti i distributori!',
     machineBroken: 'Distributore distrutto! ({0}/{1})',
     allMachines:   'Tutti i distributori a pezzi! Suona la campanella! 🔔',
+    machineHint:   'Tieni premuto per spaccare!',
   };
 
   window.STRINGS = lang === 'it' ? it : en;

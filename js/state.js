@@ -92,7 +92,7 @@ function nextLevel() {
 }
 
 function restartGame() {
-  lives = 3; score = 0; currentLevel = 1;
+  lives = 3; score = 0;
   resetLevel();
   state = 'playing';
   GameAudio.playMusic();

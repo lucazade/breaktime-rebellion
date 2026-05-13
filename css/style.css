@@ -50,7 +50,7 @@ canvas {
 }
 #hud-row {
   display: flex; justify-content: space-between; align-items: center;
-  padding: 2px 16px;
+  padding: 2px 16px; min-height: 20px;
 }
 #timer-bar-wrap {
   width: 100%; height: 3px;
@@ -213,4 +213,8 @@ canvas {
   #wrap, #ctrl-joy, #ctrl-action { display: none; }
   #overlay { display: none; }
   #portrait-msg { display: flex; }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  #ctrl-joy, #ctrl-action { display: none; }
 }
