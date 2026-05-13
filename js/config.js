@@ -4,7 +4,7 @@
 // ═══════════════════════════════════════════════════════════
 const CONFIG = {
   images: {
-    background: 'assets/pics/bg.png',
+    background: 'assets/pics/bg-640.png',
   },
   audio: {
     musicVolume: 0.5,
