@@ -117,7 +117,7 @@ Obiettivo: nuovi ambienti, nuovi livelli, NPC aggiuntivi.
 
 Obiettivo: non ci piacciono i bachi.
 
-- [ ] # Perchè il gioco è mappato in 320x200 nel codice? Non è meglio lavorare a risoluzioni maggiori? Abbiamo lo sfondo disponibile anche a 1280x800 e 1024x640 oltre che al 640x400.
+- [ ] # Chiarire perchè il gioco è mappato in 320x200 nel codice? Non è meglio lavorare a risoluzioni maggiori? Abbiamo lo sfondo disponibile anche a 1280x800 e 1024x640 oltre che al 640x400.
 Non escludiamo oltre al mobile la possibilità di giocare da browser desktop.
 - [ ] # Quando si gioca sul browser desktop nascondiamo il joypad e il button
 - [ ] # Finchè non scompare il banner della missione il gioco dietro deve essere fermo
