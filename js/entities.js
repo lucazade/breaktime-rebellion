@@ -51,7 +51,7 @@ function playerDied() {
   if (lives <= 0) {
     // Game over: freeze everything, then show banner
     deathFreeze = true;
-    pendingTransition = { t: 108, fn: function() {
+    pendingTransition = { t: 60, fn: function() {
       state = 'gameover'; GameAudio.stopMusic(); GameAudio.playJingle('gameover');
     }};
   } else {
