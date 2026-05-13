@@ -131,8 +131,6 @@ Non escludiamo oltre al mobile la possibilità di giocare da browser desktop.
 - [ ] # La scritta "avvicinati alla lavagna" o "spacca il distributore" compaiono mentre stai facendo l'azione, mostriamo il messaggio in prossimità del target.
 - [ ] # Il radar dei professori si vede poco, aumentare opacità.
 - [ ] # Rendere la scelta dei livelli accessibile agli utenti in base a quelli sbloccati (per i dev tutti accessibili). Ricordiamo l'ultimo livello scelto.
-- [ ] # I pulsanti sulla schermata principale (sotto il logo) devono avere tutti la stessa altezza
-- [ ] # Prime prove app android? Apk locale? PlayStore?
 
 ---
 
@@ -141,6 +139,7 @@ Non escludiamo oltre al mobile la possibilità di giocare da browser desktop.
 Obiettivo: lucidare l'esperienza prima del rilascio.
 
 - [X] #6  Logo (Luca lo genera e lo integriamo)
+- [ ] # I pulsanti sulla schermata principale (sotto il logo) devono avere tutti la stessa altezza
 - [ ] # Implementare Schermata storia del personaggio all'inizio del gioco
 - [ ] # Implementare Schermata caricamento stile ZX Spectrum (barre laterali animate + logo progressivo a linee)
 - [ ] # Implementare Schermata migliori punteggi con livello raggiunto (non serve inserire il nome)
@@ -157,6 +156,7 @@ Obiettivo: lucidare l'esperienza prima del rilascio.
 ## FASE 10 — Varie ed eventuali
 
 Obiettivo: ancora in dubbio.
+- [ ] # Prime prove app android? Apk locale? PlayStore?
 - [ ] # Mostrare collo personaggi (fare un collo basso)
 - [ ] # Lavoro su branch outline personaggi
 - [ ] # Aggiungere favicon? serve nel gioco finale? Utile se si gioca sul browser su pc
