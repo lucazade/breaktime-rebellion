@@ -131,6 +131,7 @@ Non escludiamo oltre al mobile la possibilità di giocare da browser desktop.
 - [ ] # La scritta "avvicinati alla lavagna" o "spacca il distributore" compaiono mentre stai facendo l'azione, mostriamo il messaggio in prossimità del target.
 - [ ] # Il radar dei professori si vede poco, aumentare opacità.
 - [ ] # Rendere la scelta dei livelli accessibile agli utenti in base a quelli sbloccati (per i dev tutti accessibili). Ricordiamo l'ultimo livello scelto.
+- [ ] # I pulsanti sulla schermata principale (sotto il logo) devono avere tutti la stessa altezza
 - [ ] # Prime prove app android? Apk locale? PlayStore?
 
 ---
