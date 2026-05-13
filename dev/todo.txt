@@ -117,6 +117,7 @@ Obiettivo: nuovi ambienti, nuovi livelli, NPC aggiuntivi.
 
 Obiettivo: non ci piacciono i bachi.
 
+- [ ] # Quando completi il primo livello in msg mostra goBell invece di allBoards
 - [ ] # Ridurre la grandezza della campanella di un 30%
 - [ ] # Sistemare interazione con campanella e distributori (ora sono più in alto e non funzionano, non spostare oggetti)
 - [ ] # Dopo il game over, la musica di sottofondo del finale non si interrompe all'avvio di una nuova partita, sovrapponendosi alla traccia iniziale
