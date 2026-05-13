@@ -3,13 +3,6 @@
 //  Edit here to change the look of the school building.
 // ═══════════════════════════════════════════════════════════
 
-/*CONFIG.layout = {
-  W: 320, H: 200,
-  PW: 8, PH: 16,
-  GY: 186, MY: 123, TY: 58,
-  BW: 22, BH: 14,
-};*/
-
 CONFIG.layout = {
   W: 320, H: 200,
   PW: 8, PH: 16,
@@ -49,13 +42,6 @@ const walkOffset = CONFIG.layout.walkOffset;
 var SHARED_LAYOUT = {
   playerStart: { x: 35, y: GY - PH - walkOffset },
 
-  /*stairs: [
-    {x1:87,  y1:GY, x2:27,  y2:MY},  // GY→MY left
-    {x1:235, y1:GY, x2:285, y2:MY},  // GY→MY right
-    {x1:95,  y1:MY, x2:35, y2:TY},  // MY→TY left
-    {x1:225, y1:MY, x2:285, y2:TY},  // MY→TY right
-  ],*/
-
   stairs: [
     {x1:88,  y1:GY-walkOffset, x2:35,  y2:MY-walkOffset},  // GY→MY sx
     {x1:232, y1:GY-walkOffset, x2:285, y2:MY-walkOffset},  // GY→MY dx
@@ -77,7 +63,6 @@ var SHARED_LAYOUT = {
     {x:61,  y:TY-20}, {x:84,  y:TY-20},
     {x:158, y:TY-20}, {x:182, y:TY-20},
   ],
-  //{x:131, y:MY-22}, 
 
   bell: { x: 13, y: GY - 52 },
 
