@@ -117,6 +117,7 @@ Obiettivo: nuovi ambienti, nuovi livelli, NPC aggiuntivi.
 
 Obiettivo: non ci piacciono i bachi.
 
+- [ ] # Finchè non scompare il banner della missione il gioco dietro deve essere fermo
 - [ ] # Quando completi il primo livello ogni tanto in msg mostra goBell invece di allBoards
 - [ ] # Ridurre la grandezza della campanella di un 30%
 - [ ] # Sistemare interazione con campanella e distributori (ora sono più in alto e non funzionano, non spostare oggetti)

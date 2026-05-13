@@ -245,63 +245,110 @@ function drawFloating() {
   ctx.globalAlpha = 1;
 }
 
-function drawEndScreen() {
+function drawOverlayPanel(bx, by, bw, bh, bgColor, borderColor, lines) {
+  ctx.fillStyle = bgColor; ctx.fillRect(bx, by, bw, bh);
+  ctx.strokeStyle = borderColor; ctx.lineWidth = 1;
+  ctx.strokeRect(bx + 1, by + 1, bw - 2, bh - 2);
   ctx.save();
   ctx.textAlign = 'center';
-  if (state === 'win') {
-    ctx.fillStyle = 'rgba(0,0,60,0.88)'; ctx.fillRect(20, 60, 280, 80);
-    ctx.fillStyle = C.gold;  ctx.font = '8px "Press Start 2P"';
-    ctx.fillText(STRINGS.winTitle, 160, 85);
-    ctx.fillStyle = C.white; ctx.font = '7px "Press Start 2P"';
-    ctx.fillText(STRINGS.scoreLabel + String(score).padStart(5,'0'), 160, 103);
-    if (Math.floor(frame/20)%2 === 0) {
-      ctx.fillStyle = C.lgreen; ctx.font = '6px "Press Start 2P"';
-      var tapText = currentLevel < LEVELS.length ? STRINGS.reloadNext : STRINGS.reloadWin;
-      ctx.fillText(tapText, 160, 124);
-    }
+  ctx.textBaseline = 'top';
+  let totalHeight = 0;
+  for (let i = 0; i < lines.length; i++) {
+    if (lines[i].visible === false) continue;
+    totalHeight += lines[i].height || 10;
+    if (i < lines.length - 1) totalHeight += lines[i].spacing != null ? lines[i].spacing : 4;
   }
-  if (state === 'gameover') {
-    ctx.fillStyle = 'rgba(60,0,0,0.88)'; ctx.fillRect(40, 65, 240, 70);
-    ctx.fillStyle = C.red;   ctx.font = '10px "Press Start 2P"';
-    ctx.fillText(STRINGS.gameoverTitle, 160, 92);
-    ctx.fillStyle = C.white; ctx.font = '7px "Press Start 2P"';
-    ctx.fillText(STRINGS.scoreLabel + String(score).padStart(5,'0'), 160, 110);
-    if (Math.floor(frame/20)%2 === 0) {
-      ctx.fillStyle = C.yellow; ctx.font = '6px "Press Start 2P"';
-      ctx.fillText(STRINGS.reloadLose, 160, 128);
-    }
+  let y = by + Math.round((bh - totalHeight) / 2);
+  const x = bx + bw / 2;
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    if (line.visible === false) continue;
+    ctx.font = line.font;
+    ctx.fillStyle = line.color;
+    ctx.fillText(line.text, x, y);
+    y += (line.height || 10) + (line.spacing != null ? line.spacing : 4);
   }
   ctx.restore();
+}
+
+function drawEndScreen() {
+  if (state !== 'win' && state !== 'gameover') return;
+  const bx = 160 - 130;
+  const by = 64;
+  const bw = 260;
+  const bh = 72;
+  const isWin = state === 'win';
+  const scoreText = STRINGS.scoreLabel + String(score).padStart(5, '0');
+  const actionText = isWin
+    ? (currentLevel < LEVELS.length ? STRINGS.reloadNext : STRINGS.reloadWin)
+    : STRINGS.reloadLose;
+  const actionVisible = Math.floor(frame / 20) % 2 === 0;
+  drawOverlayPanel(bx, by, bw, bh, isWin ? 'rgba(0,0,60,0.88)' : 'rgba(60,0,0,0.88)', C.gold, [
+    {
+      text: isWin ? STRINGS.winTitle : STRINGS.gameoverTitle,
+      font: isWin ? '8px "Press Start 2P"' : '10px "Press Start 2P"',
+      color: isWin ? C.gold : C.redprof,
+      height: 10,
+      spacing: 10,
+    },
+    {
+      text: scoreText,
+      font: '7px "Press Start 2P"',
+      color: C.white,
+      height: 10,
+      spacing: 6,
+    },
+    {
+      text: actionText,
+      font: '6px "Press Start 2P"',
+      color: actionVisible ? (isWin ? C.green : C.gold) : 'rgba(255,255,255,0)',
+      height: 10,
+      spacing: 0,
+    },
+  ]);
 }
 
 function drawMissionBanner() {
   if (missionBannerT <= 0) return;
   if (!missionBannerLines) {
-    ctx.font = '5px "Press Start 2P"';
+    ctx.font = '7px "Press Start 2P"';
     const text = STRINGS['mission' + currentLevel] || STRINGS.mission1;
     const words = text.split(' ');
     let line = '', lines = [];
     for (let i = 0; i < words.length; i++) {
       const test = line + (line ? ' ' : '') + words[i];
-      if (ctx.measureText(test).width > 240) { lines.push(line); line = words[i]; }
+      if (ctx.measureText(test).width > 220) { lines.push(line); line = words[i]; }
       else line = test;
     }
     if (line) lines.push(line);
     missionBannerLines = lines;
   }
   const alpha = missionBannerT < 40 ? missionBannerT / 40 : 1;
+  const bx = 160 - 130;
+  const by = 64;
+  const bw = 260;
+  const bh = 72;
+  const lines = [
+    {
+      text: fmt(STRINGS.missionLabel, currentLevel),
+      font: '7px "Press Start 2P"',
+      color: C.gold,
+      height: 10,
+      spacing: 8,
+    },
+  ];
+  for (let i = 0; i < missionBannerLines.length; i++) {
+    lines.push({
+      text: missionBannerLines[i],
+      font: '7px "Press Start 2P"',
+      color: C.white,
+      height: 10,
+      spacing: i < missionBannerLines.length - 1 ? 4 : 0,
+    });
+  }
   ctx.save();
   ctx.globalAlpha = alpha;
-  ctx.fillStyle = 'rgba(0,0,40,0.88)'; ctx.fillRect(20, 72, 280, 56);
-  ctx.strokeStyle = C.gold; ctx.lineWidth = 1;
-  ctx.strokeRect(21, 73, 278, 54);
-  ctx.font = '6px "Press Start 2P"'; ctx.textAlign = 'center';
-  ctx.fillStyle = C.gold;
-  ctx.fillText(fmt(STRINGS.missionLabel, currentLevel), 160, 91);
-  ctx.fillStyle = C.white; ctx.font = '5px "Press Start 2P"';
-  for (let li = 0; li < missionBannerLines.length; li++)
-    ctx.fillText(missionBannerLines[li], 160, 107 + li * 10);
-  ctx.textAlign = 'left';
+  drawOverlayPanel(bx, by, bw, bh, 'rgba(0,0,40,0.88)', C.gold, lines);
   ctx.restore();
 }
 
