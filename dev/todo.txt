@@ -120,7 +120,7 @@ Obiettivo: non ci piacciono i bachi.
 - [ ] # Finchè non scompare il banner della missione il gioco dietro deve essere fermo
 - [ ] # Quando perdi tutti i cuori la hud barra diventa più bassa
 - [ ] # Quando completi il primo livello ogni tanto in msg mostra goBell invece di allBoards
-- [ ] # Ridurre la grandezza della campanella di un 30%
+- [ ] # Ridurre la grandezza della campanella di un 20-30%
 - [ ] # Sistemare interazione con campanella e distributori (ora sono più in alto e non funzionano, non spostare oggetti)
 - [ ] # Dopo il game over, la musica di sottofondo del finale non si interrompe all'avvio di una nuova partita, sovrapponendosi alla traccia iniziale
 - [ ] # Nel primo livello ogni tanto non si sente la musica di sottofondo anche se attiva. Poi nel secondo riprende correttamente.
