@@ -31,8 +31,14 @@
     allBagsStolen: 'All bags stolen! Ring the bell! 🔔', 
     mission3:      'Smash all vending machines!',
     machineBroken: 'Machine smashed! ({0}/{1})',
-    allMachines:   'All machines smashed! Ring the bell! 🔔',
-    machineHint:   'Hold action to smash!',
+    allMachines:          'All machines smashed! Ring the bell! 🔔',
+    machineHint:          'Hold action to smash!',
+    mission4:             'Deflate the ball and ring the bell!',
+    ballDeflated:         'Ball deflated! Run to the bell! 🔔',
+    mission5:             'Disturb all students in class!',
+    throwHint:            'Press Z to throw!',
+    studentHit:           'Student hit! ({0}/{1})',
+    allStudentsDisturbed: 'All students disturbed! Ring the bell! 🔔',
   };
 
   var it = {
@@ -60,8 +66,14 @@
     allBagsStolen: 'Tutte le cartelle rubate! Suona la campanella! 🔔',
     mission3:      'Spacca tutti i distributori!',
     machineBroken: 'Distributore distrutto! ({0}/{1})',
-    allMachines:   'Tutti i distributori a pezzi! Suona la campanella! 🔔',
-    machineHint:   'Tieni premuto per spaccare!',
+    allMachines:          'Tutti i distributori a pezzi! Suona la campanella! 🔔',
+    machineHint:          'Tieni premuto per spaccare!',
+    mission4:             'Sgonfia il pallone e suona la campanella!',
+    ballDeflated:         'Pallone sgonfiato! Corri alla campanella! 🔔',
+    mission5:             'Disturba tutti gli alunni in classe!',
+    throwHint:            'Premi Z per lanciare!',
+    studentHit:           'Alunno colpito! ({0}/{1})',
+    allStudentsDisturbed: 'Tutti gli alunni disturbati! Suona la campanella! 🔔',
   };
 
   window.STRINGS = lang === 'it' ? it : en;

@@ -63,6 +63,24 @@ function updatePlayer() {
       }
     }
   }
+  if (!player.shaking && levelMechanics.deflateBall && gymBall && !gymBall.deflated && K.action && !player.onStair) {
+    const dx = Math.abs(player.x + PW/2 - gymBall.x - 4);
+    const dy = Math.abs(player.y + PH  - gymBall.y - 9);
+    if (dx < 14 && dy < 14) {
+      player.shaking = true;
+      actionPressed = false;
+      player.dir = (player.x + PW/2 < gymBall.x + 4) ? 1 : -1;
+      gymBall.shakeT++;
+      if (gymBall.shakeT >= CONFIG.deflateTime) {
+        gymBall.deflated = true;
+        score += 600;
+        addFloating(gymBall.x + 4, gymBall.y, '+600', C.yellow);
+        addParticles(gymBall.x + 4, gymBall.y + 4, C.yellow, 18);
+        alertTeachers(gymBall.x + 4, gymBall.y + 4);
+        ballDeflatedWin();
+      }
+    }
+  }
   if (player.shaking) return;
 
   const stairResult = getStairAt(player.x, player.y);
@@ -148,7 +166,7 @@ function updatePlayer() {
   // Auto-ring bell on proximity — triggers when level objective is complete.
   // player.y > MY ensures the bell can only be rung from the ground floor,
   // not from the floor above where the player passes directly overhead.
-  if (levelMechanics.ringBell && (allBoards || allBags || allMachines) && !BELL.ringing && !BELL.done) {
+  if (levelMechanics.ringBell && (allBoards || allBags || allMachines || allBall || allStudents) && !BELL.ringing && !BELL.done) {
     const bdx = Math.abs(player.x + PW/2 - BELL.x - 2);
     const bdy = Math.abs(player.y + PH/2 - BELL.y - 3);
     if (bdx < 22 && bdy < 40 && player.y > MY) ringBell();
@@ -174,7 +192,48 @@ function updatePlayer() {
         const mdy = Math.abs(player.y + PH  - m.y - 18);
         if (mdx < 14 && mdy < 20) { setMsg(STRINGS.machineHint, 60); break; }
       }
+    } else if (levelMechanics.deflateBall && gymBall && !gymBall.deflated) {
+      const bdx = Math.abs(player.x + PW/2 - gymBall.x - 4);
+      const bdy = Math.abs(player.y + PH  - gymBall.y - 9);
+      if (bdx < 18 && bdy < 18) setMsg(STRINGS.machineHint, 60);
+    } else if (levelMechanics.throwPaper && !allStudents) {
+      for (let si = 0; si < students.length; si++) {
+        if (students[si].disturbed) continue;
+        if (Math.abs(students[si].y - (player.y + PH)) < 30) { setMsg(STRINGS.throwHint, 60); break; }
+      }
     }
+  }
+}
+
+function updatePaperBalls() {
+  if (throwCooldown > 0) throwCooldown--;
+  const SPEED = 4, MAX_DIST = 180;
+  for (let i = paperBalls.length - 1; i >= 0; i--) {
+    const b = paperBalls[i];
+    b.x += b.dir * SPEED;
+    b.dist += SPEED;
+    if (b.dist > MAX_DIST || b.x < 0 || b.x > W) { paperBalls.splice(i, 1); continue; }
+    let hit = false;
+    for (let j = 0; j < students.length; j++) {
+      const s = students[j];
+      if (s.disturbed) continue;
+      if (Math.abs(b.x - (s.x + 5)) < 12 && Math.abs(b.y - (s.y - 10)) < 16) {
+        s.disturbed = true;
+        score += 300;
+        addFloating(s.x + 5, s.y - 18, '+300', C.yellow);
+        addParticles(s.x + 5, s.y - 10, C.yellow, 8);
+        alertTeachers(s.x + 5, s.y - 10);
+        let done = 0;
+        for (let k = 0; k < students.length; k++) if (students[k].disturbed) done++;
+        if (done === students.length) {
+          allStudentsWin();
+        } else {
+          setMsg(fmt(STRINGS.studentHit, done, students.length));
+        }
+        hit = true; break;
+      }
+    }
+    if (hit) paperBalls.splice(i, 1);
   }
 }
 
@@ -219,7 +278,17 @@ function tryAction() {
       if ((allBoards || allBags) && !BELL.done) setMsg(STRINGS.goBell);
       else setMsg(STRINGS.getCloser);
     }
+  } else if (levelMechanics.throwPaper && !allStudents) {
+    if (throwCooldown <= 0) {
+      paperBalls.push({
+        x: player.dir > 0 ? player.x + PW : player.x - 3,
+        y: player.y + 2,
+        dir: player.dir,
+        dist: 0,
+      });
+      throwCooldown = 40;
+    }
   } else {
-    if ((allBoards || allBags || allMachines) && !BELL.done) setMsg(STRINGS.goBell);
+    if ((allBoards || allBags || allMachines || allBall || allStudents) && !BELL.done) setMsg(STRINGS.goBell);
   }
 }

@@ -19,8 +19,9 @@ const CONFIG = {
       gameover: 'assets/audio/gameover.mp3',
     },
   },
-  levelTimer: 60,  // default seconds per level (0 = disabled); override with lv.timer
-  shakeTime:  150, // frames to shake a vending machine (≈2.5s at 60fps)
+  levelTimer:   60,  // default seconds per level (0 = disabled); override with lv.timer
+  shakeTime:   150,  // frames to shake a vending machine (≈2.5s at 60fps)
+  deflateTime:  80,  // frames to deflate the gym ball (≈1.3s at 60fps)
   debug: {
     disableJanitors:  false,
     showLevelChooser: true,

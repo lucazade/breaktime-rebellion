@@ -72,7 +72,7 @@ function drawBell() {
   ctx.fillRect(bx+2+sx, by+5, 1, 1);
   ctx.fillRect(bx+1+sx, by+6, 2, 1);
 
-  if ((allBoards || allBags) && !BELL.done) {
+  if ((allBoards || allBags || allMachines || allBall || allStudents) && !BELL.done) {
     const pulse = 0.12 + 0.08 * Math.sin(frame * 0.15);
     ctx.fillStyle = 'rgba(255,215,0,' + pulse + ')';
     ctx.beginPath(); ctx.arc(bx+2, by+3, 6, 0, Math.PI*2); ctx.fill();
@@ -84,6 +84,72 @@ function drawBell() {
       ctx.lineWidth = 1;
       ctx.beginPath(); ctx.arc(bx+2, by+3, 3+i*2, 0, Math.PI*2); ctx.stroke();
     }
+  }
+}
+
+function drawGymBall() {
+  if (!gymBall) return;
+  const bx = Math.round(gymBall.x), by = Math.round(gymBall.y);
+  if (gymBall.deflated) {
+    ctx.fillStyle = '#CC6600';
+    ctx.fillRect(bx, by+5, 9, 3);
+    ctx.fillStyle = '#993300';
+    ctx.fillRect(bx+1, by+6, 7, 1);
+    return;
+  }
+  if (gymBall.shakeT > 0) {
+    const pct = gymBall.shakeT / CONFIG.deflateTime;
+    ctx.fillStyle = 'rgba(0,0,0,0.55)'; ctx.fillRect(bx-1, by-5, 11, 3);
+    ctx.fillStyle = C.yellow;           ctx.fillRect(bx-1, by-5, Math.round(11 * pct), 3);
+  }
+  ctx.fillStyle = '#CC6600';
+  ctx.fillRect(bx+1, by, 7, 9); ctx.fillRect(bx, by+1, 9, 7);
+  ctx.fillStyle = '#993300';
+  ctx.fillRect(bx+4, by, 1, 9); ctx.fillRect(bx, by+4, 9, 1);
+  ctx.fillStyle = 'rgba(255,200,100,0.5)'; ctx.fillRect(bx+1, by+1, 2, 2);
+  if (!allBall) {
+    const pdx = Math.abs(player.x + PW/2 - gymBall.x - 4);
+    const pdy = Math.abs(player.y + PH  - gymBall.y - 9);
+    if (pdx < 14 && pdy < 14) {
+      ctx.strokeStyle = C.yellow; ctx.lineWidth = 1;
+      ctx.setLineDash([2, 2]);
+      ctx.strokeRect(bx-2, by-2, 13, 13);
+      ctx.setLineDash([]);
+    }
+  }
+}
+
+function drawStudents() {
+  for (let i = 0; i < students.length; i++) {
+    const s = students[i];
+    const bx = Math.round(s.x + 5); // center on 20px desk
+    const by = Math.round(s.y);     // desk top Y
+    ctx.fillStyle = C.brown;
+    ctx.fillRect(bx-2, by-17, 5, 2);
+    ctx.fillStyle = C.pink;
+    ctx.fillRect(bx-2, by-15, 5, 7);
+    ctx.fillStyle = C.black;
+    ctx.fillRect(bx-2, by-13, 2, 2); // eye facing left (toward board)
+    ctx.fillStyle = C.white;
+    ctx.fillRect(bx-3, by-8, 7, 6);  // shirt
+    ctx.fillStyle = C.pink;
+    ctx.fillRect(bx-4, by-3, 2, 3);  // left hand
+    ctx.fillRect(bx+2, by-3, 2, 3);  // right hand
+    if (s.disturbed) {
+      ctx.fillStyle = C.red;
+      ctx.save(); ctx.textAlign = 'center';
+      ctx.font = '5px "Press Start 2P"';
+      ctx.fillText('!', bx, by-19);
+      ctx.restore();
+    }
+  }
+}
+
+function drawPaperBalls() {
+  for (let i = 0; i < paperBalls.length; i++) {
+    const b = paperBalls[i];
+    ctx.fillStyle = C.white; ctx.fillRect(Math.round(b.x), Math.round(b.y), 3, 3);
+    ctx.fillStyle = C.lgray; ctx.fillRect(Math.round(b.x)+1, Math.round(b.y)+1, 1, 1);
   }
 }
 
@@ -451,6 +517,14 @@ function updateHUD() {
     for (let i = 0; i < machines.length; i++) if (machines[i].broken) objDone++;
     objTotal = machines.length;
     iconClass = 'fa-box';
+  } else if (levelMechanics.deflateBall) {
+    objDone = (gymBall && gymBall.deflated) ? 1 : 0;
+    objTotal = 1;
+    iconClass = 'fa-futbol';
+  } else if (levelMechanics.throwPaper) {
+    for (let i = 0; i < students.length; i++) if (students[i].disturbed) objDone++;
+    objTotal = students.length;
+    iconClass = 'fa-user-graduate';
   } else {
     for (let i = 0; i < BOARDS.length; i++) if (BOARDS[i].done) objDone++;
     objTotal = BOARDS.length;

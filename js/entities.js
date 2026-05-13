@@ -94,6 +94,18 @@ function machineWin() {
   setMsg(STRINGS.allMachines);
 }
 
+function ballDeflatedWin() {
+  if (allBall) return;
+  allBall = true;
+  setMsg(STRINGS.ballDeflated);
+}
+
+function allStudentsWin() {
+  if (allStudents) return;
+  allStudents = true;
+  setMsg(STRINGS.allStudentsDisturbed);
+}
+
 function bagWin() {
   if (allBags) return;
   allBags = true;

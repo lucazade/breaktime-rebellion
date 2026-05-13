@@ -36,6 +36,7 @@ function loop(ts) {
         updateTeachers();
         if (!CONFIG.debug.disableJanitors) updateJanitors();
         updateBell();
+        updatePaperBalls();
         updateTimer();
         tickTransition();
       }
@@ -45,10 +46,12 @@ function loop(ts) {
 
   drawBg();
   drawDesks();
+  drawStudents();
   drawBoards();
   if (levelMechanics.ringBell && !BELL.done) drawBell();
   drawBags();
   drawMachines();
+  drawGymBall();
   drawSight();
 
   for (let i = 0; i < teachers.length; i++) {
@@ -67,6 +70,7 @@ function loop(ts) {
 
   if (deathFreeze) { ctx.fillStyle = 'rgba(255,0,0,0.18)'; ctx.fillRect(0,0,W,H); }
 
+  drawPaperBalls();
   drawParticles();
   drawFloating();
   drawEndScreen();
