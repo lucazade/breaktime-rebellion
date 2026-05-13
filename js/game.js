@@ -29,6 +29,8 @@ function loop(ts) {
     if (state === 'playing') {
       if (missionBannerT > 0) {
         missionBannerT--;
+      } else if (deathFreeze) {
+        tickTransition(); // only advance the respawn/gameover countdown; everything else frozen
       } else {
         updatePlayer();
         updateTeachers();
@@ -63,7 +65,7 @@ function loop(ts) {
     drawChar(player.x, player.y, player.dir, player.animT, C.blue, false, player.spraying, false);
   }
 
-  if (player.stunT > 120) { ctx.fillStyle = 'rgba(255,0,0,0.18)'; ctx.fillRect(0,0,W,H); }
+  if (deathFreeze) { ctx.fillStyle = 'rgba(255,0,0,0.18)'; ctx.fillRect(0,0,W,H); }
 
   drawParticles();
   drawFloating();

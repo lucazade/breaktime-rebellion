@@ -44,18 +44,35 @@ function updateTeachers() {
   }
 }
 
+function playerDied() {
+  player.spraying = false; player.shaking = false; player.vy = 0;
+  addParticles(player.x + PW/2, player.y, C.red, 20);
+  GameAudio.playSfx('caught');
+  deathFreeze = true;
+  if (lives <= 0) {
+    pendingTransition = { t: 108, fn: function() {
+      state = 'gameover'; GameAudio.stopMusic(); GameAudio.playJingle('gameover');
+    }};
+  } else {
+    pendingTransition = { t: 80, fn: function() {
+      const ps = LEVELS[currentLevel - 1].playerStart;
+      player.x = ps.x; player.y = ps.y; player.vy = 0;
+      player.onStair = false; player.currentStair = null;
+      player.stunT = 120;
+      timerTicks = maxTimerTicks;
+      deathFreeze = false;
+    }};
+  }
+}
+
 function caughtBy(t) {
+  if (deathFreeze || player.stunT > 0) return;
   lives--;
   score = Math.max(0, score - 300);
-  player.stunT = 160; player.spraying = false;
-  addParticles(player.x + PW/2, player.y, C.red, 20);
   let msg = fmt(STRINGS.caughtBy, t.name);
   msg += lives > 0 ? '♥'.repeat(lives) : 'GAME OVER!';
   setMsg(msg);
-  const ps = LEVELS[currentLevel - 1].playerStart;
-  player.x = ps.x; player.y = ps.y; player.vy = 0;
-  GameAudio.playSfx('caught');
-  if (lives <= 0) pendingTransition = { t: 108, fn: function() { state = 'gameover'; GameAudio.stopMusic(); GameAudio.playJingle('gameover'); } };
+  playerDied();
 }
 
 function updateJanitors() {
@@ -97,19 +114,10 @@ function updateTimer() {
   if (timerTicks <= 0) {
     timerTicks = 0;
     lives--;
-    addParticles(player.x + PW/2, player.y, C.red, 20);
     let msg = STRINGS.timesUp;
     msg += lives > 0 ? '♥'.repeat(lives) : 'GAME OVER!';
     setMsg(msg);
-    player.stunT = 160; player.spraying = false;
-    const ps = LEVELS[currentLevel - 1].playerStart;
-    player.x = ps.x; player.y = ps.y; player.vy = 0;
-    GameAudio.playSfx('caught');
-    if (lives <= 0) {
-      pendingTransition = { t: 108, fn: function() { state = 'gameover'; GameAudio.stopMusic(); GameAudio.playJingle('gameover'); } };
-    } else {
-      timerTicks = maxTimerTicks;
-    }
+    playerDied();
   }
 }
 

@@ -26,6 +26,7 @@ let actionPressed, allBoards, allBags, allMachines, timerTicks, maxTimerTicks;
 let machines;
 let missionBannerT, missionBannerLines;
 let pendingTransition = null;
+let deathFreeze = false;
 let currentLevel = 1;
 let bgImage = null;
 let levelMechanics;
@@ -67,6 +68,7 @@ function resetLevel() {
   missionBannerT = 210;
   missionBannerLines = null;
   pendingTransition = null;
+  deathFreeze = false;
   levelMechanics = Object.assign({ writeBoards:true, ringBell:true, stealBags:false }, lv.mechanics);
   frame = 0;
 }
