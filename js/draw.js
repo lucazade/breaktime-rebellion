@@ -92,35 +92,38 @@ function drawGymBall() {
   const bx = Math.round(gymBall.x), by = Math.round(gymBall.y);
   if (gymBall.deflated) {
     ctx.fillStyle = C.lgray;
-    ctx.fillRect(bx, by+5, 9, 3);
+    ctx.fillRect(bx+1, by+8, 9, 3);
     ctx.fillStyle = C.dgray;
-    ctx.fillRect(bx+1, by+6, 7, 1);
+    ctx.fillRect(bx+2, by+9, 7, 1);
     return;
   }
   if (gymBall.shakeT > 0) {
     const pct = gymBall.shakeT / CONFIG.deflateTime;
-    ctx.fillStyle = 'rgba(0,0,0,0.55)'; ctx.fillRect(bx-1, by-5, 11, 3);
-    ctx.fillStyle = C.yellow;           ctx.fillRect(bx-1, by-5, Math.round(11 * pct), 3);
+    ctx.fillStyle = 'rgba(0,0,0,0.55)'; ctx.fillRect(bx, by-5, 11, 3);
+    ctx.fillStyle = C.yellow;           ctx.fillRect(bx, by-5, Math.round(11 * pct), 3);
   }
-  // Soccer ball — white base
+  // Soccer ball — round white base (11×11)
   ctx.fillStyle = C.white;
-  ctx.fillRect(bx+1, by, 7, 9); ctx.fillRect(bx, by+1, 9, 7);
-  // Black patches (pentagon pattern)
+  ctx.fillRect(bx+3, by,    5, 1);
+  ctx.fillRect(bx+2, by+1,  7, 1);
+  ctx.fillRect(bx+1, by+2,  9, 7);
+  ctx.fillRect(bx+2, by+9,  7, 1);
+  ctx.fillRect(bx+3, by+10, 5, 1);
+  // Black pentagon patches
   ctx.fillStyle = C.black;
-  ctx.fillRect(bx+3, by+2, 3, 3); // centre
-  ctx.fillRect(bx+1, by+1, 2, 1); // top-left
-  ctx.fillRect(bx+6, by+1, 2, 1); // top-right
-  ctx.fillRect(bx+1, by+7, 2, 1); // bottom-left
-  ctx.fillRect(bx+6, by+7, 2, 1); // bottom-right
-  ctx.fillRect(bx,   by+3, 1, 3); // left
-  ctx.fillRect(bx+8, by+3, 1, 3); // right
+  ctx.fillRect(bx+4, by+4, 3, 3); // centre
+  ctx.fillRect(bx+4, by+1, 3, 2); // top
+  ctx.fillRect(bx+1, by+3, 2, 2); // upper-left
+  ctx.fillRect(bx+8, by+3, 2, 2); // upper-right
+  ctx.fillRect(bx+2, by+7, 2, 2); // lower-left
+  ctx.fillRect(bx+7, by+7, 2, 2); // lower-right
   if (!allBall) {
-    const pdx = Math.abs(player.x + PW/2 - gymBall.x - 4);
-    const pdy = Math.abs(player.y + PH  - gymBall.y - 9);
+    const pdx = Math.abs(player.x + PW/2 - gymBall.x - 5);
+    const pdy = Math.abs(player.y + PH  - gymBall.y - 11);
     if (pdx < 14 && pdy < 14) {
       ctx.strokeStyle = C.yellow; ctx.lineWidth = 1;
       ctx.setLineDash([2, 2]);
-      ctx.strokeRect(bx-2, by-2, 13, 13);
+      ctx.strokeRect(bx-2, by-2, 15, 15);
       ctx.setLineDash([]);
     }
   }

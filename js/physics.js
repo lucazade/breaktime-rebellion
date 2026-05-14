@@ -64,8 +64,8 @@ function updatePlayer() {
     }
   }
   if (!player.shaking && levelMechanics.deflateBall && gymBall && !gymBall.deflated && K.action && !player.onStair) {
-    const dx = Math.abs(player.x + PW/2 - gymBall.x - 4);
-    const dy = Math.abs(player.y + PH  - gymBall.y - 9);
+    const dx = Math.abs(player.x + PW/2 - gymBall.x - 5);
+    const dy = Math.abs(player.y + PH  - gymBall.y - 11);
     if (dx < 14 && dy < 14) {
       player.shaking = true;
       actionPressed = false;
@@ -206,8 +206,8 @@ function updatePlayer() {
         if (mdx < 14 && mdy < 20) { setMsg(STRINGS.machineHint, 60); break; }
       }
     } else if (levelMechanics.deflateBall && gymBall && !gymBall.deflated) {
-      const gdx = Math.abs(player.x + PW/2 - gymBall.x - 4);
-      const gdy = Math.abs(player.y + PH  - gymBall.y - 9);
+      const gdx = Math.abs(player.x + PW/2 - gymBall.x - 5);
+      const gdy = Math.abs(player.y + PH  - gymBall.y - 11);
       if (gdx < 18 && gdy < 18) setMsg(STRINGS.deflateHint, 60);
     } else if (levelMechanics.throwPaper && !allStudents) {
       // Show hint only when Marco is in the classroom area (not in the corridor)
