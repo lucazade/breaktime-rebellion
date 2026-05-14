@@ -69,7 +69,7 @@
     <div id="msg"></div>
     <div id="pause-overlay">
       <div class="game-dialog">
-        <span class="dialog-title">— PAUSA —</span>
+        <span class="dialog-title" id="pause-title">— PAUSA —</span>
         <div class="dialog-btns">
           <button class="dialog-btn" id="btn-resume">RIPRENDI</button>
         </div>
@@ -77,7 +77,7 @@
     </div>
     <div id="home-confirm-overlay">
       <div class="game-dialog">
-        <span class="dialog-title">TORNARE ALLA HOME?</span>
+        <span class="dialog-title" id="home-confirm-title">TORNARE ALLA HOME?</span>
         <div class="dialog-btns">
           <button class="dialog-btn" id="btn-home-yes">SÌ</button>
           <button class="dialog-btn" id="btn-home-no">NO</button>
@@ -105,5 +105,6 @@
 <script src="js/draw.js"></script>
 <script src="js/game.js"></script>
 <script src="js/title.js"></script>
+<div id="screen-fade"></div>
 </body>
 </html>

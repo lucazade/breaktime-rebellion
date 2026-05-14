@@ -71,7 +71,7 @@
     currentLevel = Math.max(1, Math.min(btrMax, parseInt(localStorage.getItem('btr_last_level') || '1')));
 
     function refreshLevel() {
-      lvlName.textContent = currentLevel;
+      lvlName.textContent = STRINGS.levelLabel + ' ' + currentLevel;
       prevBtn.disabled = currentLevel <= 1;
       var atCeiling = currentLevel >= btrMax;
       var moreExist  = btrMax < LEVELS.length;

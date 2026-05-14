@@ -57,7 +57,7 @@ const GameAudio = (function() {
   }
 
   function playIntro() {
-    if (!introMusic || mode === 'mute') return;
+    if (!introMusic || mode !== 'full') return;
     introMusic.currentTime = 0;
     introMusic.volume = CONFIG.audio.musicVolume;
     introMusic.play().catch(function() {});
@@ -65,6 +65,12 @@ const GameAudio = (function() {
 
   function stopIntro() {
     if (introMusic) { introMusic.pause(); introMusic.currentTime = 0; }
+  }
+
+  // Fade out intro independently (no callback chain) — use with CSS transitionend
+  function fadeOutIntro(durationMs) {
+    if (!introMusic || introMusic.paused) return;
+    _fadeAudio(introMusic, 0, durationMs || 1200, stopIntro);
   }
 
   // Fade out intro, then call cb (show game), then fade in game music
@@ -76,11 +82,11 @@ const GameAudio = (function() {
         bgMusic.currentTime = 0;
         bgMusic.volume = 0;
         bgMusic.play().catch(function() {});
-        _fadeAudio(bgMusic, CONFIG.audio.musicVolume, 600, null);
+        _fadeAudio(bgMusic, CONFIG.audio.musicVolume, 1500, null);
       }
     };
     if (introMusic && !introMusic.paused) {
-      _fadeAudio(introMusic, 0, 600, function() { stopIntro(); _go(); });
+      _fadeAudio(introMusic, 0, 1500, function() { stopIntro(); _go(); });
     } else {
       stopIntro();
       _go();
@@ -135,5 +141,5 @@ const GameAudio = (function() {
     jingle.play().catch(function() {});
   }
 
-  return { playIntro: playIntro, stopIntro: stopIntro, crossfadeToGame: crossfadeToGame, fadeOutMusic: fadeOutMusic, playMusic: playMusic, stopMusic: stopMusic, pauseMusic: pauseMusic, resumeMusic: resumeMusic, playSfx: playSfx, playJingle: playJingle, setMode: setMode, getMode: getMode };
+  return { playIntro: playIntro, stopIntro: stopIntro, fadeOutIntro: fadeOutIntro, crossfadeToGame: crossfadeToGame, fadeOutMusic: fadeOutMusic, playMusic: playMusic, stopMusic: stopMusic, pauseMusic: pauseMusic, resumeMusic: resumeMusic, playSfx: playSfx, playJingle: playJingle, setMode: setMode, getMode: getMode };
 })();

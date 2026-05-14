@@ -10,7 +10,7 @@ const CONFIG = {
   audio: {
     musicVolume: 0.5,
     sfxVolume:   0.8,
-    music:       'assets/audio/music.mp3',
+    music:       'assets/audio/music1.mp3',
     introMusic:  'assets/audio/intro.mp3',
     sfx: {
       spray:    'assets/audio/spray.mp3',

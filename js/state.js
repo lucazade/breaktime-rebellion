@@ -88,12 +88,31 @@ resetLevel();
 
 function setMsg(t, d) { msgText = t; msgT = d || 220; }
 
+// Fade #screen-fade from `from` to `to` opacity over `ms`, then call cb
+function fadeScreen(from, to, ms, cb) {
+  var el = document.getElementById('screen-fade');
+  el.style.display    = 'block';
+  el.style.transition = '';
+  el.style.opacity    = from;
+  void el.offsetWidth; // force reflow so transition fires
+  el.style.transition = 'opacity ' + (ms / 1000) + 's linear';
+  el.style.opacity    = to;
+  el.addEventListener('transitionend', function() {
+    el.style.transition = '';
+    if (+to === 0) el.style.display = 'none';
+    if (cb) cb();
+  }, {once: true});
+}
+
 function startGame() {
   localStorage.setItem('btr_last_level', currentLevel);
   resetLevel();
-  GameAudio.crossfadeToGame(function() {
+  GameAudio.fadeOutIntro(750);
+  fadeScreen(0, 1, 750, function() {          // home → black (750ms)
     document.getElementById('overlay').style.display = 'none';
     state = 'playing';
+    GameAudio.playMusic();
+    fadeScreen(1, 0, 600, null);              // black → game (600ms)
   });
 }
 

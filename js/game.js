@@ -160,13 +160,17 @@ function goHome() {
   _homeOverlay.classList.remove('active');
   _pauseOverlay.classList.remove('active');
   _pauseIcon.className = 'fa-solid fa-pause';
-  lives = 3; score = 0;
-  currentLevel = Math.max(1, parseInt(localStorage.getItem('btr_last_level') || '1'));
-  resetLevel();
-  state = 'title';
-  GameAudio.stopMusic();
-  GameAudio.playIntro();
-  document.getElementById('overlay').style.display = 'flex';
+  GameAudio.fadeOutMusic(750);
+  fadeScreen(0, 1, 750, function() {          // game → black (750ms)
+    lives = 3; score = 0;
+    currentLevel = Math.max(1, parseInt(localStorage.getItem('btr_last_level') || '1'));
+    resetLevel();
+    state = 'title';
+    document.getElementById('overlay').style.display = 'flex';
+    fadeScreen(1, 0, 600, function() {        // black → home (600ms)
+      GameAudio.playIntro();
+    });
+  });
 }
 
 function cancelHome() {

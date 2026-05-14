@@ -101,6 +101,9 @@ Obiettivo: nuovi ambienti, nuovi livelli, NPC aggiuntivi.
 - [x] #39 Fix L5: teacher vicino alla lavagna (patrol stretto x115-205); no bidelli; throwHint solo in aula (x80-250); pallina che colpisce prof → Marco perde vita
 - [x] #40 Fix L4: Prof.Ginnastica visibile in zona palestra (minX=110); 3 sgonfiate
 - [x] #41 Fix L5: shake studenti colpiti + bolla "!" gialla 7px + prof a terra (knockedT=150)
+- [ ] #42 la musica di intro attiva solo se musica attiva nei controlli (controllo quando esci dal gioco la musica parte sempre)
+- [x] #43 rendere intro muisc fadeout più lungo in ms e aspettare prima che compaia il gioco
+- [ ] #44 il banner tornare alla home e pausa devono essere localizzati
 
 |  #  | Stato | Nome                                    |
 |-----|-------|-----------------------------------------|

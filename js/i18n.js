@@ -20,16 +20,16 @@
     winTitle:      'SCHOOL LEGEND!',
     scoreLabel:    'SCORE: ',
     gameoverTitle: 'EXPELLED!',
-    mission6:          'Drop the books and ring the bell!',
-    bookDropHint:      'Hold action to drop a book!',
-    bookFirstDrop:     "He's putting it back... do it again!",
-    bookSecondDrop:    'Almost there! One more!',
-    bookReset:         'Book back on shelf! Knock it again!',
-    bookDropped:       'Books dropped! Run to the bell! 🔔',
     keyMove:       'Move',
     keyAction:     'Action',
     keyPause:      'Pause',
     keyHome:       'Home',
+    levelLabel:    'Level',
+    pauseTitle:    '— PAUSE —',
+    btnResume:     'RESUME',
+    homeConfirm:   'GO TO HOME?',
+    btnYes:        'YES',
+    btnNo:         'NO',
     missionLabel:  'LEVEL {0}',
     mission1:      'Tag all boards!',
     getCloser:     'Tag the board!',
@@ -54,6 +54,12 @@
     throwHint:            'Press to throw the paper!',
     studentHit:           'Student hit! ({0}/{1})',
     allStudentsDisturbed: 'All students disturbed! Ring the bell! 🔔',
+    mission6:          'Drop the books!',
+    bookDropHint:      'Hold action to drop a book!',
+    bookFirstDrop:     "He's putting it back... do it again!",
+    bookSecondDrop:    'Almost there! One more!',
+    bookReset:         'Book back on shelf! Knock it again!',
+    bookDropped:       'Books dropped! Run to the bell! 🔔',
   };
 
   var it = {
@@ -70,16 +76,16 @@
     winTitle:      'LEGGENDA DELLA SCUOLA!',
     scoreLabel:    'PUNTEGGIO: ',
     gameoverTitle: 'ESPULSO!',
-    mission6:          'Fai cadere i libri e suona la campanella!',
-    bookDropHint:      'Tieni premuto per far cadere un libro!',
-    bookFirstDrop:     'Lo sta rimettendo a posto... rifallo!',
-    bookSecondDrop:    'Quasi! Ancora uno!',
-    bookReset:         'Libro rimesso! Fallo cadere di nuovo!',
-    bookDropped:       'Libri caduti! Corri alla campanella! 🔔',
     keyMove:       'Muovi',
     keyAction:     'Azione',
     keyPause:      'Pausa',
     keyHome:       'Home',
+    levelLabel:    'Livello',
+    pauseTitle:    '— PAUSA —',
+    btnResume:     'RIPRENDI',
+    homeConfirm:   'TORNARE ALLA HOME?',
+    btnYes:        'SÌ',
+    btnNo:         'NO',
     missionLabel:  'LIVELLO {0}',
     mission1:      'Imbratta tutte le lavagne!',
     getCloser:     'Scrivi sulla lavagna!',
@@ -104,6 +110,12 @@
     throwHint:            'Premi per lanciare la cartaccia!',
     studentHit:           'Alunno colpito! ({0}/{1})',
     allStudentsDisturbed: 'Tutti gli alunni disturbati! Suona la campanella! 🔔',
+    mission6:          'Fai cadere i libri!',
+    bookDropHint:      'Tieni premuto per far cadere un libro!',
+    bookFirstDrop:     'Lo sta rimettendo a posto... rifallo!',
+    bookSecondDrop:    'Quasi! Ancora uno!',
+    bookReset:         'Libro rimesso! Fallo cadere di nuovo!',
+    bookDropped:       'Libri caduti! Corri alla campanella! 🔔',
   };
 
   window.STRINGS = lang === 'it' ? it : en;
@@ -112,4 +124,17 @@
   if (pm) pm.innerHTML = STRINGS.rotateHtml;
   var go = document.querySelector('.go');
   if (go) go.textContent = STRINGS.tapToStart;
+
+  // Localise pause and home-confirm overlays
+  var _ids = {
+    'pause-title':    'pauseTitle',
+    'btn-resume':     'btnResume',
+    'home-confirm-title': 'homeConfirm',
+    'btn-home-yes':   'btnYes',
+    'btn-home-no':    'btnNo',
+  };
+  Object.keys(_ids).forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.textContent = STRINGS[_ids[id]];
+  });
 })();
