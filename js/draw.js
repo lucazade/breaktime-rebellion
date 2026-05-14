@@ -91,9 +91,9 @@ function drawGymBall() {
   if (!gymBall) return;
   const bx = Math.round(gymBall.x), by = Math.round(gymBall.y);
   if (gymBall.deflated) {
-    ctx.fillStyle = '#CC6600';
+    ctx.fillStyle = C.lgray;
     ctx.fillRect(bx, by+5, 9, 3);
-    ctx.fillStyle = '#993300';
+    ctx.fillStyle = C.dgray;
     ctx.fillRect(bx+1, by+6, 7, 1);
     return;
   }
@@ -102,11 +102,18 @@ function drawGymBall() {
     ctx.fillStyle = 'rgba(0,0,0,0.55)'; ctx.fillRect(bx-1, by-5, 11, 3);
     ctx.fillStyle = C.yellow;           ctx.fillRect(bx-1, by-5, Math.round(11 * pct), 3);
   }
-  ctx.fillStyle = '#CC6600';
+  // Soccer ball — white base
+  ctx.fillStyle = C.white;
   ctx.fillRect(bx+1, by, 7, 9); ctx.fillRect(bx, by+1, 9, 7);
-  ctx.fillStyle = '#993300';
-  ctx.fillRect(bx+4, by, 1, 9); ctx.fillRect(bx, by+4, 9, 1);
-  ctx.fillStyle = 'rgba(255,200,100,0.5)'; ctx.fillRect(bx+1, by+1, 2, 2);
+  // Black patches (pentagon pattern)
+  ctx.fillStyle = C.black;
+  ctx.fillRect(bx+3, by+2, 3, 3); // centre
+  ctx.fillRect(bx+1, by+1, 2, 1); // top-left
+  ctx.fillRect(bx+6, by+1, 2, 1); // top-right
+  ctx.fillRect(bx+1, by+7, 2, 1); // bottom-left
+  ctx.fillRect(bx+6, by+7, 2, 1); // bottom-right
+  ctx.fillRect(bx,   by+3, 1, 3); // left
+  ctx.fillRect(bx+8, by+3, 1, 3); // right
   if (!allBall) {
     const pdx = Math.abs(player.x + PW/2 - gymBall.x - 4);
     const pdy = Math.abs(player.y + PH  - gymBall.y - 9);
