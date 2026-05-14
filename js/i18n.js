@@ -40,7 +40,7 @@
     ballDeflated:         'Ball deflated! Run to the bell! 🔔',
     bagHint:              'Get closer to steal!',
     mission5:             'Throw paper at students in class!',
-    throwHint:            'Press Z to throw!',
+    throwHint:            'Press to throw the paper!',
     studentHit:           'Student hit! ({0}/{1})',
     allStudentsDisturbed: 'All students disturbed! Ring the bell! 🔔',
   };
@@ -79,7 +79,7 @@
     ballDeflated:         'Pallone sgonfiato! Corri alla campanella! 🔔',
     bagHint:              'Avvicinati per rubare!',
     mission5:             'Lancia le cartacce agli alunni in classe!',
-    throwHint:            'Premi Z per lanciare!',
+    throwHint:            'Premi per lanciare la cartaccia!',
     studentHit:           'Alunno colpito! ({0}/{1})',
     allStudentsDisturbed: 'Tutti gli alunni disturbati! Suona la campanella! 🔔',
   };
