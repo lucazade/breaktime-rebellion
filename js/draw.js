@@ -123,32 +123,29 @@ function drawGymBall() {
 function drawBookcase() {
   if (!bookcase) return;
   const bx = Math.round(bookcase.x), by = Math.round(bookcase.y);
-  const wobble = (!bookcase.dropped && bookcase.shakeT > 0) ? Math.round(Math.sin(frame * 1.8) * 1) : 0;
 
   if (bookcase.dropped) {
-    // Book lying flat on floor
-    ctx.fillStyle = '#6B2200'; ctx.fillRect(bx-3, by+10, 11, 4);
-    ctx.fillStyle = '#F5E6C0'; ctx.fillRect(bx-3, by+7,  11, 3);
-    ctx.fillStyle = '#CC6600'; ctx.fillRect(bx,   by+7,   5, 1);
+    // Book lying flat: spine (dark) on top, pages (light) on bottom
+    ctx.fillStyle = '#6B2200'; ctx.fillRect(bx-3, by+7,  11, 3); // spine — top
+    ctx.fillStyle = '#F5E6C0'; ctx.fillRect(bx-3, by+10, 11, 4); // pages — bottom
     return;
   }
 
-  // Progress bar while shaking
+  // Draw book only while actively shaking (sticking out); static = bg.png handles it
   if (bookcase.shakeT > 0) {
     const pct = bookcase.shakeT / dropTime;
+    const wobble = Math.round(Math.sin(frame * 1.8) * 1);
     ctx.fillStyle = 'rgba(0,0,0,0.55)'; ctx.fillRect(bx-1, by-5, 7, 3);
     ctx.fillStyle = C.yellow;           ctx.fillRect(bx-1, by-5, Math.round(7 * pct), 3);
+    const tx = bx + wobble;
+    ctx.fillStyle = '#8B3000'; ctx.fillRect(tx,   by, 1, 12);
+    ctx.fillStyle = '#F5E6C0'; ctx.fillRect(tx+1, by, 3, 12);
+    ctx.fillStyle = '#6B1800'; ctx.fillRect(tx+4, by, 1, 12);
+    ctx.fillStyle = '#CC6600'; ctx.fillRect(tx+1, by+4, 3, 1);
+    ctx.fillStyle = '#8B3000'; ctx.fillRect(tx,   by,   5, 1);
   }
 
-  // Standing book (5×12px pixel art)
-  const tx = bx + wobble;
-  ctx.fillStyle = '#8B3000'; ctx.fillRect(tx,   by, 1, 12); // left spine
-  ctx.fillStyle = '#F5E6C0'; ctx.fillRect(tx+1, by, 3, 12); // pages
-  ctx.fillStyle = '#6B1800'; ctx.fillRect(tx+4, by, 1, 12); // right edge
-  ctx.fillStyle = '#CC6600'; ctx.fillRect(tx+1, by+4, 3, 1); // bookmark stripe
-  ctx.fillStyle = '#8B3000'; ctx.fillRect(tx,   by,   5, 1); // top edge
-
-  // Proximity dashed border
+  // Proximity dashed border — always shown when near, even without the book sprite
   if (!allBooks) {
     const pdx = Math.abs(player.x + PW/2 - bookcase.x - 3);
     const pdy = Math.abs(player.y + PH  - bookcase.y - 12);
@@ -254,6 +251,61 @@ function drawMachines() {
         ctx.setLineDash([]);
       }
     }
+  }
+}
+
+function drawPreside(x, y, dir, animT, bodyCol, chasing, knockedT) {
+  const bx = Math.round(x), by = Math.round(y);
+
+  if (knockedT > 0) {
+    const fy = by + PH - 1;
+    ctx.fillStyle = 'rgba(0,0,0,0.2)'; ctx.fillRect(bx-4, fy+2, 18, 2);
+    ctx.fillStyle = bodyCol; ctx.fillRect(bx-2, fy-3, 14, 4);
+    ctx.fillStyle = C.pink;  ctx.fillRect(dir > 0 ? bx+12 : bx-6, fy-4, 6, 5);
+    ctx.fillStyle = C.blue;  ctx.fillRect(dir > 0 ? bx-4 : bx+8, fy-2, 4, 3);
+    return;
+  }
+
+  const leg = Math.sin(animT) * 2.5;
+
+  // Shadow slightly wider for heavier build
+  ctx.fillStyle = 'rgba(0,0,0,0.2)'; ctx.fillRect(bx-2, by+PH, PW+4, 2);
+
+  // Legs — same as teacher
+  ctx.fillStyle = C.blue;
+  ctx.fillRect(bx+1, by+10, 3, 4+leg);
+  ctx.fillRect(bx+4, by+10, 3, 4-leg);
+  ctx.fillStyle = C.black;
+  ctx.fillRect(bx,   by+13+leg, 4, 2);
+  ctx.fillRect(bx+3, by+13-leg, 4, 2);
+
+  // Body 2px wider — no tie
+  ctx.fillStyle = bodyCol;
+  ctx.fillRect(bx-1, by+4, PW+2, 8);
+
+  // Long sleeves: jacket colour + white shirt cuff + pink hand
+  const frontX = dir > 0 ? bx-2 : bx+PW;
+  const backX  = dir > 0 ? bx+PW : bx-2;
+  ctx.fillStyle = bodyCol;
+  ctx.fillRect(frontX, by+5, 2, 7);
+  ctx.fillRect(backX,  by+5, 2, 7);
+  ctx.fillStyle = C.white;          // cuff
+  ctx.fillRect(frontX, by+11, 2, 1);
+  ctx.fillRect(backX,  by+11, 2, 1);
+  ctx.fillStyle = C.pink;           // hand
+  ctx.fillRect(frontX, by+12, 2, 2);
+  ctx.fillRect(backX,  by+12, 2, 2);
+
+  // Head
+  ctx.fillStyle = C.pink;  ctx.fillRect(bx+1, by-7, PW-2, 8);
+  ctx.fillStyle = C.white; ctx.fillRect(bx+1, by-8, PW-2, 2); // white hair — older
+  ctx.fillStyle = C.black; ctx.fillRect(dir > 0 ? bx+4 : bx+2, by-5, 2, 2); // eye, no glasses
+
+  if (chasing) {
+    const bub = dir > 0 ? bx+PW : bx-26;
+    ctx.fillStyle = C.yellow; ctx.fillRect(bub, by-14, 26, 10);
+    ctx.fillStyle = C.black; ctx.font = '5px "Press Start 2P"';
+    ctx.fillText(STRINGS.hey, bub+1, by-7);
   }
 }
 

@@ -59,7 +59,11 @@ function loop(ts) {
 
   for (let i = 0; i < teachers.length; i++) {
     const t = teachers[i];
-    drawChar(t.x, t.y, t.dir, t.animT, t.color, true, false, t.chasing, t.knockedT);
+    if (t.name === 'Preside') {
+      drawPreside(t.x, t.y, t.dir, t.animT, t.color, t.chasing, t.knockedT);
+    } else {
+      drawChar(t.x, t.y, t.dir, t.animT, t.color, true, false, t.chasing, t.knockedT);
+    }
   }
   for (let i = 0; i < janitors.length; i++) {
     drawJanitor(janitors[i].x, janitors[i].y, janitors[i].dir, janitors[i].animT);
