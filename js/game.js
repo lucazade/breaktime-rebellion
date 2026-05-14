@@ -78,7 +78,7 @@ function loop(ts) {
   requestAnimationFrame(loop);
 }
 
-CV.addEventListener('click', function() {
+function handleTap() {
   if (missionBannerT > 0) { missionBannerT = 0; return; }
   if (state === 'win') {
     if (currentLevel < LEVELS.length) nextLevel();
@@ -86,6 +86,17 @@ CV.addEventListener('click', function() {
     return;
   }
   if (state === 'gameover') { restartGame(); }
+}
+
+CV.addEventListener('click', handleTap);
+
+// Arcade cabinet panels and action button also forward taps to game handler
+['panel-left', 'panel-right'].forEach(function(id) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  el.addEventListener('click', handleTap);
+  el.addEventListener('touchend', function(e) { e.preventDefault(); handleTap(); }, {passive: false});
 });
+document.getElementById('btn-action').addEventListener('touchend', function() { handleTap(); }, {passive: true});
 
 requestAnimationFrame(loop);
