@@ -113,6 +113,31 @@ function updatePlayer() {
       }
     }
   }
+  if (!player.shaking && levelMechanics.floodSink && sink && sink.pourCount < 3 && sink.resetT <= 0 && K.action && !player.onStair) {
+    const dx = Math.abs(player.x + PW/2 - sink.x - 6);
+    const dy = Math.abs(player.y + PH  - sink.y - 10);
+    if (dx < 14 && dy < 20) {
+      player.shaking = true;
+      actionPressed = false;
+      player.dir = (player.x + PW/2 < sink.x + 6) ? 1 : -1;
+      sink.pourT++;
+      if (sink.pourT >= floodTime) {
+        sink.pourT = 0;
+        sink.pourCount++;
+        sink.waterLevel = sink.pourCount;
+        score += 300;
+        addFloating(sink.x + 6, sink.y - 8, '+300', C.cyan);
+        addParticles(sink.x + 6, sink.y, C.cyan, 12);
+        if (sink.waterLevel >= 2) alertTeachers(107, sink.y);
+        if (sink.pourCount >= 3) {
+          sinkFloodWin();
+        } else {
+          sink.resetT = 180;
+          setMsg(sink.pourCount === 1 ? STRINGS.sinkFirstPour : STRINGS.sinkSecondPour);
+        }
+      }
+    }
+  }
   if (player.shaking) return;
 
   const stairResult = getStairAt(player.x, player.y);
@@ -198,7 +223,7 @@ function updatePlayer() {
   // Auto-ring bell on proximity — triggers when level objective is complete.
   // player.y > MY ensures the bell can only be rung from the ground floor,
   // not from the floor above where the player passes directly overhead.
-  if (levelMechanics.ringBell && (allBoards || allBags || allMachines || allBall || allStudents || allBooks) && !BELL.ringing && !BELL.done) {
+  if (levelMechanics.ringBell && (allBoards || allBags || allMachines || allBall || allStudents || allBooks || allSink) && !BELL.ringing && !BELL.done) {
     const bdx = Math.abs(player.x + PW/2 - BELL.x - 2);
     const bdy = Math.abs(player.y + PH/2 - BELL.y - 3);
     if (bdx < 22 && bdy < 40 && player.y > MY) ringBell();
@@ -238,6 +263,10 @@ function updatePlayer() {
       const bdx = Math.abs(player.x + PW/2 - bookcase.x - 12);
       const bdy = Math.abs(player.y + PH  - bookcase.y - 26);
       if (bdx < 20 && bdy < 36) setMsg(STRINGS.bookDropHint, 60);
+    } else if (levelMechanics.floodSink && sink && sink.pourCount < 3 && sink.resetT <= 0) {
+      const sdx = Math.abs(player.x + PW/2 - sink.x - 6);
+      const sdy = Math.abs(player.y + PH  - sink.y - 10);
+      if (sdx < 14 && sdy < 20) setMsg(STRINGS.sinkHint, 60);
     } else if (levelMechanics.throwPaper && !allStudents) {
       // Show hint only when Marco is in the classroom area (not in the corridor)
       if (player.x > 80 && player.x < 250) {

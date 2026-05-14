@@ -38,6 +38,7 @@ function loop(ts) {
         updateBell();
         updateGymBall();
         updateBookcase();
+        updateSink();
         updatePaperBalls();
         updateTimer();
         tickTransition();
@@ -55,6 +56,7 @@ function loop(ts) {
   drawMachines();
   drawGymBall();
   drawBookcase();
+  drawSink();
   drawSight();
 
   for (let i = 0; i < teachers.length; i++) {

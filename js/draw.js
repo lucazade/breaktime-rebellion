@@ -158,6 +158,76 @@ function drawBookcase() {
   }
 }
 
+function drawSink() {
+  if (!sink) return;
+  const bx = Math.round(sink.x), by = Math.round(sink.y);
+  const fy = Math.round(MY - walkOffset + 1); // floor level
+
+  // Water puddle on floor — starts past the wall (x=12), grows rightward
+  if (sink.waterLevel > 0) {
+    const wx = 12; // left offset to avoid drawing over the wall
+    const rights = [0, 62, 107, 107];
+    const w = Math.max(0, rights[sink.waterLevel] - wx);
+    // Perspective wedge (angled near origin)
+    ctx.fillStyle = 'rgba(30,90,200,0.22)';
+    ctx.fillRect(wx, fy-2, Math.min(w, 8), 2);
+    // Main body
+    ctx.fillStyle = 'rgba(30,90,200,0.28)';
+    ctx.fillRect(wx, fy, w, 4);
+    // Bright top edge (reflection)
+    ctx.fillStyle = 'rgba(100,170,255,0.55)';
+    ctx.fillRect(wx, fy, w, 1);
+    // Animated ripple lines
+    ctx.fillStyle = 'rgba(130,200,255,0.5)';
+    const rOff = Math.floor(frame / 6) % 12;
+    for (let rx = wx + rOff; rx < wx + w; rx += 12) ctx.fillRect(rx, fy+2, 5, 1);
+  }
+
+  // Mirror — small, close to sink
+  ctx.fillStyle = '#1a3a5c'; ctx.fillRect(bx,   by-20, 10,  8); // dark frame
+  ctx.fillStyle = '#7ab8d8'; ctx.fillRect(bx+1, by-19,  8,  6); // glass
+  ctx.fillStyle = 'rgba(255,255,255,0.45)'; ctx.fillRect(bx+2, by-18, 2, 3); // highlight
+
+  // Tap (wall pipe below mirror gap)
+  ctx.fillStyle = '#777'; ctx.fillRect(bx+5, by-10, 2, 3);
+  ctx.fillStyle = '#aaa'; ctx.fillRect(bx+4, by-10, 1, 1);
+
+  // Sink basin
+  ctx.fillStyle = '#b0b0b0'; ctx.fillRect(bx,   by-8, 12, 8);
+  ctx.fillStyle = '#d8d8d8'; ctx.fillRect(bx+1, by-7, 10, 6);
+  ctx.fillStyle = '#888';    ctx.fillRect(bx+5, by-2,  2, 1); // drain
+
+  // Dripping animation while pouring
+  if (sink.pourT > 0) {
+    const drop = Math.floor(frame / 3) % 5;
+    ctx.fillStyle = '#4488cc';
+    ctx.fillRect(bx+5, by-8+drop, 2, 2);
+    if (drop >= 3) {
+      ctx.fillStyle = 'rgba(68,136,204,0.6)';
+      ctx.fillRect(bx+3, by-3, 2, 1); ctx.fillRect(bx+7, by-3, 2, 1);
+    }
+  }
+
+  // Progress bar (left of sink) while pouring
+  if (sink.pourT > 0) {
+    const pct = sink.pourT / floodTime;
+    ctx.fillStyle = 'rgba(0,0,0,0.55)'; ctx.fillRect(bx-8, by-10, 7, 3);
+    ctx.fillStyle = '#4488cc';          ctx.fillRect(bx-8, by-10, Math.round(7 * pct), 3);
+  }
+
+  // Proximity dashed border — tight around basin only
+  if (!allSink && sink.pourCount < 3 && sink.resetT <= 0) {
+    const pdx = Math.abs(player.x + PW/2 - sink.x - 6);
+    const pdy = Math.abs(player.y + PH  - sink.y - 10);
+    if (pdx < 14 && pdy < 20) {
+      ctx.strokeStyle = C.cyan; ctx.lineWidth = 1;
+      ctx.setLineDash([2, 2]);
+      ctx.strokeRect(bx-2, by-11, 16, 13);
+      ctx.setLineDash([]);
+    }
+  }
+}
+
 function drawStudents() {
   for (let i = 0; i < students.length; i++) {
     const s = students[i];
@@ -635,6 +705,10 @@ function updateHUD() {
     objDone = bookcase ? bookcase.dropCount : 0;
     objTotal = 3;
     iconClass = 'fa-book';
+  } else if (levelMechanics.floodSink) {
+    objDone = sink ? sink.pourCount : 0;
+    objTotal = 3;
+    iconClass = 'fa-faucet';
   } else {
     for (let i = 0; i < BOARDS.length; i++) if (BOARDS[i].done) objDone++;
     objTotal = BOARDS.length;

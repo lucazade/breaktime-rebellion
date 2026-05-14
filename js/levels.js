@@ -181,5 +181,28 @@ var LEVELS = (function() {
       janitors: [],
     }),
 
+    // ── LEVEL 7 — Flood the bathroom, ring the bell ──────────────────────────
+    Object.assign({}, SHARED_LAYOUT, {
+      timer:     75,
+      floodTime: 80, // frames to hold action per pour (≈1.3s at 60fps)
+
+      mechanics: {
+        writeBoards: false,
+        floodSink: true,
+        ringBell:  true,
+      },
+
+      bags: [],
+      // Sink in the leftmost room on the middle floor (bathroom)
+      sink: {x:32, y:MY-20},
+
+      teachers: [
+        {x:180, y:MY-PH-walkOffset, dir:-1, minX:10, maxX:205, speed:0.65, color:C.cyanprof, name:'Prof.Celeste', sight:90},
+        {x:200, y:GY-PH-walkOffset, dir: 1, minX:10, maxX:305, speed:0.55, color:C.redprof,  name:'Prof.Rossi',   sight:90},
+      ],
+
+      janitors: [],
+    }),
+
   ];
 })();

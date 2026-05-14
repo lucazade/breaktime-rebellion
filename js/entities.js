@@ -134,6 +134,18 @@ function bookDropWin() {
   setMsg(STRINGS.bookDropped);
 }
 
+function sinkFloodWin() {
+  if (allSink) return;
+  allSink = true;
+  setMsg(STRINGS.sinkFlooded);
+}
+
+function updateSink() {
+  if (!sink || sink.resetT <= 0) return;
+  sink.resetT--;
+  if (sink.resetT === 0) setMsg(STRINGS.sinkReady);
+}
+
 function bagWin() {
   if (allBags) return;
   allBags = true;

@@ -60,6 +60,12 @@
     bookSecondDrop:    'Almost there! One more!',
     bookReset:         'Book back on shelf! Knock it again!',
     bookDropped:       'Books dropped! Run to the bell! 🔔',
+    mission7:          'Flood the bathroom!',
+    sinkHint:          'Hold action to open the tap!',
+    sinkFirstPour:     "Water's spreading... do it again!",
+    sinkSecondPour:    'Almost there! One more pour!',
+    sinkReady:         'Tap ready! Turn it on again!',
+    sinkFlooded:       'Bathroom flooded! Run to the bell! 🔔',
   };
 
   var it = {
@@ -116,6 +122,12 @@
     bookSecondDrop:    'Quasi! Ancora uno!',
     bookReset:         'Libro rimesso! Fallo cadere di nuovo!',
     bookDropped:       'Libri caduti! Corri alla campanella! 🔔',
+    mission7:          'Allaga il bagno!',
+    sinkHint:          'Tieni premuto per aprire il rubinetto!',
+    sinkFirstPour:     "L'acqua si allarga... rifallo!",
+    sinkSecondPour:    'Quasi! Ancora una volta!',
+    sinkReady:         'Rubinetto pronto! Apri ancora!',
+    sinkFlooded:       'Bagno allagato! Corri alla campanella! 🔔',
   };
 
   window.STRINGS = lang === 'it' ? it : en;
