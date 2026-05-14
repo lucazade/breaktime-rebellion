@@ -84,4 +84,11 @@
     });
   }
 
+  // Keyboard legend labels (localised)
+  var _kl = { 'kl-move': 'keyMove', 'kl-action': 'keyAction', 'kl-pause': 'keyPause', 'kl-home': 'keyHome' };
+  Object.keys(_kl).forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.textContent = STRINGS[_kl[id]] || '';
+  });
+
 })();

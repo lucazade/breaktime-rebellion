@@ -44,6 +44,10 @@
     throwHint:            'Press to throw the paper!',
     studentHit:           'Student hit! ({0}/{1})',
     allStudentsDisturbed: 'All students disturbed! Ring the bell! 🔔',
+    keyMove:   'move Marco',
+    keyAction: 'action',
+    keyPause:  'pause',
+    keyHome:   'home',
   };
 
   var it = {
@@ -84,6 +88,10 @@
     throwHint:            'Premi per lanciare la cartaccia!',
     studentHit:           'Alunno colpito! ({0}/{1})',
     allStudentsDisturbed: 'Tutti gli alunni disturbati! Suona la campanella! 🔔',
+    keyMove:   'muovi Marco',
+    keyAction: 'azione',
+    keyPause:  'pausa',
+    keyHome:   'home',
   };
 
   window.STRINGS = lang === 'it' ? it : en;

@@ -266,41 +266,40 @@ canvas {
 #lvl-chooser  { justify-content: flex-start; }
 #audio-wrap   { justify-content: flex-end; }
 
-/* Level chooser — always occupies flex space; children hidden unless dev mode */
-#lvl-chooser { gap: 6px; color: #6c5eb5; font-size: clamp(7px,1.8vw,11px); }
-#lvl-chooser > * { visibility: hidden; } /* made visible by title.js when enabled */
-#lvl-prev, #lvl-next {
-  background: none; border: 1px solid #6c5eb5; color: #6c5eb5;
+/* ── Unified base for all title-screen interactive elements ── */
+#lvl-prev, #lvl-next, #lvl-name,
+.lang-btn, #audio-toggle {
+  min-height: 36px;
+  box-sizing: border-box;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: 3px;
+  color: rgba(255,255,255,0.65);
   font-family: 'Press Start 2P', monospace;
-  font-size: clamp(10px,2.5vw,16px);
-  padding: 3px 9px; cursor: pointer; border-radius: 3px;
-  touch-action: manipulation; line-height: 1;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: background .12s, border-color .12s, color .12s;
 }
-#lvl-prev:active, #lvl-next:active { background: #6c5eb5; color: #000; }
+#lvl-prev:active, #lvl-next:active,
+.lang-btn:active, #audio-toggle:active {
+  background: rgba(255,255,255,0.16);
+}
+
+/* Level chooser */
+#lvl-chooser { gap: 6px; font-size: clamp(7px,1.8vw,11px); }
+#lvl-chooser > * { visibility: hidden; }
+#lvl-prev, #lvl-next { font-size: clamp(10px,2.5vw,16px); padding: 3px 9px; line-height: 1; }
 #lvl-prev:disabled, #lvl-next:disabled { cursor: default; opacity: 0.35; }
-#lvl-next.lvl-locked { cursor: not-allowed; color: #554070; border-color: #443058; opacity: 1; }
+#lvl-next.lvl-locked { cursor: not-allowed; opacity: 0.45; }
 
 /* Language buttons */
 #lang-chooser { gap: 8px; }
-.lang-btn {
-  background: none; border: 1px solid #555;
-  color: #888; font-family: 'Press Start 2P', monospace;
-  font-size: clamp(7px,1.8vw,11px);
-  padding: 6px 10px; cursor: pointer; border-radius: 3px;
-  touch-action: manipulation; transition: border-color .15s, color .15s;
-}
-.lang-btn.active { border-color: #ffd700; color: #ffd700; }
-.lang-btn:active { background: #333; }
+.lang-btn { font-size: clamp(7px,1.8vw,11px); padding: 6px 10px; }
+.lang-btn.active { border-color: #ffd700; color: #ffd700; background: rgba(255,215,0,0.10); }
 
 /* Audio toggle */
-#audio-toggle {
-  background: none; border: 1px solid #555; color: #888;
-  font-size: clamp(12px,3vw,18px);
-  padding: 5px 11px; cursor: pointer; border-radius: 3px;
-  touch-action: manipulation; transition: border-color .15s, color .15s;
-  min-width: 42px; min-height: 34px; line-height: 1;
-}
-#audio-toggle:active { background: #333; }
+#audio-toggle { font-size: clamp(12px,3vw,18px); padding: 5px 11px; min-width: 42px; line-height: 1; }
 
 /* ─── PORTRAIT: RUOTA IL DISPOSITIVO ─── */
 #portrait-msg {
@@ -322,10 +321,10 @@ canvas {
 /* ─── KEYBOARD LEGEND (hidden by default; desktop media query below shows it) ─── */
 #keyboard-legend {
   display: none;
-  margin-top: 14px;
-  color: rgba(255,255,255,0.45);
+  margin-top: 16px;
+  color: rgba(255,255,255,0.50);
   font-family: 'Press Start 2P', monospace;
-  font-size: clamp(6px, 0.65vw, 8px);
+  font-size: clamp(8px, 0.75vw, 10px);
   letter-spacing: 1px;
   text-align: center;
   pointer-events: none;
@@ -338,8 +337,16 @@ canvas {
   border-bottom: 2px solid rgba(255,255,255,0.18);
   border-radius: 4px;
   padding: 3px 7px;
-  color: rgba(255,215,0,0.80);
+  color: rgba(255,215,0,0.82);
   letter-spacing: 0;
+}
+
+/* Arrow keycaps use system font so all 4 arrows render at the same size */
+.kb-arr {
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 13px;
+  line-height: 1;
+  padding: 3px 5px;
 }
 
 /* Desktop / mouse — panels hidden; full synthwave background + 150% zoom + screen bezel */
