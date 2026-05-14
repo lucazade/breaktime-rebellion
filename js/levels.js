@@ -26,7 +26,6 @@ var LEVELS = (function() {
         ringBell:    true,
       },
 
-
       bags: [],
 
       teachers: [
@@ -47,8 +46,6 @@ var LEVELS = (function() {
         stealBags:   true,
         ringBell:    true,
       },
-
-
 
       bags: [
         {x:120, y:GY-18}, {x:182, y:GY-18},
@@ -112,7 +109,7 @@ var LEVELS = (function() {
       },
 
       bags: [],
-      gymBall: {x:255, y:GY-18},
+      gymBall: {x:290, y:MY-12},
 
       teachers: [
         {x:30,  y:GY-PH-walkOffset, dir:1,  minX:10, maxX:305, speed:1.0,  color:'#1a1a4a', name:'Preside', sight:150},
