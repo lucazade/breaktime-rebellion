@@ -94,20 +94,29 @@ Obiettivo: nuovi ambienti, nuovi livelli, NPC aggiuntivi.
 
 Obiettivo: nuovi ambienti, nuovi livelli, NPC aggiuntivi.
 
-- [ ] # Disegnare lavandino con specchio in bagno (L7)
-- [ ] # Disegnare secchi spazzatura nell'ingresso e palestra (L8)
-- [ ] # Disegnare alunni seduti al banco e professori che fanno lezione vicino alla lavagna (L5)
+- [ ] #35 Fix L1: Non compare in msg il messaggio boardTagged e poi allBoards. Compare alla fine solo goBell (che rimuoverei del tutto perchè fa parte già dei messaggi di livello completato). 
+- [ ] #36 Fix L2: Non compare l'hint di rubare la cartella
+- [ ] #37 Fix L3: Alla fine compare goBell invece di allMachines
+- [ ] #38 Fix L4:
+    1. Dobbiamo sostituire il preside con l'insegnante di educazione fisica. Il preside comunque non compariva nel gioco. Se lo hai già disegnato il preside nel codice lo teniamo buono per L6.
+    2. L'insegnante di educazione fisica gira nel piano intermedio (quello della palestra) e dopo che Marco sgonfia il pallone la prima volta lui lo sgrida dicendogli di non farlo più altrimenti gli mette la nota e poi lo rigonfia. Appena il prof si allontana Marco lo va a sgonfiare nuovamente e a suonare la campanella.
+    3. Manca hint "tieni premuto per sgonfiare"
+- [ ] #39 Fix L5: 
+    1. L'insegnate non si vede sullo schermo. Deve essere accanto alla lavagna a fare lezione.
+    2. Premere per lanciare la cartaccia deve comparire solo nell'aula dove c'e' lezione.
+    3. Rimuoviamo il bidello da questo livello. C'e' troppa gente in giro
+    4. Se la cartaccia colpisce il prof egli cade per terra e Marco perde una vita.
 
 |  #  | Stato | Nome                                    |
 |-----|-------|-----------------------------------------|
 | L1  |   X   | Scrivere sulle lavagne
 | L2  |   X   | Rubare cartelle dei compagni
 | L3  |   X   | Agitare il distributore merende
-| L4  |       | Fare casino in palestra (pallonate?)
-| L5  |       | Disturbare la lezione (strillare?)
-| L6  |       | Far cadere libri in presidenza
-| L7  |       | Allagare il bagno
-| L8  |       | Inserire petardi nei secchi della spazzatura
+| L4  |       | Fare casino in palestra (insegnante di educazione fisica, sgonfiare pallone)
+| L5  |       | Disturbare la lezione (prof alla lavagna, alunni, lanciare cartaccia)
+| L6  |       | Far cadere libri in presidenza (preside)
+| L7  |       | Allagare il bagno (lavandino con specchio in bagno)
+| L8  |       | Inserire petardi nei secchi della spazzatura (secchi spazzatura nell'ingresso e palestra)
 | L9  |       | Far scattare l'allarme anti-incendio
 | L10 |       | Scappare da scuola (boss finale)
 
@@ -137,7 +146,7 @@ Obiettivo: non ci piacciono i bachi.
 
 Obiettivo: lucidare l'esperienza prima del rilascio.
 
-- [X] #6  Logo (Luca lo genera e lo integriamo)
+- [X] # Logo (Luca lo genera e lo integriamo)
 - [ ] # I pulsanti sulla schermata principale (sotto il logo) devono avere tutti la stessa altezza
 - [ ] # Implementare Schermata storia del personaggio all'inizio del gioco
 - [ ] # Implementare Schermata caricamento stile ZX Spectrum (barre laterali animate + logo progressivo a linee)

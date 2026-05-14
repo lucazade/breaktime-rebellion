@@ -137,9 +137,9 @@ var LEVELS = (function() {
       bags: [],
 
       students: [
-        {x:155, y:GY-22}, {x:179, y:GY-22},
-        {x:155, y:MY-22}, {x:179, y:MY-22},
-        {x:158, y:TY-20}, {x:182, y:TY-20},
+        {x:159, y:GY-19}, {x:183, y:GY-19},
+        {x:159, y:MY-19}, {x:183, y:MY-19},
+        {x:162, y:TY-17}, {x:186, y:TY-17},
       ],
 
       teachers: [
