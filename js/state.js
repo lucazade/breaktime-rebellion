@@ -69,7 +69,7 @@ function resetLevel() {
   students  = (lv.students  || []).map(function(s) { return {x:s.x, y:s.y, disturbed:false, shakeT:0}; });
   paperBalls = [];
   throwCooldown = 0;
-  bookcase    = lv.bookcase ? {x:lv.bookcase.x, y:lv.bookcase.y, dropped:false, shakeT:0, dropCount:0, resetT:0} : null;
+  bookcase    = lv.bookcase ? {x:lv.bookcase.x, y:lv.bookcase.y, fallDx:lv.bookcase.fallDx||0, fallDy:lv.bookcase.fallDy||36, dropped:false, shakeT:0, dropCount:0, resetT:0} : null;
   shakeTime   = lv.shakeTime   || 150;
   deflateTime = lv.deflateTime || 80;
   dropTime    = lv.dropTime    || 40;

@@ -125,34 +125,34 @@ function drawBookcase() {
   const bx = Math.round(bookcase.x), by = Math.round(bookcase.y);
 
   if (bookcase.dropped) {
-    // Book lying flat: spine (dark) on top, pages (light) on bottom
-    ctx.fillStyle = '#6B2200'; ctx.fillRect(bx-3, by+7,  11, 3); // spine — top
-    ctx.fillStyle = '#F5E6C0'; ctx.fillRect(bx-3, by+10, 11, 4); // pages — bottom
+    // Open book lying flat on the floor (two pages + spine)
+    const fx = bx + bookcase.fallDx, fy = by + bookcase.fallDy;
+    ctx.fillStyle = '#8B3000'; ctx.fillRect(fx,    fy,   18, 1); // binding top
+    ctx.fillStyle = '#F5E6C0'; ctx.fillRect(fx,    fy+1,  7, 8); // left page
+    ctx.fillStyle = '#F5E6C0'; ctx.fillRect(fx+11, fy+1,  7, 8); // right page
+    ctx.fillStyle = '#6B2200'; ctx.fillRect(fx+7,  fy,    4, 9); // spine
+    ctx.fillStyle = '#999999'; ctx.fillRect(fx+1,  fy+3,  5, 1); // text lines L
+    ctx.fillStyle = '#999999'; ctx.fillRect(fx+1,  fy+5,  5, 1);
+    ctx.fillStyle = '#999999'; ctx.fillRect(fx+12, fy+3,  5, 1); // text lines R
+    ctx.fillStyle = '#999999'; ctx.fillRect(fx+12, fy+5,  5, 1);
     return;
   }
 
-  // Draw book only while actively shaking (sticking out); static = bg.png handles it
+  // Progress bar while shaking; no book sprite (bg.png shows it in place)
   if (bookcase.shakeT > 0) {
     const pct = bookcase.shakeT / dropTime;
-    const wobble = Math.round(Math.sin(frame * 1.8) * 1);
-    ctx.fillStyle = 'rgba(0,0,0,0.55)'; ctx.fillRect(bx-1, by-5, 7, 3);
-    ctx.fillStyle = C.yellow;           ctx.fillRect(bx-1, by-5, Math.round(7 * pct), 3);
-    const tx = bx + wobble;
-    ctx.fillStyle = '#8B3000'; ctx.fillRect(tx,   by, 1, 12);
-    ctx.fillStyle = '#F5E6C0'; ctx.fillRect(tx+1, by, 3, 12);
-    ctx.fillStyle = '#6B1800'; ctx.fillRect(tx+4, by, 1, 12);
-    ctx.fillStyle = '#CC6600'; ctx.fillRect(tx+1, by+4, 3, 1);
-    ctx.fillStyle = '#8B3000'; ctx.fillRect(tx,   by,   5, 1);
+    ctx.fillStyle = 'rgba(0,0,0,0.55)'; ctx.fillRect(bx-8, by-5, 7, 3);
+    ctx.fillStyle = C.yellow;           ctx.fillRect(bx-8, by-5, Math.round(7 * pct), 3);
   }
 
-  // Proximity dashed border — always shown when near, even without the book sprite
+  // Proximity dashed border — full bookcase area
   if (!allBooks) {
-    const pdx = Math.abs(player.x + PW/2 - bookcase.x - 3);
-    const pdy = Math.abs(player.y + PH  - bookcase.y - 12);
-    if (pdx < 16 && pdy < 28) {
+    const pdx = Math.abs(player.x + PW/2 - bookcase.x - 12);
+    const pdy = Math.abs(player.y + PH  - bookcase.y - 26);
+    if (pdx < 20 && pdy < 36) {
       ctx.strokeStyle = C.yellow; ctx.lineWidth = 1;
       ctx.setLineDash([2, 2]);
-      ctx.strokeRect(bx-2, by-2, 9, 16);
+      ctx.strokeRect(bx, by-10, 28, 56);
       ctx.setLineDash([]);
     }
   }

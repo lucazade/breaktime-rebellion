@@ -89,12 +89,12 @@ function updatePlayer() {
     }
   }
   if (!player.shaking && levelMechanics.dropBook && bookcase && !bookcase.dropped && K.action && !player.onStair) {
-    const dx = Math.abs(player.x + PW/2 - bookcase.x - 3);
-    const dy = Math.abs(player.y + PH  - bookcase.y - 12);
-    if (dx < 16 && dy < 28) {
+    const dx = Math.abs(player.x + PW/2 - bookcase.x - 12);
+    const dy = Math.abs(player.y + PH  - bookcase.y - 26);
+    if (dx < 20 && dy < 36) {
       player.shaking = true;
       actionPressed = false;
-      player.dir = (player.x + PW/2 < bookcase.x + 3) ? 1 : -1;
+      player.dir = (player.x + PW/2 < bookcase.x + 12) ? 1 : -1;
       bookcase.shakeT++;
       if (bookcase.shakeT >= dropTime) {
         bookcase.dropped = true;
@@ -235,9 +235,9 @@ function updatePlayer() {
       const gdy = Math.abs(player.y + PH  - gymBall.y - 9);
       if (gdx < 18 && gdy < 18) setMsg(STRINGS.deflateHint, 60);
     } else if (levelMechanics.dropBook && bookcase && !bookcase.dropped) {
-      const bdx = Math.abs(player.x + PW/2 - bookcase.x - 3);
-      const bdy = Math.abs(player.y + PH  - bookcase.y - 12);
-      if (bdx < 16 && bdy < 28) setMsg(STRINGS.bookDropHint, 60);
+      const bdx = Math.abs(player.x + PW/2 - bookcase.x - 12);
+      const bdy = Math.abs(player.y + PH  - bookcase.y - 26);
+      if (bdx < 20 && bdy < 36) setMsg(STRINGS.bookDropHint, 60);
     } else if (levelMechanics.throwPaper && !allStudents) {
       // Show hint only when Marco is in the classroom area (not in the corridor)
       if (player.x > 80 && player.x < 250) {

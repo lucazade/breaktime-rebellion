@@ -164,13 +164,14 @@ var LEVELS = (function() {
       dropTime: 40, // frames to hold action near the bookcase (≈0.7s at 60fps)
 
       mechanics: {
+        writeBoards: false,
         dropBook: true,
         ringBell: true,
       },
 
       bags: [],
       // Bookcase is the rightmost fixture on the ground floor (yellow room).
-      bookcase: {x:278, y:GY-40},
+      bookcase: {x:288, y:GY-43, fallDx:-30, fallDy:28},
 
       // Only the Preside patrols the ground floor — sole threat, full patrol range.
       teachers: [
