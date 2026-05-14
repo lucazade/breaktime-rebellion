@@ -83,7 +83,7 @@ canvas {
 /* ─── JOYSTICK OVERLAY ─── */
 #ctrl-joy {
   position: absolute;
-  bottom: 3%;
+  bottom: 1%;
   left: 1%;
   width: 110px;
   height: 110px;
@@ -114,7 +114,7 @@ canvas {
 /* ─── ACTION BUTTON OVERLAY ─── */
 #ctrl-action {
   position: absolute;
-  bottom: 3%;
+  bottom: 5%;
   right: 1%;
   z-index: 50;
 }
