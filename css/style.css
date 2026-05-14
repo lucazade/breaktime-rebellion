@@ -103,14 +103,16 @@ body {
   #panel-left #ctrl-joy {
     position: absolute;
     bottom: 20px;
-    left: 16px;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 1;
   }
 
   #panel-right #ctrl-action {
     position: absolute;
-    bottom: 36px;
-    right: 16px;
+    bottom: 28px; /* center = 28+47 = 75px, same as joy center 20+55 = 75px */
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 1;
   }
 
