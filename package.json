@@ -5,7 +5,7 @@
   "scripts": {
     "build": "rm -rf www && mkdir -p www && cp index.html manifest.json sw.js robots.txt www/ && cp -r css js assets www/",
     "sync":  "npm run build && npx cap sync android",
-    "apk":   "npm run sync && cd android && JAVA_HOME=/opt/android-studio/jbr ANDROID_HOME=$HOME/Android/Sdk ./gradlew assembleDebug && cd .. && cp android/app/build/outputs/apk/debug/app-debug.apk \"breaktime-rebellion-v$(node -p 'require(\"./package.json\").version').apk\" && echo \"APK: breaktime-rebellion-v$(node -p 'require(\"./package.json\").version').apk\""
+    "apk":   "npm run sync && cd android && JAVA_HOME=/opt/android-studio/jbr ANDROID_HOME=$HOME/Android/Sdk ./gradlew assembleDebug && cd .. && cp android/app/build/outputs/apk/debug/app-debug.apk \"breaktime-rebellion-v$(node -p 'require(\"./package.json\").version').apk\" && rclone copy \"breaktime-rebellion-v$(node -p 'require(\"./package.json\").version').apk\" \"luca.forina:Breaktime-Rebellion/\" && echo \"APK caricato su Drive: breaktime-rebellion-v$(node -p 'require(\"./package.json\").version').apk\""
   },
   "dependencies": {
     "@capacitor/android": "^8.3.4",
