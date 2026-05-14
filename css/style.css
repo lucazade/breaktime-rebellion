@@ -36,14 +36,14 @@ body {
     height: 100dvh;
   }
 
-  /* Game screen: 16:10, fits within viewport, panels always get at least 80px. No box-shadow. */
+  /* Game screen: explicit height:100dvh fills viewport and eliminates dark bands above/below. */
   #game-area {
     flex: 0 0 auto;
     aspect-ratio: 16/10;
+    height: 100dvh;
     max-height: 100dvh;
     max-width: calc(100vw - 160px);
     width: auto;
-    height: auto;
   }
 
   /* Cabinet side panels — synthwave / retro-arcade */
@@ -103,14 +103,14 @@ body {
   #panel-left #ctrl-joy {
     position: absolute;
     bottom: 20px;
-    left: 8px;
+    left: 16px;
     z-index: 1;
   }
 
   #panel-right #ctrl-action {
     position: absolute;
-    bottom: 20px;
-    right: 8px;
+    bottom: 36px;
+    right: 16px;
     z-index: 1;
   }
 
