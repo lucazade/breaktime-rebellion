@@ -376,28 +376,27 @@ canvas {
     height: min(600px, 80dvh, calc(78vw / 1.6));
     width: auto;
     aspect-ratio: 16/10;
-    margin: 54px 40px 38px;
+    margin: 80px 40px 38px;
     box-shadow:
       0 0 0  2px #04000e,
-      0 0 0  5px rgba(0,215,255,0.82),   /* cyan screen bezel */
+      0 0 0  5px rgba(140,0,220,0.88),   /* violet screen bezel */
       0 0 0  9px #04000e,
-      0 0 0 11px rgba(130,0,210,0.55),   /* purple outer ring */
-      0 0 45px rgba(0,140,255,0.22);     /* blue ambient glow */
+      0 0 50px rgba(80,0,160,0.28);      /* ambient glow */
   }
 
   /* Top bezel: game title above the screen */
   #game-area::before {
     content: '⊙  BREAKTIME REBELLION  ⊙';
     position: absolute;
-    bottom: calc(100% + 9px);
+    bottom: calc(100% + 22px);
     left: 50%;
     transform: translateX(-50%);
     white-space: nowrap;
     font-family: 'Press Start 2P', monospace;
-    font-size: clamp(8px, 0.8vw, 12px);
-    color: rgba(255,215,0,0.90);
-    letter-spacing: 4px;
-    text-shadow: 0 0 10px rgba(255,200,0,0.55), 0 0 24px rgba(255,140,0,0.30);
+    font-size: clamp(12px, 1.1vw, 17px);
+    color: rgba(255,215,0,0.92);
+    letter-spacing: 5px;
+    text-shadow: 0 0 12px rgba(255,200,0,0.60), 0 0 28px rgba(255,140,0,0.32);
     pointer-events: none;
   }
 
