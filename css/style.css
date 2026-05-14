@@ -319,56 +319,75 @@ canvas {
   #portrait-msg { display: flex; }
 }
 
-/* Desktop / mouse: panels hidden; game zoomed to 150% with arcade bezel */
+/* Desktop / mouse — panels hidden; full synthwave background + 150% zoom + screen bezel */
 @media (hover: hover) and (pointer: fine) {
   #panel-left, #panel-right { display: none; }
 
-  #game-area {
-    /* 150% zoom: 400→600px, capped so it never overflows any screen */
-    height: min(600px, 80dvh, calc(80vw / 1.6));
-    width: auto;
-    aspect-ratio: 16/10;
-    /* Margins create the visible bezel area around the canvas */
-    margin: 52px 40px 36px;
-    /* Multi-layer arcade bezel via box-shadow (doesn't affect layout) */
-    box-shadow:
-      0 0 0  2px #1c0535,           /* inner lip */
-      0 0 0 18px #0b0120,           /* bezel body dark */
-      0 0 0 20px rgba(0,215,255,0.72), /* cyan neon strip */
-      0 0 0 22px #0b0120,           /* gap */
-      0 0 0 38px #160430,           /* outer frame */
-      0 0 0 39px rgba(130,0,215,0.50), /* purple outer edge */
-      0 0 90px rgba(80,0,160,0.35); /* ambient glow */
+  /* Synthwave grid fills the entire page (all "black" border areas) */
+  body {
+    background:
+      radial-gradient(ellipse at 50% 110%, rgba(255,0,180,0.32) 0%, transparent 48%),
+      radial-gradient(ellipse at 50% -8%,  rgba(0,180,255,0.14) 0%, transparent 42%),
+      radial-gradient(ellipse at 0%   50%, rgba(120,0,200,0.12) 0%, transparent 50%),
+      radial-gradient(ellipse at 100% 50%, rgba(0,160,200,0.10) 0%, transparent 50%),
+      repeating-linear-gradient(
+        90deg, transparent 0px, transparent 44px,
+        rgba(160,0,255,0.17) 44px, rgba(160,0,255,0.17) 45px
+      ),
+      repeating-linear-gradient(
+        0deg, transparent 0px, transparent 44px,
+        rgba(0,200,255,0.13) 44px, rgba(0,200,255,0.13) 45px
+      ),
+      linear-gradient(160deg, #060010 0%, #0e0026 45%, #100030 60%, #060010 100%);
   }
 
-  /* Top bezel: game title */
+  /* Game canvas: 150% zoom (400→600px) with neon screen bezel */
+  #game-area {
+    height: min(600px, 80dvh, calc(78vw / 1.6));
+    width: auto;
+    aspect-ratio: 16/10;
+    margin: 54px 40px 38px;
+    box-shadow:
+      0 0 0  2px #04000e,
+      0 0 0  5px rgba(0,215,255,0.82),   /* cyan screen bezel */
+      0 0 0  9px #04000e,
+      0 0 0 11px rgba(130,0,210,0.55),   /* purple outer ring */
+      0 0 45px rgba(0,140,255,0.22);     /* blue ambient glow */
+  }
+
+  /* Top bezel: game title above the screen */
   #game-area::before {
     content: '⊙  BREAKTIME REBELLION  ⊙';
     position: absolute;
-    bottom: calc(100% + 8px);
+    bottom: calc(100% + 9px);
     left: 50%;
     transform: translateX(-50%);
     white-space: nowrap;
     font-family: 'Press Start 2P', monospace;
     font-size: clamp(8px, 0.8vw, 12px);
-    color: rgba(255,215,0,0.88);
+    color: rgba(255,215,0,0.90);
     letter-spacing: 4px;
     text-shadow: 0 0 10px rgba(255,200,0,0.55), 0 0 24px rgba(255,140,0,0.30);
     pointer-events: none;
   }
 
-  /* Bottom bezel: decorative neon line */
+  /* Bottom bezel: neon gradient line */
   #game-area::after {
     content: '';
     position: absolute;
-    top: calc(100% + 12px);
+    top: calc(100% + 14px);
     left: 50%;
     transform: translateX(-50%);
     width: 55%;
     height: 2px;
-    background: linear-gradient(90deg, transparent, rgba(0,210,255,0.60), rgba(160,0,255,0.40), rgba(0,210,255,0.60), transparent);
+    background: linear-gradient(90deg,
+      transparent, rgba(0,210,255,0.65), rgba(160,0,255,0.45), rgba(0,210,255,0.65), transparent);
     pointer-events: none;
   }
+
+  /* Title screen (home): scale logo and controls to 150% */
+  #overlay #logo-img  { width: clamp(460px, 40vw, 690px); }
+  #title-controls     { width: clamp(460px, 40vw, 690px); }
 }
 
 /* ─── PANEL BUTTONS (home / pause) ─── */
