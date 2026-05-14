@@ -24,8 +24,9 @@ body {
   max-width: 100vw;
 }
 
-/* Fullscreen o standalone (PWA): canvas a tutto schermo senza fasce nere */
-@media ((display-mode: fullscreen) or (display-mode: standalone)) and (orientation: landscape) {
+/* Fullscreen on PWA/standalone and on any touch device in landscape (incl. Capacitor WebView) */
+@media ((display-mode: fullscreen) or (display-mode: standalone)) and (orientation: landscape),
+       (orientation: landscape) and (pointer: coarse) {
   #wrap { width: 100vw; }
   #game-area {
     width: 100%;
@@ -81,7 +82,7 @@ canvas {
 /* ─── JOYSTICK OVERLAY ─── */
 #ctrl-joy {
   position: fixed;
-  bottom: calc(5px + env(safe-area-inset-bottom, 0px));
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
   left: 5px;
   width: 110px;
   height: 110px;
@@ -112,7 +113,7 @@ canvas {
 /* ─── ACTION BUTTON OVERLAY ─── */
 #ctrl-action {
   position: fixed;
-  bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+  bottom: calc(20px + env(safe-area-inset-bottom, 0px));
   right: 10px;
   z-index: 50;
 }
