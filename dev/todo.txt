@@ -142,9 +142,8 @@ Obiettivo: non ci piacciono i bachi.
 Obiettivo: lucidare l'esperienza prima del rilascio.
 
 - [X] # Logo (Luca lo genera e lo integriamo)
-- [ ] # I pulsanti sulla schermata principale (sotto il logo) devono avere tutti la stessa altezza
+- [X] # I pulsanti sulla schermata principale (sotto il logo) devono avere tutti la stessa altezza
 - [ ] # Implementare Schermata storia del personaggio all'inizio del gioco
-- [ ] # Implementare Schermata caricamento stile ZX Spectrum (barre laterali animate + logo progressivo a linee)
 - [ ] # Implementare Schermata migliori punteggi con livello raggiunto (non serve inserire il nome)
 - [ ] # Implementare Schermata crediti (vedi credits.txt)
 - [ ] # Transizione tra schermate (fade in/out?)
@@ -152,14 +151,16 @@ Obiettivo: lucidare l'esperienza prima del rilascio.
 - [ ] # Rimuovere cuori da msg
 - [ ] # Gestire Marco quando sale e scende le scale coprendo parte non visibile dietro al pavimento
 - [ ] # Rifare immagine iniziale con chatgpt senza problemi di licenza (prima definire meglio homepage)(per Luca)
-- [ ] # Aggiungere favicon? serve nel gioco finale? Utile se si gioca sul browser su pc
+- [X] # Aggiungere favicon? serve nel gioco finale? Utile se si gioca sul browser su pc
 
 ---
 
 ## FASE 10 — Varie ed eventuali
 
 Obiettivo: ancora in dubbio.
+
 - [x] # Prime prove app android? Apk locale? PlayStore?
+- [ ] # Implementare Schermata caricamento stile ZX Spectrum (barre laterali animate + logo progressivo a linee)
 - [ ] # Mostrare collo personaggi (fare un collo basso)
 - [ ] # Lavoro su branch outline personaggi
 - [ ] # ngrok errore? 17:38:17.361 CEST GET /.well-known/assetlinks.json 404 File not found     
