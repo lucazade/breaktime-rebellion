@@ -180,8 +180,8 @@ document.getElementById('btn-home-no').addEventListener('click', cancelHome);
 // ── Keyboard shortcuts (desktop) — P = pause, ESC = home / close dialog ─────
 document.addEventListener('keydown', function(e) {
   if (_homeOverlay.classList.contains('active')) {
-    if (e.key === 'Enter')  { e.preventDefault(); goHome(); }
-    if (e.key === 'Escape') { e.preventDefault(); cancelHome(); }
+    if (e.key === 'Enter' || e.key === 'y' || e.key === 'Y') { e.preventDefault(); goHome(); }
+    if (e.key === 'Escape' || e.key === 'n' || e.key === 'N') { e.preventDefault(); cancelHome(); }
     return;
   }
   if (e.key === 'p' || e.key === 'P') triggerPause();
