@@ -109,7 +109,7 @@ var LEVELS = (function() {
       },
 
       bags: [],
-      gymBall: {x:255, y:MY-17},
+      gymBall: {x:255, y:MY-18},
 
       // PE teacher on the gym floor (MY), patrols ONLY the gym area so they are
       // always visible near the ball. Preside is reserved for L6.
