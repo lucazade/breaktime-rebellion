@@ -52,50 +52,61 @@ body {
     display: flex;
     flex: 1;
     min-width: 80px;
-    align-self: stretch;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-    padding-bottom: 8%;
+    height: 100dvh;
     position: relative;
     overflow: hidden;
-    background:
-      radial-gradient(ellipse at 50% 88%, rgba(255,110,0,0.13) 0%, transparent 60%),
-      linear-gradient(180deg, #080400 0%, #1c0b00 40%, #100700 70%, #080400 100%);
     border-top: 2px solid #2e1200;
     border-bottom: 2px solid #2e1200;
+    background:
+      radial-gradient(ellipse at 50% 92%, rgba(255,100,0,0.28) 0%, transparent 52%),
+      repeating-linear-gradient(
+        162deg,
+        #0e0600 0px, #1e0e00 3px, #130700 6px, #090300 9px, #0e0600 12px
+      );
   }
 
-  /* Wood grain scanlines */
+  /* LED amber strip facing the game screen */
+  #panel-left  { border-right: 3px solid rgba(255,120,0,0.55); }
+  #panel-right { border-left:  3px solid rgba(255,120,0,0.55); }
+
+  /* Horizontal scanlines over grain */
   #panel-left::before, #panel-right::before {
     content: '';
     position: absolute;
     inset: 0;
     background: repeating-linear-gradient(
       0deg,
-      rgba(255,150,50,0.0) 0px, rgba(255,150,50,0.0) 5px,
-      rgba(0,0,0,0.18) 5px, rgba(0,0,0,0.18) 6px
+      rgba(0,0,0,0) 0px, rgba(0,0,0,0) 2px,
+      rgba(0,0,0,0.32) 2px, rgba(0,0,0,0.32) 3px
     );
     pointer-events: none;
   }
 
-  /* Coin-slot decoration at top of each panel */
+  /* Coin-slot decoration */
   #panel-left::after, #panel-right::after {
     content: '';
     position: absolute;
-    top: 12%;
+    top: 10%;
     left: 50%;
     transform: translateX(-50%);
-    width: 30px; height: 4px;
-    background: #0a0500;
+    width: 28px; height: 4px;
+    background: #060300;
     border-radius: 2px;
-    box-shadow: 0 0 0 2px #2a1000, 0 0 6px rgba(255,100,0,0.2);
+    box-shadow: 0 0 0 2px #2a0e00, 0 0 8px rgba(255,100,0,0.25);
   }
 
-  /* Controls inside panels: relative, not absolute */
-  #ctrl-joy, #ctrl-action {
-    position: relative;
-    bottom: auto; left: auto; right: auto;
+  /* Controls: absolute inside panel, pushed to bottom-edge */
+  #panel-left #ctrl-joy {
+    position: absolute;
+    bottom: 20px;
+    left: 8px;
+    z-index: 1;
+  }
+
+  #panel-right #ctrl-action {
+    position: absolute;
+    bottom: 20px;
+    right: 8px;
     z-index: 1;
   }
 
