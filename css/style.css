@@ -319,6 +319,29 @@ canvas {
   #portrait-msg { display: flex; }
 }
 
+/* ─── KEYBOARD LEGEND (hidden by default; desktop media query below shows it) ─── */
+#keyboard-legend {
+  display: none;
+  margin-top: 14px;
+  color: rgba(255,255,255,0.45);
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(6px, 0.65vw, 8px);
+  letter-spacing: 1px;
+  text-align: center;
+  pointer-events: none;
+}
+
+.kb {
+  display: inline-block;
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.30);
+  border-bottom: 2px solid rgba(255,255,255,0.18);
+  border-radius: 4px;
+  padding: 3px 7px;
+  color: rgba(255,215,0,0.80);
+  letter-spacing: 0;
+}
+
 /* Desktop / mouse — panels hidden; full synthwave background + 150% zoom + screen bezel */
 @media (hover: hover) and (pointer: fine) {
   #panel-left, #panel-right { display: none; }
@@ -391,29 +414,6 @@ canvas {
 
   /* Keyboard legend: visible only on desktop */
   #keyboard-legend { display: block; }
-}
-
-/* ─── KEYBOARD LEGEND ─── */
-#keyboard-legend {
-  display: none;
-  margin-top: 14px;
-  color: rgba(255,255,255,0.45);
-  font-family: 'Press Start 2P', monospace;
-  font-size: clamp(6px, 0.65vw, 8px);
-  letter-spacing: 1px;
-  text-align: center;
-  pointer-events: none;
-}
-
-.kb {
-  display: inline-block;
-  background: rgba(255,255,255,0.10);
-  border: 1px solid rgba(255,255,255,0.30);
-  border-bottom: 2px solid rgba(255,255,255,0.18);
-  border-radius: 4px;
-  padding: 3px 7px;
-  color: rgba(255,215,0,0.80);
-  letter-spacing: 0;
 }
 
 /* ─── PANEL BUTTONS (home / pause) ─── */
