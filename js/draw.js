@@ -91,9 +91,9 @@ function drawGymBall() {
   if (!gymBall) return;
   const bx = Math.round(gymBall.x), by = Math.round(gymBall.y);
   if (gymBall.deflated) {
-    ctx.fillStyle = C.lgray;
+    ctx.fillStyle = '#993300';
     ctx.fillRect(bx+1, by+8, 9, 3);
-    ctx.fillStyle = C.dgray;
+    ctx.fillStyle = '#662200';
     ctx.fillRect(bx+2, by+9, 7, 1);
     return;
   }
@@ -102,21 +102,25 @@ function drawGymBall() {
     ctx.fillStyle = 'rgba(0,0,0,0.55)'; ctx.fillRect(bx, by-5, 11, 3);
     ctx.fillStyle = C.yellow;           ctx.fillRect(bx, by-5, Math.round(11 * pct), 3);
   }
-  // Soccer ball — round white base (11×11)
-  ctx.fillStyle = C.white;
+  // Basketball — round orange base (11×11)
+  ctx.fillStyle = '#CC6600';
   ctx.fillRect(bx+3, by,    5, 1);
   ctx.fillRect(bx+2, by+1,  7, 1);
   ctx.fillRect(bx+1, by+2,  9, 7);
   ctx.fillRect(bx+2, by+9,  7, 1);
   ctx.fillRect(bx+3, by+10, 5, 1);
-  // Black pentagon patches
-  ctx.fillStyle = C.black;
-  ctx.fillRect(bx+4, by+4, 3, 3); // centre
-  ctx.fillRect(bx+4, by+1, 3, 2); // top
-  ctx.fillRect(bx+1, by+3, 2, 2); // upper-left
-  ctx.fillRect(bx+8, by+3, 2, 2); // upper-right
-  ctx.fillRect(bx+2, by+7, 2, 2); // lower-left
-  ctx.fillRect(bx+7, by+7, 2, 2); // lower-right
+  // Seam lines — curved arcs, not straight (avoid pumpkin look)
+  ctx.fillStyle = '#993300';
+  ctx.fillRect(bx+2, by+5,  7, 1); // horizontal equator
+  ctx.fillRect(bx+4, by+2,  1, 2); // left arc top
+  ctx.fillRect(bx+3, by+4,  1, 3); // left arc mid
+  ctx.fillRect(bx+4, by+7,  1, 2); // left arc bottom
+  ctx.fillRect(bx+6, by+2,  1, 2); // right arc top
+  ctx.fillRect(bx+7, by+4,  1, 3); // right arc mid
+  ctx.fillRect(bx+6, by+7,  1, 2); // right arc bottom
+  // Highlight
+  ctx.fillStyle = 'rgba(255,200,100,0.5)';
+  ctx.fillRect(bx+2, by+2, 2, 2);
   if (!allBall) {
     const pdx = Math.abs(player.x + PW/2 - gymBall.x - 5);
     const pdy = Math.abs(player.y + PH  - gymBall.y - 11);
