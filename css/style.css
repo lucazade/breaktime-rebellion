@@ -24,16 +24,117 @@ body {
   max-width: 100vw;
 }
 
-/* Fullscreen on PWA/standalone and on any touch device in landscape (incl. Capacitor WebView).
-   aspect-ratio 16/10 is kept to avoid stretching on 20:9 screens — black bars on sides. */
-@media ((display-mode: fullscreen) or (display-mode: standalone)) and (orientation: landscape),
-       (orientation: landscape) and (pointer: coarse) {
-  #wrap { width: 100vw; height: 100dvh; justify-content: center; }
-  #game-area {
-    aspect-ratio: 16/10;
+/* ─── ARCADE CABINET PANELS — mobile landscape only ─── */
+#panel-left, #panel-right { display: none; }
+
+@media (orientation: landscape) and (pointer: coarse) {
+  /* Row layout: [panel-left] [game] [panel-right] */
+  #wrap {
+    flex-direction: row;
+    align-items: center;
+    width: 100vw;
     height: 100dvh;
+  }
+
+  /* Game screen: 16:10, fits within viewport, panels always get at least 80px */
+  #game-area {
+    flex: 0 0 auto;
+    aspect-ratio: 16/10;
+    max-height: 100dvh;
+    max-width: calc(100vw - 160px);
     width: auto;
-    max-width: 100vw;
+    height: auto;
+    box-shadow: 0 0 0 3px #1a1a1a, 0 0 0 5px #111, 0 0 30px rgba(0,0,0,0.9);
+  }
+
+  /* Cabinet side panels */
+  #panel-left, #panel-right {
+    display: flex;
+    flex: 1;
+    min-width: 80px;
+    align-self: stretch;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding-bottom: 8%;
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse at 50% 88%, rgba(255,110,0,0.13) 0%, transparent 60%),
+      linear-gradient(180deg, #080400 0%, #1c0b00 40%, #100700 70%, #080400 100%);
+    border-top: 2px solid #2e1200;
+    border-bottom: 2px solid #2e1200;
+  }
+
+  /* Wood grain scanlines */
+  #panel-left::before, #panel-right::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      rgba(255,150,50,0.0) 0px, rgba(255,150,50,0.0) 5px,
+      rgba(0,0,0,0.18) 5px, rgba(0,0,0,0.18) 6px
+    );
+    pointer-events: none;
+  }
+
+  /* Coin-slot decoration at top of each panel */
+  #panel-left::after, #panel-right::after {
+    content: '';
+    position: absolute;
+    top: 12%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px; height: 4px;
+    background: #0a0500;
+    border-radius: 2px;
+    box-shadow: 0 0 0 2px #2a1000, 0 0 6px rgba(255,100,0,0.2);
+  }
+
+  /* Controls inside panels: relative, not absolute */
+  #ctrl-joy, #ctrl-action {
+    position: relative;
+    bottom: auto; left: auto; right: auto;
+    z-index: 1;
+  }
+
+  /* Arcade joystick base — dark metallic */
+  #joy-base {
+    background: radial-gradient(circle at 38% 36%, #2e2e2e, #0a0a0a);
+    border: 3px solid #3c3c3c;
+    box-shadow:
+      0 6px 20px rgba(0,0,0,0.95),
+      inset 0 0 14px rgba(0,0,0,0.85),
+      inset 0 1px 3px rgba(255,255,255,0.06);
+  }
+
+  #joy-knob {
+    background: radial-gradient(circle at 35% 28%, #484848, #181818);
+    border: 3px solid #565656;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.9), inset 0 1px 4px rgba(255,255,255,0.07);
+  }
+
+  /* Arcade button — large red dome */
+  #btn-action {
+    width: 82px; height: 82px;
+    background: radial-gradient(circle at 37% 32%, #ff5228, #9a0f00);
+    border: 4px solid #5c0000;
+    box-shadow:
+      0 8px 24px rgba(0,0,0,0.95),
+      0 0 20px rgba(255,55,0,0.28),
+      inset 0 3px 8px rgba(255,140,90,0.32),
+      inset 0 -3px 7px rgba(0,0,0,0.55);
+  }
+
+  #btn-action:active, #btn-action.pressed {
+    background: radial-gradient(circle at 37% 32%, #cc3010, #700800);
+    box-shadow:
+      0 2px 8px rgba(0,0,0,0.95),
+      0 0 10px rgba(255,55,0,0.15),
+      inset 0 6px 12px rgba(0,0,0,0.65);
+    transform: translateY(3px) scale(0.97);
+    border-color: rgba(205,50,0,0.8);
   }
 }
 
@@ -82,9 +183,6 @@ canvas {
 
 /* ─── JOYSTICK OVERLAY ─── */
 #ctrl-joy {
-  position: absolute;
-  bottom: 1%;
-  left: 1%;
   width: 110px;
   height: 110px;
   z-index: 50;
@@ -113,9 +211,6 @@ canvas {
 
 /* ─── ACTION BUTTON OVERLAY ─── */
 #ctrl-action {
-  position: absolute;
-  bottom: 5%;
-  right: 1%;
   z-index: 50;
 }
 
@@ -217,6 +312,7 @@ canvas {
   #portrait-msg { display: flex; }
 }
 
+/* Desktop / mouse: panels and controls hidden (panels already display:none by default) */
 @media (hover: hover) and (pointer: fine) {
-  #ctrl-joy, #ctrl-action { display: none; }
+  #panel-left, #panel-right { display: none; }
 }
