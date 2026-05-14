@@ -73,11 +73,18 @@ function updatePlayer() {
       gymBall.shakeT++;
       if (gymBall.shakeT >= CONFIG.deflateTime) {
         gymBall.deflated = true;
-        score += 600;
-        addFloating(gymBall.x + 4, gymBall.y, '+600', C.yellow);
+        gymBall.shakeT = 0;
+        gymBall.deflateCount++;
+        score += 300;
+        addFloating(gymBall.x + 4, gymBall.y, '+300', C.yellow);
         addParticles(gymBall.x + 4, gymBall.y + 4, C.yellow, 18);
         alertTeachers(gymBall.x + 4, gymBall.y + 4);
-        ballDeflatedWin();
+        if (gymBall.deflateCount >= 2) {
+          ballDeflatedWin();
+        } else {
+          gymBall.reinflateT = 240; // ~4s — PE teacher scolds then reinflates
+          setMsg(STRINGS.ballFirstDeflate);
+        }
       }
     }
   }
@@ -184,6 +191,12 @@ function updatePlayer() {
         if (d < nd) nd = d;
       }
       if (nd < 36) setMsg(STRINGS.getCloser, 60);
+    } else if (levelMechanics.stealBags && !allBags) {
+      for (let bi = 0; bi < bags.length; bi++) {
+        if (bags[bi].collected) continue;
+        const dd = Math.abs(player.x - bags[bi].x) + Math.abs(player.y - bags[bi].y);
+        if (dd < 40) { setMsg(STRINGS.bagHint, 60); break; }
+      }
     } else if (levelMechanics.shakeMachines && !allMachines) {
       for (let mi = 0; mi < machines.length; mi++) {
         const m = machines[mi];
@@ -193,13 +206,16 @@ function updatePlayer() {
         if (mdx < 14 && mdy < 20) { setMsg(STRINGS.machineHint, 60); break; }
       }
     } else if (levelMechanics.deflateBall && gymBall && !gymBall.deflated) {
-      const bdx = Math.abs(player.x + PW/2 - gymBall.x - 4);
-      const bdy = Math.abs(player.y + PH  - gymBall.y - 9);
-      if (bdx < 18 && bdy < 18) setMsg(STRINGS.machineHint, 60);
+      const gdx = Math.abs(player.x + PW/2 - gymBall.x - 4);
+      const gdy = Math.abs(player.y + PH  - gymBall.y - 9);
+      if (gdx < 18 && gdy < 18) setMsg(STRINGS.deflateHint, 60);
     } else if (levelMechanics.throwPaper && !allStudents) {
-      for (let si = 0; si < students.length; si++) {
-        if (students[si].disturbed) continue;
-        if (Math.abs(students[si].y - (player.y + PH)) < 30) { setMsg(STRINGS.throwHint, 60); break; }
+      // Show hint only when Marco is in the classroom area (not in the corridor)
+      if (player.x > 80 && player.x < 250) {
+        for (let si = 0; si < students.length; si++) {
+          if (students[si].disturbed) continue;
+          if (Math.abs(students[si].y - (player.y + PH)) < 30) { setMsg(STRINGS.throwHint, 60); break; }
+        }
       }
     }
   }
@@ -214,6 +230,16 @@ function updatePaperBalls() {
     b.dist += SPEED;
     if (b.dist > MAX_DIST || b.x < 0 || b.x > W) { paperBalls.splice(i, 1); continue; }
     let hit = false;
+    // Check collision with teachers first — ball hitting teacher penalises Marco
+    for (let ti = 0; ti < teachers.length; ti++) {
+      const t = teachers[ti];
+      if (Math.abs(b.x - t.x - PW/2) < 10 && Math.abs(b.y - t.y - PH/2) < 14) {
+        paperBalls.splice(i, 1);
+        caughtBy(t);
+        hit = true; break;
+      }
+    }
+    if (hit) continue;
     for (let j = 0; j < students.length; j++) {
       const s = students[j];
       if (s.disturbed) continue;
@@ -274,10 +300,8 @@ function tryAction() {
         actionPressed = false;
         player.spraying = false;
       }, 750);
-    } else {
-      if ((allBoards || allBags) && !BELL.done) setMsg(STRINGS.goBell);
-      else setMsg(STRINGS.getCloser);
     }
+    // No message when action pressed far from a board — proximity hints handle it.
   } else if (levelMechanics.throwPaper && !allStudents) {
     if (throwCooldown <= 0) {
       paperBalls.push({
@@ -288,7 +312,6 @@ function tryAction() {
       });
       throwCooldown = 40;
     }
-  } else {
-    if ((allBoards || allBags || allMachines || allBall || allStudents) && !BELL.done) setMsg(STRINGS.goBell);
   }
+  // No fallback message — win messages and proximity hints keep the player informed.
 }

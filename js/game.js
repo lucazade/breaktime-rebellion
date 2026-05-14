@@ -36,6 +36,7 @@ function loop(ts) {
         updateTeachers();
         if (!CONFIG.debug.disableJanitors) updateJanitors();
         updateBell();
+        updateGymBall();
         updatePaperBalls();
         updateTimer();
         tickTransition();

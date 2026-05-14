@@ -94,6 +94,16 @@ function machineWin() {
   setMsg(STRINGS.allMachines);
 }
 
+function updateGymBall() {
+  if (!gymBall || !gymBall.deflated || gymBall.reinflateT <= 0) return;
+  gymBall.reinflateT--;
+  if (gymBall.reinflateT === 0) {
+    gymBall.deflated = false;
+    gymBall.shakeT = 0;
+    setMsg(STRINGS.ballReinflated);
+  }
+}
+
 function ballDeflatedWin() {
   if (allBall) return;
   allBall = true;

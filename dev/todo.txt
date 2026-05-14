@@ -94,18 +94,11 @@ Obiettivo: nuovi ambienti, nuovi livelli, NPC aggiuntivi.
 
 Obiettivo: nuovi ambienti, nuovi livelli, NPC aggiuntivi.
 
-- [ ] #35 Fix L1: Non compare in msg il messaggio boardTagged e poi allBoards. Compare alla fine solo goBell (che rimuoverei del tutto perchè fa parte già dei messaggi di livello completato). 
-- [ ] #36 Fix L2: Non compare l'hint di rubare la cartella
-- [ ] #37 Fix L3: Alla fine compare goBell invece di allMachines
-- [ ] #38 Fix L4:
-    1. Dobbiamo sostituire il preside con l'insegnante di educazione fisica. Il preside comunque non compariva nel gioco. Se lo hai già disegnato il preside nel codice lo teniamo buono per L6.
-    2. L'insegnante di educazione fisica gira nel piano intermedio (quello della palestra) e dopo che Marco sgonfia il pallone la prima volta lui lo sgrida dicendogli di non farlo più altrimenti gli mette la nota e poi lo rigonfia. Appena il prof si allontana Marco lo va a sgonfiare nuovamente e a suonare la campanella.
-    3. Manca hint "tieni premuto per sgonfiare"
-- [ ] #39 Fix L5: 
-    1. L'insegnate non si vede sullo schermo. Deve essere accanto alla lavagna a fare lezione.
-    2. Premere per lanciare la cartaccia deve comparire solo nell'aula dove c'e' lezione.
-    3. Rimuoviamo il bidello da questo livello. C'e' troppa gente in giro
-    4. Se la cartaccia colpisce il prof egli cade per terra e Marco perde una vita.
+- [x] #35 Fix L1: rimosso goBell/getCloser da tryAction; i proximity hint e i win-message coprono tutto
+- [x] #36 Fix L2: aggiunto bagHint nei proximity hints (range 40px)
+- [x] #37 Fix L3: stessa fix di #35 — goBell rimosso da tryAction
+- [x] #38 Fix L4: Prof.Ginnastica (verde) al piano MY vicino al pallone; due sgonfiate — prima sgonfiata → scold + reinflazione 4s, seconda → win; deflateHint aggiunto
+- [x] #39 Fix L5: teacher vicino alla lavagna (patrol stretto x115-205); no bidelli; throwHint solo in aula (x80-250); pallina che colpisce prof → Marco perde vita
 
 |  #  | Stato | Nome                                    |
 |-----|-------|-----------------------------------------|

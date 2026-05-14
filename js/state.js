@@ -64,7 +64,7 @@ function resetLevel() {
   msgText = ''; msgT = 0;
   actionPressed = false; allBoards = false; allBags = false; allMachines = false; allBall = false; allStudents = false;
   machines  = (lv.machines  || []).map(function(m) { return {x:m.x, y:m.y, broken:false, shakeT:0}; });
-  gymBall   = lv.gymBall ? {x:lv.gymBall.x, y:lv.gymBall.y, deflated:false, shakeT:0} : null;
+  gymBall   = lv.gymBall ? {x:lv.gymBall.x, y:lv.gymBall.y, deflated:false, shakeT:0, deflateCount:0, reinflateT:0} : null;
   students  = (lv.students  || []).map(function(s) { return {x:s.x, y:s.y, disturbed:false}; });
   paperBalls = [];
   throwCooldown = 0;

@@ -109,23 +109,24 @@ var LEVELS = (function() {
       },
 
       bags: [],
-      gymBall: {x:290, y:MY-12},
+      gymBall: {x:255, y:MY-18},
 
+      // PE teacher on the gym floor (MY), patrols the right side near the ball.
+      // Preside is kept for L6. Other teachers on remaining floors.
       teachers: [
-        {x:30,  y:GY-PH-walkOffset, dir:1,  minX:10, maxX:305, speed:1.0,  color:'#1a1a4a', name:'Preside', sight:150},
-        {x:80,  y:MY-PH-walkOffset, dir:-1, minX:10, maxX:305, speed:0.50, color:C.cyanprof, name:'Prof.Celeste', sight:80},
-        {x:230, y:TY-PH-walkOffset, dir:1,  minX:10, maxX:275, speed:0.60, color:C.grayprof, name:'Prof.Neri',   sight:100},
+        {x:250, y:MY-PH-walkOffset, dir:-1, minX:140, maxX:305, speed:0.80, color:C.green, name:'Prof.Ginnastica', sight:130},
+        {x:200, y:GY-PH-walkOffset, dir:1,  minX:10,  maxX:305, speed:0.55, color:C.redprof,  name:'Prof.Rossi', sight:90},
+        {x:230, y:TY-PH-walkOffset, dir:1,  minX:10,  maxX:275, speed:0.60, color:C.grayprof, name:'Prof.Neri',  sight:100},
       ],
 
       janitors: [
         {x:160, y:GY-PH-walkOffset, dir:1,  minX:90,  maxX:230, speed:0.65, name:'Bidello'},
-        {x:140, y:TY-PH-walkOffset, dir:-1, minX:115, maxX:200, speed:0.65, name:'Bidello'},
       ],
     }),
 
     // ── LEVEL 5 — Throw paper balls at students, ring the bell ───────────────
     Object.assign({}, SHARED_LAYOUT, {
-      timer: 80,
+      timer: 90,
 
       mechanics: {
         writeBoards: false,
@@ -142,16 +143,16 @@ var LEVELS = (function() {
         {x:162, y:TY-17}, {x:186, y:TY-17},
       ],
 
+      // Teachers near the blackboard (x≈130) simulating active lesson.
+      // Limited patrol range so they look like they're teaching, not wandering.
+      // No janitors — hallways are empty during class.
       teachers: [
-        {x:200, y:GY-PH-walkOffset, dir:1,  minX:10, maxX:305, speed:0.60, color:C.redprof,  name:'Prof.Rossi',   sight:90},
-        {x:80,  y:MY-PH-walkOffset, dir:-1, minX:10, maxX:305, speed:0.55, color:C.cyanprof, name:'Prof.Celeste', sight:80},
-        {x:230, y:TY-PH-walkOffset, dir:1,  minX:10, maxX:275, speed:0.65, color:C.grayprof, name:'Prof.Neri',    sight:100},
+        {x:138, y:GY-PH-walkOffset, dir:-1, minX:115, maxX:205, speed:0.40, color:C.redprof,  name:'Prof.Rossi',   sight:90},
+        {x:138, y:MY-PH-walkOffset, dir:-1, minX:115, maxX:205, speed:0.40, color:C.cyanprof, name:'Prof.Celeste', sight:80},
+        {x:100, y:TY-PH-walkOffset, dir:-1, minX:50,  maxX:195, speed:0.40, color:C.grayprof, name:'Prof.Neri',    sight:100},
       ],
 
-      janitors: [
-        {x:160, y:GY-PH-walkOffset, dir:1,  minX:90,  maxX:230, speed:0.65, name:'Bidello'},
-        {x:140, y:TY-PH-walkOffset, dir:-1, minX:115, maxX:200, speed:0.65, name:'Bidello'},
-      ],
+      janitors: [],
     }),
 
   ];
