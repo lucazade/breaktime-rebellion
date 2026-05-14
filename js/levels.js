@@ -39,7 +39,7 @@ var LEVELS = (function() {
 
     // ── LEVEL 2 — Steal all classmates' bags, ring the bell ──────────────────
     Object.assign({}, SHARED_LAYOUT, {
-      timer: 90,
+      timer: 60,
 
       mechanics: {
         writeBoards: false,
@@ -67,7 +67,7 @@ var LEVELS = (function() {
 
     // ── LEVEL 3 — Smash all vending machines, ring the bell ─────────────────
     Object.assign({}, SHARED_LAYOUT, {
-      timer:     90,
+      timer:     60,
       shakeTime: 150, // frames to hold action near a machine (≈2.5s at 60fps)
 
       mechanics: {
@@ -99,7 +99,7 @@ var LEVELS = (function() {
 
     // ── LEVEL 4 — Deflate the gym ball, ring the bell ────────────────────────
     Object.assign({}, SHARED_LAYOUT, {
-      timer:       70,
+      timer:       60,
       deflateTime: 80, // frames to hold action near the ball (≈1.3s at 60fps)
 
       mechanics: {
@@ -128,7 +128,7 @@ var LEVELS = (function() {
 
     // ── LEVEL 5 — Throw paper balls at students, ring the bell ───────────────
     Object.assign({}, SHARED_LAYOUT, {
-      timer: 90,
+      timer: 60,
 
       mechanics: {
         writeBoards: false,
