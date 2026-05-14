@@ -90,12 +90,19 @@ function handleTap() {
 
 CV.addEventListener('click', handleTap);
 
-// Arcade cabinet panels and action button also forward taps to game handler
+// Panels forward taps to game handler — but NOT when the tap is on a panel button
 ['panel-left', 'panel-right'].forEach(function(id) {
   var el = document.getElementById(id);
   if (!el) return;
-  el.addEventListener('click', handleTap);
-  el.addEventListener('touchend', function(e) { e.preventDefault(); handleTap(); }, {passive: false});
+  el.addEventListener('click', function(e) {
+    if (e.target.closest('.panel-btn')) return;
+    handleTap();
+  });
+  el.addEventListener('touchend', function(e) {
+    if (e.target.closest('.panel-btn')) return; // let the button handle its own tap
+    e.preventDefault();
+    handleTap();
+  }, {passive: false});
 });
 document.getElementById('btn-action').addEventListener('touchend', function() { handleTap(); }, {passive: true});
 
@@ -118,35 +125,30 @@ function setPaused(paused) {
   }
 }
 
-_btnPause.addEventListener('click', function() {
+function triggerPause() {
   if (state === 'playing') setPaused(true);
   else if (state === 'paused') setPaused(false);
-});
+}
 
+_btnPause.addEventListener('click', triggerPause);
 document.getElementById('btn-resume').addEventListener('click', function() {
   if (state === 'paused') setPaused(false);
 });
 
-// ESC key for desktop testing
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') {
-    if (state === 'playing') setPaused(true);
-    else if (state === 'paused') setPaused(false);
-  }
-});
-
 // ── Home ─────────────────────────────────────────────────────────────────────
-var _homeOverlay       = document.getElementById('home-confirm-overlay');
-var _stateBeforeHome   = null;
+var _homeOverlay     = document.getElementById('home-confirm-overlay');
+var _stateBeforeHome = null;
 
-document.getElementById('btn-home').addEventListener('click', function() {
+function triggerHome() {
   if (state !== 'playing' && state !== 'paused') return;
   _stateBeforeHome = state;
   if (state === 'playing') GameAudio.pauseMusic();
-  _pauseOverlay.classList.remove('active'); // hide pause dialog if open
-  state = 'paused'; // freeze physics while confirming
+  _pauseOverlay.classList.remove('active');
+  state = 'paused';
   _homeOverlay.classList.add('active');
-});
+}
+
+document.getElementById('btn-home').addEventListener('click', triggerHome);
 
 document.getElementById('btn-home-yes').addEventListener('click', function() {
   _homeOverlay.classList.remove('active');
@@ -169,6 +171,12 @@ document.getElementById('btn-home-no').addEventListener('click', function() {
     GameAudio.resumeMusic();
   }
   _stateBeforeHome = null;
+});
+
+// ── Keyboard shortcuts (desktop) — ESC = home, P = pause ────────────────────
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'p' || e.key === 'P') triggerPause();
+  if (e.key === 'Escape') triggerHome();
 });
 
 requestAnimationFrame(loop);

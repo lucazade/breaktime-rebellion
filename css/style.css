@@ -328,15 +328,15 @@ canvas {
 .panel-btn {
   display: none; /* shown only in mobile landscape via media query */
   position: absolute;
-  top: 20px;
+  top: 36px;
   left: 50%;
   transform: translateX(-50%);
-  width: 54px; height: 26px;
-  border-radius: 8px;
+  width: 68px; height: 34px;
+  border-radius: 10px;
   background: rgba(0,0,0,0.45);
   border: 1px solid rgba(255,255,255,0.22);
   color: rgba(255,255,255,0.82);
-  font-size: 13px;
+  font-size: 16px;
   cursor: pointer;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
