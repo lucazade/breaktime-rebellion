@@ -138,10 +138,7 @@ function drawStudents() {
     ctx.fillRect(bx-4, by-3, 2, 3);  // left hand
     ctx.fillRect(bx+2, by-3, 2, 3);  // right hand
     if (s.disturbed) {
-      // Yellow speech bubble with "!" for visibility
-      ctx.fillStyle = C.yellow;
-      ctx.fillRect(bx-1, by-26, 10, 10);
-      ctx.fillStyle = C.black;
+      ctx.fillStyle = '#FF2222';
       ctx.save(); ctx.textAlign = 'center';
       ctx.font = '7px "Press Start 2P"';
       ctx.fillText('!', bx+4, by-19);
@@ -534,8 +531,8 @@ function updateHUD() {
     objTotal = machines.length;
     iconClass = 'fa-box';
   } else if (levelMechanics.deflateBall) {
-    objDone = (gymBall && gymBall.deflated) ? 1 : 0;
-    objTotal = 1;
+    objDone = gymBall ? gymBall.deflateCount : 0;
+    objTotal = 3;
     iconClass = 'fa-futbol';
   } else if (levelMechanics.throwPaper) {
     for (let i = 0; i < students.length; i++) if (students[i].disturbed) objDone++;

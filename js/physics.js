@@ -82,8 +82,8 @@ function updatePlayer() {
         if (gymBall.deflateCount >= 3) {
           ballDeflatedWin();
         } else {
-          gymBall.reinflateT = 240; // ~4s — PE teacher scolds then reinflates
-          setMsg(STRINGS.ballFirstDeflate);
+          gymBall.reinflateT = 240;
+          setMsg(gymBall.deflateCount === 1 ? STRINGS.ballFirstDeflate : STRINGS.ballSecondDeflate);
         }
       }
     }
