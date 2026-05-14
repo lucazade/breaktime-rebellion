@@ -20,6 +20,10 @@
     winTitle:      'SCHOOL LEGEND!',
     scoreLabel:    'SCORE: ',
     gameoverTitle: 'EXPELLED!',
+    keyMove:       'Move',
+    keyAction:     'Action',
+    keyPause:      'Pause',
+    keyHome:       'Home',
     missionLabel:  'LEVEL {0}',
     mission1:      'Tag all boards!',
     getCloser:     'Tag the board!',
@@ -44,10 +48,6 @@
     throwHint:            'Press to throw the paper!',
     studentHit:           'Student hit! ({0}/{1})',
     allStudentsDisturbed: 'All students disturbed! Ring the bell! 🔔',
-    keyMove:   'move Marco',
-    keyAction: 'action',
-    keyPause:  'pause',
-    keyHome:   'home',
   };
 
   var it = {
@@ -64,6 +64,10 @@
     winTitle:      'LEGGENDA DELLA SCUOLA!',
     scoreLabel:    'PUNTEGGIO: ',
     gameoverTitle: 'ESPULSO!',
+    keyMove:       'Muovi',
+    keyAction:     'Azione',
+    keyPause:      'Pausa',
+    keyHome:       'Home',
     missionLabel:  'LIVELLO {0}',
     mission1:      'Imbratta tutte le lavagne!',
     getCloser:     'Scrivi sulla lavagna!',
@@ -88,10 +92,6 @@
     throwHint:            'Premi per lanciare la cartaccia!',
     studentHit:           'Alunno colpito! ({0}/{1})',
     allStudentsDisturbed: 'Tutti gli alunni disturbati! Suona la campanella! 🔔',
-    keyMove:   'muovi Marco',
-    keyAction: 'azione',
-    keyPause:  'pausa',
-    keyHome:   'home',
   };
 
   window.STRINGS = lang === 'it' ? it : en;
