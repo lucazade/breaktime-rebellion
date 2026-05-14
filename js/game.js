@@ -57,7 +57,7 @@ function loop(ts) {
 
   for (let i = 0; i < teachers.length; i++) {
     const t = teachers[i];
-    drawChar(t.x, t.y, t.dir, t.animT, t.color, true, false, t.chasing);
+    drawChar(t.x, t.y, t.dir, t.animT, t.color, true, false, t.chasing, t.knockedT);
   }
   if (!CONFIG.debug.disableJanitors) {
     for (let i = 0; i < janitors.length; i++) {

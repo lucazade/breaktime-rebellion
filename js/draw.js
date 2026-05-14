@@ -122,8 +122,9 @@ function drawGymBall() {
 function drawStudents() {
   for (let i = 0; i < students.length; i++) {
     const s = students[i];
-    const bx = Math.round(s.x + 5); // center on 20px desk
-    const by = Math.round(s.y);     // desk top Y
+    const wobble = s.shakeT > 0 ? Math.round(Math.sin(s.shakeT * 0.9) * 2) : 0;
+    const bx = Math.round(s.x + 5) + wobble; // shake offset when hit
+    const by = Math.round(s.y);
     ctx.fillStyle = C.brown;
     ctx.fillRect(bx-2, by-17, 5, 2);
     ctx.fillStyle = C.pink;
@@ -136,10 +137,13 @@ function drawStudents() {
     ctx.fillRect(bx-4, by-3, 2, 3);  // left hand
     ctx.fillRect(bx+2, by-3, 2, 3);  // right hand
     if (s.disturbed) {
-      ctx.fillStyle = C.red;
+      // Yellow speech bubble with "!" for visibility
+      ctx.fillStyle = C.yellow;
+      ctx.fillRect(bx-1, by-26, 10, 10);
+      ctx.fillStyle = C.black;
       ctx.save(); ctx.textAlign = 'center';
-      ctx.font = '5px "Press Start 2P"';
-      ctx.fillText('!', bx, by-19);
+      ctx.font = '7px "Press Start 2P"';
+      ctx.fillText('!', bx+4, by-19);
       ctx.restore();
     }
   }
@@ -214,8 +218,19 @@ function drawMachines() {
   }
 }
 
-function drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, chasing) {
+function drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, chasing, knockedT) {
   const bx = Math.round(x), by = Math.round(y);
+
+  // Knocked-down state — draw teacher lying flat on floor
+  if (isTeacher && knockedT > 0) {
+    const fy = by + PH - 1; // floor level
+    ctx.fillStyle = 'rgba(0,0,0,0.2)'; ctx.fillRect(bx-4, fy+2, 18, 2); // shadow
+    ctx.fillStyle = bodyCol; ctx.fillRect(bx-2, fy-3, 14, 4); // body horizontal
+    ctx.fillStyle = C.pink;  ctx.fillRect(dir > 0 ? bx+12 : bx-6, fy-4, 6, 5); // head
+    ctx.fillStyle = C.blue;  ctx.fillRect(dir > 0 ? bx-4 : bx+8, fy-2, 4, 3);  // feet
+    return;
+  }
+
   const leg = Math.sin(animT) * 2.5;
 
   ctx.fillStyle = 'rgba(0,0,0,0.2)'; ctx.fillRect(bx-1, by+PH, PW, 2);

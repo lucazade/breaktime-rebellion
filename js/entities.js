@@ -25,6 +25,7 @@ function updateTeachers() {
   if (state !== 'playing') return;
   for (let i = 0; i < teachers.length; i++) {
     const t = teachers[i];
+    if (t.knockedT > 0) { t.knockedT--; continue; } // lying on the floor, skip movement
     t.animT += 0.12;
     if (t.chasing) {
       t.alertT = Math.max(0, t.alertT - 1);

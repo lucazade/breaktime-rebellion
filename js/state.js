@@ -50,7 +50,7 @@ function resetLevel() {
   teachers = lv.teachers.map(function(t) {
     return {x:t.x, y:t.y, dir:t.dir, minX:t.minX, maxX:t.maxX,
             speed:t.speed, animT:0, color:t.color, name:t.name,
-            sight:t.sight, alertT:0, chasing:false, chaseX:0};
+            sight:t.sight, alertT:0, chasing:false, chaseX:0, knockedT:0};
   });
   janitors = lv.janitors.map(function(j) {
     return {x:j.x, y:j.y, dir:j.dir, minX:j.minX, maxX:j.maxX, speed:j.speed, animT:0, name:j.name};
@@ -65,7 +65,7 @@ function resetLevel() {
   actionPressed = false; allBoards = false; allBags = false; allMachines = false; allBall = false; allStudents = false;
   machines  = (lv.machines  || []).map(function(m) { return {x:m.x, y:m.y, broken:false, shakeT:0}; });
   gymBall   = lv.gymBall ? {x:lv.gymBall.x, y:lv.gymBall.y, deflated:false, shakeT:0, deflateCount:0, reinflateT:0} : null;
-  students  = (lv.students  || []).map(function(s) { return {x:s.x, y:s.y, disturbed:false}; });
+  students  = (lv.students  || []).map(function(s) { return {x:s.x, y:s.y, disturbed:false, shakeT:0}; });
   paperBalls = [];
   throwCooldown = 0;
   timerTicks = maxTimerTicks = (lv.timer !== undefined ? lv.timer : CONFIG.levelTimer) * 60;

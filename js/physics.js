@@ -79,7 +79,7 @@ function updatePlayer() {
         addFloating(gymBall.x + 4, gymBall.y, '+300', C.yellow);
         addParticles(gymBall.x + 4, gymBall.y + 4, C.yellow, 18);
         alertTeachers(gymBall.x + 4, gymBall.y + 4);
-        if (gymBall.deflateCount >= 2) {
+        if (gymBall.deflateCount >= 3) {
           ballDeflatedWin();
         } else {
           gymBall.reinflateT = 240; // ~4s — PE teacher scolds then reinflates
@@ -223,6 +223,7 @@ function updatePlayer() {
 
 function updatePaperBalls() {
   if (throwCooldown > 0) throwCooldown--;
+  for (let si = 0; si < students.length; si++) { if (students[si].shakeT > 0) students[si].shakeT--; }
   const SPEED = 4, MAX_DIST = 180;
   for (let i = paperBalls.length - 1; i >= 0; i--) {
     const b = paperBalls[i];
@@ -230,21 +231,25 @@ function updatePaperBalls() {
     b.dist += SPEED;
     if (b.dist > MAX_DIST || b.x < 0 || b.x > W) { paperBalls.splice(i, 1); continue; }
     let hit = false;
-    // Check collision with teachers first — ball hitting teacher penalises Marco
+    // Teacher hit — ball hitting teacher knocks them down and costs Marco a life
     for (let ti = 0; ti < teachers.length; ti++) {
       const t = teachers[ti];
+      if (t.knockedT > 0) continue;
       if (Math.abs(b.x - t.x - PW/2) < 10 && Math.abs(b.y - t.y - PH/2) < 14) {
         paperBalls.splice(i, 1);
+        t.knockedT = 150; t.chasing = false; t.alertT = 0;
         caughtBy(t);
         hit = true; break;
       }
     }
     if (hit) continue;
+    // Student hit
     for (let j = 0; j < students.length; j++) {
       const s = students[j];
       if (s.disturbed) continue;
       if (Math.abs(b.x - (s.x + 5)) < 12 && Math.abs(b.y - (s.y - 10)) < 16) {
         s.disturbed = true;
+        s.shakeT = 25;
         score += 300;
         addFloating(s.x + 5, s.y - 18, '+300', C.yellow);
         addParticles(s.x + 5, s.y - 10, C.yellow, 8);

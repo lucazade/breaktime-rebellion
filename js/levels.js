@@ -111,12 +111,12 @@ var LEVELS = (function() {
       bags: [],
       gymBall: {x:255, y:MY-18},
 
-      // PE teacher on the gym floor (MY), patrols the right side near the ball.
-      // Preside is kept for L6. Other teachers on remaining floors.
+      // PE teacher on the gym floor (MY), patrols ONLY the gym area so they are
+      // always visible near the ball. Preside is reserved for L6.
       teachers: [
-        {x:250, y:MY-PH-walkOffset, dir:-1, minX:140, maxX:305, speed:0.80, color:C.green, name:'Prof.Ginnastica', sight:130},
-        {x:200, y:GY-PH-walkOffset, dir:1,  minX:10,  maxX:305, speed:0.55, color:C.redprof,  name:'Prof.Rossi', sight:90},
-        {x:230, y:TY-PH-walkOffset, dir:1,  minX:10,  maxX:275, speed:0.60, color:C.grayprof, name:'Prof.Neri',  sight:100},
+        {x:255, y:MY-PH-walkOffset, dir:1, minX:215, maxX:305, speed:0.80, color:C.green, name:'Prof.Ginnastica', sight:130},
+        {x:200, y:GY-PH-walkOffset, dir:1, minX:10,  maxX:305, speed:0.55, color:C.redprof,  name:'Prof.Rossi', sight:90},
+        {x:230, y:TY-PH-walkOffset, dir:1, minX:10,  maxX:275, speed:0.60, color:C.grayprof, name:'Prof.Neri',  sight:100},
       ],
 
       janitors: [
