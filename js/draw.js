@@ -72,7 +72,7 @@ function drawBell() {
   ctx.fillRect(bx+2+sx, by+5, 1, 1);
   ctx.fillRect(bx+1+sx, by+6, 2, 1);
 
-  if ((allBoards || allBags || allMachines || allBall || allStudents) && !BELL.done) {
+  if ((allBoards || allBags || allMachines || allBall || allStudents || allBooks) && !BELL.done) {
     const pulse = 0.12 + 0.08 * Math.sin(frame * 0.15);
     ctx.fillStyle = 'rgba(255,215,0,' + pulse + ')';
     ctx.beginPath(); ctx.arc(bx+2, by+3, 6, 0, Math.PI*2); ctx.fill();
@@ -115,6 +115,47 @@ function drawGymBall() {
       ctx.strokeStyle = C.yellow; ctx.lineWidth = 1;
       ctx.setLineDash([2, 2]);
       ctx.strokeRect(bx-2, by-2, 13, 13);
+      ctx.setLineDash([]);
+    }
+  }
+}
+
+function drawBookcase() {
+  if (!bookcase) return;
+  const bx = Math.round(bookcase.x), by = Math.round(bookcase.y);
+  const wobble = (!bookcase.dropped && bookcase.shakeT > 0) ? Math.round(Math.sin(frame * 1.8) * 1) : 0;
+
+  if (bookcase.dropped) {
+    // Book lying flat on floor
+    ctx.fillStyle = '#6B2200'; ctx.fillRect(bx-3, by+10, 11, 4);
+    ctx.fillStyle = '#F5E6C0'; ctx.fillRect(bx-3, by+7,  11, 3);
+    ctx.fillStyle = '#CC6600'; ctx.fillRect(bx,   by+7,   5, 1);
+    return;
+  }
+
+  // Progress bar while shaking
+  if (bookcase.shakeT > 0) {
+    const pct = bookcase.shakeT / dropTime;
+    ctx.fillStyle = 'rgba(0,0,0,0.55)'; ctx.fillRect(bx-1, by-5, 7, 3);
+    ctx.fillStyle = C.yellow;           ctx.fillRect(bx-1, by-5, Math.round(7 * pct), 3);
+  }
+
+  // Standing book (5×12px pixel art)
+  const tx = bx + wobble;
+  ctx.fillStyle = '#8B3000'; ctx.fillRect(tx,   by, 1, 12); // left spine
+  ctx.fillStyle = '#F5E6C0'; ctx.fillRect(tx+1, by, 3, 12); // pages
+  ctx.fillStyle = '#6B1800'; ctx.fillRect(tx+4, by, 1, 12); // right edge
+  ctx.fillStyle = '#CC6600'; ctx.fillRect(tx+1, by+4, 3, 1); // bookmark stripe
+  ctx.fillStyle = '#8B3000'; ctx.fillRect(tx,   by,   5, 1); // top edge
+
+  // Proximity dashed border
+  if (!allBooks) {
+    const pdx = Math.abs(player.x + PW/2 - bookcase.x - 3);
+    const pdy = Math.abs(player.y + PH  - bookcase.y - 12);
+    if (pdx < 16 && pdy < 28) {
+      ctx.strokeStyle = C.yellow; ctx.lineWidth = 1;
+      ctx.setLineDash([2, 2]);
+      ctx.strokeRect(bx-2, by-2, 9, 16);
       ctx.setLineDash([]);
     }
   }
@@ -538,6 +579,10 @@ function updateHUD() {
     for (let i = 0; i < students.length; i++) if (students[i].disturbed) objDone++;
     objTotal = students.length;
     iconClass = 'fa-user-graduate';
+  } else if (levelMechanics.dropBook) {
+    objDone = bookcase ? bookcase.dropCount : 0;
+    objTotal = 3;
+    iconClass = 'fa-book';
   } else {
     for (let i = 0; i < BOARDS.length; i++) if (BOARDS[i].done) objDone++;
     objTotal = BOARDS.length;

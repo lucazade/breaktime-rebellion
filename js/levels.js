@@ -7,6 +7,7 @@
 //   shakeMachines — hold action near a vending machine to smash it
 //   deflateBall   — hold action near the gym ball to deflate it (L4)
 //   throwPaper    — press action to throw a paper ball at seated students (L5)
+//   dropBook      — hold action near the bookcase to knock a book off the shelf (L6)
 //   ringBell      — ring the bell to complete the level (required in every level)
 //
 // rooms: named zones for context-aware gameplay (populate when a level needs them).
@@ -152,6 +153,28 @@ var LEVELS = (function() {
         {x:138, y:GY-PH-walkOffset, dir:-1, minX:115, maxX:205, speed:0.40, color:C.redprof,  name:'Prof.Rossi',   sight:90},
         {x:138, y:MY-PH-walkOffset, dir:-1, minX:115, maxX:205, speed:0.40, color:C.cyanprof, name:'Prof.Celeste', sight:80},
         {x:100, y:TY-PH-walkOffset, dir:-1, minX:50,  maxX:195, speed:0.40, color:C.grayprof, name:'Prof.Neri',    sight:100},
+      ],
+
+      janitors: [],
+    }),
+
+    // ── LEVEL 6 — Drop books in the principal's office, ring the bell ────────
+    Object.assign({}, SHARED_LAYOUT, {
+      timer:    75,
+      dropTime: 40, // frames to hold action near the bookcase (≈0.7s at 60fps)
+
+      mechanics: {
+        dropBook: true,
+        ringBell: true,
+      },
+
+      bags: [],
+      // Bookcase is the rightmost fixture on the ground floor (yellow room).
+      bookcase: {x:278, y:GY-40},
+
+      // Only the Preside patrols the ground floor — sole threat, full patrol range.
+      teachers: [
+        {x:260, y:GY-PH-walkOffset, dir:-1, minX:10, maxX:305, speed:1.0, color:'#1a1a4a', name:'Preside', sight:150},
       ],
 
       janitors: [],

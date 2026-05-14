@@ -117,6 +117,22 @@ function allStudentsWin() {
   setMsg(STRINGS.allStudentsDisturbed);
 }
 
+function updateBookcase() {
+  if (!bookcase || !bookcase.dropped || bookcase.resetT <= 0) return;
+  bookcase.resetT--;
+  if (bookcase.resetT === 0) {
+    bookcase.dropped = false;
+    bookcase.shakeT = 0;
+    setMsg(STRINGS.bookReset);
+  }
+}
+
+function bookDropWin() {
+  if (allBooks) return;
+  allBooks = true;
+  setMsg(STRINGS.bookDropped);
+}
+
 function bagWin() {
   if (allBags) return;
   allBags = true;

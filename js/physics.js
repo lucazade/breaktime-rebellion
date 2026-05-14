@@ -88,6 +88,31 @@ function updatePlayer() {
       }
     }
   }
+  if (!player.shaking && levelMechanics.dropBook && bookcase && !bookcase.dropped && K.action && !player.onStair) {
+    const dx = Math.abs(player.x + PW/2 - bookcase.x - 3);
+    const dy = Math.abs(player.y + PH  - bookcase.y - 12);
+    if (dx < 16 && dy < 28) {
+      player.shaking = true;
+      actionPressed = false;
+      player.dir = (player.x + PW/2 < bookcase.x + 3) ? 1 : -1;
+      bookcase.shakeT++;
+      if (bookcase.shakeT >= dropTime) {
+        bookcase.dropped = true;
+        bookcase.shakeT = 0;
+        bookcase.dropCount++;
+        score += 300;
+        addFloating(bookcase.x + 3, bookcase.y, '+300', C.yellow);
+        addParticles(bookcase.x + 3, bookcase.y + 6, C.yellow, 12);
+        alertTeachers(bookcase.x + 3, bookcase.y + 6);
+        if (bookcase.dropCount >= 3) {
+          bookDropWin();
+        } else {
+          bookcase.resetT = 200;
+          setMsg(bookcase.dropCount === 1 ? STRINGS.bookFirstDrop : STRINGS.bookSecondDrop);
+        }
+      }
+    }
+  }
   if (player.shaking) return;
 
   const stairResult = getStairAt(player.x, player.y);
@@ -173,7 +198,7 @@ function updatePlayer() {
   // Auto-ring bell on proximity — triggers when level objective is complete.
   // player.y > MY ensures the bell can only be rung from the ground floor,
   // not from the floor above where the player passes directly overhead.
-  if (levelMechanics.ringBell && (allBoards || allBags || allMachines || allBall || allStudents) && !BELL.ringing && !BELL.done) {
+  if (levelMechanics.ringBell && (allBoards || allBags || allMachines || allBall || allStudents || allBooks) && !BELL.ringing && !BELL.done) {
     const bdx = Math.abs(player.x + PW/2 - BELL.x - 2);
     const bdy = Math.abs(player.y + PH/2 - BELL.y - 3);
     if (bdx < 22 && bdy < 40 && player.y > MY) ringBell();
@@ -209,6 +234,10 @@ function updatePlayer() {
       const gdx = Math.abs(player.x + PW/2 - gymBall.x - 4);
       const gdy = Math.abs(player.y + PH  - gymBall.y - 9);
       if (gdx < 18 && gdy < 18) setMsg(STRINGS.deflateHint, 60);
+    } else if (levelMechanics.dropBook && bookcase && !bookcase.dropped) {
+      const bdx = Math.abs(player.x + PW/2 - bookcase.x - 3);
+      const bdy = Math.abs(player.y + PH  - bookcase.y - 12);
+      if (bdx < 16 && bdy < 28) setMsg(STRINGS.bookDropHint, 60);
     } else if (levelMechanics.throwPaper && !allStudents) {
       // Show hint only when Marco is in the classroom area (not in the corridor)
       if (player.x > 80 && player.x < 250) {
