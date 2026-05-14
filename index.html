@@ -42,6 +42,7 @@
 
 <div id="wrap">
   <div id="panel-left">
+    <button id="btn-home" class="panel-btn"><i class="fa-solid fa-house"></i></button>
     <div id="ctrl-joy">
       <div id="joy-base"><div id="joy-knob"></div></div>
     </div>
@@ -57,8 +58,26 @@
       <div id="timer-bar-wrap"><div id="timer-bar"></div></div>
     </div>
     <div id="msg"></div>
+    <div id="pause-overlay">
+      <div class="game-dialog">
+        <span class="dialog-title">— PAUSA —</span>
+        <div class="dialog-btns">
+          <button class="dialog-btn" id="btn-resume">RIPRENDI</button>
+        </div>
+      </div>
+    </div>
+    <div id="home-confirm-overlay">
+      <div class="game-dialog">
+        <span class="dialog-title">TORNARE ALLA HOME?</span>
+        <div class="dialog-btns">
+          <button class="dialog-btn" id="btn-home-yes">SÌ</button>
+          <button class="dialog-btn" id="btn-home-no">NO</button>
+        </div>
+      </div>
+    </div>
   </div>
   <div id="panel-right">
+    <button id="btn-pause" class="panel-btn"><i class="fa-solid fa-pause"></i></button>
     <div id="ctrl-action">
       <div id="btn-action"></div>
     </div>

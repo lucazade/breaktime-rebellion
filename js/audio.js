@@ -39,6 +39,14 @@ const GameAudio = (function() {
     if (bgMusic) { bgMusic.pause(); bgMusic.currentTime = 0; }
   }
 
+  function pauseMusic() {
+    if (bgMusic) bgMusic.pause();
+  }
+
+  function resumeMusic() {
+    if (bgMusic && mode === 'full') bgMusic.play().catch(function() {});
+  }
+
   function playSfx(name) {
     if (mode === 'mute') return;
     var src = CONFIG.audio.sfx[name];
@@ -58,5 +66,5 @@ const GameAudio = (function() {
     jingle.play().catch(function() {});
   }
 
-  return { playMusic: playMusic, stopMusic: stopMusic, playSfx: playSfx, playJingle: playJingle, setMode: setMode, getMode: getMode };
+  return { playMusic: playMusic, stopMusic: stopMusic, pauseMusic: pauseMusic, resumeMusic: resumeMusic, playSfx: playSfx, playJingle: playJingle, setMode: setMode, getMode: getMode };
 })();

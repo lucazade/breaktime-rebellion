@@ -99,4 +99,76 @@ CV.addEventListener('click', handleTap);
 });
 document.getElementById('btn-action').addEventListener('touchend', function() { handleTap(); }, {passive: true});
 
+// ── Pause ────────────────────────────────────────────────────────────────────
+var _pauseOverlay = document.getElementById('pause-overlay');
+var _btnPause     = document.getElementById('btn-pause');
+var _pauseIcon    = _btnPause.querySelector('i');
+
+function setPaused(paused) {
+  if (paused) {
+    state = 'paused';
+    GameAudio.pauseMusic();
+    _pauseOverlay.classList.add('active');
+    _pauseIcon.className = 'fa-solid fa-play';
+  } else {
+    state = 'playing';
+    GameAudio.resumeMusic();
+    _pauseOverlay.classList.remove('active');
+    _pauseIcon.className = 'fa-solid fa-pause';
+  }
+}
+
+_btnPause.addEventListener('click', function() {
+  if (state === 'playing') setPaused(true);
+  else if (state === 'paused') setPaused(false);
+});
+
+document.getElementById('btn-resume').addEventListener('click', function() {
+  if (state === 'paused') setPaused(false);
+});
+
+// ESC key for desktop testing
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    if (state === 'playing') setPaused(true);
+    else if (state === 'paused') setPaused(false);
+  }
+});
+
+// ── Home ─────────────────────────────────────────────────────────────────────
+var _homeOverlay       = document.getElementById('home-confirm-overlay');
+var _stateBeforeHome   = null;
+
+document.getElementById('btn-home').addEventListener('click', function() {
+  if (state !== 'playing' && state !== 'paused') return;
+  _stateBeforeHome = state;
+  if (state === 'playing') GameAudio.pauseMusic();
+  _pauseOverlay.classList.remove('active'); // hide pause dialog if open
+  state = 'paused'; // freeze physics while confirming
+  _homeOverlay.classList.add('active');
+});
+
+document.getElementById('btn-home-yes').addEventListener('click', function() {
+  _homeOverlay.classList.remove('active');
+  _pauseOverlay.classList.remove('active');
+  _pauseIcon.className = 'fa-solid fa-pause';
+  lives = 3; score = 0; currentLevel = 1;
+  resetLevel();
+  state = 'title';
+  GameAudio.stopMusic();
+  document.getElementById('overlay').style.display = 'flex';
+});
+
+document.getElementById('btn-home-no').addEventListener('click', function() {
+  _homeOverlay.classList.remove('active');
+  if (_stateBeforeHome === 'paused') {
+    _pauseOverlay.classList.add('active');
+    state = 'paused';
+  } else {
+    state = 'playing';
+    GameAudio.resumeMusic();
+  }
+  _stateBeforeHome = null;
+});
+
 requestAnimationFrame(loop);
