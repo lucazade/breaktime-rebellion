@@ -1,6 +1,7 @@
 // ═══════════════════════════════════════════════════════════
-//  CONFIG — assets, audio, timer and debug flags
-//  Layout, palette and scene structure are in js/layout.js
+//  CONFIG — assets, audio and debug flags only.
+//  Timers, shake times and NPC lists live in js/levels.js.
+//  Layout, palette and scene structure are in js/layout.js.
 // ═══════════════════════════════════════════════════════════
 const CONFIG = {
   images: {
@@ -19,11 +20,7 @@ const CONFIG = {
       gameover: 'assets/audio/gameover.mp3',
     },
   },
-  levelTimer:   60,  // default seconds per level (0 = disabled); override with lv.timer
-  shakeTime:   150,  // frames to shake a vending machine (≈2.5s at 60fps)
-  deflateTime:  80,  // frames to deflate the gym ball (≈1.3s at 60fps)
   debug: {
-    disableJanitors:  false,
     showLevelChooser: true,
   },
 };

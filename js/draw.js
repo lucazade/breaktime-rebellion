@@ -98,7 +98,7 @@ function drawGymBall() {
     return;
   }
   if (gymBall.shakeT > 0) {
-    const pct = gymBall.shakeT / CONFIG.deflateTime;
+    const pct = gymBall.shakeT / deflateTime;
     ctx.fillStyle = 'rgba(0,0,0,0.55)'; ctx.fillRect(bx-1, by-5, 11, 3);
     ctx.fillStyle = C.yellow;           ctx.fillRect(bx-1, by-5, Math.round(11 * pct), 3);
   }
@@ -195,7 +195,7 @@ function drawMachines() {
 
     // Progress bar while shaking
     if (!m.broken && m.shakeT > 0) {
-      const pct = m.shakeT / CONFIG.shakeTime;
+      const pct = m.shakeT / shakeTime;
       ctx.fillStyle = 'rgba(0,0,0,0.55)';
       ctx.fillRect(mx-1, my-5, 12, 3);
       ctx.fillStyle = C.yellow;

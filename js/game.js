@@ -34,7 +34,7 @@ function loop(ts) {
       } else {
         updatePlayer();
         updateTeachers();
-        if (!CONFIG.debug.disableJanitors) updateJanitors();
+        updateJanitors();
         updateBell();
         updateGymBall();
         updatePaperBalls();
@@ -59,11 +59,8 @@ function loop(ts) {
     const t = teachers[i];
     drawChar(t.x, t.y, t.dir, t.animT, t.color, true, false, t.chasing, t.knockedT);
   }
-  if (!CONFIG.debug.disableJanitors) {
-    for (let i = 0; i < janitors.length; i++) {
-      const j = janitors[i];
-      drawJanitor(j.x, j.y, j.dir, j.animT);
-    }
+  for (let i = 0; i < janitors.length; i++) {
+    drawJanitor(janitors[i].x, janitors[i].y, janitors[i].dir, janitors[i].animT);
   }
   if (!(player.stunT > 0 && Math.floor(frame/5)%2 === 1)) {
     drawChar(player.x, player.y, player.dir, player.animT, C.blue, false, player.spraying, false);

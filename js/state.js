@@ -24,6 +24,7 @@ let particles, floatingTexts;
 let msgText, msgT;
 let actionPressed, allBoards, allBags, allMachines, allBall, allStudents, timerTicks, maxTimerTicks;
 let machines, gymBall, paperBalls, students, throwCooldown;
+let shakeTime, deflateTime;
 let missionBannerT, missionBannerLines;
 let pendingTransition = null;
 let deathFreeze = false;
@@ -68,7 +69,9 @@ function resetLevel() {
   students  = (lv.students  || []).map(function(s) { return {x:s.x, y:s.y, disturbed:false, shakeT:0}; });
   paperBalls = [];
   throwCooldown = 0;
-  timerTicks = maxTimerTicks = (lv.timer !== undefined ? lv.timer : CONFIG.levelTimer) * 60;
+  shakeTime   = lv.shakeTime   || 150;
+  deflateTime = lv.deflateTime || 80;
+  timerTicks  = maxTimerTicks  = (lv.timer || 0) * 60;
   missionBannerT = 210;
   missionBannerLines = null;
   pendingTransition = null;

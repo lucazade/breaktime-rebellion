@@ -45,7 +45,7 @@ function updatePlayer() {
         actionPressed = false;
         player.dir = (player.x + PW/2 < m.x + 5) ? 1 : -1;
         m.shakeT++;
-        if (m.shakeT >= CONFIG.shakeTime) {
+        if (m.shakeT >= shakeTime) {
           m.broken = true;
           score += 500;
           addFloating(m.x + 5, m.y, '+500', C.yellow);
@@ -71,7 +71,7 @@ function updatePlayer() {
       actionPressed = false;
       player.dir = (player.x + PW/2 < gymBall.x + 4) ? 1 : -1;
       gymBall.shakeT++;
-      if (gymBall.shakeT >= CONFIG.deflateTime) {
+      if (gymBall.shakeT >= deflateTime) {
         gymBall.deflated = true;
         gymBall.shakeT = 0;
         gymBall.deflateCount++;
