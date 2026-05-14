@@ -154,7 +154,8 @@ document.getElementById('btn-home-yes').addEventListener('click', function() {
   _homeOverlay.classList.remove('active');
   _pauseOverlay.classList.remove('active');
   _pauseIcon.className = 'fa-solid fa-pause';
-  lives = 3; score = 0; currentLevel = 1;
+  lives = 3; score = 0;
+  currentLevel = Math.max(1, parseInt(localStorage.getItem('btr_last_level') || '1'));
   resetLevel();
   state = 'title';
   GameAudio.stopMusic();
@@ -173,8 +174,14 @@ document.getElementById('btn-home-no').addEventListener('click', function() {
   _stateBeforeHome = null;
 });
 
-// ── Keyboard shortcuts (desktop) — ESC = home, P = pause ────────────────────
+// ── Keyboard shortcuts (desktop) — P = pause, ESC = home / close dialog ─────
 document.addEventListener('keydown', function(e) {
+  // When home-confirm dialog is open: Enter = yes, Escape = no/close
+  if (_homeOverlay.classList.contains('active')) {
+    if (e.key === 'Enter')  document.getElementById('btn-home-yes').click();
+    if (e.key === 'Escape') document.getElementById('btn-home-no').click();
+    return;
+  }
   if (e.key === 'p' || e.key === 'P') triggerPause();
   if (e.key === 'Escape') triggerHome();
 });
