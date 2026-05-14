@@ -99,16 +99,16 @@ Obiettivo: nuovi ambienti, nuovi livelli, NPC aggiuntivi.
 - [x] #37 Fix L3: stessa fix di #35 — goBell rimosso da tryAction
 - [x] #38 Fix L4: Prof.Ginnastica (verde) al piano MY vicino al pallone; due sgonfiate — prima sgonfiata → scold + reinflazione 4s, seconda → win; deflateHint aggiunto
 - [x] #39 Fix L5: teacher vicino alla lavagna (patrol stretto x115-205); no bidelli; throwHint solo in aula (x80-250); pallina che colpisce prof → Marco perde vita
-- [ ] #40 Fix L4: Il prof di educazione fisica non si vede nel gioco. Facciamo 3 sgonfiaggi invece di 2, altrimenti è troppo facile.
-- [ ] #41 Fix L5. Quando gli alunni vengono colpiti devono fare un shake di feedback e il punto esclamativo è poco visibile. Quando vengono colpiti i professori questi devono cadere per terra e rialziarsi dopo poco
+- [x] #40 Fix L4: Prof.Ginnastica visibile in zona palestra (minX=110); 3 sgonfiate
+- [x] #41 Fix L5: shake studenti colpiti + bolla "!" gialla 7px + prof a terra (knockedT=150)
 
 |  #  | Stato | Nome                                    |
 |-----|-------|-----------------------------------------|
 | L1  |   X   | Scrivere sulle lavagne
 | L2  |   X   | Rubare cartelle dei compagni
 | L3  |   X   | Agitare il distributore merende
-| L4  |       | Fare casino in palestra (insegnante di educazione fisica, sgonfiare pallone)
-| L5  |       | Disturbare la lezione (prof alla lavagna, alunni, lanciare cartaccia)
+| L4  |   X   | Fare casino in palestra (insegnante di educazione fisica, sgonfiare pallone)
+| L5  |   X   | Disturbare la lezione (prof alla lavagna, alunni, lanciare cartaccia)
 | L6  |       | Far cadere libri in presidenza (preside)
 | L7  |       | Allagare il bagno (lavandino con specchio in bagno)
 | L8  |       | Inserire petardi nei secchi della spazzatura (secchi spazzatura nell'ingresso e palestra)
