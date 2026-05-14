@@ -319,9 +319,56 @@ canvas {
   #portrait-msg { display: flex; }
 }
 
-/* Desktop / mouse: panels and controls hidden (panels already display:none by default) */
+/* Desktop / mouse: panels hidden; game zoomed to 150% with arcade bezel */
 @media (hover: hover) and (pointer: fine) {
   #panel-left, #panel-right { display: none; }
+
+  #game-area {
+    /* 150% zoom: 400→600px, capped so it never overflows any screen */
+    height: min(600px, 80dvh, calc(80vw / 1.6));
+    width: auto;
+    aspect-ratio: 16/10;
+    /* Margins create the visible bezel area around the canvas */
+    margin: 52px 40px 36px;
+    /* Multi-layer arcade bezel via box-shadow (doesn't affect layout) */
+    box-shadow:
+      0 0 0  2px #1c0535,           /* inner lip */
+      0 0 0 18px #0b0120,           /* bezel body dark */
+      0 0 0 20px rgba(0,215,255,0.72), /* cyan neon strip */
+      0 0 0 22px #0b0120,           /* gap */
+      0 0 0 38px #160430,           /* outer frame */
+      0 0 0 39px rgba(130,0,215,0.50), /* purple outer edge */
+      0 0 90px rgba(80,0,160,0.35); /* ambient glow */
+  }
+
+  /* Top bezel: game title */
+  #game-area::before {
+    content: '⊙  BREAKTIME REBELLION  ⊙';
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(8px, 0.8vw, 12px);
+    color: rgba(255,215,0,0.88);
+    letter-spacing: 4px;
+    text-shadow: 0 0 10px rgba(255,200,0,0.55), 0 0 24px rgba(255,140,0,0.30);
+    pointer-events: none;
+  }
+
+  /* Bottom bezel: decorative neon line */
+  #game-area::after {
+    content: '';
+    position: absolute;
+    top: calc(100% + 12px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 55%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(0,210,255,0.60), rgba(160,0,255,0.40), rgba(0,210,255,0.60), transparent);
+    pointer-events: none;
+  }
 }
 
 /* ─── PANEL BUTTONS (home / pause) ─── */
