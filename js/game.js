@@ -150,7 +150,7 @@ function triggerHome() {
 
 document.getElementById('btn-home').addEventListener('click', triggerHome);
 
-document.getElementById('btn-home-yes').addEventListener('click', function() {
+function goHome() {
   _homeOverlay.classList.remove('active');
   _pauseOverlay.classList.remove('active');
   _pauseIcon.className = 'fa-solid fa-pause';
@@ -160,9 +160,9 @@ document.getElementById('btn-home-yes').addEventListener('click', function() {
   state = 'title';
   GameAudio.stopMusic();
   document.getElementById('overlay').style.display = 'flex';
-});
+}
 
-document.getElementById('btn-home-no').addEventListener('click', function() {
+function cancelHome() {
   _homeOverlay.classList.remove('active');
   if (_stateBeforeHome === 'paused') {
     _pauseOverlay.classList.add('active');
@@ -172,14 +172,16 @@ document.getElementById('btn-home-no').addEventListener('click', function() {
     GameAudio.resumeMusic();
   }
   _stateBeforeHome = null;
-});
+}
+
+document.getElementById('btn-home-yes').addEventListener('click', goHome);
+document.getElementById('btn-home-no').addEventListener('click', cancelHome);
 
 // ── Keyboard shortcuts (desktop) — P = pause, ESC = home / close dialog ─────
 document.addEventListener('keydown', function(e) {
-  // When home-confirm dialog is open: Enter = yes, Escape = no/close
   if (_homeOverlay.classList.contains('active')) {
-    if (e.key === 'Enter')  document.getElementById('btn-home-yes').click();
-    if (e.key === 'Escape') document.getElementById('btn-home-no').click();
+    if (e.key === 'Enter')  { e.preventDefault(); goHome(); }
+    if (e.key === 'Escape') { e.preventDefault(); cancelHome(); }
     return;
   }
   if (e.key === 'p' || e.key === 'P') triggerPause();
