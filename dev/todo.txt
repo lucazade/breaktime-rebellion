@@ -159,7 +159,7 @@ Obiettivo: lucidare l'esperienza prima del rilascio.
 ## FASE 10 — Varie ed eventuali
 
 Obiettivo: ancora in dubbio.
-- [ ] # Prime prove app android? Apk locale? PlayStore?
+- [x] # Prime prove app android? Apk locale? PlayStore?
 - [ ] # Mostrare collo personaggi (fare un collo basso)
 - [ ] # Lavoro su branch outline personaggi
 - [ ] # ngrok errore? 17:38:17.361 CEST GET /.well-known/assetlinks.json 404 File not found     

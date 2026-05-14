@@ -3,3 +3,8 @@
 
 # Claude Code local settings
 .claude/
+
+# Capacitor / Android build
+node_modules/
+www/
+android/
