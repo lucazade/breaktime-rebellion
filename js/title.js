@@ -32,9 +32,14 @@
   function refreshAudio() { audioBtn.innerHTML = audioIcons[GameAudio.getMode()]; }
   refreshAudio();
 
+  // Try to autoplay intro immediately; browsers that block autoplay will silently fail
+  // and the music will start on first user interaction via the audio toggle or Play button
+  GameAudio.playIntro();
+
   audioBtn.addEventListener('click', function() {
     var next = audioModes[(audioModes.indexOf(GameAudio.getMode()) + 1) % audioModes.length];
     GameAudio.setMode(next);
+    if (next === 'full') GameAudio.playIntro();
     refreshAudio();
   });
 

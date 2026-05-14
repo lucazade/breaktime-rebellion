@@ -70,9 +70,9 @@ body {
       linear-gradient(180deg, #080015 0%, #12002e 55%, #080015 100%);
   }
 
-  /* Cyan neon strip facing the game screen */
-  #panel-left  { border-right: 3px solid rgba(0,220,255,0.7); }
-  #panel-right { border-left:  3px solid rgba(0,220,255,0.7); }
+  /* Purple neon strip facing the game screen */
+  #panel-left  { border-right: 3px solid rgba(160,0,255,0.7); }
+  #panel-right { border-left:  3px solid rgba(160,0,255,0.7); }
 
   /* Scanline overlay */
   #panel-left::before, #panel-right::before {

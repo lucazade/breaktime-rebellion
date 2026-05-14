@@ -50,10 +50,11 @@ function playerDied() {
   addParticles(player.x + PW/2, player.y, C.red, 20);
   GameAudio.playSfx('caught');
   if (lives <= 0) {
-    // Game over: freeze everything, then show banner
+    // Game over: freeze everything, fade out music, then show banner + gameover jingle
     deathFreeze = true;
+    GameAudio.fadeOutMusic(900);
     pendingTransition = { t: 60, fn: function() {
-      state = 'gameover'; GameAudio.stopMusic(); GameAudio.playJingle('gameover');
+      state = 'gameover'; GameAudio.playJingle('gameover');
     }};
   } else {
     // Lost a life but game continues: immediate respawn, teachers keep moving

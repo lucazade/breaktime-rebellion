@@ -13,13 +13,41 @@ const GameAudio = (function() {
     return a;
   })() : null;
 
+  var introMusic = CONFIG.audio.introMusic ? (function() {
+    var a = new Audio(CONFIG.audio.introMusic);
+    a.preload = 'auto';
+    a.loop    = true;
+    a.volume  = CONFIG.audio.musicVolume;
+    return a;
+  })() : null;
+
+  // Fades audio to targetVol over durationMs; returns interval id
+  function _fadeAudio(audio, targetVol, durationMs, cb) {
+    var steps    = 20;
+    var interval = Math.round(durationMs / steps);
+    var startVol = audio.volume;
+    var delta    = (targetVol - startVol) / steps;
+    var count    = 0;
+    var t = setInterval(function() {
+      count++;
+      audio.volume = Math.max(0, Math.min(1, startVol + delta * count));
+      if (count >= steps) {
+        clearInterval(t);
+        audio.volume = Math.max(0, Math.min(1, targetVol));
+        if (cb) cb();
+      }
+    }, interval);
+    return t;
+  }
+
   function setMode(m) {
     mode = m;
     localStorage.setItem('btr_audio', m);
-    if (bgMusic) {
-      if (mode === 'full') bgMusic.play().catch(function() {});
-      else bgMusic.pause();
+    if (mode !== 'full') {
+      if (bgMusic)    bgMusic.pause();
+      if (introMusic) introMusic.pause();
     }
+    // Callers resume the right track after switching back to 'full'
   }
 
   function getMode() { return mode; }
@@ -28,10 +56,51 @@ const GameAudio = (function() {
     if (jingle) { jingle.pause(); jingle.currentTime = 0; jingle = null; }
   }
 
+  function playIntro() {
+    if (!introMusic || mode === 'mute') return;
+    introMusic.currentTime = 0;
+    introMusic.volume = CONFIG.audio.musicVolume;
+    introMusic.play().catch(function() {});
+  }
+
+  function stopIntro() {
+    if (introMusic) { introMusic.pause(); introMusic.currentTime = 0; }
+  }
+
+  // Fade out intro, then call cb (show game), then fade in game music
+  function crossfadeToGame(cb) {
+    stopJingle();
+    var _go = function() {
+      if (cb) cb();
+      if (bgMusic && mode === 'full') {
+        bgMusic.currentTime = 0;
+        bgMusic.volume = 0;
+        bgMusic.play().catch(function() {});
+        _fadeAudio(bgMusic, CONFIG.audio.musicVolume, 600, null);
+      }
+    };
+    if (introMusic && !introMusic.paused) {
+      _fadeAudio(introMusic, 0, 600, function() { stopIntro(); _go(); });
+    } else {
+      stopIntro();
+      _go();
+    }
+  }
+
+  // Fade out game music over durationMs then call optional cb
+  function fadeOutMusic(durationMs, cb) {
+    if (!bgMusic) { if (cb) cb(); return; }
+    _fadeAudio(bgMusic, 0, durationMs || 1000, function() {
+      bgMusic.pause(); bgMusic.currentTime = 0;
+      if (cb) cb();
+    });
+  }
+
   function playMusic() {
     stopJingle();
     if (!bgMusic || mode !== 'full') return;
     bgMusic.currentTime = 0;
+    bgMusic.volume = CONFIG.audio.musicVolume;
     bgMusic.play().catch(function() {});
   }
 
@@ -66,5 +135,5 @@ const GameAudio = (function() {
     jingle.play().catch(function() {});
   }
 
-  return { playMusic: playMusic, stopMusic: stopMusic, pauseMusic: pauseMusic, resumeMusic: resumeMusic, playSfx: playSfx, playJingle: playJingle, setMode: setMode, getMode: getMode };
+  return { playIntro: playIntro, stopIntro: stopIntro, crossfadeToGame: crossfadeToGame, fadeOutMusic: fadeOutMusic, playMusic: playMusic, stopMusic: stopMusic, pauseMusic: pauseMusic, resumeMusic: resumeMusic, playSfx: playSfx, playJingle: playJingle, setMode: setMode, getMode: getMode };
 })();

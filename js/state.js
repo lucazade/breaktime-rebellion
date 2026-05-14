@@ -90,10 +90,11 @@ function setMsg(t, d) { msgText = t; msgT = d || 220; }
 
 function startGame() {
   localStorage.setItem('btr_last_level', currentLevel);
-  document.getElementById('overlay').style.display = 'none';
   resetLevel();
-  state = 'playing';
-  GameAudio.playMusic();
+  GameAudio.crossfadeToGame(function() {
+    document.getElementById('overlay').style.display = 'none';
+    state = 'playing';
+  });
 }
 
 function nextLevel() {

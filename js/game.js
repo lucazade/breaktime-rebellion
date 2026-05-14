@@ -165,6 +165,7 @@ function goHome() {
   resetLevel();
   state = 'title';
   GameAudio.stopMusic();
+  GameAudio.playIntro();
   document.getElementById('overlay').style.display = 'flex';
 }
 
