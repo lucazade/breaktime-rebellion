@@ -121,7 +121,7 @@ Obiettivo: nuovi ambienti, nuovi livelli, NPC aggiuntivi.
 | L7  |   X   | Allagare il bagno (lavandino con specchio in bagno)
 | L8  |   X   | Inserire petardi nei secchi della spazzatura (secchi spazzatura nell'ingresso e palestra)
 | L9  |   X   | Far scattare l'allarme anti-incendio
-| L10 |       | Scappare da scuola (boss finale)
+| L10 |   X   | Scappare da scuola (boss finale)
 
 ---
 
