@@ -39,7 +39,6 @@ let levelMechanics;
 const player = {
   x:0, y:0, vy:0,
   dir:1, animT:0,
-  onGround:false, onLadder:false,
   onStair:false, currentStair:null,
   stunT:0, stunEndedT:-1, spraying:false, sprayT:0, shaking:false,
   speed:1.5,
@@ -63,7 +62,6 @@ function resetLevel() {
   });
   player.x = lv.playerStart.x; player.y = lv.playerStart.y; player.vy = 0;
   player.dir = 1; player.animT = 0;
-  player.onGround = false; player.onLadder = false;
   player.onStair = false; player.currentStair = null;
   player.stunT = 0; player.spraying = false; player.sprayT = 0; player.shaking = false;
   particles = []; floatingTexts = [];

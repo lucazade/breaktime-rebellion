@@ -7,7 +7,6 @@ function drawBg() {
   ctx.setTransform(2, 0, 0, 2, 0, 0);
 }
 
-
 function drawDesks() {
   for (let i = 0; i < DESKS.length; i++) {
     const d = DESKS[i];
