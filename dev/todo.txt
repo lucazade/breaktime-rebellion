@@ -104,6 +104,11 @@ Obiettivo: nuovi ambienti, nuovi livelli, NPC aggiuntivi.
 - [ ] #42 la musica di intro attiva solo se musica attiva nei controlli (controllo quando esci dal gioco la musica parte sempre)
 - [x] #43 rendere intro muisc fadeout più lungo in ms e aspettare prima che compaia il gioco
 - [ ] #44 il banner tornare alla home e pausa devono essere localizzati
+- [ ] #45 In "Ruota il dispositivo" il logo gira è troppo piccolo rispetto alla scritta
+- [ ] #46 quando clicchi sui pulsanti nella home lo schermo fa un Flash (rimuoviamolo) 
+- [ ] #47 nel livello 7 lo Specchio non allineato orizzontalmente al lavandino
+- [ ] #48 lvl-name nella home deve essere solo una label non pulsante
+- [ ] #49 sulla versione desktop la scritta Breaktime Rebellion fa scendere il canvas troppo in basso (il canvas deve essere centrato verticalmente e la scritta va sopra e non lo fa scendere)
 
 |  #  | Stato | Nome                                    |
 |-----|-------|-----------------------------------------|
