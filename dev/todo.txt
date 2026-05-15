@@ -178,6 +178,7 @@ label ruota il dispositivo
 - [X] #61 facciamo sparire il fumetto quando appare il banner "leggenda della scuola"
 - [ ] #62 Prima del rilascio disattivare debug: showLevelChooser: true nel config
 - [ ] #63 Rivedere testo storia iniziale
+- [ ] #64 Scritta Marco sulla lavagna errata
 
 ---
 
