@@ -173,6 +173,7 @@ label ruota il dispositivo
 - [X] #55 Luca ha maglia bianca per distinguerlo
 - [X] #56 in L10 Marco appare nella stanza tutta a destra all'ultimo piano (non più in terrazza)
 - [ ] #57 il fumetto di Luca è troppo piccolo, non entra tutto il testo
+- [ ] #58 nel banner "Leggenda della scuola con il punteggio" non ci deve essere scritto "tocca per riprovare" perchè essendo finita la partita al tap si va in titlescreen
 
 
 ---

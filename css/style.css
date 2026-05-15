@@ -334,6 +334,7 @@ canvas {
   color: #ffd700;
   font-size: clamp(12px,4vw,18px);
   align-items: center; justify-content: center;
+  flex-direction: column;
   text-align: center; letter-spacing: 2px; line-height: 2.5;
   z-index: 200;
 }

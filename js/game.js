@@ -108,9 +108,9 @@ function loop(ts) {
 
 function handleTap() {
   if (storyBannerT > 0) { storyBannerT = 0; storyShown = true; missionBannerT = 210; return; }
-  // L10: tap during Luca fumetto → win state (tap-only, no auto-timer)
-  if (deathFreeze && levelMechanics.escapeExit && exitDone) {
-    deathFreeze = false; state = 'win';
+  // L10: tap during Luca fumetto → win state (only after 90-frame cooldown)
+  if (deathFreeze && levelMechanics.escapeExit && exitDone && exitWinReady) {
+    pendingTransition = null; deathFreeze = false; state = 'win';
     GameAudio.stopMusic(); GameAudio.playJingle('win');
     return;
   }

@@ -688,17 +688,23 @@ function drawLucaEnd() {
   ctx.textAlign = 'left'; ctx.textBaseline = 'top';
   ctx.fillStyle = C.gold; ctx.fillText('Luca:', bx + 4, by2 + 4);
   ctx.fillStyle = '#000';
-  const fullMsg = STRINGS.lucaAppears.replace(/^[^"]*"?/, '').replace(/".*$/, '');
-  const words = fullMsg.split(' ');
+  // Split on | to force line breaks; last segment is always on its own line
+  const raw = STRINGS.lucaAppears.replace(/^[^"]*"?/, '').replace(/".*$/, '');
+  const parts = raw.split('|');
   const maxW = bw - 8;
-  let lines = [], cur = '';
-  for (let i = 0; i < words.length; i++) {
-    const test = cur + (cur ? ' ' : '') + words[i];
-    if (ctx.measureText(test).width > maxW) { if (cur) lines.push(cur); cur = words[i]; }
-    else cur = test;
+  let lines = [];
+  for (let p = 0; p < parts.length; p++) {
+    const words = parts[p].trim().split(' ');
+    let cur = '';
+    for (let i = 0; i < words.length; i++) {
+      const test = cur + (cur ? ' ' : '') + words[i];
+      if (ctx.measureText(test).width > maxW) { if (cur) lines.push(cur); cur = words[i]; }
+      else cur = test;
+    }
+    if (cur) lines.push(cur);
   }
-  if (cur) lines.push(cur);
-  for (let i = 0; i < Math.min(lines.length, 3); i++) {
+  for (let i = 0; i < Math.min(lines.length, 4); i++) {
+    ctx.fillStyle = i === lines.length - 1 ? C.gold : '#000';
     ctx.fillText(lines[i], bx + 4, by2 + 14 + i * 10);
   }
 }
@@ -780,7 +786,7 @@ function drawEndScreen() {
     const bestScore = parseInt(localStorage.getItem('btr_best_score') || '0');
     const bestLevel = parseInt(localStorage.getItem('btr_best_level') || '1');
     const by = 44, bw = 260, bh = 112;
-    const tapAction = actionVisible ? STRINGS.reloadWin : 'rgba(255,255,255,0)';
+    const tapAction = actionVisible ? STRINGS.tapForTitle : 'rgba(255,255,255,0)';
     drawOverlayPanel(bx, by, bw, bh, 'rgba(0,0,40,0.92)', C.gold, [
       { text: 'LEGGENDARIO!', font: '9px "Press Start 2P"', color: C.gold,  height: 12, spacing: 8 },
       { text: STRINGS.winTitle,  font: '6px "Press Start 2P"', color: C.lgreen, height: 8,  spacing: 8 },

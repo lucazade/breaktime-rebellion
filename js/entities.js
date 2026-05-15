@@ -78,6 +78,10 @@ function playerDied() {
     player.onStair = false; player.currentStair = null;
     player.stunT = 120;
     timerTicks = maxTimerTicks;
+    // Briefly stun guards so they don't immediately kill on respawn
+    for (let i = 0; i < teachers.length; i++) {
+      if (teachers[i].catchRadius) { teachers[i].knockedT = Math.max(teachers[i].knockedT, 90); teachers[i].chasing = false; }
+    }
   }
 }
 
@@ -124,7 +128,9 @@ function escapeWin() {
   addFloating(exitDoor.x + 5, exitDoor.y - 10, '+1000!', C.gold);
   addParticles(exitDoor.x + 5, exitDoor.y, C.gold, 30);
   GameAudio.playSfx('bell');
-  deathFreeze = true; // frozen until player taps — no auto-timer
+  deathFreeze = true;
+  exitWinReady = false;
+  pendingTransition = { t: 90, fn: function() { exitWinReady = true; pendingTransition = null; } };
 }
 
 function allSprinklersWin() {
