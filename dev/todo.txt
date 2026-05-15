@@ -160,7 +160,6 @@ Obiettivo: lucidare l'esperienza prima del rilascio.
 - [X] # Implementare banner crediti (premendo sulla campanella della sidebar nuovo banner ,vedi credits.txt)
 - [X] # Implementare Schermata migliori punteggi con livello raggiunto a fine partita (non serve inserire il nome)
 - [X] # Rimuovere cuori da msg
-- [ ] #50 Gestire Marco quando sale e scende le scale coprendo parte non visibile dietro al pavimento
 - [X] #51 nella schermata del ruota il dispositivo ordiniamole così dall'alto al basso:
 logo
 spazio
@@ -180,7 +179,15 @@ label ruota il dispositivo
 
 ---
 
-## FASE 10 — Varie ed eventuali
+## FASE 10 — Aggiustaggi finali
+
+Obiettivo: pixel perfect e rocksolid
+
+- [ ] #50 Gestire Marco quando sale e scende le scale coprendo parte non visibile dietro al pavimento
+
+---
+
+## FASE 11 — Varie ed eventuali
 
 Obiettivo: ancora in dubbio.
 
