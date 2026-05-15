@@ -10,10 +10,18 @@
   // ── Service worker ──────────────────────────────────────────────────────────
   if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
 
-  // ── Enter key to start game ─────────────────────────────────────────────────
+  // ── Start game: Enter key or tap on logo image only ─────────────────────────
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && state === 'title') startGame();
   });
+  var logoImg = document.getElementById('logo-img');
+  logoImg.addEventListener('click', function() {
+    if (state === 'title') startGame();
+  });
+  logoImg.addEventListener('touchend', function(e) {
+    e.preventDefault();
+    if (state === 'title') startGame();
+  }, {passive: false});
 
   // ── Stop tap propagation (controls must not trigger startGame) ──────────────
   var controls = document.getElementById('title-controls');
