@@ -186,6 +186,13 @@ Obiettivo: pixel perfect e rocksolid
 - [X] #50 Gestire Marco quando sale e scende le scale coprendo parte non visibile dietro al pavimento
 - [X] #62 Serve ancora FD in layout ora che abbiamo le altre soglie?
 - [X] #63 Mega controllo cleanup generale: variabili e funzioni morte, implementazioni di oggetti, banner, personaggi o azioni che si posso uniformare fra di loro. Prettify codice. Controllo best practice rispettate. Insomma un codice ben rifinito anche perchè siamo andati avanti e indietro in alcune implementazioni e non vorrei che ci sono hard fix dentro o cose che posso essere astratte meglio.
+- [ ] #64 Marco può suonare la campanella solo se si trova proprio sotto di essa e non prima
+- [ ] #65 Nel banner quando si supera livello ci deve essere scritto (i18n) "Livello Superato" al posto di "Leggenda della scuola" e il messaggio in fondo deve essere "Tocca per proseguire" e non "Tocca per il livello successivo". 
+- [ ] #66 Nel banner "Livello Superato", banner finale dopo che si completa L10 e quando c'e' il fumetto di Luca bisogna catturare enter/invio/space pre proseguire sul desktop
+- [ ] #67 Visto che Marco dopo il fix #64 suonerà la campanella solo se sotto di essa bisogna gestire il caso della fine del livello 10 perchè in quel caso ci sarà Luca sotto la campanella (davanti alla porta). Facciamo che Marco alla fine del livello 10 può suonare la campanella dove la suona ora, cioè prima della porta
+- [ ] #68 Nel banner finale sostiuiamo "Legendario" con "Leggenda della scuola.
+La seconda riga attuale "Leggenda della scuola" la rimuoviamo del tutto.
+
 
 ---
 

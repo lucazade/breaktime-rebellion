@@ -223,7 +223,7 @@ var LEVELS = (function() {
 
       teachers: [
         {x:200, y:GY-PH-walkOffset, dir: 1, minX:10, maxX:305, speed:0.60, color:C.redprof,  name:'Prof.Rossi',      sight:90},
-        {x:80,  y:MY-PH-walkOffset, dir:-1, minX:10, maxX:305, speed:0.55, color:C.green,    name:'Prof.Ginnastica', sight:100},
+        {x:80,  y:MY-PH-walkOffset, dir:-1, minX:10, maxX:305, speed:0.55, color:C.greenprof,    name:'Prof.Ginnastica', sight:100},
         {x:230, y:TY-PH-walkOffset, dir: 1, minX:10, maxX:275, speed:0.60, color:C.grayprof, name:'Prof.Neri',       sight:90},
       ],
 

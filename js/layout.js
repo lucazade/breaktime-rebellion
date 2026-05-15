@@ -24,7 +24,7 @@ CONFIG.colors = {
   desk:'#2C1800', desklt:'#4E2A00',
   bagbody:'#4A3D8F', bagborder:'#2A1F5E',
   bell:'#DAA520',
-  redprof:'#c3200e', greenprof:'#1fa40d', grayprof:'#171717', whiteprof:'#dcdcdc', cyanprof:'#0757d7',
+  redprof:'#c3200e', greenprof:'#109f06', grayprof:'#171717', whiteprof:'#dcdcdc', cyanprof:'#0757d7',
 };
 
 // Layout shortcut constants — used throughout all modules
