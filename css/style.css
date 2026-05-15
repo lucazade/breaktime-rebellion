@@ -453,7 +453,7 @@ canvas {
   display: none;
   position: absolute;
   top: 100px;
-  left: 55%;
+  left: calc(55% - 1px);
   transform: translateX(-50%);
   width: 66px;
   opacity: 0.72;

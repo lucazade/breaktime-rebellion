@@ -142,6 +142,7 @@ Obiettivo: non ci piacciono i bachi.
 - [x] # La scritta "avvicinati alla lavagna" o "spacca il distributore" compaiono mentre stai facendo l'azione, mostriamo il messaggio in prossimità del target.
 - [x] # Il radar dei professori si vede poco, aumentare opacità.
 - [x] # Rendere la scelta dei livelli accessibile agli utenti in base a quelli già sbloccati (con opzione di debug sono invece tutti accessibili). Ricordiamo l'ultimo livello scelto.
+- [x] # Prime prove app android? Apk locale?
 
 ---
 
@@ -151,15 +152,16 @@ Obiettivo: lucidare l'esperienza prima del rilascio.
 
 - [X] # Logo (Luca lo genera e lo integriamo)
 - [X] # I pulsanti sulla schermata principale (sotto il logo) devono avere tutti la stessa altezza
-- [ ] # Implementare Schermata storia del personaggio all'inizio del gioco
-- [ ] # Implementare Schermata migliori punteggi con livello raggiunto (non serve inserire il nome)
-- [ ] # Implementare Schermata crediti (vedi credits.txt)
-- [ ] # Transizione tra schermate (fade in/out?)
-- [ ] # Rimuovere occhiali ai professori
+- [X] # Transizione tra schermate (fade in/out?)
+- [X] # Rimuovere occhiali ai professori
+- [X] # Rifare immagine iniziale con chatgpt senza problemi di licenza (Luca)
+- [X] # Aggiungere favicon. Utile se si gioca sul browser su pc
+- [ ] # Implementare banner storia del personaggio all'inizio del gioco (prima del banner del 1 livello, nuovo banner con storia, tap per continuare)
+- [ ] # Implementare banner crediti (premendo sulla campanella della sidebar nuovo banner ,vedi credits.txt)
+- [ ] # Implementare Schermata migliori punteggi con livello raggiunto a fine partita (non serve inserire il nome)
 - [ ] # Rimuovere cuori da msg
 - [ ] # Gestire Marco quando sale e scende le scale coprendo parte non visibile dietro al pavimento
-- [ ] # Rifare immagine iniziale con chatgpt senza problemi di licenza (prima definire meglio homepage)(per Luca)
-- [X] # Aggiungere favicon? serve nel gioco finale? Utile se si gioca sul browser su pc
+- [ ] # in ruota il dispositivo, logo sopra alle scritte
 
 ---
 
@@ -167,7 +169,6 @@ Obiettivo: lucidare l'esperienza prima del rilascio.
 
 Obiettivo: ancora in dubbio.
 
-- [x] # Prime prove app android? Apk locale? PlayStore?
 - [ ] # Implementare Schermata caricamento stile ZX Spectrum (barre laterali animate + logo progressivo a linee)
 - [ ] # Mostrare collo personaggi (fare un collo basso)
 - [ ] # Lavoro su branch outline personaggi
