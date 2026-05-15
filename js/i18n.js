@@ -7,7 +7,7 @@
   document.documentElement.lang = lang;
 
   var en = {
-    rotateHtml:    '<span style="font-size:2.8em;line-height:1.2">↺</span><br>ROTATE<br>DEVICE',
+    rotateHtml:    '<img src="assets/pics/logo.png" style="width:72vw;max-width:280px;border-radius:8px;border:2px solid #000;margin-bottom:16px"><br><span style="font-size:2.8em;line-height:1.2">↺</span><br>ROTATE<br>DEVICE',
     tapToStart:    '[ TAP TO START ]',
     reloadLose:    '[ TAP TO TRY AGAIN ]',
     reloadNext:    '[ TAP FOR NEXT LEVEL ]',
@@ -31,6 +31,11 @@
     btnYes:        'YES',
     btnNo:         'NO',
     missionLabel:  'LEVEL {0}',
+    storyTitle:    '— 1987 —',
+    storyText:     "Luca dares Marco to pull off a string of legendary pranks. Whoever becomes the school legend by end of day wins. Marco never backs down from a dare.",
+    storyContinue: '[ tap to continue ]',
+    bestLabel:     'BEST',
+    levelReached:  'LEVEL {0} REACHED',
     mission1:      'Tag all boards!',
     getCloser:     'Tag the board!',
     boardTagged:   'Board tagged! +500 ({0}/{1})',
@@ -79,7 +84,7 @@
   };
 
   var it = {
-    rotateHtml:    '<span style="font-size:2.8em;line-height:1.2">↺</span><br>RUOTA IL<br>DISPOSITIVO',
+    rotateHtml:    '<img src="assets/pics/logo.png" style="width:72vw;max-width:280px;border-radius:8px;border:2px solid #000;margin-bottom:16px"><br><span style="font-size:2.8em;line-height:1.2">↺</span><br>RUOTA IL<br>DISPOSITIVO',
     tapToStart:    '[ TOCCA PER INIZIARE ]',
     reloadLose:    '[ TOCCA PER RIPROVARE ]',
     reloadNext:    '[ TOCCA PER IL LIVELLO SUCCESSIVO ]',
@@ -103,6 +108,11 @@
     btnYes:        'SÌ',
     btnNo:         'NO',
     missionLabel:  'LIVELLO {0}',
+    storyTitle:    '— 1987 —',
+    storyText:     "Luca sfida Marco a fare una serie di marachelle leggendarie. Chi si fa riconoscere come leggenda della scuola entro la fine della giornata vince. Marco non si tira mai indietro.",
+    storyContinue: '[ tocca per continuare ]',
+    bestLabel:     'MIGLIOR',
+    levelReached:  'LIVELLO {0} RAGGIUNTO',
     mission1:      'Imbratta tutte le lavagne!',
     getCloser:     'Scrivi sulla lavagna!',
     boardTagged:   'Lavagna imbrattata! +500 ({0}/{1})',

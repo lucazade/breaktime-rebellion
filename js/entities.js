@@ -54,6 +54,11 @@ function playerDied() {
     // Game over: freeze everything, fade out music, then show banner + gameover jingle
     deathFreeze = true;
     GameAudio.fadeOutMusic(900);
+    // Save high scores
+    var bs = parseInt(localStorage.getItem('btr_best_score') || '0');
+    var bl = parseInt(localStorage.getItem('btr_best_level') || '0');
+    if (score > bs) localStorage.setItem('btr_best_score', score);
+    if (currentLevel > bl) localStorage.setItem('btr_best_level', currentLevel);
     pendingTransition = { t: 60, fn: function() {
       state = 'gameover'; GameAudio.playJingle('gameover');
     }};
@@ -72,7 +77,7 @@ function caughtBy(t) {
   lives--;
   score = Math.max(0, score - 300);
   let msg = fmt(STRINGS.caughtBy, t.name);
-  msg += lives > 0 ? '♥'.repeat(lives) : 'GAME OVER!';
+  msg += lives <= 0 ? ' GAME OVER!' : '';
   setMsg(msg);
   playerDied();
 }
@@ -202,7 +207,7 @@ function updateBins() {
       lives--;
       score = Math.max(0, score - 300);
       var blastMsg = STRINGS.binBlastHit;
-      blastMsg += lives > 0 ? '♥'.repeat(lives) : 'GAME OVER!';
+      blastMsg += lives <= 0 ? ' GAME OVER!' : '';
       setMsg(blastMsg);
       playerDied();
       return; // skip win check this frame
@@ -252,7 +257,7 @@ function updateTimer() {
     timerTicks = 0;
     lives--;
     let msg = STRINGS.timesUp;
-    msg += lives > 0 ? '♥'.repeat(lives) : 'GAME OVER!';
+    msg += lives <= 0 ? ' GAME OVER!' : '';
     setMsg(msg);
     playerDied();
   }

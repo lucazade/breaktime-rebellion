@@ -625,42 +625,64 @@ function drawOverlayPanel(bx, by, bw, bh, bgColor, borderColor, lines) {
 function drawEndScreen() {
   if (state !== 'win' && state !== 'gameover') return;
   const bx = 160 - 130;
-  const by = 64;
-  const bw = 260;
-  const bh = 72;
   const isWin = state === 'win';
   const scoreText = STRINGS.scoreLabel + String(score).padStart(5, '0');
   const actionText = isWin
     ? (currentLevel < LEVELS.length ? STRINGS.reloadNext : STRINGS.reloadWin)
     : STRINGS.reloadLose;
   const actionVisible = Math.floor(frame / 20) % 2 === 0;
-  drawOverlayPanel(bx, by, bw, bh, isWin ? 'rgba(0,0,60,0.88)' : 'rgba(60,0,0,0.88)', C.gold, [
-    {
-      text: isWin ? STRINGS.winTitle : STRINGS.gameoverTitle,
-      font: isWin ? '8px "Press Start 2P"' : '10px "Press Start 2P"',
-      color: isWin ? C.gold : C.redprof,
-      height: 10,
-      spacing: 10,
-    },
-    {
-      text: scoreText,
-      font: '7px "Press Start 2P"',
-      color: C.white,
-      height: 10,
-      spacing: 6,
-    },
-    {
-      text: actionText,
-      font: '6px "Press Start 2P"',
-      color: actionVisible ? (isWin ? C.green : C.gold) : 'rgba(255,255,255,0)',
-      height: 10,
-      spacing: 0,
-    },
-  ]);
+
+  if (!isWin) {
+    // Gameover: show current run + personal best
+    const bestScore = parseInt(localStorage.getItem('btr_best_score') || '0');
+    const bestLevel = parseInt(localStorage.getItem('btr_best_level') || '1');
+    const by = 52, bw = 260, bh = 96;
+    drawOverlayPanel(bx, by, bw, bh, 'rgba(60,0,0,0.88)', C.gold, [
+      { text: STRINGS.gameoverTitle, font: '10px "Press Start 2P"', color: C.redprof, height: 10, spacing: 8 },
+      { text: fmt(STRINGS.levelReached, currentLevel), font: '6px "Press Start 2P"', color: C.white, height: 8, spacing: 2 },
+      { text: scoreText, font: '6px "Press Start 2P"', color: C.white, height: 8, spacing: 6 },
+      { text: STRINGS.bestLabel + ' LVL ' + bestLevel + ' — ' + String(bestScore).padStart(5,'0'), font: '6px "Press Start 2P"', color: C.gold, height: 8, spacing: 6 },
+      { text: actionText, font: '6px "Press Start 2P"', color: actionVisible ? C.gold : 'rgba(255,255,255,0)', height: 8, spacing: 0 },
+    ]);
+  } else {
+    const by = 64, bw = 260, bh = 72;
+    drawOverlayPanel(bx, by, bw, bh, 'rgba(0,0,60,0.88)', C.gold, [
+      { text: STRINGS.winTitle, font: '8px "Press Start 2P"', color: C.gold, height: 10, spacing: 10 },
+      { text: scoreText, font: '7px "Press Start 2P"', color: C.white, height: 10, spacing: 6 },
+      { text: actionText, font: '6px "Press Start 2P"', color: actionVisible ? C.green : 'rgba(255,255,255,0)', height: 10, spacing: 0 },
+    ]);
+  }
+}
+
+function drawStoryBanner() {
+  if (storyBannerT <= 0 || state !== 'playing') return;
+  if (!storyBannerLines) {
+    ctx.font = '6px "Press Start 2P"';
+    const words = STRINGS.storyText.split(' ');
+    let line = '', lines = [];
+    for (let i = 0; i < words.length; i++) {
+      const test = line + (line ? ' ' : '') + words[i];
+      if (ctx.measureText(test).width > 240) { lines.push(line); line = words[i]; }
+      else line = test;
+    }
+    if (line) lines.push(line);
+    storyBannerLines = lines;
+  }
+  const bx = 20, by = 22, bw = 280, bh = 156;
+  const lineObjs = [
+    { text: STRINGS.storyTitle, font: '8px "Press Start 2P"', color: C.gold, height: 10, spacing: 10 },
+  ];
+  for (let i = 0; i < storyBannerLines.length; i++) {
+    lineObjs.push({ text: storyBannerLines[i], font: '6px "Press Start 2P"', color: C.white, height: 8, spacing: 4 });
+  }
+  const blink = Math.floor(frame / 25) % 2 === 0;
+  lineObjs.push({ text: '', font: '6px "Press Start 2P"', color: 'transparent', height: 6, spacing: 0 });
+  lineObjs.push({ text: STRINGS.storyContinue, font: '6px "Press Start 2P"', color: blink ? C.gold : 'rgba(0,0,0,0)', height: 8, spacing: 0 });
+  drawOverlayPanel(bx, by, bw, bh, 'rgba(0,0,40,0.92)', C.gold, lineObjs);
 }
 
 function drawMissionBanner() {
-  if (missionBannerT <= 0) return;
+  if (missionBannerT <= 0 || state !== 'playing') return;
   if (!missionBannerLines) {
     ctx.font = '7px "Press Start 2P"';
     const text = STRINGS['mission' + currentLevel] || STRINGS.mission1;

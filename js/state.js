@@ -27,6 +27,8 @@ let machines, gymBall, paperBalls, students, throwCooldown, bookcase, sink, bins
 let shakeTime, deflateTime, dropTime, floodTime, lighterTime;
 let allSink, allBins, allSprinklers;
 let missionBannerT, missionBannerLines;
+let storyBannerT, storyBannerLines;  // like missionBannerT but shown first on L1
+let storyShown = false; // session-level — not reset by resetLevel
 let pendingTransition = null;
 let deathFreeze = false;
 let currentLevel = 1;
@@ -80,7 +82,9 @@ function resetLevel() {
   floodTime   = lv.floodTime   || 80;
   lighterTime = lv.lighterTime || 80;
   timerTicks  = maxTimerTicks  = (lv.timer || 0) * 60;
-  missionBannerT = 210;
+  storyBannerT     = (currentLevel === 1 && !storyShown) ? 300 : 0; // 5s, L1 only
+  storyBannerLines = null;
+  missionBannerT     = storyBannerT > 0 ? 0 : 210; // defer until after story
   missionBannerLines = null;
   pendingTransition = null;
   deathFreeze = false;

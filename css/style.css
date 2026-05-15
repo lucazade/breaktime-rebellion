@@ -492,6 +492,31 @@ canvas {
   .panel-btn { display: flex; }
 }
 
+/* ─── CREDITS OVERLAY ─── */
+#credits-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.88);
+  z-index: 9500;
+  align-items: center; justify-content: center;
+}
+#credits-overlay.active { display: flex; }
+.credits-box {
+  background: #000030;
+  border: 1px solid #ffd700;
+  padding: 20px 24px;
+  max-width: 340px; width: 88vw;
+  text-align: center;
+  font-family: 'Press Start 2P', monospace;
+  color: #fff;
+}
+.credits-title { color: #ffd700; font-size: 11px; margin-bottom: 14px; }
+.credits-team  { color: #9ad284; font-size: 8px; margin-bottom: 10px; }
+.credits-content p { font-size: 8px; margin-bottom: 9px; line-height: 1.7; }
+.credits-role  { color: #70a4b2; font-size: 7px; }
+.credits-small { font-size: 6px; color: #aaa; }
+.credits-box .dialog-btn { margin-top: 14px; }
+
 /* ─── IN-GAME DIALOGS (pause / home confirm) ─── */
 #pause-overlay, #home-confirm-overlay {
   position: absolute;

@@ -27,7 +27,9 @@ function loop(ts) {
   while (_accumulator >= _STEP) {
     frame++;
     if (state === 'playing') {
-      if (missionBannerT > 0) {
+      if (storyBannerT > 0) {
+        // frozen — dismissed only by tap or Enter key
+      } else if (missionBannerT > 0) {
         missionBannerT--;
       } else if (deathFreeze) {
         tickTransition(); // only advance the respawn/gameover countdown; everything else frozen
@@ -91,6 +93,7 @@ function loop(ts) {
   drawParticles();
   drawFloating();
   drawEndScreen();
+  drawStoryBanner();
   drawMissionBanner();
   drawDebugOverlay();
   updateHUD();
@@ -98,6 +101,7 @@ function loop(ts) {
 }
 
 function handleTap() {
+  if (storyBannerT > 0) { storyBannerT = 0; storyShown = true; missionBannerT = 210; return; }
   if (missionBannerT > 0) { missionBannerT = 0; return; }
   if (state === 'win') {
     if (currentLevel < LEVELS.length) nextLevel();
@@ -201,6 +205,26 @@ function cancelHome() {
 document.getElementById('btn-home-yes').addEventListener('click', goHome);
 document.getElementById('btn-home-no').addEventListener('click', cancelHome);
 
+// ── Credits (panel bell tap) ─────────────────────────────────────────────────
+var _creditsOverlay = document.getElementById('credits-overlay');
+
+function showCredits() {
+  _creditsOverlay.classList.add('active');
+  if (state === 'playing') GameAudio.pauseMusic();
+}
+function hideCredits() {
+  _creditsOverlay.classList.remove('active');
+  if (state === 'playing') GameAudio.resumeMusic();
+}
+
+var _panelBell = document.getElementById('panel-bell');
+if (_panelBell) {
+  _panelBell.style.pointerEvents = 'auto';
+  _panelBell.addEventListener('click', showCredits);
+  _panelBell.addEventListener('touchend', function(e) { e.preventDefault(); showCredits(); }, {passive: false});
+}
+document.getElementById('btn-credits-close').addEventListener('click', hideCredits);
+
 // ── Keyboard shortcuts (desktop) — P = pause, ESC = home / close dialog ─────
 document.addEventListener('keydown', function(e) {
   if (_homeOverlay.classList.contains('active')) {
@@ -208,6 +232,7 @@ document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape' || e.key === 'n' || e.key === 'N') { e.preventDefault(); cancelHome(); }
     return;
   }
+  if ((e.key === 'Enter' || e.key === ' ') && storyBannerT > 0) { handleTap(); return; }
   if (e.key === 'p' || e.key === 'P') triggerPause();
   if (e.key === 'Escape') triggerHome();
 });
