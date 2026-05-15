@@ -643,6 +643,19 @@ function drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, chasing, knock
   }
 }
 
+// Draw a character clipped to exclude the floor band [bandTop, bandBottom].
+// Used when Marco is on a stair and his body crosses a floor.
+function drawCharClipped(x, y, dir, animT, bodyCol, isTeacher, spraying, chasing, knockedT, bandTop, bandBottom) {
+  ctx.save();
+  ctx.beginPath(); ctx.rect(0, 0, W, bandTop); ctx.clip();
+  drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, chasing, knockedT);
+  ctx.restore();
+  ctx.save();
+  ctx.beginPath(); ctx.rect(0, bandBottom, W, H - bandBottom); ctx.clip();
+  drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, chasing, knockedT);
+  ctx.restore();
+}
+
 function drawJanitor(x, y, dir, animT) {
   drawChar(x, y, dir, animT, C.mgray, false, false, false);
   const bx = Math.round(x), by = Math.round(y);

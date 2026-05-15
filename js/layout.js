@@ -9,6 +9,7 @@ CONFIG.layout = {
   GY: 185, MY: 127, TY: 70,
   BW: 22, BH: 14,
   walkOffset: 6,
+  FD: 8, // floor band depth in px — tune to match bg.png visually
 };
 
 CONFIG.colors = {
@@ -33,6 +34,7 @@ const PW = CONFIG.layout.PW, PH = CONFIG.layout.PH;
 const GY = CONFIG.layout.GY, MY = CONFIG.layout.MY, TY = CONFIG.layout.TY;
 const BW = CONFIG.layout.BW, BH = CONFIG.layout.BH;
 const walkOffset = CONFIG.layout.walkOffset;
+const FD = CONFIG.layout.FD;
 
 // ── Shared scene ─────────────────────────────────────────────────────────────
 // Stairs, boards, desks, bell and player start are the same in every level —
@@ -42,11 +44,13 @@ const walkOffset = CONFIG.layout.walkOffset;
 var SHARED_LAYOUT = {
   playerStart: { x: 25, y: GY - PH - walkOffset },
 
+  // fdTop: px above the walking surface where the sprite starts to appear (trapdoor top edge)
+  // fdBot: px below the walking surface where the sprite disappears  (floor plank underside)
   stairs: [
-    {x1:88,  y1:GY-walkOffset, x2:35,  y2:MY-walkOffset},  // GY→MY sx
-    {x1:232, y1:GY-walkOffset, x2:285, y2:MY-walkOffset},  // GY→MY dx
-    {x1:90,  y1:MY-walkOffset, x2:33,  y2:TY-walkOffset},  // MY→TY sx
-    {x1:232, y1:MY-walkOffset, x2:285, y2:TY-walkOffset},  // MY→TY dx
+    {x1:88,  y1:GY-walkOffset, x2:35,  y2:MY-walkOffset, fdTop:4, fdBot:12},  // GY→MY sx
+    {x1:232, y1:GY-walkOffset, x2:285, y2:MY-walkOffset, fdTop:4, fdBot:12},  // GY→MY dx
+    {x1:90,  y1:MY-walkOffset, x2:33,  y2:TY-walkOffset, fdTop:4, fdBot:12},  // MY→TY sx
+    {x1:232, y1:MY-walkOffset, x2:285, y2:TY-walkOffset, fdTop:4, fdBot:12},  // MY→TY dx
   ],
 
   boards: [
