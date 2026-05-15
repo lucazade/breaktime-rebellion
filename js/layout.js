@@ -9,7 +9,6 @@ CONFIG.layout = {
   GY: 185, MY: 127, TY: 70,
   BW: 22, BH: 14,
   walkOffset: 6,
-  FD: 8, // floor band depth in px — tune to match bg.png visually
 };
 
 CONFIG.colors = {
@@ -34,7 +33,6 @@ const PW = CONFIG.layout.PW, PH = CONFIG.layout.PH;
 const GY = CONFIG.layout.GY, MY = CONFIG.layout.MY, TY = CONFIG.layout.TY;
 const BW = CONFIG.layout.BW, BH = CONFIG.layout.BH;
 const walkOffset = CONFIG.layout.walkOffset;
-const FD = CONFIG.layout.FD;
 
 // ── Shared scene ─────────────────────────────────────────────────────────────
 // Stairs, boards, desks, bell and player start are the same in every level —

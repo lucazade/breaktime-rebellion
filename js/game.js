@@ -92,7 +92,7 @@ function loop(ts) {
       const s = player.currentStair;
       const surfaceY  = Math.min(s.y1, s.y2);          // walking surface at upper floor
       const bandTop    = surfaceY - (s.fdTop || 0);     // where head appears above (tune fdTop per stair)
-      const bandBottom = surfaceY + (s.fdBot !== undefined ? s.fdBot : FD); // where legs disappear below
+      const bandBottom = surfaceY + s.fdBot;  // where legs disappear below (tune fdBot per stair)
       if (player.y > bandTop - PH && player.y < bandBottom + 8) {
         drawCharClipped(player.x, player.y, player.dir, player.animT, C.blue, false, player.spraying, false, 0, bandTop, bandBottom);
       } else {
