@@ -129,7 +129,6 @@ function updatePlayer() {
         addParticles(register.x + 5, register.y, C.gold, 14);
         GameAudio.playSfx('bag');
         alertTeachers(register.x + 5, register.y);
-        setMsg(STRINGS.registerStolen);
         allRegisterWin();
       }
     }
@@ -231,22 +230,18 @@ function updatePlayer() {
     let t2 = (player.x + PW/2 - s.x1) / (s.x2 - s.x1);
     t2 = Math.max(0, Math.min(1, t2));
     player.y = s.y1 + (s.y2 - s.y1) * t2 - PH;
-    player.onGround = true;
-    player.onLadder = true;
     if (t2 <= 0.02 || t2 >= 0.98) {
       player.onStair = false;
       player.currentStair = null;
     }
   } else {
-    player.onLadder = false;
     player.vy += 0.35;
     player.y  += player.vy;
     if (K.left)  { player.x -= player.speed; player.dir = -1; player.animT += 0.25; }
     if (K.right) { player.x += player.speed; player.dir =  1; player.animT += 0.25; }
     player.x = clampX(player.x);
     const gFy = getFloorBelow(player.x, player.y);
-    if (gFy !== null && player.vy >= 0) { player.y = gFy - PH; player.vy = 0; player.onGround = true; }
-    else { player.onGround = false; }
+    if (gFy !== null && player.vy >= 0) { player.y = gFy - PH; player.vy = 0; }
   }
 
   if (player.y < 2) player.y = 2;

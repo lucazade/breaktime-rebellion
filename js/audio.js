@@ -90,26 +90,6 @@ const GameAudio = (function() {
     _fadeAudio(introMusic, 0, durationMs || 1200, stopIntro);
   }
 
-  // Fade out intro, then call cb (show game), then fade in game music
-  function crossfadeToGame(cb) {
-    stopJingle();
-    var _go = function() {
-      if (cb) cb();
-      if (bgMusic && mode === 'full') {
-        bgMusic.currentTime = 0;
-        bgMusic.volume = 0;
-        bgMusic.play().catch(function() {});
-        _fadeAudio(bgMusic, CONFIG.audio.musicVolume, 1500, null);
-      }
-    };
-    if (introMusic && !introMusic.paused) {
-      _fadeAudio(introMusic, 0, 1500, function() { stopIntro(); _go(); });
-    } else {
-      stopIntro();
-      _go();
-    }
-  }
-
   // Fade out game music over durationMs then call optional cb
   function fadeOutMusic(durationMs, cb) {
     var t = _gameTrack();
@@ -163,5 +143,5 @@ const GameAudio = (function() {
     jingle.play().catch(function() {});
   }
 
-  return { playIntro: playIntro, stopIntro: stopIntro, fadeOutIntro: fadeOutIntro, crossfadeToGame: crossfadeToGame, fadeOutMusic: fadeOutMusic, playMusic: playMusic, stopMusic: stopMusic, pauseMusic: pauseMusic, resumeMusic: resumeMusic, playSfx: playSfx, playJingle: playJingle, setMode: setMode, getMode: getMode };
+  return { playIntro: playIntro, stopIntro: stopIntro, fadeOutIntro: fadeOutIntro, fadeOutMusic: fadeOutMusic, playMusic: playMusic, stopMusic: stopMusic, pauseMusic: pauseMusic, resumeMusic: resumeMusic, playSfx: playSfx, playJingle: playJingle, setMode: setMode, getMode: getMode };
 })();
