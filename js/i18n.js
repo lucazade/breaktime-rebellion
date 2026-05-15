@@ -7,7 +7,7 @@
   document.documentElement.lang = lang;
 
   var en = {
-    rotateHtml:    '↺<br>ROTATE<br>DEVICE',
+    rotateHtml:    '<span style="font-size:2.8em;line-height:1.2">↺</span><br>ROTATE<br>DEVICE',
     tapToStart:    '[ TAP TO START ]',
     reloadLose:    '[ TAP TO TRY AGAIN ]',
     reloadNext:    '[ TAP FOR NEXT LEVEL ]',
@@ -69,7 +69,7 @@
   };
 
   var it = {
-    rotateHtml:    '↺<br>RUOTA IL<br>DISPOSITIVO',
+    rotateHtml:    '<span style="font-size:2.8em;line-height:1.2">↺</span><br>RUOTA IL<br>DISPOSITIVO',
     tapToStart:    '[ TOCCA PER INIZIARE ]',
     reloadLose:    '[ TOCCA PER RIPROVARE ]',
     reloadNext:    '[ TOCCA PER IL LIVELLO SUCCESSIVO ]',

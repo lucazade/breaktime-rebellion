@@ -101,14 +101,14 @@ Obiettivo: nuovi ambienti, nuovi livelli, NPC aggiuntivi.
 - [x] #39 Fix L5: teacher vicino alla lavagna (patrol stretto x115-205); no bidelli; throwHint solo in aula (x80-250); pallina che colpisce prof → Marco perde vita
 - [x] #40 Fix L4: Prof.Ginnastica visibile in zona palestra (minX=110); 3 sgonfiate
 - [x] #41 Fix L5: shake studenti colpiti + bolla "!" gialla 7px + prof a terra (knockedT=150)
-- [ ] #42 la musica di intro attiva solo se musica attiva nei controlli (controllo quando esci dal gioco la musica parte sempre)
+- [x] #42 la musica di intro attiva solo se musica attiva nei controlli (controllo quando esci dal gioco la musica parte sempre)
 - [x] #43 rendere intro muisc fadeout più lungo in ms e aspettare prima che compaia il gioco
-- [ ] #44 il banner tornare alla home e pausa devono essere localizzati
-- [ ] #45 In "Ruota il dispositivo" il logo gira è troppo piccolo rispetto alla scritta
-- [ ] #46 quando clicchi sui pulsanti nella home lo schermo fa un Flash (rimuoviamolo) 
-- [ ] #47 nel livello 7 lo Specchio non allineato orizzontalmente al lavandino
-- [ ] #48 lvl-name nella home deve essere solo una label non pulsante
-- [ ] #49 sulla versione desktop la scritta Breaktime Rebellion fa scendere il canvas troppo in basso (il canvas deve essere centrato verticalmente e la scritta va sopra e non lo fa scendere)
+- [x] #44 il banner tornare alla home e pausa devono essere localizzati
+- [x] #45 In "Ruota il dispositivo" il logo gira è troppo piccolo rispetto alla scritta
+- [x] #46 quando clicchi sui pulsanti nella home lo schermo fa un Flash (rimuoviamolo)
+- [x] #47 nel livello 7 lo Specchio non allineato orizzontalmente al lavandino
+- [x] #48 lvl-name nella home deve essere solo una label non pulsante
+- [x] #49 sulla versione desktop la scritta Breaktime Rebellion fa scendere il canvas troppo in basso (il canvas deve essere centrato verticalmente e la scritta va sopra e non lo fa scendere)
 
 |  #  | Stato | Nome                                    |
 |-----|-------|-----------------------------------------|

@@ -166,7 +166,7 @@ function drawSink() {
   // Water puddle on floor — starts past the wall (x=12), grows rightward
   if (sink.waterLevel > 0) {
     const wx = 12; // left offset to avoid drawing over the wall
-    const rights = [0, 62, 107, 107];
+    const rights = [0, 62, 107, 130]; // level 3: water spills into corridor
     const w = Math.max(0, rights[sink.waterLevel] - wx);
     // Perspective wedge (angled near origin)
     ctx.fillStyle = 'rgba(30,90,200,0.22)';
@@ -183,10 +183,10 @@ function drawSink() {
     for (let rx = wx + rOff; rx < wx + w; rx += 12) ctx.fillRect(rx, fy+2, 5, 1);
   }
 
-  // Mirror — small, close to sink
-  ctx.fillStyle = '#1a3a5c'; ctx.fillRect(bx,   by-20, 10,  8); // dark frame
-  ctx.fillStyle = '#7ab8d8'; ctx.fillRect(bx+1, by-19,  8,  6); // glass
-  ctx.fillStyle = 'rgba(255,255,255,0.45)'; ctx.fillRect(bx+2, by-18, 2, 3); // highlight
+  // Mirror — small, centered over the 12px-wide basin (bx+1 to bx+11)
+  ctx.fillStyle = '#1a3a5c'; ctx.fillRect(bx+1, by-20, 10,  8); // dark frame
+  ctx.fillStyle = '#7ab8d8'; ctx.fillRect(bx+2, by-19,  8,  6); // glass
+  ctx.fillStyle = 'rgba(255,255,255,0.45)'; ctx.fillRect(bx+3, by-18, 2, 3); // highlight
 
   // Tap (wall pipe below mirror gap)
   ctx.fillStyle = '#777'; ctx.fillRect(bx+5, by-10, 2, 3);
@@ -410,15 +410,10 @@ function drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, chasing, knock
   ctx.fillStyle = C.pink;
   ctx.fillRect(dir>0 ? bx-2 : bx+PW, by+5, 2, 4);
   ctx.fillRect(dir>0 ? bx+PW : bx-2, by+5, 2, 4);
-  if (isTeacher) {
-    ctx.fillStyle = C.brown;
-    ctx.fillRect(dir>0 ? bx-4 : bx+PW+1, by+7, 3, 4);
-  }
 
   ctx.fillStyle = C.pink; ctx.fillRect(bx+1, by-7, PW-2, 8);
   ctx.fillStyle = isTeacher ? C.lgray : C.brown; ctx.fillRect(bx+1, by-8, PW-2, 2);
   ctx.fillStyle = C.black; ctx.fillRect(dir>0 ? bx+4 : bx+2, by-5, 2, 2);
-  if (isTeacher) { ctx.fillStyle = C.black; ctx.fillRect(bx+1, by-5, 3, 1); ctx.fillRect(bx+5, by-5, 3, 1); }
 
   if (spraying) {
     const sx = dir>0 ? bx+PW : bx-5;

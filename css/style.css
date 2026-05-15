@@ -277,7 +277,7 @@ canvas {
 #audio-wrap   { justify-content: flex-end; }
 
 /* ── Unified base for all title-screen interactive elements ── */
-#lvl-prev, #lvl-next, #lvl-name,
+#lvl-prev, #lvl-next,
 .lang-btn, #audio-toggle {
   min-height: 36px;
   box-sizing: border-box;
@@ -289,11 +289,24 @@ canvas {
   font-family: 'Press Start 2P', monospace;
   cursor: pointer;
   touch-action: manipulation;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
   transition: background .12s, border-color .12s, color .12s;
 }
 #lvl-prev:active, #lvl-next:active,
 .lang-btn:active, #audio-toggle:active {
   background: rgba(255,255,255,0.16);
+}
+
+/* Level name: plain label, not a button */
+#lvl-name {
+  min-height: 36px;
+  box-sizing: border-box;
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(255,255,255,0.65);
+  font-family: 'Press Start 2P', monospace;
+  cursor: default;
+  user-select: none;
 }
 
 /* Level chooser */
@@ -383,10 +396,11 @@ canvas {
 
   /* Game canvas: 150% zoom (400→600px) with neon screen bezel */
   #game-area {
+    position: relative; /* anchors ::before/::after absolutely — keeps canvas flex-centered */
     height: min(600px, 80dvh, calc(78vw / 1.6));
     width: auto;
     aspect-ratio: 16/10;
-    margin: 80px 40px 38px;
+    margin: 0 40px;
     box-shadow:
       0 0 0  2px #04000e,
       0 0 0  5px rgba(140,0,220,0.88),   /* violet screen bezel */
