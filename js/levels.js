@@ -204,5 +204,31 @@ var LEVELS = (function() {
       janitors: [],
     }),
 
+    // ── LEVEL 8 — Plant firecrackers in all trash bins, ring the bell ────────
+    Object.assign({}, SHARED_LAYOUT, {
+      timer: 90,
+
+      mechanics: {
+        writeBoards: false,
+        plantBomb: true,
+        ringBell:  true,
+      },
+
+      bags: [],
+      bins: [
+        {x:35,  y:GY-20}, // entrance — leftmost room, ground floor
+        {x:278, y:MY-20}, // gym — rightmost room, middle floor
+        {x:296, y:TY-3}, // terrace — rightmost room, top floor
+      ],
+
+      teachers: [
+        {x:200, y:GY-PH-walkOffset, dir: 1, minX:10, maxX:305, speed:0.60, color:C.redprof,  name:'Prof.Rossi',      sight:90},
+        {x:80,  y:MY-PH-walkOffset, dir:-1, minX:10, maxX:305, speed:0.55, color:C.green,    name:'Prof.Ginnastica', sight:100},
+        {x:230, y:TY-PH-walkOffset, dir: 1, minX:10, maxX:275, speed:0.60, color:C.grayprof, name:'Prof.Neri',       sight:90},
+      ],
+
+      janitors: [],
+    }),
+
   ];
 })();

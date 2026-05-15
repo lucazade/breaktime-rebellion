@@ -134,6 +134,61 @@ function bookDropWin() {
   setMsg(STRINGS.bookDropped);
 }
 
+function binExplodeWin() {
+  if (allBins) return;
+  allBins = true;
+  setMsg(STRINGS.allBinsExploded);
+}
+
+function updateBins() {
+  for (let i = 0; i < bins.length; i++) {
+    const b = bins[i];
+    if (!b.lit || b.fuseT <= 0) continue;
+    b.fuseT--;
+    if (b.fuseT > 0) continue;
+
+    b.lit = false;
+    b.exploded = true;
+    addParticles(b.x + 5, b.y - 7, '#FF6600', 18);
+    addParticles(b.x + 5, b.y - 7, C.yellow, 12);
+    addParticles(b.x + 5, b.y - 7, C.red,    8);
+    addFloating(b.x - 8, b.y - 26, 'BOOM!', C.gold);
+    GameAudio.playSfx('caught');
+
+    // Teachers on same floor: knocked if close, alerted if far
+    for (let j = 0; j < teachers.length; j++) {
+      const t = teachers[j];
+      if (Math.abs(t.y - b.y) > 20) continue;
+      if (Math.abs(t.x - b.x - 5) < 30) {
+        t.knockedT = 90; t.chasing = false; t.alertT = 0; // stordito
+      } else {
+        t.alertT = 200; t.chasing = true; t.chaseX = b.x + 5; // si precipita al secchio
+      }
+    }
+
+    // Blast Marco if too close
+    if (!deathFreeze && player.stunT === 0 && Math.abs(player.y - b.y) < 20 && Math.abs(player.x + PW/2 - b.x - 5) < 24) {
+      lives--;
+      score = Math.max(0, score - 300);
+      var blastMsg = STRINGS.binBlastHit;
+      blastMsg += lives > 0 ? '♥'.repeat(lives) : 'GAME OVER!';
+      setMsg(blastMsg);
+      playerDied();
+      return; // skip win check this frame
+    }
+
+    let done = 0;
+    for (let k = 0; k < bins.length; k++) if (bins[k].exploded) done++;
+    score += 300;
+    addFloating(b.x + 5, b.y - 18, '+300', C.yellow);
+    if (done >= bins.length) {
+      binExplodeWin();
+    } else {
+      setMsg(fmt(STRINGS.binExploded, done, bins.length));
+    }
+  }
+}
+
 function sinkFloodWin() {
   if (allSink) return;
   allSink = true;

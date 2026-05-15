@@ -223,7 +223,7 @@ function updatePlayer() {
   // Auto-ring bell on proximity — triggers when level objective is complete.
   // player.y > MY ensures the bell can only be rung from the ground floor,
   // not from the floor above where the player passes directly overhead.
-  if (levelMechanics.ringBell && (allBoards || allBags || allMachines || allBall || allStudents || allBooks || allSink) && !BELL.ringing && !BELL.done) {
+  if (levelMechanics.ringBell && (allBoards || allBags || allMachines || allBall || allStudents || allBooks || allSink || allBins) && !BELL.ringing && !BELL.done) {
     const bdx = Math.abs(player.x + PW/2 - BELL.x - 2);
     const bdy = Math.abs(player.y + PH/2 - BELL.y - 3);
     if (bdx < 22 && bdy < 40 && player.y > MY) ringBell();
@@ -267,6 +267,14 @@ function updatePlayer() {
       const sdx = Math.abs(player.x + PW/2 - sink.x - 6);
       const sdy = Math.abs(player.y + PH  - sink.y - 10);
       if (sdx < 14 && sdy < 20) setMsg(STRINGS.sinkHint, 60);
+    } else if (levelMechanics.plantBomb && !allBins) {
+      for (let bi = 0; bi < bins.length; bi++) {
+        const b = bins[bi];
+        if (b.lit || b.exploded) continue;
+        const bdx = Math.abs(player.x + PW/2 - b.x - 5);
+        const bdy = Math.abs(player.y + PH  - b.y - 7);
+        if (bdx < 16 && bdy < 20) { setMsg(STRINGS.binHint, 60); break; }
+      }
     } else if (levelMechanics.throwPaper && !allStudents) {
       // Show hint only when Marco is in the classroom area (not in the corridor)
       if (player.x > 80 && player.x < 250) {
@@ -374,6 +382,21 @@ function tryAction() {
         dist: 0,
       });
       throwCooldown = 40;
+    }
+  } else if (levelMechanics.plantBomb && !allBins) {
+    for (let bi = 0; bi < bins.length; bi++) {
+      const b = bins[bi];
+      if (b.lit || b.exploded) continue;
+      const dx = Math.abs(player.x + PW/2 - b.x - 5);
+      const dy = Math.abs(player.y + PH  - b.y - 7);
+      if (dx < 16 && dy < 20) {
+        b.lit = true;
+        b.fuseT = 180;
+        player.dir = (player.x + PW/2 < b.x + 5) ? 1 : -1;
+        setMsg(STRINGS.binLit);
+        GameAudio.playSfx('spray');
+        break;
+      }
     }
   }
   // No fallback message — win messages and proximity hints keep the player informed.

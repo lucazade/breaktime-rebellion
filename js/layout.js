@@ -40,7 +40,7 @@ const walkOffset = CONFIG.layout.walkOffset;
 // Only mechanics (what Marco can do) and NPCs change per level.
 
 var SHARED_LAYOUT = {
-  playerStart: { x: 35, y: GY - PH - walkOffset },
+  playerStart: { x: 25, y: GY - PH - walkOffset },
 
   stairs: [
     {x1:88,  y1:GY-walkOffset, x2:35,  y2:MY-walkOffset},  // GY→MY sx

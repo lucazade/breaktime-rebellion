@@ -66,6 +66,12 @@
     sinkSecondPour:    'Almost there! One more pour!',
     sinkReady:         'Tap ready! Turn it on again!',
     sinkFlooded:       'Bathroom flooded! Run to the bell! 🔔',
+    mission8:          'Plant firecrackers in all the bins!',
+    binHint:           'Press action to plant the firecracker!',
+    binLit:            'Fuse lit! Run! 🧨',
+    binExploded:       'BOOM! ({0}/{1})',
+    allBinsExploded:   'All bins destroyed! Ring the bell! 🔔',
+    binBlastHit:       'Too close to the explosion! ',
   };
 
   var it = {
@@ -128,6 +134,12 @@
     sinkSecondPour:    'Quasi! Ancora una volta!',
     sinkReady:         'Rubinetto pronto! Apri ancora!',
     sinkFlooded:       'Bagno allagato! Corri alla campanella! 🔔',
+    mission8:          'Inserisci petardi in tutti i secchi!',
+    binHint:           'Premi azione per inserire il petardo!',
+    binLit:            'Miccia accesa! Scappa! 🧨',
+    binExploded:       'BOOM! ({0}/{1})',
+    allBinsExploded:   'Tutti i secchi distrutti! Suona la campanella! 🔔',
+    binBlastHit:       'Troppo vicino all\'esplosione! ',
   };
 
   window.STRINGS = lang === 'it' ? it : en;

@@ -158,6 +158,60 @@ function drawBookcase() {
   }
 }
 
+function drawBins() {
+  for (let i = 0; i < bins.length; i++) {
+    const b = bins[i];
+    const bx = Math.round(b.x), by = Math.round(b.y);
+
+    if (b.exploded) {
+      // Charred debris
+      ctx.fillStyle = '#2a1a00'; ctx.fillRect(bx-2, by-5, 13, 5);
+      ctx.fillStyle = '#444';    ctx.fillRect(bx-4, by-7,  3, 2);
+      ctx.fillStyle = '#444';    ctx.fillRect(bx+11,by-8,  3, 2);
+      ctx.fillStyle = '#333';    ctx.fillRect(bx+2, by-9,  2, 3);
+      continue;
+    }
+
+    // Lid
+    ctx.fillStyle = '#1a7a1a'; ctx.fillRect(bx, by-14, 10, 3);
+    ctx.fillStyle = '#0d4d0d'; ctx.fillRect(bx+1, by-15, 8, 1); // top rim
+    // Body
+    ctx.fillStyle = '#228B22'; ctx.fillRect(bx, by-11, 10, 11);
+    ctx.fillStyle = '#1a6e1a'; ctx.fillRect(bx, by-11, 1, 11); // left shadow
+    // Triangle (vertex up) as recycle symbol
+    ctx.fillStyle = 'rgba(255,255,255,0.75)';
+    ctx.fillRect(bx+4, by-9, 2, 1); // top vertex
+    ctx.fillRect(bx+3, by-8, 4, 1); // middle
+    ctx.fillRect(bx+2, by-7, 6, 1); // base
+
+    // Fuse animation (speeds up as timer runs out)
+    if (b.lit) {
+      const speed = b.fuseT > 90 ? 8 : b.fuseT > 40 ? 5 : 2;
+      if (Math.floor(frame / speed) % 2 === 0) {
+        ctx.fillStyle = '#FF6600'; ctx.fillRect(bx+4, by-16, 2, 3);
+        ctx.fillStyle = C.yellow;  ctx.fillRect(bx+4, by-17, 2, 1);
+      }
+      // Fuse countdown bar
+      const pct = b.fuseT / 180;
+      ctx.fillStyle = 'rgba(0,0,0,0.55)'; ctx.fillRect(bx-1, by-19, 12, 2);
+      ctx.fillStyle = b.fuseT > 60 ? '#FF6600' : C.red;
+      ctx.fillRect(bx-1, by-19, Math.round(12 * pct), 2);
+    }
+
+    // Proximity dashed border
+    if (!allBins && !b.lit) {
+      const pdx = Math.abs(player.x + PW/2 - b.x - 5);
+      const pdy = Math.abs(player.y + PH  - b.y - 7);
+      if (pdx < 16 && pdy < 20) {
+        ctx.strokeStyle = C.yellow; ctx.lineWidth = 1;
+        ctx.setLineDash([2, 2]);
+        ctx.strokeRect(bx-2, by-16, 14, 18);
+        ctx.setLineDash([]);
+      }
+    }
+  }
+}
+
 function drawSink() {
   if (!sink) return;
   const bx = Math.round(sink.x), by = Math.round(sink.y);
@@ -704,6 +758,10 @@ function updateHUD() {
     objDone = sink ? sink.pourCount : 0;
     objTotal = 3;
     iconClass = 'fa-faucet';
+  } else if (levelMechanics.plantBomb) {
+    for (let i = 0; i < bins.length; i++) if (bins[i].exploded) objDone++;
+    objTotal = bins.length;
+    iconClass = 'fa-trash-can';
   } else {
     for (let i = 0; i < BOARDS.length; i++) if (BOARDS[i].done) objDone++;
     objTotal = BOARDS.length;
