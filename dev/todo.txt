@@ -185,6 +185,7 @@ Obiettivo: pixel perfect e rocksolid
 
 - [X] #50 Gestire Marco quando sale e scende le scale coprendo parte non visibile dietro al pavimento
 - [ ] #62 Serve ancora FD in layout ora che abbiamo le altre soglie?
+- [ ] #63 Mega controllo cleanup generale: variabili e funzioni morte, implementazioni di oggetti, banner, personaggi o azioni che si posso uniformare fra di loro. Prettify codice
 
 ---
 
