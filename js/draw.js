@@ -158,6 +158,102 @@ function drawBookcase() {
   }
 }
 
+function drawRegister() {
+  if (!register || register.stolen) return;
+  const bx = Math.round(register.x), by = Math.round(register.y);
+  // Book cover (dark red register)
+  ctx.fillStyle = '#8B0000'; ctx.fillRect(bx, by-2, 10, 14);
+  ctx.fillStyle = '#6B0000'; ctx.fillRect(bx, by-2, 1, 14);  // spine
+  ctx.fillStyle = '#AA2200'; ctx.fillRect(bx+1, by-2, 9, 1); // top edge
+  // Pages
+  ctx.fillStyle = '#F0E8D0'; ctx.fillRect(bx+2, by-1, 7, 12);
+  // Grade lines
+  ctx.fillStyle = '#888'; ctx.fillRect(bx+3, by+2, 5, 1);
+  ctx.fillStyle = C.red;   ctx.fillRect(bx+3, by+4, 5, 1);
+  ctx.fillStyle = '#888'; ctx.fillRect(bx+3, by+6, 5, 1);
+  ctx.fillStyle = C.red;   ctx.fillRect(bx+3, by+8, 5, 1);
+
+  // Progress bar while stealing
+  if (register.stealT > 0) {
+    const pct = register.stealT / registerTime;
+    ctx.fillStyle = 'rgba(0,0,0,0.55)'; ctx.fillRect(bx-1, by-6, 12, 2);
+    ctx.fillStyle = C.gold;             ctx.fillRect(bx-1, by-6, Math.round(12 * pct), 2);
+  }
+
+  // Proximity border
+  if (!allRegister) {
+    const pdx = Math.abs(player.x + PW/2 - register.x - 5);
+    const pdy = Math.abs(player.y + PH  - register.y - 8);
+    if (pdx < 16 && pdy < 20) {
+      ctx.strokeStyle = C.gold; ctx.lineWidth = 1;
+      ctx.setLineDash([2, 2]);
+      ctx.strokeRect(bx-2, by-4, 14, 18);
+      ctx.setLineDash([]);
+    }
+  }
+}
+
+function drawExitDoor() {
+  if (!exitDoor || !allRegister) return;
+  const bx = Math.round(exitDoor.x), by = Math.round(exitDoor.y);
+  const pdx = Math.abs(player.x + PW/2 - exitDoor.x - 6);
+  const pdy = Math.abs(player.y + PH  - exitDoor.y - 10);
+  if (pdx < 22 && pdy < 30) {
+    const blink = Math.floor(frame / 10) % 2 === 0;
+    ctx.strokeStyle = blink ? C.gold : C.green; ctx.lineWidth = 1;
+    ctx.setLineDash([3, 2]);
+    ctx.strokeRect(bx-2, by-14, 14, 30);
+    ctx.setLineDash([]);
+  }
+}
+
+function drawNightOverlay() {
+  if (!nightMode) return;
+  const px = Math.round(player.x + PW/2);
+  const py = Math.round(player.y + PH/2 - 2);
+  const gradient = ctx.createRadialGradient(px, py, 10, px, py, 70);
+  gradient.addColorStop(0,    'rgba(0,0,8,0)');
+  gradient.addColorStop(0.45, 'rgba(0,0,8,0)');
+  gradient.addColorStop(0.72, 'rgba(0,0,8,0.80)');
+  gradient.addColorStop(1,    'rgba(0,0,8,0.96)');
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, W, H);
+}
+
+function drawGuard(x, y, dir, animT, chasing, knockedT) {
+  const bx = Math.round(x), by = Math.round(y);
+  if (knockedT > 0) {
+    const fy = by + PH - 1;
+    ctx.fillStyle = 'rgba(0,0,0,0.2)'; ctx.fillRect(bx-4, fy+2, 18, 2);
+    ctx.fillStyle = '#1a1a3a'; ctx.fillRect(bx-2, fy-3, 14, 4);
+    ctx.fillStyle = C.pink;   ctx.fillRect(dir > 0 ? bx+12 : bx-6, fy-4, 6, 5);
+    return;
+  }
+  const leg = Math.sin(animT) * 2.5;
+  ctx.fillStyle = 'rgba(0,0,0,0.2)'; ctx.fillRect(bx-1, by+PH, PW, 2);
+  // Dark trousers
+  ctx.fillStyle = '#111'; ctx.fillRect(bx+1, by+10, 3, 4+leg); ctx.fillRect(bx+4, by+10, 3, 4-leg);
+  ctx.fillStyle = C.black; ctx.fillRect(bx, by+13+leg, 4, 2); ctx.fillRect(bx+3, by+13-leg, 4, 2);
+  // Dark uniform body
+  ctx.fillStyle = '#1a1a3a'; ctx.fillRect(bx, by+4, PW, 8);
+  // Arms
+  ctx.fillStyle = C.pink; ctx.fillRect(dir>0 ? bx-2 : bx+PW, by+5, 2, 4); ctx.fillRect(dir>0 ? bx+PW : bx-2, by+5, 2, 4);
+  // Head
+  ctx.fillStyle = C.pink; ctx.fillRect(bx+1, by-7, PW-2, 8);
+  // White cap
+  ctx.fillStyle = '#ddd'; ctx.fillRect(bx, by-8, PW, 3);
+  ctx.fillStyle = '#bbb'; ctx.fillRect(dir>0 ? bx-2 : bx+PW-1, by-7, 3, 2); // cap visor
+  // Eye
+  ctx.fillStyle = C.black; ctx.fillRect(dir>0 ? bx+4 : bx+2, by-5, 2, 2);
+  if (chasing) {
+    const bub = dir>0 ? bx+PW : bx-26;
+    ctx.fillStyle = C.red; ctx.fillRect(bub, by-14, 26, 10);
+    ctx.fillStyle = C.black; ctx.font = '5px "Press Start 2P"';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+    ctx.fillText('STOP!', bub + 13, by - 12);
+  }
+}
+
 function drawSprinklers() {
   for (let i = 0; i < sprinklers.length; i++) {
     const sp = sprinklers[i];
@@ -565,11 +661,45 @@ function drawJanitor(x, y, dir, animT) {
 function drawSight() {
   for (let i = 0; i < teachers.length; i++) {
     const t = teachers[i];
-    if (t.chasing) continue;
+    if (t.chasing || t.name === 'Guardiano') continue; // guards have no visible sight cone
     ctx.fillStyle = 'rgba(255,200,0,0.18)';
     const rx = t.dir>0 ? t.x+PW : t.x-t.sight;
     ctx.fillRect(rx, t.y-2, t.sight, PH+4);
   }
+}
+
+function drawLucaEnd() {
+  if (!exitDone || !levelMechanics.escapeExit) return;
+  // Luca stands at the exit door
+  const lx = Math.round(exitDoor.x) + 1;
+  const ly = Math.round(GY - PH - walkOffset);
+  drawChar(lx, ly, 1, 0, C.white, false, false, false, 0);
+
+  // Speech bubble — 10px higher than character head
+  const bx = lx + PW + 3, by2 = ly - 44;
+  const bw = 148, bh = 30;
+  ctx.fillStyle = 'rgba(255,255,255,0.96)'; ctx.fillRect(bx, by2, bw, bh);
+  ctx.strokeStyle = C.gold; ctx.lineWidth = 1;
+  ctx.strokeRect(bx, by2, bw, bh);
+  // Pointer triangle
+  ctx.fillStyle = 'rgba(255,255,255,0.96)';
+  ctx.fillRect(bx, by2 + bh, 3, 4);
+  ctx.fillStyle = C.gold;
+  ctx.strokeRect(bx, by2 + bh, 3, 4);
+  // Text
+  ctx.fillStyle = '#000'; ctx.font = '5px "Press Start 2P"';
+  ctx.textAlign = 'left'; ctx.textBaseline = 'top';
+  ctx.fillText('Luca:', bx + 3, by2 + 4);
+  const msg1 = STRINGS.lucaAppears.split('"')[1] || STRINGS.lucaAppears;
+  const words = msg1.split(' ');
+  let line1 = '', line2 = '';
+  for (let i = 0; i < words.length; i++) {
+    const t = line1 + (line1 ? ' ' : '') + words[i];
+    if (ctx.measureText(t).width > bw - 6) { line2 += (line2 ? ' ' : '') + words[i]; }
+    else { line1 = t; }
+  }
+  ctx.fillText(line1, bx + 3, by2 + 13);
+  if (line2) ctx.fillText(line2, bx + 3, by2 + 21);
 }
 
 function drawParticles() {
@@ -844,6 +974,10 @@ function updateHUD() {
     for (let i = 0; i < bins.length; i++) if (bins[i].exploded) objDone++;
     objTotal = bins.length;
     iconClass = 'fa-trash-can';
+  } else if (levelMechanics.stealRegister) {
+    objDone = register && register.stolen ? 1 : 0;
+    objTotal = 1;
+    iconClass = 'fa-scroll';
   } else if (levelMechanics.activateSprinkler) {
     for (let i = 0; i < sprinklers.length; i++) if (sprinklers[i].active) objDone++;
     objTotal = sprinklers.length;

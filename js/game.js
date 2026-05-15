@@ -63,12 +63,16 @@ function loop(ts) {
   drawSprinklers();
   drawSink();
   drawBins();
+  drawRegister();
+  drawExitDoor();
   drawSight();
 
   for (let i = 0; i < teachers.length; i++) {
     const t = teachers[i];
     if (t.name === 'Preside') {
       drawPreside(t.x, t.y, t.dir, t.animT, t.color, t.chasing, t.knockedT);
+    } else if (t.name === 'Guardiano') {
+      drawGuard(t.x, t.y, t.dir, t.animT, t.chasing, t.knockedT);
     } else {
       drawChar(t.x, t.y, t.dir, t.animT, t.color, true, false, t.chasing, t.knockedT);
     }
@@ -92,6 +96,8 @@ function loop(ts) {
   drawPaperBalls();
   drawParticles();
   drawFloating();
+  drawNightOverlay();
+  drawLucaEnd();
   drawEndScreen();
   drawStoryBanner();
   drawMissionBanner();
@@ -102,10 +108,15 @@ function loop(ts) {
 
 function handleTap() {
   if (storyBannerT > 0) { storyBannerT = 0; storyShown = true; missionBannerT = 210; return; }
+  // L10: tap during Luca fumetto → skip to win state
+  if (deathFreeze && levelMechanics.escapeExit && exitDone) {
+    if (pendingTransition) pendingTransition.fn();
+    pendingTransition = null; deathFreeze = false; return;
+  }
   if (missionBannerT > 0) { missionBannerT = 0; return; }
   if (state === 'win') {
     if (currentLevel < LEVELS.length) nextLevel();
-    else { currentLevel = 1; restartGame(); }
+    else { goHome(); } // Last level completed → back to title
     return;
   }
   if (state === 'gameover') { restartGame(); }

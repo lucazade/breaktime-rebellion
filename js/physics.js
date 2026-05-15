@@ -113,6 +113,27 @@ function updatePlayer() {
       }
     }
   }
+  if (!player.shaking && levelMechanics.stealRegister && register && !register.stolen && K.action && !player.onStair) {
+    const dx = Math.abs(player.x + PW/2 - register.x - 5);
+    const dy = Math.abs(player.y + PH  - register.y - 8);
+    if (dx < 16 && dy < 20) {
+      player.shaking = true;
+      actionPressed = false;
+      player.dir = (player.x + PW/2 < register.x + 5) ? 1 : -1;
+      register.stealT++;
+      if (register.stealT >= registerTime) {
+        register.stolen = true;
+        register.stealT = 0;
+        score += 500;
+        addFloating(register.x, register.y - 10, '+500', C.gold);
+        addParticles(register.x + 5, register.y, C.gold, 14);
+        GameAudio.playSfx('bag');
+        alertTeachers(register.x + 5, register.y);
+        setMsg(STRINGS.registerStolen);
+        allRegisterWin();
+      }
+    }
+  }
   if (!player.shaking && levelMechanics.activateSprinkler && K.action && !player.onStair) {
     for (let si = 0; si < sprinklers.length; si++) {
       const sp = sprinklers[si];
@@ -259,7 +280,13 @@ function updatePlayer() {
   // Auto-ring bell on proximity — triggers when level objective is complete.
   // player.y > MY ensures the bell can only be rung from the ground floor,
   // not from the floor above where the player passes directly overhead.
-  if (levelMechanics.ringBell && (allBoards || allBags || allMachines || allBall || allStudents || allBooks || allSink || allBins || allSprinklers) && !BELL.ringing && !BELL.done) {
+  // Escape exit (L10): reach exit door with register → escapeWin
+  if (levelMechanics.escapeExit && register && register.stolen && exitDoor && !exitDone) {
+    const ddx = Math.abs(player.x + PW/2 - exitDoor.x - 6);
+    const ddy = Math.abs(player.y + PH  - exitDoor.y - 10);
+    if (ddx < 24 && ddy < 32 && player.y > MY) escapeWin();
+  }
+  if (levelMechanics.ringBell && (allBoards || allBags || allMachines || allBall || allStudents || allBooks || allSink || allBins || allSprinklers || allRegister) && !BELL.ringing && !BELL.done) {
     const bdx = Math.abs(player.x + PW/2 - BELL.x - 2);
     const bdy = Math.abs(player.y + PH/2 - BELL.y - 3);
     if (bdx < 22 && bdy < 40 && player.y > MY) ringBell();
@@ -303,6 +330,14 @@ function updatePlayer() {
       const sdx = Math.abs(player.x + PW/2 - sink.x - 6);
       const sdy = Math.abs(player.y + PH  - sink.y - 10);
       if (sdx < 14 && sdy < 20) setMsg(STRINGS.sinkHint, 60);
+    } else if (levelMechanics.stealRegister && register && !register.stolen) {
+      const rdx = Math.abs(player.x + PW/2 - register.x - 5);
+      const rdy = Math.abs(player.y + PH  - register.y - 8);
+      if (rdx < 16 && rdy < 20) setMsg(STRINGS.registerHint, 60);
+    } else if (levelMechanics.stealRegister && register && register.stolen && exitDoor) {
+      const edx = Math.abs(player.x + PW/2 - exitDoor.x - 6);
+      const edy = Math.abs(player.y + PH  - exitDoor.y - 10);
+      if (edx < 22 && edy < 30) setMsg(STRINGS.exitHint, 60);
     } else if (levelMechanics.activateSprinkler && !allSprinklers) {
       const _pFloor = player.y > (MY+GY)/2 ? 'GY' : player.y > (TY+MY)/2 ? 'MY' : 'TY';
       for (let si = 0; si < sprinklers.length; si++) {

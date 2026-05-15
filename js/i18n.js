@@ -7,7 +7,7 @@
   document.documentElement.lang = lang;
 
   var en = {
-    rotateHtml:    '<img src="assets/pics/logo.png" style="width:72vw;max-width:280px;border-radius:8px;border:2px solid #000;margin-bottom:16px"><br><span style="font-size:2.8em;line-height:1.2">↺</span><br>ROTATE<br>DEVICE',
+    rotateHtml:    '<img src="assets/pics/logo.png" style="width:72vw;max-width:280px;border-radius:8px;border:2px solid #000"><div style="margin:14px 0"><span style="font-size:2.8em;line-height:1">↺</span></div>ROTATE<br>DEVICE',
     tapToStart:    '[ TAP TO START ]',
     reloadLose:    '[ TAP TO TRY AGAIN ]',
     reloadNext:    '[ TAP FOR NEXT LEVEL ]',
@@ -77,6 +77,11 @@
     binExploded:       'BOOM! ({0}/{1})',
     allBinsExploded:   'All bins destroyed! Ring the bell! 🔔',
     binBlastHit:       'Too close to the explosion! ',
+    mission10:         'Steal the register and escape!',
+    registerHint:      'Hold action to steal the register!',
+    registerStolen:    'Got it! Now run to the exit!',
+    exitHint:          'Run! Get out of here!',
+    lucaAppears:       'Luca: "LEGENDARY! See you next year... if they let us back in."',
     mission9:          'Trigger all the fire sprinklers!',
     sprinklerHint:     'Hold action to use the lighter!',
     sprinklerLit:      'Sprinkler triggered! ({0}/{1})',
@@ -84,7 +89,7 @@
   };
 
   var it = {
-    rotateHtml:    '<img src="assets/pics/logo.png" style="width:72vw;max-width:280px;border-radius:8px;border:2px solid #000;margin-bottom:16px"><br><span style="font-size:2.8em;line-height:1.2">↺</span><br>RUOTA IL<br>DISPOSITIVO',
+    rotateHtml:    '<img src="assets/pics/logo.png" style="width:72vw;max-width:280px;border-radius:8px;border:2px solid #000"><div style="margin:14px 0"><span style="font-size:2.8em;line-height:1">↺</span></div>RUOTA IL<br>DISPOSITIVO',
     tapToStart:    '[ TOCCA PER INIZIARE ]',
     reloadLose:    '[ TOCCA PER RIPROVARE ]',
     reloadNext:    '[ TOCCA PER IL LIVELLO SUCCESSIVO ]',
@@ -154,6 +159,11 @@
     binExploded:       'BOOM! ({0}/{1})',
     allBinsExploded:   'Tutti i secchi distrutti! Suona la campanella! 🔔',
     binBlastHit:       'Troppo vicino all\'esplosione! ',
+    mission10:         'Ruba il registro e scappa!',
+    registerHint:      'Tieni premuto per rubare il registro!',
+    registerStolen:    'Preso! Corri all\'uscita!',
+    exitHint:          'Corri! Esci di qui!',
+    lucaAppears:       'Luca: "LEGGENDARIO! Ci vediamo il prossimo anno... se ci fanno tornare."',
     mission9:          'Attiva tutti gli sprinkler antincendio!',
     sprinklerHint:     'Tieni premuto per usare l\'accendino!',
     sprinklerLit:      'Sprinkler attivato! ({0}/{1})',

@@ -34,7 +34,9 @@ function updateTeachers() {
       t.dir = dx > 0 ? 1 : -1;
       t.x += t.dir * t.speed * 1.8;
       t.animT += 0.1;
-      if (Math.abs(t.y - player.y) < 12 && Math.abs(t.x - player.x) < 16 && player.stunT === 0) {
+      const catchX = t.catchRadius || 16;
+      const catchY = t.catchRadius ? Math.round(t.catchRadius * 0.7) : 12;
+      if (Math.abs(t.y - player.y) < catchY && Math.abs(t.x - player.x) < catchX && player.stunT === 0 && frame !== player.stunEndedT) {
         caughtBy(t); t.chasing = false; t.alertT = 0;
       }
       if (t.alertT <= 0) t.chasing = false;
@@ -42,6 +44,13 @@ function updateTeachers() {
       t.x += t.dir * t.speed;
       if (t.x >= t.maxX) { t.x = t.maxX; t.dir = -1; }
       if (t.x <= t.minX) { t.x = t.minX; t.dir =  1; }
+      // Guards catch Marco on patrol too (no sight cone needed)
+      if (t.catchRadius) {
+        const cx = t.catchRadius, cy = Math.round(t.catchRadius * 0.7);
+        if (Math.abs(t.y - player.y) < cy && Math.abs(t.x - player.x) < cx && player.stunT === 0 && frame !== player.stunEndedT) {
+          caughtBy(t);
+        }
+      }
     }
   }
 }
@@ -100,6 +109,26 @@ function updateJanitors() {
       caughtBy(j);
     }
   }
+}
+
+function allRegisterWin() {
+  if (allRegister) return;
+  allRegister = true;
+  setMsg(STRINGS.registerStolen);
+}
+
+function escapeWin() {
+  if (exitDone) return;
+  exitDone = true;
+  score += 1000;
+  addFloating(exitDoor.x + 5, exitDoor.y - 10, '+1000!', C.gold);
+  addParticles(exitDoor.x + 5, exitDoor.y, C.gold, 30);
+  GameAudio.playSfx('bell');
+  deathFreeze = true;
+  pendingTransition = { t: 300, fn: function() {
+    deathFreeze = false; state = 'win';
+    GameAudio.stopMusic(); GameAudio.playJingle('win');
+  }};
 }
 
 function allSprinklersWin() {

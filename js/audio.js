@@ -13,6 +13,23 @@ const GameAudio = (function() {
     return a;
   })() : null;
 
+  var bossMusic = CONFIG.audio.bossMusic ? (function() {
+    var a = new Audio(CONFIG.audio.bossMusic);
+    a.preload = 'auto';
+    a.loop    = true;
+    a.volume  = CONFIG.audio.musicVolume;
+    return a;
+  })() : null;
+
+  // Returns the correct game music track for the current level
+  function _gameTrack() {
+    return (typeof currentLevel !== 'undefined' && currentLevel === LEVELS.length && bossMusic)
+      ? bossMusic : bgMusic;
+  }
+  function _otherTrack() {
+    return _gameTrack() === bossMusic ? bgMusic : bossMusic;
+  }
+
   var introMusic = CONFIG.audio.introMusic ? (function() {
     var a = new Audio(CONFIG.audio.introMusic);
     a.preload = 'auto';
@@ -95,31 +112,36 @@ const GameAudio = (function() {
 
   // Fade out game music over durationMs then call optional cb
   function fadeOutMusic(durationMs, cb) {
-    if (!bgMusic) { if (cb) cb(); return; }
-    _fadeAudio(bgMusic, 0, durationMs || 1000, function() {
-      bgMusic.pause(); bgMusic.currentTime = 0;
+    var t = _gameTrack();
+    if (!t) { if (cb) cb(); return; }
+    _fadeAudio(t, 0, durationMs || 1000, function() {
+      t.pause(); t.currentTime = 0;
       if (cb) cb();
     });
   }
 
   function playMusic() {
     stopJingle();
-    if (!bgMusic || mode !== 'full') return;
-    bgMusic.currentTime = 0;
-    bgMusic.volume = CONFIG.audio.musicVolume;
-    bgMusic.play().catch(function() {});
+    if (mode !== 'full') return;
+    var track = _gameTrack(), other = _otherTrack();
+    if (other) { other.pause(); other.currentTime = 0; }
+    if (!track) return;
+    track.currentTime = 0;
+    track.volume = CONFIG.audio.musicVolume;
+    track.play().catch(function() {});
   }
 
   function stopMusic() {
-    if (bgMusic) { bgMusic.pause(); bgMusic.currentTime = 0; }
+    if (bgMusic)   { bgMusic.pause();   bgMusic.currentTime = 0; }
+    if (bossMusic) { bossMusic.pause(); bossMusic.currentTime = 0; }
   }
 
   function pauseMusic() {
-    if (bgMusic) bgMusic.pause();
+    var t = _gameTrack(); if (t) t.pause();
   }
 
   function resumeMusic() {
-    if (bgMusic && mode === 'full') bgMusic.play().catch(function() {});
+    var t = _gameTrack(); if (t && mode === 'full') t.play().catch(function() {});
   }
 
   function playSfx(name) {

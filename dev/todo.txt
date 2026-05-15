@@ -156,12 +156,21 @@ Obiettivo: lucidare l'esperienza prima del rilascio.
 - [X] # Rimuovere occhiali ai professori
 - [X] # Rifare immagine iniziale con chatgpt senza problemi di licenza (Luca)
 - [X] # Aggiungere favicon. Utile se si gioca sul browser su pc
-- [ ] # Implementare banner storia del personaggio all'inizio del gioco (prima del banner del 1 livello, nuovo banner con storia, tap per continuare)
-- [ ] # Implementare banner crediti (premendo sulla campanella della sidebar nuovo banner ,vedi credits.txt)
-- [ ] # Implementare Schermata migliori punteggi con livello raggiunto a fine partita (non serve inserire il nome)
-- [ ] # Rimuovere cuori da msg
+- [X] # Implementare banner storia del personaggio all'inizio del gioco (prima del banner del 1 livello, nuovo banner con storia, tap per continuare)
+- [X] # Implementare banner crediti (premendo sulla campanella della sidebar nuovo banner ,vedi credits.txt)
+- [X] # Implementare Schermata migliori punteggi con livello raggiunto a fine partita (non serve inserire il nome)
+- [X] # Rimuovere cuori da msg
 - [ ] # Gestire Marco quando sale e scende le scale coprendo parte non visibile dietro al pavimento
-- [ ] # in ruota il dispositivo, logo sopra alle scritte
+- [ ] # nella schermata del ruota il dispositivo ordiniamole così dall'alto al basso:
+logo
+spazio
+simbolo ruota
+spazio
+label ruota il dispositivo
+- [ ] quando a fine 10 livello appare Luca con il fumetto -> tap o invio per continuare -> schermata finale con migliore punteggi -> tap o invio per continuare -> si va su title screen.
+- [ ] i guardiani ancora non beccano Marco quando arrivano vicino a Marco
+- [ ] alziamo di 10px il fumetto di Luca
+- [ ] Luca ha maglia bianca per distinguerlo
 
 ---
 
