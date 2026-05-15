@@ -2,7 +2,13 @@ LucazadeSoft Team:
 -------------------
 
 - Luca Forina (Orchestrator)
+
 - Claude by Anthropic (Lead Developer)
+
 - ChatGPT (Graphics)
-- OpenGameArt (Music and effects)
+
+- OpenGameArt.org (Music and effects)
+  Intro: "A Journey Awaits" by Pierre Bondoerffer (@pbondoer)
+  In Game: "Lunar Joyride (8-Bit)" by FoxSynergy
+
 - Family (BetaTesting and Ideas!)
