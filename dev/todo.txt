@@ -176,6 +176,8 @@ label ruota il dispositivo
 - [X] #59 attiviamo il tempo in L10
 - [X] #60 il fumetto è ancora basso alziamo di 10px
 - [X] #61 facciamo sparire il fumetto quando appare il banner "leggenda della scuola"
+- [ ] #62 Prima del rilascio disattivare debug: showLevelChooser: true nel config
+- [ ] #63 Rivedere testo storia iniziale
 
 ---
 
