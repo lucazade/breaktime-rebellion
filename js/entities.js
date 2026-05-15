@@ -78,15 +78,17 @@ function playerDied() {
     player.onStair = false; player.currentStair = null;
     player.stunT = 120;
     timerTicks = maxTimerTicks;
-    // Briefly stun guards so they don't immediately kill on respawn
+    // Stop all teachers from chasing on respawn (player.stunT=120 prevents re-catch; direction already reversed in caughtBy)
     for (let i = 0; i < teachers.length; i++) {
-      if (teachers[i].catchRadius) { teachers[i].knockedT = Math.max(teachers[i].knockedT, 90); teachers[i].chasing = false; }
+      teachers[i].chasing = false; teachers[i].alertT = 0;
     }
   }
 }
 
 function caughtBy(t) {
   if (deathFreeze || player.stunT > 0 || frame === player.stunEndedT) return;
+  t.dir = -t.dir; // bounce away after catch so they don't follow Marco to respawn
+  t.chasing = false; t.alertT = 0;
   lives--;
   score = Math.max(0, score - 300);
   let msg = fmt(STRINGS.caughtBy, t.name);

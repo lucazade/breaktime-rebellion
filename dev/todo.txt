@@ -161,7 +161,7 @@ Obiettivo: lucidare l'esperienza prima del rilascio.
 - [X] # Implementare Schermata migliori punteggi con livello raggiunto a fine partita (non serve inserire il nome)
 - [X] # Rimuovere cuori da msg
 - [ ] #50 Gestire Marco quando sale e scende le scale coprendo parte non visibile dietro al pavimento
-- [ ] #51 nella schermata del ruota il dispositivo ordiniamole così dall'alto al basso:
+- [X] #51 nella schermata del ruota il dispositivo ordiniamole così dall'alto al basso:
 logo
 spazio
 simbolo ruota
@@ -172,8 +172,10 @@ label ruota il dispositivo
 - [X] #54 alziamo di 10px il fumetto di Luca
 - [X] #55 Luca ha maglia bianca per distinguerlo
 - [X] #56 in L10 Marco appare nella stanza tutta a destra all'ultimo piano (non più in terrazza)
-- [ ] #57 il fumetto di Luca è troppo piccolo, non entra tutto il testo
-- [ ] #58 nel banner "Leggenda della scuola con il punteggio" non ci deve essere scritto "tocca per riprovare" perchè essendo finita la partita al tap si va in titlescreen
+- [X] #57 il fumetto di Luca è troppo piccolo, non entra tutto il testo
+- [X] #58 nel banner "Leggenda della scuola con il punteggio" non ci deve essere scritto "tocca per riprovare" perchè essendo finita la partita al tap si va in titlescreen
+- [ ] #59 attiviamo il tempo in L10
+- [ ] #60 il fumetto è ancora basso alziamo di 10px
 
 
 ---

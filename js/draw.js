@@ -676,7 +676,7 @@ function drawLucaEnd() {
   drawChar(lx, ly, 1, 0, C.white, false, false, false, 0);
 
   // Speech bubble — larger, proper word wrap into 3 lines
-  const bx = lx + PW + 2, by2 = ly - 52;
+  const bx = lx + PW + 2, by2 = ly - 62;
   const bw = 190, bh = 48;
   ctx.fillStyle = 'rgba(255,255,255,0.97)'; ctx.fillRect(bx, by2, bw, bh);
   ctx.strokeStyle = C.gold; ctx.lineWidth = 1;

@@ -263,7 +263,7 @@ var LEVELS = (function() {
 
     // ── LEVEL 10 — Steal the register and escape ─────────────────────────────
     Object.assign({}, SHARED_LAYOUT, {
-      timer:        0,   // no time limit — pure stealth
+      timer:        90,
       registerTime: 80,  // frames to steal the register (≈1.3s)
       nightMode:    true,
 
