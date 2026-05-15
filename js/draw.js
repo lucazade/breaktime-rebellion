@@ -794,24 +794,24 @@ function drawEndScreen() {
       { text: actionText, font: '6px "Press Start 2P"', color: actionVisible ? C.gold : 'rgba(255,255,255,0)', height: 8, spacing: 0 },
     ]);
   } else if (currentLevel === LEVELS.length) {
-    // L10 final: special ending screen with best scores
+    // L10 final: special ending screen with best scores (#68: winTitle as heading, no subtitle)
     const bestScore = parseInt(localStorage.getItem('btr_best_score') || '0');
     const bestLevel = parseInt(localStorage.getItem('btr_best_level') || '1');
-    const by = 44, bw = 260, bh = 112;
+    const by = 44, bw = 260, bh = 104;
     const tapAction = actionVisible ? STRINGS.tapForTitle : 'rgba(255,255,255,0)';
     drawOverlayPanel(bx, by, bw, bh, 'rgba(0,0,40,0.92)', C.gold, [
-      { text: 'LEGGENDARIO!', font: '9px "Press Start 2P"', color: C.gold,  height: 12, spacing: 8 },
-      { text: STRINGS.winTitle,  font: '6px "Press Start 2P"', color: C.lgreen, height: 8,  spacing: 8 },
-      { text: scoreText,         font: '6px "Press Start 2P"', color: C.white, height: 8,  spacing: 4 },
+      { text: STRINGS.winTitle,  font: '8px "Press Start 2P"', color: C.gold,   height: 12, spacing: 10 },
+      { text: scoreText,         font: '6px "Press Start 2P"', color: C.white,  height: 8,  spacing: 4 },
       { text: STRINGS.bestLabel + ' LVL ' + bestLevel + ' — ' + String(bestScore).padStart(5,'0'), font: '6px "Press Start 2P"', color: C.yellow, height: 8, spacing: 8 },
       { text: tapAction,         font: '6px "Press Start 2P"', color: actionVisible ? C.gold : 'rgba(0,0,0,0)', height: 8, spacing: 0 },
     ]);
   } else {
+    // Non-final win (#65: levelComplete title, tapContinue action)
     const by = 64, bw = 260, bh = 72;
     drawOverlayPanel(bx, by, bw, bh, 'rgba(0,0,60,0.88)', C.gold, [
-      { text: STRINGS.winTitle, font: '8px "Press Start 2P"', color: C.gold, height: 10, spacing: 10 },
-      { text: scoreText, font: '7px "Press Start 2P"', color: C.white, height: 10, spacing: 6 },
-      { text: actionText, font: '6px "Press Start 2P"', color: actionVisible ? C.green : 'rgba(255,255,255,0)', height: 10, spacing: 0 },
+      { text: STRINGS.levelComplete, font: '8px "Press Start 2P"', color: C.gold,  height: 10, spacing: 10 },
+      { text: scoreText,             font: '7px "Press Start 2P"', color: C.white, height: 10, spacing: 6 },
+      { text: actionVisible ? STRINGS.tapContinue : 'rgba(255,255,255,0)', font: '6px "Press Start 2P"', color: actionVisible ? C.green : 'rgba(255,255,255,0)', height: 10, spacing: 0 },
     ]);
   }
 }

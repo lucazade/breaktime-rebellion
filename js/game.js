@@ -256,7 +256,12 @@ document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape' || e.key === 'n' || e.key === 'N') { e.preventDefault(); cancelHome(); }
     return;
   }
-  if ((e.key === 'Enter' || e.key === ' ') && storyBannerT > 0) { handleTap(); return; }
+  if (e.key === 'Enter' || e.key === ' ') {
+    if (storyBannerT > 0 || state === 'win' || state === 'gameover' ||
+        (deathFreeze && levelMechanics.escapeExit && exitDone && exitWinReady)) {
+      e.preventDefault(); handleTap(); return;
+    }
+  }
   if (e.key === 'p' || e.key === 'P') triggerPause();
   if (e.key === 'Escape') triggerHome();
 });

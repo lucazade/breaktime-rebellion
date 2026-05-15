@@ -284,7 +284,7 @@ function updatePlayer() {
   if (levelMechanics.ringBell && (allBoards || allBags || allMachines || allBall || allStudents || allBooks || allSink || allBins || allSprinklers || allRegister) && !BELL.ringing && !BELL.done) {
     const bdx = Math.abs(player.x + PW/2 - BELL.x - 2);
     const bdy = Math.abs(player.y + PH/2 - BELL.y - 3);
-    if (bdx < 22 && bdy < 40 && player.y > MY) ringBell();
+    if (bdx < 14 && bdy < 40 && player.y > MY) ringBell();
   }
 
   if (actionPressed) { actionPressed = false; tryAction(); }
