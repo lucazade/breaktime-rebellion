@@ -183,7 +183,8 @@ label ruota il dispositivo
 
 Obiettivo: pixel perfect e rocksolid
 
-- [ ] #50 Gestire Marco quando sale e scende le scale coprendo parte non visibile dietro al pavimento
+- [X] #50 Gestire Marco quando sale e scende le scale coprendo parte non visibile dietro al pavimento
+- [ ] #62 Serve ancora FD in layout ora che abbiamo le altre soglie?
 
 ---
 
