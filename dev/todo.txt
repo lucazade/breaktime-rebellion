@@ -168,15 +168,15 @@ simbolo ruota
 spazio
 label ruota il dispositivo
 - [ ] #52 quando a fine 10 livello appare Luca con il fumetto -> serve tap o invio per continuare -> appare schermata finale con migliore punteggi -> serve tap o invio per continuare -> si va su title screen.
-- [ ] #53 i guardiani beccano Marco quando arrivano vicino a Marco e non quando ruba il registro
+- [X] #53 i guardiani beccano Marco quando arrivano vicino a Marco e non quando ruba il registro
 - [X] #54 alziamo di 10px il fumetto di Luca
 - [X] #55 Luca ha maglia bianca per distinguerlo
 - [X] #56 in L10 Marco appare nella stanza tutta a destra all'ultimo piano (non più in terrazza)
 - [X] #57 il fumetto di Luca è troppo piccolo, non entra tutto il testo
 - [X] #58 nel banner "Leggenda della scuola con il punteggio" non ci deve essere scritto "tocca per riprovare" perchè essendo finita la partita al tap si va in titlescreen
-- [ ] #59 attiviamo il tempo in L10
-- [ ] #60 il fumetto è ancora basso alziamo di 10px
-
+- [X] #59 attiviamo il tempo in L10
+- [X] #60 il fumetto è ancora basso alziamo di 10px
+- [ ] #61 facciamo sparire il fumetto quando appare il banner "leggenda della scuola"
 
 ---
 

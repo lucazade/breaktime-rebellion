@@ -669,7 +669,7 @@ function drawSight() {
 }
 
 function drawLucaEnd() {
-  if (!exitDone || !levelMechanics.escapeExit) return;
+  if (!exitDone || !levelMechanics.escapeExit || state === 'win') return;
   // Luca stands at the exit door
   const lx = Math.round(exitDoor.x) + 1;
   const ly = Math.round(GY - PH - walkOffset);
