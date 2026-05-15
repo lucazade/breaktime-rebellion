@@ -158,6 +158,66 @@ function drawBookcase() {
   }
 }
 
+function drawSprinklers() {
+  for (let i = 0; i < sprinklers.length; i++) {
+    const sp = sprinklers[i];
+    const bx = Math.round(sp.x), by = Math.round(sp.y);
+    const floorY = by > 110 ? Math.round(GY - walkOffset) : Math.round(MY - walkOffset);
+
+    // Water umbrella when active (widens toward floor)
+    if (sp.active) {
+      const range = floorY - by - 4;
+      ctx.fillStyle = 'rgba(60,140,255,0.45)';
+      for (let wy = by + 4; wy < floorY; wy += 4) {
+        const spread = Math.floor((wy - by - 4) / range * 5); // 0→5 spread
+        const wx = Math.floor(Math.sin((wy + frame * 0.5) * 0.6) * 1);
+        ctx.fillRect(bx + 1 - spread + wx, wy, 2, 3); // left stream
+        ctx.fillRect(bx + 5 + spread + wx, wy, 2, 3); // right stream
+        if (spread >= 2) ctx.fillRect(bx + 3 + wx, wy, 2, 3); // centre
+      }
+      // Floor splash (wider at base)
+      ctx.fillStyle = 'rgba(100,180,255,0.38)';
+      ctx.fillRect(bx - 6, floorY - 2, 20, 3);
+    }
+
+    // Sprinkler fixture — disc + head only (no stem above ceiling)
+    ctx.fillStyle = '#bbb'; ctx.fillRect(bx,   by-2, 8, 2);    // deflector disc
+    ctx.fillStyle = sp.active ? C.red : '#888';
+    ctx.fillRect(bx+2, by, 4, 3);                              // head (red = active)
+
+    // Progress bar just below the sprinkler head
+    if (sp.lighterT > 0 && !sp.active) {
+      const pct = sp.lighterT / lighterTime;
+      ctx.fillStyle = 'rgba(0,0,0,0.55)'; ctx.fillRect(bx, by+7, 8, 2);
+      ctx.fillStyle = '#FF6600';          ctx.fillRect(bx, by+7, Math.round(8 * pct), 2);
+    }
+
+    // Proximity dashed border — same floor only
+    if (!allSprinklers && !sp.active) {
+      const pdFloor = player.y > (MY+GY)/2 ? 'GY' : player.y > (TY+MY)/2 ? 'MY' : 'TY';
+      if (!sp.floor || sp.floor === pdFloor) {
+        const pdx = Math.abs(player.x + PW/2 - sp.x - 4);
+        const pdy = Math.abs(player.y - sp.y);
+        if (pdx < 16 && pdy < 50) {
+          ctx.strokeStyle = '#FF6600'; ctx.lineWidth = 1;
+          ctx.setLineDash([2, 2]);
+          ctx.strokeRect(bx-2, by-4, 12, 9);
+          ctx.setLineDash([]);
+        }
+      }
+    }
+  }
+
+  // Lighter flame above Marco when shaking near a sprinkler
+  if (player.shaking && levelMechanics.activateSprinkler) {
+    const fx = Math.round(player.x + PW/2 - 1);
+    const fy = Math.round(player.y) - 4;
+    const flicker = Math.floor(frame / 2) % 3;
+    ctx.fillStyle = '#FF6600'; ctx.fillRect(fx, fy - flicker,     2, 3);
+    ctx.fillStyle = C.yellow;  ctx.fillRect(fx, fy - flicker - 2, 2, 2);
+  }
+}
+
 function drawBins() {
   for (let i = 0; i < bins.length; i++) {
     const b = bins[i];
@@ -762,6 +822,10 @@ function updateHUD() {
     for (let i = 0; i < bins.length; i++) if (bins[i].exploded) objDone++;
     objTotal = bins.length;
     iconClass = 'fa-trash-can';
+  } else if (levelMechanics.activateSprinkler) {
+    for (let i = 0; i < sprinklers.length; i++) if (sprinklers[i].active) objDone++;
+    objTotal = sprinklers.length;
+    iconClass = 'fa-fire';
   } else {
     for (let i = 0; i < BOARDS.length; i++) if (BOARDS[i].done) objDone++;
     objTotal = BOARDS.length;

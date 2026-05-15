@@ -23,9 +23,9 @@ let lives, score, state, frame;
 let particles, floatingTexts;
 let msgText, msgT;
 let actionPressed, allBoards, allBags, allMachines, allBall, allStudents, allBooks, timerTicks, maxTimerTicks;
-let machines, gymBall, paperBalls, students, throwCooldown, bookcase, sink, bins;
-let shakeTime, deflateTime, dropTime, floodTime;
-let allSink, allBins;
+let machines, gymBall, paperBalls, students, throwCooldown, bookcase, sink, bins, sprinklers;
+let shakeTime, deflateTime, dropTime, floodTime, lighterTime;
+let allSink, allBins, allSprinklers;
 let missionBannerT, missionBannerLines;
 let pendingTransition = null;
 let deathFreeze = false;
@@ -38,7 +38,7 @@ const player = {
   dir:1, animT:0,
   onGround:false, onLadder:false,
   onStair:false, currentStair:null,
-  stunT:0, spraying:false, sprayT:0, shaking:false,
+  stunT:0, stunEndedT:-1, spraying:false, sprayT:0, shaking:false,
   speed:1.5,
 };
 
@@ -55,7 +55,7 @@ function resetLevel() {
             sight:t.sight, alertT:0, chasing:false, chaseX:0, knockedT:0};
   });
   janitors = lv.janitors.map(function(j) {
-    return {x:j.x, y:j.y, dir:j.dir, minX:j.minX, maxX:j.maxX, speed:j.speed, animT:0, name:j.name};
+    return {x:j.x, y:j.y, dir:j.dir, minX:j.minX, maxX:j.maxX, speed:j.speed, animT:0, name:j.name, knockedT:0, soakCooldownT:0};
   });
   player.x = lv.playerStart.x; player.y = lv.playerStart.y; player.vy = 0;
   player.dir = 1; player.animT = 0;
@@ -64,7 +64,7 @@ function resetLevel() {
   player.stunT = 0; player.spraying = false; player.sprayT = 0; player.shaking = false;
   particles = []; floatingTexts = [];
   msgText = ''; msgT = 0;
-  actionPressed = false; allBoards = false; allBags = false; allMachines = false; allBall = false; allStudents = false; allBooks = false; allSink = false; allBins = false;
+  actionPressed = false; allBoards = false; allBags = false; allMachines = false; allBall = false; allStudents = false; allBooks = false; allSink = false; allBins = false; allSprinklers = false;
   machines  = (lv.machines  || []).map(function(m) { return {x:m.x, y:m.y, broken:false, shakeT:0}; });
   gymBall   = lv.gymBall ? {x:lv.gymBall.x, y:lv.gymBall.y, deflated:false, shakeT:0, deflateCount:0, reinflateT:0} : null;
   students  = (lv.students  || []).map(function(s) { return {x:s.x, y:s.y, disturbed:false, shakeT:0}; });
@@ -72,11 +72,13 @@ function resetLevel() {
   throwCooldown = 0;
   bookcase    = lv.bookcase ? {x:lv.bookcase.x, y:lv.bookcase.y, fallDx:lv.bookcase.fallDx||0, fallDy:lv.bookcase.fallDy||36, dropped:false, shakeT:0, dropCount:0, resetT:0} : null;
   sink      = lv.sink ? {x:lv.sink.x, y:lv.sink.y, waterLevel:0, pourT:0, pourCount:0, resetT:0} : null;
-  bins      = (lv.bins || []).map(function(b) { return {x:b.x, y:b.y, lit:false, fuseT:0, exploded:false}; });
+  bins        = (lv.bins        || []).map(function(b) { return {x:b.x, y:b.y, lit:false, fuseT:0, exploded:false}; });
+  sprinklers  = (lv.sprinklers  || []).map(function(s) { return {x:s.x, y:s.y, floor:s.floor||'', lighterT:0, active:false}; });
   shakeTime   = lv.shakeTime   || 150;
   deflateTime = lv.deflateTime || 80;
   dropTime    = lv.dropTime    || 40;
   floodTime   = lv.floodTime   || 80;
+  lighterTime = lv.lighterTime || 80;
   timerTicks  = maxTimerTicks  = (lv.timer || 0) * 60;
   missionBannerT = 210;
   missionBannerLines = null;

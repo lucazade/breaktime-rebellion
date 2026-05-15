@@ -19,6 +19,7 @@ const CONFIG = {
       bag:      'assets/audio/bag.mp3',
       win:      'assets/audio/win.mp3',
       gameover: 'assets/audio/gameover.mp3',
+      explosion: 'assets/audio/explosion.wav',
     },
   },
   debug: {

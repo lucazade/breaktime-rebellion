@@ -29,7 +29,7 @@ function clampX(x) { return Math.max(4, Math.min(W - PW - 4, x)); }
 
 function updatePlayer() {
   if (state !== 'playing') return;
-  if (player.stunT > 0) { player.stunT--; return; }
+  if (player.stunT > 0) { if (--player.stunT === 0) player.stunEndedT = frame; return; }
   if (player.spraying) { player.sprayT--; if (player.sprayT <= 0) player.spraying = false; return; }
 
   // Vending machine shake — hold action near machine to smash it
@@ -110,6 +110,42 @@ function updatePlayer() {
           bookcase.resetT = 200;
           setMsg(bookcase.dropCount === 1 ? STRINGS.bookFirstDrop : STRINGS.bookSecondDrop);
         }
+      }
+    }
+  }
+  if (!player.shaking && levelMechanics.activateSprinkler && K.action && !player.onStair) {
+    for (let si = 0; si < sprinklers.length; si++) {
+      const sp = sprinklers[si];
+      if (sp.active) continue;
+      if (sp.floor) {
+        const pFloor = player.y > (MY+GY)/2 ? 'GY' : player.y > (TY+MY)/2 ? 'MY' : 'TY';
+        if (sp.floor !== pFloor) continue;
+      }
+      const dx = Math.abs(player.x + PW/2 - sp.x - 4);
+      const dy = Math.abs(player.y - sp.y);
+      if (dx < 16 && dy < 50) {
+        player.shaking = true;
+        actionPressed = false;
+        player.dir = (player.x + PW/2 < sp.x + 4) ? 1 : -1;
+        sp.lighterT++;
+        if (sp.lighterT >= lighterTime) {
+          sp.lighterT = 0;
+          sp.active = true;
+          score += 300;
+          addFloating(sp.x, sp.y - 8, '+300', C.cyan);
+          addParticles(sp.x + 4, sp.y, C.cyan, 15);
+          GameAudio.playSfx('spray');
+          for (let ti = 0; ti < teachers.length; ti++) {
+            const t = teachers[ti];
+            const tFloor = t.y > (MY+GY)/2 ? 'GY' : t.y > (TY+MY)/2 ? 'MY' : 'TY';
+            if (sp.floor && sp.floor !== tFloor) continue;
+            t.alertT = 200; t.chasing = true; t.chaseX = player.x;
+          }
+          let done = 0;
+          for (let k = 0; k < sprinklers.length; k++) if (sprinklers[k].active) done++;
+          if (done >= sprinklers.length) { allSprinklersWin(); } else { setMsg(fmt(STRINGS.sprinklerLit, done, sprinklers.length)); }
+        }
+        break;
       }
     }
   }
@@ -223,7 +259,7 @@ function updatePlayer() {
   // Auto-ring bell on proximity — triggers when level objective is complete.
   // player.y > MY ensures the bell can only be rung from the ground floor,
   // not from the floor above where the player passes directly overhead.
-  if (levelMechanics.ringBell && (allBoards || allBags || allMachines || allBall || allStudents || allBooks || allSink || allBins) && !BELL.ringing && !BELL.done) {
+  if (levelMechanics.ringBell && (allBoards || allBags || allMachines || allBall || allStudents || allBooks || allSink || allBins || allSprinklers) && !BELL.ringing && !BELL.done) {
     const bdx = Math.abs(player.x + PW/2 - BELL.x - 2);
     const bdy = Math.abs(player.y + PH/2 - BELL.y - 3);
     if (bdx < 22 && bdy < 40 && player.y > MY) ringBell();
@@ -267,6 +303,15 @@ function updatePlayer() {
       const sdx = Math.abs(player.x + PW/2 - sink.x - 6);
       const sdy = Math.abs(player.y + PH  - sink.y - 10);
       if (sdx < 14 && sdy < 20) setMsg(STRINGS.sinkHint, 60);
+    } else if (levelMechanics.activateSprinkler && !allSprinklers) {
+      const _pFloor = player.y > (MY+GY)/2 ? 'GY' : player.y > (TY+MY)/2 ? 'MY' : 'TY';
+      for (let si = 0; si < sprinklers.length; si++) {
+        const sp = sprinklers[si];
+        if (sp.active || (sp.floor && sp.floor !== _pFloor)) continue;
+        const sdx = Math.abs(player.x + PW/2 - sp.x - 4);
+        const sdy = Math.abs(player.y - sp.y);
+        if (sdx < 16 && sdy < 50) { setMsg(STRINGS.sprinklerHint, 60); break; }
+      }
     } else if (levelMechanics.plantBomb && !allBins) {
       for (let bi = 0; bi < bins.length; bi++) {
         const b = bins[bi];

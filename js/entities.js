@@ -9,7 +9,8 @@ function ringBell() {
   addParticles(BELL.x, BELL.y, C.gold, 30);
   setMsg(STRINGS.ringMsg);
   GameAudio.playSfx('bell');
-  pendingTransition = { t: 120, fn: function() { BELL.done = true; state = 'win'; GameAudio.stopMusic(); GameAudio.playJingle('win'); } };
+  deathFreeze = true; // freeze NPCs immediately so they can't catch Marco after ringing
+  pendingTransition = { t: 120, fn: function() { deathFreeze = false; BELL.done = true; state = 'win'; GameAudio.stopMusic(); GameAudio.playJingle('win'); } };
 }
 
 function alertTeachers(bx, by) {
@@ -67,7 +68,7 @@ function playerDied() {
 }
 
 function caughtBy(t) {
-  if (deathFreeze || player.stunT > 0) return;
+  if (deathFreeze || player.stunT > 0 || frame === player.stunEndedT) return;
   lives--;
   score = Math.max(0, score - 300);
   let msg = fmt(STRINGS.caughtBy, t.name);
@@ -80,12 +81,42 @@ function updateJanitors() {
   if (state !== 'playing') return;
   for (let i = 0; i < janitors.length; i++) {
     const j = janitors[i];
+    if (j.knockedT > 0) {
+      j.knockedT--;
+      if (j.knockedT === 0) j.soakCooldownT = 90; // immunity after recovery
+      continue;
+    }
+    if (j.soakCooldownT > 0) j.soakCooldownT--; // decrement immunity (janitor moves freely)
     j.animT += 0.15;
     j.x += j.dir * j.speed;
     if (j.x >= j.maxX) { j.x = j.maxX; j.dir = -1; }
     if (j.x <= j.minX) { j.x = j.minX; j.dir =  1; }
     if (Math.abs(j.y - player.y) < 12 && Math.abs(j.x - player.x) < 14 && player.stunT === 0) {
       caughtBy(j);
+    }
+  }
+}
+
+function allSprinklersWin() {
+  if (allSprinklers) return;
+  allSprinklers = true;
+  setMsg(STRINGS.allSprinklersLit);
+}
+
+function updateSprinklers() {
+  for (let i = 0; i < sprinklers.length; i++) {
+    const sp = sprinklers[i];
+    if (!sp.active) continue;
+    // Soak janitors standing under active water column
+    for (let j = 0; j < janitors.length; j++) {
+      const jan = janitors[j];
+      if (jan.knockedT > 0) continue;
+      const janFloor = jan.y > (MY+GY)/2 ? 'GY' : jan.y > (TY+MY)/2 ? 'MY' : 'TY';
+      if (jan.knockedT > 0 || jan.soakCooldownT > 0) continue;
+      if (sp.floor === janFloor && Math.abs(jan.x + PW/2 - sp.x - 4) < 10) {
+        jan.knockedT = 120;
+        addParticles(jan.x + 4, jan.y, C.cyan, 10);
+      }
     }
   }
 }
@@ -153,7 +184,7 @@ function updateBins() {
     addParticles(b.x + 5, b.y - 7, C.yellow, 12);
     addParticles(b.x + 5, b.y - 7, C.red,    8);
     addFloating(b.x - 8, b.y - 26, 'BOOM!', C.gold);
-    GameAudio.playSfx('caught');
+    GameAudio.playSfx('explosion');
 
     // Teachers on same floor: knocked if close, alerted if far
     for (let j = 0; j < teachers.length; j++) {

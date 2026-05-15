@@ -230,5 +230,36 @@ var LEVELS = (function() {
       janitors: [],
     }),
 
+    // ── LEVEL 9 — Trigger fire sprinklers, ring the bell ─────────────────────
+    Object.assign({}, SHARED_LAYOUT, {
+      timer:       90,
+      lighterTime: 80, // frames to hold lighter under sprinkler (≈1.3s at 60fps)
+
+      mechanics: {
+        writeBoards:       false,
+        activateSprinkler: true,
+        ringBell:          true,
+      },
+
+      bags: [],
+      sprinklers: [
+        {x:90,  y:GY-50, floor:'GY'}, // GY left room (entrance)
+        {x:224, y:GY-50, floor:'GY'}, // GY right room
+        {x:90,  y:MY-49, floor:'MY'}, // MY left room (bathroom)
+        {x:224, y:MY-49, floor:'MY'}, // MY right room (gym)
+      ],
+
+      teachers: [
+        {x:200, y:GY-PH-walkOffset, dir: 1, minX:10, maxX:305, speed:0.60, color:C.redprof,  name:'Prof.Rossi',   sight:90},
+        {x:80,  y:MY-PH-walkOffset, dir:-1, minX:10, maxX:305, speed:0.60, color:C.cyanprof, name:'Prof.Celeste', sight:90},
+        {x:230, y:TY-PH-walkOffset, dir: 1, minX:10, maxX:275, speed:0.55, color:C.grayprof, name:'Prof.Neri',    sight:90},
+      ],
+
+      janitors: [
+        {x:120, y:GY-PH-walkOffset, dir: 1, minX:10, maxX:305, speed:0.65, name:'Bidello'},
+        {x:140, y:MY-PH-walkOffset, dir:-1, minX:10, maxX:305, speed:0.65, name:'Bidello'},
+      ],
+    }),
+
   ];
 })();

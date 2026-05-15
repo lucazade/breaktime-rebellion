@@ -72,6 +72,10 @@
     binExploded:       'BOOM! ({0}/{1})',
     allBinsExploded:   'All bins destroyed! Ring the bell! 🔔',
     binBlastHit:       'Too close to the explosion! ',
+    mission9:          'Trigger all the fire sprinklers!',
+    sprinklerHint:     'Hold action to use the lighter!',
+    sprinklerLit:      'Sprinkler triggered! ({0}/{1})',
+    allSprinklersLit:  'Fire alarm! Run to the bell! 🔔',
   };
 
   var it = {
@@ -140,6 +144,10 @@
     binExploded:       'BOOM! ({0}/{1})',
     allBinsExploded:   'Tutti i secchi distrutti! Suona la campanella! 🔔',
     binBlastHit:       'Troppo vicino all\'esplosione! ',
+    mission9:          'Attiva tutti gli sprinkler antincendio!',
+    sprinklerHint:     'Tieni premuto per usare l\'accendino!',
+    sprinklerLit:      'Sprinkler attivato! ({0}/{1})',
+    allSprinklersLit:  'Allarme antincendio! Corri alla campanella! 🔔',
   };
 
   window.STRINGS = lang === 'it' ? it : en;

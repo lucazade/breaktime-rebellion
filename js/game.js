@@ -40,6 +40,7 @@ function loop(ts) {
         updateBookcase();
         updateSink();
         updateBins();
+        updateSprinklers();
         updatePaperBalls();
         updateTimer();
         tickTransition();
@@ -57,6 +58,7 @@ function loop(ts) {
   drawMachines();
   drawGymBall();
   drawBookcase();
+  drawSprinklers();
   drawSink();
   drawBins();
   drawSight();
@@ -70,13 +72,20 @@ function loop(ts) {
     }
   }
   for (let i = 0; i < janitors.length; i++) {
-    drawJanitor(janitors[i].x, janitors[i].y, janitors[i].dir, janitors[i].animT);
+    const jn = janitors[i];
+    drawJanitor(jn.x, jn.y, jn.dir, jn.animT);
+    if (jn.knockedT > 0 && Math.floor(frame / 4) % 2 === 0) {
+      ctx.fillStyle = C.cyan;
+      ctx.fillRect(Math.round(jn.x - 2), Math.round(jn.y),     2, 2);
+      ctx.fillRect(Math.round(jn.x + 9), Math.round(jn.y - 3), 2, 2);
+      ctx.fillRect(Math.round(jn.x + 4), Math.round(jn.y - 9), 2, 2);
+    }
   }
   if (!(player.stunT > 0 && Math.floor(frame/5)%2 === 1)) {
     drawChar(player.x, player.y, player.dir, player.animT, C.blue, false, player.spraying, false);
   }
 
-  if (deathFreeze) { ctx.fillStyle = 'rgba(255,0,0,0.18)'; ctx.fillRect(0,0,W,H); }
+  if (deathFreeze && !BELL.ringing) { ctx.fillStyle = 'rgba(255,0,0,0.18)'; ctx.fillRect(0,0,W,H); }
 
   drawPaperBalls();
   drawParticles();

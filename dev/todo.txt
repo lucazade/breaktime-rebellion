@@ -119,7 +119,7 @@ Obiettivo: nuovi ambienti, nuovi livelli, NPC aggiuntivi.
 | L5  |   X   | Disturbare la lezione (prof alla lavagna, alunni, lanciare cartaccia)
 | L6  |   X   | Far cadere libri in presidenza (preside)
 | L7  |   X   | Allagare il bagno (lavandino con specchio in bagno)
-| L8  |       | Inserire petardi nei secchi della spazzatura (secchi spazzatura nell'ingresso e palestra)
+| L8  |   X   | Inserire petardi nei secchi della spazzatura (secchi spazzatura nell'ingresso e palestra)
 | L9  |       | Far scattare l'allarme anti-incendio
 | L10 |       | Scappare da scuola (boss finale)
 

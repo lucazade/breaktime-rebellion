@@ -133,7 +133,7 @@ const GameAudio = (function() {
 
   function playJingle(name) {
     stopJingle();
-    if (mode === 'mute') return;
+    if (mode !== 'full') return; // jingles are music — silent in sfx-only and mute modes
     var src = CONFIG.audio.sfx[name];
     if (!src) return;
     jingle = new Audio(src);
