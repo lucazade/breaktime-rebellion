@@ -267,7 +267,7 @@ var LEVELS = (function() {
       registerTime: 80,  // frames to steal the register (≈1.3s)
       nightMode:    true,
 
-      playerStart: {x:265, y:TY-PH-walkOffset}, // enters from TY right (terrace)
+      playerStart: {x:20, y:TY-PH-walkOffset}, // enters from rightmost TY room
 
       mechanics: {
         writeBoards:   false,
@@ -284,9 +284,9 @@ var LEVELS = (function() {
 
       // Three night guards — larger catch radius (within torch light)
       teachers: [
-        {x:200, y:GY-PH-walkOffset, dir: 1, minX:10, maxX:305, speed:0.50, color:'#1a1a3a', name:'Guardiano', sight:110, catchRadius:34},
-        {x:80,  y:MY-PH-walkOffset, dir:-1, minX:10, maxX:305, speed:0.45, color:'#1a1a3a', name:'Guardiano', sight:110, catchRadius:34},
-        {x:230, y:TY-PH-walkOffset, dir: 1, minX:10, maxX:275, speed:0.45, color:'#1a1a3a', name:'Guardiano', sight:100, catchRadius:34},
+        {x:200, y:GY-PH-walkOffset, dir: 1, minX:10, maxX:305, speed:0.50, color:'#1a1a3a', name:'Guardiano', sight:110, catchRadius:20},
+        {x:80,  y:MY-PH-walkOffset, dir:-1, minX:10, maxX:305, speed:0.45, color:'#1a1a3a', name:'Guardiano', sight:110, catchRadius:20},
+        {x:230, y:TY-PH-walkOffset, dir: 1, minX:10, maxX:275, speed:0.45, color:'#1a1a3a', name:'Guardiano', sight:100, catchRadius:20},
       ],
 
       janitors: [],

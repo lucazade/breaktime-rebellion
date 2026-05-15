@@ -7,7 +7,7 @@
   document.documentElement.lang = lang;
 
   var en = {
-    rotateHtml:    '<img src="assets/pics/logo.png" style="width:72vw;max-width:280px;border-radius:8px;border:2px solid #000"><div style="margin:14px 0"><span style="font-size:2.8em;line-height:1">↺</span></div>ROTATE<br>DEVICE',
+    rotateHtml:    '<img src="assets/pics/logo.png" style="width:72vw;max-width:280px;border-radius:8px;border:2px solid #000;margin-bottom:18px"><span style="font-size:2.8em;line-height:1;display:block;margin-bottom:18px">↺</span><span style="display:block">ROTATE DEVICE</span>',
     tapToStart:    '[ TAP TO START ]',
     reloadLose:    '[ TAP TO TRY AGAIN ]',
     reloadNext:    '[ TAP FOR NEXT LEVEL ]',
@@ -81,7 +81,7 @@
     registerHint:      'Hold action to steal the register!',
     registerStolen:    'Got it! Now run to the exit!',
     exitHint:          'Run! Get out of here!',
-    lucaAppears:       'Luca: "LEGENDARY! See you next year... if they let us back in."',
+    lucaAppears:       'Luca: "LEGENDARY! See you next year... if they let us back in. Tap to continue."',
     mission9:          'Trigger all the fire sprinklers!',
     sprinklerHint:     'Hold action to use the lighter!',
     sprinklerLit:      'Sprinkler triggered! ({0}/{1})',
@@ -89,7 +89,7 @@
   };
 
   var it = {
-    rotateHtml:    '<img src="assets/pics/logo.png" style="width:72vw;max-width:280px;border-radius:8px;border:2px solid #000"><div style="margin:14px 0"><span style="font-size:2.8em;line-height:1">↺</span></div>RUOTA IL<br>DISPOSITIVO',
+    rotateHtml:    '<img src="assets/pics/logo.png" style="width:72vw;max-width:280px;border-radius:8px;border:2px solid #000;margin-bottom:18px"><span style="font-size:2.8em;line-height:1;display:block;margin-bottom:18px">↺</span><span style="display:block">RUOTA IL DISPOSITIVO</span>',
     tapToStart:    '[ TOCCA PER INIZIARE ]',
     reloadLose:    '[ TOCCA PER RIPROVARE ]',
     reloadNext:    '[ TOCCA PER IL LIVELLO SUCCESSIVO ]',
@@ -163,7 +163,7 @@
     registerHint:      'Tieni premuto per rubare il registro!',
     registerStolen:    'Preso! Corri all\'uscita!',
     exitHint:          'Corri! Esci di qui!',
-    lucaAppears:       'Luca: "LEGGENDARIO! Ci vediamo il prossimo anno... se ci fanno tornare."',
+    lucaAppears:       'Luca: "LEGGENDARIO! Ci vediamo il prossimo anno... se ci fanno tornare. Tocca per continuare."',
     mission9:          'Attiva tutti gli sprinkler antincendio!',
     sprinklerHint:     'Tieni premuto per usare l\'accendino!',
     sprinklerLit:      'Sprinkler attivato! ({0}/{1})',

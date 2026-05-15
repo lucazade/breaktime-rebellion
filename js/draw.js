@@ -675,31 +675,32 @@ function drawLucaEnd() {
   const ly = Math.round(GY - PH - walkOffset);
   drawChar(lx, ly, 1, 0, C.white, false, false, false, 0);
 
-  // Speech bubble — 10px higher than character head
-  const bx = lx + PW + 3, by2 = ly - 44;
-  const bw = 148, bh = 30;
-  ctx.fillStyle = 'rgba(255,255,255,0.96)'; ctx.fillRect(bx, by2, bw, bh);
+  // Speech bubble — larger, proper word wrap into 3 lines
+  const bx = lx + PW + 2, by2 = ly - 52;
+  const bw = 190, bh = 48;
+  ctx.fillStyle = 'rgba(255,255,255,0.97)'; ctx.fillRect(bx, by2, bw, bh);
   ctx.strokeStyle = C.gold; ctx.lineWidth = 1;
   ctx.strokeRect(bx, by2, bw, bh);
-  // Pointer triangle
-  ctx.fillStyle = 'rgba(255,255,255,0.96)';
-  ctx.fillRect(bx, by2 + bh, 3, 4);
-  ctx.fillStyle = C.gold;
-  ctx.strokeRect(bx, by2 + bh, 3, 4);
-  // Text
+  ctx.fillStyle = 'rgba(255,255,255,0.97)'; ctx.fillRect(bx, by2 + bh, 3, 5);
+  ctx.fillStyle = C.gold; ctx.strokeRect(bx, by2 + bh, 3, 5);
+  // Word-wrapped text (3 lines max)
   ctx.fillStyle = '#000'; ctx.font = '5px "Press Start 2P"';
   ctx.textAlign = 'left'; ctx.textBaseline = 'top';
-  ctx.fillText('Luca:', bx + 3, by2 + 4);
-  const msg1 = STRINGS.lucaAppears.split('"')[1] || STRINGS.lucaAppears;
-  const words = msg1.split(' ');
-  let line1 = '', line2 = '';
+  ctx.fillStyle = C.gold; ctx.fillText('Luca:', bx + 4, by2 + 4);
+  ctx.fillStyle = '#000';
+  const fullMsg = STRINGS.lucaAppears.replace(/^[^"]*"?/, '').replace(/".*$/, '');
+  const words = fullMsg.split(' ');
+  const maxW = bw - 8;
+  let lines = [], cur = '';
   for (let i = 0; i < words.length; i++) {
-    const t = line1 + (line1 ? ' ' : '') + words[i];
-    if (ctx.measureText(t).width > bw - 6) { line2 += (line2 ? ' ' : '') + words[i]; }
-    else { line1 = t; }
+    const test = cur + (cur ? ' ' : '') + words[i];
+    if (ctx.measureText(test).width > maxW) { if (cur) lines.push(cur); cur = words[i]; }
+    else cur = test;
   }
-  ctx.fillText(line1, bx + 3, by2 + 13);
-  if (line2) ctx.fillText(line2, bx + 3, by2 + 21);
+  if (cur) lines.push(cur);
+  for (let i = 0; i < Math.min(lines.length, 3); i++) {
+    ctx.fillText(lines[i], bx + 4, by2 + 14 + i * 10);
+  }
 }
 
 function drawParticles() {
@@ -773,6 +774,19 @@ function drawEndScreen() {
       { text: scoreText, font: '6px "Press Start 2P"', color: C.white, height: 8, spacing: 6 },
       { text: STRINGS.bestLabel + ' LVL ' + bestLevel + ' — ' + String(bestScore).padStart(5,'0'), font: '6px "Press Start 2P"', color: C.gold, height: 8, spacing: 6 },
       { text: actionText, font: '6px "Press Start 2P"', color: actionVisible ? C.gold : 'rgba(255,255,255,0)', height: 8, spacing: 0 },
+    ]);
+  } else if (currentLevel === LEVELS.length) {
+    // L10 final: special ending screen with best scores
+    const bestScore = parseInt(localStorage.getItem('btr_best_score') || '0');
+    const bestLevel = parseInt(localStorage.getItem('btr_best_level') || '1');
+    const by = 44, bw = 260, bh = 112;
+    const tapAction = actionVisible ? STRINGS.reloadWin : 'rgba(255,255,255,0)';
+    drawOverlayPanel(bx, by, bw, bh, 'rgba(0,0,40,0.92)', C.gold, [
+      { text: 'LEGGENDARIO!', font: '9px "Press Start 2P"', color: C.gold,  height: 12, spacing: 8 },
+      { text: STRINGS.winTitle,  font: '6px "Press Start 2P"', color: C.lgreen, height: 8,  spacing: 8 },
+      { text: scoreText,         font: '6px "Press Start 2P"', color: C.white, height: 8,  spacing: 4 },
+      { text: STRINGS.bestLabel + ' LVL ' + bestLevel + ' — ' + String(bestScore).padStart(5,'0'), font: '6px "Press Start 2P"', color: C.yellow, height: 8, spacing: 8 },
+      { text: tapAction,         font: '6px "Press Start 2P"', color: actionVisible ? C.gold : 'rgba(0,0,0,0)', height: 8, spacing: 0 },
     ]);
   } else {
     const by = 64, bw = 260, bh = 72;

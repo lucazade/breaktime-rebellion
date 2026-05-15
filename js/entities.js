@@ -124,11 +124,7 @@ function escapeWin() {
   addFloating(exitDoor.x + 5, exitDoor.y - 10, '+1000!', C.gold);
   addParticles(exitDoor.x + 5, exitDoor.y, C.gold, 30);
   GameAudio.playSfx('bell');
-  deathFreeze = true;
-  pendingTransition = { t: 300, fn: function() {
-    deathFreeze = false; state = 'win';
-    GameAudio.stopMusic(); GameAudio.playJingle('win');
-  }};
+  deathFreeze = true; // frozen until player taps — no auto-timer
 }
 
 function allSprinklersWin() {

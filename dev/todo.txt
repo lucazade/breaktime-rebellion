@@ -160,17 +160,20 @@ Obiettivo: lucidare l'esperienza prima del rilascio.
 - [X] # Implementare banner crediti (premendo sulla campanella della sidebar nuovo banner ,vedi credits.txt)
 - [X] # Implementare Schermata migliori punteggi con livello raggiunto a fine partita (non serve inserire il nome)
 - [X] # Rimuovere cuori da msg
-- [ ] # Gestire Marco quando sale e scende le scale coprendo parte non visibile dietro al pavimento
-- [ ] # nella schermata del ruota il dispositivo ordiniamole così dall'alto al basso:
+- [ ] #50 Gestire Marco quando sale e scende le scale coprendo parte non visibile dietro al pavimento
+- [ ] #51 nella schermata del ruota il dispositivo ordiniamole così dall'alto al basso:
 logo
 spazio
 simbolo ruota
 spazio
 label ruota il dispositivo
-- [ ] quando a fine 10 livello appare Luca con il fumetto -> tap o invio per continuare -> schermata finale con migliore punteggi -> tap o invio per continuare -> si va su title screen.
-- [ ] i guardiani ancora non beccano Marco quando arrivano vicino a Marco
-- [ ] alziamo di 10px il fumetto di Luca
-- [ ] Luca ha maglia bianca per distinguerlo
+- [ ] #52 quando a fine 10 livello appare Luca con il fumetto -> serve tap o invio per continuare -> appare schermata finale con migliore punteggi -> serve tap o invio per continuare -> si va su title screen.
+- [ ] #53 i guardiani beccano Marco quando arrivano vicino a Marco e non quando ruba il registro
+- [X] #54 alziamo di 10px il fumetto di Luca
+- [X] #55 Luca ha maglia bianca per distinguerlo
+- [X] #56 in L10 Marco appare nella stanza tutta a destra all'ultimo piano (non più in terrazza)
+- [ ] #57 il fumetto di Luca è troppo piccolo, non entra tutto il testo
+
 
 ---
 
