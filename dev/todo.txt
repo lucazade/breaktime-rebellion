@@ -203,5 +203,6 @@ Obiettivo: come da titolo
 - [ ] #63 Rivedere testo storia iniziale
 - [ ] #64 Revisione punteggi (Federica)
 - [ ] #65 Aggiornare stile pulsanti home, pausa e bell nei sidepanel
-- [ ] #66 Lavoro su branch outline personaggi (vecchio tentativo, pesa sulla cpu)
+- [X] #66 Lavoro su branch outline personaggi
+- [ ] #67 il libro torna al proprio posto quando il preside ci passa sopra (stessa cosa per il pallone e l'insegnante di Ginnastica) 
  
