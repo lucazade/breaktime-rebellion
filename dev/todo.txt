@@ -205,4 +205,5 @@ Obiettivo: come da titolo
 - [ ] #72 Aggiornare stile pulsanti home, pausa e bell nei sidepanel
 - [X] #73 Lavoro su branch outline personaggi
 - [ ] #74 il libro torna al proprio posto quando il preside ci passa sopra (stessa cosa per il pallone e l'insegnante di Ginnastica) 
- 
+- [ ] #75 target libreria troppo grande
+- [ ] #76 i caratteri dei banner sono un pò sfuocati
