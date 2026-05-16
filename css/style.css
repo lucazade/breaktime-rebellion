@@ -280,6 +280,7 @@ canvas {
 }
 #lvl-chooser  { justify-content: flex-start; }
 #audio-wrap   { justify-content: flex-end; }
+#title-controls.no-lang { width: min(280px, 70vw); }
 
 /* ── Unified base for all title-screen interactive elements ── */
 #lvl-prev, #lvl-next,

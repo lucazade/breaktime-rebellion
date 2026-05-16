@@ -52,14 +52,20 @@
   });
 
   // ── Language selector ───────────────────────────────────────────────────────
-  var currentLang = document.documentElement.lang;
-  document.querySelectorAll('.lang-btn').forEach(function(btn) {
-    if (btn.dataset.lang === currentLang) btn.classList.add('active');
-    btn.addEventListener('click', function() {
-      localStorage.setItem('btr_lang', btn.dataset.lang);
-      location.href = location.pathname + '?lang=' + btn.dataset.lang;
+  var langChooser = document.getElementById('lang-chooser');
+  if (CONFIG.debug.showLangChooser) {
+    var currentLang = document.documentElement.lang;
+    document.querySelectorAll('.lang-btn').forEach(function(btn) {
+      if (btn.dataset.lang === currentLang) btn.classList.add('active');
+      btn.addEventListener('click', function() {
+        localStorage.setItem('btr_lang', btn.dataset.lang);
+        location.href = location.pathname + '?lang=' + btn.dataset.lang;
+      });
     });
-  });
+  } else {
+    langChooser.style.display = 'none';
+    document.getElementById('title-controls').classList.add('no-lang');
+  }
 
   // ── Level chooser ────────────────────────────────────────────────────────────
   // Visible to all users when there are multiple levels.

@@ -28,5 +28,6 @@ const CONFIG = {
   },
   debug: {
     showLevelChooser: true,
+    showLangChooser:  true,
   },
 };
