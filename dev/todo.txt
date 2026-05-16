@@ -206,4 +206,11 @@ Obiettivo: come da titolo
 - [X] #73 Lavoro su branch outline personaggi
 - [X] #74 il libro torna al proprio posto quando il preside ci passa sopra (stessa cosa per il pallone e l'insegnante di Ginnastica) 
 - [ ] #75 target libreria troppo grande
-- [ ] #76 i caratteri dei banner sono un pò sfuocati
+- [X] #76 i caratteri dei banner sono un pò sfuocati
+- [ ] #77 limitare il movimento di marco all'estrema sinistra e destra del quadro altrimenti sembra camminare sul muro (fine tuning in config)
+- [ ] #78 la bomboletta spray va spostata fuori dal corpo perchè così non si capisce e il getto spray deve essere particellare (piccoli pixel)
+- [ ] #79 le cartelle non devono avere i due pixel gialli lampegganti (sembrano bombe) e per raccoglierle
+bisogna tener premuto azione Z con progressbar altrimenti troppo semplice
+- [ ] #80 Selezione lingua attivabile solo da voce di debug dal config (altrimenti usa lingua da locale del device. Inglese fallback). Se selezione lingua è nascosto la selezione livelli e gestione audio devono essere più vicine.
+- [X] #81 il fumetto finale deve avere bordo giallo e sfondo giallo e sistemare anche i caratteri di grandezza (4px ?). Tutti i caratteri dentro neri, tranne Tocca per continuare in rosso
+- [ ] #82 progressbar L10 non gialla ma rossa

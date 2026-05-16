@@ -1,6 +1,6 @@
 {
   "name": "breaktime-rebellion",
-  "version": "0.8.4",
+  "version": "0.8.5",
   "private": true,
   "scripts": {
     "build": "rm -rf www && mkdir -p www && cp index.html manifest.json sw.js robots.txt www/ && cp -r css js assets www/",

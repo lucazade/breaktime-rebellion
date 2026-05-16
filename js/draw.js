@@ -279,7 +279,7 @@ function drawGuard(x, y, dir, animT, chasing, knockedT) {
   if (chasing) {
     const bub = dir>0 ? bx+PW : bx-26;
     ctx.fillStyle = C.red; ctx.fillRect(bub, by-14, 26, 10);
-    ctx.fillStyle = C.black; ctx.font = '5px "Press Start 2P"';
+    ctx.fillStyle = C.black; ctx.font = '4px "Press Start 2P"';
     ctx.textAlign = 'center'; ctx.textBaseline = 'top';
     ctx.fillText('STOP!', bub + 13, by - 12);
   }
@@ -504,7 +504,7 @@ function drawStudents() {
     if (s.disturbed) {
       ctx.fillStyle = '#FF2222';
       ctx.save(); ctx.textAlign = 'center';
-      ctx.font = '7px "Press Start 2P"';
+      ctx.font = '8px "Press Start 2P"';
       ctx.fillText('!', bx+4, by-19);
       ctx.restore();
     }
@@ -654,7 +654,7 @@ function drawPreside(x, y, dir, animT, bodyCol, chasing, knockedT) {
   if (chasing) {
     const bub = dir > 0 ? bx+PW : bx-26;
     ctx.fillStyle = C.yellow; ctx.fillRect(bub, by-14, 26, 10);
-    ctx.fillStyle = C.black; ctx.font = '5px "Press Start 2P"';
+    ctx.fillStyle = C.black; ctx.font = '4px "Press Start 2P"';
     ctx.fillText(STRINGS.hey, bub+1, by-7);
   }
 }
@@ -731,7 +731,7 @@ function drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, chasing, knock
   if (chasing) {
     const bub = dir>0 ? bx+PW : bx-26;
     ctx.fillStyle = C.yellow; ctx.fillRect(bub, by-14, 26, 10);
-    ctx.fillStyle = C.black; ctx.font = '5px "Press Start 2P"';
+    ctx.fillStyle = C.black; ctx.font = '4px "Press Start 2P"';
     ctx.fillText(STRINGS.hey, bub+1, by-7);
   }
 }
@@ -790,20 +790,17 @@ function drawLucaEnd() {
   const ly = Math.round(GY - PH - walkOffset);
   drawChar(lx, ly, 1, 0, C.white, false, false, false, 0);
 
-  // Speech bubble — larger, proper word wrap into 3 lines
+  // Speech bubble
   const bx = lx + PW + 2, by2 = ly - 62;
   const bw = 190, bh = 48;
-  ctx.fillStyle = 'rgba(255,255,255,0.97)'; ctx.fillRect(bx, by2, bw, bh);
-  ctx.strokeStyle = C.gold; ctx.lineWidth = 1;
+  ctx.fillStyle = C.gold; ctx.fillRect(bx, by2, bw, bh);
+  ctx.strokeStyle = '#aa7700'; ctx.lineWidth = 1;
   ctx.strokeRect(bx, by2, bw, bh);
-  ctx.fillStyle = 'rgba(255,255,255,0.97)'; ctx.fillRect(bx, by2 + bh, 3, 5);
-  ctx.fillStyle = C.gold; ctx.strokeRect(bx, by2 + bh, 3, 5);
-  // Word-wrapped text (3 lines max)
-  ctx.fillStyle = '#000'; ctx.font = '5px "Press Start 2P"';
+  ctx.fillStyle = C.gold; ctx.fillRect(bx, by2 + bh, 3, 5);
+  ctx.strokeStyle = '#aa7700'; ctx.strokeRect(bx, by2 + bh, 3, 5);
+  ctx.fillStyle = '#000'; ctx.font = '4px "Press Start 2P"';
   ctx.textAlign = 'left'; ctx.textBaseline = 'top';
-  ctx.fillStyle = C.gold; ctx.fillText('Luca:', bx + 4, by2 + 4);
-  ctx.fillStyle = '#000';
-  // Split on | to force line breaks; last segment is always on its own line
+  ctx.fillText('Luca:', bx + 4, by2 + 4);
   const raw = STRINGS.lucaAppears.replace(/^[^"]*"?/, '').replace(/".*$/, '');
   const parts = raw.split('|');
   const maxW = bw - 8;
@@ -819,7 +816,7 @@ function drawLucaEnd() {
     if (cur) lines.push(cur);
   }
   for (let i = 0; i < Math.min(lines.length, 4); i++) {
-    ctx.fillStyle = i === lines.length - 1 ? C.gold : '#000';
+    ctx.fillStyle = i === lines.length - 1 ? C.redprof : '#000';
     ctx.fillText(lines[i], bx + 4, by2 + 14 + i * 10);
   }
 }
@@ -841,7 +838,7 @@ function drawFloating() {
   for (let i = 0; i < floatingTexts.length; i++) {
     const t = floatingTexts[i];
     ctx.globalAlpha = Math.min(1, t.life/20);
-    ctx.fillStyle = t.color; ctx.font = '6px "Press Start 2P"';
+    ctx.fillStyle = t.color; ctx.font = '8px "Press Start 2P"';
     ctx.fillText(t.text, t.x - ctx.measureText(t.text).width/2, t.y);
     t.y -= 0.5; t.life--;
   }
@@ -890,11 +887,11 @@ function drawEndScreen() {
     const bestLevel = parseInt(localStorage.getItem('btr_best_level') || '1');
     const by = 52, bw = 260, bh = 96;
     drawOverlayPanel(bx, by, bw, bh, 'rgba(60,0,0,0.88)', C.gold, [
-      { text: STRINGS.gameoverTitle, font: '10px "Press Start 2P"', color: C.redprof, height: 10, spacing: 8 },
-      { text: fmt(STRINGS.levelReached, currentLevel), font: '6px "Press Start 2P"', color: C.white, height: 8, spacing: 2 },
-      { text: scoreText, font: '6px "Press Start 2P"', color: C.white, height: 8, spacing: 6 },
-      { text: STRINGS.bestLabel + ' LVL ' + bestLevel + ' — ' + String(bestScore).padStart(5,'0'), font: '6px "Press Start 2P"', color: C.gold, height: 8, spacing: 6 },
-      { text: actionText, font: '6px "Press Start 2P"', color: actionVisible ? C.gold : 'rgba(255,255,255,0)', height: 8, spacing: 0 },
+      { text: STRINGS.gameoverTitle, font: '8px "Press Start 2P"', color: C.redprof, height: 10, spacing: 8 },
+      { text: fmt(STRINGS.levelReached, currentLevel), font: '8px "Press Start 2P"', color: C.white, height: 8, spacing: 2 },
+      { text: scoreText, font: '8px "Press Start 2P"', color: C.white, height: 8, spacing: 6 },
+      { text: STRINGS.bestLabel + ' LVL ' + bestLevel + ' — ' + String(bestScore).padStart(5,'0'), font: '8px "Press Start 2P"', color: C.gold, height: 8, spacing: 6 },
+      { text: actionText, font: '8px "Press Start 2P"', color: actionVisible ? C.gold : 'rgba(255,255,255,0)', height: 8, spacing: 0 },
     ]);
   } else if (currentLevel === LEVELS.length) {
     // L10 final: special ending screen with best scores (#68: winTitle as heading, no subtitle)
@@ -904,17 +901,17 @@ function drawEndScreen() {
     const tapAction = actionVisible ? STRINGS.tapForTitle : 'rgba(255,255,255,0)';
     drawOverlayPanel(bx, by, bw, bh, 'rgba(0,0,40,0.92)', C.gold, [
       { text: STRINGS.winTitle,  font: '8px "Press Start 2P"', color: C.gold,   height: 12, spacing: 10 },
-      { text: scoreText,         font: '6px "Press Start 2P"', color: C.white,  height: 8,  spacing: 4 },
-      { text: STRINGS.bestLabel + ' LVL ' + bestLevel + ' — ' + String(bestScore).padStart(5,'0'), font: '6px "Press Start 2P"', color: C.yellow, height: 8, spacing: 8 },
-      { text: tapAction,         font: '6px "Press Start 2P"', color: actionVisible ? C.gold : 'rgba(0,0,0,0)', height: 8, spacing: 0 },
+      { text: scoreText,         font: '8px "Press Start 2P"', color: C.white,  height: 8,  spacing: 4 },
+      { text: STRINGS.bestLabel + ' LVL ' + bestLevel + ' — ' + String(bestScore).padStart(5,'0'), font: '8px "Press Start 2P"', color: C.yellow, height: 8, spacing: 8 },
+      { text: tapAction,         font: '8px "Press Start 2P"', color: actionVisible ? C.gold : 'rgba(0,0,0,0)', height: 8, spacing: 0 },
     ]);
   } else {
     // Non-final win (#65: levelComplete title, tapContinue action)
     const by = 64, bw = 260, bh = 72;
     drawOverlayPanel(bx, by, bw, bh, 'rgba(0,0,60,0.88)', C.gold, [
       { text: STRINGS.levelComplete, font: '8px "Press Start 2P"', color: C.gold,  height: 10, spacing: 10 },
-      { text: scoreText,             font: '7px "Press Start 2P"', color: C.white, height: 10, spacing: 6 },
-      { text: actionVisible ? STRINGS.tapContinue : 'rgba(255,255,255,0)', font: '6px "Press Start 2P"', color: actionVisible ? C.green : 'rgba(255,255,255,0)', height: 10, spacing: 0 },
+      { text: scoreText,             font: '8px "Press Start 2P"', color: C.white, height: 8, spacing: 6 },
+      { text: actionVisible ? STRINGS.tapContinue : 'rgba(255,255,255,0)', font: '8px "Press Start 2P"', color: actionVisible ? C.green : 'rgba(255,255,255,0)', height: 8, spacing: 0 },
     ]);
   }
 }
@@ -922,12 +919,12 @@ function drawEndScreen() {
 function drawStoryBanner() {
   if (storyBannerT <= 0 || state !== 'playing') return;
   if (!storyBannerLines) {
-    ctx.font = '6px "Press Start 2P"';
+    ctx.font = '8px "Press Start 2P"';
     const words = STRINGS.storyText.split(' ');
     let line = '', lines = [];
     for (let i = 0; i < words.length; i++) {
       const test = line + (line ? ' ' : '') + words[i];
-      if (ctx.measureText(test).width > 240) { lines.push(line); line = words[i]; }
+      if (ctx.measureText(test).width > 220) { lines.push(line); line = words[i]; }
       else line = test;
     }
     if (line) lines.push(line);
@@ -938,24 +935,24 @@ function drawStoryBanner() {
     { text: STRINGS.storyTitle, font: '8px "Press Start 2P"', color: C.gold, height: 10, spacing: 10 },
   ];
   for (let i = 0; i < storyBannerLines.length; i++) {
-    lineObjs.push({ text: storyBannerLines[i], font: '6px "Press Start 2P"', color: C.white, height: 8, spacing: 4 });
+    lineObjs.push({ text: storyBannerLines[i], font: '8px "Press Start 2P"', color: C.white, height: 8, spacing: 4 });
   }
   const blink = Math.floor(frame / 25) % 2 === 0;
-  lineObjs.push({ text: '', font: '6px "Press Start 2P"', color: 'transparent', height: 6, spacing: 0 });
-  lineObjs.push({ text: STRINGS.storyContinue, font: '6px "Press Start 2P"', color: blink ? C.gold : 'rgba(0,0,0,0)', height: 8, spacing: 0 });
+  lineObjs.push({ text: '', font: '8px "Press Start 2P"', color: 'transparent', height: 4, spacing: 0 });
+  lineObjs.push({ text: STRINGS.storyContinue, font: '8px "Press Start 2P"', color: blink ? C.gold : 'rgba(0,0,0,0)', height: 8, spacing: 0 });
   drawOverlayPanel(bx, by, bw, bh, 'rgba(0,0,40,0.92)', C.gold, lineObjs);
 }
 
 function drawMissionBanner() {
   if (missionBannerT <= 0 || state !== 'playing') return;
   if (!missionBannerLines) {
-    ctx.font = '7px "Press Start 2P"';
+    ctx.font = '8px "Press Start 2P"';
     const text = STRINGS['mission' + currentLevel] || STRINGS.mission1;
     const words = text.split(' ');
     let line = '', lines = [];
     for (let i = 0; i < words.length; i++) {
       const test = line + (line ? ' ' : '') + words[i];
-      if (ctx.measureText(test).width > 220) { lines.push(line); line = words[i]; }
+      if (ctx.measureText(test).width > 200) { lines.push(line); line = words[i]; }
       else line = test;
     }
     if (line) lines.push(line);
@@ -969,7 +966,7 @@ function drawMissionBanner() {
   const lines = [
     {
       text: fmt(STRINGS.missionLabel, currentLevel),
-      font: '7px "Press Start 2P"',
+      font: '8px "Press Start 2P"',
       color: C.gold,
       height: 10,
       spacing: 8,
@@ -978,9 +975,9 @@ function drawMissionBanner() {
   for (let i = 0; i < missionBannerLines.length; i++) {
     lines.push({
       text: missionBannerLines[i],
-      font: '7px "Press Start 2P"',
+      font: '8px "Press Start 2P"',
       color: C.white,
-      height: 10,
+      height: 8,
       spacing: i < missionBannerLines.length - 1 ? 4 : 0,
     });
   }
