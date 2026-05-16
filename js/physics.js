@@ -107,7 +107,6 @@ function updatePlayer() {
         if (bookcase.dropCount >= 3) {
           bookDropWin();
         } else {
-          bookcase.resetT = 200;
           setMsg(bookcase.dropCount === 1 ? STRINGS.bookFirstDrop : STRINGS.bookSecondDrop);
         }
       }
