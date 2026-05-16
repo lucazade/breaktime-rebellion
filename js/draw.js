@@ -10,6 +10,7 @@ function drawBg() {
 function drawDesks() {
   for (let i = 0; i < DESKS.length; i++) {
     const d = DESKS[i];
+    ctx.fillStyle = '#2c1800'; ctx.fillRect(d.x-1, d.y-1, 22, 8);
     ctx.fillStyle = C.desklt; ctx.fillRect(d.x, d.y, 20, 6);
     ctx.fillStyle = C.desk;   ctx.fillRect(d.x, d.y+5, 20, 2);
     ctx.fillStyle = C.brown;
@@ -32,9 +33,9 @@ function drawBoards() {
   for (let i = 0; i < BOARDS.length; i++) {
     const b = BOARDS[i];
     ctx.fillStyle = C.brown;   ctx.fillRect(b.x-1, b.y-1, BW+2, BH+2);
-    ctx.fillStyle = C.chalkbg; ctx.fillRect(b.x, b.y, BW, BH);
+    ctx.fillStyle = '#075b07'; ctx.fillRect(b.x, b.y, BW, BH);
     if (!b.done) {
-      ctx.fillStyle = 'rgba(200,220,200,0.18)';
+      ctx.fillStyle = '#2c832c';
       ctx.fillRect(b.x+2, b.y+3, BW-4, 2);
       ctx.fillRect(b.x+2, b.y+8, BW-4, 2);
       if (i === nearestIdx && nd < 36) {
@@ -53,35 +54,39 @@ function drawBoards() {
 
 function drawBell() {
   const bx = BELL.x, by = BELL.y;
-  const sx = BELL.ringing ? Math.round(Math.sin(frame * 0.6) * 2) : 0;
-  const gold = BELL.ringing ? '#FFE000' : C.bell;
+  const sw = BELL.ringing ? Math.round(Math.sin(frame * 0.6) * 3) : 0;
+  const red  = BELL.ringing ? '#ff2200' : '#cc1100';
+  const dark = '#880a00';
 
-  ctx.fillStyle = C.dgray;
-  ctx.fillRect(bx+1, by, 2, 1);
+  // Outline pass
+  ctx.fillStyle = dark;
+  ctx.fillRect(bx+2+sw, by,   4, 1);  // top border
+  ctx.fillRect(bx+2+sw, by+1, 4, 1);  // tip outline
+  ctx.fillRect(bx+1+sw, by+2, 6, 1);  // row2 outline
+  ctx.fillRect(bx+1+sw, by+3, 6, 1);  // base outline (6px)
+  ctx.fillRect(bx+1+sw, by+4, 6, 1);  // bottom border
 
-  ctx.fillStyle = gold;
-  ctx.fillRect(bx+0+sx, by+1, 4, 1);
-  ctx.fillRect(bx-1+sx, by+2, 6, 2);
-  ctx.fillRect(bx-1+sx, by+4, 7, 1);
+  // Red fill (3 righe: 2→4→6px)
+  ctx.fillStyle = red;
+  ctx.fillRect(bx+3+sw, by+1, 2, 1);  // tip:  2 px
+  ctx.fillRect(bx+2+sw, by+2, 4, 1);  // row2: 4 px
+  ctx.fillRect(bx+2+sw, by+3, 4, 1);  // base: 4 px (stessa larghezza, no flare)
 
-  ctx.fillStyle = 'rgba(255,255,200,0.6)';
-  ctx.fillRect(bx+1+sx, by+2, 1, 1);
-
-  ctx.fillStyle = C.brown;
-  ctx.fillRect(bx+2+sx, by+5, 1, 1);
-  ctx.fillRect(bx+1+sx, by+6, 2, 1);
+  // Clapper (batacchio) — corto
+  ctx.fillStyle = dark;
+  ctx.fillRect(bx+3+sw, by+5, 2, 1);  // ball
 
   if ((allBoards || allBags || allMachines || allBall || allStudents || allBooks) && !BELL.done) {
     const pulse = 0.12 + 0.08 * Math.sin(frame * 0.15);
     ctx.fillStyle = 'rgba(255,215,0,' + pulse + ')';
-    ctx.beginPath(); ctx.arc(bx+2, by+3, 6, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(bx+4, by+2, 7, 0, Math.PI*2); ctx.fill();
   }
 
   if (BELL.ringing) {
     for (let i = 1; i <= 3; i++) {
       ctx.strokeStyle = 'rgba(255,215,0,' + (0.6 - i*0.15) + ')';
       ctx.lineWidth = 1;
-      ctx.beginPath(); ctx.arc(bx+2, by+3, 3+i*2, 0, Math.PI*2); ctx.stroke();
+      ctx.beginPath(); ctx.arc(bx+4, by+2, 4+i*3, 0, Math.PI*2); ctx.stroke();
     }
   }
 }
@@ -102,9 +107,12 @@ function drawGymBall() {
     ctx.fillStyle = C.yellow;           ctx.fillRect(bx-1, by-5, Math.round(11 * pct), 3);
   }
   // Basketball
+  ctx.fillStyle = '#6b2200';
+  ctx.fillRect(bx+1, by-1, 7, 1); ctx.fillRect(bx+1, by+9, 7, 1); // top/bottom
+  ctx.fillRect(bx-1, by+1, 1, 7); ctx.fillRect(bx+9, by+1, 1, 7); // left/right
   ctx.fillStyle = '#CC6600';
   ctx.fillRect(bx+1, by, 7, 9); ctx.fillRect(bx, by+1, 9, 7);
-  ctx.fillStyle = '#993300';
+  ctx.fillStyle = '#6b2200';
   ctx.fillRect(bx+4, by, 1, 9); ctx.fillRect(bx, by+4, 9, 1);
   ctx.fillStyle = 'rgba(255,200,100,0.5)'; ctx.fillRect(bx+1, by+1, 2, 2);
   if (!allBall) {
@@ -126,7 +134,10 @@ function drawBookcase() {
   if (bookcase.dropped) {
     // Open book lying flat on the floor (two pages + spine)
     const fx = bx + bookcase.fallDx, fy = by + bookcase.fallDy;
-    ctx.fillStyle = '#8B3000'; ctx.fillRect(fx,    fy,   18, 1); // binding top
+    ctx.fillStyle = '#3a1000';
+    ctx.fillRect(fx-1, fy, 1, 9); ctx.fillRect(fx+18, fy, 1, 9); // vertical borders
+    ctx.fillRect(fx-1, fy+9, 20, 1);                               // bottom border
+    ctx.fillStyle = '#3a1000'; ctx.fillRect(fx,    fy,   18, 1); // binding top
     ctx.fillStyle = '#F5E6C0'; ctx.fillRect(fx,    fy+1,  7, 8); // left page
     ctx.fillStyle = '#F5E6C0'; ctx.fillRect(fx+11, fy+1,  7, 8); // right page
     ctx.fillStyle = '#6B2200'; ctx.fillRect(fx+7,  fy,    4, 9); // spine
@@ -224,17 +235,37 @@ function drawGuard(x, y, dir, animT, chasing, knockedT) {
   if (knockedT > 0) {
     const fy = by + PH - 1;
     ctx.fillStyle = 'rgba(0,0,0,0.2)'; ctx.fillRect(bx-4, fy+2, 18, 2);
+    if (CONFIG.charOutline) {
+      const s = CONFIG.charOutlineSize || 1;
+      ctx.fillStyle = CONFIG.charOutlineColor;
+      ctx.fillRect(bx-2-s, fy-3-s, 14+s*2, 4+s*2);
+      ctx.fillRect((dir>0 ? bx+12 : bx-6)-s, fy-4-s, 6+s*2, 5+s*2);
+    }
     ctx.fillStyle = '#1a1a3a'; ctx.fillRect(bx-2, fy-3, 14, 4);
     ctx.fillStyle = C.pink;   ctx.fillRect(dir > 0 ? bx+12 : bx-6, fy-4, 6, 5);
     return;
   }
   const leg = Math.sin(animT) * 2.5;
   ctx.fillStyle = 'rgba(0,0,0,0.2)'; ctx.fillRect(bx-1, by+PH, PW, 2);
+  if (CONFIG.charOutline) {
+    const s = CONFIG.charOutlineSize || 1;
+    ctx.fillStyle = CONFIG.charOutlineColor;
+    ctx.fillRect(bx+1-s, by+10-s, 3+s*2, 4+leg+s*2);
+    ctx.fillRect(bx+4-s, by+10-s, 3+s*2, 4-leg+s*2);
+    ctx.fillRect(bx-s,   by+13+leg-s, 4+s*2, 2+s*2);
+    ctx.fillRect(bx+3-s, by+13-leg-s, 4+s*2, 2+s*2);
+    ctx.fillRect(bx-s, by+2-s, PW+s*2, 8+s*2);
+    ctx.fillRect((dir>0 ? bx-2 : bx+PW)-s, by+5-s, 2+s*2, 4+s*2);
+    ctx.fillRect((dir>0 ? bx+PW : bx-2)-s, by+5-s, 2+s*2, 4+s*2);
+    ctx.fillRect(bx+2-s, by+1-s, PW-4+s*2, 1+s*2);
+    ctx.fillRect(bx-s, by-8-s, PW+s*2, 11+s*2);
+    ctx.fillRect((dir>0 ? bx-2 : bx+PW-1)-s, by-7-s, 3+s*2, 2+s*2);
+  }
   // Dark trousers
   ctx.fillStyle = '#111'; ctx.fillRect(bx+1, by+10, 3, 4+leg); ctx.fillRect(bx+4, by+10, 3, 4-leg);
   ctx.fillStyle = C.black; ctx.fillRect(bx, by+13+leg, 4, 2); ctx.fillRect(bx+3, by+13-leg, 4, 2);
   // Dark uniform body
-  ctx.fillStyle = '#1a1a3a'; ctx.fillRect(bx, by+4, PW, 8);
+  ctx.fillStyle = '#1a1a3a'; ctx.fillRect(bx, by+2, PW, 8);
   // Arms
   ctx.fillStyle = C.pink; ctx.fillRect(dir>0 ? bx-2 : bx+PW, by+5, 2, 4); ctx.fillRect(dir>0 ? bx+PW : bx-2, by+5, 2, 4);
   // Head
@@ -244,6 +275,7 @@ function drawGuard(x, y, dir, animT, chasing, knockedT) {
   ctx.fillStyle = '#bbb'; ctx.fillRect(dir>0 ? bx-2 : bx+PW-1, by-7, 3, 2); // cap visor
   // Eye
   ctx.fillStyle = C.black; ctx.fillRect(dir>0 ? bx+4 : bx+2, by-5, 2, 2);
+  ctx.fillStyle = '#825144'; ctx.fillRect(bx+2, by+1, PW-4, 1);
   if (chasing) {
     const bub = dir>0 ? bx+PW : bx-26;
     ctx.fillStyle = C.red; ctx.fillRect(bub, by-14, 26, 10);
@@ -333,6 +365,12 @@ function drawBins() {
     // Body
     ctx.fillStyle = '#228B22'; ctx.fillRect(bx, by-11, 10, 11);
     ctx.fillStyle = '#1a6e1a'; ctx.fillRect(bx, by-11, 1, 11); // left shadow
+    // Dark green border (overwrite existing edge pixels, no external expansion)
+    ctx.fillStyle = '#0d4d0d';
+    ctx.fillRect(bx,   by-14, 1,  14); // left
+    ctx.fillRect(bx+9, by-14, 1,  14); // right
+    ctx.fillRect(bx,   by-1,  10,  1); // bottom
+
     // Triangle (vertex up) as recycle symbol
     ctx.fillStyle = 'rgba(255,255,255,0.75)';
     ctx.fillRect(bx+4, by-9, 2, 1); // top vertex
@@ -402,6 +440,7 @@ function drawSink() {
   ctx.fillStyle = '#aaa'; ctx.fillRect(bx+4, by-10, 1, 1);
 
   // Sink basin
+  ctx.fillStyle = '#666'; ctx.fillRect(bx-1, by-9, 14, 10);
   ctx.fillStyle = '#b0b0b0'; ctx.fillRect(bx,   by-8, 12, 8);
   ctx.fillStyle = '#d8d8d8'; ctx.fillRect(bx+1, by-7, 10, 6);
   ctx.fillStyle = '#888';    ctx.fillRect(bx+5, by-2,  2, 1); // drain
@@ -443,6 +482,14 @@ function drawStudents() {
     const wobble = s.shakeT > 0 ? Math.round(Math.sin(s.shakeT * 0.9) * 2) : 0;
     const bx = Math.round(s.x + 5) + wobble; // shake offset when hit
     const by = Math.round(s.y);
+    if (CONFIG.charOutline) {
+      const so = CONFIG.charOutlineSize || 1;
+      ctx.fillStyle = CONFIG.charOutlineColor;
+      ctx.fillRect(bx-2-so, by-17-so, 5+so*2, 9+so*2);
+      ctx.fillRect(bx-3-so, by-8-so,  7+so*2, 6+so*2);
+      ctx.fillRect(bx-4-so, by-3-so,  2+so*2, 3+so*2);
+      ctx.fillRect(bx+2-so, by-3-so,  2+so*2, 3+so*2);
+    }
     ctx.fillStyle = C.brown;
     ctx.fillRect(bx-2, by-17, 5, 2);
     ctx.fillStyle = C.pink;
@@ -539,6 +586,13 @@ function drawPreside(x, y, dir, animT, bodyCol, chasing, knockedT) {
   if (knockedT > 0) {
     const fy = by + PH - 1;
     ctx.fillStyle = 'rgba(0,0,0,0.2)'; ctx.fillRect(bx-4, fy+2, 18, 2);
+    if (CONFIG.charOutline) {
+      const s = CONFIG.charOutlineSize || 1;
+      ctx.fillStyle = CONFIG.charOutlineColor;
+      ctx.fillRect(bx-2-s, fy-3-s, 14+s*2, 4+s*2);
+      ctx.fillRect((dir>0 ? bx+12 : bx-6)-s, fy-4-s, 6+s*2, 5+s*2);
+      ctx.fillRect((dir>0 ? bx-4 : bx+8)-s, fy-2-s, 4+s*2, 3+s*2);
+    }
     ctx.fillStyle = bodyCol; ctx.fillRect(bx-2, fy-3, 14, 4);
     ctx.fillStyle = C.pink;  ctx.fillRect(dir > 0 ? bx+12 : bx-6, fy-4, 6, 5);
     ctx.fillStyle = C.blue;  ctx.fillRect(dir > 0 ? bx-4 : bx+8, fy-2, 4, 3);
@@ -550,6 +604,22 @@ function drawPreside(x, y, dir, animT, bodyCol, chasing, knockedT) {
   // Shadow slightly wider for heavier build
   ctx.fillStyle = 'rgba(0,0,0,0.2)'; ctx.fillRect(bx-2, by+PH, PW+4, 2);
 
+  if (CONFIG.charOutline) {
+    const s = CONFIG.charOutlineSize || 1;
+    const fX = dir>0 ? bx-2 : bx+PW;
+    const bkX = dir>0 ? bx+PW : bx-2;
+    ctx.fillStyle = CONFIG.charOutlineColor;
+    ctx.fillRect(bx+1-s, by+10-s, 3+s*2, 4+leg+s*2);
+    ctx.fillRect(bx+4-s, by+10-s, 3+s*2, 4-leg+s*2);
+    ctx.fillRect(bx-s,   by+13+leg-s, 4+s*2, 2+s*2);
+    ctx.fillRect(bx+3-s, by+13-leg-s, 4+s*2, 2+s*2);
+    ctx.fillRect(bx-1-s, by+2-s, PW+2+s*2, 8+s*2);
+    ctx.fillRect(fX-s, by+5-s, 2+s*2, 9+s*2);
+    ctx.fillRect(bkX-s, by+5-s, 2+s*2, 9+s*2);
+    ctx.fillRect(bx+2-s, by+1-s, PW-4+s*2, 1+s*2);
+    ctx.fillRect(bx+1-s, by-8-s, PW-2+s*2, 10+s*2);
+  }
+
   // Legs — same as teacher
   ctx.fillStyle = C.blue;
   ctx.fillRect(bx+1, by+10, 3, 4+leg);
@@ -560,7 +630,7 @@ function drawPreside(x, y, dir, animT, bodyCol, chasing, knockedT) {
 
   // Body 2px wider — no tie
   ctx.fillStyle = bodyCol;
-  ctx.fillRect(bx-1, by+4, PW+2, 8);
+  ctx.fillRect(bx-1, by+2, PW+2, 8);
 
   // Long sleeves: jacket colour + white shirt cuff + pink hand
   const frontX = dir > 0 ? bx-2 : bx+PW;
@@ -579,6 +649,7 @@ function drawPreside(x, y, dir, animT, bodyCol, chasing, knockedT) {
   ctx.fillStyle = C.pink;  ctx.fillRect(bx+1, by-7, PW-2, 8);
   ctx.fillStyle = C.white; ctx.fillRect(bx+1, by-8, PW-2, 2); // white hair — older
   ctx.fillStyle = C.black; ctx.fillRect(dir > 0 ? bx+4 : bx+2, by-5, 2, 2); // eye, no glasses
+  ctx.fillStyle = C.pink;  ctx.fillRect(bx+2, by+1, PW-4, 1);
 
   if (chasing) {
     const bub = dir > 0 ? bx+PW : bx-26;
@@ -595,6 +666,13 @@ function drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, chasing, knock
   if (isTeacher && knockedT > 0) {
     const fy = by + PH - 1; // floor level
     ctx.fillStyle = 'rgba(0,0,0,0.2)'; ctx.fillRect(bx-4, fy+2, 18, 2); // shadow
+    if (CONFIG.charOutline) {
+      const s = CONFIG.charOutlineSize || 1;
+      ctx.fillStyle = CONFIG.charOutlineColor;
+      ctx.fillRect(bx-2-s, fy-3-s, 14+s*2, 4+s*2);
+      ctx.fillRect((dir>0 ? bx+12 : bx-6)-s, fy-4-s, 6+s*2, 5+s*2);
+      ctx.fillRect((dir>0 ? bx-4 : bx+8)-s, fy-2-s, 4+s*2, 3+s*2);
+    }
     ctx.fillStyle = bodyCol; ctx.fillRect(bx-2, fy-3, 14, 4); // body horizontal
     ctx.fillStyle = C.pink;  ctx.fillRect(dir > 0 ? bx+12 : bx-6, fy-4, 6, 5); // head
     ctx.fillStyle = C.blue;  ctx.fillRect(dir > 0 ? bx-4 : bx+8, fy-2, 4, 3);  // feet
@@ -605,6 +683,21 @@ function drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, chasing, knock
 
   ctx.fillStyle = 'rgba(0,0,0,0.2)'; ctx.fillRect(bx-1, by+PH, PW, 2);
 
+  if (CONFIG.charOutline) {
+    const s = CONFIG.charOutlineSize || 1;
+    ctx.fillStyle = CONFIG.charOutlineColor;
+    ctx.fillRect(bx+1-s, by+10-s, 3+s*2, 4+leg+s*2);
+    ctx.fillRect(bx+4-s, by+10-s, 3+s*2, 4-leg+s*2);
+    ctx.fillRect(bx-s,   by+13+leg-s, 4+s*2, 2+s*2);
+    ctx.fillRect(bx+3-s, by+13-leg-s, 4+s*2, 2+s*2);
+    ctx.fillRect(bx-s, by+2-s, PW+s*2, 8+s*2);
+    ctx.fillRect((dir>0 ? bx-2 : bx+PW)-s, by+5-s, 2+s*2, 4+s*2);
+    ctx.fillRect((dir>0 ? bx+PW : bx-2)-s, by+5-s, 2+s*2, 4+s*2);
+    if (!isTeacher) ctx.fillRect((dir>0 ? bx-3 : bx+PW)-s, by+2-s, 3+s*2, 6+s*2);
+    ctx.fillRect(bx+2-s, by+1-s, PW-4+s*2, 1+s*2);
+    ctx.fillRect(bx+1-s, by-8-s, PW-2+s*2, 10+s*2);
+  }
+
   ctx.fillStyle = isTeacher ? C.blue : C.mgray;
   ctx.fillRect(bx+1, by+10, 3, 4+leg);
   ctx.fillRect(bx+4, by+10, 3, 4-leg);
@@ -612,9 +705,9 @@ function drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, chasing, knock
   ctx.fillRect(bx,   by+13+leg, 4, 2);
   ctx.fillRect(bx+3, by+13-leg, 4, 2);
 
-  ctx.fillStyle = bodyCol; ctx.fillRect(bx, by+4, PW, 8);
-  if (isTeacher) { ctx.fillStyle = C.yellow; ctx.fillRect(bx+3, by+5, 2, 6); }
-  else { ctx.fillStyle = C.lblue; ctx.fillRect(bx+1, by+4, 1, 8); ctx.fillRect(bx+5, by+4, 1, 8); }
+  ctx.fillStyle = bodyCol; ctx.fillRect(bx, by+2, PW, 8);
+  if (isTeacher) { ctx.fillStyle = C.yellow; ctx.fillRect(bx+3, by+2, 2, 6); }
+  else { ctx.fillStyle = C.lblue; ctx.fillRect(bx+1, by+2, 1, 8); ctx.fillRect(bx+5, by+2, 1, 8); }
 
   ctx.fillStyle = C.pink;
   ctx.fillRect(dir>0 ? bx-2 : bx+PW, by+5, 2, 4);
@@ -623,16 +716,17 @@ function drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, chasing, knock
   ctx.fillStyle = C.pink; ctx.fillRect(bx+1, by-7, PW-2, 8);
   ctx.fillStyle = isTeacher ? C.lgray : C.brown; ctx.fillRect(bx+1, by-8, PW-2, 2);
   ctx.fillStyle = C.black; ctx.fillRect(dir>0 ? bx+4 : bx+2, by-5, 2, 2);
+  ctx.fillStyle = '#825144'; ctx.fillRect(bx+2, by+1, PW-4, 1);
 
   if (spraying) {
     const sx = dir>0 ? bx+PW : bx-5;
-    ctx.fillStyle = C.cyan; ctx.fillRect(sx, by+4, 4, 6);
+    ctx.fillStyle = C.cyan; ctx.fillRect(sx, by+2, 4, 6);
     for (let i = 0; i < 4; i++) {
       ctx.fillStyle = 'rgba(180,230,180,' + (0.4+Math.random()*0.3) + ')';
       ctx.fillRect(sx + (dir>0 ? 4+i*3 : -i*3-3), by+4+i%3, 3, 3);
     }
   }
-  if (!isTeacher) { ctx.fillStyle = C.blue; ctx.fillRect(dir>0 ? bx-3 : bx+PW, by+4, 3, 6); }
+  if (!isTeacher) { ctx.fillStyle = '#3e3e3e'; ctx.fillRect(dir>0 ? bx-3 : bx+PW, by+2, 3, 6); }
 
   if (chasing) {
     const bub = dir>0 ? bx+PW : bx-26;
@@ -658,10 +752,19 @@ function drawCharClipped(x, y, dir, animT, bodyCol, isTeacher, spraying, chasing
 function drawJanitor(x, y, dir, animT) {
   drawChar(x, y, dir, animT, C.mgray, false, false, false);
   const bx = Math.round(x), by = Math.round(y);
+  const mx = dir > 0 ? bx+PW : bx-1;
+  if (CONFIG.charOutline) {
+    const s = CONFIG.charOutlineSize || 1;
+    ctx.fillStyle = CONFIG.charOutlineColor;
+    ctx.fillRect(bx+1-s, by-9-s, PW-2+s*2, 3+s*2);
+    ctx.fillRect((dir>0 ? bx+PW-1 : bx-1)-s, by-7-s, 3+s*2, 1+s*2);
+    ctx.fillRect(mx-s, by+4-s, 1+s*2, 12+s*2);
+    ctx.fillRect(mx-1-s, by+14-s, 3+s*2, 2+s*2);
+    ctx.fillRect(mx-2-s, by+16-s, 5+s*2, 1+s*2);
+  }
   ctx.fillStyle = C.blue;
   ctx.fillRect(bx+1, by-9, PW-2, 3);
   ctx.fillRect(dir>0 ? bx+PW-1 : bx-1, by-7, 3, 1);
-  const mx = dir > 0 ? bx+PW : bx-1;
   ctx.fillStyle = C.brown;
   ctx.fillRect(mx, by+4, 1, 12);
   ctx.fillStyle = C.lgray;

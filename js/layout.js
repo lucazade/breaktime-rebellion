@@ -45,9 +45,9 @@ var SHARED_LAYOUT = {
   // fdTop: px above the walking surface where the sprite starts to appear (trapdoor top edge)
   // fdBot: px below the walking surface where the sprite disappears  (floor plank underside)
   stairs: [
-    {x1:88,  y1:GY-walkOffset, x2:35,  y2:MY-walkOffset, fdTop:4, fdBot:12},  // GY→MY sx
+    {x1:90,  y1:GY-walkOffset, x2:37,  y2:MY-walkOffset, fdTop:4, fdBot:12},  // GY→MY sx
     {x1:232, y1:GY-walkOffset, x2:285, y2:MY-walkOffset, fdTop:4, fdBot:12},  // GY→MY dx
-    {x1:90,  y1:MY-walkOffset, x2:33,  y2:TY-walkOffset, fdTop:4, fdBot:12},  // MY→TY sx
+    {x1:92,  y1:MY-walkOffset, x2:35,  y2:TY-walkOffset, fdTop:4, fdBot:12},  // MY→TY sx
     {x1:232, y1:MY-walkOffset, x2:285, y2:TY-walkOffset, fdTop:4, fdBot:12},  // MY→TY dx
   ],
 
@@ -60,8 +60,8 @@ var SHARED_LAYOUT = {
   desks: [
     {x:155, y:GY-22}, {x:179, y:GY-22},
     {x:155, y:MY-22}, {x:179, y:MY-22},
-    {x:61,  y:TY-20}, {x:84,  y:TY-20}, {x:158, y:TY-20}, {x:182, y:TY-20},
+    {x:62,  y:TY-20}, {x:85,  y:TY-20}, {x:158, y:TY-20}, {x:182, y:TY-20},
   ],
 
-  bell: { x: 14, y: GY - 51 },
+  bell: { x: 13, y: GY - 51 },
 };
