@@ -203,12 +203,5 @@ Obiettivo: come da titolo
 - [ ] #63 Rivedere testo storia iniziale
 - [ ] #64 Revisione punteggi (Federica)
 - [ ] #65 Aggiornare stile pulsanti home, pausa e bell nei sidepanel
-
----
-
-## FASE 12 — Varie ed eventuali
-
-Obiettivo: ancora in dubbio.
-
-- [ ] # Lavoro su branch outline personaggi (vecchio tentativo, pesa sulla cpu)
+- [ ] #66 Lavoro su branch outline personaggi (vecchio tentativo, pesa sulla cpu)
  
