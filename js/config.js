@@ -7,6 +7,9 @@ const CONFIG = {
   images: {
     background: 'assets/pics/bg-640.png',
   },
+  charOutline:      true,
+  charOutlineSize:  1.0,
+  charOutlineColor: '#121212',
   audio: {
     musicVolume: 0.5,
     sfxVolume:   0.8,
