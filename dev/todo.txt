@@ -176,8 +176,6 @@ label ruota il dispositivo
 - [X] #59 attiviamo il tempo in L10
 - [X] #60 il fumetto è ancora basso alziamo di 10px
 - [X] #61 facciamo sparire il fumetto quando appare il banner "leggenda della scuola"
-- [ ] #62 Prima del rilascio disattivare debug: showLevelChooser: true nel config
-- [ ] #63 Rivedere testo storia iniziale
 
 ---
 
@@ -195,10 +193,20 @@ Obiettivo: pixel perfect e rocksolid
 - [X] #68 Nel banner finale sostiuiamo "Legendario" con "Leggenda della scuola.
 La seconda riga attuale "Leggenda della scuola" la rimuoviamo del tutto.
 
+---
+
+## FASE 11 — Beta Testing
+
+Obiettivo: come da titolo
+
+- [ ] #62 Prima del rilascio disattivare debug: showLevelChooser: true nel config
+- [ ] #63 Rivedere testo storia iniziale
+- [ ] #64 Revisione punteggi (Federica)
+- [ ] #65 Aggiornare stile pulsanti home, pausa e bell nei sidepanel
 
 ---
 
-## FASE 11 — Varie ed eventuali
+## FASE 12 — Varie ed eventuali
 
 Obiettivo: ancora in dubbio.
 
