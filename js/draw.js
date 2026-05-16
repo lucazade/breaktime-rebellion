@@ -54,35 +54,39 @@ function drawBoards() {
 
 function drawBell() {
   const bx = BELL.x, by = BELL.y;
-  const sx = BELL.ringing ? Math.round(Math.sin(frame * 0.6) * 2) : 0;
-  const gold = BELL.ringing ? '#FFE000' : C.bell;
+  const sw = BELL.ringing ? Math.round(Math.sin(frame * 0.6) * 3) : 0;
+  const red  = BELL.ringing ? '#ff2200' : '#cc1100';
+  const dark = '#880a00';
 
-  ctx.fillStyle = C.dgray;
-  ctx.fillRect(bx+1, by, 2, 1);
+  // Outline pass
+  ctx.fillStyle = dark;
+  ctx.fillRect(bx+2+sw, by,   4, 1);  // top border
+  ctx.fillRect(bx+2+sw, by+1, 4, 1);  // tip outline
+  ctx.fillRect(bx+1+sw, by+2, 6, 1);  // row2 outline
+  ctx.fillRect(bx+1+sw, by+3, 6, 1);  // base outline (6px)
+  ctx.fillRect(bx+1+sw, by+4, 6, 1);  // bottom border
 
-  ctx.fillStyle = gold;
-  ctx.fillRect(bx+0+sx, by+1, 4, 1);
-  ctx.fillRect(bx-1+sx, by+2, 6, 2);
-  ctx.fillRect(bx-1+sx, by+4, 7, 1);
+  // Red fill (3 righe: 2→4→6px)
+  ctx.fillStyle = red;
+  ctx.fillRect(bx+3+sw, by+1, 2, 1);  // tip:  2 px
+  ctx.fillRect(bx+2+sw, by+2, 4, 1);  // row2: 4 px
+  ctx.fillRect(bx+2+sw, by+3, 4, 1);  // base: 4 px (stessa larghezza, no flare)
 
-  ctx.fillStyle = 'rgba(255,255,200,0.6)';
-  ctx.fillRect(bx+1+sx, by+2, 1, 1);
-
-  ctx.fillStyle = C.brown;
-  ctx.fillRect(bx+2+sx, by+5, 1, 1);
-  ctx.fillRect(bx+1+sx, by+6, 2, 1);
+  // Clapper (batacchio) — corto
+  ctx.fillStyle = dark;
+  ctx.fillRect(bx+3+sw, by+5, 2, 1);  // ball
 
   if ((allBoards || allBags || allMachines || allBall || allStudents || allBooks) && !BELL.done) {
     const pulse = 0.12 + 0.08 * Math.sin(frame * 0.15);
     ctx.fillStyle = 'rgba(255,215,0,' + pulse + ')';
-    ctx.beginPath(); ctx.arc(bx+2, by+3, 6, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(bx+4, by+2, 7, 0, Math.PI*2); ctx.fill();
   }
 
   if (BELL.ringing) {
     for (let i = 1; i <= 3; i++) {
       ctx.strokeStyle = 'rgba(255,215,0,' + (0.6 - i*0.15) + ')';
       ctx.lineWidth = 1;
-      ctx.beginPath(); ctx.arc(bx+2, by+3, 3+i*2, 0, Math.PI*2); ctx.stroke();
+      ctx.beginPath(); ctx.arc(bx+4, by+2, 4+i*3, 0, Math.PI*2); ctx.stroke();
     }
   }
 }
@@ -103,9 +107,12 @@ function drawGymBall() {
     ctx.fillStyle = C.yellow;           ctx.fillRect(bx-1, by-5, Math.round(11 * pct), 3);
   }
   // Basketball
+  ctx.fillStyle = '#6b2200';
+  ctx.fillRect(bx+1, by-1, 7, 1); ctx.fillRect(bx+1, by+9, 7, 1); // top/bottom
+  ctx.fillRect(bx-1, by+1, 1, 7); ctx.fillRect(bx+9, by+1, 1, 7); // left/right
   ctx.fillStyle = '#CC6600';
   ctx.fillRect(bx+1, by, 7, 9); ctx.fillRect(bx, by+1, 9, 7);
-  ctx.fillStyle = '#993300';
+  ctx.fillStyle = '#6b2200';
   ctx.fillRect(bx+4, by, 1, 9); ctx.fillRect(bx, by+4, 9, 1);
   ctx.fillStyle = 'rgba(255,200,100,0.5)'; ctx.fillRect(bx+1, by+1, 2, 2);
   if (!allBall) {
@@ -127,7 +134,10 @@ function drawBookcase() {
   if (bookcase.dropped) {
     // Open book lying flat on the floor (two pages + spine)
     const fx = bx + bookcase.fallDx, fy = by + bookcase.fallDy;
-    ctx.fillStyle = '#8B3000'; ctx.fillRect(fx,    fy,   18, 1); // binding top
+    ctx.fillStyle = '#3a1000';
+    ctx.fillRect(fx-1, fy, 1, 9); ctx.fillRect(fx+18, fy, 1, 9); // vertical borders
+    ctx.fillRect(fx-1, fy+9, 20, 1);                               // bottom border
+    ctx.fillStyle = '#3a1000'; ctx.fillRect(fx,    fy,   18, 1); // binding top
     ctx.fillStyle = '#F5E6C0'; ctx.fillRect(fx,    fy+1,  7, 8); // left page
     ctx.fillStyle = '#F5E6C0'; ctx.fillRect(fx+11, fy+1,  7, 8); // right page
     ctx.fillStyle = '#6B2200'; ctx.fillRect(fx+7,  fy,    4, 9); // spine
@@ -355,6 +365,12 @@ function drawBins() {
     // Body
     ctx.fillStyle = '#228B22'; ctx.fillRect(bx, by-11, 10, 11);
     ctx.fillStyle = '#1a6e1a'; ctx.fillRect(bx, by-11, 1, 11); // left shadow
+    // Dark green border (overwrite existing edge pixels, no external expansion)
+    ctx.fillStyle = '#0d4d0d';
+    ctx.fillRect(bx,   by-14, 1,  14); // left
+    ctx.fillRect(bx+9, by-14, 1,  14); // right
+    ctx.fillRect(bx,   by-1,  10,  1); // bottom
+
     // Triangle (vertex up) as recycle symbol
     ctx.fillStyle = 'rgba(255,255,255,0.75)';
     ctx.fillRect(bx+4, by-9, 2, 1); // top vertex
@@ -424,6 +440,7 @@ function drawSink() {
   ctx.fillStyle = '#aaa'; ctx.fillRect(bx+4, by-10, 1, 1);
 
   // Sink basin
+  ctx.fillStyle = '#666'; ctx.fillRect(bx-1, by-9, 14, 10);
   ctx.fillStyle = '#b0b0b0'; ctx.fillRect(bx,   by-8, 12, 8);
   ctx.fillStyle = '#d8d8d8'; ctx.fillRect(bx+1, by-7, 10, 6);
   ctx.fillStyle = '#888';    ctx.fillRect(bx+5, by-2,  2, 1); // drain

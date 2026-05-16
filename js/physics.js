@@ -452,7 +452,7 @@ function tryAction() {
     if (throwCooldown <= 0) {
       paperBalls.push({
         x: player.dir > 0 ? player.x + PW : player.x - 3,
-        y: player.y + 2,
+        y: player.y - 3,
         dir: player.dir,
         dist: 0,
       });
