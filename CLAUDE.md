@@ -15,9 +15,9 @@ robots.txt          ← noindex pre-release
 css/
   style.css         ← tutti gli stili
 js/                 ← ordine di caricamento obbligatorio:
-  config.js         ← CONFIG (images, audio, levelTimer, debug) — primo
+  config.js         ← CONFIG (images, audio, debug) — primo
   layout.js         ← CONFIG.layout, CONFIG.colors, shortcut constants, SHARED_LAYOUT
-  levels.js         ← LEVELS[] con mechanics + rooms per livello
+  levels.js         ← LEVELS[] con mechanics + NPC per livello
   i18n.js           ← STRINGS EN/IT
   audio.js          ← GameAudio (music + sfx manager)
   state.js          ← variabili condivise, player, resetLevel, startGame, fmt()
@@ -26,11 +26,14 @@ js/                 ← ordine di caricamento obbligatorio:
   entities.js       ← teachers, janitors, bell, timer, particles
   draw.js           ← tutte le draw* + updateHUD
   game.js           ← canvas setup + loop puro
+  title.js          ← title screen, level chooser, audio toggle, service worker
 assets/
-  logo.png          ← logo title screen (1408×768)
+  pics/
+    logo.png        ← logo title screen
+    bg-640.png      ← background disegnato a mano (640×400px)
+  audio/            ← musica e sfx
   icon-192.png      ← icona PWA 192×192
   icon-512.png      ← icona PWA 512×512
-  bg.png            ← background disegnato a mano (640×400px, opzionale)
 dev/
   todo.txt          ← piano di implementazione a fasi
 ```
@@ -65,85 +68,115 @@ Il codice è diviso in moduli distinti che comunicano via variabili globali cond
 - `player`, `teachers`, `janitors`, `BOARDS`, `bags`, `BELL`, `DESKS`, `stairs`
 - `lives`, `score`, `state`, `frame`, `currentLevel`
 - `levelMechanics` — mechanics attive nel livello corrente (da `lv.mechanics`)
-- `pendingTransition` — `{ t: frames, fn: callback }` o `null`; usato al posto di `setTimeout` per transizioni di stato (win/gameover). Resettato da `resetLevel()`, decrementato da `tickTransition()` nel loop.
-- `missionBannerLines` — array di righe pre-calcolate per il banner missione; `null` = da ricalcolare. Resettato da `resetLevel()`, calcolato al primo frame da `drawMissionBanner()`.
+- `nightMode` — `true` in L10, attiva `drawNightOverlay()` (gradiente radiale torcia)
+- `register`, `exitDoor` — oggetti L10; `exitDone`, `exitWinReady` — flag win L10
+- `deathFreeze` — congela NPC e aggiornamenti durante morte/win; solo `tickTransition()` avanza
+- `pendingTransition` — `{ t: frames, fn: callback }` o `null`; usato al posto di `setTimeout` per transizioni di stato. Resettato da `resetLevel()`, decrementato da `tickTransition()`.
+- `storyBannerT` — countdown banner storia (solo L1 prima partita); `missionBannerT` — banner missione
 - `fmt(s, ...args)` — formatta stringhe con placeholder `{0}`, `{1}`
 
 ## LEVELS (js/levels.js)
 
-Tutti i dati di ogni livello sono in `LEVELS[]` (e `CONFIG.levels` è un alias).
+Tutti i dati di ogni livello sono in `LEVELS[]`.
+Ogni livello è `Object.assign({}, SHARED_LAYOUT, { ... })`.
+`SHARED_LAYOUT` (in layout.js) contiene scale, lavagne, banchi, campanella e playerStart — fissi in tutti i livelli.
+
 Ogni livello contiene:
 ```js
 {
-  timer: 60,               // secondi (override CONFIG.levelTimer)
+  timer: 60,               // secondi (0 = nessun limite)
   playerStart: {x, y},
 
-  mechanics: {             // quali azioni/obiettivi sono attivi in questo livello
-    writeBoards: true,     // spray boards → allBoards → campanella
-    stealBags:   false,    // raccogliere tutte le cartelle (obiettivo L2)
-    ringBell:    true,     // suonare la campanella completa il livello
+  mechanics: {             // quali azioni/obiettivi sono attivi
+    writeBoards:     true/false,   // L1: spray lavagne
+    stealBags:       true/false,   // L2: raccogliere cartelle
+    shakeMachines:   true/false,   // L3: spaccare distributori
+    deflateBall:     true/false,   // L4: sgonfiare pallone
+    throwPaper:      true/false,   // L5: lanciare cartacce
+    dropBook:        true/false,   // L6: far cadere libri
+    floodSink:       true/false,   // L7: allagare bagno
+    plantBomb:       true/false,   // L8: petardi nei secchi
+    activateSprinkler: true/false, // L9: sprinkler antincendio
+    stealRegister:   true/false,   // L10: rubare registro
+    escapeExit:      true/false,   // L10: raggiungere uscita con registro
+    ringBell:        true/false,   // campanella completa il livello (false in L10)
   },
 
-  rooms: [                 // zone con azioni contestuali (vuoto se non servono)
-    { id, name, x, y, w, h, actions: [] }
-  ],
-
-  stairs:   [{x1,y1,x2,y2}, ...],
+  stairs:   [{x1,y1,x2,y2, fdTop, fdBot}, ...],  // fdTop/fdBot: px clip banda pavimento
   boards:   [{x,y}, ...],
   bags:     [{x,y}, ...],
   desks:    [{x,y}, ...],
   bell:     {x, y},
-  teachers: [{x,y,dir,minX,maxX,speed,color,name,sight}, ...],
+  teachers: [{x,y,dir,minX,maxX,speed,color,name,sight, catchRadius?}, ...],
   janitors: [{x,y,dir,minX,maxX,speed,name}, ...],
+
+  // Oggetti opzionali per livello:
+  machines:   [{x,y}, ...],            // L3
+  gymBall:    {x,y},                   // L4
+  students:   [{x,y}, ...],            // L5
+  bookcase:   {x,y,fallDx,fallDy},     // L6
+  sink:       {x,y},                   // L7
+  bins:       [{x,y}, ...],            // L8
+  sprinklers: [{x,y,floor}, ...],      // L9
+  register:   {x,y},                   // L10
+  exitDoor:   {x,y},                   // L10
+  nightMode:  true/false,              // L10
 }
 ```
-Le coordinate usano `L.GY`, `L.MY`, `L.TY`, `L.PH` (da `CONFIG.layout`) per restare leggibili.
+Le coordinate usano `GY`, `MY`, `TY`, `PH`, `walkOffset` (da `layout.js`) per restare leggibili.
+
+**Scale (`stairs`):** `fdTop` = px sopra la superficie dove la testa appare; `fdBot` = px sotto dove le gambe spariscono. Valori attuali: `fdTop:4, fdBot:12` su tutte le scale.
+
+**Teacher con `catchRadius`:** i Guardiani (L10) hanno `catchRadius:20` — catturano Marco anche in patrol, senza cono visivo. Copiato nella teacher map di `state.js`.
 
 ## i18n (js/i18n.js)
 
 - Solo **stringhe pure** in `var en` e `var it` — NO funzioni, NO array
 - Stringhe con parametri: placeholder `{0}`, `{1}` — formattare con `fmt()` in game code
 - Missioni per livello: chiavi `mission1`, `mission2`, ... (una per livello)
+- Separatore `|` nelle stringhe dei fumetti per forzare a capo
 - Override lingua: `?lang=en` o `?lang=it` nell'URL
 
 ## Canvas e background
 
-**Risoluzione 2×:** canvas element `640×400`, `ctx.scale(2,2)` → coordinate logiche invariate a `320×200`. `ctx.imageSmoothingEnabled = false`.
+**Risoluzione 2×:** canvas element `640×400`, `ctx.scale(2,2)` → coordinate logiche `320×200`. `ctx.imageSmoothingEnabled = false`.
 
-**Background bitmap** (`assets/bg.png`, 640×400px, sempre presente):
+**Background bitmap** (`assets/pics/bg-640.png`, 640×400px):
 - `drawBg()` lo disegna a 1:1 (bypass `ctx.scale` con `setTransform`)
 - Muri, pavimenti, scale sono nel PNG — non esistono funzioni draw per questi elementi
 - Oggetti interattivi (banchi, lavagne, campanella, cartelle) sono sempre disegnati via codice sopra il PNG
-- Coordinate di riferimento nel PNG: TY=y116, MY=y246, GY=y376, dividers x214/x426
 
 **Debug overlay (`?debug=1`):**
-- Mostra: floor lines (TY/MY/GY), room dividers (x=107/213), stair boxes con coordinate, hitbox tutti gli oggetti
-- Utile per allineare `bg.png` con la logica: screenshot con `?debug=1`, sovrapponi in editor
+- Mostra: floor lines (TY/MY/GY), stair boxes con coordinate, hitbox tutti gli oggetti
+- Utile per allineare `bg-640.png` con la logica
+
+**Clip sprite sulle scale:** `drawCharClipped()` in draw.js disegna Marco in due passate (sopra e sotto la banda del pavimento) quando `player.onStair` è true. La banda è `[surfaceY - fdTop, surfaceY + fdBot]`.
 
 ## CONFIG (js/config.js)
 
-- `CONFIG.layout` — W, H, PW, PH, GY, MY, TY, BW, BH, FD
+- `CONFIG.layout` — W, H, PW, PH, GY, MY, TY, BW, BH, walkOffset
 - `CONFIG.colors` — palette C64 (alias `C` in state.js, disponibile globalmente)
-- `CONFIG.images` — percorsi immagini
-- `CONFIG.audio` — `musicVolume`, `sfxVolume`, `music` path, `sfx` map
-- `CONFIG.levelTimer` — timer globale in secondi (0 = disabilitato); override con `lv.timer`
-- `CONFIG.debug.disableMusic` — `true` per silenziare musica durante testing
-- `CONFIG.debug.disableJanitors` — `true` per rimuovere bidelli durante testing
-- `CONFIG.levels` — non più usato; i livelli sono in `LEVELS[]` di `js/levels.js`
+- `CONFIG.images` — percorsi immagini (`background: 'assets/pics/bg-640.png'`)
+- `CONFIG.audio` — `musicVolume`, `sfxVolume`, `music`, `introMusic`, `bossMusic`, `sfx` map
+- `CONFIG.debug.showLevelChooser` — `true` sblocca tutti i livelli nel chooser
 
-## Teacher sprites
+## NPC sprites
 
-- **Prof.Rossi** (piano terra, `C.red`): giacca rossa, pantaloni blu, cravatta gialla
-- **Prof.Verdi** (piano medio, `C.green`): giacca verde, pantaloni blu, cravatta gialla
-- **Prof.Neri** (piano alto, `C.mgray`, maxX=275): giacca grigia, pantaloni blu, cravatta gialla
-- **Bidello**: `drawJanitor()` = `drawChar(C.mgray)` + cap navy + mop. Patrol corto, no chasing.
+- **Prof.Rossi** (`C.redprof`): patrol GY, sight 90
+- **Prof.Celeste** (`C.cyanprof`): patrol MY, sight 80
+- **Prof.Neri** (`C.grayprof`): patrol TY, sight 100, maxX=275
+- **Prof.Ginnastica** (`C.green`): L4, patrol MY area palestra
+- **Preside** (`'#1a1a4a'`): L6, `drawPreside()`, velocità 1.0, sight 150
+- **Guardiano** (`'#1a1a3a'`): L10, `drawGuard()`, `catchRadius:20`, NO cono visivo, NO caduta a terra
+- **Bidello**: `drawJanitor()`, patrol corto, no chasing; se colpito da sprinkler → `knockedT`
 
-## HUD icons
+**Catch behavior:** `caughtBy(t)` inverte `t.dir` e resetta `chasing` — l'NPC rimbalza via invece di seguire Marco al respawn. I Guardiani NON cadono a terra (`knockedT`), invertono solo direzione.
 
-Icons in `#hud-row` usano **Font Awesome 6 Solid** (CDN).
-- Lives: `♥` ripetuto (`.hl`, color `#ff6b6b`)
-- Boards: `fa-spray-can` (green) + contatore `0/6`
-- Score: `fa-star` (gold) + punteggio
+## Audio
+
+- Musica di gioco: `bgMusic` (L1-L9), `bossMusic` (L10) — selezionata da `_gameTrack()`
+- Intro music: fade out con `fadeOutIntro()` all'avvio partita — NON TOCCARE la logica audio/transizioni
+- Jingle win/gameover: tracciati in `jingle` per poterli stoppare al restart
 
 ## Convenzioni commit
 
