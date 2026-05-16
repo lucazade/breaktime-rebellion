@@ -9,4 +9,4 @@ node_modules/
 package-lock.json
 www/
 android/
-breaktime-rebellion-v*.apk
+apks/
