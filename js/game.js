@@ -2,6 +2,16 @@
 
 const CV = document.getElementById('c');
 const ctx = CV.getContext('2d');
+
+// Aggiorna --game-h su :root così HUD e msg scalano sull'altezza reale del game-area
+(function() {
+  var _ga = document.getElementById('game-area');
+  function _updateGameH() {
+    document.documentElement.style.setProperty('--game-h', _ga.offsetHeight + 'px');
+  }
+  _updateGameH();
+  window.addEventListener('resize', _updateGameH);
+})();
 ctx.scale(2, 2); // 2× resolution: 640×400 canvas, 320×200 logical coordinates
 ctx.imageSmoothingEnabled = false;
 
