@@ -5,7 +5,7 @@
 // ═══════════════════════════════════════════════════════════
 const CONFIG = {
   images: {
-    background: 'assets/pics/bg-640.png',
+    background: 'assets/pics/bg.png',
   },
   charOutline:      true,
   charOutlineSize:  1.0,
