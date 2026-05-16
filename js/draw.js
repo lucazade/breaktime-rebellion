@@ -10,6 +10,7 @@ function drawBg() {
 function drawDesks() {
   for (let i = 0; i < DESKS.length; i++) {
     const d = DESKS[i];
+    ctx.fillStyle = '#2c1800'; ctx.fillRect(d.x-1, d.y-1, 22, 8);
     ctx.fillStyle = C.desklt; ctx.fillRect(d.x, d.y, 20, 6);
     ctx.fillStyle = C.desk;   ctx.fillRect(d.x, d.y+5, 20, 2);
     ctx.fillStyle = C.brown;
@@ -32,9 +33,9 @@ function drawBoards() {
   for (let i = 0; i < BOARDS.length; i++) {
     const b = BOARDS[i];
     ctx.fillStyle = C.brown;   ctx.fillRect(b.x-1, b.y-1, BW+2, BH+2);
-    ctx.fillStyle = C.chalkbg; ctx.fillRect(b.x, b.y, BW, BH);
+    ctx.fillStyle = '#075b07'; ctx.fillRect(b.x, b.y, BW, BH);
     if (!b.done) {
-      ctx.fillStyle = 'rgba(200,220,200,0.18)';
+      ctx.fillStyle = '#2c832c';
       ctx.fillRect(b.x+2, b.y+3, BW-4, 2);
       ctx.fillRect(b.x+2, b.y+8, BW-4, 2);
       if (i === nearestIdx && nd < 36) {
