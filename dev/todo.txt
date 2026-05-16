@@ -199,10 +199,10 @@ La seconda riga attuale "Leggenda della scuola" la rimuoviamo del tutto.
 
 Obiettivo: come da titolo
 
-- [ ] #62 Prima del rilascio disattivare debug: showLevelChooser: true nel config
-- [ ] #63 Rivedere testo storia iniziale
-- [ ] #64 Revisione punteggi (Federica)
-- [ ] #65 Aggiornare stile pulsanti home, pausa e bell nei sidepanel
-- [X] #66 Lavoro su branch outline personaggi
-- [ ] #67 il libro torna al proprio posto quando il preside ci passa sopra (stessa cosa per il pallone e l'insegnante di Ginnastica) 
+- [ ] #69 Prima del rilascio disattivare debug: showLevelChooser: true nel config
+- [ ] #70 Rivedere testo storia iniziale
+- [ ] #71 Revisione punteggi (Federica)
+- [ ] #72 Aggiornare stile pulsanti home, pausa e bell nei sidepanel
+- [X] #73 Lavoro su branch outline personaggi
+- [ ] #74 il libro torna al proprio posto quando il preside ci passa sopra (stessa cosa per il pallone e l'insegnante di Ginnastica) 
  
