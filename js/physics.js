@@ -25,7 +25,7 @@ function getStairAt(px, py) {
   return null;
 }
 
-function clampX(x) { return Math.max(4, Math.min(W - PW - 4, x)); }
+function clampX(x) { return Math.max(CONFIG.layout.wallLeft, Math.min(W - PW - CONFIG.layout.wallRight, x)); }
 
 function updatePlayer() {
   if (state !== 'playing') return;

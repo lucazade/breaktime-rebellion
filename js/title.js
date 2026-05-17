@@ -10,7 +10,7 @@
   // ── Service worker ──────────────────────────────────────────────────────────
   if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
 
-  // ── Start game: Enter key or tap on logo image only ─────────────────────────
+  // ── Start game: Enter key o tap sull'immagine logo ───────────────────────────
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && state === 'title') startGame();
   });

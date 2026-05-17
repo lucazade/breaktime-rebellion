@@ -227,16 +227,16 @@ Obiettivo: come da titolo
 - [X] #102 quando sgonfi il pallone o rubi il registro non deve fare lo sparkling
 - [X] #103 far sparire il mouse su browser se non in uso
 - [X] #83 Pausa ed esci sono due menù esclusivi
+- [X] #78 limitare il movimento di marco all'estrema sinistra e destra del quadro altrimenti sembra camminare sul muro (fine tuning in config)
+- [X] #88 Il tocco nella title screen deve essere catturato dappertutto tranne che nella zona dei pulsanti sotto l' immagine
 - [ ] #90 Testa dei personaggi leggermente meno alta e pixel sopra campanella mancante (non implementrare adesso)
 - [ ] #72 Revisione punteggi (per Federica)
 - [ ] #85 Aggiungere banco al secondo piano (per Luca)
 - [ ] #76 target libreria troppo grande
-- [ ] #78 limitare il movimento di marco all'estrema sinistra e destra del quadro altrimenti sembra camminare sul muro (fine tuning in config)
 - [ ] #79 la bomboletta spray va spostata fuori dal corpo perchè così non si distingue e il getto spray deve essere particellare (piccoli pixel)
 - [ ] #80 le cartelle non devono avere i due pixel gialli lampegganti (sembrano bombe) e per raccoglierle
 bisogna tener premuto azione Z con progressbar altrimenti troppo semplice
 - [ ] #86 Banner storia fadeout al click (non implementare adesso, controllare dopo #96)
-- [ ] #88 Il tocco nella title screen deve essere catturato dappertutto tranne che nella zona dei pulsanti sotto l' immagine
 - [ ] #96 Quando appaiono i banner della storia e di inizio livello il gioco dietro deve essere leggermente scurito e con il fadout del banner del livello il gioco torna del tutto visibile
 - [ ] #97 Transizione grafica tra un livello e il successivo (come? sempre fade?)
 - [ ] #99 quando devi suonare la campanella deve lampeggiare come fa alla fine di L1

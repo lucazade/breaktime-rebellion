@@ -9,6 +9,7 @@ CONFIG.layout = {
   GY: 185, MY: 127, TY: 70,
   BW: 22, BH: 14,
   walkOffset: 6,
+  wallLeft: 10, wallRight: 10, // #78 — margini muro sx/dx (pixel logici)
 };
 
 CONFIG.colors = {
