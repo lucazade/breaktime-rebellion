@@ -21,7 +21,7 @@ let stairs, DESKS;
 let BOARDS, bags, BELL, teachers, janitors;
 let lives, score, state, frame;
 let particles, floatingTexts;
-let msgText, msgT;
+let msgText, msgT, msgDuration;
 let actionPressed, allBoards, allBags, allMachines, allBall, allStudents, allBooks, timerTicks, maxTimerTicks;
 let machines, gymBall, paperBalls, students, throwCooldown, bookcase, sink, bins, sprinklers, register, exitDoor;
 let nightMode, registerTime, allRegister, exitDone, exitWinReady;
@@ -65,7 +65,7 @@ function resetLevel() {
   player.onStair = false; player.currentStair = null;
   player.stunT = 0; player.spraying = false; player.sprayT = 0; player.shaking = false;
   particles = []; floatingTexts = [];
-  msgText = ''; msgT = 0;
+  msgText = ''; msgT = 0; msgDuration = 0;
   actionPressed = false; allBoards = false; allBags = false; allMachines = false; allBall = false; allStudents = false; allBooks = false; allSink = false; allBins = false; allSprinklers = false; allRegister = false; exitDone = false; exitWinReady = false;
   machines  = (lv.machines  || []).map(function(m) { return {x:m.x, y:m.y, broken:false, shakeT:0}; });
   gymBall   = lv.gymBall ? {x:lv.gymBall.x, y:lv.gymBall.y, deflated:false, shakeT:0, deflateCount:0, reinflateT:0} : null;
@@ -100,7 +100,7 @@ function resetLevel() {
 lives = 3; score = 0; state = 'title';
 resetLevel();
 
-function setMsg(t, d) { msgText = t; msgT = d || 220; }
+function setMsg(t, d) { msgText = t; msgT = d || 220; msgDuration = msgT; }
 
 // Fade #screen-fade from `from` to `to` opacity over `ms`, then call cb
 function fadeScreen(from, to, ms, cb) {

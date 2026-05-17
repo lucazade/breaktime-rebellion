@@ -1072,9 +1072,6 @@ function updateHUD() {
   for (let i = 0; i < BOARDS.length; i++) if (BOARDS[i].done) done++;
   document.getElementById('hW').textContent = done + '/' + BOARDS.length;
   document.getElementById('hS').textContent = String(score).padStart(5,'0');
-  var msgEl = document.getElementById('msg');
-  if (msgT > 0) { msgT--; msgEl.textContent = msgText; }
-  else { msgEl.textContent = ''; }
   // Objective counter and icon — switches per active mechanic
   var objDone = 0, objTotal = 0, iconClass = 'fa-spray-can';
   if (levelMechanics.stealBags) {
@@ -1117,11 +1114,29 @@ function updateHUD() {
     for (let i = 0; i < BOARDS.length; i++) if (BOARDS[i].done) objDone++;
     objTotal = BOARDS.length;
   }
-  var icon = document.getElementById('hud-obj-icon');
-  if (icon && !icon.classList.contains(iconClass)) {
-    icon.className = 'fa-solid ' + iconClass + ' hud-icon hud-spray';
+  var icon  = document.getElementById('hud-obj-icon');
+  var hWEl  = document.getElementById('hW');
+  var hudMsg = document.getElementById('hud-msg');
+
+  if (msgT > 0) {
+    msgT--;
+    var elapsed = msgDuration - msgT;
+    var fadeIn  = elapsed < 15 ? elapsed / 15 : 1;
+    var fadeOut = msgT < 25 ? msgT / 25 : 1;
+    hudMsg.textContent  = msgText;
+    hudMsg.style.opacity = Math.min(fadeIn, fadeOut);
+    hudMsg.style.display = 'inline';
+    hWEl.style.display  = 'none';
+    icon.style.display  = 'none';
+  } else {
+    hudMsg.style.display = 'none';
+    hWEl.style.display  = '';
+    icon.style.display  = '';
+    if (icon && !icon.classList.contains(iconClass)) {
+      icon.className = 'fa-solid ' + iconClass + ' hud-icon hud-spray';
+    }
+    hWEl.textContent = objDone + '/' + objTotal;
   }
-  document.getElementById('hW').textContent = objDone + '/' + objTotal;
   if (maxTimerTicks > 0) {
     var pct = Math.max(0, timerTicks / maxTimerTicks);
     var bar = document.getElementById('timer-bar');
