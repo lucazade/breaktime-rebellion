@@ -248,7 +248,8 @@ Obiettivo: come da titolo
 - [ ] #96 Quando appaiono i banner della storia e di inizio livello il gioco dietro deve essere leggermente scurito e con il fadout del banner del livello il gioco torna del tutto visibile
 - [ ] #97 Transizione grafica tra un livello e il successivo (come? sempre fade?)
 - [ ] #104 non compare piu l'immagine logo sopra la label rotateHtml
-- [ ] #105 In rotatehtml non deve prendere tap o clicca altrimenti parte il gioco
+- [ ] #105 In rotatehtml non deve prendere tap o clicca altrimenti parte il gioco (non sempre)
 - [ ] #106 Sulla title screen quando fai tap sta per partire il gioco prende anche altri tap e non dovrebbe
 - [ ] #107 Test robustezza automatico
 - [ ] #108 sistemare suoni (per Luca)
+- [ ] #109 La progress di L2 è troppo difficile che si resetta se non riesci a completarla, rimettiamo quella classica e questa che si resetta se non la completi mettiamola al pallone
