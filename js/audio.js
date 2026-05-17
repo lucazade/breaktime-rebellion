@@ -124,11 +124,19 @@ const GameAudio = (function() {
     var t = _gameTrack(); if (t && mode === 'full') t.play().catch(function() {});
   }
 
+  // Preload sfx — cloneNode() è istantaneo rispetto a new Audio() ogni volta
+  var _sfxCache = {};
+  Object.keys(CONFIG.audio.sfx).forEach(function(name) {
+    var a = new Audio(CONFIG.audio.sfx[name]);
+    a.preload = 'auto';
+    _sfxCache[name] = a;
+  });
+
   function playSfx(name) {
     if (mode === 'mute') return;
-    var src = CONFIG.audio.sfx[name];
-    if (!src) return;
-    var s = new Audio(src);
+    var cached = _sfxCache[name];
+    if (!cached) return;
+    var s = cached.cloneNode();
     s.volume = CONFIG.audio.sfxVolume;
     s.play().catch(function() {});
   }
