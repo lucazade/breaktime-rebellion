@@ -29,7 +29,7 @@ const CONFIG = {
   debug: {
     showLevelChooser: true,
     showLangChooser:  true,
-    simulateMobile:   false,
+    simulateMobile:   true,
   },
 };
 

@@ -76,7 +76,7 @@ function drawBell() {
   ctx.fillStyle = dark;
   ctx.fillRect(bx+3+sw, by+5, 2, 1);  // ball
 
-  if ((allBoards || allBags || allMachines || allBall || allStudents || allBooks) && !BELL.done) {
+  if ((allBoards || allBags || allMachines || allBall || allStudents || allBooks || allSink || allBins || allSprinklers) && !BELL.done) {
     const pulse = 0.12 + 0.08 * Math.sin(frame * 0.15);
     ctx.fillStyle = 'rgba(255,215,0,' + pulse + ')';
     ctx.beginPath(); ctx.arc(bx+4, by+2, 7, 0, Math.PI*2); ctx.fill();
@@ -103,8 +103,9 @@ function drawGymBall() {
   }
   if (gymBall.shakeT > 0) {
     const pct = gymBall.shakeT / deflateTime;
-    ctx.fillStyle = '#2a0000'; ctx.fillRect(bx-1, by-5, 11, 3);
-    ctx.fillStyle = '#cc1100'; ctx.fillRect(bx-1, by-5, Math.round(11 * pct), 3);
+    ctx.fillStyle = '#880000'; ctx.fillRect(bx-2, by-9, 13, 5);
+    ctx.fillStyle = '#2a0000'; ctx.fillRect(bx-1, by-8, 11, 3);
+    ctx.fillStyle = '#cc1100'; ctx.fillRect(bx-1, by-8, Math.round(11 * pct), 3);
   }
   // Basketball
   ctx.fillStyle = '#6b2200';
@@ -151,8 +152,9 @@ function drawBookcase() {
   // Progress bar while shaking; no book sprite (bg.png shows it in place)
   if (bookcase.shakeT > 0) {
     const pct = bookcase.shakeT / dropTime;
-    ctx.fillStyle = '#2a0000'; ctx.fillRect(bx-8, by-5, 7, 3);
-    ctx.fillStyle = '#cc1100'; ctx.fillRect(bx-8, by-5, Math.round(7 * pct), 3);
+    ctx.fillStyle = '#880000'; ctx.fillRect(bx-14, by-6, 9, 5);
+    ctx.fillStyle = '#2a0000'; ctx.fillRect(bx-13, by-5, 7, 3);
+    ctx.fillStyle = '#cc1100'; ctx.fillRect(bx-13, by-5, Math.round(7 * pct), 3);
   }
 
   // Proximity dashed border — full bookcase area
@@ -186,6 +188,7 @@ function drawRegister() {
   // Progress bar while stealing
   if (register.stealT > 0) {
     const pct = register.stealT / registerTime;
+    ctx.fillStyle = '#880000'; ctx.fillRect(bx-2, by-7, 14, 4);
     ctx.fillStyle = '#2a0000'; ctx.fillRect(bx-1, by-6, 12, 2);
     ctx.fillStyle = '#cc1100'; ctx.fillRect(bx-1, by-6, Math.round(12 * pct), 2);
   }
@@ -315,8 +318,9 @@ function drawSprinklers() {
     // Progress bar just below the sprinkler head
     if (sp.lighterT > 0 && !sp.active) {
       const pct = sp.lighterT / lighterTime;
-      ctx.fillStyle = 'rgba(0,0,0,0.55)'; ctx.fillRect(bx, by+7, 8, 2);
-      ctx.fillStyle = '#FF6600';          ctx.fillRect(bx, by+7, Math.round(8 * pct), 2);
+      ctx.fillStyle = '#880000'; ctx.fillRect(bx-1, by+8, 10, 4);
+      ctx.fillStyle = '#2a0000'; ctx.fillRect(bx, by+9, 8, 2);
+      ctx.fillStyle = '#cc1100'; ctx.fillRect(bx, by+9, Math.round(8 * pct), 2);
     }
 
     // Proximity dashed border — same floor only
@@ -386,9 +390,9 @@ function drawBins() {
       }
       // Fuse countdown bar
       const pct = b.fuseT / 180;
-      ctx.fillStyle = 'rgba(0,0,0,0.55)'; ctx.fillRect(bx-1, by-19, 12, 2);
-      ctx.fillStyle = b.fuseT > 60 ? '#FF6600' : C.red;
-      ctx.fillRect(bx-1, by-19, Math.round(12 * pct), 2);
+      ctx.fillStyle = '#880000'; ctx.fillRect(bx-2, by-25, 14, 4);
+      ctx.fillStyle = '#2a0000'; ctx.fillRect(bx-1, by-24, 12, 2);
+      ctx.fillStyle = '#cc1100'; ctx.fillRect(bx-1, by-24, Math.round(12 * pct), 2);
     }
 
     // Proximity dashed border
@@ -459,8 +463,9 @@ function drawSink() {
   // Progress bar (left of sink) while pouring
   if (sink.pourT > 0) {
     const pct = sink.pourT / floodTime;
-    ctx.fillStyle = 'rgba(0,0,0,0.55)'; ctx.fillRect(bx-8, by-10, 7, 3);
-    ctx.fillStyle = '#4488cc';          ctx.fillRect(bx-8, by-10, Math.round(7 * pct), 3);
+    ctx.fillStyle = '#880000'; ctx.fillRect(bx+2, by-26, 9, 5);
+    ctx.fillStyle = '#2a0000'; ctx.fillRect(bx+3, by-25, 7, 3);
+    ctx.fillStyle = '#cc1100'; ctx.fillRect(bx+3, by-25, Math.round(7 * pct), 3);
   }
 
   // Proximity dashed border — tight around basin only
@@ -560,10 +565,9 @@ function drawMachines() {
     // Progress bar while shaking
     if (!m.broken && m.shakeT > 0) {
       const pct = m.shakeT / shakeTime;
-      ctx.fillStyle = '#2a0000';
-      ctx.fillRect(mx-1, my-5, 12, 3);
-      ctx.fillStyle = '#cc1100';
-      ctx.fillRect(mx-1, my-5, Math.round(12 * pct), 3);
+      ctx.fillStyle = '#880000'; ctx.fillRect(mx-2, my-9, 14, 5);
+      ctx.fillStyle = '#2a0000'; ctx.fillRect(mx-1, my-8, 12, 3);
+      ctx.fillStyle = '#cc1100'; ctx.fillRect(mx-1, my-8, Math.round(12 * pct), 3);
     }
 
     // Proximity highlight (dashed border)

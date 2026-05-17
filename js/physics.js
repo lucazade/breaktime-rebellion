@@ -77,7 +77,6 @@ function updatePlayer() {
         gymBall.deflateCount++;
         score += 300;
         addFloating(gymBall.x + 4, gymBall.y, '+300', C.yellow);
-        addParticles(gymBall.x + 4, gymBall.y + 4, C.yellow, 18);
         alertTeachers(gymBall.x + 4, gymBall.y + 4);
         if (gymBall.deflateCount >= 3) {
           ballDeflatedWin();
@@ -125,7 +124,6 @@ function updatePlayer() {
         register.stealT = 0;
         score += 500;
         addFloating(register.x, register.y - 10, '+500', C.gold);
-        addParticles(register.x + 5, register.y, C.gold, 14);
         GameAudio.playSfx('bag');
         alertTeachers(register.x + 5, register.y);
         allRegisterWin();

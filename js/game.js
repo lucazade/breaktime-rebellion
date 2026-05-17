@@ -12,6 +12,16 @@ const ctx = CV.getContext('2d');
   _updateGameH();
   window.addEventListener('resize', _updateGameH);
 })();
+
+// #103 — nasconde il cursore dopo 2s di inattività
+(function() {
+  var _mt, _ga = document.getElementById('game-area');
+  document.addEventListener('mousemove', function() {
+    _ga.style.cursor = '';
+    clearTimeout(_mt);
+    _mt = setTimeout(function() { _ga.style.cursor = 'none'; }, 2000);
+  });
+})();
 ctx.scale(2, 2); // 2× resolution: 640×400 canvas, 320×200 logical coordinates
 ctx.imageSmoothingEnabled = false;
 
@@ -183,6 +193,7 @@ function setPaused(paused) {
 }
 
 function triggerPause() {
+  if (_homeOverlay.classList.contains('active')) return; // home aperto → ignora
   if (state === 'playing') setPaused(true);
   else if (state === 'paused') setPaused(false);
 }
@@ -197,10 +208,11 @@ var _homeOverlay     = document.getElementById('home-confirm-overlay');
 var _stateBeforeHome = null;
 
 function triggerHome() {
-  if (state !== 'playing' && state !== 'paused') return;
+  if (_pauseOverlay.classList.contains('active')) return;          // pausa aperta → ignora
+  if (_homeOverlay.classList.contains('active')) { cancelHome(); return; } // home aperto → chiudi
+  if (state !== 'playing') return;
   _stateBeforeHome = state;
-  if (state === 'playing') GameAudio.pauseMusic();
-  _pauseOverlay.classList.remove('active');
+  GameAudio.pauseMusic();
   state = 'paused';
   _homeOverlay.classList.add('active');
 }
