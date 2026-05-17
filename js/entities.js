@@ -128,6 +128,11 @@ function updateJanitors() {
     if (Math.abs(j.y - player.y) < 12 && Math.abs(j.x - player.x) < 14 && player.stunT === 0) {
       caughtBy(j);
     }
+    // L7: bidello entra nella pozza → asciuga il pavimento
+    if (levelMechanics.floodSink && sink && sink.waterLevel > 0 && !allSink && j.x < 120) {
+      sink.waterLevel = 0; sink.pourT = 0;
+      setMsg(STRINGS.sinkReady);
+    }
   }
 }
 

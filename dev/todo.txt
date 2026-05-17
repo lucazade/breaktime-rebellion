@@ -235,3 +235,5 @@ bisogna tener premuto azione Z con progressbar altrimenti troppo semplice
 - [ ] #96 Quando appaiono i banner della storia e di inizio livello il gioco dietro deve essere leggermente scurito e con il fadout del banner del livello il gioco torna del tutto visibile
 - [ ] #97 Transizione grafica tra un livello e il successivo (come? sempre fade?)
 - [X] #98 Nel banner della storia la riga "tocca per continuare" deve avere uno spazio sopra
+- [ ] #99 quando devi suonare la campanella deve lampeggiare come fa alla fine di L1
+- [ ] #100 In L7 ci deve essere il bidello al piano intermedio e non il prof. Il bidello asciuga per terra e Marco può riallagare. Ogni volta che Marco apre il rubinetto si allaga tutto il bagno e non una parte 

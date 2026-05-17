@@ -197,11 +197,12 @@ var LEVELS = (function() {
       sink: {x:32, y:MY-21},
 
       teachers: [
-        {x:180, y:MY-PH-walkOffset, dir:-1, minX:10, maxX:205, speed:0.65, color:C.cyanprof, name:'Prof.Celeste', sight:90},
-        {x:200, y:GY-PH-walkOffset, dir: 1, minX:10, maxX:305, speed:0.55, color:C.redprof,  name:'Prof.Rossi',   sight:90},
+        {x:200, y:GY-PH-walkOffset, dir: 1, minX:10, maxX:305, speed:0.55, color:C.redprof, name:'Prof.Rossi', sight:90},
       ],
 
-      janitors: [],
+      janitors: [
+        {x:185, y:MY-PH-walkOffset, dir:-1, minX:10, maxX:220, speed:0.65, name:'Bidello'},
+      ],
     }),
 
     // ── LEVEL 8 — Plant firecrackers in all trash bins, ring the bell ────────

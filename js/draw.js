@@ -464,7 +464,7 @@ function drawSink() {
   }
 
   // Proximity dashed border — tight around basin only
-  if (!allSink && sink.pourCount < 3 && sink.resetT <= 0) {
+  if (!allSink && sink.pourCount < 3 && sink.waterLevel === 0) {
     const pdx = Math.abs(player.x + PW/2 - sink.x - 6);
     const pdy = Math.abs(player.y + PH  - sink.y - 10);
     if (pdx < 14 && pdy < 20) {

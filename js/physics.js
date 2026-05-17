@@ -168,7 +168,7 @@ function updatePlayer() {
       }
     }
   }
-  if (!player.shaking && levelMechanics.floodSink && sink && sink.pourCount < 3 && sink.resetT <= 0 && K.action && !player.onStair) {
+  if (!player.shaking && levelMechanics.floodSink && sink && sink.pourCount < 3 && sink.waterLevel === 0 && K.action && !player.onStair) {
     const dx = Math.abs(player.x + PW/2 - sink.x - 6);
     const dy = Math.abs(player.y + PH  - sink.y - 10);
     if (dx < 14 && dy < 20) {
@@ -179,15 +179,14 @@ function updatePlayer() {
       if (sink.pourT >= floodTime) {
         sink.pourT = 0;
         sink.pourCount++;
-        sink.waterLevel = sink.pourCount;
+        sink.waterLevel = 3;
         score += 300;
         addFloating(sink.x + 6, sink.y - 8, '+300', C.cyan);
         addParticles(sink.x + 6, sink.y, C.cyan, 12);
-        if (sink.waterLevel >= 2) alertTeachers(107, sink.y);
+        alertTeachers(107, sink.y);
         if (sink.pourCount >= 3) {
           sinkFloodWin();
         } else {
-          sink.resetT = 180;
           setMsg(fmt(STRINGS.sinkProgress, sink.pourCount, 3));
         }
       }
