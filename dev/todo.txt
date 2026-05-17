@@ -219,10 +219,10 @@ Obiettivo: come da titolo
 - [X] #95 Quando suoni la campanella il punteggio +500 che sale (o il numero che è) è quasi tutto fuori dallo schermo
 - [X] #98 In hud colore cuori e oggeti presi 1/1 più saturo
 - [ ] #90 Testa dei personaggi leggermente meno alta e pixel sopra campanella mancante (non implementrare adesso)
-- [ ] #71 Rivedere testo storia iniziale (per Federica)
+- [X] #71 Rivedere testo storia iniziale (per Federica)
 - [ ] #72 Revisione punteggi (per Federica)
 - [ ] #85 Aggiungere banco al secondo piano (per Luca)
-- [ ] #98 Rivedere messaggi in i18n (per Luca)
+- [ ] #98 Rivedere messaggi in i18n
 - [ ] #76 target libreria troppo grande
 - [ ] #78 limitare il movimento di marco all'estrema sinistra e destra del quadro altrimenti sembra camminare sul muro (fine tuning in config)
 - [ ] #79 la bomboletta spray va spostata fuori dal corpo perchè così non si distingue e il getto spray deve essere particellare (piccoli pixel)
@@ -230,7 +230,8 @@ Obiettivo: come da titolo
 bisogna tener premuto azione Z con progressbar altrimenti troppo semplice
 - [ ] #83 Pausa ed esci sono due menù esclusivi
 - [ ] #86 Banner storia fadeout al click (non implementare adesso, controllare dopo #96)
-- [ ] #87 I msg devono comparire nell' hud al centro (per pochi secondi) con fadein/out al posto del numero di oggetti raccolti
+- [X] #87 I msg devono comparire nell' hud al centro (per pochi secondi) con fadein/out al posto del numero di oggetti raccolti
 - [ ] #88 Il tocco nella title screen deve essere catturato dappertutto tranne che nella zona dei pulsanti sotto l' immagine
 - [ ] #96 Quando appaiono i banner della storia e di inizio livello il gioco dietro deve essere leggermente scurito e con il fadout del banner del livello il gioco torna del tutto visibile
 - [ ] #97 Transizione grafica tra un livello e il successivo (come? sempre fade?)
+- [X] #98 Nel banner della storia la riga "tocca per continuare" deve avere uno spazio sopra

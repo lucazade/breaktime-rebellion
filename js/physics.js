@@ -83,7 +83,7 @@ function updatePlayer() {
           ballDeflatedWin();
         } else {
           gymBall.reinflateT = 240;
-          setMsg(gymBall.deflateCount === 1 ? STRINGS.ballFirstDeflate : STRINGS.ballSecondDeflate);
+          setMsg(fmt(STRINGS.ballProgress, gymBall.deflateCount, 3));
         }
       }
     }
@@ -107,7 +107,7 @@ function updatePlayer() {
         if (bookcase.dropCount >= 3) {
           bookDropWin();
         } else {
-          setMsg(bookcase.dropCount === 1 ? STRINGS.bookFirstDrop : STRINGS.bookSecondDrop);
+          setMsg(fmt(STRINGS.bookProgress, bookcase.dropCount, 3));
         }
       }
     }
@@ -188,7 +188,7 @@ function updatePlayer() {
           sinkFloodWin();
         } else {
           sink.resetT = 180;
-          setMsg(sink.pourCount === 1 ? STRINGS.sinkFirstPour : STRINGS.sinkSecondPour);
+          setMsg(fmt(STRINGS.sinkProgress, sink.pourCount, 3));
         }
       }
     }

@@ -919,14 +919,18 @@ function drawStoryBanner() {
   if (storyBannerT <= 0 || state !== 'playing') return;
   if (!storyBannerLines) {
     ctx.font = '8px "Press Start 2P"';
-    const words = STRINGS.storyText.split(' ');
-    let line = '', lines = [];
-    for (let i = 0; i < words.length; i++) {
-      const test = line + (line ? ' ' : '') + words[i];
-      if (ctx.measureText(test).width > 220) { lines.push(line); line = words[i]; }
-      else line = test;
+    const parts = STRINGS.storyText.split('|');
+    let lines = [];
+    for (let p = 0; p < parts.length; p++) {
+      const words = parts[p].trim().split(' ');
+      let line = '';
+      for (let i = 0; i < words.length; i++) {
+        const test = line + (line ? ' ' : '') + words[i];
+        if (ctx.measureText(test).width > 220) { lines.push(line); line = words[i]; }
+        else line = test;
+      }
+      if (line) lines.push(line);
     }
-    if (line) lines.push(line);
     storyBannerLines = lines;
   }
   const bx = 20, by = 22, bw = 280, bh = 156;
@@ -937,8 +941,8 @@ function drawStoryBanner() {
     lineObjs.push({ text: storyBannerLines[i], font: '8px "Press Start 2P"', color: C.white, height: 8, spacing: 4 });
   }
   const blink = Math.floor(frame / 25) % 2 === 0;
-  lineObjs.push({ text: '', font: '8px "Press Start 2P"', color: 'transparent', height: 4, spacing: 0 });
-  lineObjs.push({ text: STRINGS.storyContinue, font: '8px "Press Start 2P"', color: blink ? C.gold : 'rgba(0,0,0,0)', height: 8, spacing: 0 });
+  lineObjs.push({ text: '', font: '8px "Press Start 2P"', color: 'transparent', height: 10, spacing: 0 });
+  lineObjs.push({ text: STRINGS.tapContinue, font: '8px "Press Start 2P"', color: blink ? C.gold : 'rgba(0,0,0,0)', height: 8, spacing: 0 });
   drawOverlayPanel(bx, by, bw, bh, 'rgba(0,0,40,0.92)', C.gold, lineObjs);
 }
 
