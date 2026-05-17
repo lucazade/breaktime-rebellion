@@ -240,11 +240,11 @@ bisogna tener premuto azione Z con progressbar altrimenti troppo semplice
 
 Obiettivo: come da titolo
 
-- [ ] #90 Testa dei personaggi leggermente meno alta e pixel sopra campanella mancante (non implementrare adesso)
 - [ ] #72 Revisione punteggi (per Federica)
-- [ ] #85 Aggiungere banco al secondo piano (per Luca)
 - [ ] #76 target libreria troppo grande
+- [ ] #85 Aggiungere banco al secondo piano (per Luca)
 - [ ] #86 Banner storia fadeout al click (non implementare adesso, controllare dopo #96)
+- [ ] #90 Testa dei personaggi leggermente meno alta e pixel sopra campanella mancante (non implementrare adesso)
 - [ ] #96 Quando appaiono i banner della storia e di inizio livello il gioco dietro deve essere leggermente scurito e con il fadout del banner del livello il gioco torna del tutto visibile
 - [ ] #97 Transizione grafica tra un livello e il successivo (come? sempre fade?)
 - [ ] #104 non compare piu l'immagine logo sopra la label rotateHtml
