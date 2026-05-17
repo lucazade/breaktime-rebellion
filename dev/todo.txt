@@ -202,18 +202,18 @@ Obiettivo: come da titolo
 - [X] #69 Prima del rilascio disattivare debug: showLevelChooser: true nel config
 - [X] #70 Prima del rilascio scelta della lingua solo se voce di debug dal config attiva (altrimenti usa lingua da locale del device. Inglese fallback). Se selezione lingua è nascosto la selezione livelli e gestione audio devono essere più vicine.
 - [X] #85 Prima del rilascio disattivare opzione simulare versione mobile su desktop
-- [ ] #71 Rivedere testo storia iniziale (Federica)
-- [ ] #72 Revisione punteggi (Federica)
-- [ ] #73 Aggiornare stile pulsanti home, pausa e bell nei sidepanel (sfondo non trasparente)
+- [X] #73 Aggiornare stile pulsanti home, pausa e bell nei sidepanel (sfondo non trasparente)
 - [X] #74 Lavoro su branch outline personaggi
 - [X] #75 il libro torna al proprio posto quando il preside ci passa sopra (stessa cosa per il pallone e l'insegnante di Ginnastica) 
-- [ ] #76 target libreria troppo grande
 - [X] #77 i caratteri dei banner sono un pò sfuocati
+- [X] #81 il fumetto finale deve avere bordo giallo e sfondo giallo e sistemare anche i caratteri di grandezza (4px ?). Tutti i caratteri dentro neri, tranne Tocca per continuare in rosso
+- [X] #83 la grandezza del font di msg su pc è perfetta su mobile troppo grande
+- [X] #84 sostituire bell in sidepanel con scritta i
+- [ ] #71 Rivedere testo storia iniziale (Federica)
+- [ ] #72 Revisione punteggi (Federica)
+- [ ] #76 target libreria troppo grande
 - [ ] #78 limitare il movimento di marco all'estrema sinistra e destra del quadro altrimenti sembra camminare sul muro (fine tuning in config)
 - [ ] #79 la bomboletta spray va spostata fuori dal corpo perchè così non si capisce e il getto spray deve essere particellare (piccoli pixel)
 - [ ] #80 le cartelle non devono avere i due pixel gialli lampegganti (sembrano bombe) e per raccoglierle
 bisogna tener premuto azione Z con progressbar altrimenti troppo semplice
-- [X] #81 il fumetto finale deve avere bordo giallo e sfondo giallo e sistemare anche i caratteri di grandezza (4px ?). Tutti i caratteri dentro neri, tranne Tocca per continuare in rosso
 - [ ] #82 progressbar L10 non gialla ma rossa
-- [X] #83 la grandezza del font di msg su pc è perfetta su mobile troppo grande
-- [ ] #84 sostituire bell in sidepanel con scritta BR

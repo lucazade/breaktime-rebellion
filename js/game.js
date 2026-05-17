@@ -239,7 +239,7 @@ function cancelHome() {
 document.getElementById('btn-home-yes').addEventListener('click', goHome);
 document.getElementById('btn-home-no').addEventListener('click', cancelHome);
 
-// ── Credits (panel bell tap) ─────────────────────────────────────────────────
+// ── Credits (btn-info tap) ────────────────────────────────────────────────────
 var _creditsOverlay = document.getElementById('credits-overlay');
 
 function showCredits() {
@@ -251,11 +251,10 @@ function hideCredits() {
   if (state === 'playing') GameAudio.resumeMusic();
 }
 
-var _panelBell = document.getElementById('panel-bell');
-if (_panelBell) {
-  _panelBell.style.pointerEvents = 'auto';
-  _panelBell.addEventListener('click', showCredits);
-  _panelBell.addEventListener('touchend', function(e) { e.preventDefault(); showCredits(); }, {passive: false});
+var _btnInfo = document.getElementById('btn-info');
+if (_btnInfo) {
+  _btnInfo.addEventListener('click', showCredits);
+  _btnInfo.addEventListener('touchend', function(e) { e.preventDefault(); showCredits(); }, {passive: false});
 }
 document.getElementById('btn-credits-close').addEventListener('click', hideCredits);
 

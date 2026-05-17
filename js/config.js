@@ -43,7 +43,7 @@ if (CONFIG.debug.simulateMobile) {
     '#panel-right{border-left:3px solid rgba(160,0,255,.7)!important}',
     '#panel-left #ctrl-joy{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);z-index:1}',
     '#panel-right #ctrl-action{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:1}',
-    '#panel-bell{display:block!important}',
+    '#btn-info{display:flex!important}',
     '.panel-btn{display:flex!important}',
   ].join('');
   var _el = document.createElement('style');
