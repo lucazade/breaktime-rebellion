@@ -5,7 +5,7 @@ function ringBell() {
   BELL.ringing = true;
   BELL.ringT = 120;
   score += 1000;
-  addFloating(BELL.x - 20, BELL.y - 6, '+1000!', C.gold);
+  addFloating(BELL.x + 10, BELL.y - 6, '+1000!', C.gold);
   addParticles(BELL.x, BELL.y, C.gold, 30);
   setMsg(STRINGS.ringMsg);
   GameAudio.playSfx('bell');

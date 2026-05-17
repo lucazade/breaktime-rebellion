@@ -45,9 +45,9 @@ function drawBoards() {
         ctx.setLineDash([]);
       }
     } else {
-      ctx.fillStyle = C.pink; ctx.font = '4px "Press Start 2P"';
+      ctx.fillStyle = 'rgba(255,255,255,0.9)'; ctx.font = '4px "Press Start 2P"';
       ctx.fillText('MARCO', b.x+1, b.y+9);
-      ctx.fillStyle = C.yellow; ctx.fillRect(b.x+1, b.y+10, BW-2, 1);
+      ctx.fillStyle = 'rgba(255,255,255,0.9)'; ctx.fillRect(b.x+1, b.y+10, BW-2, 1);
     }
   }
 }
@@ -103,8 +103,8 @@ function drawGymBall() {
   }
   if (gymBall.shakeT > 0) {
     const pct = gymBall.shakeT / deflateTime;
-    ctx.fillStyle = 'rgba(0,0,0,0.55)'; ctx.fillRect(bx-1, by-5, 11, 3);
-    ctx.fillStyle = C.yellow;           ctx.fillRect(bx-1, by-5, Math.round(11 * pct), 3);
+    ctx.fillStyle = '#2a0000'; ctx.fillRect(bx-1, by-5, 11, 3);
+    ctx.fillStyle = '#cc1100'; ctx.fillRect(bx-1, by-5, Math.round(11 * pct), 3);
   }
   // Basketball
   ctx.fillStyle = '#6b2200';
@@ -151,8 +151,8 @@ function drawBookcase() {
   // Progress bar while shaking; no book sprite (bg.png shows it in place)
   if (bookcase.shakeT > 0) {
     const pct = bookcase.shakeT / dropTime;
-    ctx.fillStyle = 'rgba(0,0,0,0.55)'; ctx.fillRect(bx-8, by-5, 7, 3);
-    ctx.fillStyle = C.yellow;           ctx.fillRect(bx-8, by-5, Math.round(7 * pct), 3);
+    ctx.fillStyle = '#2a0000'; ctx.fillRect(bx-8, by-5, 7, 3);
+    ctx.fillStyle = '#cc1100'; ctx.fillRect(bx-8, by-5, Math.round(7 * pct), 3);
   }
 
   // Proximity dashed border — full bookcase area
@@ -186,8 +186,8 @@ function drawRegister() {
   // Progress bar while stealing
   if (register.stealT > 0) {
     const pct = register.stealT / registerTime;
-    ctx.fillStyle = 'rgba(0,0,0,0.55)'; ctx.fillRect(bx-1, by-6, 12, 2);
-    ctx.fillStyle = C.gold;             ctx.fillRect(bx-1, by-6, Math.round(12 * pct), 2);
+    ctx.fillStyle = '#2a0000'; ctx.fillRect(bx-1, by-6, 12, 2);
+    ctx.fillStyle = '#cc1100'; ctx.fillRect(bx-1, by-6, Math.round(12 * pct), 2);
   }
 
   // Proximity border
@@ -278,7 +278,7 @@ function drawGuard(x, y, dir, animT, chasing, knockedT) {
   ctx.fillStyle = '#825144'; ctx.fillRect(bx+2, by+1, PW-4, 1);
   if (chasing) {
     const bub = dir>0 ? bx+PW : bx-26;
-    ctx.fillStyle = C.red; ctx.fillRect(bub, by-14, 26, 10);
+    ctx.fillStyle = 'rgba(255,255,255,0.9)'; ctx.fillRect(bub, by-14, 26, 10);
     ctx.fillStyle = C.black; ctx.font = '4px "Press Start 2P"';
     ctx.textAlign = 'center'; ctx.textBaseline = 'top';
     ctx.fillText('STOP!', bub + 13, by - 12);
@@ -560,9 +560,9 @@ function drawMachines() {
     // Progress bar while shaking
     if (!m.broken && m.shakeT > 0) {
       const pct = m.shakeT / shakeTime;
-      ctx.fillStyle = 'rgba(0,0,0,0.55)';
+      ctx.fillStyle = '#2a0000';
       ctx.fillRect(mx-1, my-5, 12, 3);
-      ctx.fillStyle = C.yellow;
+      ctx.fillStyle = '#cc1100';
       ctx.fillRect(mx-1, my-5, Math.round(12 * pct), 3);
     }
 
@@ -653,7 +653,7 @@ function drawPreside(x, y, dir, animT, bodyCol, chasing, knockedT) {
 
   if (chasing) {
     const bub = dir > 0 ? bx+PW : bx-26;
-    ctx.fillStyle = C.yellow; ctx.fillRect(bub, by-14, 26, 10);
+    ctx.fillStyle = 'rgba(255,255,255,0.9)'; ctx.fillRect(bub, by-14, 26, 10);
     ctx.fillStyle = C.black; ctx.font = '4px "Press Start 2P"';
     ctx.fillText(STRINGS.hey, bub+1, by-7);
   }
@@ -730,7 +730,7 @@ function drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, chasing, knock
 
   if (chasing) {
     const bub = dir>0 ? bx+PW : bx-26;
-    ctx.fillStyle = C.yellow; ctx.fillRect(bub, by-14, 26, 10);
+    ctx.fillStyle = 'rgba(255,255,255,0.9)'; ctx.fillRect(bub, by-14, 26, 10);
     ctx.fillStyle = C.black; ctx.font = '4px "Press Start 2P"';
     ctx.fillText(STRINGS.hey, bub+1, by-7);
   }
@@ -888,9 +888,8 @@ function drawEndScreen() {
     const by = 52, bw = 260, bh = 96;
     drawOverlayPanel(bx, by, bw, bh, 'rgba(60,0,0,0.88)', C.gold, [
       { text: STRINGS.gameoverTitle, font: '8px "Press Start 2P"', color: C.redprof, height: 10, spacing: 8 },
-      { text: fmt(STRINGS.levelReached, currentLevel), font: '8px "Press Start 2P"', color: C.white, height: 8, spacing: 2 },
-      { text: scoreText, font: '8px "Press Start 2P"', color: C.white, height: 8, spacing: 6 },
-      { text: STRINGS.bestLabel + ' LVL ' + bestLevel + ' — ' + String(bestScore).padStart(5,'0'), font: '8px "Press Start 2P"', color: C.gold, height: 8, spacing: 6 },
+      { text: fmt(STRINGS.levelReached, currentLevel), font: '8px "Press Start 2P"', color: C.white, height: 8, spacing: 4 },
+      { text: scoreText, font: '8px "Press Start 2P"', color: C.white, height: 8, spacing: 10 },
       { text: actionText, font: '8px "Press Start 2P"', color: actionVisible ? C.gold : 'rgba(255,255,255,0)', height: 8, spacing: 0 },
     ]);
   } else if (currentLevel === LEVELS.length) {
@@ -910,7 +909,7 @@ function drawEndScreen() {
     const by = 64, bw = 260, bh = 72;
     drawOverlayPanel(bx, by, bw, bh, 'rgba(0,0,60,0.88)', C.gold, [
       { text: STRINGS.levelComplete, font: '8px "Press Start 2P"', color: C.gold,  height: 10, spacing: 10 },
-      { text: scoreText,             font: '8px "Press Start 2P"', color: C.white, height: 8, spacing: 6 },
+      { text: scoreText,             font: '8px "Press Start 2P"', color: C.white, height: 8, spacing: 14 },
       { text: actionVisible ? STRINGS.tapContinue : 'rgba(255,255,255,0)', font: '8px "Press Start 2P"', color: actionVisible ? C.green : 'rgba(255,255,255,0)', height: 8, spacing: 0 },
     ]);
   }
@@ -1128,7 +1127,7 @@ function updateHUD() {
     var bar = document.getElementById('timer-bar');
     if (bar) {
       bar.style.width = (pct * 100) + '%';
-      bar.style.background = pct > 0.6 ? C.lgreen : pct > 0.3 ? C.yellow : C.red;
+      bar.style.background = pct > 0.6 ? '#22cc44' : pct > 0.3 ? '#ddcc00' : '#dd1100';
     }
   }
 }
