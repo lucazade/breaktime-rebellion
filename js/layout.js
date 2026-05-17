@@ -64,5 +64,5 @@ var SHARED_LAYOUT = {
     {x:62,  y:TY-20}, {x:85,  y:TY-20}, {x:158, y:TY-20}, {x:182, y:TY-20},
   ],
 
-  bell: { x: 13, y: GY - 51 },
+  bell: { x: 7, y: GY - 49 },
 };

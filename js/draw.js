@@ -55,38 +55,56 @@ function drawBoards() {
 function drawBell() {
   const bx = BELL.x, by = BELL.y;
   const sw = BELL.ringing ? Math.round(Math.sin(frame * 0.6) * 3) : 0;
-  const red  = BELL.ringing ? '#ff2200' : '#cc1100';
-  const dark = '#880a00';
+  const X  = bx + sw;
 
-  // Outline pass
-  ctx.fillStyle = dark;
-  ctx.fillRect(bx+2+sw, by,   4, 1);  // top border
-  ctx.fillRect(bx+2+sw, by+1, 4, 1);  // tip outline
-  ctx.fillRect(bx+1+sw, by+2, 6, 1);  // row2 outline
-  ctx.fillRect(bx+1+sw, by+3, 6, 1);  // base outline (6px)
-  ctx.fillRect(bx+1+sw, by+4, 6, 1);  // bottom border
+  const out = '#554400';
+  const col = '#FFCC00';
+  const hi  = '#FFE966';
+  const shd = '#CC9900';
+  const drk = '#332200';
 
-  // Red fill (3 righe: 2→4→6px)
-  ctx.fillStyle = red;
-  ctx.fillRect(bx+3+sw, by+1, 2, 1);  // tip:  2 px
-  ctx.fillRect(bx+2+sw, by+2, 4, 1);  // row2: 4 px
-  ctx.fillRect(bx+2+sw, by+3, 4, 1);  // base: 4 px (stessa larghezza, no flare)
+  // Top cap (chiude il bordo)
+  ctx.fillStyle = out; ctx.fillRect(X+2, by-1, 2, 1);
 
-  // Clapper (batacchio) — corto
-  ctx.fillStyle = dark;
-  ctx.fillRect(bx+3+sw, by+5, 2, 1);  // ball
+  // Knob (2px)
+  ctx.fillStyle = out; ctx.fillRect(X+1, by,   4, 1);
+  ctx.fillStyle = col; ctx.fillRect(X+2, by,   2, 1);
 
+  // Cap (4px)
+  ctx.fillStyle = out; ctx.fillRect(X+0, by+1, 6, 1);
+  ctx.fillStyle = col; ctx.fillRect(X+1, by+1, 4, 1);
+
+  // Dome (4px × 1 row)
+  ctx.fillStyle = out; ctx.fillRect(X+0, by+2, 6, 1);
+  ctx.fillStyle = col; ctx.fillRect(X+1, by+2, 4, 1);
+  ctx.fillStyle = hi;  ctx.fillRect(X+1, by+2, 1, 1);
+  ctx.fillStyle = col; ctx.fillRect(X+4, by+2, 1, 1);
+
+  // Flare / skirt (6px × 2 rows)
+  ctx.fillStyle = out; ctx.fillRect(X-1, by+3, 8, 2);
+  ctx.fillStyle = col; ctx.fillRect(X+0, by+3, 6, 1);
+  ctx.fillStyle = col; ctx.fillRect(X+0, by+4, 6, 1);
+  ctx.fillStyle = hi;  ctx.fillRect(X+0, by+3, 1, 2);
+
+  // Bottom outline
+  ctx.fillStyle = out; ctx.fillRect(X-1, by+5, 8, 1);
+
+  // Clapper (2px × 1 row)
+  ctx.fillStyle = drk; ctx.fillRect(X+2, by+6, 2, 1);
+
+  // Glow pulsante quando obiettivo completato
   if ((allBoards || allBags || allMachines || allBall || allStudents || allBooks || allSink || allBins || allSprinklers) && !BELL.done) {
     const pulse = 0.12 + 0.08 * Math.sin(frame * 0.15);
     ctx.fillStyle = 'rgba(255,215,0,' + pulse + ')';
-    ctx.beginPath(); ctx.arc(bx+4, by+2, 7, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(bx+3, by+3, 7, 0, Math.PI*2); ctx.fill();
   }
 
+  // Onde sonore quando suona
   if (BELL.ringing) {
     for (let i = 1; i <= 3; i++) {
       ctx.strokeStyle = 'rgba(255,215,0,' + (0.6 - i*0.15) + ')';
       ctx.lineWidth = 1;
-      ctx.beginPath(); ctx.arc(bx+4, by+2, 4+i*3, 0, Math.PI*2); ctx.stroke();
+      ctx.beginPath(); ctx.arc(bx+3, by+3, 4+i*3, 0, Math.PI*2); ctx.stroke();
     }
   }
 }
