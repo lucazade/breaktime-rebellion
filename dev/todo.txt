@@ -209,11 +209,26 @@ Obiettivo: come da titolo
 - [X] #81 il fumetto finale deve avere bordo giallo e sfondo giallo e sistemare anche i caratteri di grandezza (4px ?). Tutti i caratteri dentro neri, tranne Tocca per continuare in rosso
 - [X] #83 la grandezza del font di msg su pc è perfetta su mobile troppo grande
 - [X] #84 sostituire bell in sidepanel con scritta i
-- [ ] #71 Rivedere testo storia iniziale (Federica)
-- [ ] #72 Revisione punteggi (Federica)
+- [ ] #71 Rivedere testo storia iniziale (per Federica)
+- [ ] #72 Revisione punteggi (per Federica)
 - [ ] #76 target libreria troppo grande
 - [ ] #78 limitare il movimento di marco all'estrema sinistra e destra del quadro altrimenti sembra camminare sul muro (fine tuning in config)
-- [ ] #79 la bomboletta spray va spostata fuori dal corpo perchè così non si capisce e il getto spray deve essere particellare (piccoli pixel)
+- [ ] #79 la bomboletta spray va spostata fuori dal corpo perchè così non si distingue e il getto spray deve essere particellare (piccoli pixel)
 - [ ] #80 le cartelle non devono avere i due pixel gialli lampegganti (sembrano bombe) e per raccoglierle
 bisogna tener premuto azione Z con progressbar altrimenti troppo semplice
-- [ ] #82 progressbar L10 non gialla ma rossa
+- [ ] #82 progressbar delle azioni deve essere rosso con bordino scuro e non gialla
+- [ ] #83 Pausa ed esci sono due menù esclusivi
+- [ ] #84 Scritta sulla lavagna bianco intenso
+- [ ] #85 Aggiungere banco al secondo piano (per Luca)
+- [ ] #86 Banner storia fadeout al click (non implementare adesso, controllare dopo #96)
+- [ ] #87 I msg devono comparire nell' hud al centro (per pochi secondi) con fadein/out al posto del numero di oggetti raccolti
+- [ ] #88 Il tocco nella title screen deve essere catturato dappertutto tranne che nella zona dei pulsanti sotto l' immagine
+- [ ] #89 Tutti i titoli nei banner devono avere i trattini prima e dopo come il title pausa
+- [ ] #90 Testa dei personaggi leggermente meno alta e pixel sopra campanella mancante (non implementrare adesso)
+- [ ] #91 Colori timerbar più saturi (verde, giallo, rosso)
+- [ ] #92 Fumetto professori sfondo bianco
+- [ ] #93 Da banner gameover nascondere miglior punteggio
+- [ ] #94 Nel banner livello superato “tocca per proseguire” deve stare più in basso (spazio sopra)
+- [ ] #95 Quando suoni la campanella il punteggio +500 che sale (o il numero che è) è quasi tutto fuori dallo schermo
+- [ ] #96 Quando appaiono i banner della storia e di inizio livello il gioco dietro deve essere leggermente scurito e con il fadout del banner del livello il gioco torna del tutto visibile
+- [ ] #97 Transizione grafica tra un livello e il successivo (come? sempre fade?)
