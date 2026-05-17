@@ -10,7 +10,7 @@ function ringBell() {
   setMsg(STRINGS.ringMsg);
   GameAudio.playSfx('bell');
   deathFreeze = true; // freeze NPCs immediately so they can't catch Marco after ringing
-  pendingTransition = { t: 120, fn: function() { deathFreeze = false; BELL.done = true; state = 'win'; GameAudio.stopMusic(); GameAudio.playJingle('win'); } };
+  pendingTransition = { t: 120, fn: function() { deathFreeze = false; BELL.done = true; state = 'win'; endScreenT = 0; GameAudio.stopMusic(); GameAudio.playJingle('win'); } };
 }
 
 function alertTeachers(bx, by) {
@@ -83,7 +83,7 @@ function playerDied() {
     if (score > bs) localStorage.setItem('btr_best_score', score);
     if (currentLevel > bl) localStorage.setItem('btr_best_level', currentLevel);
     pendingTransition = { t: 60, fn: function() {
-      state = 'gameover'; GameAudio.playJingle('gameover');
+      state = 'gameover'; endScreenT = 0; GameAudio.playJingle('gameover');
     }};
   } else {
     // Lost a life but game continues: immediate respawn, teachers keep moving

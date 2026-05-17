@@ -32,6 +32,7 @@ let storyBannerT, storyBannerLines;  // like missionBannerT but shown first on L
 let storyShown = false; // session-level — not reset by resetLevel
 let pendingTransition = null;
 let deathFreeze = false;
+let endScreenT = 0;
 let currentLevel = 1;
 let bgImage = null;
 let levelMechanics;

@@ -922,6 +922,11 @@ function drawOverlayPanel(bx, by, bw, bh, bgColor, borderColor, lines) {
 
 function drawEndScreen() {
   if (state !== 'win' && state !== 'gameover') return;
+  const fadeAlpha = Math.min(1, endScreenT / 20);
+  ctx.fillStyle = 'rgba(0,0,0,' + (0.45 * fadeAlpha) + ')';
+  ctx.fillRect(0, 0, W, H);
+  ctx.save();
+  ctx.globalAlpha = fadeAlpha;
   const bx = 160 - 130;
   const isWin = state === 'win';
   const scoreText = STRINGS.scoreLabel + String(score).padStart(5, '0');
@@ -962,6 +967,7 @@ function drawEndScreen() {
       { text: actionVisible ? STRINGS.tapContinue : 'rgba(255,255,255,0)', font: '8px "Press Start 2P"', color: actionVisible ? C.green : 'rgba(255,255,255,0)', height: 8, spacing: 0 },
     ]);
   }
+  ctx.restore();
 }
 
 function drawStoryBanner() {
@@ -982,6 +988,8 @@ function drawStoryBanner() {
     }
     storyBannerLines = lines;
   }
+  ctx.fillStyle = 'rgba(0,0,0,0.45)';
+  ctx.fillRect(0, 0, W, H);
   const bx = 20, by = 22, bw = 280, bh = 156;
   const lineObjs = [
     { text: STRINGS.storyTitle, font: '8px "Press Start 2P"', color: C.gold, height: 10, spacing: 10 },
@@ -1035,6 +1043,8 @@ function drawMissionBanner() {
   }
   ctx.save();
   ctx.globalAlpha = alpha;
+  ctx.fillStyle = 'rgba(0,0,0,0.45)';
+  ctx.fillRect(0, 0, W, H);
   drawOverlayPanel(bx, by, bw, bh, 'rgba(0,0,40,0.88)', C.gold, lines);
   ctx.restore();
 }
