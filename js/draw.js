@@ -723,11 +723,16 @@ function drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, chasing, knock
   ctx.fillStyle = '#825144'; ctx.fillRect(bx+2, by+1, PW-4, 1);
 
   if (spraying) {
-    const sx = dir>0 ? bx+PW : bx-5;
-    ctx.fillStyle = C.cyan; ctx.fillRect(sx, by+2, 4, 6);
-    for (let i = 0; i < 4; i++) {
-      ctx.fillStyle = 'rgba(180,230,180,' + (0.4+Math.random()*0.3) + ')';
-      ctx.fillRect(sx + (dir>0 ? 4+i*3 : -i*3-3), by+4+i%3, 3, 3);
+    const sx = dir>0 ? bx+PW+2 : bx-6;
+    ctx.fillStyle = '#005050'; ctx.fillRect(sx-1, by+2, 6, 7); // bordino scuro
+    ctx.fillStyle = C.cyan;   ctx.fillRect(sx,   by+3, 4, 5); // can
+    for (let i = 0; i < 8; i++) {
+      const t = (frame * 5 + i * 11) % 19;
+      const dist = 2 + i * 2 + (t % 3);
+      const oy = Math.round(((t % 5) - 2) * (1 + i / 4));
+      const lift = Math.round(dist * 0.35);
+      ctx.fillStyle = 'rgba(140,220,140,' + (0.9 - i * 0.09).toFixed(2) + ')';
+      ctx.fillRect(sx + (dir>0 ? 4+dist : -1-dist), by+5+oy-lift, 1, 1);
     }
   }
   if (!isTeacher) { ctx.fillStyle = '#3e3e3e'; ctx.fillRect(dir>0 ? bx-3 : bx+PW, by+2, 3, 6); }
