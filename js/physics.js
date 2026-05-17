@@ -47,6 +47,7 @@ function updatePlayer() {
         m.shakeT++;
         if (m.shakeT >= shakeTime) {
           m.broken = true;
+          GameAudio.playSfx('machine');
           score += 500;
           addFloating(m.x + 5, m.y, '+500', C.yellow);
           addParticles(m.x + 5, m.y + 9, C.yellow, 18);
@@ -75,6 +76,7 @@ function updatePlayer() {
         gymBall.deflated = true;
         gymBall.shakeT = 0;
         gymBall.deflateCount++;
+        GameAudio.playSfx('deflate');
         score += 300;
         addFloating(gymBall.x + 4, gymBall.y, '+300', C.yellow);
         alertTeachers(gymBall.x + 4, gymBall.y + 4);
@@ -99,6 +101,7 @@ function updatePlayer() {
         bookcase.dropped = true;
         bookcase.shakeT = 0;
         bookcase.dropCount++;
+        GameAudio.playSfx('book');
         score += 300;
         addFloating(bookcase.x + 3, bookcase.y, '+300', C.yellow);
         addParticles(bookcase.x + 3, bookcase.y + 6, C.yellow, 12);
@@ -124,7 +127,7 @@ function updatePlayer() {
         register.stealT = 0;
         score += 500;
         addFloating(register.x, register.y - 10, '+500', C.gold);
-        GameAudio.playSfx('bag');
+        GameAudio.playSfx('register');
         alertTeachers(register.x + 5, register.y);
         allRegisterWin();
       }
@@ -151,7 +154,7 @@ function updatePlayer() {
           score += 300;
           addFloating(sp.x, sp.y - 8, '+300', C.cyan);
           addParticles(sp.x + 4, sp.y, C.cyan, 15);
-          GameAudio.playSfx('spray');
+          GameAudio.playSfx('sprinkler');
           for (let ti = 0; ti < teachers.length; ti++) {
             const t = teachers[ti];
             const tFloor = t.y > (MY+GY)/2 ? 'GY' : t.y > (TY+MY)/2 ? 'MY' : 'TY';
@@ -181,6 +184,7 @@ function updatePlayer() {
         score += 300;
         addFloating(sink.x + 6, sink.y - 8, '+300', C.cyan);
         addParticles(sink.x + 6, sink.y, C.cyan, 12);
+        GameAudio.playSfx('sink');
         alertTeachers(107, sink.y);
         if (sink.pourCount >= 3) {
           sinkFloodWin();
@@ -242,29 +246,43 @@ function updatePlayer() {
 
   if (player.y < 2) player.y = 2;
 
-  // Collect bags
+  // Steal bags — hold action (L2: stealBags) or instant touch (altri livelli)
   for (let bi = 0; bi < bags.length; bi++) {
     const bag = bags[bi];
     if (bag.collected) continue;
-    if (Math.abs(player.x - bag.x) < 14 && Math.abs(player.y - bag.y) < 14) {
-      bag.collected = true;
-      score += 200;
-      addFloating(bag.x, bag.y, '+200', C.gold);
-      addParticles(bag.x, bag.y, C.gold, 10);
-      GameAudio.playSfx('bag');
+    const bdx = Math.abs(player.x + PW/2 - bag.x - 7);
+    const bdy = Math.abs(player.y + PH  - bag.y - 10);
+    if (bdx < 14 && bdy < 14) {
       if (levelMechanics.stealBags) {
-        alertTeachers(bag.x, bag.y);
-        let remaining = 0;
-        for (let bj = 0; bj < bags.length; bj++) if (!bags[bj].collected) remaining++;
-        if (remaining === 0) {
-          bagWin();
+        if (K.action && !player.onStair) {
+          player.dir = (player.x + PW/2 < bag.x + 7) ? 1 : -1;
+          bag.stealT++;
+          if (bag.stealT >= bagStealTime) {
+            GameAudio.playSfx('bag');
+            bag.collected = true; bag.stealT = 0;
+            score += 200;
+            addFloating(bag.x, bag.y, '+200', C.gold);
+            alertTeachers(bag.x, bag.y);
+            let remaining = 0;
+            for (let bj = 0; bj < bags.length; bj++) if (!bags[bj].collected) remaining++;
+            if (remaining === 0) { bagWin(); } else {
+              setMsg(fmt(STRINGS.bagStolen, bags.length - remaining, bags.length));
+            }
+          }
         } else {
-          let collected = bags.length - remaining;
-          setMsg(fmt(STRINGS.bagStolen, collected, bags.length));
+          bag.stealT = 0;
         }
       } else {
+        bag.collected = true;
+        score += 200;
+        addFloating(bag.x, bag.y, '+200', C.gold);
+        addParticles(bag.x, bag.y, C.gold, 10);
+        GameAudio.playSfx('bag');
         setMsg(STRINGS.bagCollected);
       }
+      break;
+    } else {
+      bag.stealT = 0;
     }
   }
 
@@ -298,8 +316,9 @@ function updatePlayer() {
     } else if (levelMechanics.stealBags && !allBags) {
       for (let bi = 0; bi < bags.length; bi++) {
         if (bags[bi].collected) continue;
-        const dd = Math.abs(player.x - bags[bi].x) + Math.abs(player.y - bags[bi].y);
-        if (dd < 40) { setMsg(STRINGS.bagHint, 60); break; }
+        const bdx = Math.abs(player.x + PW/2 - bags[bi].x - 7);
+        const bdy = Math.abs(player.y + PH  - bags[bi].y - 10);
+        if (bdx < 14 && bdy < 14) { setMsg(STRINGS.bagHint, 60); break; }
       }
     } else if (levelMechanics.shakeMachines && !allMachines) {
       for (let mi = 0; mi < machines.length; mi++) {

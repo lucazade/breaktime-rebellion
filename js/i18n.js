@@ -51,7 +51,7 @@
     allBoards:            'All vandalized! Ring! 🔔',
 
     mission2:             "Steal all classmates' bags!",
-    bagHint:              'Get closer to steal!',
+    bagHint:              'Hold to steal!',
     bagCollected:         'Bag stolen!',
     bagStolen:            'Bag stolen! ({0}/{1})',
     allBagsStolen:        'All stolen! Ring! 🔔',
@@ -149,7 +149,7 @@
     allBoards:            'Tutte imbrattate! Suona! 🔔',
 
     mission2:             'Ruba tutte le cartelle!',
-    bagHint:              'Avvicinati per rubare la cartella!',
+    bagHint:              'Tieni premuto per rubare la cartella!',
     bagCollected:         'Cartella rubata!',
     bagStolen:            'Cartella rubata! ({0}/{1})',
     allBagsStolen:        'Tutte rubate! Suona! 🔔',

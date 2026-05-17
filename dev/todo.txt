@@ -229,15 +229,26 @@ Obiettivo: come da titolo
 - [X] #83 Pausa ed esci sono due menù esclusivi
 - [X] #78 limitare il movimento di marco all'estrema sinistra e destra del quadro altrimenti sembra camminare sul muro (fine tuning in config)
 - [X] #88 Il tocco nella title screen deve essere catturato dappertutto tranne che nella zona dei pulsanti sotto l' immagine
+- [X] #79 la bomboletta spray va spostata fuori dal corpo perchè così non si distingue e il getto spray deve essere particellare (piccoli pixel)
+- [X] #80 le cartelle non devono avere i due pixel gialli lampegganti (sembrano bombe) e per raccoglierle
+bisogna tener premuto azione Z con progressbar altrimenti troppo semplice
+
+---
+
+## FASE 12 — Beta Testing II
+
+Obiettivo: come da titolo
+
 - [ ] #90 Testa dei personaggi leggermente meno alta e pixel sopra campanella mancante (non implementrare adesso)
 - [ ] #72 Revisione punteggi (per Federica)
 - [ ] #85 Aggiungere banco al secondo piano (per Luca)
 - [ ] #76 target libreria troppo grande
-- [ ] #79 la bomboletta spray va spostata fuori dal corpo perchè così non si distingue e il getto spray deve essere particellare (piccoli pixel)
-- [ ] #80 le cartelle non devono avere i due pixel gialli lampegganti (sembrano bombe) e per raccoglierle
-bisogna tener premuto azione Z con progressbar altrimenti troppo semplice
 - [ ] #86 Banner storia fadeout al click (non implementare adesso, controllare dopo #96)
 - [ ] #96 Quando appaiono i banner della storia e di inizio livello il gioco dietro deve essere leggermente scurito e con il fadout del banner del livello il gioco torna del tutto visibile
 - [ ] #97 Transizione grafica tra un livello e il successivo (come? sempre fade?)
 - [ ] #99 quando devi suonare la campanella deve lampeggiare come fa alla fine di L1
 - [ ] #104 non compare piu l'immagine logo sopra la label rotateHtml
+- [ ] #105 In rotatehtml non deve prendere tap o clicca altrimenti parte il gioco
+- [ ] #106 Sulla title screen quando fai tap sta per partire il gioco prende anche altri tap e non dovrebbe
+- [ ] #107 Test robustezza automatico
+- [ ] #108 sistemare suoni (per Luca)
