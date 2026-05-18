@@ -182,7 +182,7 @@ function drawBookcase() {
     if (pdx < 20 && pdy < 36) {
       ctx.strokeStyle = C.yellow; ctx.lineWidth = 1;
       ctx.setLineDash([2, 2]);
-      ctx.strokeRect(bx, by-10, 28, 36);
+      ctx.strokeRect(bx, by-8, 28, 46);
       ctx.setLineDash([]);
     }
   }
