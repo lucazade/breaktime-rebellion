@@ -178,12 +178,24 @@ function handleTap() {
     else { goHome(); }
     return;
   }
-  if (state === 'gameover' && !endScreenFadingOut) {
-    endScreenFadingOut = true; endScreenFadeOutCb = restartGame;
-  }
 }
 
-CV.addEventListener('click', handleTap);
+// #111: gameover choice — detect SI/NO button tap (logical canvas coords 320×200)
+function _gameoverChoice(lx, ly) {
+  if (state !== 'gameover' || endScreenFadingOut || endScreenT < 20) return;
+  if (ly < 128 || ly > 142) return;
+  if (lx >= 60 && lx <= 130)  { endScreenFadingOut = true; endScreenFadeOutCb = restartGame; }
+  else if (lx >= 190 && lx <= 260) { goHome(); }
+}
+
+CV.addEventListener('click', function(e) {
+  if (state === 'gameover') {
+    var rect = CV.getBoundingClientRect();
+    _gameoverChoice((e.clientX - rect.left) * 320 / rect.width, (e.clientY - rect.top) * 200 / rect.height);
+    return;
+  }
+  handleTap();
+});
 
 // Panels forward taps to game handler — but NOT when the tap is on a panel button
 ['panel-left', 'panel-right'].forEach(function(id) {
@@ -306,8 +318,17 @@ document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape' || e.key === 'n' || e.key === 'N') { e.preventDefault(); cancelHome(); }
     return;
   }
+  // Gameover choice: Enter/Y = rigioca, Escape/N = home
+  if (state === 'gameover' && !endScreenFadingOut && endScreenT >= 20) {
+    if (e.key === 'Enter' || e.key === ' ' || e.key === 'y' || e.key === 'Y') {
+      e.preventDefault(); endScreenFadingOut = true; endScreenFadeOutCb = restartGame;
+    } else if (e.key === 'Escape' || e.key === 'n' || e.key === 'N') {
+      e.preventDefault(); goHome();
+    }
+    return;
+  }
   if (e.key === 'Enter' || e.key === ' ') {
-    if (storyBannerT > 0 || state === 'win' || state === 'gameover' ||
+    if (storyBannerT > 0 || state === 'win' ||
         (deathFreeze && levelMechanics.escapeExit && exitDone && exitWinReady)) {
       e.preventDefault(); handleTap(); return;
     }

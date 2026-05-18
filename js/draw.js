@@ -934,16 +934,27 @@ function drawEndScreen() {
   const actionVisible = Math.floor(frame / 20) % 2 === 0;
 
   if (!isWin) {
-    // Gameover: show current run + personal best
-    const bestScore = parseInt(localStorage.getItem('btr_best_score') || '0');
-    const bestLevel = parseInt(localStorage.getItem('btr_best_level') || '1');
-    const by = 52, bw = 260, bh = 96;
+    // Gameover: show current run + SI/NO choice buttons
+    const by = 48, bw = 260, bh = 108;
     drawOverlayPanel(bx, by, bw, bh, 'rgba(60,0,0,0.88)', C.gold, [
       { text: STRINGS.gameoverTitle, font: '8px "Press Start 2P"', color: C.redprof, height: 10, spacing: 8 },
       { text: fmt(STRINGS.levelReached, currentLevel), font: '8px "Press Start 2P"', color: C.white, height: 8, spacing: 4 },
-      { text: scoreText, font: '8px "Press Start 2P"', color: C.white, height: 8, spacing: 10 },
-      { text: actionText, font: '8px "Press Start 2P"', color: actionVisible ? C.gold : 'rgba(255,255,255,0)', height: 8, spacing: 0 },
+      { text: scoreText, font: '8px "Press Start 2P"', color: C.white, height: 8, spacing: 0 },
     ]);
+    // SI / NO buttons
+    const btnY = by + bh - 28, btnH = 14;
+    const siX = bx + 30, siW = 70;
+    const noX = bx + 160, noW = 70;
+    ctx.save();
+    ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+    ctx.font = '8px "Press Start 2P"';
+    ctx.fillStyle = 'rgba(0,90,0,0.92)'; ctx.fillRect(siX, btnY, siW, btnH);
+    ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(siX+1, btnY+1, siW-2, btnH-2);
+    ctx.fillStyle = C.white; ctx.fillText(STRINGS.btnYes, siX + siW/2, btnY + 3);
+    ctx.fillStyle = 'rgba(90,0,0,0.92)'; ctx.fillRect(noX, btnY, noW, btnH);
+    ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(noX+1, btnY+1, noW-2, btnH-2);
+    ctx.fillStyle = C.white; ctx.fillText(STRINGS.btnNo, noX + noW/2, btnY + 3);
+    ctx.restore();
   } else if (currentLevel === LEVELS.length) {
     // L10 final: special ending screen with best scores (#68: winTitle as heading, no subtitle)
     const bestScore = parseInt(localStorage.getItem('btr_best_score') || '0');
