@@ -1185,11 +1185,10 @@ function drawDebugOverlay() {
 }
 
 function _drawHeart(x, y) {
-  // 9×8 pixel art heart — matches 8px font height
+  // 8×7 pixel art heart
   ctx.fillRect(x+1,y,  2,1); ctx.fillRect(x+5,y,  2,1);
-  ctx.fillRect(x,  y+1,9,1); ctx.fillRect(x,  y+2,9,1); ctx.fillRect(x,  y+3,9,1);
-  ctx.fillRect(x+1,y+4,7,1); ctx.fillRect(x+2,y+5,5,1);
-  ctx.fillRect(x+3,y+6,3,1); ctx.fillRect(x+4,y+7,1,1);
+  ctx.fillRect(x,  y+1,8,1); ctx.fillRect(x,  y+2,8,1); ctx.fillRect(x,  y+3,8,1);
+  ctx.fillRect(x+1,y+4,6,1); ctx.fillRect(x+2,y+5,4,1); ctx.fillRect(x+3,y+6,2,1);
 }
 
 function _hudObjInfo() {
@@ -1244,7 +1243,7 @@ function drawHUD() {
     var _grpW = VH.dotW + VH.dotGap + _tw;
     var _sx = Math.round(VH.centerX - _grpW / 2);
     ctx.fillStyle = _oi.dot;
-    ctx.fillRect(_sx, VH.textY + Math.round((VH.fontSize - VH.dotW) / 2), VH.dotW, VH.dotW);
+    ctx.fillRect(_sx, VH.textY + VH.dotOffsetY, VH.dotW, VH.dotW);
     ctx.textAlign = 'left'; ctx.fillStyle = '#44ee66';
     ctx.fillText(_txt, _sx + VH.dotW + VH.dotGap, VH.textY);
   }
