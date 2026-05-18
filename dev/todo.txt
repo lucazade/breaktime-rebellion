@@ -258,6 +258,9 @@ CHIUSI:
 - [X] #112 Marco deve suonare la campanella proprio sotto la campanella
 - [X] #107 no muori per debug
 - [X] #116 il banner missione del livello può essere dismesso via tempo, via click/tap e anche invio
+- [X] #119 in credits bisogna freezare il gioco
+- [X] #120 in title rendiamo la riga "tap per continuare opzionale"
+- [X] #121 visto che la riga tap per continuare è opzionale e la legend c'e' solo su pc allora tutto il canvas nella title deve essere centrato verticalmente
 
 PER LUCA:
 - [ ] #72 Revisione punteggi (per Luca)
@@ -265,7 +268,6 @@ PER LUCA:
 - [ ] #108 sistemare suoni (per Luca)
 
 IMPORTANTI:
-
 
 MINORI:
 - [ ] #76 target libreria troppo grande
