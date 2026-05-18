@@ -88,7 +88,7 @@ function updatePlayer() {
         }
       }
     } else {
-      gymBall.shakeT = 0; // #109: reset if released or out of range
+      gymBall.shakeT = 0;
     }
   }
   if (!player.shaking && levelMechanics.dropBook && bookcase && !bookcase.dropped && K.action && !player.onStair) {
