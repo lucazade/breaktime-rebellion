@@ -119,26 +119,26 @@ CONFIG.vis = {
     padBottom: 23,  // spazio dal fondo tapForTitle al bordo inferiore
   },
 
-  // Banner storia (L1) — panH fisso (contenuto dinamico); padBottom = margine target dal basso
+  // Banner storia (L1) — panH calcolato: padTop+titleH+titleSpacing+lineBlock+spacerH+tapH+padBottom
   storyBanner: {
-    panX: 20, panY: 22, panW: 280, panH: 156, wrapWidth: 220,
-    fontSize:       8,   // px font corpo
-    padTop:        16,  // spazio dal bordo superiore al titolo
+    panX: 20, panY: 22, panW: 280, wrapWidth: 220,
+    fontSize:       8,
+    padTop:        16,
     titleH:        10, titleSpacing: 10,
     lineH:          8, lineSpacing:   4,
-    spacerH:       10,                    // spazio vuoto prima di tapContinue
+    spacerH:       10,
     tapH:           8,
-    padBottom:     16,  // margine target dal fondo tapContinue al bordo inferiore
+    padBottom:     16,
   },
 
-  // Banner missione — panH fisso (contenuto dinamico); padBottom = margine target dal basso
+  // Banner missione — panH calcolato: padTop+titleH+titleSpacing+lineBlock+padBottom
   missionBanner: {
-    panY: 64, panW: 260, panH: 72, wrapWidth: 200,
-    fontSize:       8,   // px font corpo
-    padTop:        14,  // spazio dal bordo superiore al titolo
+    panY: 64, panW: 260, wrapWidth: 200,
+    fontSize:       8,
+    padTop:        14,
     titleH:        10, titleSpacing: 8,
     lineH:          8, lineSpacing:  4,
-    padBottom:     14,  // margine target dal fondo ultima riga al bordo inferiore
+    padBottom:     14,
   },
 
   // Overlay pausa — panH calcolato: padTop+stepTitle+btnH+padBottom
@@ -162,8 +162,8 @@ CONFIG.vis = {
     timerH:    1,                    // altezza barra timer
     fontSize:  8,                    // ⚠ solo 4px e 8px sono crispini su questo canvas (scale 2×)
     dotW:      7,                    // lato quadratino indicatore meccanica
-    dotGap:    3,                    // gap tra quadratino e testo counter
-    dotOffsetY: -1,                  // offset y del dot rispetto a textY (negativo = su)
+    dotGap:    5,                    // gap tra quadratino e testo counter
+    dotOffsetY: 0,                  // offset y del dot rispetto a textY (negativo = su)
     bgColor:   'rgba(0,0,0,0.55)',
     // Colore quadratino indicatore per ogni meccanica
     dotColors: {

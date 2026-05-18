@@ -1010,7 +1010,9 @@ function drawStoryBanner() {
   ctx.save();
   ctx.globalAlpha = storyPanelAlpha;
   const VS = CONFIG.vis.storyBanner;
-  const bx = VS.panX, by = VS.panY, bw = VS.panW, bh = VS.panH;
+  const bx = VS.panX, by = VS.panY, bw = VS.panW;
+  const _stLineH = storyBannerLines.length * VS.lineH + Math.max(0, storyBannerLines.length - 1) * VS.lineSpacing;
+  const bh = VS.padTop + VS.titleH + VS.titleSpacing + _stLineH + VS.spacerH + VS.tapH + VS.padBottom;
   ctx.fillStyle = 'rgba(0,0,40,0.92)'; ctx.fillRect(bx, by, bw, bh);
   ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(bx+1, by+1, bw-2, bh-2);
   ctx.textAlign = 'center'; ctx.textBaseline = 'top';
@@ -1046,7 +1048,9 @@ function drawMissionBanner() {
   const alpha = missionBannerT < 40 ? missionBannerT / 40 : missionBannerT > 170 ? (210 - missionBannerT) / 40 : 1;
   const VM = CONFIG.vis.missionBanner;
   const bx = Math.round(W / 2 - VM.panW / 2);
-  const by = VM.panY, bw = VM.panW, bh = VM.panH;
+  const by = VM.panY, bw = VM.panW;
+  const _msLineH = missionBannerLines.length * VM.lineH + Math.max(0, missionBannerLines.length - 1) * VM.lineSpacing;
+  const bh = VM.padTop + VM.titleH + VM.titleSpacing + _msLineH + VM.padBottom;
   ctx.save();
   ctx.globalAlpha = alpha;
   ctx.fillStyle = 'rgba(0,0,40,0.88)'; ctx.fillRect(bx, by, bw, bh);
@@ -1356,7 +1360,7 @@ function drawCredits() {
   var btnX = bx + Math.round((VC.panW - VC.btnW) / 2);
   ctx.fillStyle = 'rgba(0,90,0,0.92)'; ctx.fillRect(btnX, ty, VC.btnW, VC.btnH);
   ctx.strokeStyle = C.gold; ctx.strokeRect(btnX+1, ty+1, VC.btnW-2, VC.btnH-2);
-  ctx.fillStyle = C.white; ctx.fillText('OK', bx + VC.panW/2, ty + 2);
+  ctx.fillStyle = C.white; ctx.fillText('OK', bx + VC.panW/2, ty + Math.round((VC.btnH - 4) / 2));
   ctx.restore();
 }
 
