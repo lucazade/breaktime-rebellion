@@ -36,7 +36,7 @@ const CONFIG = {
     showLevelChooser: true,
     showLangChooser:  true,
     simulateMobile:   false,
-    godMode:          false, // Marco non muore mai
+    godMode:          false,
   },
 };
 

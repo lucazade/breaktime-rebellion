@@ -253,6 +253,11 @@ CHIUSI:
 - [X] #114 nella titlescreen se fai partire il gioco prima che parta la musica della title quando poi appare il gioco partono sia la musica della title che del gioco
 - [X] #115 quando muori si scurisce subito overlay con fadein (tutto giusto) ma poi il banner gameover ci mette troppo tempo ad apparire
 - [X] #109 La progress di L2 è troppo difficile che si resetta se non riesci a completarla, rimettiamo quella classica e questa che si resetta se non la completi mettiamola al pallone
+- [X] #111 il banner gameover deve chiedere se rigiocare altrimenti manda in titlescreen
+- [X] #117 in L2 solo bidello al piano terra, solo prof al piano medio, ultimo piano sia bidello che prof. I prof si devono allertare quando rubi cartella e in caso di collisione morte
+- [X] #112 Marco deve suonare la campanella proprio sotto la campanella
+- [X] #107 no muori per debug
+- [X] #116 il banner missione del livello può essere dismesso via tempo, via click/tap e anche invio
 
 PER LUCA:
 - [ ] #72 Revisione punteggi (per Luca)
@@ -260,10 +265,8 @@ PER LUCA:
 - [ ] #108 sistemare suoni (per Luca)
 
 IMPORTANTI:
-- [ ] #111 il banner gameover deve chiedere se rigiocare altrimenti manda in titlescreen 
+
 
 MINORI:
 - [ ] #76 target libreria troppo grande
-- [ ] #112 Marco deve suonare la campanella proprio sotto la campanella
-- [ ] #107 no muori per debug
-- [ ] #116 il banner missione del livello può essere dismesso via tempo, via click/tap e anche invio
+- [ ] #118 banner livello completato la scritta premi per continuare cambiare pixel spazio
