@@ -1195,10 +1195,11 @@ function _drawHeart(x, y) {
 function _drawHudIcon(type, x, y, color) {
   ctx.fillStyle = color;
   switch (type) {
-    case 'boards':   // lavagna: rettangolo bordo con riga gessosa interna
-      ctx.fillRect(x,   y,   7,1); ctx.fillRect(x,   y+5, 7,1); // top/bottom border
-      ctx.fillRect(x,   y+1, 1,4); ctx.fillRect(x+6, y+1, 1,4); // side borders
-      ctx.fillStyle = '#D8E8D0'; ctx.fillRect(x+1, y+2, 5,1);   // chalk line
+    case 'boards':   // lavagna: outline 7×7 + 2 righe gesso
+      ctx.fillRect(x,   y,   7,1); ctx.fillRect(x,   y+6, 7,1); // top/bottom
+      ctx.fillRect(x,   y+1, 1,5); ctx.fillRect(x+6, y+1, 1,5); // sides
+      ctx.fillStyle = '#fff'; ctx.fillRect(x+1, y+2, 5,1);       // chalk line 1
+                              ctx.fillRect(x+1, y+4, 5,1);       // chalk line 2
       break;
     case 'bags':     // cartella: corpo + manico
       ctx.fillRect(x+2, y,   3,1);                               // handle
