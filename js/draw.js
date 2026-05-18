@@ -989,7 +989,7 @@ function drawStoryBanner() {
       let line = '';
       for (let i = 0; i < words.length; i++) {
         const test = line + (line ? ' ' : '') + words[i];
-        if (ctx.measureText(test).width > 220) { lines.push(line); line = words[i]; }
+        if (ctx.measureText(test).width > CONFIG.vis.storyBanner.wrapWidth) { lines.push(line); line = words[i]; }
         else line = test;
       }
       if (line) lines.push(line);
@@ -999,7 +999,8 @@ function drawStoryBanner() {
   const storyPanelAlpha = storyBannerFading ? Math.max(0, storyBannerT / 20) : Math.min(1, storyFadeInT / 40);
   ctx.save();
   ctx.globalAlpha = storyPanelAlpha;
-  const bx = 20, by = 22, bw = 280, bh = 156;
+  const VS = CONFIG.vis.storyBanner;
+  const bx = VS.panX, by = VS.panY, bw = VS.panW, bh = VS.panH;
   const lineObjs = [
     { text: STRINGS.storyTitle, font: '8px "Press Start 2P"', color: C.gold, height: 10, spacing: 10 },
   ];
@@ -1022,17 +1023,16 @@ function drawMissionBanner() {
     let line = '', lines = [];
     for (let i = 0; i < words.length; i++) {
       const test = line + (line ? ' ' : '') + words[i];
-      if (ctx.measureText(test).width > 200) { lines.push(line); line = words[i]; }
+      if (ctx.measureText(test).width > CONFIG.vis.missionBanner.wrapWidth) { lines.push(line); line = words[i]; }
       else line = test;
     }
     if (line) lines.push(line);
     missionBannerLines = lines;
   }
   const alpha = missionBannerT < 40 ? missionBannerT / 40 : missionBannerT > 170 ? (210 - missionBannerT) / 40 : 1;
-  const bx = 160 - 130;
-  const by = 64;
-  const bw = 260;
-  const bh = 72;
+  const VM = CONFIG.vis.missionBanner;
+  const bx = Math.round(W / 2 - VM.panW / 2);
+  const by = VM.panY, bw = VM.panW, bh = VM.panH;
   const lines = [
     {
       text: fmt(STRINGS.missionLabel, currentLevel),

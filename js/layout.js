@@ -102,4 +102,10 @@ CONFIG.vis = {
 
   // Banner fine gioco (L10 vittoria finale)
   gameWin: { panY: 44, panW: 260, panH: 104 },
+
+  // Banner storia (L1, prima partita) — pannello grande centrato
+  storyBanner: { panX: 20, panY: 22, panW: 280, panH: 156, wrapWidth: 220 },
+
+  // Banner missione (inizio di ogni livello)
+  missionBanner: { panY: 64, panW: 260, panH: 72, wrapWidth: 200 },
 };
