@@ -31,8 +31,9 @@ function _drawLockIcon(x, y, color) {
 
 function drawTitleScreen() {
   var VT = CONFIG.vis.titleScreen;
-  // Sfondo: scuola senza oggetti di gioco (early return nel loop salta drawDesks/drawChar/ecc.)
-  drawBg();
+  // Sfondo blu — il resto della finestra è coperto da body.title-mode in CSS
+  var VT = CONFIG.vis.titleScreen;
+  ctx.fillStyle = VT.bgColor || '#000060'; ctx.fillRect(0, 0, W, H);
 
   // Logo
   var logoW = VT.logo.w, logoY = VT.logo.y;

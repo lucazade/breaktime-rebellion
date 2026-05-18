@@ -305,8 +305,19 @@ canvas {
     pointer-events: none;
   }
 
-  /* title screen CSS rimosso: su canvas */
 }
+
+/* ─── TITLE MODE — copre tutto, nasconde bezel e pannelli ─── */
+body.title-mode {
+  background: linear-gradient(180deg, #000080 0%, #000040 100%) !important;
+}
+body.title-mode #panel-left,
+body.title-mode #panel-right { visibility: hidden !important; }
+body.title-mode #game-area {
+  box-shadow: none !important;
+}
+body.title-mode #game-area::before,
+body.title-mode #game-area::after { display: none !important; }
 
 /* #panel-bell rimosso */
 

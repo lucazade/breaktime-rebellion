@@ -53,8 +53,12 @@ function _initTitleState() {
   _titleStarting = false;
 }
 _initTitleState();
+document.body.classList.add('title-mode'); // attivo al caricamento (state='title')
 
-window.addEventListener('_titleReset', function() { _titleStarting = false; _initTitleState(); });
+window.addEventListener('_titleReset', function() {
+  _titleStarting = false; _initTitleState();
+  document.body.classList.add('title-mode');
+});
 
 function _tryStart() {
   if (_titleStarting || state !== 'title') return;

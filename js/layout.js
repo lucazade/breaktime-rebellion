@@ -198,6 +198,7 @@ CONFIG.vis = {
 
   // Title screen — logo + tap to start + level chooser + audio toggle + keyboard legend
   titleScreen: {
+    bgColor:  '#000060',               // colore canvas (deve matchare il gradiente body.title-mode)
     logo:     { w: 220, y: 10 },       // larghezza logo e y top (height dall'aspect ratio)
     tapText:  { fontSize: 8, gapY: 8 },// font e gap sotto il logo
     controls: {
