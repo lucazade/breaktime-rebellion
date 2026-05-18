@@ -35,41 +35,38 @@ const GY = CONFIG.layout.GY, MY = CONFIG.layout.MY, TY = CONFIG.layout.TY;
 const BW = CONFIG.layout.BW, BH = CONFIG.layout.BH;
 const walkOffset = CONFIG.layout.walkOffset;
 
-// ── Shared scene ─────────────────────────────────────────────────────────────
-// Stairs, boards, desks, bell and player start are the same in every level —
-// they are physical elements of the building fixed in bg.png.
-// Only mechanics (what Marco can do) and NPCs change per level.
-
-var SHARED_LAYOUT = {
-  playerStart: { x: 18, y: GY - PH - walkOffset },
-
-  // fdTop: px above the walking surface where the sprite starts to appear (trapdoor top edge)
-  // fdBot: px below the walking surface where the sprite disappears  (floor plank underside)
-  stairs: [
-    {x1:90,  y1:GY-walkOffset, x2:37,  y2:MY-walkOffset, fdTop:4, fdBot:12},  // GY→MY sx
-    {x1:232, y1:GY-walkOffset, x2:285, y2:MY-walkOffset, fdTop:4, fdBot:12},  // GY→MY dx
-    {x1:92,  y1:MY-walkOffset, x2:35,  y2:TY-walkOffset, fdTop:4, fdBot:12},  // MY→TY sx
-    {x1:232, y1:MY-walkOffset, x2:285, y2:TY-walkOffset, fdTop:4, fdBot:12},  // MY→TY dx
-  ],
-
-  boards: [
-    {x:130, y:GY-44},
-    {x:130, y:MY-43},
-    {x:72,  y:TY-41}, {x:130, y:TY-41},
-  ],
-
-  desks: [
-    {x:155, y:GY-22}, {x:179, y:GY-22},
-    {x:155, y:MY-22}, {x:179, y:MY-22},
-    {x:62,  y:TY-20}, {x:85,  y:TY-20}, {x:158, y:TY-20}, {x:182, y:TY-20},
-  ],
-
-  bell: { x: 7, y: GY - 49 },
-};
-
-// ── Visual config — edit here to adjust dashed borders and canvas banner layout ─
+// ── Visual config — edit here to adjust layout, dashed borders and canvas banners ─
 // All canvas coords are in logical 320×200 space (ctx.scale 2×).
 CONFIG.vis = {
+
+  // Shared scene — stairs, boards, desks, bell and player start are the same in every level.
+  // Physical elements fixed in bg.png; only mechanics and NPCs change per level.
+  shared: {
+    playerStart: { x: 18, y: GY - PH - walkOffset },
+
+    // fdTop: px above the walking surface where the sprite starts to appear
+    // fdBot: px below the walking surface where the sprite disappears
+    stairs: [
+      {x1:90,  y1:GY-walkOffset, x2:37,  y2:MY-walkOffset, fdTop:4, fdBot:12},  // GY→MY sx
+      {x1:232, y1:GY-walkOffset, x2:285, y2:MY-walkOffset, fdTop:4, fdBot:12},  // GY→MY dx
+      {x1:92,  y1:MY-walkOffset, x2:35,  y2:TY-walkOffset, fdTop:4, fdBot:12},  // MY→TY sx
+      {x1:232, y1:MY-walkOffset, x2:285, y2:TY-walkOffset, fdTop:4, fdBot:12},  // MY→TY dx
+    ],
+
+    boards: [
+      {x:130, y:GY-44},
+      {x:130, y:MY-43},
+      {x:72,  y:TY-41}, {x:130, y:TY-41},
+    ],
+
+    desks: [
+      {x:155, y:GY-22}, {x:179, y:GY-22},
+      {x:155, y:MY-22}, {x:179, y:MY-22},
+      {x:62,  y:TY-20}, {x:85,  y:TY-20}, {x:158, y:TY-20}, {x:182, y:TY-20},
+    ],
+
+    bell: { x: 7, y: GY - 49 },
+  },
 
   // Proximity dashed borders — { x, y, w, h } offset from object's top-left (bx, by)
   dashed: {
@@ -109,3 +106,6 @@ CONFIG.vis = {
   // Banner missione (inizio di ogni livello)
   missionBanner: { panY: 64, panW: 260, panH: 72, wrapWidth: 200 },
 };
+
+// Alias per retrocompatibilità con levels.js
+var SHARED_LAYOUT = CONFIG.vis.shared;
