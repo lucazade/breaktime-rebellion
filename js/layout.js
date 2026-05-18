@@ -84,6 +84,7 @@ CONFIG.vis = {
   // Banner gameover — panH calcolato: padTop+stepTitle+stepLevel+stepScore+stepConfirm+btnH+padBottom
   gameover: {
     panY: 44, panW: 260,
+    fontSize:    8,   // px font corpo
     padTop:      12,  // spazio dal bordo superiore al primo testo
     stepTitle:   18,  // avanzamento dopo "ESPULSO!"
     stepLevel:   12,  // avanzamento dopo livello raggiunto
@@ -98,6 +99,7 @@ CONFIG.vis = {
   // Banner livello superato — panH calcolato: padTop+stepTitle+stepScore+tapH+padBottom
   levelComplete: {
     panY: 64, panW: 260,
+    fontSize:   8,   // px font corpo
     padTop:    11,  // spazio dal bordo superiore al primo testo
     stepTitle: 20,  // avanzamento dopo titolo (h=10 + spacing=10)
     stepScore: 22,  // avanzamento dopo punteggio (h=8 + spacing=14)
@@ -108,6 +110,7 @@ CONFIG.vis = {
   // Banner fine gioco (L10) — panH calcolato: padTop+stepTitle+stepScore+stepBest+tapH+padBottom
   gameWin: {
     panY: 44, panW: 260,
+    fontSize:   8,   // px font corpo
     padTop:    23,  // spazio dal bordo superiore al primo testo
     stepTitle: 22,  // avanzamento dopo titolo win (h=12 + spacing=10)
     stepScore: 12,  // avanzamento dopo punteggio (h=8 + spacing=4)
@@ -119,6 +122,7 @@ CONFIG.vis = {
   // Banner storia (L1) — panH fisso (contenuto dinamico); padBottom = margine target dal basso
   storyBanner: {
     panX: 20, panY: 22, panW: 280, panH: 156, wrapWidth: 220,
+    fontSize:       8,   // px font corpo
     padTop:        16,  // spazio dal bordo superiore al titolo
     titleH:        10, titleSpacing: 10,
     lineH:          8, lineSpacing:   4,
@@ -130,6 +134,7 @@ CONFIG.vis = {
   // Banner missione — panH fisso (contenuto dinamico); padBottom = margine target dal basso
   missionBanner: {
     panY: 64, panW: 260, panH: 72, wrapWidth: 200,
+    fontSize:       8,   // px font corpo
     padTop:        14,  // spazio dal bordo superiore al titolo
     titleH:        10, titleSpacing: 8,
     lineH:          8, lineSpacing:  4,
@@ -155,6 +160,7 @@ CONFIG.vis = {
     centerX:   160,                  // x centro per counter/msg
     scoreX:    316,                  // x destro per punteggio
     timerH:    1,                    // altezza barra timer
+    fontSize:  5,                    // dimensione font HUD (px logici)
     bgColor:   'rgba(0,0,0,0.55)',
     // Colore quadratino indicatore per ogni meccanica
     dotColors: {

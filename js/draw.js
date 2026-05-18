@@ -942,7 +942,7 @@ function drawEndScreen() {
     ctx.textAlign = 'center'; ctx.textBaseline = 'top';
     const cx = bx + VG.panW / 2;
     let ty = VG.panY + VG.padTop;
-    ctx.font = '8px "Press Start 2P"';
+    ctx.font = VG.fontSize + 'px "Press Start 2P"';
     ctx.fillStyle = C.redprof; ctx.fillText(STRINGS.gameoverTitle,                  cx, ty); ty += VG.stepTitle;
     ctx.fillStyle = C.white;   ctx.fillText(fmt(STRINGS.levelReached, currentLevel), cx, ty); ty += VG.stepLevel;
     ctx.fillStyle = C.white;   ctx.fillText(scoreText,                               cx, ty); ty += VG.stepScore;
@@ -966,7 +966,7 @@ function drawEndScreen() {
     ctx.textAlign = 'center'; ctx.textBaseline = 'top';
     const cxW = bx + VW.panW / 2;
     let tyW = VW.panY + VW.padTop;
-    ctx.font = '8px "Press Start 2P"';
+    ctx.font = VW.fontSize + 'px "Press Start 2P"';
     ctx.fillStyle = C.gold;   ctx.fillText(STRINGS.winTitle, cxW, tyW); tyW += VW.stepTitle;
     ctx.fillStyle = C.white;  ctx.fillText(scoreText, cxW, tyW); tyW += VW.stepScore;
     ctx.fillStyle = C.yellow; ctx.fillText(STRINGS.bestLabel + ' LVL ' + bestLevel + ' — ' + String(bestScore).padStart(5,'0'), cxW, tyW); tyW += VW.stepBest;
@@ -980,7 +980,7 @@ function drawEndScreen() {
     ctx.textAlign = 'center'; ctx.textBaseline = 'top';
     const cxL = bx + VL.panW / 2;
     let tyL = VL.panY + VL.padTop;
-    ctx.font = '8px "Press Start 2P"';
+    ctx.font = VL.fontSize + 'px "Press Start 2P"';
     ctx.fillStyle = C.gold;  ctx.fillText(STRINGS.levelComplete, cxL, tyL); tyL += VL.stepTitle;
     ctx.fillStyle = C.white; ctx.fillText(scoreText, cxL, tyL); tyL += VL.stepScore;
     ctx.fillStyle = actionVisible ? C.green : 'rgba(0,0,0,0)'; ctx.fillText(STRINGS.tapContinue, cxL, tyL);
@@ -1014,7 +1014,7 @@ function drawStoryBanner() {
   ctx.fillStyle = 'rgba(0,0,40,0.92)'; ctx.fillRect(bx, by, bw, bh);
   ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(bx+1, by+1, bw-2, bh-2);
   ctx.textAlign = 'center'; ctx.textBaseline = 'top';
-  ctx.font = '8px "Press Start 2P"';
+  ctx.font = VS.fontSize + 'px "Press Start 2P"';
   const cxSt = bx + bw / 2;
   let tySt = by + VS.padTop;
   ctx.fillStyle = C.gold;  ctx.fillText(STRINGS.storyTitle, cxSt, tySt); tySt += VS.titleH + VS.titleSpacing;
@@ -1031,7 +1031,7 @@ function drawStoryBanner() {
 function drawMissionBanner() {
   if (missionBannerT <= 0 || state !== 'playing') return;
   if (!missionBannerLines) {
-    ctx.font = '8px "Press Start 2P"';
+    ctx.font = CONFIG.vis.missionBanner.fontSize + 'px "Press Start 2P"';
     const text = STRINGS['mission' + currentLevel] || STRINGS.mission1;
     const words = text.split(' ');
     let line = '', lines = [];
@@ -1052,7 +1052,7 @@ function drawMissionBanner() {
   ctx.fillStyle = 'rgba(0,0,40,0.88)'; ctx.fillRect(bx, by, bw, bh);
   ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(bx+1, by+1, bw-2, bh-2);
   ctx.textAlign = 'center'; ctx.textBaseline = 'top';
-  ctx.font = '8px "Press Start 2P"';
+  ctx.font = VM.fontSize + 'px "Press Start 2P"';
   const cxM = bx + bw / 2;
   let tyM = by + VM.padTop;
   ctx.fillStyle = C.gold;  ctx.fillText(fmt(STRINGS.missionLabel, currentLevel), cxM, tyM); tyM += VM.titleH + VM.titleSpacing;
@@ -1066,13 +1066,14 @@ function drawMissionBanner() {
 
 function drawPauseOverlay() {
   if (state !== 'paused' || !_pauseActive) return;
+  ctx.save();
   const VP = CONFIG.vis.pauseOverlay;
   const pH = VP.padTop + VP.stepTitle + VP.btnH + VP.padBottom;
   const bx = Math.round(W / 2 - VP.panW / 2);
   ctx.fillStyle = 'rgba(0,0,40,0.92)'; ctx.fillRect(bx, VP.panY, VP.panW, pH);
   ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(bx+1, VP.panY+1, VP.panW-2, pH-2);
   ctx.textAlign = 'center'; ctx.textBaseline = 'top';
-  ctx.font = '8px "Press Start 2P"';
+  ctx.font = '8px "Press Start 2P"'; // pauseOverlay usa 8px fisso (titolo piccolo)
   const cx = bx + VP.panW / 2;
   let ty = VP.panY + VP.padTop;
   ctx.fillStyle = C.gold; ctx.fillText(STRINGS.pauseTitle, cx, ty); ty += VP.stepTitle;
@@ -1080,10 +1081,12 @@ function drawPauseOverlay() {
   ctx.fillStyle = 'rgba(0,90,0,0.92)'; ctx.fillRect(rx, ty, VP.resumeW, VP.btnH);
   ctx.strokeStyle = C.gold; ctx.strokeRect(rx+1, ty+1, VP.resumeW-2, VP.btnH-2);
   ctx.fillStyle = C.white; ctx.fillText(STRINGS.btnResume, rx + VP.resumeW/2, ty + 3);
+  ctx.restore();
 }
 
 function drawHomeConfirm() {
   if (!_homeConfirmActive) return;
+  ctx.save();
   const VH = CONFIG.vis.homeConfirm;
   const hH = VH.padTop + VH.stepTitle + VH.btnH + VH.padBottom;
   const bx = Math.round(W / 2 - VH.panW / 2);
@@ -1101,6 +1104,7 @@ function drawHomeConfirm() {
   ctx.fillStyle = 'rgba(90,0,0,0.92)'; ctx.fillRect(noX, ty, VH.noW, VH.btnH);
   ctx.strokeStyle = C.gold; ctx.strokeRect(noX+1, ty+1, VH.noW-2, VH.btnH-2);
   ctx.fillStyle = C.white; ctx.fillText(STRINGS.btnNo, noX + VH.noW/2, ty + 3);
+  ctx.restore();
 }
 
 function drawDebugOverlay() {
@@ -1216,19 +1220,21 @@ function _hudObjInfo() {
 function drawHUD() {
   if (state === 'title') return;
   var VH = CONFIG.vis.hud;
+  ctx.save();
+  var _f = VH.fontSize + 'px "Press Start 2P"';
   ctx.fillStyle = VH.bgColor; ctx.fillRect(0, 0, W, VH.rowH);
   // Hearts
   ctx.fillStyle = '#ff2244';
   for (var _i = 0; _i < Math.max(0, lives); _i++) _drawHeart(VH.heartsX + _i * VH.heartStep, VH.textY);
   // Score
-  ctx.font = '4px "Press Start 2P"'; ctx.textAlign = 'right'; ctx.textBaseline = 'top';
+  ctx.font = _f; ctx.textAlign = 'right'; ctx.textBaseline = 'top';
   ctx.fillStyle = '#ffffff'; ctx.fillText(String(score).padStart(5,'0'), VH.scoreX, VH.textY);
   // Counter or message
   ctx.textAlign = 'center';
   if (msgT > 0) {
     var _el = msgDuration - msgT, _ao = Math.min(_el/15,1) * (msgT<25 ? msgT/25 : 1);
     ctx.globalAlpha = _ao; ctx.fillStyle = '#ffffff';
-    ctx.fillText(msgText, VH.centerX, VH.textY); ctx.globalAlpha = 1;
+    ctx.fillText(msgText, VH.centerX, VH.textY);
   } else if (state === 'playing') {
     var _oi = _hudObjInfo();
     ctx.fillStyle = _oi.dot; ctx.fillRect(VH.centerX - 22, VH.textY, 4, 4);
@@ -1240,6 +1246,7 @@ function drawHUD() {
     ctx.fillStyle = _pct > 0.6 ? '#22cc44' : _pct > 0.3 ? '#ddcc00' : '#dd1100';
     ctx.fillRect(0, VH.rowH, Math.round(W * _pct), VH.timerH);
   }
+  ctx.restore();
 }
 
 var _CREDITS_MEMBERS = [
@@ -1252,6 +1259,7 @@ var _CREDITS_MEMBERS = [
 
 function drawCredits() {
   if (!_creditsActive) return;
+  ctx.save();
   var VC = CONFIG.vis.credits;
   var n = _CREDITS_MEMBERS.length;
   var panH = VC.padTop + VC.stepTitle + VC.stepTeam
@@ -1276,6 +1284,7 @@ function drawCredits() {
   ctx.fillStyle = 'rgba(0,90,0,0.92)'; ctx.fillRect(btnX, ty, VC.btnW, VC.btnH);
   ctx.strokeStyle = C.gold; ctx.strokeRect(btnX+1, ty+1, VC.btnW-2, VC.btnH-2);
   ctx.fillStyle = C.white; ctx.fillText('OK', bx + VC.panW/2, ty + 2);
+  ctx.restore();
 }
 
 function updateHUD() {} // sostituita da drawHUD() su canvas
