@@ -117,6 +117,7 @@ function playerDied() {
 
 function caughtBy(t) {
   if (deathFreeze || player.stunT > 0 || frame === player.stunEndedT) return;
+  if (CONFIG.debug.godMode) return;
   t.dir = -t.dir; // bounce away after catch so they don't follow Marco to respawn
   t.chasing = false; t.alertT = 0;
   lives--;

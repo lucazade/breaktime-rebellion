@@ -179,10 +179,10 @@ function drawBookcase() {
   if (!allBooks) {
     const pdx = Math.abs(player.x + PW/2 - bookcase.x - 12);
     const pdy = Math.abs(player.y + PH  - bookcase.y - 26);
-    if (pdx < 20 && pdy < 36) {
+    if (pdx < 12 && pdy < 22) {
       ctx.strokeStyle = C.yellow; ctx.lineWidth = 1;
       ctx.setLineDash([2, 2]);
-      ctx.strokeRect(bx, by-10, 28, 56);
+      ctx.strokeRect(bx+2, by+4, 22, 34);
       ctx.setLineDash([]);
     }
   }

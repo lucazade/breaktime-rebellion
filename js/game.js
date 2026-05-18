@@ -328,7 +328,7 @@ document.addEventListener('keydown', function(e) {
     return;
   }
   if (e.key === 'Enter' || e.key === ' ') {
-    if (storyBannerT > 0 || state === 'win' ||
+    if (storyBannerT > 0 || missionBannerT > 0 || state === 'win' ||
         (deathFreeze && levelMechanics.escapeExit && exitDone && exitWinReady)) {
       e.preventDefault(); handleTap(); return;
     }
