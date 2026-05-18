@@ -211,16 +211,4 @@
   var go = document.querySelector('.go');
   if (go) go.textContent = STRINGS.tapToStart;
 
-  // Localise pause and home-confirm overlays
-  var _ids = {
-    'pause-title':    'pauseTitle',
-    'btn-resume':     'btnResume',
-    'home-confirm-title': 'homeConfirm',
-    'btn-home-yes':   'btnYes',
-    'btn-home-no':    'btnNo',
-  };
-  Object.keys(_ids).forEach(function(id) {
-    var el = document.getElementById(id);
-    if (el) el.textContent = STRINGS[_ids[id]];
-  });
 })();

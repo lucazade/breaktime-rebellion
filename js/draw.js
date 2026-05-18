@@ -140,7 +140,7 @@ function drawGymBall() {
     if (pdx < 14 && pdy < 14) {
       ctx.strokeStyle = C.yellow; ctx.lineWidth = 1;
       ctx.setLineDash([2, 2]);
-      ctx.strokeRect(bx-2, by-2, 13, 13);
+      const _dg = CONFIG.vis.dashed.gymBall; ctx.strokeRect(bx+_dg.x, by+_dg.y, _dg.w, _dg.h);
       ctx.setLineDash([]);
     }
   }
@@ -182,7 +182,7 @@ function drawBookcase() {
     if (pdx < 20 && pdy < 36) {
       ctx.strokeStyle = C.yellow; ctx.lineWidth = 1;
       ctx.setLineDash([2, 2]);
-      ctx.strokeRect(bx, by-8, 28, 46);
+      const _db = CONFIG.vis.dashed.bookcase; ctx.strokeRect(bx+_db.x, by+_db.y, _db.w, _db.h);
       ctx.setLineDash([]);
     }
   }
@@ -218,7 +218,7 @@ function drawRegister() {
     if (pdx < 16 && pdy < 20) {
       ctx.strokeStyle = C.gold; ctx.lineWidth = 1;
       ctx.setLineDash([2, 2]);
-      ctx.strokeRect(bx-2, by-4, 14, 18);
+      const _dr = CONFIG.vis.dashed.register; ctx.strokeRect(bx+_dr.x, by+_dr.y, _dr.w, _dr.h);
       ctx.setLineDash([]);
     }
   }
@@ -233,7 +233,7 @@ function drawExitDoor() {
     const blink = Math.floor(frame / 10) % 2 === 0;
     ctx.strokeStyle = blink ? C.gold : C.green; ctx.lineWidth = 1;
     ctx.setLineDash([3, 2]);
-    ctx.strokeRect(bx-2, by-14, 14, 30);
+    const _de = CONFIG.vis.dashed.exitDoor; ctx.strokeRect(bx+_de.x, by+_de.y, _de.w, _de.h);
     ctx.setLineDash([]);
   }
 }
@@ -350,7 +350,7 @@ function drawSprinklers() {
         if (pdx < 16 && pdy < 50) {
           ctx.strokeStyle = '#FF6600'; ctx.lineWidth = 1;
           ctx.setLineDash([2, 2]);
-          ctx.strokeRect(bx-2, by-4, 12, 9);
+          const _ds = CONFIG.vis.dashed.sprinklers; ctx.strokeRect(bx+_ds.x, by+_ds.y, _ds.w, _ds.h);
           ctx.setLineDash([]);
         }
       }
@@ -420,7 +420,7 @@ function drawBins() {
       if (pdx < 16 && pdy < 20) {
         ctx.strokeStyle = C.yellow; ctx.lineWidth = 1;
         ctx.setLineDash([2, 2]);
-        ctx.strokeRect(bx-2, by-16, 14, 18);
+        const _dbn = CONFIG.vis.dashed.bins; ctx.strokeRect(bx+_dbn.x, by+_dbn.y, _dbn.w, _dbn.h);
         ctx.setLineDash([]);
       }
     }
@@ -493,7 +493,7 @@ function drawSink() {
     if (pdx < 14 && pdy < 20) {
       ctx.strokeStyle = C.cyan; ctx.lineWidth = 1;
       ctx.setLineDash([2, 2]);
-      ctx.strokeRect(bx-2, by-11, 16, 13);
+      const _dsk = CONFIG.vis.dashed.sink; ctx.strokeRect(bx+_dsk.x, by+_dsk.y, _dsk.w, _dsk.h);
       ctx.setLineDash([]);
     }
   }
@@ -566,7 +566,7 @@ function drawBags() {
       if (pdx < 14 && pdy < 14) {
         ctx.strokeStyle = C.gold; ctx.lineWidth = 1;
         ctx.setLineDash([2, 2]);
-        ctx.strokeRect(b.x-1, b.y-1, 16, 12);
+        const _dbg = CONFIG.vis.dashed.bags; ctx.strokeRect(b.x+_dbg.x, b.y+_dbg.y, _dbg.w, _dbg.h);
         ctx.setLineDash([]);
       }
     }
@@ -610,7 +610,7 @@ function drawMachines() {
       if (pdx < 14 && pdy < 20) {
         ctx.strokeStyle = C.yellow; ctx.lineWidth = 1;
         ctx.setLineDash([2, 2]);
-        ctx.strokeRect(mx-2, my-2, 14, 22);
+        const _dm = CONFIG.vis.dashed.machines; ctx.strokeRect(mx+_dm.x, my+_dm.y, _dm.w, _dm.h);
         ctx.setLineDash([]);
       }
     }
@@ -832,9 +832,9 @@ function drawLucaEnd() {
   const ly = Math.round(GY - PH - walkOffset);
   drawChar(lx, ly, 1, 0, C.white, false, false, false, 0);
 
-  // Speech bubble — bh dinamico: Luca:(14) + righe(10 cad) + gap(4) + tapForTitle(8) + margine(6)
-  const bw = 190;
-  ctx.font = '4px "Press Start 2P"';
+  // Speech bubble — bh calcolato da CONFIG.vis.lucaFumetto
+  const VF = CONFIG.vis.lucaFumetto;
+  ctx.font = VF.fontSize + 'px "Press Start 2P"';
   const raw = STRINGS.lucaAppears.replace(/^[^"]*"?/, '').replace(/".*$/, '');
   const parts = raw.split('|');
   let lines = [];
@@ -843,30 +843,30 @@ function drawLucaEnd() {
     let cur = '';
     for (let i = 0; i < words.length; i++) {
       const test = cur + (cur ? ' ' : '') + words[i];
-      if (ctx.measureText(test).width > bw - 8) { if (cur) lines.push(cur); cur = words[i]; }
+      if (ctx.measureText(test).width > VF.bw - 8) { if (cur) lines.push(cur); cur = words[i]; }
       else cur = test;
     }
     if (cur) lines.push(cur);
   }
   const lineCount = Math.min(lines.length, 4);
-  const bh = 14 + lineCount * 10 + 4 + 8 + 6;
-  const bx = lx + PW + 2, by2 = ly - 14 - bh; // tail sempre a ly-14
-  ctx.fillStyle = C.gold; ctx.fillRect(bx, by2, bw, bh);
+  const bh = VF.headerH + lineCount * VF.lineH + VF.gapTap + VF.tapH + VF.padBottom;
+  const bx = lx + VF.offsetX, by2 = ly - VF.tailOffY - bh;
+  ctx.fillStyle = C.gold; ctx.fillRect(bx, by2, VF.bw, bh);
   ctx.strokeStyle = '#aa7700'; ctx.lineWidth = 1;
-  ctx.strokeRect(bx, by2, bw, bh);
-  ctx.fillStyle = C.gold; ctx.fillRect(bx, by2 + bh, 3, 5);
-  ctx.strokeStyle = '#aa7700'; ctx.strokeRect(bx, by2 + bh, 3, 5);
+  ctx.strokeRect(bx, by2, VF.bw, bh);
+  ctx.fillStyle = C.gold; ctx.fillRect(bx, by2 + bh, VF.tailW, VF.tailH);
+  ctx.strokeStyle = '#aa7700'; ctx.strokeRect(bx, by2 + bh, VF.tailW, VF.tailH);
   ctx.fillStyle = '#000'; ctx.textAlign = 'left'; ctx.textBaseline = 'top';
   ctx.fillText('Luca:', bx + 4, by2 + 4);
   for (let i = 0; i < lineCount; i++) {
     ctx.fillStyle = i === lineCount - 1 ? C.redprof : '#000';
-    ctx.fillText(lines[i], bx + 4, by2 + 14 + i * 10);
+    ctx.fillText(lines[i], bx + 4, by2 + VF.headerH + i * VF.lineH);
   }
-  const tapY = by2 + 14 + lineCount * 10 + 4;
+  const tapY = by2 + VF.headerH + lineCount * VF.lineH + VF.gapTap;
   const blink = Math.floor(frame / 25) % 2 === 0;
   ctx.fillStyle = blink ? '#554400' : 'rgba(0,0,0,0)';
   ctx.textAlign = 'center';
-  ctx.fillText(STRINGS.tapForTitle, bx + bw / 2, tapY);
+  ctx.fillText(STRINGS.tapContinue, bx + VF.bw / 2, tapY);
   ctx.textAlign = 'left';
 }
 
@@ -925,7 +925,7 @@ function drawEndScreen() {
   const fadeAlpha = Math.min(1, endScreenT / 20);
   ctx.save();
   ctx.globalAlpha = fadeAlpha;
-  const bx = 160 - 130;
+  const bx = Math.round(W / 2 - CONFIG.vis.gameover.panW / 2);
   const isWin = state === 'win';
   const scoreText = STRINGS.scoreLabel + String(score).padStart(5, '0');
   const actionText = isWin
@@ -934,46 +934,55 @@ function drawEndScreen() {
   const actionVisible = Math.floor(frame / 20) % 2 === 0;
 
   if (!isWin) {
-    // Gameover — drawn manually for precise vertical spacing (no centering)
-    const panY = 44, panW = 260, panH = 104;
-    ctx.fillStyle = 'rgba(60,0,0,0.88)'; ctx.fillRect(bx, panY, panW, panH);
-    ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(bx+1, panY+1, panW-2, panH-2);
+    const VG = CONFIG.vis.gameover;
+    const _gH = VG.padTop + VG.stepTitle + VG.stepLevel + VG.stepScore + VG.stepConfirm + VG.btnH + VG.padBottom;
+    const {bx:gX, by:gY} = _panPos(VG.panW, _gH);
+    ctx.fillStyle = 'rgba(60,0,0,0.88)'; ctx.fillRect(gX, gY, VG.panW, _gH);
+    ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(gX+1, gY+1, VG.panW-2, _gH-2);
     ctx.textAlign = 'center'; ctx.textBaseline = 'top';
-    const cx = bx + panW / 2;
-    let ty = panY + 12;
-    ctx.font = '8px "Press Start 2P"';
-    ctx.fillStyle = C.redprof; ctx.fillText(STRINGS.gameoverTitle,                  cx, ty); ty += 18;
-    ctx.fillStyle = C.white;   ctx.fillText(fmt(STRINGS.levelReached, currentLevel), cx, ty); ty += 12;
-    ctx.fillStyle = C.white;   ctx.fillText(scoreText,                               cx, ty); ty += 20;
-    ctx.fillStyle = C.gold;    ctx.fillText(STRINGS.gameoverConfirm,                 cx, ty); ty += 16;
-    // SI / NO buttons
-    const btnH = 14, siX = bx + 30, siW = 70, noX = bx + 160, noW = 70;
-    ctx.fillStyle = 'rgba(0,90,0,0.92)'; ctx.fillRect(siX, ty, siW, btnH);
-    ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(siX+1, ty+1, siW-2, btnH-2);
-    ctx.fillStyle = C.white; ctx.fillText(STRINGS.btnYes, siX + siW/2, ty + 3);
-    ctx.fillStyle = 'rgba(90,0,0,0.92)'; ctx.fillRect(noX, ty, noW, btnH);
-    ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(noX+1, ty+1, noW-2, btnH-2);
-    ctx.fillStyle = C.white; ctx.fillText(STRINGS.btnNo, noX + noW/2, ty + 3);
+    const cx = gX + VG.panW / 2;
+    let ty = gY + VG.padTop;
+    ctx.font = VG.fontSize + 'px "Press Start 2P"';
+    ctx.fillStyle = C.redprof; ctx.fillText(STRINGS.gameoverTitle,                  cx, ty); ty += VG.stepTitle;
+    ctx.fillStyle = C.white;   ctx.fillText(fmt(STRINGS.levelReached, currentLevel), cx, ty); ty += VG.stepLevel;
+    ctx.fillStyle = C.white;   ctx.fillText(scoreText,                               cx, ty); ty += VG.stepScore;
+    ctx.fillStyle = C.gold;    ctx.fillText(STRINGS.gameoverConfirm,                 cx, ty); ty += VG.stepConfirm;
+    const siX = gX + VG.siOx, noX = gX + VG.noOx;
+    ctx.fillStyle = 'rgba(0,90,0,0.92)'; ctx.fillRect(siX, ty, VG.siW, VG.btnH);
+    ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(siX+1, ty+1, VG.siW-2, VG.btnH-2);
+    ctx.fillStyle = C.white; ctx.fillText(STRINGS.btnYes, siX + VG.siW/2, ty + 3);
+    ctx.fillStyle = 'rgba(90,0,0,0.92)'; ctx.fillRect(noX, ty, VG.noW, VG.btnH);
+    ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(noX+1, ty+1, VG.noW-2, VG.btnH-2);
+    ctx.fillStyle = C.white; ctx.fillText(STRINGS.btnNo, noX + VG.noW/2, ty + 3);
   } else if (currentLevel === LEVELS.length) {
-    // L10 final: special ending screen with best scores (#68: winTitle as heading, no subtitle)
     const bestScore = parseInt(localStorage.getItem('btr_best_score') || '0');
     const bestLevel = parseInt(localStorage.getItem('btr_best_level') || '1');
-    const by = 44, bw = 260, bh = 104;
-    const tapAction = actionVisible ? STRINGS.tapForTitle : 'rgba(255,255,255,0)';
-    drawOverlayPanel(bx, by, bw, bh, 'rgba(0,0,40,0.92)', C.gold, [
-      { text: STRINGS.winTitle,  font: '8px "Press Start 2P"', color: C.gold,   height: 12, spacing: 10 },
-      { text: scoreText,         font: '8px "Press Start 2P"', color: C.white,  height: 8,  spacing: 4 },
-      { text: STRINGS.bestLabel + ' LVL ' + bestLevel + ' — ' + String(bestScore).padStart(5,'0'), font: '8px "Press Start 2P"', color: C.yellow, height: 8, spacing: 8 },
-      { text: tapAction,         font: '8px "Press Start 2P"', color: actionVisible ? C.gold : 'rgba(0,0,0,0)', height: 8, spacing: 0 },
-    ]);
+    const VW = CONFIG.vis.gameWin;
+    const _wH = VW.padTop + VW.stepTitle + VW.stepScore + VW.stepBest + VW.tapH + VW.padBottom;
+    const {bx:wX, by:wY} = _panPos(VW.panW, _wH);
+    ctx.fillStyle = 'rgba(0,0,40,0.92)'; ctx.fillRect(wX, wY, VW.panW, _wH);
+    ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(wX+1, wY+1, VW.panW-2, _wH-2);
+    ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+    const cxW = wX + VW.panW / 2;
+    let tyW = wY + VW.padTop;
+    ctx.font = VW.fontSize + 'px "Press Start 2P"';
+    ctx.fillStyle = C.gold;   ctx.fillText(STRINGS.winTitle, cxW, tyW); tyW += VW.stepTitle;
+    ctx.fillStyle = C.white;  ctx.fillText(scoreText, cxW, tyW); tyW += VW.stepScore;
+    ctx.fillStyle = C.yellow; ctx.fillText(STRINGS.bestLabel + ' LVL ' + bestLevel + ' — ' + String(bestScore).padStart(5,'0'), cxW, tyW); tyW += VW.stepBest;
+    ctx.fillStyle = actionVisible ? C.gold : 'rgba(0,0,0,0)'; ctx.fillText(STRINGS.tapForTitle, cxW, tyW);
   } else {
-    // Non-final win (#65: levelComplete title, tapContinue action)
-    const by = 64, bw = 260, bh = 72;
-    drawOverlayPanel(bx, by, bw, bh, 'rgba(0,0,60,0.88)', C.gold, [
-      { text: STRINGS.levelComplete, font: '8px "Press Start 2P"', color: C.gold,  height: 10, spacing: 10 },
-      { text: scoreText,             font: '8px "Press Start 2P"', color: C.white, height: 8, spacing: 14 },
-      { text: actionVisible ? STRINGS.tapContinue : 'rgba(255,255,255,0)', font: '8px "Press Start 2P"', color: actionVisible ? C.green : 'rgba(255,255,255,0)', height: 8, spacing: 0 },
-    ]);
+    const VL = CONFIG.vis.levelComplete;
+    const _lH = VL.padTop + VL.stepTitle + VL.stepScore + VL.tapH + VL.padBottom;
+    const {bx:lX, by:lY} = _panPos(VL.panW, _lH);
+    ctx.fillStyle = 'rgba(0,0,60,0.88)'; ctx.fillRect(lX, lY, VL.panW, _lH);
+    ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(lX+1, lY+1, VL.panW-2, _lH-2);
+    ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+    const cxL = lX + VL.panW / 2;
+    let tyL = lY + VL.padTop;
+    ctx.font = VL.fontSize + 'px "Press Start 2P"';
+    ctx.fillStyle = C.gold;  ctx.fillText(STRINGS.levelComplete, cxL, tyL); tyL += VL.stepTitle;
+    ctx.fillStyle = C.white; ctx.fillText(scoreText, cxL, tyL); tyL += VL.stepScore;
+    ctx.fillStyle = actionVisible ? C.green : 'rgba(0,0,0,0)'; ctx.fillText(STRINGS.tapContinue, cxL, tyL);
   }
   ctx.restore();
 }
@@ -989,7 +998,7 @@ function drawStoryBanner() {
       let line = '';
       for (let i = 0; i < words.length; i++) {
         const test = line + (line ? ' ' : '') + words[i];
-        if (ctx.measureText(test).width > 220) { lines.push(line); line = words[i]; }
+        if (ctx.measureText(test).width > CONFIG.vis.storyBanner.wrapWidth) { lines.push(line); line = words[i]; }
         else line = test;
       }
       if (line) lines.push(line);
@@ -999,61 +1008,106 @@ function drawStoryBanner() {
   const storyPanelAlpha = storyBannerFading ? Math.max(0, storyBannerT / 20) : Math.min(1, storyFadeInT / 40);
   ctx.save();
   ctx.globalAlpha = storyPanelAlpha;
-  const bx = 20, by = 22, bw = 280, bh = 156;
-  const lineObjs = [
-    { text: STRINGS.storyTitle, font: '8px "Press Start 2P"', color: C.gold, height: 10, spacing: 10 },
-  ];
+  const VS = CONFIG.vis.storyBanner;
+  const bw = VS.panW;
+  const _stLineH = storyBannerLines.length * VS.lineH + Math.max(0, storyBannerLines.length - 1) * VS.lineSpacing;
+  const bh = VS.padTop + VS.titleH + VS.titleSpacing + _stLineH + VS.spacerH + VS.tapH + VS.padBottom;
+  const {bx, by} = _panPos(bw, bh);
+  ctx.fillStyle = 'rgba(0,0,40,0.92)'; ctx.fillRect(bx, by, bw, bh);
+  ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(bx+1, by+1, bw-2, bh-2);
+  ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+  ctx.font = VS.fontSize + 'px "Press Start 2P"';
+  const cxSt = bx + bw / 2;
+  let tySt = by + VS.padTop;
+  ctx.fillStyle = C.gold;  ctx.fillText(STRINGS.storyTitle, cxSt, tySt); tySt += VS.titleH + VS.titleSpacing;
+  ctx.fillStyle = C.white;
   for (let i = 0; i < storyBannerLines.length; i++) {
-    lineObjs.push({ text: storyBannerLines[i], font: '8px "Press Start 2P"', color: C.white, height: 8, spacing: 4 });
+    ctx.fillText(storyBannerLines[i], cxSt, tySt);
+    tySt += VS.lineH + (i < storyBannerLines.length - 1 ? VS.lineSpacing : VS.spacerH);
   }
   const blink = Math.floor(frame / 25) % 2 === 0;
-  lineObjs.push({ text: '', font: '8px "Press Start 2P"', color: 'transparent', height: 10, spacing: 0 });
-  lineObjs.push({ text: STRINGS.tapContinue, font: '8px "Press Start 2P"', color: blink ? C.gold : 'rgba(0,0,0,0)', height: 8, spacing: 0 });
-  drawOverlayPanel(bx, by, bw, bh, 'rgba(0,0,40,0.92)', C.gold, lineObjs);
+  ctx.fillStyle = blink ? C.gold : 'rgba(0,0,0,0)'; ctx.fillText(STRINGS.tapContinue, cxSt, tySt);
   ctx.restore();
 }
 
 function drawMissionBanner() {
   if (missionBannerT <= 0 || state !== 'playing') return;
   if (!missionBannerLines) {
-    ctx.font = '8px "Press Start 2P"';
+    ctx.font = CONFIG.vis.missionBanner.fontSize + 'px "Press Start 2P"';
     const text = STRINGS['mission' + currentLevel] || STRINGS.mission1;
     const words = text.split(' ');
     let line = '', lines = [];
     for (let i = 0; i < words.length; i++) {
       const test = line + (line ? ' ' : '') + words[i];
-      if (ctx.measureText(test).width > 200) { lines.push(line); line = words[i]; }
+      if (ctx.measureText(test).width > CONFIG.vis.missionBanner.wrapWidth) { lines.push(line); line = words[i]; }
       else line = test;
     }
     if (line) lines.push(line);
     missionBannerLines = lines;
   }
   const alpha = missionBannerT < 40 ? missionBannerT / 40 : missionBannerT > 170 ? (210 - missionBannerT) / 40 : 1;
-  const bx = 160 - 130;
-  const by = 64;
-  const bw = 260;
-  const bh = 72;
-  const lines = [
-    {
-      text: fmt(STRINGS.missionLabel, currentLevel),
-      font: '8px "Press Start 2P"',
-      color: C.gold,
-      height: 10,
-      spacing: 8,
-    },
-  ];
-  for (let i = 0; i < missionBannerLines.length; i++) {
-    lines.push({
-      text: missionBannerLines[i],
-      font: '8px "Press Start 2P"',
-      color: C.white,
-      height: 8,
-      spacing: i < missionBannerLines.length - 1 ? 4 : 0,
-    });
-  }
+  const VM = CONFIG.vis.missionBanner;
+  const bw = VM.panW;
+  const _msLineH = missionBannerLines.length * VM.lineH + Math.max(0, missionBannerLines.length - 1) * VM.lineSpacing;
+  const bh = VM.padTop + VM.titleH + VM.titleSpacing + _msLineH + VM.padBottom;
+  const {bx, by} = _panPos(bw, bh);
   ctx.save();
   ctx.globalAlpha = alpha;
-  drawOverlayPanel(bx, by, bw, bh, 'rgba(0,0,40,0.88)', C.gold, lines);
+  ctx.fillStyle = 'rgba(0,0,40,0.88)'; ctx.fillRect(bx, by, bw, bh);
+  ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(bx+1, by+1, bw-2, bh-2);
+  ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+  ctx.font = VM.fontSize + 'px "Press Start 2P"';
+  const cxM = bx + bw / 2;
+  let tyM = by + VM.padTop;
+  ctx.fillStyle = C.gold;  ctx.fillText(fmt(STRINGS.missionLabel, currentLevel), cxM, tyM); tyM += VM.titleH + VM.titleSpacing;
+  ctx.fillStyle = C.white;
+  for (let i = 0; i < missionBannerLines.length; i++) {
+    ctx.fillText(missionBannerLines[i], cxM, tyM);
+    if (i < missionBannerLines.length - 1) tyM += VM.lineH + VM.lineSpacing;
+  }
+  ctx.restore();
+}
+
+function drawPauseOverlay() {
+  if (state !== 'paused' || !_pauseActive) return;
+  ctx.save();
+  const VP = CONFIG.vis.pauseOverlay;
+  const pH = VP.padTop + VP.stepTitle + VP.btnH + VP.padBottom;
+  const {bx, by} = _panPos(VP.panW, pH);
+  ctx.fillStyle = 'rgba(0,0,40,0.92)'; ctx.fillRect(bx, by, VP.panW, pH);
+  ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(bx+1, by+1, VP.panW-2, pH-2);
+  ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+  ctx.font = VP.fontSize + 'px "Press Start 2P"';
+  const cx = bx + VP.panW / 2;
+  let ty = by + VP.padTop;
+  ctx.fillStyle = C.gold; ctx.fillText(STRINGS.pauseTitle, cx, ty); ty += VP.stepTitle;
+  const rx = bx + VP.resumeOx;
+  ctx.fillStyle = 'rgba(0,90,0,0.92)'; ctx.fillRect(rx, ty, VP.resumeW, VP.btnH);
+  ctx.strokeStyle = C.gold; ctx.strokeRect(rx+1, ty+1, VP.resumeW-2, VP.btnH-2);
+  ctx.fillStyle = C.white; ctx.fillText(STRINGS.btnResume, rx + VP.resumeW/2, ty + 3);
+  ctx.restore();
+}
+
+function drawHomeConfirm() {
+  if (!_homeConfirmActive) return;
+  ctx.save();
+  const VH = CONFIG.vis.homeConfirm;
+  const hH = VH.padTop + VH.stepTitle + VH.btnH + VH.padBottom;
+  const {bx, by} = _panPos(VH.panW, hH);
+  ctx.fillStyle = 'rgba(0,0,40,0.92)'; ctx.fillRect(bx, by, VH.panW, hH);
+  ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(bx+1, by+1, VH.panW-2, hH-2);
+  ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+  ctx.font = VH.fontSize + 'px "Press Start 2P"';
+  const cx = bx + VH.panW / 2;
+  let ty = by + VH.padTop;
+  ctx.fillStyle = C.gold; ctx.fillText(STRINGS.homeConfirm, cx, ty); ty += VH.stepTitle;
+  const siX = bx + VH.siOx, noX = bx + VH.noOx;
+  ctx.fillStyle = 'rgba(0,90,0,0.92)'; ctx.fillRect(siX, ty, VH.siW, VH.btnH);
+  ctx.strokeStyle = C.gold; ctx.strokeRect(siX+1, ty+1, VH.siW-2, VH.btnH-2);
+  ctx.fillStyle = C.white; ctx.fillText(STRINGS.btnYes, siX + VH.siW/2, ty + 3);
+  ctx.fillStyle = 'rgba(90,0,0,0.92)'; ctx.fillRect(noX, ty, VH.noW, VH.btnH);
+  ctx.strokeStyle = C.gold; ctx.strokeRect(noX+1, ty+1, VH.noW-2, VH.btnH-2);
+  ctx.fillStyle = C.white; ctx.fillText(STRINGS.btnNo, noX + VH.noW/2, ty + 3);
   ctx.restore();
 }
 
@@ -1134,86 +1188,184 @@ function drawDebugOverlay() {
   ctx.restore();
 }
 
-var _HEART_SVG = '<svg width="14" height="12" viewBox="0 0 14 12" xmlns="http://www.w3.org/2000/svg" style="shape-rendering:crispEdges;display:inline-block;vertical-align:middle;margin-right:2px;filter:drop-shadow(1px 1px 1px rgba(0,0,0,0.2))"><rect x="2" y="0" width="4" height="2" fill="currentColor"/><rect x="8" y="0" width="4" height="2" fill="currentColor"/><rect x="0" y="2" width="14" height="2" fill="currentColor"/><rect x="0" y="4" width="14" height="2" fill="currentColor"/><rect x="2" y="6" width="10" height="2" fill="currentColor"/><rect x="4" y="8" width="6" height="2" fill="currentColor"/><rect x="6" y="10" width="2" height="2" fill="currentColor"/></svg>';
+function _panPos(panW, panH) {
+  return { bx: Math.round((W - panW) / 2), by: Math.round((H - panH) / 2) };
+}
 
-function updateHUD() {
-  var h = ''; for (var _i = 0; _i < Math.max(0, lives); _i++) h += _HEART_SVG;
-  document.getElementById('hL').innerHTML = h;
-  let done = 0;
-  for (let i = 0; i < BOARDS.length; i++) if (BOARDS[i].done) done++;
-  document.getElementById('hW').textContent = done + '/' + BOARDS.length;
-  document.getElementById('hS').textContent = String(score).padStart(5,'0');
-  // Objective counter and icon — switches per active mechanic
-  var objDone = 0, objTotal = 0, iconClass = 'fa-spray-can';
-  if (bags.length > 0) {
-    for (let i = 0; i < bags.length; i++) if (bags[i].collected) objDone++;
-    objTotal = bags.length;
-    iconClass = 'fa-bag-shopping';
-  } else if (levelMechanics.shakeMachines) {
-    for (let i = 0; i < machines.length; i++) if (machines[i].broken) objDone++;
-    objTotal = machines.length;
-    iconClass = 'fa-box';
-  } else if (levelMechanics.deflateBall) {
-    objDone = gymBall ? gymBall.deflateCount : 0;
-    objTotal = 3;
-    iconClass = 'fa-futbol';
-  } else if (levelMechanics.throwPaper) {
-    for (let i = 0; i < students.length; i++) if (students[i].disturbed) objDone++;
-    objTotal = students.length;
-    iconClass = 'fa-user-graduate';
-  } else if (levelMechanics.dropBook) {
-    objDone = bookcase ? bookcase.dropCount : 0;
-    objTotal = 3;
-    iconClass = 'fa-book';
-  } else if (levelMechanics.floodSink) {
-    objDone = sink ? sink.pourCount : 0;
-    objTotal = 3;
-    iconClass = 'fa-faucet';
-  } else if (levelMechanics.plantBomb) {
-    for (let i = 0; i < bins.length; i++) if (bins[i].exploded) objDone++;
-    objTotal = bins.length;
-    iconClass = 'fa-trash-can';
-  } else if (levelMechanics.stealRegister) {
-    objDone = register && register.stolen ? 1 : 0;
-    objTotal = 1;
-    iconClass = 'fa-scroll';
-  } else if (levelMechanics.activateSprinkler) {
-    for (let i = 0; i < sprinklers.length; i++) if (sprinklers[i].active) objDone++;
-    objTotal = sprinklers.length;
-    iconClass = 'fa-fire';
-  } else {
-    for (let i = 0; i < BOARDS.length; i++) if (BOARDS[i].done) objDone++;
-    objTotal = BOARDS.length;
-  }
-  var icon  = document.getElementById('hud-obj-icon');
-  var hWEl  = document.getElementById('hW');
-  var hudMsg = document.getElementById('hud-msg');
+function _drawHeart(x, y) {
+  // 8×7 pixel art heart
+  ctx.fillRect(x+1,y,  2,1); ctx.fillRect(x+5,y,  2,1);
+  ctx.fillRect(x,  y+1,8,1); ctx.fillRect(x,  y+2,8,1); ctx.fillRect(x,  y+3,8,1);
+  ctx.fillRect(x+1,y+4,6,1); ctx.fillRect(x+2,y+5,4,1); ctx.fillRect(x+3,y+6,2,1);
+}
 
-  if (msgT > 0) {
-    msgT--;
-    var elapsed = msgDuration - msgT;
-    var fadeIn  = elapsed < 15 ? elapsed / 15 : 1;
-    var fadeOut = msgT < 25 ? msgT / 25 : 1;
-    hudMsg.textContent  = msgText;
-    hudMsg.style.opacity = Math.min(fadeIn, fadeOut);
-    hudMsg.style.display = 'inline';
-    hWEl.style.display  = 'none';
-    icon.style.display  = 'none';
-  } else {
-    hudMsg.style.display = 'none';
-    hWEl.style.display  = '';
-    icon.style.display  = '';
-    if (icon && !icon.classList.contains(iconClass)) {
-      icon.className = 'fa-solid ' + iconClass + ' hud-icon hud-spray';
-    }
-    hWEl.textContent = objDone + '/' + objTotal;
-  }
-  if (maxTimerTicks > 0) {
-    var pct = Math.max(0, timerTicks / maxTimerTicks);
-    var bar = document.getElementById('timer-bar');
-    if (bar) {
-      bar.style.width = (pct * 100) + '%';
-      bar.style.background = pct > 0.6 ? '#22cc44' : pct > 0.3 ? '#ddcc00' : '#dd1100';
-    }
+// Pixel-art icons for HUD mechanic indicator — all 7×7, drawn with fillRect
+function _drawHudIcon(type, x, y, color) {
+  ctx.fillStyle = color;
+  switch (type) {
+    case 'boards':   // lavagna: outline 7×7 + 2 righe gesso
+      ctx.fillRect(x,   y,   7,1); ctx.fillRect(x,   y+6, 7,1); // top/bottom
+      ctx.fillRect(x,   y+1, 1,5); ctx.fillRect(x+6, y+1, 1,5); // sides
+      ctx.fillStyle = '#fff'; ctx.fillRect(x+1, y+2, 5,1);       // chalk line 1
+                              ctx.fillRect(x+1, y+4, 5,1);       // chalk line 2
+      break;
+    case 'bags':     // cartella: corpo + manico
+      ctx.fillRect(x+2, y,   3,1);                               // handle
+      ctx.fillRect(x,   y+1, 7,1); ctx.fillRect(x,   y+6, 7,1); // top/bottom
+      ctx.fillRect(x,   y+2, 1,4); ctx.fillRect(x+6, y+2, 1,4); // sides
+      ctx.fillStyle = '#2A1F5E'; ctx.fillRect(x+2, y+3, 3,1);   // clasp
+      break;
+    case 'machines': // distributore: rettangolo con schermo e tasto
+      ctx.fillRect(x,   y,   6,7);
+      ctx.fillStyle = '#000'; ctx.fillRect(x+1, y+1, 4,2);      // screen
+      ctx.fillStyle = '#FFD700'; ctx.fillRect(x+2, y+5, 2,1);   // button
+      break;
+    case 'ball':     // pallone: cerchio con cuciture
+      ctx.fillRect(x+1, y,   5,1); ctx.fillRect(x+1, y+6, 5,1);
+      ctx.fillRect(x,   y+1, 7,5);
+      ctx.fillStyle = '#000'; ctx.fillRect(x+3, y+1, 1,5);      // vertical seam
+      ctx.fillRect(x+1, y+3, 5,1);                              // horizontal seam
+      break;
+    case 'students': // alunno: testa + corpo + gambe
+      ctx.fillRect(x+2, y,   3,3);                              // head
+      ctx.fillRect(x+1, y+3, 5,2);                              // body
+      ctx.fillRect(x+1, y+5, 2,2); ctx.fillRect(x+4, y+5, 2,2);// legs
+      break;
+    case 'books':    // libro: rettangolo con costa e righe
+      ctx.fillRect(x,   y,   7,7);
+      ctx.fillStyle = '#000'; ctx.fillRect(x+1, y,   1,7);      // spine
+      ctx.fillStyle = '#fff'; ctx.fillRect(x+2, y+2, 4,1);      // page lines
+                              ctx.fillRect(x+2, y+4, 4,1);
+      break;
+    case 'sink':     // lavandino: gocce + vasca
+      ctx.fillRect(x+1, y,   1,2); ctx.fillRect(x+5, y,   1,2);// drops
+      ctx.fillRect(x,   y+3, 7,1); ctx.fillRect(x,   y+6, 7,1);// basin top/bottom
+      ctx.fillRect(x,   y+4, 1,2); ctx.fillRect(x+6, y+4, 1,2);// basin sides
+      break;
+    case 'bins':     // secchio: coperchio + corpo + miccia
+      ctx.fillRect(x+1, y+1, 5,1);                              // lid
+      ctx.fillRect(x,   y+2, 7,5);                              // body
+      ctx.fillStyle = '#FFD700'; ctx.fillRect(x+3, y,   1,2);   // fuse
+      ctx.fillStyle = '#000'; ctx.fillRect(x+2, y+4, 1,2);      // lines
+                              ctx.fillRect(x+4, y+4, 1,2);
+      break;
+    case 'sprinklers': // fiamma: silhouette fuoco
+      ctx.fillRect(x+3, y,   1,1);
+      ctx.fillRect(x+2, y+1, 3,1); ctx.fillRect(x+1, y+2, 5,2);
+      ctx.fillRect(x,   y+4, 7,1); ctx.fillRect(x+1, y+5, 5,1); ctx.fillRect(x+2, y+6, 3,1);
+      break;
+    case 'register': // registro: libro con angolo dorato
+      ctx.fillRect(x,   y,   7,7);
+      ctx.fillStyle = '#000'; ctx.fillRect(x+1, y+1, 5,1);      // lines
+                              ctx.fillRect(x+1, y+3, 5,1);
+                              ctx.fillRect(x+1, y+5, 3,1);
+      ctx.fillStyle = '#FFD700'; ctx.fillRect(x+5, y+5, 2,2);   // gold corner
+      break;
+    default:
+      ctx.fillRect(x, y, 7, 7);
   }
 }
+
+function _hudObjInfo() {
+  var done = 0, total = 0, mechanic = 'boards';
+  var dc = CONFIG.vis.hud.dotColors;
+  if (bags.length > 0) {
+    for (var i=0;i<bags.length;i++) if(bags[i].collected) done++; total=bags.length; mechanic='bags';
+  } else if (levelMechanics.shakeMachines) {
+    for (var i=0;i<machines.length;i++) if(machines[i].broken) done++; total=machines.length; mechanic='machines';
+  } else if (levelMechanics.deflateBall) {
+    done=gymBall?gymBall.deflateCount:0; total=3; mechanic='ball';
+  } else if (levelMechanics.throwPaper) {
+    for (var i=0;i<students.length;i++) if(students[i].disturbed) done++; total=students.length; mechanic='students';
+  } else if (levelMechanics.dropBook) {
+    done=bookcase?bookcase.dropCount:0; total=3; mechanic='books';
+  } else if (levelMechanics.floodSink) {
+    done=sink?sink.pourCount:0; total=3; mechanic='sink';
+  } else if (levelMechanics.plantBomb) {
+    for (var i=0;i<bins.length;i++) if(bins[i].exploded) done++; total=bins.length; mechanic='bins';
+  } else if (levelMechanics.stealRegister) {
+    done=register&&register.stolen?1:0; total=1; mechanic='register';
+  } else if (levelMechanics.activateSprinkler) {
+    for (var i=0;i<sprinklers.length;i++) if(sprinklers[i].active) done++; total=sprinklers.length; mechanic='sprinklers';
+  } else {
+    for (var i=0;i<BOARDS.length;i++) if(BOARDS[i].done) done++; total=BOARDS.length; mechanic='boards';
+  }
+  return { done:done, total:total, color:dc[mechanic]||'#44ee66', mechanic:mechanic };
+}
+
+function drawHUD() {
+  if (state === 'title') return;
+  var VH = CONFIG.vis.hud;
+  ctx.save();
+  var _f = VH.fontSize + 'px "Press Start 2P"';
+  ctx.fillStyle = VH.bgColor; ctx.fillRect(0, 0, W, VH.rowH);
+  // Hearts
+  ctx.fillStyle = '#ff2244';
+  for (var _i = 0; _i < Math.max(0, lives); _i++) _drawHeart(VH.heartsX + _i * VH.heartStep, VH.textY);
+  // Score
+  ctx.font = _f; ctx.textAlign = 'right'; ctx.textBaseline = 'top';
+  ctx.fillStyle = '#ffffff'; ctx.fillText(String(score).padStart(5,'0'), VH.scoreX, VH.textY);
+  // Counter or message
+  ctx.textAlign = 'center';
+  if (msgT > 0) {
+    var _el = msgDuration - msgT, _ao = Math.min(_el/15,1) * (msgT<25 ? msgT/25 : 1);
+    ctx.globalAlpha = _ao; ctx.fillStyle = '#ffffff';
+    ctx.fillText(msgText, VH.centerX, VH.textY);
+  } else if (state === 'playing') {
+    var _oi = _hudObjInfo();
+    var _txt = _oi.done + '/' + _oi.total;
+    var _tw  = ctx.measureText(_txt).width;
+    var _grpW = VH.dotW + VH.dotGap + _tw;
+    var _sx = Math.round(VH.centerX - _grpW / 2);
+    _drawHudIcon(_oi.mechanic, _sx, VH.textY + VH.dotOffsetY, _oi.color);
+    ctx.textAlign = 'left'; ctx.fillStyle = '#44ee66';
+    ctx.fillText(_txt, _sx + VH.dotW + VH.dotGap, VH.textY);
+  }
+  // Timer bar
+  if (maxTimerTicks > 0) {
+    var _pct = Math.max(0, timerTicks / maxTimerTicks);
+    ctx.fillStyle = _pct > 0.6 ? '#22cc44' : _pct > 0.3 ? '#ddcc00' : '#dd1100';
+    ctx.fillRect(0, VH.rowH, Math.round(W * _pct), VH.timerH);
+  }
+  ctx.restore();
+}
+
+var _CREDITS_MEMBERS = [
+  { name: 'Luca Forina',        role: 'Orchestrator'         },
+  { name: 'Claude / Anthropic', role: 'Lead Developer'       },
+  { name: 'ChatGPT',            role: 'Graphics'             },
+  { name: 'OpenGameArt.org',    role: 'Music & Effects'      },
+  { name: 'Family',             role: 'Beta Testing & Ideas' },
+];
+
+function drawCredits() {
+  if (!_creditsActive) return;
+  ctx.save();
+  var VC = CONFIG.vis.credits;
+  var n = _CREDITS_MEMBERS.length;
+  var panH = VC.padTop + VC.stepTitle + VC.stepTeam
+           + n * (VC.nameH + VC.nameGap + VC.roleH + VC.roleGap)
+           + VC.btnGapAbove + VC.btnH + VC.padBottom;
+  var _cp = _panPos(VC.panW, panH); var bx = _cp.bx, by = _cp.by;
+  ctx.fillStyle = 'rgba(0,0,40,0.96)'; ctx.fillRect(bx, by, VC.panW, panH);
+  ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(bx+1, by+1, VC.panW-2, panH-2);
+  ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+  var cx = bx + VC.panW / 2;
+  var ty = by + VC.padTop;
+  ctx.font = VC.fontTitle + 'px "Press Start 2P"'; ctx.fillStyle = C.gold;
+  ctx.fillText('— CREDITS —', cx, ty); ty += VC.stepTitle;
+  ctx.font = VC.fontBody + 'px "Press Start 2P"'; ctx.fillStyle = C.lgreen;
+  ctx.fillText('LucazadeSoft Team', cx, ty); ty += VC.stepTeam;
+  for (var i = 0; i < n; i++) {
+    ctx.fillStyle = C.white; ctx.fillText(_CREDITS_MEMBERS[i].name, cx, ty); ty += VC.nameH + VC.nameGap;
+    ctx.fillStyle = C.cyan;  ctx.fillText(_CREDITS_MEMBERS[i].role, cx, ty); ty += VC.roleH + VC.roleGap;
+  }
+  ty += VC.btnGapAbove;
+  var btnX = bx + Math.round((VC.panW - VC.btnW) / 2);
+  ctx.fillStyle = 'rgba(0,90,0,0.92)'; ctx.fillRect(btnX, ty, VC.btnW, VC.btnH);
+  ctx.strokeStyle = C.gold; ctx.strokeRect(btnX+1, ty+1, VC.btnW-2, VC.btnH-2);
+  ctx.fillStyle = C.white; ctx.fillText('OK', bx + VC.panW/2, ty + Math.round((VC.btnH - VC.fontBody) / 2));
+  ctx.restore();
+}
+
+function updateHUD() {} // sostituita da drawHUD() su canvas
