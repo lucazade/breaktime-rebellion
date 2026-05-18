@@ -1135,7 +1135,7 @@ function updateHUD() {
   document.getElementById('hS').textContent = String(score).padStart(5,'0');
   // Objective counter and icon — switches per active mechanic
   var objDone = 0, objTotal = 0, iconClass = 'fa-spray-can';
-  if (levelMechanics.stealBags) {
+  if (bags.length > 0) {
     for (let i = 0; i < bags.length; i++) if (bags[i].collected) objDone++;
     objTotal = bags.length;
     iconClass = 'fa-bag-shopping';

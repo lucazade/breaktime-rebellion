@@ -44,7 +44,7 @@ var LEVELS = (function() {
 
       mechanics: {
         writeBoards: false,
-        stealBags:   true,
+        stealBags:   false,
         ringBell:    true,
       },
 

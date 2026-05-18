@@ -64,10 +64,10 @@ function updatePlayer() {
       }
     }
   }
-  if (!player.shaking && levelMechanics.deflateBall && gymBall && !gymBall.deflated && K.action && !player.onStair) {
+  if (levelMechanics.deflateBall && gymBall && !gymBall.deflated) {
     const dx = Math.abs(player.x + PW/2 - gymBall.x - 4);
     const dy = Math.abs(player.y + PH  - gymBall.y - 9);
-    if (dx < 14 && dy < 14) {
+    if (!player.shaking && !player.onStair && K.action && dx < 14 && dy < 14) {
       player.shaking = true;
       actionPressed = false;
       player.dir = (player.x + PW/2 < gymBall.x + 4) ? 1 : -1;
@@ -112,6 +112,8 @@ function updatePlayer() {
           setMsg(fmt(STRINGS.bookProgress, bookcase.dropCount, 3));
         }
       }
+    } else {
+      gymBall.shakeT = 0; // #109: reset if released or out of range
     }
   }
   if (!player.shaking && levelMechanics.stealRegister && register && !register.stolen && K.action && !player.onStair) {
