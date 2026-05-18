@@ -217,80 +217,7 @@ canvas {
   transform: translateY(2px) scale(0.96);
 }
 
-/* ─── TITLE SCREEN OVERLAY ─── */
-#overlay {
-  position: fixed; inset: 0;
-  background: linear-gradient(180deg,#000080,#000040);
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  z-index: 99; gap: 8px; padding: 10px;
-  pointer-events: none; /* only logo and controls are interactive */
-}
-#overlay #logo-img { width: min(460px,90vw); display: block; margin: 0 auto; border-radius: 8px; border: 3px solid #000; image-rendering: pixelated; cursor: pointer; pointer-events: auto; }
-#title-controls { pointer-events: auto; }
-#overlay .go    { color: #ffd700; font-size: clamp(8px,2.5vw,14px); letter-spacing: 2px; animation: blink .8s step-end infinite; text-align: center; }
-@keyframes blink { 50% { opacity: 0; } }
-
-/* Three equal columns: [level] [lang] [audio] */
-#title-controls {
-  display: flex; align-items: center;
-  width: min(460px, 92vw);
-  margin-top: clamp(12px,3vh,28px);
-}
-#title-controls > * {
-  flex: 1; display: flex; align-items: center; justify-content: center;
-}
-#lvl-chooser  { justify-content: flex-start; }
-#audio-wrap   { justify-content: flex-end; }
-#title-controls.no-lang { width: min(280px, 70vw); }
-
-/* ── Unified base for all title-screen interactive elements ── */
-#lvl-prev, #lvl-next,
-.lang-btn, #audio-toggle {
-  min-height: 36px;
-  box-sizing: border-box;
-  display: flex; align-items: center; justify-content: center;
-  background: rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,255,255,0.22);
-  border-radius: 3px;
-  color: rgba(255,255,255,0.65);
-  font-family: 'Press Start 2P', monospace;
-  cursor: pointer;
-  touch-action: manipulation;
-  outline: none;
-  -webkit-tap-highlight-color: transparent;
-  transition: background .12s, border-color .12s, color .12s;
-}
-#lvl-prev:active, #lvl-next:active,
-.lang-btn:active, #audio-toggle:active {
-  background: rgba(255,255,255,0.16);
-}
-
-/* Level name: plain label, not a button */
-#lvl-name {
-  min-height: 36px;
-  box-sizing: border-box;
-  display: flex; align-items: center; justify-content: center;
-  color: rgba(255,255,255,0.65);
-  font-family: 'Press Start 2P', monospace;
-  cursor: default;
-  user-select: none;
-}
-
-/* Level chooser */
-#lvl-chooser { gap: 6px; font-size: clamp(7px,1.8vw,11px); }
-#lvl-chooser > * { visibility: hidden; }
-#lvl-prev, #lvl-next { font-size: clamp(10px,2.5vw,16px); padding: 3px 9px; line-height: 1; }
-#lvl-prev:disabled, #lvl-next:disabled { cursor: default; opacity: 0.35; }
-#lvl-next.lvl-locked { cursor: not-allowed; opacity: 0.45; }
-
-/* Language buttons */
-#lang-chooser { gap: 8px; }
-.lang-btn { font-size: clamp(7px,1.8vw,11px); padding: 6px 10px; }
-.lang-btn.active { border-color: #ffd700; color: #ffd700; background: rgba(255,215,0,0.10); }
-
-/* Audio toggle */
-#audio-toggle { font-size: clamp(12px,3vw,18px); padding: 5px 11px; min-width: 42px; line-height: 1; }
+/* title screen overlay rimosso: ora su canvas via drawTitleScreen() */
 
 /* ─── PORTRAIT: RUOTA IL DISPOSITIVO ─── */
 #portrait-msg {
@@ -306,40 +233,11 @@ canvas {
 }
 
 @media (orientation: portrait) {
-  #wrap, #overlay { display: none; }
+  #wrap { display: none; }
   #portrait-msg { display: flex; }
 }
 
-/* ─── KEYBOARD LEGEND (hidden by default; desktop media query below shows it) ─── */
-#keyboard-legend {
-  display: none;
-  margin-top: 16px;
-  color: rgba(255,255,255,0.50);
-  font-family: 'Press Start 2P', monospace;
-  font-size: clamp(8px, 0.75vw, 10px);
-  letter-spacing: 1px;
-  text-align: center;
-  pointer-events: none;
-}
-
-.kb {
-  display: inline-block;
-  background: rgba(255,255,255,0.10);
-  border: 1px solid rgba(255,255,255,0.30);
-  border-bottom: 2px solid rgba(255,255,255,0.18);
-  border-radius: 4px;
-  padding: 3px 7px;
-  color: rgba(255,215,0,0.82);
-  letter-spacing: 0;
-}
-
-/* Arrow keycaps use system font so all 4 arrows render at the same size */
-.kb-arr {
-  font-family: system-ui, -apple-system, sans-serif;
-  font-size: 13px;
-  line-height: 1;
-  padding: 3px 5px;
-}
+/* keyboard-legend, .kb, .kb-arr rimossi: ora su canvas via drawTitleScreen() */
 
 /* Desktop / mouse — panels hidden; full synthwave background + 150% zoom + screen bezel */
 @media (hover: hover) and (pointer: fine) {
@@ -407,13 +305,21 @@ canvas {
     pointer-events: none;
   }
 
-  /* Title screen (home): scale logo and controls to 150% */
-  #overlay #logo-img  { width: clamp(460px, 40vw, 690px); }
-  #title-controls     { width: clamp(460px, 40vw, 690px); }
-
-  /* Keyboard legend: visible only on desktop */
-  #keyboard-legend { display: block; }
 }
+
+/* ─── TITLE MODE — copre tutto, nasconde bezel e pannelli ─── */
+body.title-mode {
+  background: linear-gradient(180deg, #000080 0%, #000040 100%) !important;
+}
+body.title-mode #panel-left,
+body.title-mode #panel-right { visibility: hidden !important; }
+body.title-mode #game-area {
+  box-shadow: none !important;
+  background: none !important;
+}
+body.title-mode canvas { background: none !important; }
+body.title-mode #game-area::before,
+body.title-mode #game-area::after { display: none !important; }
 
 /* #panel-bell rimosso */
 

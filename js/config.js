@@ -6,6 +6,7 @@
 const CONFIG = {
   images: {
     background: 'assets/pics/bg.png',
+    logo:       'assets/pics/logo.png',
   },
   charOutline:      true,
   charOutlineSize:  1.0,

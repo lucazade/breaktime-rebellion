@@ -1,5 +1,108 @@
 // Rendering — all draw functions and HUD update
 
+var _logoImage = null; // caricato da game.js come bgImage
+
+// ── Title screen helpers ──────────────────────────────────────────────────────
+
+function _drawAudioIcon(x, y, mode, color) {
+  ctx.fillStyle = color;
+  // speaker body
+  ctx.fillRect(x+2,y,   2,1); ctx.fillRect(x+1,y+1, 3,1);
+  ctx.fillRect(x,  y+2, 4,4);
+  ctx.fillRect(x+1,y+6, 3,1); ctx.fillRect(x+2,y+7, 2,1);
+  if (mode === 'mute') {
+    ctx.fillRect(x+5,y+2,1,1); ctx.fillRect(x+7,y+2,1,1);
+    ctx.fillRect(x+6,y+3,1,2);
+    ctx.fillRect(x+5,y+5,1,1); ctx.fillRect(x+7,y+5,1,1);
+  } else if (mode === 'sfx') {
+    ctx.fillRect(x+5,y+2,1,4);
+  } else {
+    ctx.fillRect(x+5,y+2,1,4); ctx.fillRect(x+7,y+1,1,6);
+  }
+}
+
+function _drawLockIcon(x, y, color) {
+  ctx.fillStyle = color;
+  ctx.fillRect(x+1,y,  3,1);
+  ctx.fillRect(x,  y+1,1,2); ctx.fillRect(x+4,y+1,1,2);
+  ctx.fillRect(x,  y+3,5,3);
+  ctx.fillStyle = '#000'; ctx.fillRect(x+2,y+4,1,2);
+}
+
+function drawTitleScreen() {
+  var VT = CONFIG.vis.titleScreen;
+  // Canvas trasparente — il gradiente body.title-mode CSS si vede in trasparenza
+  ctx.clearRect(0, 0, W, H);
+
+  // Logo — imageSmoothingEnabled=false per pixel-art crisp
+  var VT = CONFIG.vis.titleScreen;
+  var logoW = VT.logo.w, logoY = VT.logo.y;
+  var logoX = Math.round((W - logoW) / 2);
+  var logoH = 0;
+  if (_logoImage && _logoImage.complete && _logoImage.naturalWidth > 0) {
+    logoH = Math.round(_logoImage.naturalHeight / _logoImage.naturalWidth * logoW);
+    ctx.save();
+    ctx.setTransform(1,0,0,1,0,0);
+    ctx.imageSmoothingEnabled = false;
+    ctx.drawImage(_logoImage, logoX*2, logoY*2, logoW*2, logoH*2);
+    ctx.restore();
+  }
+
+  ctx.save();
+  ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+
+  // Tap to start (blinking)
+  var tapY = Math.round(logoY + logoH + VT.tapText.gapY);
+  if (!_titleStarting && Math.floor(frame / 20) % 2 === 0) {
+    ctx.font = VT.tapText.fontSize + 'px "Press Start 2P"';
+    ctx.fillStyle = C.gold;
+    ctx.fillText(STRINGS.tapToStart, W / 2, tapY);
+  }
+
+  // Controls row
+  var ctrlY = Math.round(tapY + VT.tapText.fontSize + VT.controls.gapY);
+  _titleCtrlY = ctrlY;
+  var ct = VT.controls;
+  ctx.font = ct.fontSize + 'px "Press Start 2P"';
+
+  // Level chooser
+  if (LEVELS.length > 1) {
+    ctx.fillStyle = currentLevel <= 1 ? C.dgray : C.white;
+    ctx.fillText('‹', ct.prevX + ct.prevW/2, ctrlY + 2);
+    ctx.fillStyle = C.gold;
+    ctx.fillText(STRINGS.levelLabel + ' ' + currentLevel, ct.labelX, ctrlY + 2);
+    var atCeiling = currentLevel >= _btrMax, moreExist = _btrMax < LEVELS.length;
+    if (atCeiling && moreExist) { _drawLockIcon(ct.nextX + 2, ctrlY + 1, C.yellow); }
+    else { ctx.fillStyle = (atCeiling && !moreExist) ? C.dgray : C.white; ctx.fillText('›', ct.nextX + ct.nextW/2, ctrlY + 2); }
+  }
+
+  // Language buttons (solo se debug)
+  if (CONFIG.debug.showLangChooser) {
+    var curLang = document.documentElement.lang;
+    ['en','it'].forEach(function(lg, idx) {
+      var lx = ct.langX + idx * (ct.langW + 4);
+      var isActive = curLang === lg;
+      ctx.fillStyle = isActive ? C.gold : C.mgray;
+      ctx.fillText(lg.toUpperCase(), lx + ct.langW/2, ctrlY + 2);
+      if (isActive) { ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(lx, ctrlY, ct.langW, 8); }
+    });
+  }
+
+  // Audio toggle
+  var audioMode = GameAudio.getMode();
+  _drawAudioIcon(ct.audioX, ctrlY, audioMode, audioMode==='full'?C.lgreen:audioMode==='sfx'?C.yellow:C.mgray);
+
+  // Keyboard legend (solo desktop)
+  if (window.matchMedia('(pointer:fine)').matches) {
+    var legY = Math.round(ctrlY + ct.btnH + VT.legend.gapY);
+    ctx.font = VT.legend.fontSize + 'px "Press Start 2P"';
+    ctx.fillStyle = C.lgray;
+    ctx.fillText('↑↓←→ '+(STRINGS.keyMove||'Move')+' · Z '+(STRINGS.keyAction||'Action')+' · P '+(STRINGS.keyPause||'Pause')+' · ESC '+(STRINGS.keyHome||'Home'), W/2, legY);
+  }
+
+  ctx.restore();
+}
+
 function drawBg() {
   // Hand-drawn background: 640×400px, drawn at 1:1 canvas pixels (bypasses ctx.scale)
   ctx.setTransform(1, 0, 0, 1, 0, 0);
