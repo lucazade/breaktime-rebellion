@@ -15,6 +15,7 @@
     keyHome:              'Home',
     levelLabel:           'Lvl',
 
+    audioFull: 'music', audioSfx: 'sfx', audioMute: 'mute',
     tapToStart:           '[ TAP TO START ]',
     reloadLose:           '[ TAP TO TRY AGAIN ]',
     reloadNext:           '[ TAP FOR NEXT LEVEL ]',
@@ -114,6 +115,7 @@
     keyHome:              'Home',
     levelLabel:           'Lvl',
 
+    audioFull: 'musica', audioSfx: 'sfx', audioMute: 'muto',
     tapToStart:           '[ TOCCA PER INIZIARE ]',
     reloadLose:           '[ TOCCA PER RIPROVARE ]',
     reloadNext:           '[ TOCCA PER IL LIVELLO SUCCESSIVO ]',

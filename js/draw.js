@@ -4,20 +4,23 @@ var _logoImage = null; // caricato da game.js come bgImage
 
 // ── Title screen helpers ──────────────────────────────────────────────────────
 
-function _drawAudioIcon(x, y, mode, color) {
+
+function _drawVolumeIcon(x, y, mode, color) {
+  // icona 5×4 logici (= 10×8 px reali) — stessa altezza del font 4px
   ctx.fillStyle = color;
-  // speaker body
-  ctx.fillRect(x+2,y,   2,1); ctx.fillRect(x+1,y+1, 3,1);
-  ctx.fillRect(x,  y+2, 4,4);
-  ctx.fillRect(x+1,y+6, 3,1); ctx.fillRect(x+2,y+7, 2,1);
   if (mode === 'mute') {
-    ctx.fillRect(x+5,y+2,1,1); ctx.fillRect(x+7,y+2,1,1);
-    ctx.fillRect(x+6,y+3,1,2);
-    ctx.fillRect(x+5,y+5,1,1); ctx.fillRect(x+7,y+5,1,1);
+    // X 5×4 — stessa larghezza delle barre
+    ctx.fillRect(x,   y,   1,1); ctx.fillRect(x+4, y,   1,1);
+    ctx.fillRect(x+1, y+1, 1,1); ctx.fillRect(x+3, y+1, 1,1);
+    ctx.fillRect(x+1, y+2, 1,1); ctx.fillRect(x+3, y+2, 1,1);
+    ctx.fillRect(x,   y+3, 1,1); ctx.fillRect(x+4, y+3, 1,1);
   } else if (mode === 'sfx') {
-    ctx.fillRect(x+5,y+2,1,4);
+    ctx.fillRect(x,   y+2, 1, 2);  // barra bassa
+    ctx.fillRect(x+2, y+1, 1, 3);  // barra media
   } else {
-    ctx.fillRect(x+5,y+2,1,4); ctx.fillRect(x+7,y+1,1,6);
+    ctx.fillRect(x,   y+2, 1, 2);  // barra bassa
+    ctx.fillRect(x+2, y+1, 1, 3);  // barra media
+    ctx.fillRect(x+4, y,   1, 4);  // barra alta
   }
 }
 
@@ -49,9 +52,9 @@ function drawTitleScreen() {
   // Centratura verticale: calcola altezza totale del blocco contenuto
   var tapBlockH = showTap    ? (VT.tapText.gapY + VT.tapText.fontSize) : 0;
   var ctrlBlockH = ct.gapY + ct.btnH;
-  var legBlockH  = showLegend ? (VT.legend.gapY  + VT.legend.fontSize)  : 0;
+  var legBlockH  = showLegend ? (VT.legend.gapY  + VT.legend.fontSize + 2)  : 0;
   var totalH = logoH + tapBlockH + ctrlBlockH + legBlockH;
-  var logoY  = Math.round((H - totalH) / 2);
+  var logoY  = Math.max(0, Math.round((H - totalH) / 2));
 
   // Logo clippato con angoli stondati + bordino
   if (logoH > 0) {
@@ -96,15 +99,31 @@ function drawTitleScreen() {
   _titleCtrlY = ctrlY;
   ctx.font = ct.fontSize + 'px "Press Start 2P"';
 
+  ctx.lineWidth = 1;
+  var ctrlTextY = ctrlY + Math.floor((ct.btnH - ct.fontSize) / 2); // centratura verticale testo
+  var r = ct.boxR;
+  function _box(x, y, w, color) {
+    ctx.strokeStyle = color; ctx.beginPath(); ctx.roundRect(x, y, w, ct.btnH, r); ctx.stroke();
+  }
+
   // Level chooser
   if (LEVELS.length > 1) {
-    ctx.fillStyle = currentLevel <= 1 ? C.dgray : C.white;
-    ctx.fillText('‹', ct.prevX + ct.prevW/2, ctrlY + 2);
+    var prevColor = currentLevel <= 1 ? C.dgray : ct.btnColor;
+    _box(ct.prevX, ctrlY, ct.prevW, prevColor);
+    ctx.fillStyle = prevColor; ctx.fillText('‹', ct.prevX + ct.prevW/2, ctrlTextY);
+
     ctx.fillStyle = C.gold;
-    ctx.fillText(STRINGS.levelLabel + ' ' + currentLevel, ct.labelX, ctrlY + 2);
+    ctx.fillText(STRINGS.levelLabel + ' ' + currentLevel, ct.labelX, ctrlTextY);
+
     var atCeiling = currentLevel >= _btrMax, moreExist = _btrMax < LEVELS.length;
-    if (atCeiling && moreExist) { _drawLockIcon(ct.nextX + 2, ctrlY + 1, C.yellow); }
-    else { ctx.fillStyle = (atCeiling && !moreExist) ? C.dgray : C.white; ctx.fillText('›', ct.nextX + ct.nextW/2, ctrlY + 2); }
+    if (atCeiling && moreExist) {
+      _box(ct.nextX, ctrlY, ct.nextW, C.yellow);
+      _drawLockIcon(ct.nextX + 2, ctrlY + Math.floor((ct.btnH - 6) / 2), C.yellow);
+    } else {
+      var nextColor = (atCeiling && !moreExist) ? C.dgray : ct.btnColor;
+      _box(ct.nextX, ctrlY, ct.nextW, nextColor);
+      ctx.fillStyle = nextColor; ctx.fillText('›', ct.nextX + ct.nextW/2, ctrlTextY);
+    }
   }
 
   // Language buttons (solo se debug)
@@ -112,23 +131,58 @@ function drawTitleScreen() {
     var curLang = document.documentElement.lang;
     ['en','it'].forEach(function(lg, idx) {
       var lx = ct.langX + idx * (ct.langW + 4);
-      var isActive = curLang === lg;
-      ctx.fillStyle = isActive ? C.gold : C.mgray;
-      ctx.fillText(lg.toUpperCase(), lx + ct.langW/2, ctrlY + 2);
-      if (isActive) { ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(lx, ctrlY, ct.langW, 8); }
+      var langColor = (curLang === lg) ? C.gold : C.mgray;
+      _box(lx, ctrlY, ct.langW, langColor);
+      ctx.fillStyle = langColor; ctx.fillText(lg.toUpperCase(), lx + ct.langW/2, ctrlTextY);
     });
   }
 
-  // Audio toggle
+  // Audio toggle — icona + label i18n centrati nel box
   var audioMode = GameAudio.getMode();
-  _drawAudioIcon(ct.audioX, ctrlY, audioMode, audioMode==='full'?C.lgreen:audioMode==='sfx'?C.yellow:C.mgray);
+  var audioColor = audioMode==='full' ? C.lgreen : audioMode==='sfx' ? C.yellow : C.mgray;
+  var audioLabel = audioMode==='full' ? STRINGS.audioFull : audioMode==='sfx' ? STRINGS.audioSfx : STRINGS.audioMute;
+  _box(ct.audioX, ctrlY, ct.audioW, audioColor);
+  var _iconW = 5, _gap = 3;
+  var _lblW = ctx.measureText(audioLabel).width;
+  var _blockW = _iconW + _gap + _lblW;
+  var _blockX = ct.audioX + Math.floor((ct.audioW - _blockW) / 2);
+  _drawVolumeIcon(_blockX, ctrlY + Math.floor((ct.btnH - 4) / 2), audioMode, audioColor);
+  ctx.fillStyle = audioColor; ctx.textAlign = 'left';
+  ctx.fillText(audioLabel, _blockX + _iconW + _gap, ctrlTextY);
+  ctx.textAlign = 'center';
 
-  // Keyboard legend — solo su desktop
+  // Keyboard legend — solo su desktop, riga singola con key box
   if (showLegend) {
+    var lf = VT.legend.fontSize, kh = lf + 2, kr = 1, ks = 4;
+    ctx.font = lf + 'px "Press Start 2P"';
+    ctx.lineWidth = 1; ctx.textBaseline = 'top';
     var legY = ctrlY + ct.btnH + VT.legend.gapY;
-    ctx.font = VT.legend.fontSize + 'px "Press Start 2P"';
-    ctx.fillStyle = C.lgray;
-    ctx.fillText('↑↓←→ '+(STRINGS.keyMove||'Move')+' · Z '+(STRINGS.keyAction||'Action')+' · P '+(STRINGS.keyPause||'Pause')+' · ESC '+(STRINGS.keyHome||'Home'), W/2, legY);
+
+    function _kw(c) { return ctx.measureText(c).width + 4; }
+    function _key(x, c) {
+      var kw = _kw(c);
+      ctx.strokeStyle = C.lgray; ctx.beginPath(); ctx.roundRect(x, legY, kw, kh, kr); ctx.stroke();
+      ctx.fillStyle = C.lgray; ctx.textAlign = 'center'; ctx.fillText(c, x + kw/2, legY + 1);
+      return kw;
+    }
+
+    var twMov=ctx.measureText(STRINGS.keyMove||'move').width;
+    var twAct=ctx.measureText(STRINGS.keyAction||'action').width;
+    var twPau=ctx.measureText(STRINGS.keyPause||'pause').width;
+    var twHom=ctx.measureText(STRINGS.keyHome||'home').width;
+    var totalLW = _kw('<')+1+_kw('^')+1+_kw('v')+1+_kw('>') + ks+twMov + ks+_kw('Z')+ks+twAct + ks+_kw('P')+ks+twPau + ks+_kw('ESC')+ks+twHom;
+    var bx = Math.round((W - totalLW) / 2);
+
+    bx += _key(bx,'<')+1; bx += _key(bx,'^')+1; bx += _key(bx,'v')+1; bx += _key(bx,'>');
+    bx += ks; ctx.fillStyle=C.lgray; ctx.textAlign='left'; ctx.fillText(STRINGS.keyMove||'move', bx, legY+1); bx += twMov;
+    bx += ks; bx += _key(bx,'Z');
+    bx += ks; ctx.fillStyle=C.lgray; ctx.textAlign='left'; ctx.fillText(STRINGS.keyAction||'action', bx, legY+1); bx += twAct;
+    bx += ks; bx += _key(bx,'P');
+    bx += ks; ctx.fillStyle=C.lgray; ctx.textAlign='left'; ctx.fillText(STRINGS.keyPause||'pause', bx, legY+1); bx += twPau;
+    bx += ks; bx += _key(bx,'ESC');
+    bx += ks; ctx.fillStyle=C.lgray; ctx.textAlign='left'; ctx.fillText(STRINGS.keyHome||'home', bx, legY+1);
+
+    ctx.textAlign = 'center';
   }
 
   ctx.restore();

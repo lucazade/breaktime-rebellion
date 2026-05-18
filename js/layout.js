@@ -49,16 +49,18 @@ Object.assign(CONFIG.vis, {
   // Title screen — logo + tap to start + level chooser + audio toggle + keyboard legend
   titleScreen: {
     logo:     { w: 320, borderW: 1, borderR: 5 }, // larghezza logo; y calcolato (centratura verticale); borderW=spessore bordino, borderR=raggio angoli clip
-    tapText:  { fontSize: 4, gapY: 4 },// font e gap sotto il logo
+    tapText:  { fontSize: 4, gapY: 3 },// font e gap sotto il logo
     controls: {
       fontSize: 4,       // ⚠ solo 4px e 8px sono crispini
-      gapY:     6,       // gap dopo tapText prima della riga controlli
+      gapY:     3,       // gap dopo tapText prima della riga controlli
       btnH:    10,       // altezza clickable dei pulsanti
-      prevX:   30, prevW: 14,    // pulsante ‹ livello
-      nextX:   75, nextW: 14,    // pulsante › o lock
-      labelX:  60,               // x centro label "LVL N"
+      boxR:     2,       // raggio angoli box pulsanti
+      btnColor: '#b0b0b0', // colore pulsanti abilitati (meno saturo di white)
+      prevX:   10, prevW: 14,    // pulsante ‹ livello
+      nextX:   55, nextW: 14,    // pulsante › o lock
+      labelX:  40,               // x centro label "LVL N"
       langX:  135, langW: 20,    // pulsanti EN / IT (solo se showLangChooser)
-      audioX: 275, audioW: 22,   // pulsante audio toggle
+      audioX: 265, audioW: 46,   // pulsante audio toggle: icona(5) + gap(3) + label
     },
     legend: { fontSize: 4, gapY: 4 },  // keyboard legend (solo desktop) — ⚠ solo 4px o 8px
   },
