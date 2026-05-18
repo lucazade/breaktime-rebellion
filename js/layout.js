@@ -41,7 +41,7 @@ const walkOffset = CONFIG.layout.walkOffset;
 // Only mechanics (what Marco can do) and NPCs change per level.
 
 var SHARED_LAYOUT = {
-  playerStart: { x: 25, y: GY - PH - walkOffset },
+  playerStart: { x: 18, y: GY - PH - walkOffset },
 
   // fdTop: px above the walking surface where the sprite starts to appear (trapdoor top edge)
   // fdBot: px below the walking surface where the sprite disappears  (floor plank underside)
