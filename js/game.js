@@ -183,9 +183,12 @@ function handleTap() {
 // #111: gameover choice — detect SI/NO button tap (logical canvas coords 320×200)
 function _gameoverChoice(lx, ly) {
   if (state !== 'gameover' || endScreenFadingOut || endScreenT < 20) return;
-  if (ly < 122 || ly > 136) return;
-  if (lx >= 60 && lx <= 130)  { endScreenFadingOut = true; endScreenFadeOutCb = restartGame; }
-  else if (lx >= 190 && lx <= 260) { goHome(); }
+  var VG = CONFIG.vis.gameover;
+  var bx = Math.round(W / 2 - VG.panW / 2);
+  var btnY = VG.panY + VG.padTop + VG.stepTitle + VG.stepLevel + VG.stepScore + VG.stepConfirm;
+  if (ly < btnY || ly > btnY + VG.btnH) return;
+  if (lx >= bx + VG.siOx && lx <= bx + VG.siOx + VG.siW) { endScreenFadingOut = true; endScreenFadeOutCb = restartGame; }
+  else if (lx >= bx + VG.noOx && lx <= bx + VG.noOx + VG.noW) { goHome(); }
 }
 
 CV.addEventListener('click', function(e) {

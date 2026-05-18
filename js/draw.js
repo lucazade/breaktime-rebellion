@@ -140,7 +140,7 @@ function drawGymBall() {
     if (pdx < 14 && pdy < 14) {
       ctx.strokeStyle = C.yellow; ctx.lineWidth = 1;
       ctx.setLineDash([2, 2]);
-      ctx.strokeRect(bx-2, by-2, 13, 13);
+      const _dg = CONFIG.vis.dashed.gymBall; ctx.strokeRect(bx+_dg.x, by+_dg.y, _dg.w, _dg.h);
       ctx.setLineDash([]);
     }
   }
@@ -182,7 +182,7 @@ function drawBookcase() {
     if (pdx < 20 && pdy < 36) {
       ctx.strokeStyle = C.yellow; ctx.lineWidth = 1;
       ctx.setLineDash([2, 2]);
-      ctx.strokeRect(bx, by-8, 28, 46);
+      const _db = CONFIG.vis.dashed.bookcase; ctx.strokeRect(bx+_db.x, by+_db.y, _db.w, _db.h);
       ctx.setLineDash([]);
     }
   }
@@ -218,7 +218,7 @@ function drawRegister() {
     if (pdx < 16 && pdy < 20) {
       ctx.strokeStyle = C.gold; ctx.lineWidth = 1;
       ctx.setLineDash([2, 2]);
-      ctx.strokeRect(bx-2, by-4, 14, 18);
+      const _dr = CONFIG.vis.dashed.register; ctx.strokeRect(bx+_dr.x, by+_dr.y, _dr.w, _dr.h);
       ctx.setLineDash([]);
     }
   }
@@ -233,7 +233,7 @@ function drawExitDoor() {
     const blink = Math.floor(frame / 10) % 2 === 0;
     ctx.strokeStyle = blink ? C.gold : C.green; ctx.lineWidth = 1;
     ctx.setLineDash([3, 2]);
-    ctx.strokeRect(bx-2, by-14, 14, 30);
+    const _de = CONFIG.vis.dashed.exitDoor; ctx.strokeRect(bx+_de.x, by+_de.y, _de.w, _de.h);
     ctx.setLineDash([]);
   }
 }
@@ -350,7 +350,7 @@ function drawSprinklers() {
         if (pdx < 16 && pdy < 50) {
           ctx.strokeStyle = '#FF6600'; ctx.lineWidth = 1;
           ctx.setLineDash([2, 2]);
-          ctx.strokeRect(bx-2, by-4, 12, 9);
+          const _ds = CONFIG.vis.dashed.sprinklers; ctx.strokeRect(bx+_ds.x, by+_ds.y, _ds.w, _ds.h);
           ctx.setLineDash([]);
         }
       }
@@ -420,7 +420,7 @@ function drawBins() {
       if (pdx < 16 && pdy < 20) {
         ctx.strokeStyle = C.yellow; ctx.lineWidth = 1;
         ctx.setLineDash([2, 2]);
-        ctx.strokeRect(bx-2, by-16, 14, 18);
+        const _dbn = CONFIG.vis.dashed.bins; ctx.strokeRect(bx+_dbn.x, by+_dbn.y, _dbn.w, _dbn.h);
         ctx.setLineDash([]);
       }
     }
@@ -493,7 +493,7 @@ function drawSink() {
     if (pdx < 14 && pdy < 20) {
       ctx.strokeStyle = C.cyan; ctx.lineWidth = 1;
       ctx.setLineDash([2, 2]);
-      ctx.strokeRect(bx-2, by-11, 16, 13);
+      const _dsk = CONFIG.vis.dashed.sink; ctx.strokeRect(bx+_dsk.x, by+_dsk.y, _dsk.w, _dsk.h);
       ctx.setLineDash([]);
     }
   }
@@ -566,7 +566,7 @@ function drawBags() {
       if (pdx < 14 && pdy < 14) {
         ctx.strokeStyle = C.gold; ctx.lineWidth = 1;
         ctx.setLineDash([2, 2]);
-        ctx.strokeRect(b.x-1, b.y-1, 16, 12);
+        const _dbg = CONFIG.vis.dashed.bags; ctx.strokeRect(b.x+_dbg.x, b.y+_dbg.y, _dbg.w, _dbg.h);
         ctx.setLineDash([]);
       }
     }
@@ -610,7 +610,7 @@ function drawMachines() {
       if (pdx < 14 && pdy < 20) {
         ctx.strokeStyle = C.yellow; ctx.lineWidth = 1;
         ctx.setLineDash([2, 2]);
-        ctx.strokeRect(mx-2, my-2, 14, 22);
+        const _dm = CONFIG.vis.dashed.machines; ctx.strokeRect(mx+_dm.x, my+_dm.y, _dm.w, _dm.h);
         ctx.setLineDash([]);
       }
     }
@@ -935,30 +935,30 @@ function drawEndScreen() {
 
   if (!isWin) {
     // Gameover — drawn manually for precise vertical spacing (no centering)
-    const panY = 44, panW = 260, panH = 104;
-    ctx.fillStyle = 'rgba(60,0,0,0.88)'; ctx.fillRect(bx, panY, panW, panH);
-    ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(bx+1, panY+1, panW-2, panH-2);
+    const VG = CONFIG.vis.gameover;
+    ctx.fillStyle = 'rgba(60,0,0,0.88)'; ctx.fillRect(bx, VG.panY, VG.panW, VG.panH);
+    ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(bx+1, VG.panY+1, VG.panW-2, VG.panH-2);
     ctx.textAlign = 'center'; ctx.textBaseline = 'top';
-    const cx = bx + panW / 2;
-    let ty = panY + 12;
+    const cx = bx + VG.panW / 2;
+    let ty = VG.panY + VG.padTop;
     ctx.font = '8px "Press Start 2P"';
-    ctx.fillStyle = C.redprof; ctx.fillText(STRINGS.gameoverTitle,                  cx, ty); ty += 18;
-    ctx.fillStyle = C.white;   ctx.fillText(fmt(STRINGS.levelReached, currentLevel), cx, ty); ty += 12;
-    ctx.fillStyle = C.white;   ctx.fillText(scoreText,                               cx, ty); ty += 20;
-    ctx.fillStyle = C.gold;    ctx.fillText(STRINGS.gameoverConfirm,                 cx, ty); ty += 16;
+    ctx.fillStyle = C.redprof; ctx.fillText(STRINGS.gameoverTitle,                  cx, ty); ty += VG.stepTitle;
+    ctx.fillStyle = C.white;   ctx.fillText(fmt(STRINGS.levelReached, currentLevel), cx, ty); ty += VG.stepLevel;
+    ctx.fillStyle = C.white;   ctx.fillText(scoreText,                               cx, ty); ty += VG.stepScore;
+    ctx.fillStyle = C.gold;    ctx.fillText(STRINGS.gameoverConfirm,                 cx, ty); ty += VG.stepConfirm;
     // SI / NO buttons
-    const btnH = 14, siX = bx + 30, siW = 70, noX = bx + 160, noW = 70;
-    ctx.fillStyle = 'rgba(0,90,0,0.92)'; ctx.fillRect(siX, ty, siW, btnH);
-    ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(siX+1, ty+1, siW-2, btnH-2);
-    ctx.fillStyle = C.white; ctx.fillText(STRINGS.btnYes, siX + siW/2, ty + 3);
-    ctx.fillStyle = 'rgba(90,0,0,0.92)'; ctx.fillRect(noX, ty, noW, btnH);
-    ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(noX+1, ty+1, noW-2, btnH-2);
-    ctx.fillStyle = C.white; ctx.fillText(STRINGS.btnNo, noX + noW/2, ty + 3);
+    const siX = bx + VG.siOx, noX = bx + VG.noOx;
+    ctx.fillStyle = 'rgba(0,90,0,0.92)'; ctx.fillRect(siX, ty, VG.siW, VG.btnH);
+    ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(siX+1, ty+1, VG.siW-2, VG.btnH-2);
+    ctx.fillStyle = C.white; ctx.fillText(STRINGS.btnYes, siX + VG.siW/2, ty + 3);
+    ctx.fillStyle = 'rgba(90,0,0,0.92)'; ctx.fillRect(noX, ty, VG.noW, VG.btnH);
+    ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(noX+1, ty+1, VG.noW-2, VG.btnH-2);
+    ctx.fillStyle = C.white; ctx.fillText(STRINGS.btnNo, noX + VG.noW/2, ty + 3);
   } else if (currentLevel === LEVELS.length) {
     // L10 final: special ending screen with best scores (#68: winTitle as heading, no subtitle)
     const bestScore = parseInt(localStorage.getItem('btr_best_score') || '0');
     const bestLevel = parseInt(localStorage.getItem('btr_best_level') || '1');
-    const by = 44, bw = 260, bh = 104;
+    const { panY: by, panW: bw, panH: bh } = CONFIG.vis.gameWin;
     const tapAction = actionVisible ? STRINGS.tapForTitle : 'rgba(255,255,255,0)';
     drawOverlayPanel(bx, by, bw, bh, 'rgba(0,0,40,0.92)', C.gold, [
       { text: STRINGS.winTitle,  font: '8px "Press Start 2P"', color: C.gold,   height: 12, spacing: 10 },
@@ -968,7 +968,7 @@ function drawEndScreen() {
     ]);
   } else {
     // Non-final win (#65: levelComplete title, tapContinue action)
-    const by = 64, bw = 260, bh = 72;
+    const { panY: by, panW: bw, panH: bh } = CONFIG.vis.levelComplete;
     drawOverlayPanel(bx, by, bw, bh, 'rgba(0,0,60,0.88)', C.gold, [
       { text: STRINGS.levelComplete, font: '8px "Press Start 2P"', color: C.gold,  height: 10, spacing: 10 },
       { text: scoreText,             font: '8px "Press Start 2P"', color: C.white, height: 8, spacing: 14 },
