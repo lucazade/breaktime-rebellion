@@ -31,21 +31,31 @@ function _drawLockIcon(x, y, color) {
 
 function drawTitleScreen() {
   var VT = CONFIG.vis.titleScreen;
-  // Canvas trasparente — il gradiente body.title-mode CSS si vede in trasparenza
   ctx.clearRect(0, 0, W, H);
 
-  // Logo — imageSmoothingEnabled=false per pixel-art crisp
-  var VT = CONFIG.vis.titleScreen;
-  var logoW = VT.logo.w, logoY = VT.logo.y;
+  var ct = VT.controls;
+  var isDesktop = !CONFIG.debug.simulateMobile && window.matchMedia('(pointer:fine)').matches;
+  var showTap    = !isDesktop;   // tap solo su touch — su desktop c'è la legend
+  var showLegend = isDesktop;
+
+  // Altezza logo
+  var logoW = VT.logo.w;
   var logoX = Math.round((W - logoW) / 2);
   var logoH = 0;
   if (_logoImage && _logoImage.complete && _logoImage.naturalWidth > 0) {
     logoH = Math.round(_logoImage.naturalHeight / _logoImage.naturalWidth * logoW);
   }
-  // Logo clippato con angoli stondati + bordino sopra
+
+  // Centratura verticale: calcola altezza totale del blocco contenuto
+  var tapBlockH = showTap    ? (VT.tapText.gapY + VT.tapText.fontSize) : 0;
+  var ctrlBlockH = ct.gapY + ct.btnH;
+  var legBlockH  = showLegend ? (VT.legend.gapY  + VT.legend.fontSize)  : 0;
+  var totalH = logoH + tapBlockH + ctrlBlockH + legBlockH;
+  var logoY  = Math.round((H - totalH) / 2);
+
+  // Logo clippato con angoli stondati + bordino
   if (logoH > 0) {
     var r = VT.logo.borderR;
-    // Clip mask roundRect → logo con angoli stondati
     ctx.save();
     ctx.beginPath();
     ctx.roundRect(logoX, logoY, logoW, logoH, r);
@@ -53,8 +63,7 @@ function drawTitleScreen() {
     ctx.setTransform(1,0,0,1,0,0);
     ctx.imageSmoothingEnabled = false;
     ctx.drawImage(_logoImage, logoX*2, logoY*2, logoW*2, logoH*2);
-    ctx.restore(); // rimuove clip e ripristina transform
-    // Bordino nero stondato sopra il logo
+    ctx.restore();
     if (VT.logo.borderW > 0) {
       ctx.save();
       ctx.strokeStyle = '#000';
@@ -69,18 +78,22 @@ function drawTitleScreen() {
   ctx.save();
   ctx.textAlign = 'center'; ctx.textBaseline = 'top';
 
-  // Tap to start (blinking)
-  var tapY = Math.round(logoY + logoH + VT.tapText.gapY);
-  if (!_titleStarting && Math.floor(frame / 20) % 2 === 0) {
-    ctx.font = VT.tapText.fontSize + 'px "Press Start 2P"';
-    ctx.fillStyle = C.gold;
-    ctx.fillText(STRINGS.tapToStart, W / 2, tapY);
+  var nextY = logoY + logoH;
+
+  // Tap to start — solo su non-desktop (blinking)
+  if (showTap) {
+    var tapY = nextY + VT.tapText.gapY;
+    if (!_titleStarting && Math.floor(frame / 20) % 2 === 0) {
+      ctx.font = VT.tapText.fontSize + 'px "Press Start 2P"';
+      ctx.fillStyle = C.gold;
+      ctx.fillText(STRINGS.tapToStart, W / 2, tapY);
+    }
+    nextY = tapY + VT.tapText.fontSize;
   }
 
   // Controls row
-  var ctrlY = Math.round(tapY + VT.tapText.fontSize + VT.controls.gapY);
+  var ctrlY = nextY + ct.gapY;
   _titleCtrlY = ctrlY;
-  var ct = VT.controls;
   ctx.font = ct.fontSize + 'px "Press Start 2P"';
 
   // Level chooser
@@ -110,9 +123,9 @@ function drawTitleScreen() {
   var audioMode = GameAudio.getMode();
   _drawAudioIcon(ct.audioX, ctrlY, audioMode, audioMode==='full'?C.lgreen:audioMode==='sfx'?C.yellow:C.mgray);
 
-  // Keyboard legend (solo desktop)
-  if (window.matchMedia('(pointer:fine)').matches) {
-    var legY = Math.round(ctrlY + ct.btnH + VT.legend.gapY);
+  // Keyboard legend — solo su desktop
+  if (showLegend) {
+    var legY = ctrlY + ct.btnH + VT.legend.gapY;
     ctx.font = VT.legend.fontSize + 'px "Press Start 2P"';
     ctx.fillStyle = C.lgray;
     ctx.fillText('↑↓←→ '+(STRINGS.keyMove||'Move')+' · Z '+(STRINGS.keyAction||'Action')+' · P '+(STRINGS.keyPause||'Pause')+' · ESC '+(STRINGS.keyHome||'Home'), W/2, legY);

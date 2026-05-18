@@ -116,7 +116,7 @@ function loop(ts) {
         if (_wcb) _wcb();
       }
     }
-    if (state === 'playing') {
+    if (state === 'playing' && !_creditsActive) {
       if (storyBannerT > 0) {
         if (storyBannerFading) {
           storyBannerT--;

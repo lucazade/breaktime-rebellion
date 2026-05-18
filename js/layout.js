@@ -26,7 +26,7 @@ CONFIG.layout = {
   BW: 22, BH: 14,
   walkOffset: 6,
   wallLeft: 10, wallRight: 10, // #78 — margini muro sx/dx (pixel logici)
-  desktopZoom: 1.0,            // zoom canvas su desktop (pointer:fine) — 1.5 = 400→600px
+  desktopZoom: 1.5,            // zoom canvas su desktop (pointer:fine) — 1.5 = 400→600px
 };
 
 // Layout shortcut constants — used throughout all modules
@@ -199,7 +199,7 @@ CONFIG.vis = {
 
   // Title screen — logo + tap to start + level chooser + audio toggle + keyboard legend
   titleScreen: {
-    logo:     { w: 300, y: 2, borderW: 1, borderR: 5 }, // larghezza logo e y top; borderW=spessore bordino, borderR=raggio angoli clip
+    logo:     { w: 300, borderW: 1, borderR: 5 }, // larghezza logo; y calcolato (centratura verticale); borderW=spessore bordino, borderR=raggio angoli clip
     tapText:  { fontSize: 4, gapY: 4 },// font e gap sotto il logo
     controls: {
       fontSize: 4,       // ⚠ solo 4px e 8px sono crispini
