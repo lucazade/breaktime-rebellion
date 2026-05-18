@@ -925,7 +925,7 @@ function drawEndScreen() {
   const fadeAlpha = Math.min(1, endScreenT / 20);
   ctx.save();
   ctx.globalAlpha = fadeAlpha;
-  const bx = 160 - 130;
+  const bx = Math.round(W / 2 - CONFIG.vis.gameover.panW / 2);
   const isWin = state === 'win';
   const scoreText = STRINGS.scoreLabel + String(score).padStart(5, '0');
   const actionText = isWin
