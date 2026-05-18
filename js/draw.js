@@ -935,7 +935,7 @@ function drawEndScreen() {
 
   if (!isWin) {
     // Gameover — drawn manually for precise vertical spacing (no centering)
-    const panY = 44, panW = 260, panH = 120;
+    const panY = 44, panW = 260, panH = 104;
     ctx.fillStyle = 'rgba(60,0,0,0.88)'; ctx.fillRect(bx, panY, panW, panH);
     ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(bx+1, panY+1, panW-2, panH-2);
     ctx.textAlign = 'center'; ctx.textBaseline = 'top';
@@ -944,7 +944,7 @@ function drawEndScreen() {
     ctx.font = '8px "Press Start 2P"';
     ctx.fillStyle = C.redprof; ctx.fillText(STRINGS.gameoverTitle,                  cx, ty); ty += 18;
     ctx.fillStyle = C.white;   ctx.fillText(fmt(STRINGS.levelReached, currentLevel), cx, ty); ty += 12;
-    ctx.fillStyle = C.white;   ctx.fillText(scoreText,                               cx, ty); ty += 22;
+    ctx.fillStyle = C.white;   ctx.fillText(scoreText,                               cx, ty); ty += 20;
     ctx.fillStyle = C.gold;    ctx.fillText(STRINGS.gameoverConfirm,                 cx, ty); ty += 16;
     // SI / NO buttons
     const btnH = 14, siX = bx + 30, siW = 70, noX = bx + 160, noW = 70;

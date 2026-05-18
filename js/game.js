@@ -183,7 +183,7 @@ function handleTap() {
 // #111: gameover choice — detect SI/NO button tap (logical canvas coords 320×200)
 function _gameoverChoice(lx, ly) {
   if (state !== 'gameover' || endScreenFadingOut || endScreenT < 20) return;
-  if (ly < 124 || ly > 138) return;
+  if (ly < 122 || ly > 136) return;
   if (lx >= 60 && lx <= 130)  { endScreenFadingOut = true; endScreenFadeOutCb = restartGame; }
   else if (lx >= 190 && lx <= 260) { goHome(); }
 }
