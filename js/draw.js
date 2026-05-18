@@ -390,9 +390,9 @@ function drawGuard(x, y, dir, animT, chasing, knockedT) {
   if (knockedT > 0) {
     const fy = by + PH - 1;
     ctx.fillStyle = 'rgba(0,0,0,0.2)'; ctx.fillRect(bx-4, fy+2, 18, 2);
-    if (CONFIG.charOutline) {
-      const s = CONFIG.charOutlineSize || 1;
-      ctx.fillStyle = CONFIG.charOutlineColor;
+    if (CONFIG.vis.char.outline) {
+      const s = CONFIG.vis.char.outlineSize || 1;
+      ctx.fillStyle = CONFIG.vis.char.outlineColor;
       ctx.fillRect(bx-2-s, fy-3-s, 14+s*2, 4+s*2);
       ctx.fillRect((dir>0 ? bx+12 : bx-6)-s, fy-4-s, 6+s*2, 5+s*2);
     }
@@ -402,9 +402,9 @@ function drawGuard(x, y, dir, animT, chasing, knockedT) {
   }
   const leg = Math.sin(animT) * 2.5;
   ctx.fillStyle = 'rgba(0,0,0,0.2)'; ctx.fillRect(bx-1, by+PH, PW, 2);
-  if (CONFIG.charOutline) {
-    const s = CONFIG.charOutlineSize || 1;
-    ctx.fillStyle = CONFIG.charOutlineColor;
+  if (CONFIG.vis.char.outline) {
+    const s = CONFIG.vis.char.outlineSize || 1;
+    ctx.fillStyle = CONFIG.vis.char.outlineColor;
     ctx.fillRect(bx+1-s, by+10-s, 3+s*2, 4+leg+s*2);
     ctx.fillRect(bx+4-s, by+10-s, 3+s*2, 4-leg+s*2);
     ctx.fillRect(bx-s,   by+13+leg-s, 4+s*2, 2+s*2);
@@ -639,9 +639,9 @@ function drawStudents() {
     const wobble = s.shakeT > 0 ? Math.round(Math.sin(s.shakeT * 0.9) * 2) : 0;
     const bx = Math.round(s.x + 5) + wobble; // shake offset when hit
     const by = Math.round(s.y);
-    if (CONFIG.charOutline) {
-      const so = CONFIG.charOutlineSize || 1;
-      ctx.fillStyle = CONFIG.charOutlineColor;
+    if (CONFIG.vis.char.outline) {
+      const so = CONFIG.vis.char.outlineSize || 1;
+      ctx.fillStyle = CONFIG.vis.char.outlineColor;
       ctx.fillRect(bx-2-so, by-17-so, 5+so*2, 9+so*2);
       ctx.fillRect(bx-3-so, by-8-so,  7+so*2, 6+so*2);
       ctx.fillRect(bx-4-so, by-3-so,  2+so*2, 3+so*2);
@@ -757,9 +757,9 @@ function drawPreside(x, y, dir, animT, bodyCol, chasing, knockedT) {
   if (knockedT > 0) {
     const fy = by + PH - 1;
     ctx.fillStyle = 'rgba(0,0,0,0.2)'; ctx.fillRect(bx-4, fy+2, 18, 2);
-    if (CONFIG.charOutline) {
-      const s = CONFIG.charOutlineSize || 1;
-      ctx.fillStyle = CONFIG.charOutlineColor;
+    if (CONFIG.vis.char.outline) {
+      const s = CONFIG.vis.char.outlineSize || 1;
+      ctx.fillStyle = CONFIG.vis.char.outlineColor;
       ctx.fillRect(bx-2-s, fy-3-s, 14+s*2, 4+s*2);
       ctx.fillRect((dir>0 ? bx+12 : bx-6)-s, fy-4-s, 6+s*2, 5+s*2);
       ctx.fillRect((dir>0 ? bx-4 : bx+8)-s, fy-2-s, 4+s*2, 3+s*2);
@@ -775,11 +775,11 @@ function drawPreside(x, y, dir, animT, bodyCol, chasing, knockedT) {
   // Shadow slightly wider for heavier build
   ctx.fillStyle = 'rgba(0,0,0,0.2)'; ctx.fillRect(bx-2, by+PH, PW+4, 2);
 
-  if (CONFIG.charOutline) {
-    const s = CONFIG.charOutlineSize || 1;
+  if (CONFIG.vis.char.outline) {
+    const s = CONFIG.vis.char.outlineSize || 1;
     const fX = dir>0 ? bx-2 : bx+PW;
     const bkX = dir>0 ? bx+PW : bx-2;
-    ctx.fillStyle = CONFIG.charOutlineColor;
+    ctx.fillStyle = CONFIG.vis.char.outlineColor;
     ctx.fillRect(bx+1-s, by+10-s, 3+s*2, 4+leg+s*2);
     ctx.fillRect(bx+4-s, by+10-s, 3+s*2, 4-leg+s*2);
     ctx.fillRect(bx-s,   by+13+leg-s, 4+s*2, 2+s*2);
@@ -837,9 +837,9 @@ function drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, chasing, knock
   if (isTeacher && knockedT > 0) {
     const fy = by + PH - 1; // floor level
     ctx.fillStyle = 'rgba(0,0,0,0.2)'; ctx.fillRect(bx-4, fy+2, 18, 2); // shadow
-    if (CONFIG.charOutline) {
-      const s = CONFIG.charOutlineSize || 1;
-      ctx.fillStyle = CONFIG.charOutlineColor;
+    if (CONFIG.vis.char.outline) {
+      const s = CONFIG.vis.char.outlineSize || 1;
+      ctx.fillStyle = CONFIG.vis.char.outlineColor;
       ctx.fillRect(bx-2-s, fy-3-s, 14+s*2, 4+s*2);
       ctx.fillRect((dir>0 ? bx+12 : bx-6)-s, fy-4-s, 6+s*2, 5+s*2);
       ctx.fillRect((dir>0 ? bx-4 : bx+8)-s, fy-2-s, 4+s*2, 3+s*2);
@@ -854,9 +854,9 @@ function drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, chasing, knock
 
   ctx.fillStyle = 'rgba(0,0,0,0.2)'; ctx.fillRect(bx-1, by+PH, PW, 2);
 
-  if (CONFIG.charOutline) {
-    const s = CONFIG.charOutlineSize || 1;
-    ctx.fillStyle = CONFIG.charOutlineColor;
+  if (CONFIG.vis.char.outline) {
+    const s = CONFIG.vis.char.outlineSize || 1;
+    ctx.fillStyle = CONFIG.vis.char.outlineColor;
     ctx.fillRect(bx+1-s, by+10-s, 3+s*2, 4+leg+s*2);
     ctx.fillRect(bx+4-s, by+10-s, 3+s*2, 4-leg+s*2);
     ctx.fillRect(bx-s,   by+13+leg-s, 4+s*2, 2+s*2);
@@ -929,9 +929,9 @@ function drawJanitor(x, y, dir, animT) {
   drawChar(x, y, dir, animT, C.mgray, false, false, false);
   const bx = Math.round(x), by = Math.round(y);
   const mx = dir > 0 ? bx+PW : bx-1;
-  if (CONFIG.charOutline) {
-    const s = CONFIG.charOutlineSize || 1;
-    ctx.fillStyle = CONFIG.charOutlineColor;
+  if (CONFIG.vis.char.outline) {
+    const s = CONFIG.vis.char.outlineSize || 1;
+    ctx.fillStyle = CONFIG.vis.char.outlineColor;
     ctx.fillRect(bx+1-s, by-9-s, PW-2+s*2, 3+s*2);
     ctx.fillRect((dir>0 ? bx+PW-1 : bx-1)-s, by-7-s, 3+s*2, 1+s*2);
     ctx.fillRect(mx-s, by+4-s, 1+s*2, 12+s*2);

@@ -307,6 +307,20 @@ canvas {
 
 }
 
+/* ─── SIMULATE MOBILE — debug flag CONFIG.debug.simulateMobile ─── */
+body.simulate-mobile #wrap { flex-direction: row !important; align-items: center !important; width: 100vw !important; height: 100dvh !important; }
+body.simulate-mobile #game-area { flex: 0 0 auto !important; height: 100dvh !important; max-height: 100dvh !important; max-width: calc(100vw - 320px) !important; width: auto !important; margin: 0 !important; box-shadow: none !important; }
+body.simulate-mobile #game-area::before,
+body.simulate-mobile #game-area::after { display: none !important; }
+body.simulate-mobile #panel-left,
+body.simulate-mobile #panel-right { display: flex !important; flex: 1 !important; min-width: 160px !important; height: 100dvh; position: relative; overflow: hidden; border-top: 2px solid #2a0055; border-bottom: 2px solid #2a0055; background: radial-gradient(ellipse at 50% 108%, rgba(255,0,180,.42) 0%, transparent 52%), linear-gradient(180deg, #080015 0%, #12002e 55%, #080015 100%); }
+body.simulate-mobile #panel-left  { border-right: 3px solid rgba(160,0,255,.7) !important; }
+body.simulate-mobile #panel-right { border-left:  3px solid rgba(160,0,255,.7) !important; }
+body.simulate-mobile #panel-left  #ctrl-joy    { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 1; }
+body.simulate-mobile #panel-right #ctrl-action { position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); z-index: 1; }
+body.simulate-mobile #btn-info  { display: flex !important; }
+body.simulate-mobile .panel-btn { display: flex !important; }
+
 /* ─── TITLE MODE — copre tutto, nasconde bezel e pannelli ─── */
 body.title-mode {
   background: linear-gradient(180deg, #000080 0%, #000040 100%) !important;

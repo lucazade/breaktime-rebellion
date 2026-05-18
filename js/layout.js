@@ -56,6 +56,13 @@ CONFIG.vis = {
     legend: { fontSize: 4, gapY: 4 },  // keyboard legend (solo desktop) — ⚠ solo 4px o 8px
   },
 
+  // Sprite personaggi — outline e colore
+  char: {
+    outline:      true,
+    outlineSize:  1.0,
+    outlineColor: '#121212',
+  },
+
   // HUD — strip in cima al canvas
   hud: {
     rowH:      10,                   // altezza strip HUD
