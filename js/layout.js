@@ -154,13 +154,15 @@ CONFIG.vis = {
   // HUD — strip in cima al canvas
   hud: {
     rowH:      10,                   // altezza strip HUD
-    textY:     2,                    // y baseline testo/cuori
+    textY:     1,                    // y baseline testo/cuori
     heartsX:   4,                    // x primo cuore
-    heartStep: 8,                    // px per cuore (7 wide + 1 gap)
+    heartStep: 10,                   // px per cuore (9 wide + 1 gap)
     centerX:   160,                  // x centro per counter/msg
     scoreX:    316,                  // x destro per punteggio
     timerH:    1,                    // altezza barra timer
-    fontSize:  4,                    // ⚠ solo 4px e 8px sono crispini su questo canvas (scale 2×)
+    fontSize:  8,                    // ⚠ solo 4px e 8px sono crispini su questo canvas (scale 2×)
+    dotW:      4,                    // lato quadratino indicatore meccanica
+    dotGap:    3,                    // gap tra quadratino e testo counter
     bgColor:   'rgba(0,0,0,0.55)',
     // Colore quadratino indicatore per ogni meccanica
     dotColors: {

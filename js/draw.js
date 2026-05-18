@@ -1185,9 +1185,11 @@ function drawDebugOverlay() {
 }
 
 function _drawHeart(x, y) {
-  ctx.fillRect(x+1,y,  2,1); ctx.fillRect(x+4,y,  2,1);
-  ctx.fillRect(x,  y+1,7,1); ctx.fillRect(x,  y+2,7,1);
-  ctx.fillRect(x+1,y+3,5,1); ctx.fillRect(x+2,y+4,3,1); ctx.fillRect(x+3,y+5,1,1);
+  // 9×8 pixel art heart — matches 8px font height
+  ctx.fillRect(x+1,y,  2,1); ctx.fillRect(x+5,y,  2,1);
+  ctx.fillRect(x,  y+1,9,1); ctx.fillRect(x,  y+2,9,1); ctx.fillRect(x,  y+3,9,1);
+  ctx.fillRect(x+1,y+4,7,1); ctx.fillRect(x+2,y+5,5,1);
+  ctx.fillRect(x+3,y+6,3,1); ctx.fillRect(x+4,y+7,1,1);
 }
 
 function _hudObjInfo() {
@@ -1237,8 +1239,14 @@ function drawHUD() {
     ctx.fillText(msgText, VH.centerX, VH.textY);
   } else if (state === 'playing') {
     var _oi = _hudObjInfo();
-    ctx.fillStyle = _oi.dot; ctx.fillRect(VH.centerX - 22, VH.textY, 4, 4);
-    ctx.fillStyle = '#44ee66'; ctx.fillText(_oi.done + '/' + _oi.total, VH.centerX - 10, VH.textY);
+    var _txt = _oi.done + '/' + _oi.total;
+    var _tw  = ctx.measureText(_txt).width;
+    var _grpW = VH.dotW + VH.dotGap + _tw;
+    var _sx = Math.round(VH.centerX - _grpW / 2);
+    ctx.fillStyle = _oi.dot;
+    ctx.fillRect(_sx, VH.textY + Math.round((VH.fontSize - VH.dotW) / 2), VH.dotW, VH.dotW);
+    ctx.textAlign = 'left'; ctx.fillStyle = '#44ee66';
+    ctx.fillText(_txt, _sx + VH.dotW + VH.dotGap, VH.textY);
   }
   // Timer bar
   if (maxTimerTicks > 0) {
