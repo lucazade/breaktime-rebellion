@@ -196,6 +196,21 @@ CONFIG.vis = {
     padBottom:    10,
   },
 
+  // Title screen — logo + tap to start + level chooser + audio toggle + keyboard legend
+  titleScreen: {
+    logo:     { w: 220, y: 10 },       // larghezza logo e y top (height dall'aspect ratio)
+    tapText:  { fontSize: 8, gapY: 8 },// font e gap sotto il logo
+    controls: {
+      gapY:    8,        // gap dopo tapText prima della riga controlli
+      btnH:    12,       // altezza clickable dei pulsanti
+      prevX:   20, prevW: 14,    // pulsante ‹ livello
+      nextX:   90, nextW: 14,    // pulsante › o lock
+      labelX:  60,               // x centro label "LVL N"
+      audioX: 275, audioW: 22,   // pulsante audio toggle
+    },
+    legend: { fontSize: 4, gapY: 8 },  // keyboard legend (solo desktop)
+  },
+
   // Fumetto di Luca (L10 fine livello) — bh calcolato: headerH + lineCount*lineH + gapTap + tapH + padBottom
   lucaFumetto: {
     bw:        190,  // larghezza fumetto

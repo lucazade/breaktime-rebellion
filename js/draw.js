@@ -1,5 +1,110 @@
 // Rendering — all draw functions and HUD update
 
+var _logoImage = null; // caricato da game.js come bgImage
+
+// ── Title screen helpers ──────────────────────────────────────────────────────
+
+function _drawAudioIcon(x, y, mode, color) {
+  ctx.fillStyle = color;
+  // speaker body
+  ctx.fillRect(x+2,y,   2,1); ctx.fillRect(x+1,y+1, 3,1);
+  ctx.fillRect(x,  y+2, 4,4);
+  ctx.fillRect(x+1,y+6, 3,1); ctx.fillRect(x+2,y+7, 2,1);
+  if (mode === 'mute') {
+    ctx.fillRect(x+5,y+2,1,1); ctx.fillRect(x+7,y+2,1,1);
+    ctx.fillRect(x+6,y+3,1,2);
+    ctx.fillRect(x+5,y+5,1,1); ctx.fillRect(x+7,y+5,1,1);
+  } else if (mode === 'sfx') {
+    ctx.fillRect(x+5,y+2,1,4);
+  } else {
+    ctx.fillRect(x+5,y+2,1,4); ctx.fillRect(x+7,y+1,1,6);
+  }
+}
+
+function _drawLockIcon(x, y, color) {
+  ctx.fillStyle = color;
+  ctx.fillRect(x+1,y,  3,1);
+  ctx.fillRect(x,  y+1,1,2); ctx.fillRect(x+4,y+1,1,2);
+  ctx.fillRect(x,  y+3,5,3);
+  ctx.fillStyle = '#000'; ctx.fillRect(x+2,y+4,1,2);
+}
+
+function drawTitleScreen() {
+  var VT = CONFIG.vis.titleScreen;
+  // Background: school scene + dark overlay
+  drawBg();
+  ctx.fillStyle = 'rgba(0,0,0,0.65)'; ctx.fillRect(0, 0, W, H);
+
+  // Logo
+  var logoW = VT.logo.w, logoY = VT.logo.y;
+  var logoX = Math.round((W - logoW) / 2);
+  var logoH = 0;
+  if (_logoImage && _logoImage.complete && _logoImage.naturalWidth > 0) {
+    logoH = Math.round(_logoImage.naturalHeight / _logoImage.naturalWidth * logoW);
+    ctx.save();
+    ctx.setTransform(1,0,0,1,0,0);
+    ctx.drawImage(_logoImage, logoX*2, logoY*2, logoW*2, logoH*2);
+    ctx.restore();
+  }
+
+  ctx.save();
+  ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+
+  // Tap to start (blinking, nascosta mentre parte il gioco)
+  var tapY = logoY + logoH + VT.tapText.gapY;
+  if (!_titleStarting && Math.floor(frame / 20) % 2 === 0) {
+    ctx.font = VT.tapText.fontSize + 'px "Press Start 2P"';
+    ctx.fillStyle = C.gold;
+    ctx.fillText(STRINGS.tapToStart, W / 2, tapY);
+  }
+
+  // Controls row
+  var ctrlY = tapY + VT.tapText.fontSize + VT.controls.gapY;
+  _titleCtrlY = ctrlY; // esposto per click detection in game.js
+  var ct = VT.controls;
+  ctx.font = '4px "Press Start 2P"';
+
+  if (LEVELS.length > 1) {
+    // Prev ‹
+    var prevDisabled = currentLevel <= 1;
+    ctx.fillStyle = prevDisabled ? C.dgray : C.white;
+    ctx.fillText('‹', ct.prevX + ct.prevW/2, ctrlY + 2);
+    // Level label
+    ctx.fillStyle = C.gold;
+    ctx.fillText(STRINGS.levelLabel + ' ' + currentLevel, ct.labelX, ctrlY + 2);
+    // Next › or lock
+    var atCeiling = currentLevel >= _btrMax;
+    var moreExist = _btrMax < LEVELS.length;
+    if (atCeiling && moreExist) {
+      _drawLockIcon(ct.nextX + 2, ctrlY + 1, C.yellow);
+    } else {
+      ctx.fillStyle = (atCeiling && !moreExist) ? C.dgray : C.white;
+      ctx.fillText('›', ct.nextX + ct.nextW/2, ctrlY + 2);
+    }
+  }
+
+  // Audio toggle
+  var audioMode = GameAudio.getMode();
+  var audioColor = audioMode === 'full' ? C.lgreen : audioMode === 'sfx' ? C.yellow : C.mgray;
+  _drawAudioIcon(ct.audioX, ctrlY, audioMode, audioColor);
+
+  // Keyboard legend (solo desktop con mouse)
+  if (window.matchMedia('(pointer:fine)').matches) {
+    var legY = ctrlY + ct.btnH + VT.legend.gapY;
+    ctx.font = VT.legend.fontSize + 'px "Press Start 2P"';
+    ctx.fillStyle = C.lgray;
+    ctx.fillText(
+      '↑↓←→ ' + (STRINGS.keyMove||'Move') +
+      ' \xB7 Z ' + (STRINGS.keyAction||'Action') +
+      ' \xB7 P ' + (STRINGS.keyPause||'Pause') +
+      ' \xB7 ESC ' + (STRINGS.keyHome||'Home'),
+      W/2, legY
+    );
+  }
+
+  ctx.restore();
+}
+
 function drawBg() {
   // Hand-drawn background: 640×400px, drawn at 1:1 canvas pixels (bypasses ctx.scale)
   ctx.setTransform(1, 0, 0, 1, 0, 0);

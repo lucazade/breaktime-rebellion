@@ -140,7 +140,6 @@ function startGame() {
   var _sf = document.getElementById('screen-fade');
   _sf.style.pointerEvents = 'auto';           // blocca click durante transizione
   fadeScreen(0, 1, 750, function() {          // home → black (750ms)
-    document.getElementById('overlay').style.display = 'none';
     state = 'playing';
     GameAudio.playMusic();
     fadeScreen(1, 0, 600, function() {        // black → game (600ms)

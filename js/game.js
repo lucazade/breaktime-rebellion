@@ -33,6 +33,58 @@ ctx.imageSmoothingEnabled = false;
   img.src = CONFIG.images.background;
 })();
 
+// Load logo for title screen canvas drawing
+(function() {
+  if (!CONFIG.images.logo) return;
+  var img = new Image();
+  img.onload = function() { _logoImage = img; };
+  img.src = CONFIG.images.logo;
+})();
+
+// ── Title screen state ────────────────────────────────────────────────────────
+var _titleStarting = false;
+var _btrMax = 1;
+
+function _initTitleState() {
+  var debug = CONFIG.debug.showLevelChooser;
+  _btrMax = debug ? LEVELS.length
+    : Math.min(LEVELS.length, Math.max(1, parseInt(localStorage.getItem('btr_max_level') || '1')));
+  currentLevel = Math.max(1, Math.min(_btrMax, parseInt(localStorage.getItem('btr_last_level') || '1')));
+  _titleStarting = false;
+}
+_initTitleState();
+
+window.addEventListener('_titleReset', function() { _titleStarting = false; _initTitleState(); });
+
+function _tryStart() {
+  if (_titleStarting || state !== 'title') return;
+  if (window.innerWidth <= window.innerHeight) return; // portrait
+  _titleStarting = true;
+  startGame();
+}
+
+function _titleCycleAudio() {
+  var modes = ['full', 'sfx', 'mute'];
+  var next = modes[(modes.indexOf(GameAudio.getMode()) + 1) % modes.length];
+  GameAudio.setMode(next);
+  if (next === 'full') GameAudio.playIntro();
+}
+
+var _titleCtrlY = 0; // aggiornato da drawTitleScreen ogni frame
+
+function _titleCanvasClick(lx, ly) {
+  if (state !== 'title') return;
+  var ct = CONFIG.vis.titleScreen.controls;
+  if (ly >= _titleCtrlY - 2 && ly <= _titleCtrlY + ct.btnH + 2) {
+    // Siamo nella riga controlli
+    if (lx >= ct.audioX && lx <= ct.audioX + ct.audioW + 4) { _titleCycleAudio(); return; }
+    if (lx >= ct.prevX && lx <= ct.prevX + ct.prevW && currentLevel > 1 && LEVELS.length > 1) { currentLevel--; return; }
+    if (lx >= ct.nextX && lx <= ct.nextX + ct.nextW && currentLevel < _btrMax && LEVELS.length > 1) { currentLevel++; return; }
+    return; // nella riga ma non su un pulsante → non partire
+  }
+  _tryStart();
+}
+
 var _lastLoopTime = 0;
 var _accumulator  = 0;
 var _STEP         = 1000 / 60; // fixed physics tick at 60Hz
@@ -83,6 +135,14 @@ function loop(ts) {
       }
     }
     _accumulator -= _STEP;
+  }
+
+  // Title screen: disegna canvas dedicato e salta il rendering di gioco
+  if (state === 'title') {
+    drawTitleScreen();
+    drawDebugOverlay();
+    requestAnimationFrame(loop);
+    return;
   }
 
   drawBg();
@@ -256,11 +316,9 @@ function goHome() {
   GameAudio.fadeOutMusic(750);
   fadeScreen(0, 1, 750, function() {
     lives = 3; score = 0;
-    currentLevel = Math.max(1, parseInt(localStorage.getItem('btr_last_level') || '1'));
     resetLevel();
     state = 'title';
-    document.getElementById('overlay').style.display = 'flex';
-    window.dispatchEvent(new Event('_titleReset'));
+    window.dispatchEvent(new Event('_titleReset')); // resetta _titleStarting e _btrMax
     fadeScreen(1, 0, 600, function() { GameAudio.playIntro(); });
   });
 }
@@ -332,6 +390,7 @@ CV.addEventListener('click', function(e) {
   var rect = CV.getBoundingClientRect();
   var lx = (e.clientX - rect.left) * 320 / rect.width;
   var ly = (e.clientY - rect.top)  * 200 / rect.height;
+  if (state === 'title')                 { _titleCanvasClick(lx, ly); return; }
   if (_creditsActive)                    { _creditsCanvasClick(lx, ly); return; }
   if (_homeConfirmActive)                { _homeConfirmCanvasClick(lx, ly); return; }
   if (state === 'paused' && _pauseActive){ _pauseCanvasClick(lx, ly); return; }
@@ -341,6 +400,10 @@ CV.addEventListener('click', function(e) {
 
 // ── Keyboard shortcuts (desktop) — P = pause, ESC = home / close dialog ─────
 document.addEventListener('keydown', function(e) {
+  if (state === 'title') {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); _tryStart(); }
+    return;
+  }
   if (_homeConfirmActive) {
     if (e.key === 'Enter' || e.key === 'y' || e.key === 'Y') { e.preventDefault(); goHome(); }
     if (e.key === 'Escape' || e.key === 'n' || e.key === 'N') { e.preventDefault(); cancelHome(); }
