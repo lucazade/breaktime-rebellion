@@ -934,28 +934,26 @@ function drawEndScreen() {
   const actionVisible = Math.floor(frame / 20) % 2 === 0;
 
   if (!isWin) {
-    // Gameover: show current run + SI/NO choice buttons
-    const by = 44, bw = 260, bh = 128;
-    drawOverlayPanel(bx, by, bw, bh, 'rgba(60,0,0,0.88)', C.gold, [
-      { text: STRINGS.gameoverTitle,              font: '8px "Press Start 2P"', color: C.redprof, height: 10, spacing: 10 },
-      { text: fmt(STRINGS.levelReached, currentLevel), font: '8px "Press Start 2P"', color: C.white, height: 8, spacing: 4 },
-      { text: scoreText,                          font: '8px "Press Start 2P"', color: C.white,   height: 8, spacing: 12 },
-      { text: STRINGS.gameoverConfirm,            font: '8px "Press Start 2P"', color: C.gold,    height: 8, spacing: 0 },
-    ]);
-    // SI / NO buttons
-    const btnY = by + bh - 28, btnH = 14;
-    const siX = bx + 30, siW = 70;
-    const noX = bx + 160, noW = 70;
-    ctx.save();
+    // Gameover — drawn manually for precise vertical spacing (no centering)
+    const panY = 44, panW = 260, panH = 120;
+    ctx.fillStyle = 'rgba(60,0,0,0.88)'; ctx.fillRect(bx, panY, panW, panH);
+    ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(bx+1, panY+1, panW-2, panH-2);
     ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+    const cx = bx + panW / 2;
+    let ty = panY + 12;
     ctx.font = '8px "Press Start 2P"';
-    ctx.fillStyle = 'rgba(0,90,0,0.92)'; ctx.fillRect(siX, btnY, siW, btnH);
-    ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(siX+1, btnY+1, siW-2, btnH-2);
-    ctx.fillStyle = C.white; ctx.fillText(STRINGS.btnYes, siX + siW/2, btnY + 3);
-    ctx.fillStyle = 'rgba(90,0,0,0.92)'; ctx.fillRect(noX, btnY, noW, btnH);
-    ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(noX+1, btnY+1, noW-2, btnH-2);
-    ctx.fillStyle = C.white; ctx.fillText(STRINGS.btnNo, noX + noW/2, btnY + 3);
-    ctx.restore();
+    ctx.fillStyle = C.redprof; ctx.fillText(STRINGS.gameoverTitle,                  cx, ty); ty += 18;
+    ctx.fillStyle = C.white;   ctx.fillText(fmt(STRINGS.levelReached, currentLevel), cx, ty); ty += 12;
+    ctx.fillStyle = C.white;   ctx.fillText(scoreText,                               cx, ty); ty += 22;
+    ctx.fillStyle = C.gold;    ctx.fillText(STRINGS.gameoverConfirm,                 cx, ty); ty += 16;
+    // SI / NO buttons
+    const btnH = 14, siX = bx + 30, siW = 70, noX = bx + 160, noW = 70;
+    ctx.fillStyle = 'rgba(0,90,0,0.92)'; ctx.fillRect(siX, ty, siW, btnH);
+    ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(siX+1, ty+1, siW-2, btnH-2);
+    ctx.fillStyle = C.white; ctx.fillText(STRINGS.btnYes, siX + siW/2, ty + 3);
+    ctx.fillStyle = 'rgba(90,0,0,0.92)'; ctx.fillRect(noX, ty, noW, btnH);
+    ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(noX+1, ty+1, noW-2, btnH-2);
+    ctx.fillStyle = C.white; ctx.fillText(STRINGS.btnNo, noX + noW/2, ty + 3);
   } else if (currentLevel === LEVELS.length) {
     // L10 final: special ending screen with best scores (#68: winTitle as heading, no subtitle)
     const bestScore = parseInt(localStorage.getItem('btr_best_score') || '0');
