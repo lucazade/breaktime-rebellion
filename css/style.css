@@ -261,10 +261,10 @@ canvas {
       linear-gradient(160deg, #060010 0%, #0e0026 45%, #100030 60%, #060010 100%);
   }
 
-  /* Game canvas: 150% zoom (400→600px) with neon screen bezel */
+  /* Game canvas: zoom controllato da CONFIG.layout.desktopZoom in layout.js (default 1.5 → 400→600px) */
   #game-area {
     position: relative; /* anchors ::before/::after absolutely — keeps canvas flex-centered */
-    height: min(600px, 80dvh, calc(78vw / 1.6));
+    height: min(calc(400px * var(--btr-zoom, 1.5)), 80dvh, calc(78vw / 1.6));
     width: auto;
     aspect-ratio: 16/10;
     margin: 0 40px;

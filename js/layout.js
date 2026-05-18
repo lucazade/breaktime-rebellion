@@ -26,6 +26,7 @@ CONFIG.layout = {
   BW: 22, BH: 14,
   walkOffset: 6,
   wallLeft: 10, wallRight: 10, // #78 — margini muro sx/dx (pixel logici)
+  desktopZoom: 1.0,            // zoom canvas su desktop (pointer:fine) — 1.5 = 400→600px
 };
 
 // Layout shortcut constants — used throughout all modules
@@ -198,19 +199,19 @@ CONFIG.vis = {
 
   // Title screen — logo + tap to start + level chooser + audio toggle + keyboard legend
   titleScreen: {
-    logo:     { w: 220, y: 10 },       // larghezza logo e y top (height dall'aspect ratio)
-    tapText:  { fontSize: 8, gapY: 8 },// font e gap sotto il logo
+    logo:     { w: 300, y: 2, borderW: 1, borderR: 5 }, // larghezza logo e y top; borderW=spessore bordino, borderR=raggio angoli clip
+    tapText:  { fontSize: 4, gapY: 4 },// font e gap sotto il logo
     controls: {
       fontSize: 4,       // ⚠ solo 4px e 8px sono crispini
-      gapY:    8,        // gap dopo tapText prima della riga controlli
-      btnH:    12,       // altezza clickable dei pulsanti
-      prevX:   20, prevW: 14,    // pulsante ‹ livello
-      nextX:   90, nextW: 14,    // pulsante › o lock
+      gapY:    6,        // gap dopo tapText prima della riga controlli
+      btnH:    10,       // altezza clickable dei pulsanti
+      prevX:   30, prevW: 14,    // pulsante ‹ livello
+      nextX:   75, nextW: 14,    // pulsante › o lock
       labelX:  60,               // x centro label "LVL N"
-      langX:  155, langW: 20,    // pulsanti EN / IT (solo se showLangChooser)
+      langX:  135, langW: 20,    // pulsanti EN / IT (solo se showLangChooser)
       audioX: 275, audioW: 22,   // pulsante audio toggle
     },
-    legend: { fontSize: 4, gapY: 8 },  // keyboard legend (solo desktop) — ⚠ solo 4px o 8px
+    legend: { fontSize: 4, gapY: 4 },  // keyboard legend (solo desktop) — ⚠ solo 4px o 8px
   },
 
   // Fumetto di Luca (L10 fine livello) — bh calcolato: headerH + lineCount*lineH + gapTap + tapH + padBottom
@@ -242,3 +243,6 @@ CONFIG.vis = {
 
 // Alias per retrocompatibilità con levels.js
 var SHARED_LAYOUT = CONFIG.vis.shared;
+
+// Applica zoom desktop come CSS custom property (letto da style.css)
+document.documentElement.style.setProperty('--btr-zoom', CONFIG.layout.desktopZoom);

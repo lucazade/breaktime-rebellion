@@ -41,11 +41,29 @@ function drawTitleScreen() {
   var logoH = 0;
   if (_logoImage && _logoImage.complete && _logoImage.naturalWidth > 0) {
     logoH = Math.round(_logoImage.naturalHeight / _logoImage.naturalWidth * logoW);
+  }
+  // Logo clippato con angoli stondati + bordino sopra
+  if (logoH > 0) {
+    var r = VT.logo.borderR;
+    // Clip mask roundRect → logo con angoli stondati
     ctx.save();
+    ctx.beginPath();
+    ctx.roundRect(logoX, logoY, logoW, logoH, r);
+    ctx.clip();
     ctx.setTransform(1,0,0,1,0,0);
     ctx.imageSmoothingEnabled = false;
     ctx.drawImage(_logoImage, logoX*2, logoY*2, logoW*2, logoH*2);
-    ctx.restore();
+    ctx.restore(); // rimuove clip e ripristina transform
+    // Bordino nero stondato sopra il logo
+    if (VT.logo.borderW > 0) {
+      ctx.save();
+      ctx.strokeStyle = '#000';
+      ctx.lineWidth = VT.logo.borderW;
+      ctx.beginPath();
+      ctx.roundRect(logoX, logoY, logoW, logoH, r);
+      ctx.stroke();
+      ctx.restore();
+    }
   }
 
   ctx.save();
