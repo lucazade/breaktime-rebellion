@@ -87,6 +87,8 @@ function updatePlayer() {
           setMsg(fmt(STRINGS.ballProgress, gymBall.deflateCount, 3));
         }
       }
+    } else {
+      gymBall.shakeT = 0; // #109: reset if released or out of range
     }
   }
   if (!player.shaking && levelMechanics.dropBook && bookcase && !bookcase.dropped && K.action && !player.onStair) {
@@ -112,8 +114,6 @@ function updatePlayer() {
           setMsg(fmt(STRINGS.bookProgress, bookcase.dropCount, 3));
         }
       }
-    } else {
-      gymBall.shakeT = 0; // #109: reset if released or out of range
     }
   }
   if (!player.shaking && levelMechanics.stealRegister && register && !register.stolen && K.action && !player.onStair) {
