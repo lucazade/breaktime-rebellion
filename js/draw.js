@@ -832,8 +832,8 @@ function drawLucaEnd() {
   const ly = Math.round(GY - PH - walkOffset);
   drawChar(lx, ly, 1, 0, C.white, false, false, false, 0);
 
-  // Speech bubble — bh dinamico: Luca:(14) + righe(10 cad) + gap(4) + tapForTitle(8) + margine(6)
-  const bw = 190;
+  // Speech bubble — bh calcolato da CONFIG.vis.lucaFumetto
+  const VF = CONFIG.vis.lucaFumetto;
   ctx.font = '4px "Press Start 2P"';
   const raw = STRINGS.lucaAppears.replace(/^[^"]*"?/, '').replace(/".*$/, '');
   const parts = raw.split('|');
@@ -843,30 +843,30 @@ function drawLucaEnd() {
     let cur = '';
     for (let i = 0; i < words.length; i++) {
       const test = cur + (cur ? ' ' : '') + words[i];
-      if (ctx.measureText(test).width > bw - 8) { if (cur) lines.push(cur); cur = words[i]; }
+      if (ctx.measureText(test).width > VF.bw - 8) { if (cur) lines.push(cur); cur = words[i]; }
       else cur = test;
     }
     if (cur) lines.push(cur);
   }
   const lineCount = Math.min(lines.length, 4);
-  const bh = 14 + lineCount * 10 + 4 + 8 + 6;
-  const bx = lx + PW + 2, by2 = ly - 14 - bh; // tail sempre a ly-14
-  ctx.fillStyle = C.gold; ctx.fillRect(bx, by2, bw, bh);
+  const bh = VF.headerH + lineCount * VF.lineH + VF.gapTap + VF.tapH + VF.padBottom;
+  const bx = lx + VF.offsetX, by2 = ly - VF.tailOffY - bh;
+  ctx.fillStyle = C.gold; ctx.fillRect(bx, by2, VF.bw, bh);
   ctx.strokeStyle = '#aa7700'; ctx.lineWidth = 1;
-  ctx.strokeRect(bx, by2, bw, bh);
-  ctx.fillStyle = C.gold; ctx.fillRect(bx, by2 + bh, 3, 5);
-  ctx.strokeStyle = '#aa7700'; ctx.strokeRect(bx, by2 + bh, 3, 5);
+  ctx.strokeRect(bx, by2, VF.bw, bh);
+  ctx.fillStyle = C.gold; ctx.fillRect(bx, by2 + bh, VF.tailW, VF.tailH);
+  ctx.strokeStyle = '#aa7700'; ctx.strokeRect(bx, by2 + bh, VF.tailW, VF.tailH);
   ctx.fillStyle = '#000'; ctx.textAlign = 'left'; ctx.textBaseline = 'top';
   ctx.fillText('Luca:', bx + 4, by2 + 4);
   for (let i = 0; i < lineCount; i++) {
     ctx.fillStyle = i === lineCount - 1 ? C.redprof : '#000';
-    ctx.fillText(lines[i], bx + 4, by2 + 14 + i * 10);
+    ctx.fillText(lines[i], bx + 4, by2 + VF.headerH + i * VF.lineH);
   }
-  const tapY = by2 + 14 + lineCount * 10 + 4;
+  const tapY = by2 + VF.headerH + lineCount * VF.lineH + VF.gapTap;
   const blink = Math.floor(frame / 25) % 2 === 0;
   ctx.fillStyle = blink ? '#554400' : 'rgba(0,0,0,0)';
   ctx.textAlign = 'center';
-  ctx.fillText(STRINGS.tapForTitle, bx + bw / 2, tapY);
+  ctx.fillText(STRINGS.tapContinue, bx + VF.bw / 2, tapY);
   ctx.textAlign = 'left';
 }
 

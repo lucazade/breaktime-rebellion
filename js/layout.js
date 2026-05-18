@@ -146,6 +146,19 @@ CONFIG.vis = {
     resumeOx:  65, resumeW: 70,  // pulsante RIPRENDI: bx+resumeOx, larghezza resumeW
   },
 
+  // Fumetto di Luca (L10 fine livello) — bh calcolato: headerH + lineCount*lineH + gapTap + tapH + padBottom
+  lucaFumetto: {
+    bw:        190,  // larghezza fumetto
+    offsetX:    10,  // offset orizzontale da Luca (PW+2)
+    tailOffY:   14,  // distanza verticale della coda da ly (by2 = ly - tailOffY - bh)
+    headerH:    14,  // altezza riga "Luca:" in cima
+    lineH:      10,  // altezza di ogni riga di testo
+    gapTap:      4,  // gap tra testo e label tap
+    tapH:        8,  // altezza label tapContinue
+    padBottom:   6,  // margine inferiore
+    tailW: 3, tailH: 5,  // dimensione coda del fumetto
+  },
+
   // Overlay home confirm — panH calcolato: padTop+stepTitle+btnH+padBottom
   homeConfirm: {
     panY: 72, panW: 200,
