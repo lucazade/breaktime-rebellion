@@ -260,7 +260,7 @@ PER LUCA:
 - [ ] #108 sistemare suoni (per Luca)
 
 IMPORTANTI:
-- [ ] #111 il banner gameover deve chiedere se rigiocare altrimenti manda in titlescreen (riusciamo a farlo senza usare il desing del popup pausa ed )
+- [ ] #111 il banner gameover deve chiedere se rigiocare altrimenti manda in titlescreen 
 
 MINORI:
 - [ ] #76 target libreria troppo grande
