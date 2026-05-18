@@ -94,17 +94,40 @@ CONFIG.vis = {
     noOx: 160, noW: 70,  // NO: bx+noOx, larghezza noW
   },
 
-  // Banner livello superato (non-finale)
-  levelComplete: { panY: 64, panW: 260, panH: 72 },
+  // Banner livello superato (non-finale) — disegno manuale top-aligned
+  levelComplete: {
+    panY: 64, panW: 260, panH: 72,
+    padTop:     11,  // spazio dal bordo superiore al primo testo
+    stepTitle:  20,  // avanzamento dopo titolo (h=10 + spacing=10)
+    stepScore:  22,  // avanzamento dopo punteggio (h=8 + spacing=14)
+    // tapContinue h=8 in fondo
+  },
 
-  // Banner fine gioco (L10 vittoria finale)
-  gameWin: { panY: 44, panW: 260, panH: 104 },
+  // Banner fine gioco (L10 vittoria finale) — disegno manuale top-aligned
+  gameWin: {
+    panY: 44, panW: 260, panH: 104,
+    padTop:    23,  // spazio dal bordo superiore al primo testo
+    stepTitle: 22,  // avanzamento dopo titolo win (h=12 + spacing=10)
+    stepScore: 12,  // avanzamento dopo punteggio (h=8 + spacing=4)
+    stepBest:  16,  // avanzamento dopo riga miglior punteggio (h=8 + spacing=8)
+    // tapForTitle h=8 in fondo
+  },
 
-  // Banner storia (L1, prima partita) — pannello grande centrato
-  storyBanner: { panX: 20, panY: 22, panW: 280, panH: 156, wrapWidth: 220 },
+  // Banner storia (L1, prima partita) — contenuto dinamico, drawOverlayPanel centrato
+  storyBanner: {
+    panX: 20, panY: 22, panW: 280, panH: 156, wrapWidth: 220,
+    titleH: 10, titleSpacing: 10,  // altezza e spacing dopo il titolo
+    lineH:   8, lineSpacing:   4,  // altezza e spacing tra righe di testo
+    spacerH: 10,                   // spazio vuoto prima di tapContinue
+    tapH:     8,                   // altezza tapContinue
+  },
 
-  // Banner missione (inizio di ogni livello)
-  missionBanner: { panY: 64, panW: 260, panH: 72, wrapWidth: 200 },
+  // Banner missione (inizio di ogni livello) — contenuto dinamico, drawOverlayPanel centrato
+  missionBanner: {
+    panY: 64, panW: 260, panH: 72, wrapWidth: 200,
+    titleH: 10, titleSpacing: 8,  // altezza e spacing dopo il titolo missione
+    lineH:   8, lineSpacing:  4,  // altezza e spacing tra righe di testo
+  },
 };
 
 // Alias per retrocompatibilità con levels.js

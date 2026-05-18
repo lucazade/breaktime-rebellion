@@ -955,25 +955,32 @@ function drawEndScreen() {
     ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(noX+1, ty+1, VG.noW-2, VG.btnH-2);
     ctx.fillStyle = C.white; ctx.fillText(STRINGS.btnNo, noX + VG.noW/2, ty + 3);
   } else if (currentLevel === LEVELS.length) {
-    // L10 final: special ending screen with best scores (#68: winTitle as heading, no subtitle)
+    // L10 final win — disegno manuale top-aligned
     const bestScore = parseInt(localStorage.getItem('btr_best_score') || '0');
     const bestLevel = parseInt(localStorage.getItem('btr_best_level') || '1');
-    const { panY: by, panW: bw, panH: bh } = CONFIG.vis.gameWin;
-    const tapAction = actionVisible ? STRINGS.tapForTitle : 'rgba(255,255,255,0)';
-    drawOverlayPanel(bx, by, bw, bh, 'rgba(0,0,40,0.92)', C.gold, [
-      { text: STRINGS.winTitle,  font: '8px "Press Start 2P"', color: C.gold,   height: 12, spacing: 10 },
-      { text: scoreText,         font: '8px "Press Start 2P"', color: C.white,  height: 8,  spacing: 4 },
-      { text: STRINGS.bestLabel + ' LVL ' + bestLevel + ' — ' + String(bestScore).padStart(5,'0'), font: '8px "Press Start 2P"', color: C.yellow, height: 8, spacing: 8 },
-      { text: tapAction,         font: '8px "Press Start 2P"', color: actionVisible ? C.gold : 'rgba(0,0,0,0)', height: 8, spacing: 0 },
-    ]);
+    const VW = CONFIG.vis.gameWin;
+    ctx.fillStyle = 'rgba(0,0,40,0.92)'; ctx.fillRect(bx, VW.panY, VW.panW, VW.panH);
+    ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(bx+1, VW.panY+1, VW.panW-2, VW.panH-2);
+    ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+    const cxW = bx + VW.panW / 2;
+    let tyW = VW.panY + VW.padTop;
+    ctx.font = '8px "Press Start 2P"';
+    ctx.fillStyle = C.gold;   ctx.fillText(STRINGS.winTitle, cxW, tyW); tyW += VW.stepTitle;
+    ctx.fillStyle = C.white;  ctx.fillText(scoreText, cxW, tyW); tyW += VW.stepScore;
+    ctx.fillStyle = C.yellow; ctx.fillText(STRINGS.bestLabel + ' LVL ' + bestLevel + ' — ' + String(bestScore).padStart(5,'0'), cxW, tyW); tyW += VW.stepBest;
+    ctx.fillStyle = actionVisible ? C.gold : 'rgba(0,0,0,0)'; ctx.fillText(STRINGS.tapForTitle, cxW, tyW);
   } else {
-    // Non-final win (#65: levelComplete title, tapContinue action)
-    const { panY: by, panW: bw, panH: bh } = CONFIG.vis.levelComplete;
-    drawOverlayPanel(bx, by, bw, bh, 'rgba(0,0,60,0.88)', C.gold, [
-      { text: STRINGS.levelComplete, font: '8px "Press Start 2P"', color: C.gold,  height: 10, spacing: 10 },
-      { text: scoreText,             font: '8px "Press Start 2P"', color: C.white, height: 8, spacing: 14 },
-      { text: actionVisible ? STRINGS.tapContinue : 'rgba(255,255,255,0)', font: '8px "Press Start 2P"', color: actionVisible ? C.green : 'rgba(255,255,255,0)', height: 8, spacing: 0 },
-    ]);
+    // Non-final win — disegno manuale top-aligned
+    const VL = CONFIG.vis.levelComplete;
+    ctx.fillStyle = 'rgba(0,0,60,0.88)'; ctx.fillRect(bx, VL.panY, VL.panW, VL.panH);
+    ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(bx+1, VL.panY+1, VL.panW-2, VL.panH-2);
+    ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+    const cxL = bx + VL.panW / 2;
+    let tyL = VL.panY + VL.padTop;
+    ctx.font = '8px "Press Start 2P"';
+    ctx.fillStyle = C.gold;  ctx.fillText(STRINGS.levelComplete, cxL, tyL); tyL += VL.stepTitle;
+    ctx.fillStyle = C.white; ctx.fillText(scoreText, cxL, tyL); tyL += VL.stepScore;
+    ctx.fillStyle = actionVisible ? C.green : 'rgba(0,0,0,0)'; ctx.fillText(STRINGS.tapContinue, cxL, tyL);
   }
   ctx.restore();
 }
@@ -1001,15 +1008,15 @@ function drawStoryBanner() {
   ctx.globalAlpha = storyPanelAlpha;
   const VS = CONFIG.vis.storyBanner;
   const bx = VS.panX, by = VS.panY, bw = VS.panW, bh = VS.panH;
+  const blink = Math.floor(frame / 25) % 2 === 0;
   const lineObjs = [
-    { text: STRINGS.storyTitle, font: '8px "Press Start 2P"', color: C.gold, height: 10, spacing: 10 },
+    { text: STRINGS.storyTitle, font: '8px "Press Start 2P"', color: C.gold, height: VS.titleH, spacing: VS.titleSpacing },
   ];
   for (let i = 0; i < storyBannerLines.length; i++) {
-    lineObjs.push({ text: storyBannerLines[i], font: '8px "Press Start 2P"', color: C.white, height: 8, spacing: 4 });
+    lineObjs.push({ text: storyBannerLines[i], font: '8px "Press Start 2P"', color: C.white, height: VS.lineH, spacing: VS.lineSpacing });
   }
-  const blink = Math.floor(frame / 25) % 2 === 0;
-  lineObjs.push({ text: '', font: '8px "Press Start 2P"', color: 'transparent', height: 10, spacing: 0 });
-  lineObjs.push({ text: STRINGS.tapContinue, font: '8px "Press Start 2P"', color: blink ? C.gold : 'rgba(0,0,0,0)', height: 8, spacing: 0 });
+  lineObjs.push({ text: '', font: '8px "Press Start 2P"', color: 'transparent', height: VS.spacerH, spacing: 0 });
+  lineObjs.push({ text: STRINGS.tapContinue, font: '8px "Press Start 2P"', color: blink ? C.gold : 'rgba(0,0,0,0)', height: VS.tapH, spacing: 0 });
   drawOverlayPanel(bx, by, bw, bh, 'rgba(0,0,40,0.92)', C.gold, lineObjs);
   ctx.restore();
 }
@@ -1034,22 +1041,10 @@ function drawMissionBanner() {
   const bx = Math.round(W / 2 - VM.panW / 2);
   const by = VM.panY, bw = VM.panW, bh = VM.panH;
   const lines = [
-    {
-      text: fmt(STRINGS.missionLabel, currentLevel),
-      font: '8px "Press Start 2P"',
-      color: C.gold,
-      height: 10,
-      spacing: 8,
-    },
+    { text: fmt(STRINGS.missionLabel, currentLevel), font: '8px "Press Start 2P"', color: C.gold,  height: VM.titleH, spacing: VM.titleSpacing },
   ];
   for (let i = 0; i < missionBannerLines.length; i++) {
-    lines.push({
-      text: missionBannerLines[i],
-      font: '8px "Press Start 2P"',
-      color: C.white,
-      height: 8,
-      spacing: i < missionBannerLines.length - 1 ? 4 : 0,
-    });
+    lines.push({ text: missionBannerLines[i], font: '8px "Press Start 2P"', color: C.white, height: VM.lineH, spacing: i < missionBannerLines.length - 1 ? VM.lineSpacing : 0 });
   }
   ctx.save();
   ctx.globalAlpha = alpha;
