@@ -83,7 +83,7 @@ CONFIG.vis = {
 
   // Banner gameover — panH calcolato: padTop+stepTitle+stepLevel+stepScore+stepConfirm+btnH+padBottom
   gameover: {
-    panY: 44, panW: 260,
+    panW: 260,  // panY e bx centrati automaticamente
     fontSize:    8,   // px font corpo
     padTop:      12,  // spazio dal bordo superiore al primo testo
     stepTitle:   18,  // avanzamento dopo "ESPULSO!"
@@ -98,7 +98,7 @@ CONFIG.vis = {
 
   // Banner livello superato — panH calcolato: padTop+stepTitle+stepScore+tapH+padBottom
   levelComplete: {
-    panY: 64, panW: 260,
+    panW: 260,
     fontSize:   8,   // px font corpo
     padTop:    11,  // spazio dal bordo superiore al primo testo
     stepTitle: 20,  // avanzamento dopo titolo (h=10 + spacing=10)
@@ -109,7 +109,7 @@ CONFIG.vis = {
 
   // Banner fine gioco (L10) — panH calcolato: padTop+stepTitle+stepScore+stepBest+tapH+padBottom
   gameWin: {
-    panY: 44, panW: 260,
+    panW: 260,
     fontSize:   8,   // px font corpo
     padTop:    23,  // spazio dal bordo superiore al primo testo
     stepTitle: 22,  // avanzamento dopo titolo win (h=12 + spacing=10)
@@ -121,7 +121,7 @@ CONFIG.vis = {
 
   // Banner storia (L1) — panH calcolato: padTop+titleH+titleSpacing+lineBlock+spacerH+tapH+padBottom
   storyBanner: {
-    panX: 20, panY: 22, panW: 280, wrapWidth: 220,
+    panW: 280, wrapWidth: 220,
     fontSize:       8,
     padTop:        16,
     titleH:        10, titleSpacing: 10,
@@ -133,7 +133,7 @@ CONFIG.vis = {
 
   // Banner missione — panH calcolato: padTop+titleH+titleSpacing+lineBlock+padBottom
   missionBanner: {
-    panY: 64, panW: 260, wrapWidth: 200,
+    panW: 260, wrapWidth: 200,
     fontSize:       8,
     padTop:        14,
     titleH:        10, titleSpacing: 8,
@@ -143,7 +143,7 @@ CONFIG.vis = {
 
   // Overlay pausa — panH calcolato: padTop+stepTitle+btnH+padBottom
   pauseOverlay: {
-    panY: 72, panW: 200,
+    panW: 200,
     padTop:    14,  // spazio dal bordo superiore al titolo
     stepTitle: 22,  // avanzamento dopo "— PAUSA —" (h=10 + spacing=12)
     btnH:      14,  // altezza pulsante RIPRENDI
@@ -182,7 +182,7 @@ CONFIG.vis = {
 
   // Credits — panH calcolato: padTop+stepTitle+stepTeam+5*(nameH+nameGap+roleH+roleGap)+btnGapAbove+btnH+padBottom
   credits: {
-    panY: 18, panW: 240,
+    panW: 240,
     padTop:       8,
     stepTitle:   14,  // dopo "— CREDITS —" (h=6 + spacing=8)
     stepTeam:    12,  // dopo nome team (h=4 + spacing=8)
@@ -208,7 +208,7 @@ CONFIG.vis = {
 
   // Overlay home confirm — panH calcolato: padTop+stepTitle+btnH+padBottom
   homeConfirm: {
-    panY: 72, panW: 200,
+    panW: 200,
     padTop:    14,  // spazio dal bordo superiore alla domanda
     stepTitle: 20,  // avanzamento dopo "TORNARE ALLA HOME?" (h=8 + spacing=12)
     btnH:      14,  // altezza pulsanti SI/NO

@@ -189,8 +189,9 @@ function handleTap() {
 function _gameoverChoice(lx, ly) {
   if (state !== 'gameover' || endScreenFadingOut || endScreenT < 20) return;
   var VG = CONFIG.vis.gameover;
-  var bx = Math.round(W / 2 - VG.panW / 2);
-  var btnY = VG.panY + VG.padTop + VG.stepTitle + VG.stepLevel + VG.stepScore + VG.stepConfirm;  // mirrors draw.js
+  var _gH = VG.padTop + VG.stepTitle + VG.stepLevel + VG.stepScore + VG.stepConfirm + VG.btnH + VG.padBottom;
+  var _gp = _panPos(VG.panW, _gH); var bx = _gp.bx;
+  var btnY = _gp.by + VG.padTop + VG.stepTitle + VG.stepLevel + VG.stepScore + VG.stepConfirm;
   if (ly < btnY || ly > btnY + VG.btnH) return;
   if (lx >= bx + VG.siOx && lx <= bx + VG.siOx + VG.siW) { endScreenFadingOut = true; endScreenFadeOutCb = restartGame; }
   else if (lx >= bx + VG.noOx && lx <= bx + VG.noOx + VG.noW) { goHome(); }
@@ -297,33 +298,34 @@ if (_btnInfo) {
 }
 
 // ── Canvas click detection per tutti gli overlay canvas ──────────────────────
+function _panPos(panW, panH) { return { bx: Math.round((W - panW) / 2), by: Math.round((H - panH) / 2) }; }
+
 function _creditsCanvasClick(lx, ly) {
   var VC = CONFIG.vis.credits;
   var n = _CREDITS_MEMBERS ? _CREDITS_MEMBERS.length : 5;
-  var panH = VC.padTop + VC.stepTitle + VC.stepTeam
-           + n * (VC.nameH + VC.nameGap + VC.roleH + VC.roleGap)
-           + VC.btnGapAbove + VC.btnH + VC.padBottom;
-  var bx = Math.round(W / 2 - VC.panW / 2);
-  var btnY = VC.panY + panH - VC.padBottom - VC.btnH;
-  var btnX = bx + Math.round((VC.panW - VC.btnW) / 2);
+  var panH = VC.padTop + VC.stepTitle + VC.stepTeam + n*(VC.nameH+VC.nameGap+VC.roleH+VC.roleGap) + VC.btnGapAbove + VC.btnH + VC.padBottom;
+  var p = _panPos(VC.panW, panH);
+  var btnY = p.by + panH - VC.padBottom - VC.btnH;
+  var btnX = p.bx + Math.round((VC.panW - VC.btnW) / 2);
   if (ly >= btnY && ly <= btnY + VC.btnH && lx >= btnX && lx <= btnX + VC.btnW) hideCredits();
 }
+
 function _pauseCanvasClick(lx, ly) {
   var VP = CONFIG.vis.pauseOverlay;
-  var bx = Math.round(W / 2 - VP.panW / 2);
-  var btnY = VP.panY + VP.padTop + VP.stepTitle;
-  if (ly >= btnY && ly <= btnY + VP.btnH && lx >= bx + VP.resumeOx && lx <= bx + VP.resumeOx + VP.resumeW) {
-    setPaused(false);
-  }
+  var pH = VP.padTop + VP.stepTitle + VP.btnH + VP.padBottom;
+  var p = _panPos(VP.panW, pH);
+  var btnY = p.by + VP.padTop + VP.stepTitle;
+  if (ly >= btnY && ly <= btnY + VP.btnH && lx >= p.bx + VP.resumeOx && lx <= p.bx + VP.resumeOx + VP.resumeW) setPaused(false);
 }
 
 function _homeConfirmCanvasClick(lx, ly) {
   var VH = CONFIG.vis.homeConfirm;
-  var bx = Math.round(W / 2 - VH.panW / 2);
-  var btnY = VH.panY + VH.padTop + VH.stepTitle;
+  var hH = VH.padTop + VH.stepTitle + VH.btnH + VH.padBottom;
+  var p = _panPos(VH.panW, hH);
+  var btnY = p.by + VH.padTop + VH.stepTitle;
   if (ly < btnY || ly > btnY + VH.btnH) return;
-  if (lx >= bx + VH.siOx && lx <= bx + VH.siOx + VH.siW) { goHome(); }
-  else if (lx >= bx + VH.noOx && lx <= bx + VH.noOx + VH.noW) { cancelHome(); }
+  if (lx >= p.bx + VH.siOx && lx <= p.bx + VH.siOx + VH.siW) { goHome(); }
+  else if (lx >= p.bx + VH.noOx && lx <= p.bx + VH.noOx + VH.noW) { cancelHome(); }
 }
 
 CV.addEventListener('click', function(e) {
