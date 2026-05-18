@@ -268,6 +268,11 @@ PER LUCA:
 - [ ] #108 sistemare suoni (per Luca)
 
 IMPORTANTI:
+- [ ] #119 quando compare msg in hud nascondiamo cuori e punteggio
+- [ ] #120 msg in hud font size 4px
+- [ ] #121 quando il prof si allerta e strilla ehi! fa uno scatto in avanti che in precedenza non faceva
+- [ ] #122 la label nei pulsanti dei banner deve avere testo 4px
+- [ ] #123 pulsanti controlli in title troppi piccoli (switch a 8px)
 
 MINORI:
 - [ ] #76 target libreria troppo grande
