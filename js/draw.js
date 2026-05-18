@@ -1008,16 +1008,20 @@ function drawStoryBanner() {
   ctx.globalAlpha = storyPanelAlpha;
   const VS = CONFIG.vis.storyBanner;
   const bx = VS.panX, by = VS.panY, bw = VS.panW, bh = VS.panH;
-  const blink = Math.floor(frame / 25) % 2 === 0;
-  const lineObjs = [
-    { text: STRINGS.storyTitle, font: '8px "Press Start 2P"', color: C.gold, height: VS.titleH, spacing: VS.titleSpacing },
-  ];
+  ctx.fillStyle = 'rgba(0,0,40,0.92)'; ctx.fillRect(bx, by, bw, bh);
+  ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(bx+1, by+1, bw-2, bh-2);
+  ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+  ctx.font = '8px "Press Start 2P"';
+  const cxSt = bx + bw / 2;
+  let tySt = by + VS.padTop;
+  ctx.fillStyle = C.gold;  ctx.fillText(STRINGS.storyTitle, cxSt, tySt); tySt += VS.titleH + VS.titleSpacing;
+  ctx.fillStyle = C.white;
   for (let i = 0; i < storyBannerLines.length; i++) {
-    lineObjs.push({ text: storyBannerLines[i], font: '8px "Press Start 2P"', color: C.white, height: VS.lineH, spacing: VS.lineSpacing });
+    ctx.fillText(storyBannerLines[i], cxSt, tySt);
+    tySt += VS.lineH + (i < storyBannerLines.length - 1 ? VS.lineSpacing : VS.spacerH);
   }
-  lineObjs.push({ text: '', font: '8px "Press Start 2P"', color: 'transparent', height: VS.spacerH, spacing: 0 });
-  lineObjs.push({ text: STRINGS.tapContinue, font: '8px "Press Start 2P"', color: blink ? C.gold : 'rgba(0,0,0,0)', height: VS.tapH, spacing: 0 });
-  drawOverlayPanel(bx, by, bw, bh, 'rgba(0,0,40,0.92)', C.gold, lineObjs);
+  const blink = Math.floor(frame / 25) % 2 === 0;
+  ctx.fillStyle = blink ? C.gold : 'rgba(0,0,0,0)'; ctx.fillText(STRINGS.tapContinue, cxSt, tySt);
   ctx.restore();
 }
 
@@ -1040,15 +1044,20 @@ function drawMissionBanner() {
   const VM = CONFIG.vis.missionBanner;
   const bx = Math.round(W / 2 - VM.panW / 2);
   const by = VM.panY, bw = VM.panW, bh = VM.panH;
-  const lines = [
-    { text: fmt(STRINGS.missionLabel, currentLevel), font: '8px "Press Start 2P"', color: C.gold,  height: VM.titleH, spacing: VM.titleSpacing },
-  ];
-  for (let i = 0; i < missionBannerLines.length; i++) {
-    lines.push({ text: missionBannerLines[i], font: '8px "Press Start 2P"', color: C.white, height: VM.lineH, spacing: i < missionBannerLines.length - 1 ? VM.lineSpacing : 0 });
-  }
   ctx.save();
   ctx.globalAlpha = alpha;
-  drawOverlayPanel(bx, by, bw, bh, 'rgba(0,0,40,0.88)', C.gold, lines);
+  ctx.fillStyle = 'rgba(0,0,40,0.88)'; ctx.fillRect(bx, by, bw, bh);
+  ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(bx+1, by+1, bw-2, bh-2);
+  ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+  ctx.font = '8px "Press Start 2P"';
+  const cxM = bx + bw / 2;
+  let tyM = by + VM.padTop;
+  ctx.fillStyle = C.gold;  ctx.fillText(fmt(STRINGS.missionLabel, currentLevel), cxM, tyM); tyM += VM.titleH + VM.titleSpacing;
+  ctx.fillStyle = C.white;
+  for (let i = 0; i < missionBannerLines.length; i++) {
+    ctx.fillText(missionBannerLines[i], cxM, tyM);
+    if (i < missionBannerLines.length - 1) tyM += VM.lineH + VM.lineSpacing;
+  }
   ctx.restore();
 }
 

@@ -3,15 +3,6 @@
 //  Edit here to change the look of the school building.
 // ═══════════════════════════════════════════════════════════
 
-CONFIG.layout = {
-  W: 320, H: 200,
-  PW: 8, PH: 16,
-  GY: 185, MY: 127, TY: 70,
-  BW: 22, BH: 14,
-  walkOffset: 6,
-  wallLeft: 10, wallRight: 10, // #78 — margini muro sx/dx (pixel logici)
-};
-
 CONFIG.colors = {
   black:'#000000', white:'#FFFFFF',
   blue:'#352879', lblue:'#6C5EB5',
@@ -26,6 +17,15 @@ CONFIG.colors = {
   bagbody:'#4A3D8F', bagborder:'#2A1F5E',
   bell:'#DAA520',
   redprof:'#c3200e', greenprof:'#109f06', grayprof:'#171717', whiteprof:'#dcdcdc', cyanprof:'#0757d7',
+};
+
+CONFIG.layout = {
+  W: 320, H: 200,
+  PW: 8, PH: 16,
+  GY: 185, MY: 127, TY: 70,
+  BW: 22, BH: 14,
+  walkOffset: 6,
+  wallLeft: 10, wallRight: 10, // #78 — margini muro sx/dx (pixel logici)
 };
 
 // Layout shortcut constants — used throughout all modules
@@ -113,20 +113,22 @@ CONFIG.vis = {
     // tapForTitle h=8 in fondo
   },
 
-  // Banner storia (L1, prima partita) — contenuto dinamico, drawOverlayPanel centrato
+  // Banner storia (L1, prima partita) — contenuto dinamico, disegno manuale top-aligned
   storyBanner: {
     panX: 20, panY: 22, panW: 280, panH: 156, wrapWidth: 220,
-    titleH: 10, titleSpacing: 10,  // altezza e spacing dopo il titolo
-    lineH:   8, lineSpacing:   4,  // altezza e spacing tra righe di testo
-    spacerH: 10,                   // spazio vuoto prima di tapContinue
-    tapH:     8,                   // altezza tapContinue
+    padTop:        16,  // spazio dal bordo superiore al titolo
+    titleH:        10, titleSpacing: 10,  // altezza e spacing dopo il titolo
+    lineH:          8, lineSpacing:   4,  // altezza e spacing tra righe di testo
+    spacerH:       10,                    // spazio vuoto prima di tapContinue
+    tapH:           8,                    // altezza tapContinue
   },
 
-  // Banner missione (inizio di ogni livello) — contenuto dinamico, drawOverlayPanel centrato
+  // Banner missione (inizio di ogni livello) — contenuto dinamico, disegno manuale top-aligned
   missionBanner: {
     panY: 64, panW: 260, panH: 72, wrapWidth: 200,
-    titleH: 10, titleSpacing: 8,  // altezza e spacing dopo il titolo missione
-    lineH:   8, lineSpacing:  4,  // altezza e spacing tra righe di testo
+    padTop:        14,  // spazio dal bordo superiore al titolo missione
+    titleH:        10, titleSpacing: 8,  // altezza e spacing dopo il titolo
+    lineH:          8, lineSpacing:  4,  // altezza e spacing tra righe di testo
   },
 };
 
