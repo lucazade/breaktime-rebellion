@@ -254,3 +254,5 @@ Obiettivo: come da titolo
 - [ ] #108 sistemare suoni (per Luca)
 - [ ] #109 La progress di L2 è troppo difficile che si resetta se non riesci a completarla, rimettiamo quella classica e questa che si resetta se non la completi mettiamola al pallone
 - [X] #110 ridisegnare campanella
+- [ ] #111 sistemare click su titlepage (fare screenshot prima)
+- [ ] #112 Marco deve suonare la campanella proprio sotto la campanella

@@ -46,9 +46,22 @@ function loop(ts) {
 
   while (_accumulator >= _STEP) {
     frame++;
+    if ((state === 'win' || state === 'gameover') && endScreenFadingOut) {
+      endScreenT = Math.max(0, endScreenT - 1);
+      if (endScreenT === 0) {
+        endScreenFadingOut = false;
+        var _wcb = endScreenFadeOutCb; endScreenFadeOutCb = null;
+        if (_wcb) _wcb();
+      }
+    }
     if (state === 'playing') {
       if (storyBannerT > 0) {
-        // frozen — dismissed only by tap or Enter key
+        if (storyBannerFading) {
+          storyBannerT--;
+          if (storyBannerT <= 0) { storyBannerFading = false; storyShown = true; missionBannerT = 210; bannerChained = true; }
+        } else {
+          storyFadeInT = Math.min(storyFadeInT + 1, 40);
+        }
       } else if (missionBannerT > 0) {
         missionBannerT--;
       } else if (deathFreeze) {
@@ -130,7 +143,19 @@ function loop(ts) {
   drawFloating();
   drawNightOverlay();
   drawLucaEnd();
-  if (state === 'win' || state === 'gameover') endScreenT++;
+
+  // Overlay scuro centralizzato — gestisce tutti i banner
+  var _shouldDim = storyBannerT > 0 || storyBannerFading || missionBannerT > 0
+                || state === 'win' || state === 'gameover';
+  bannerDimT = _shouldDim ? Math.min(bannerDimT + 1, 20) : Math.max(bannerDimT - 1, 0);
+  if (bannerDimT > 0) {
+    ctx.fillStyle = 'rgba(0,0,0,' + (0.45 * bannerDimT / 20) + ')';
+    ctx.fillRect(0, 0, W, H);
+  }
+
+  if ((state === 'win' || state === 'gameover') && !endScreenFadingOut) {
+    endScreenT = Math.min(endScreenT + 1, 20);
+  }
   drawEndScreen();
   drawStoryBanner();
   drawMissionBanner();
@@ -140,20 +165,22 @@ function loop(ts) {
 }
 
 function handleTap() {
-  if (storyBannerT > 0) { storyBannerT = 0; storyShown = true; missionBannerT = 210; return; }
+  if (storyBannerT > 0 && !storyBannerFading) { storyBannerT = 20; storyBannerFading = true; return; }
   // L10: tap during Luca fumetto → win state (only after 90-frame cooldown)
   if (deathFreeze && levelMechanics.escapeExit && exitDone && exitWinReady) {
     pendingTransition = null; deathFreeze = false; state = 'win'; endScreenT = 0;
     GameAudio.stopMusic(); GameAudio.playJingle('win');
     return;
   }
-  if (missionBannerT > 0) { missionBannerT = 0; return; }
-  if (state === 'win') {
-    if (currentLevel < LEVELS.length) nextLevel();
-    else { goHome(); } // Last level completed → back to title
+  if (missionBannerT > 0) { missionBannerT = Math.min(missionBannerT, 40); return; }
+  if (state === 'win' && !endScreenFadingOut) {
+    if (currentLevel < LEVELS.length) { endScreenFadingOut = true; endScreenFadeOutCb = nextLevel; }
+    else { goHome(); }
     return;
   }
-  if (state === 'gameover') { restartGame(); }
+  if (state === 'gameover' && !endScreenFadingOut) {
+    endScreenFadingOut = true; endScreenFadeOutCb = restartGame;
+  }
 }
 
 CV.addEventListener('click', handleTap);

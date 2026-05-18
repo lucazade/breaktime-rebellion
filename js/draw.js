@@ -923,8 +923,6 @@ function drawOverlayPanel(bx, by, bw, bh, bgColor, borderColor, lines) {
 function drawEndScreen() {
   if (state !== 'win' && state !== 'gameover') return;
   const fadeAlpha = Math.min(1, endScreenT / 20);
-  ctx.fillStyle = 'rgba(0,0,0,' + (0.45 * fadeAlpha) + ')';
-  ctx.fillRect(0, 0, W, H);
   ctx.save();
   ctx.globalAlpha = fadeAlpha;
   const bx = 160 - 130;
@@ -988,8 +986,9 @@ function drawStoryBanner() {
     }
     storyBannerLines = lines;
   }
-  ctx.fillStyle = 'rgba(0,0,0,0.45)';
-  ctx.fillRect(0, 0, W, H);
+  const storyPanelAlpha = storyBannerFading ? Math.max(0, storyBannerT / 20) : Math.min(1, storyFadeInT / 40);
+  ctx.save();
+  ctx.globalAlpha = storyPanelAlpha;
   const bx = 20, by = 22, bw = 280, bh = 156;
   const lineObjs = [
     { text: STRINGS.storyTitle, font: '8px "Press Start 2P"', color: C.gold, height: 10, spacing: 10 },
@@ -1001,6 +1000,7 @@ function drawStoryBanner() {
   lineObjs.push({ text: '', font: '8px "Press Start 2P"', color: 'transparent', height: 10, spacing: 0 });
   lineObjs.push({ text: STRINGS.tapContinue, font: '8px "Press Start 2P"', color: blink ? C.gold : 'rgba(0,0,0,0)', height: 8, spacing: 0 });
   drawOverlayPanel(bx, by, bw, bh, 'rgba(0,0,40,0.92)', C.gold, lineObjs);
+  ctx.restore();
 }
 
 function drawMissionBanner() {
@@ -1018,7 +1018,7 @@ function drawMissionBanner() {
     if (line) lines.push(line);
     missionBannerLines = lines;
   }
-  const alpha = missionBannerT < 40 ? missionBannerT / 40 : 1;
+  const alpha = missionBannerT < 40 ? missionBannerT / 40 : missionBannerT > 170 ? (210 - missionBannerT) / 40 : 1;
   const bx = 160 - 130;
   const by = 64;
   const bw = 260;
@@ -1043,8 +1043,6 @@ function drawMissionBanner() {
   }
   ctx.save();
   ctx.globalAlpha = alpha;
-  ctx.fillStyle = 'rgba(0,0,0,0.45)';
-  ctx.fillRect(0, 0, W, H);
   drawOverlayPanel(bx, by, bw, bh, 'rgba(0,0,40,0.88)', C.gold, lines);
   ctx.restore();
 }

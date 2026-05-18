@@ -33,6 +33,11 @@ let storyShown = false; // session-level — not reset by resetLevel
 let pendingTransition = null;
 let deathFreeze = false;
 let endScreenT = 0;
+let endScreenFadingOut = false;
+let endScreenFadeOutCb = null;
+let storyBannerFading = false;
+let storyFadeInT = 0;
+let bannerDimT = 0;
 let currentLevel = 1;
 let bgImage = null;
 let levelMechanics;
@@ -88,7 +93,9 @@ function resetLevel() {
   lighterTime  = lv.lighterTime  || 80;
   bagStealTime = lv.bagStealTime || 60;
   timerTicks  = maxTimerTicks  = (lv.timer || 0) * 60;
-  storyBannerT     = (currentLevel === 1 && !storyShown) ? 300 : 0; // 5s, L1 only
+  storyBannerFading = false;
+  storyFadeInT  = 0;
+  storyBannerT  = (currentLevel === 1 && !storyShown) ? 300 : 0; // 5s, L1 only
   storyBannerLines = null;
   missionBannerT     = storyBannerT > 0 ? 0 : 210; // defer until after story
   missionBannerLines = null;
