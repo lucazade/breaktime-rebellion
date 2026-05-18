@@ -131,11 +131,15 @@ function startGame() {
   localStorage.setItem('btr_last_level', currentLevel);
   resetLevel();
   GameAudio.fadeOutIntro(750);
+  var _sf = document.getElementById('screen-fade');
+  _sf.style.pointerEvents = 'auto';           // blocca click durante transizione
   fadeScreen(0, 1, 750, function() {          // home → black (750ms)
     document.getElementById('overlay').style.display = 'none';
     state = 'playing';
     GameAudio.playMusic();
-    fadeScreen(1, 0, 600, null);              // black → game (600ms)
+    fadeScreen(1, 0, 600, function() {        // black → game (600ms)
+      _sf.style.pointerEvents = '';           // ripristina dopo che il gioco è visibile
+    });
   });
 }
 

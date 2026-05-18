@@ -11,17 +11,35 @@
   if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
 
   // ── Start game: Enter key o tap sull'immagine logo ───────────────────────────
+  var _starting = false;
+  function _isLandscape() { return window.innerWidth > window.innerHeight; }
+  function _tryStart() {
+    if (_starting || state !== 'title' || !_isLandscape()) return;
+    _starting = true;
+    startGame();
+  }
+  // reset quando si torna alla home (overlay ritorna visibile)
+  document.getElementById('overlay').addEventListener('transitionend', function() {
+    _starting = false;
+  });
+  window.addEventListener('_titleReset', function() { _starting = false; });
+
   document.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter' && state === 'title') startGame();
+    if (e.key === 'Enter') _tryStart('key');
   });
   var logoImg = document.getElementById('logo-img');
-  logoImg.addEventListener('click', function() {
-    if (state === 'title') startGame();
-  });
+  logoImg.addEventListener('click', function() { _tryStart(); });
   logoImg.addEventListener('touchend', function(e) {
     e.preventDefault();
-    if (state === 'title') startGame();
+    _tryStart();
   }, {passive: false});
+
+  // ── Portrait-msg blocca propagazione (evita tap accidentali che avviano il gioco) ──
+  var portraitMsg = document.getElementById('portrait-msg');
+  if (portraitMsg) {
+    portraitMsg.addEventListener('click',    function(e) { e.stopPropagation(); });
+    portraitMsg.addEventListener('touchend', function(e) { e.stopPropagation(); e.preventDefault(); }, {passive: false});
+  }
 
   // ── Stop tap propagation (controls must not trigger startGame) ──────────────
   var controls = document.getElementById('title-controls');

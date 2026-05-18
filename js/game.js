@@ -144,9 +144,9 @@ function loop(ts) {
   drawLucaEnd();
 
   // Overlay scuro centralizzato — gestisce tutti i banner
-  var _shouldDim = storyBannerT > 0 || storyBannerFading || missionBannerT > 0
+  var _shouldDim = state !== 'title' && (storyBannerT > 0 || storyBannerFading || missionBannerT > 0
                 || state === 'win' || state === 'gameover'
-                || (deathFreeze && !BELL.ringing);
+                || (deathFreeze && !BELL.ringing));
   bannerDimT = _shouldDim ? Math.min(bannerDimT + 1, 20) : Math.max(bannerDimT - 1, 0);
   if (bannerDimT > 0) {
     ctx.fillStyle = 'rgba(0,0,0,' + (0.45 * bannerDimT / 20) + ')';
@@ -258,6 +258,7 @@ function goHome() {
     resetLevel();
     state = 'title';
     document.getElementById('overlay').style.display = 'flex';
+    window.dispatchEvent(new Event('_titleReset'));
     fadeScreen(1, 0, 600, function() {        // black → home (600ms)
       GameAudio.playIntro();
     });
