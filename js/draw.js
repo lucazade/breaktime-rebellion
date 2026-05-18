@@ -1191,31 +1191,97 @@ function _drawHeart(x, y) {
   ctx.fillRect(x+1,y+4,6,1); ctx.fillRect(x+2,y+5,4,1); ctx.fillRect(x+3,y+6,2,1);
 }
 
+// Pixel-art icons for HUD mechanic indicator — all 7×7, drawn with fillRect
+function _drawHudIcon(type, x, y, color) {
+  ctx.fillStyle = color;
+  switch (type) {
+    case 'boards':   // lavagna: rettangolo bordo con riga gessosa interna
+      ctx.fillRect(x,   y,   7,1); ctx.fillRect(x,   y+5, 7,1); // top/bottom border
+      ctx.fillRect(x,   y+1, 1,4); ctx.fillRect(x+6, y+1, 1,4); // side borders
+      ctx.fillStyle = '#D8E8D0'; ctx.fillRect(x+1, y+2, 5,1);   // chalk line
+      break;
+    case 'bags':     // cartella: corpo + manico
+      ctx.fillRect(x+2, y,   3,1);                               // handle
+      ctx.fillRect(x,   y+1, 7,1); ctx.fillRect(x,   y+6, 7,1); // top/bottom
+      ctx.fillRect(x,   y+2, 1,4); ctx.fillRect(x+6, y+2, 1,4); // sides
+      ctx.fillStyle = '#2A1F5E'; ctx.fillRect(x+2, y+3, 3,1);   // clasp
+      break;
+    case 'machines': // distributore: rettangolo con schermo e tasto
+      ctx.fillRect(x,   y,   6,7);
+      ctx.fillStyle = '#000'; ctx.fillRect(x+1, y+1, 4,2);      // screen
+      ctx.fillStyle = '#FFD700'; ctx.fillRect(x+2, y+5, 2,1);   // button
+      break;
+    case 'ball':     // pallone: cerchio con cuciture
+      ctx.fillRect(x+1, y,   5,1); ctx.fillRect(x+1, y+6, 5,1);
+      ctx.fillRect(x,   y+1, 7,5);
+      ctx.fillStyle = '#000'; ctx.fillRect(x+3, y+1, 1,5);      // vertical seam
+      ctx.fillRect(x+1, y+3, 5,1);                              // horizontal seam
+      break;
+    case 'students': // alunno: testa + corpo + gambe
+      ctx.fillRect(x+2, y,   3,3);                              // head
+      ctx.fillRect(x+1, y+3, 5,2);                              // body
+      ctx.fillRect(x+1, y+5, 2,2); ctx.fillRect(x+4, y+5, 2,2);// legs
+      break;
+    case 'books':    // libro: rettangolo con costa e righe
+      ctx.fillRect(x,   y,   7,7);
+      ctx.fillStyle = '#000'; ctx.fillRect(x+1, y,   1,7);      // spine
+      ctx.fillStyle = '#fff'; ctx.fillRect(x+2, y+2, 4,1);      // page lines
+                              ctx.fillRect(x+2, y+4, 4,1);
+      break;
+    case 'sink':     // lavandino: gocce + vasca
+      ctx.fillRect(x+1, y,   1,2); ctx.fillRect(x+5, y,   1,2);// drops
+      ctx.fillRect(x,   y+3, 7,1); ctx.fillRect(x,   y+6, 7,1);// basin top/bottom
+      ctx.fillRect(x,   y+4, 1,2); ctx.fillRect(x+6, y+4, 1,2);// basin sides
+      break;
+    case 'bins':     // secchio: coperchio + corpo + miccia
+      ctx.fillRect(x+1, y+1, 5,1);                              // lid
+      ctx.fillRect(x,   y+2, 7,5);                              // body
+      ctx.fillStyle = '#FFD700'; ctx.fillRect(x+3, y,   1,2);   // fuse
+      ctx.fillStyle = '#000'; ctx.fillRect(x+2, y+4, 1,2);      // lines
+                              ctx.fillRect(x+4, y+4, 1,2);
+      break;
+    case 'sprinklers': // fiamma: silhouette fuoco
+      ctx.fillRect(x+3, y,   1,1);
+      ctx.fillRect(x+2, y+1, 3,1); ctx.fillRect(x+1, y+2, 5,2);
+      ctx.fillRect(x,   y+4, 7,1); ctx.fillRect(x+1, y+5, 5,1); ctx.fillRect(x+2, y+6, 3,1);
+      break;
+    case 'register': // registro: libro con angolo dorato
+      ctx.fillRect(x,   y,   7,7);
+      ctx.fillStyle = '#000'; ctx.fillRect(x+1, y+1, 5,1);      // lines
+                              ctx.fillRect(x+1, y+3, 5,1);
+                              ctx.fillRect(x+1, y+5, 3,1);
+      ctx.fillStyle = '#FFD700'; ctx.fillRect(x+5, y+5, 2,2);   // gold corner
+      break;
+    default:
+      ctx.fillRect(x, y, 7, 7);
+  }
+}
+
 function _hudObjInfo() {
-  var done = 0, total = 0, dot = CONFIG.vis.hud.dotColors.default || '#44ee66';
+  var done = 0, total = 0, mechanic = 'boards';
   var dc = CONFIG.vis.hud.dotColors;
   if (bags.length > 0) {
-    for (var i=0;i<bags.length;i++) if(bags[i].collected) done++; total=bags.length; dot=dc.bags;
+    for (var i=0;i<bags.length;i++) if(bags[i].collected) done++; total=bags.length; mechanic='bags';
   } else if (levelMechanics.shakeMachines) {
-    for (var i=0;i<machines.length;i++) if(machines[i].broken) done++; total=machines.length; dot=dc.machines;
+    for (var i=0;i<machines.length;i++) if(machines[i].broken) done++; total=machines.length; mechanic='machines';
   } else if (levelMechanics.deflateBall) {
-    done=gymBall?gymBall.deflateCount:0; total=3; dot=dc.ball;
+    done=gymBall?gymBall.deflateCount:0; total=3; mechanic='ball';
   } else if (levelMechanics.throwPaper) {
-    for (var i=0;i<students.length;i++) if(students[i].disturbed) done++; total=students.length; dot=dc.students;
+    for (var i=0;i<students.length;i++) if(students[i].disturbed) done++; total=students.length; mechanic='students';
   } else if (levelMechanics.dropBook) {
-    done=bookcase?bookcase.dropCount:0; total=3; dot=dc.books;
+    done=bookcase?bookcase.dropCount:0; total=3; mechanic='books';
   } else if (levelMechanics.floodSink) {
-    done=sink?sink.pourCount:0; total=3; dot=dc.sink;
+    done=sink?sink.pourCount:0; total=3; mechanic='sink';
   } else if (levelMechanics.plantBomb) {
-    for (var i=0;i<bins.length;i++) if(bins[i].exploded) done++; total=bins.length; dot=dc.bins;
+    for (var i=0;i<bins.length;i++) if(bins[i].exploded) done++; total=bins.length; mechanic='bins';
   } else if (levelMechanics.stealRegister) {
-    done=register&&register.stolen?1:0; total=1; dot=dc.register;
+    done=register&&register.stolen?1:0; total=1; mechanic='register';
   } else if (levelMechanics.activateSprinkler) {
-    for (var i=0;i<sprinklers.length;i++) if(sprinklers[i].active) done++; total=sprinklers.length; dot=dc.sprinklers;
+    for (var i=0;i<sprinklers.length;i++) if(sprinklers[i].active) done++; total=sprinklers.length; mechanic='sprinklers';
   } else {
-    for (var i=0;i<BOARDS.length;i++) if(BOARDS[i].done) done++; total=BOARDS.length; dot=dc.boards;
+    for (var i=0;i<BOARDS.length;i++) if(BOARDS[i].done) done++; total=BOARDS.length; mechanic='boards';
   }
-  return { done:done, total:total, dot:dot };
+  return { done:done, total:total, color:dc[mechanic]||'#44ee66', mechanic:mechanic };
 }
 
 function drawHUD() {
@@ -1242,8 +1308,7 @@ function drawHUD() {
     var _tw  = ctx.measureText(_txt).width;
     var _grpW = VH.dotW + VH.dotGap + _tw;
     var _sx = Math.round(VH.centerX - _grpW / 2);
-    ctx.fillStyle = _oi.dot;
-    ctx.fillRect(_sx, VH.textY + VH.dotOffsetY, VH.dotW, VH.dotW);
+    _drawHudIcon(_oi.mechanic, _sx, VH.textY + VH.dotOffsetY, _oi.color);
     ctx.textAlign = 'left'; ctx.fillStyle = '#44ee66';
     ctx.fillText(_txt, _sx + VH.dotW + VH.dotGap, VH.textY);
   }
