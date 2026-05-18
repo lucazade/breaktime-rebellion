@@ -936,8 +936,9 @@ function drawEndScreen() {
   if (!isWin) {
     // Gameover — drawn manually for precise vertical spacing (no centering)
     const VG = CONFIG.vis.gameover;
-    ctx.fillStyle = 'rgba(60,0,0,0.88)'; ctx.fillRect(bx, VG.panY, VG.panW, VG.panH);
-    ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(bx+1, VG.panY+1, VG.panW-2, VG.panH-2);
+    const _gH = VG.padTop + VG.stepTitle + VG.stepLevel + VG.stepScore + VG.stepConfirm + VG.btnH + VG.padBottom;
+    ctx.fillStyle = 'rgba(60,0,0,0.88)'; ctx.fillRect(bx, VG.panY, VG.panW, _gH);
+    ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(bx+1, VG.panY+1, VG.panW-2, _gH-2);
     ctx.textAlign = 'center'; ctx.textBaseline = 'top';
     const cx = bx + VG.panW / 2;
     let ty = VG.panY + VG.padTop;
@@ -959,8 +960,9 @@ function drawEndScreen() {
     const bestScore = parseInt(localStorage.getItem('btr_best_score') || '0');
     const bestLevel = parseInt(localStorage.getItem('btr_best_level') || '1');
     const VW = CONFIG.vis.gameWin;
-    ctx.fillStyle = 'rgba(0,0,40,0.92)'; ctx.fillRect(bx, VW.panY, VW.panW, VW.panH);
-    ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(bx+1, VW.panY+1, VW.panW-2, VW.panH-2);
+    const _wH = VW.padTop + VW.stepTitle + VW.stepScore + VW.stepBest + VW.tapH + VW.padBottom;
+    ctx.fillStyle = 'rgba(0,0,40,0.92)'; ctx.fillRect(bx, VW.panY, VW.panW, _wH);
+    ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(bx+1, VW.panY+1, VW.panW-2, _wH-2);
     ctx.textAlign = 'center'; ctx.textBaseline = 'top';
     const cxW = bx + VW.panW / 2;
     let tyW = VW.panY + VW.padTop;
@@ -972,8 +974,9 @@ function drawEndScreen() {
   } else {
     // Non-final win — disegno manuale top-aligned
     const VL = CONFIG.vis.levelComplete;
-    ctx.fillStyle = 'rgba(0,0,60,0.88)'; ctx.fillRect(bx, VL.panY, VL.panW, VL.panH);
-    ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(bx+1, VL.panY+1, VL.panW-2, VL.panH-2);
+    const _lH = VL.padTop + VL.stepTitle + VL.stepScore + VL.tapH + VL.padBottom;
+    ctx.fillStyle = 'rgba(0,0,60,0.88)'; ctx.fillRect(bx, VL.panY, VL.panW, _lH);
+    ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(bx+1, VL.panY+1, VL.panW-2, _lH-2);
     ctx.textAlign = 'center'; ctx.textBaseline = 'top';
     const cxL = bx + VL.panW / 2;
     let tyL = VL.panY + VL.padTop;

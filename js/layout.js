@@ -81,54 +81,59 @@ CONFIG.vis = {
     exitDoor:   { x:-2, y:-14, w:14, h:30 },
   },
 
-  // Banner gameover — titolo + livello + punteggio + VUOI RIGIOCARE? + pulsanti SI/NO
+  // Banner gameover — panH calcolato: padTop+stepTitle+stepLevel+stepScore+stepConfirm+btnH+padBottom
   gameover: {
-    panY: 44, panW: 260, panH: 104,
+    panY: 44, panW: 260,
     padTop:      12,  // spazio dal bordo superiore al primo testo
-    stepTitle:   18,  // avanzamento riga dopo "ESPULSO!"
+    stepTitle:   18,  // avanzamento dopo "ESPULSO!"
     stepLevel:   12,  // avanzamento dopo livello raggiunto
     stepScore:   20,  // avanzamento dopo punteggio
-    stepConfirm: 16,  // avanzamento dopo "VUOI RIGIOCARE?" → top dei pulsanti
+    stepConfirm: 16,  // avanzamento dopo "VUOI RIGIOCARE?" → top pulsanti
     btnH:        14,
+    padBottom:   12,  // spazio dal fondo pulsanti al bordo inferiore
     siOx: 30, siW: 70,   // SI: bx+siOx, larghezza siW
     noOx: 160, noW: 70,  // NO: bx+noOx, larghezza noW
   },
 
-  // Banner livello superato (non-finale) — disegno manuale top-aligned
+  // Banner livello superato — panH calcolato: padTop+stepTitle+stepScore+tapH+padBottom
   levelComplete: {
-    panY: 64, panW: 260, panH: 72,
-    padTop:     11,  // spazio dal bordo superiore al primo testo
-    stepTitle:  20,  // avanzamento dopo titolo (h=10 + spacing=10)
-    stepScore:  22,  // avanzamento dopo punteggio (h=8 + spacing=14)
-    // tapContinue h=8 in fondo
+    panY: 64, panW: 260,
+    padTop:    11,  // spazio dal bordo superiore al primo testo
+    stepTitle: 20,  // avanzamento dopo titolo (h=10 + spacing=10)
+    stepScore: 22,  // avanzamento dopo punteggio (h=8 + spacing=14)
+    tapH:       8,  // altezza tapContinue
+    padBottom: 11,  // spazio dal fondo tapContinue al bordo inferiore
   },
 
-  // Banner fine gioco (L10 vittoria finale) — disegno manuale top-aligned
+  // Banner fine gioco (L10) — panH calcolato: padTop+stepTitle+stepScore+stepBest+tapH+padBottom
   gameWin: {
-    panY: 44, panW: 260, panH: 104,
+    panY: 44, panW: 260,
     padTop:    23,  // spazio dal bordo superiore al primo testo
     stepTitle: 22,  // avanzamento dopo titolo win (h=12 + spacing=10)
     stepScore: 12,  // avanzamento dopo punteggio (h=8 + spacing=4)
     stepBest:  16,  // avanzamento dopo riga miglior punteggio (h=8 + spacing=8)
-    // tapForTitle h=8 in fondo
+    tapH:       8,  // altezza tapForTitle
+    padBottom: 23,  // spazio dal fondo tapForTitle al bordo inferiore
   },
 
-  // Banner storia (L1, prima partita) — contenuto dinamico, disegno manuale top-aligned
+  // Banner storia (L1) — panH fisso (contenuto dinamico); padBottom = margine target dal basso
   storyBanner: {
     panX: 20, panY: 22, panW: 280, panH: 156, wrapWidth: 220,
     padTop:        16,  // spazio dal bordo superiore al titolo
-    titleH:        10, titleSpacing: 10,  // altezza e spacing dopo il titolo
-    lineH:          8, lineSpacing:   4,  // altezza e spacing tra righe di testo
+    titleH:        10, titleSpacing: 10,
+    lineH:          8, lineSpacing:   4,
     spacerH:       10,                    // spazio vuoto prima di tapContinue
-    tapH:           8,                    // altezza tapContinue
+    tapH:           8,
+    padBottom:     16,  // margine target dal fondo tapContinue al bordo inferiore
   },
 
-  // Banner missione (inizio di ogni livello) — contenuto dinamico, disegno manuale top-aligned
+  // Banner missione — panH fisso (contenuto dinamico); padBottom = margine target dal basso
   missionBanner: {
     panY: 64, panW: 260, panH: 72, wrapWidth: 200,
-    padTop:        14,  // spazio dal bordo superiore al titolo missione
-    titleH:        10, titleSpacing: 8,  // altezza e spacing dopo il titolo
-    lineH:          8, lineSpacing:  4,  // altezza e spacing tra righe di testo
+    padTop:        14,  // spazio dal bordo superiore al titolo
+    titleH:        10, titleSpacing: 8,
+    lineH:          8, lineSpacing:  4,
+    padBottom:     14,  // margine target dal fondo ultima riga al bordo inferiore
   },
 };
 
