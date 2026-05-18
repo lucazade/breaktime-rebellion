@@ -136,7 +136,6 @@ function loop(ts) {
     }
   }
 
-  if (deathFreeze && !BELL.ringing) { ctx.fillStyle = 'rgba(255,0,0,0.18)'; ctx.fillRect(0,0,W,H); }
 
   drawPaperBalls();
   drawParticles();
@@ -146,7 +145,8 @@ function loop(ts) {
 
   // Overlay scuro centralizzato — gestisce tutti i banner
   var _shouldDim = storyBannerT > 0 || storyBannerFading || missionBannerT > 0
-                || state === 'win' || state === 'gameover';
+                || state === 'win' || state === 'gameover'
+                || (deathFreeze && !BELL.ringing);
   bannerDimT = _shouldDim ? Math.min(bannerDimT + 1, 20) : Math.max(bannerDimT - 1, 0);
   if (bannerDimT > 0) {
     ctx.fillStyle = 'rgba(0,0,0,' + (0.45 * bannerDimT / 20) + ')';
