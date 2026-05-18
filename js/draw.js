@@ -1502,4 +1502,3 @@ function drawCredits() {
   ctx.restore();
 }
 
-function updateHUD() {} // sostituita da drawHUD() su canvas
