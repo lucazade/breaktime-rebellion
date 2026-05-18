@@ -164,7 +164,6 @@ canvas {
   background: #1a1a4a;
 }
 
-/* HUD, msg, timer-bar rimossi: ora su canvas via drawHUD() */
 
 /* ─── JOYSTICK OVERLAY ─── */
 #ctrl-joy {
@@ -217,7 +216,6 @@ canvas {
   transform: translateY(2px) scale(0.96);
 }
 
-/* title screen overlay rimosso: ora su canvas via drawTitleScreen() */
 
 /* ─── PORTRAIT: RUOTA IL DISPOSITIVO ─── */
 #portrait-msg {
@@ -237,7 +235,6 @@ canvas {
   #portrait-msg { display: flex; }
 }
 
-/* keyboard-legend, .kb, .kb-arr rimossi: ora su canvas via drawTitleScreen() */
 
 /* Desktop / mouse — panels hidden; full synthwave background + 150% zoom + screen bezel */
 @media (hover: hover) and (pointer: fine) {
@@ -335,7 +332,6 @@ body.title-mode canvas { background: none !important; }
 body.title-mode #game-area::before,
 body.title-mode #game-area::after { display: none !important; }
 
-/* #panel-bell rimosso */
 
 /* ─── PANEL BUTTONS (home / pause) ─── */
 .panel-btn {
@@ -377,5 +373,3 @@ body.title-mode #game-area::after { display: none !important; }
 @media (orientation: landscape) and (pointer: coarse) {
   .panel-btn { display: flex; }
 }
-
-/* credits-overlay, pause-overlay, home-confirm-overlay e dialog-* rimossi: ora su canvas */
