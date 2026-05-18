@@ -266,3 +266,4 @@ MINORI:
 - [ ] #76 target libreria troppo grande
 - [ ] #112 Marco deve suonare la campanella proprio sotto la campanella
 - [ ] #107 no muori per debug
+- [ ] #116 il banner missione del livello può essere dismesso via tempo, via click/tap e anche invio
