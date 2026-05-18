@@ -62,16 +62,7 @@
   </div>
   <div id="game-area">
     <canvas id="c" width="640" height="400"></canvas>
-    <div id="hud-overlay">
-      <div id="hud-row">
-        <div class="hl"><span id="hL"></span></div>
-        <div><span id="hud-msg"></span><i id="hud-obj-icon" class="fa-solid fa-spray-can hud-icon hud-spray"></i><span class="hg" id="hW"></span></div>
-        <div><span id="hS"></span></div>
-      </div>
-      <div id="timer-bar-wrap"><div id="timer-bar"></div></div>
-    </div>
-    <div id="msg"></div>
-    <!-- pause-overlay e home-confirm-overlay rimossi: ora disegnati su canvas via drawPauseOverlay/drawHomeConfirm -->
+    <!-- hud-overlay, msg, pause-overlay, home-confirm-overlay rimossi: tutti su canvas -->
   </div>
   <div id="panel-right">
     <button id="btn-pause" class="panel-btn"><i class="fa-solid fa-pause"></i></button>
@@ -92,20 +83,7 @@
 <script src="js/physics.js"></script>
 <script src="js/entities.js"></script>
 <script src="js/draw.js"></script>
-<div id="credits-overlay">
-  <div class="credits-box">
-    <p class="credits-title">— CREDITS —</p>
-    <div class="credits-content">
-      <p class="credits-team">LucazadeSoft Team</p>
-      <p>Luca Forina<br><span class="credits-role">Orchestrator</span></p>
-      <p>Claude by Anthropic<br><span class="credits-role">Lead Developer</span></p>
-      <p>ChatGPT<br><span class="credits-role">Graphics</span></p>
-      <p>OpenGameArt.org<br><span class="credits-role">Music &amp; Effects</span></p>
-      <p>Family<br><span class="credits-role">Beta Testing &amp; Ideas</span></p>
-    </div>
-    <button class="dialog-btn" id="btn-credits-close">OK</button>
-  </div>
-</div>
+<!-- credits-overlay rimosso: ora su canvas via drawCredits() -->
 <div id="screen-fade"></div>
 <script src="js/game.js"></script>
 <script src="js/title.js"></script>

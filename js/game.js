@@ -67,6 +67,7 @@ function loop(ts) {
       } else if (deathFreeze) {
         tickTransition(); // only advance the respawn/gameover countdown; everything else frozen
       } else {
+        if (msgT > 0) msgT--;
         updatePlayer();
         updateTeachers();
         updateJanitors();
@@ -146,6 +147,7 @@ function loop(ts) {
   // Overlay scuro centralizzato — gestisce tutti i banner
   var _shouldDim = state !== 'title' && (storyBannerT > 0 || storyBannerFading || missionBannerT > 0
                 || state === 'win' || state === 'gameover' || state === 'paused'
+                || _creditsActive
                 || (deathFreeze && !BELL.ringing));
   bannerDimT = _shouldDim ? Math.min(bannerDimT + 1, 20) : Math.max(bannerDimT - 1, 0);
   if (bannerDimT > 0) {
@@ -161,8 +163,9 @@ function loop(ts) {
   drawMissionBanner();
   drawPauseOverlay();
   drawHomeConfirm();
+  drawCredits();
+  drawHUD();
   drawDebugOverlay();
-  updateHUD();
   requestAnimationFrame(loop);
 }
 
@@ -275,15 +278,15 @@ function cancelHome() {
 _btnPause.addEventListener('click', triggerPause);
 document.getElementById('btn-home').addEventListener('click', triggerHome);
 
-// ── Credits (btn-info tap) ────────────────────────────────────────────────────
-var _creditsOverlay = document.getElementById('credits-overlay');
+// ── Credits (btn-info tap) — canvas-based ────────────────────────────────────
+var _creditsActive = false;
 
 function showCredits() {
-  _creditsOverlay.classList.add('active');
+  _creditsActive = true;
   if (state === 'playing') GameAudio.pauseMusic();
 }
 function hideCredits() {
-  _creditsOverlay.classList.remove('active');
+  _creditsActive = false;
   if (state === 'playing') GameAudio.resumeMusic();
 }
 
@@ -292,9 +295,19 @@ if (_btnInfo) {
   _btnInfo.addEventListener('click', showCredits);
   _btnInfo.addEventListener('touchend', function(e) { e.preventDefault(); showCredits(); }, {passive: false});
 }
-document.getElementById('btn-credits-close').addEventListener('click', hideCredits);
 
-// ── Canvas click detection per pause e home-confirm ──────────────────────────
+// ── Canvas click detection per tutti gli overlay canvas ──────────────────────
+function _creditsCanvasClick(lx, ly) {
+  var VC = CONFIG.vis.credits;
+  var n = _CREDITS_MEMBERS ? _CREDITS_MEMBERS.length : 5;
+  var panH = VC.padTop + VC.stepTitle + VC.stepTeam
+           + n * (VC.nameH + VC.nameGap + VC.roleH + VC.roleGap)
+           + VC.btnGapAbove + VC.btnH + VC.padBottom;
+  var bx = Math.round(W / 2 - VC.panW / 2);
+  var btnY = VC.panY + panH - VC.padBottom - VC.btnH;
+  var btnX = bx + Math.round((VC.panW - VC.btnW) / 2);
+  if (ly >= btnY && ly <= btnY + VC.btnH && lx >= btnX && lx <= btnX + VC.btnW) hideCredits();
+}
 function _pauseCanvasClick(lx, ly) {
   var VP = CONFIG.vis.pauseOverlay;
   var bx = Math.round(W / 2 - VP.panW / 2);
@@ -317,9 +330,10 @@ CV.addEventListener('click', function(e) {
   var rect = CV.getBoundingClientRect();
   var lx = (e.clientX - rect.left) * 320 / rect.width;
   var ly = (e.clientY - rect.top)  * 200 / rect.height;
-  if (_homeConfirmActive) { _homeConfirmCanvasClick(lx, ly); return; }
-  if (state === 'paused' && _pauseActive) { _pauseCanvasClick(lx, ly); return; }
-  if (state === 'gameover') { _gameoverChoice(lx, ly); return; }
+  if (_creditsActive)                    { _creditsCanvasClick(lx, ly); return; }
+  if (_homeConfirmActive)                { _homeConfirmCanvasClick(lx, ly); return; }
+  if (state === 'paused' && _pauseActive){ _pauseCanvasClick(lx, ly); return; }
+  if (state === 'gameover')              { _gameoverChoice(lx, ly); return; }
   handleTap();
 });
 

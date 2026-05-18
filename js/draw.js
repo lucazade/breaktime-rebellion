@@ -1180,86 +1180,102 @@ function drawDebugOverlay() {
   ctx.restore();
 }
 
-var _HEART_SVG = '<svg width="14" height="12" viewBox="0 0 14 12" xmlns="http://www.w3.org/2000/svg" style="shape-rendering:crispEdges;display:inline-block;vertical-align:middle;margin-right:2px;filter:drop-shadow(1px 1px 1px rgba(0,0,0,0.2))"><rect x="2" y="0" width="4" height="2" fill="currentColor"/><rect x="8" y="0" width="4" height="2" fill="currentColor"/><rect x="0" y="2" width="14" height="2" fill="currentColor"/><rect x="0" y="4" width="14" height="2" fill="currentColor"/><rect x="2" y="6" width="10" height="2" fill="currentColor"/><rect x="4" y="8" width="6" height="2" fill="currentColor"/><rect x="6" y="10" width="2" height="2" fill="currentColor"/></svg>';
+function _drawHeart(x, y) {
+  ctx.fillRect(x+1,y,  2,1); ctx.fillRect(x+4,y,  2,1);
+  ctx.fillRect(x,  y+1,7,1); ctx.fillRect(x,  y+2,7,1);
+  ctx.fillRect(x+1,y+3,5,1); ctx.fillRect(x+2,y+4,3,1); ctx.fillRect(x+3,y+5,1,1);
+}
 
-function updateHUD() {
-  var h = ''; for (var _i = 0; _i < Math.max(0, lives); _i++) h += _HEART_SVG;
-  document.getElementById('hL').innerHTML = h;
-  let done = 0;
-  for (let i = 0; i < BOARDS.length; i++) if (BOARDS[i].done) done++;
-  document.getElementById('hW').textContent = done + '/' + BOARDS.length;
-  document.getElementById('hS').textContent = String(score).padStart(5,'0');
-  // Objective counter and icon — switches per active mechanic
-  var objDone = 0, objTotal = 0, iconClass = 'fa-spray-can';
+function _hudObjInfo() {
+  var done = 0, total = 0, dot = CONFIG.vis.hud.dotColors.default || '#44ee66';
+  var dc = CONFIG.vis.hud.dotColors;
   if (bags.length > 0) {
-    for (let i = 0; i < bags.length; i++) if (bags[i].collected) objDone++;
-    objTotal = bags.length;
-    iconClass = 'fa-bag-shopping';
+    for (var i=0;i<bags.length;i++) if(bags[i].collected) done++; total=bags.length; dot=dc.bags;
   } else if (levelMechanics.shakeMachines) {
-    for (let i = 0; i < machines.length; i++) if (machines[i].broken) objDone++;
-    objTotal = machines.length;
-    iconClass = 'fa-box';
+    for (var i=0;i<machines.length;i++) if(machines[i].broken) done++; total=machines.length; dot=dc.machines;
   } else if (levelMechanics.deflateBall) {
-    objDone = gymBall ? gymBall.deflateCount : 0;
-    objTotal = 3;
-    iconClass = 'fa-futbol';
+    done=gymBall?gymBall.deflateCount:0; total=3; dot=dc.ball;
   } else if (levelMechanics.throwPaper) {
-    for (let i = 0; i < students.length; i++) if (students[i].disturbed) objDone++;
-    objTotal = students.length;
-    iconClass = 'fa-user-graduate';
+    for (var i=0;i<students.length;i++) if(students[i].disturbed) done++; total=students.length; dot=dc.students;
   } else if (levelMechanics.dropBook) {
-    objDone = bookcase ? bookcase.dropCount : 0;
-    objTotal = 3;
-    iconClass = 'fa-book';
+    done=bookcase?bookcase.dropCount:0; total=3; dot=dc.books;
   } else if (levelMechanics.floodSink) {
-    objDone = sink ? sink.pourCount : 0;
-    objTotal = 3;
-    iconClass = 'fa-faucet';
+    done=sink?sink.pourCount:0; total=3; dot=dc.sink;
   } else if (levelMechanics.plantBomb) {
-    for (let i = 0; i < bins.length; i++) if (bins[i].exploded) objDone++;
-    objTotal = bins.length;
-    iconClass = 'fa-trash-can';
+    for (var i=0;i<bins.length;i++) if(bins[i].exploded) done++; total=bins.length; dot=dc.bins;
   } else if (levelMechanics.stealRegister) {
-    objDone = register && register.stolen ? 1 : 0;
-    objTotal = 1;
-    iconClass = 'fa-scroll';
+    done=register&&register.stolen?1:0; total=1; dot=dc.register;
   } else if (levelMechanics.activateSprinkler) {
-    for (let i = 0; i < sprinklers.length; i++) if (sprinklers[i].active) objDone++;
-    objTotal = sprinklers.length;
-    iconClass = 'fa-fire';
+    for (var i=0;i<sprinklers.length;i++) if(sprinklers[i].active) done++; total=sprinklers.length; dot=dc.sprinklers;
   } else {
-    for (let i = 0; i < BOARDS.length; i++) if (BOARDS[i].done) objDone++;
-    objTotal = BOARDS.length;
+    for (var i=0;i<BOARDS.length;i++) if(BOARDS[i].done) done++; total=BOARDS.length; dot=dc.boards;
   }
-  var icon  = document.getElementById('hud-obj-icon');
-  var hWEl  = document.getElementById('hW');
-  var hudMsg = document.getElementById('hud-msg');
+  return { done:done, total:total, dot:dot };
+}
 
+function drawHUD() {
+  if (state === 'title') return;
+  var VH = CONFIG.vis.hud;
+  ctx.fillStyle = VH.bgColor; ctx.fillRect(0, 0, W, VH.rowH);
+  // Hearts
+  ctx.fillStyle = '#ff2244';
+  for (var _i = 0; _i < Math.max(0, lives); _i++) _drawHeart(VH.heartsX + _i * VH.heartStep, VH.textY);
+  // Score
+  ctx.font = '4px "Press Start 2P"'; ctx.textAlign = 'right'; ctx.textBaseline = 'top';
+  ctx.fillStyle = '#ffffff'; ctx.fillText(String(score).padStart(5,'0'), VH.scoreX, VH.textY);
+  // Counter or message
+  ctx.textAlign = 'center';
   if (msgT > 0) {
-    msgT--;
-    var elapsed = msgDuration - msgT;
-    var fadeIn  = elapsed < 15 ? elapsed / 15 : 1;
-    var fadeOut = msgT < 25 ? msgT / 25 : 1;
-    hudMsg.textContent  = msgText;
-    hudMsg.style.opacity = Math.min(fadeIn, fadeOut);
-    hudMsg.style.display = 'inline';
-    hWEl.style.display  = 'none';
-    icon.style.display  = 'none';
-  } else {
-    hudMsg.style.display = 'none';
-    hWEl.style.display  = '';
-    icon.style.display  = '';
-    if (icon && !icon.classList.contains(iconClass)) {
-      icon.className = 'fa-solid ' + iconClass + ' hud-icon hud-spray';
-    }
-    hWEl.textContent = objDone + '/' + objTotal;
+    var _el = msgDuration - msgT, _ao = Math.min(_el/15,1) * (msgT<25 ? msgT/25 : 1);
+    ctx.globalAlpha = _ao; ctx.fillStyle = '#ffffff';
+    ctx.fillText(msgText, VH.centerX, VH.textY); ctx.globalAlpha = 1;
+  } else if (state === 'playing') {
+    var _oi = _hudObjInfo();
+    ctx.fillStyle = _oi.dot; ctx.fillRect(VH.centerX - 22, VH.textY, 4, 4);
+    ctx.fillStyle = '#44ee66'; ctx.fillText(_oi.done + '/' + _oi.total, VH.centerX - 10, VH.textY);
   }
+  // Timer bar
   if (maxTimerTicks > 0) {
-    var pct = Math.max(0, timerTicks / maxTimerTicks);
-    var bar = document.getElementById('timer-bar');
-    if (bar) {
-      bar.style.width = (pct * 100) + '%';
-      bar.style.background = pct > 0.6 ? '#22cc44' : pct > 0.3 ? '#ddcc00' : '#dd1100';
-    }
+    var _pct = Math.max(0, timerTicks / maxTimerTicks);
+    ctx.fillStyle = _pct > 0.6 ? '#22cc44' : _pct > 0.3 ? '#ddcc00' : '#dd1100';
+    ctx.fillRect(0, VH.rowH, Math.round(W * _pct), VH.timerH);
   }
 }
+
+var _CREDITS_MEMBERS = [
+  { name: 'Luca Forina',        role: 'Orchestrator'         },
+  { name: 'Claude / Anthropic', role: 'Lead Developer'       },
+  { name: 'ChatGPT',            role: 'Graphics'             },
+  { name: 'OpenGameArt.org',    role: 'Music & Effects'      },
+  { name: 'Family',             role: 'Beta Testing & Ideas' },
+];
+
+function drawCredits() {
+  if (!_creditsActive) return;
+  var VC = CONFIG.vis.credits;
+  var n = _CREDITS_MEMBERS.length;
+  var panH = VC.padTop + VC.stepTitle + VC.stepTeam
+           + n * (VC.nameH + VC.nameGap + VC.roleH + VC.roleGap)
+           + VC.btnGapAbove + VC.btnH + VC.padBottom;
+  var bx = Math.round(W / 2 - VC.panW / 2);
+  ctx.fillStyle = 'rgba(0,0,40,0.96)'; ctx.fillRect(bx, VC.panY, VC.panW, panH);
+  ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(bx+1, VC.panY+1, VC.panW-2, panH-2);
+  ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+  var cx = bx + VC.panW / 2;
+  var ty = VC.panY + VC.padTop;
+  ctx.font = '6px "Press Start 2P"'; ctx.fillStyle = C.gold;
+  ctx.fillText('— CREDITS —', cx, ty); ty += VC.stepTitle;
+  ctx.font = '4px "Press Start 2P"'; ctx.fillStyle = C.lgreen;
+  ctx.fillText('LucazadeSoft Team', cx, ty); ty += VC.stepTeam;
+  for (var i = 0; i < n; i++) {
+    ctx.fillStyle = C.white; ctx.fillText(_CREDITS_MEMBERS[i].name, cx, ty); ty += VC.nameH + VC.nameGap;
+    ctx.fillStyle = C.cyan;  ctx.fillText(_CREDITS_MEMBERS[i].role, cx, ty); ty += VC.roleH + VC.roleGap;
+  }
+  ty += VC.btnGapAbove;
+  var btnX = bx + Math.round((VC.panW - VC.btnW) / 2);
+  ctx.fillStyle = 'rgba(0,90,0,0.92)'; ctx.fillRect(btnX, ty, VC.btnW, VC.btnH);
+  ctx.strokeStyle = C.gold; ctx.strokeRect(btnX+1, ty+1, VC.btnW-2, VC.btnH-2);
+  ctx.fillStyle = C.white; ctx.fillText('OK', bx + VC.panW/2, ty + 2);
+}
+
+function updateHUD() {} // sostituita da drawHUD() su canvas

@@ -146,6 +146,44 @@ CONFIG.vis = {
     resumeOx:  65, resumeW: 70,  // pulsante RIPRENDI: bx+resumeOx, larghezza resumeW
   },
 
+  // HUD — strip in cima al canvas
+  hud: {
+    rowH:      9,                    // altezza strip HUD
+    textY:     1,                    // y baseline testo/cuori
+    heartsX:   4,                    // x primo cuore
+    heartStep: 8,                    // px per cuore (7 wide + 1 gap)
+    centerX:   160,                  // x centro per counter/msg
+    scoreX:    316,                  // x destro per punteggio
+    timerH:    1,                    // altezza barra timer
+    bgColor:   'rgba(0,0,0,0.55)',
+    // Colore quadratino indicatore per ogni meccanica
+    dotColors: {
+      boards:     '#588D43',
+      bags:       '#4A3D8F',
+      machines:   '#B8C76F',
+      ball:       '#CC6600',
+      students:   '#FFFFFF',
+      books:      '#6B2200',
+      sink:       '#70A4B2',
+      bins:       '#B8C76F',
+      sprinklers: '#70A4B2',
+      register:   '#FFD700',
+    },
+  },
+
+  // Credits — panH calcolato: padTop+stepTitle+stepTeam+5*(nameH+nameGap+roleH+roleGap)+btnGapAbove+btnH+padBottom
+  credits: {
+    panY: 18, panW: 240,
+    padTop:       8,
+    stepTitle:   14,  // dopo "— CREDITS —" (h=6 + spacing=8)
+    stepTeam:    12,  // dopo nome team (h=4 + spacing=8)
+    nameH:        4, nameGap:  2,  // altezza nome, gap nome→ruolo
+    roleH:        4, roleGap:  6,  // altezza ruolo, gap tra membri
+    btnGapAbove: 10,               // gap prima del pulsante OK
+    btnH:        12, btnW: 60,     // pulsante OK
+    padBottom:    8,
+  },
+
   // Fumetto di Luca (L10 fine livello) — bh calcolato: headerH + lineCount*lineH + gapTap + tapH + padBottom
   lucaFumetto: {
     bw:        190,  // larghezza fumetto
