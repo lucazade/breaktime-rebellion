@@ -834,7 +834,7 @@ function drawLucaEnd() {
 
   // Speech bubble — bh calcolato da CONFIG.vis.lucaFumetto
   const VF = CONFIG.vis.lucaFumetto;
-  ctx.font = '4px "Press Start 2P"';
+  ctx.font = VF.fontSize + 'px "Press Start 2P"';
   const raw = STRINGS.lucaAppears.replace(/^[^"]*"?/, '').replace(/".*$/, '');
   const parts = raw.split('|');
   let lines = [];
@@ -1077,7 +1077,7 @@ function drawPauseOverlay() {
   ctx.fillStyle = 'rgba(0,0,40,0.92)'; ctx.fillRect(bx, by, VP.panW, pH);
   ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(bx+1, by+1, VP.panW-2, pH-2);
   ctx.textAlign = 'center'; ctx.textBaseline = 'top';
-  ctx.font = '8px "Press Start 2P"';
+  ctx.font = VP.fontSize + 'px "Press Start 2P"';
   const cx = bx + VP.panW / 2;
   let ty = by + VP.padTop;
   ctx.fillStyle = C.gold; ctx.fillText(STRINGS.pauseTitle, cx, ty); ty += VP.stepTitle;
@@ -1097,7 +1097,7 @@ function drawHomeConfirm() {
   ctx.fillStyle = 'rgba(0,0,40,0.92)'; ctx.fillRect(bx, by, VH.panW, hH);
   ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(bx+1, by+1, VH.panW-2, hH-2);
   ctx.textAlign = 'center'; ctx.textBaseline = 'top';
-  ctx.font = '8px "Press Start 2P"';
+  ctx.font = VH.fontSize + 'px "Press Start 2P"';
   const cx = bx + VH.panW / 2;
   let ty = by + VH.padTop;
   ctx.fillStyle = C.gold; ctx.fillText(STRINGS.homeConfirm, cx, ty); ty += VH.stepTitle;
@@ -1352,9 +1352,9 @@ function drawCredits() {
   ctx.textAlign = 'center'; ctx.textBaseline = 'top';
   var cx = bx + VC.panW / 2;
   var ty = by + VC.padTop;
-  ctx.font = '6px "Press Start 2P"'; ctx.fillStyle = C.gold;
+  ctx.font = VC.fontTitle + 'px "Press Start 2P"'; ctx.fillStyle = C.gold;
   ctx.fillText('— CREDITS —', cx, ty); ty += VC.stepTitle;
-  ctx.font = '4px "Press Start 2P"'; ctx.fillStyle = C.lgreen;
+  ctx.font = VC.fontBody + 'px "Press Start 2P"'; ctx.fillStyle = C.lgreen;
   ctx.fillText('LucazadeSoft Team', cx, ty); ty += VC.stepTeam;
   for (var i = 0; i < n; i++) {
     ctx.fillStyle = C.white; ctx.fillText(_CREDITS_MEMBERS[i].name, cx, ty); ty += VC.nameH + VC.nameGap;
@@ -1364,7 +1364,7 @@ function drawCredits() {
   var btnX = bx + Math.round((VC.panW - VC.btnW) / 2);
   ctx.fillStyle = 'rgba(0,90,0,0.92)'; ctx.fillRect(btnX, ty, VC.btnW, VC.btnH);
   ctx.strokeStyle = C.gold; ctx.strokeRect(btnX+1, ty+1, VC.btnW-2, VC.btnH-2);
-  ctx.fillStyle = C.white; ctx.fillText('OK', bx + VC.panW/2, ty + Math.round((VC.btnH - 4) / 2));
+  ctx.fillStyle = C.white; ctx.fillText('OK', bx + VC.panW/2, ty + Math.round((VC.btnH - VC.fontBody) / 2));
   ctx.restore();
 }
 

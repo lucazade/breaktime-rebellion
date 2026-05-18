@@ -144,6 +144,7 @@ CONFIG.vis = {
   // Overlay pausa — panH calcolato: padTop+stepTitle+btnH+padBottom
   pauseOverlay: {
     panW: 200,
+    fontSize:  8,   // ⚠ solo 4px e 8px sono crispini
     padTop:    14,  // spazio dal bordo superiore al titolo
     stepTitle: 22,  // avanzamento dopo "— PAUSA —" (h=10 + spacing=12)
     btnH:      14,  // altezza pulsante RIPRENDI
@@ -183,19 +184,22 @@ CONFIG.vis = {
   // Credits — panH calcolato: padTop+stepTitle+stepTeam+5*(nameH+nameGap+roleH+roleGap)+btnGapAbove+btnH+padBottom
   credits: {
     panW: 240,
+    fontTitle:  8,   // ⚠ solo 4px e 8px — era 6px (non crisp), portato a 8
+    fontBody:   4,   // nomi e ruoli
     padTop:       8,
     stepTitle:   14,  // dopo "— CREDITS —" (h=6 + spacing=8)
     stepTeam:    12,  // dopo nome team (h=4 + spacing=8)
     nameH:        4, nameGap:  2,  // altezza nome, gap nome→ruolo
     roleH:        4, roleGap:  6,  // altezza ruolo, gap tra membri
-    btnGapAbove: 10,               // gap prima del pulsante OK
+    btnGapAbove:  2,               // gap prima del pulsante OK
     btnH:        12, btnW: 60,     // pulsante OK
-    padBottom:    8,
+    padBottom:    10,
   },
 
   // Fumetto di Luca (L10 fine livello) — bh calcolato: headerH + lineCount*lineH + gapTap + tapH + padBottom
   lucaFumetto: {
     bw:        190,  // larghezza fumetto
+    fontSize:   4,   // ⚠ solo 4px e 8px sono crispini
     offsetX:    10,  // offset orizzontale da Luca (PW+2)
     tailOffY:   14,  // distanza verticale della coda da ly (by2 = ly - tailOffY - bh)
     headerH:    14,  // altezza riga "Luca:" in cima
@@ -209,6 +213,7 @@ CONFIG.vis = {
   // Overlay home confirm — panH calcolato: padTop+stepTitle+btnH+padBottom
   homeConfirm: {
     panW: 200,
+    fontSize:  8,   // ⚠ solo 4px e 8px sono crispini
     padTop:    14,  // spazio dal bordo superiore alla domanda
     stepTitle: 20,  // avanzamento dopo "TORNARE ALLA HOME?" (h=8 + spacing=12)
     btnH:      14,  // altezza pulsanti SI/NO
