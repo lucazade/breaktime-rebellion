@@ -145,7 +145,7 @@ function loop(ts) {
 
   // Overlay scuro centralizzato — gestisce tutti i banner
   var _shouldDim = state !== 'title' && (storyBannerT > 0 || storyBannerFading || missionBannerT > 0
-                || state === 'win' || state === 'gameover'
+                || state === 'win' || state === 'gameover' || state === 'paused'
                 || (deathFreeze && !BELL.ringing));
   bannerDimT = _shouldDim ? Math.min(bannerDimT + 1, 20) : Math.max(bannerDimT - 1, 0);
   if (bannerDimT > 0) {
@@ -159,6 +159,8 @@ function loop(ts) {
   drawEndScreen();
   drawStoryBanner();
   drawMissionBanner();
+  drawPauseOverlay();
+  drawHomeConfirm();
   drawDebugOverlay();
   updateHUD();
   requestAnimationFrame(loop);
@@ -191,14 +193,6 @@ function _gameoverChoice(lx, ly) {
   else if (lx >= bx + VG.noOx && lx <= bx + VG.noOx + VG.noW) { goHome(); }
 }
 
-CV.addEventListener('click', function(e) {
-  if (state === 'gameover') {
-    var rect = CV.getBoundingClientRect();
-    _gameoverChoice((e.clientX - rect.left) * 320 / rect.width, (e.clientY - rect.top) * 200 / rect.height);
-    return;
-  }
-  handleTap();
-});
 
 // Panels forward taps to game handler — but NOT when the tap is on a panel button
 ['panel-left', 'panel-right'].forEach(function(id) {
@@ -216,75 +210,61 @@ CV.addEventListener('click', function(e) {
 });
 document.getElementById('btn-action').addEventListener('touchend', function() { handleTap(); }, {passive: true});
 
-// ── Pause ────────────────────────────────────────────────────────────────────
-var _pauseOverlay = document.getElementById('pause-overlay');
-var _btnPause     = document.getElementById('btn-pause');
-var _pauseIcon    = _btnPause.querySelector('i');
+// ── Pause / Home confirm — canvas-based (no HTML overlay) ────────────────────
+var _pauseActive      = false;  // pausa attiva (non home-confirm)
+var _homeConfirmActive = false; // home-confirm aperta
+var _stateBeforeHome  = null;
+var _btnPause         = document.getElementById('btn-pause');
+var _pauseIcon        = _btnPause.querySelector('i');
 
 function setPaused(paused) {
+  _pauseActive = paused;
   if (paused) {
     state = 'paused';
     GameAudio.pauseMusic();
-    _pauseOverlay.classList.add('active');
     _pauseIcon.className = 'fa-solid fa-play';
   } else {
     state = 'playing';
     GameAudio.resumeMusic();
-    _pauseOverlay.classList.remove('active');
     _pauseIcon.className = 'fa-solid fa-pause';
   }
 }
 
 function triggerPause() {
-  if (_homeOverlay.classList.contains('active')) return; // home aperto → ignora
+  if (_homeConfirmActive) return;
   if (state === 'playing') setPaused(true);
-  else if (state === 'paused') setPaused(false);
+  else if (state === 'paused' && _pauseActive) setPaused(false);
 }
-
-_btnPause.addEventListener('click', triggerPause);
-document.getElementById('btn-resume').addEventListener('click', function() {
-  if (state === 'paused') setPaused(false);
-});
-
-// ── Home ─────────────────────────────────────────────────────────────────────
-var _homeOverlay     = document.getElementById('home-confirm-overlay');
-var _stateBeforeHome = null;
 
 function triggerHome() {
-  if (_pauseOverlay.classList.contains('active')) return;          // pausa aperta → ignora
-  if (_homeOverlay.classList.contains('active')) { cancelHome(); return; } // home aperto → chiudi
+  if (_pauseActive) return;
+  if (_homeConfirmActive) { cancelHome(); return; }
   if (state !== 'playing') return;
   _stateBeforeHome = state;
+  _homeConfirmActive = true;
   GameAudio.pauseMusic();
   state = 'paused';
-  _homeOverlay.classList.add('active');
 }
 
-document.getElementById('btn-home').addEventListener('click', triggerHome);
-
 function goHome() {
-  _homeOverlay.classList.remove('active');
-  _pauseOverlay.classList.remove('active');
+  _pauseActive = false; _homeConfirmActive = false;
   _pauseIcon.className = 'fa-solid fa-pause';
   GameAudio.fadeOutMusic(750);
-  fadeScreen(0, 1, 750, function() {          // game → black (750ms)
+  fadeScreen(0, 1, 750, function() {
     lives = 3; score = 0;
     currentLevel = Math.max(1, parseInt(localStorage.getItem('btr_last_level') || '1'));
     resetLevel();
     state = 'title';
     document.getElementById('overlay').style.display = 'flex';
     window.dispatchEvent(new Event('_titleReset'));
-    fadeScreen(1, 0, 600, function() {        // black → home (600ms)
-      GameAudio.playIntro();
-    });
+    fadeScreen(1, 0, 600, function() { GameAudio.playIntro(); });
   });
 }
 
 function cancelHome() {
-  _homeOverlay.classList.remove('active');
+  _homeConfirmActive = false;
   if (_stateBeforeHome === 'paused') {
-    _pauseOverlay.classList.add('active');
-    state = 'paused';
+    _pauseActive = true; state = 'paused';
   } else {
     state = 'playing';
     GameAudio.resumeMusic();
@@ -292,8 +272,8 @@ function cancelHome() {
   _stateBeforeHome = null;
 }
 
-document.getElementById('btn-home-yes').addEventListener('click', goHome);
-document.getElementById('btn-home-no').addEventListener('click', cancelHome);
+_btnPause.addEventListener('click', triggerPause);
+document.getElementById('btn-home').addEventListener('click', triggerHome);
 
 // ── Credits (btn-info tap) ────────────────────────────────────────────────────
 var _creditsOverlay = document.getElementById('credits-overlay');
@@ -314,9 +294,38 @@ if (_btnInfo) {
 }
 document.getElementById('btn-credits-close').addEventListener('click', hideCredits);
 
+// ── Canvas click detection per pause e home-confirm ──────────────────────────
+function _pauseCanvasClick(lx, ly) {
+  var VP = CONFIG.vis.pauseOverlay;
+  var bx = Math.round(W / 2 - VP.panW / 2);
+  var btnY = VP.panY + VP.padTop + VP.stepTitle;
+  if (ly >= btnY && ly <= btnY + VP.btnH && lx >= bx + VP.resumeOx && lx <= bx + VP.resumeOx + VP.resumeW) {
+    setPaused(false);
+  }
+}
+
+function _homeConfirmCanvasClick(lx, ly) {
+  var VH = CONFIG.vis.homeConfirm;
+  var bx = Math.round(W / 2 - VH.panW / 2);
+  var btnY = VH.panY + VH.padTop + VH.stepTitle;
+  if (ly < btnY || ly > btnY + VH.btnH) return;
+  if (lx >= bx + VH.siOx && lx <= bx + VH.siOx + VH.siW) { goHome(); }
+  else if (lx >= bx + VH.noOx && lx <= bx + VH.noOx + VH.noW) { cancelHome(); }
+}
+
+CV.addEventListener('click', function(e) {
+  var rect = CV.getBoundingClientRect();
+  var lx = (e.clientX - rect.left) * 320 / rect.width;
+  var ly = (e.clientY - rect.top)  * 200 / rect.height;
+  if (_homeConfirmActive) { _homeConfirmCanvasClick(lx, ly); return; }
+  if (state === 'paused' && _pauseActive) { _pauseCanvasClick(lx, ly); return; }
+  if (state === 'gameover') { _gameoverChoice(lx, ly); return; }
+  handleTap();
+});
+
 // ── Keyboard shortcuts (desktop) — P = pause, ESC = home / close dialog ─────
 document.addEventListener('keydown', function(e) {
-  if (_homeOverlay.classList.contains('active')) {
+  if (_homeConfirmActive) {
     if (e.key === 'Enter' || e.key === 'y' || e.key === 'Y') { e.preventDefault(); goHome(); }
     if (e.key === 'Escape' || e.key === 'n' || e.key === 'N') { e.preventDefault(); cancelHome(); }
     return;

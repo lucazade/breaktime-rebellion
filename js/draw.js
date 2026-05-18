@@ -1064,6 +1064,45 @@ function drawMissionBanner() {
   ctx.restore();
 }
 
+function drawPauseOverlay() {
+  if (state !== 'paused' || !_pauseActive) return;
+  const VP = CONFIG.vis.pauseOverlay;
+  const pH = VP.padTop + VP.stepTitle + VP.btnH + VP.padBottom;
+  const bx = Math.round(W / 2 - VP.panW / 2);
+  ctx.fillStyle = 'rgba(0,0,40,0.92)'; ctx.fillRect(bx, VP.panY, VP.panW, pH);
+  ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(bx+1, VP.panY+1, VP.panW-2, pH-2);
+  ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+  ctx.font = '8px "Press Start 2P"';
+  const cx = bx + VP.panW / 2;
+  let ty = VP.panY + VP.padTop;
+  ctx.fillStyle = C.gold; ctx.fillText(STRINGS.pauseTitle, cx, ty); ty += VP.stepTitle;
+  const rx = bx + VP.resumeOx;
+  ctx.fillStyle = 'rgba(0,90,0,0.92)'; ctx.fillRect(rx, ty, VP.resumeW, VP.btnH);
+  ctx.strokeStyle = C.gold; ctx.strokeRect(rx+1, ty+1, VP.resumeW-2, VP.btnH-2);
+  ctx.fillStyle = C.white; ctx.fillText(STRINGS.btnResume, rx + VP.resumeW/2, ty + 3);
+}
+
+function drawHomeConfirm() {
+  if (!_homeConfirmActive) return;
+  const VH = CONFIG.vis.homeConfirm;
+  const hH = VH.padTop + VH.stepTitle + VH.btnH + VH.padBottom;
+  const bx = Math.round(W / 2 - VH.panW / 2);
+  ctx.fillStyle = 'rgba(0,0,40,0.92)'; ctx.fillRect(bx, VH.panY, VH.panW, hH);
+  ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(bx+1, VH.panY+1, VH.panW-2, hH-2);
+  ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+  ctx.font = '8px "Press Start 2P"';
+  const cx = bx + VH.panW / 2;
+  let ty = VH.panY + VH.padTop;
+  ctx.fillStyle = C.gold; ctx.fillText(STRINGS.homeConfirm, cx, ty); ty += VH.stepTitle;
+  const siX = bx + VH.siOx, noX = bx + VH.noOx;
+  ctx.fillStyle = 'rgba(0,90,0,0.92)'; ctx.fillRect(siX, ty, VH.siW, VH.btnH);
+  ctx.strokeStyle = C.gold; ctx.strokeRect(siX+1, ty+1, VH.siW-2, VH.btnH-2);
+  ctx.fillStyle = C.white; ctx.fillText(STRINGS.btnYes, siX + VH.siW/2, ty + 3);
+  ctx.fillStyle = 'rgba(90,0,0,0.92)'; ctx.fillRect(noX, ty, VH.noW, VH.btnH);
+  ctx.strokeStyle = C.gold; ctx.strokeRect(noX+1, ty+1, VH.noW-2, VH.btnH-2);
+  ctx.fillStyle = C.white; ctx.fillText(STRINGS.btnNo, noX + VH.noW/2, ty + 3);
+}
+
 function drawDebugOverlay() {
   if (!DEBUG) return;
   ctx.save();

@@ -135,6 +135,27 @@ CONFIG.vis = {
     lineH:          8, lineSpacing:  4,
     padBottom:     14,  // margine target dal fondo ultima riga al bordo inferiore
   },
+
+  // Overlay pausa — panH calcolato: padTop+stepTitle+btnH+padBottom
+  pauseOverlay: {
+    panY: 72, panW: 200,
+    padTop:    14,  // spazio dal bordo superiore al titolo
+    stepTitle: 22,  // avanzamento dopo "— PAUSA —" (h=10 + spacing=12)
+    btnH:      14,  // altezza pulsante RIPRENDI
+    padBottom: 14,  // spazio dal fondo pulsante al bordo inferiore
+    resumeOx:  65, resumeW: 70,  // pulsante RIPRENDI: bx+resumeOx, larghezza resumeW
+  },
+
+  // Overlay home confirm — panH calcolato: padTop+stepTitle+btnH+padBottom
+  homeConfirm: {
+    panY: 72, panW: 200,
+    padTop:    14,  // spazio dal bordo superiore alla domanda
+    stepTitle: 20,  // avanzamento dopo "TORNARE ALLA HOME?" (h=8 + spacing=12)
+    btnH:      14,  // altezza pulsanti SI/NO
+    padBottom: 14,  // spazio dal fondo pulsanti al bordo inferiore
+    siOx: 20, siW: 70,   // SI: bx+siOx, larghezza siW
+    noOx: 110, noW: 70,  // NO: bx+noOx, larghezza noW
+  },
 };
 
 // Alias per retrocompatibilità con levels.js
