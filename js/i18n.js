@@ -208,7 +208,5 @@
 
   var pt = document.getElementById('portrait-text');
   if (pt) pt.textContent = STRINGS.rotateHtml;
-  var go = document.querySelector('.go');
-  if (go) go.textContent = STRINGS.tapToStart;
 
 })();

@@ -89,5 +89,3 @@ bA.addEventListener('mouseleave',  offA);
   zone.addEventListener('mouseleave',  joyEnd);
 })();
 
-document.getElementById('overlay').addEventListener('click', startGame);
-document.getElementById('overlay').addEventListener('touchstart', function(e) { e.preventDefault(); startGame(); }, {passive:false});
