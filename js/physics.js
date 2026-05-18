@@ -94,7 +94,7 @@ function updatePlayer() {
   if (!player.shaking && levelMechanics.dropBook && bookcase && !bookcase.dropped && K.action && !player.onStair) {
     const dx = Math.abs(player.x + PW/2 - bookcase.x - 12);
     const dy = Math.abs(player.y + PH  - bookcase.y - 26);
-    if (dx < 12 && dy < 22) {
+    if (dx < 20 && dy < 36) {
       player.shaking = true;
       actionPressed = false;
       player.dir = (player.x + PW/2 < bookcase.x + 12) ? 1 : -1;
