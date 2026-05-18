@@ -280,7 +280,10 @@ function updatePlayer() {
         addFloating(bag.x, bag.y, '+200', C.gold);
         addParticles(bag.x, bag.y, C.gold, 10);
         GameAudio.playSfx('bag');
-        setMsg(STRINGS.bagCollected);
+        alertTeachers(bag.x, bag.y);
+        let remaining = 0;
+        for (let bj = 0; bj < bags.length; bj++) if (!bags[bj].collected) remaining++;
+        if (remaining === 0) { bagWin(); } else { setMsg(fmt(STRINGS.bagStolen, bags.length - remaining, bags.length)); }
       }
       break;
     } else {
