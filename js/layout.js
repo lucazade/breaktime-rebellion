@@ -201,6 +201,7 @@ CONFIG.vis = {
     logo:     { w: 220, y: 10 },       // larghezza logo e y top (height dall'aspect ratio)
     tapText:  { fontSize: 8, gapY: 8 },// font e gap sotto il logo
     controls: {
+      fontSize: 4,       // ⚠ solo 4px e 8px sono crispini
       gapY:    8,        // gap dopo tapText prima della riga controlli
       btnH:    12,       // altezza clickable dei pulsanti
       prevX:   20, prevW: 14,    // pulsante ‹ livello

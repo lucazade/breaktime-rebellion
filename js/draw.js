@@ -63,7 +63,7 @@ function drawTitleScreen() {
   var ctrlY = Math.round(tapY + VT.tapText.fontSize + VT.controls.gapY);
   _titleCtrlY = ctrlY;
   var ct = VT.controls;
-  ctx.font = '4px "Press Start 2P"';
+  ctx.font = ct.fontSize + 'px "Press Start 2P"';
 
   // Level chooser
   if (LEVELS.length > 1) {
@@ -95,7 +95,7 @@ function drawTitleScreen() {
   // Keyboard legend (solo desktop)
   if (window.matchMedia('(pointer:fine)').matches) {
     var legY = Math.round(ctrlY + ct.btnH + VT.legend.gapY);
-    ctx.font = '4px "Press Start 2P"';
+    ctx.font = VT.legend.fontSize + 'px "Press Start 2P"';
     ctx.fillStyle = C.lgray;
     ctx.fillText('↑↓←→ '+(STRINGS.keyMove||'Move')+' · Z '+(STRINGS.keyAction||'Action')+' · P '+(STRINGS.keyPause||'Pause')+' · ESC '+(STRINGS.keyHome||'Home'), W/2, legY);
   }

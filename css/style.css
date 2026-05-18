@@ -315,7 +315,9 @@ body.title-mode #panel-left,
 body.title-mode #panel-right { visibility: hidden !important; }
 body.title-mode #game-area {
   box-shadow: none !important;
+  background: none !important;
 }
+body.title-mode canvas { background: none !important; }
 body.title-mode #game-area::before,
 body.title-mode #game-area::after { display: none !important; }
 
