@@ -1,11 +1,5 @@
-// Title screen — controls init, timer bar, service worker
+// Title screen — controls init, service worker
 (function() {
-
-  // ── Timer bar visibility ────────────────────────────────────────────────────
-  if (maxTimerTicks === 0) {
-    var tw = document.getElementById('timer-bar-wrap');
-    if (tw) tw.style.display = 'none';
-  }
 
   // ── Service worker ──────────────────────────────────────────────────────────
   if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');

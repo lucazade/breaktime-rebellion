@@ -164,54 +164,7 @@ canvas {
   background: #1a1a4a;
 }
 
-#hud-overlay {
-  position: absolute; top: 0; left: 0; right: 0;
-  display: flex; flex-direction: column;
-  /*background: rgba(0,0,0,0.5);*/
-  color: #aaa; font-size: calc(var(--game-h, 400px) * 0.023); letter-spacing: 1px;
-  pointer-events: none;
-}
-#hud-row {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 2px 16px; min-height: 20px;
-}
-#timer-bar-wrap {
-  width: 100%; height: 3px;
-  /*background: rgba(0,0,0,0.2);*/
-}
-#timer-bar { height: 3px; width: 100%; background: #9AD284; }
-#hud-row > div   { display: flex; align-items: center; gap: 6px; }
-#hud-overlay .hl { color: #ff2244; font-size: 1.2em; transform: translateY(-2px); }
-#hud-overlay .hl span { color: #ff2244; }
-#hud-overlay .hl svg { height: calc(var(--game-h, 400px) * 0.025); width: auto; }
-#hud-overlay .hg { color: #44ee66; font-size: calc(var(--game-h, 400px) * 0.027); text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);}
-#hud-overlay #hS { font-size: calc(var(--game-h, 400px) * 0.027); transform: translateY(1px); text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);}
-#hud-overlay span { color: #fff; }
-.hud-icon  { font-size: 1.1em; text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3); }
-.hud-spray { color: #44ee66; }
-.hud-star  { color: #ffd700; display: none; }
-
-#hud-msg {
-  display: none;
-  color: #fff;
-  font-size: calc(var(--game-h, 400px) * 0.027);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  white-space: nowrap;
-}
-
-#msg {
-  position: absolute; bottom: 0; left: 0; right: 0;
-  /*background: rgba(16,16,93,1.0);*/ color: #fffc; 
-  text-transform: uppercase; text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.8);
-  display: none;
-  padding: 1px 4px 4px;
-  font-size: calc(var(--game-h, 400px) * 0.025);
-  height: calc(var(--game-h, 400px) * 0.04); text-align: center; letter-spacing: 0px;
-  /*border-top: 1px solid #352879;*/
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  pointer-events: none;
-}
+/* HUD, msg, timer-bar rimossi: ora su canvas via drawHUD() */
 
 /* ─── JOYSTICK OVERLAY ─── */
 #ctrl-joy {
@@ -462,21 +415,7 @@ canvas {
   #keyboard-legend { display: block; }
 }
 
-/* ─── PANEL BELL LOGO ─── */
-#panel-bell {
-  display: none;
-  position: absolute;
-  top: 100px;
-  left: calc(55% - 1px);
-  transform: translateX(-50%);
-  width: 66px;
-  opacity: 0.72;
-  pointer-events: none;
-  image-rendering: pixelated;
-}
-@media (orientation: landscape) and (pointer: coarse) {
-  #panel-bell { display: block; }
-}
+/* #panel-bell rimosso */
 
 /* ─── PANEL BUTTONS (home / pause) ─── */
 .panel-btn {
@@ -519,75 +458,4 @@ canvas {
   .panel-btn { display: flex; }
 }
 
-/* ─── CREDITS OVERLAY ─── */
-#credits-overlay {
-  display: none;
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,0.88);
-  z-index: 9500;
-  align-items: center; justify-content: center;
-}
-#credits-overlay.active { display: flex; }
-.credits-box {
-  background: #000030;
-  border: 1px solid #ffd700;
-  padding: 20px 24px;
-  max-width: 340px; width: 88vw;
-  text-align: center;
-  font-family: 'Press Start 2P', monospace;
-  color: #fff;
-}
-.credits-title { color: #ffd700; font-size: 13px; margin-bottom: 14px; }
-.credits-team  { color: #9ad284; font-size: 11px !important; margin-bottom: 10px; }
-.credits-content p { font-size: 10px; margin-bottom: 15px; line-height: 1.7; }
-.credits-role  { color: #70a4b2; font-size: 8px; }
-.credits-small { font-size: 6px; color: #aaa; }
-.credits-box .dialog-btn { margin-top: 14px; }
-
-/* ─── IN-GAME DIALOGS (pause / home confirm) ─── */
-#pause-overlay, #home-confirm-overlay {
-  position: absolute;
-  inset: 0;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0,0,0,0.62);
-  z-index: 80;
-}
-
-#pause-overlay.active, #home-confirm-overlay.active { display: flex; }
-
-.game-dialog {
-  background: rgba(0,0,24,0.95);
-  border: 2px solid #ffd700;
-  border-radius: 4px;
-  padding: 20px 28px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-  font-family: 'Press Start 2P', monospace;
-}
-
-.dialog-title {
-  color: #ffd700;
-  font-size: clamp(12px, 2.5vw, 16px);
-  letter-spacing: 2px;
-}
-
-.dialog-btns { display: flex; gap: 12px; }
-
-.dialog-btn {
-  background: rgba(255,215,0,0.12);
-  border: 1px solid #ffd700;
-  border-radius: 3px;
-  color: #ffd700;
-  font-family: 'Press Start 2P', monospace;
-  font-size: clamp(10px, 2vw, 13px);
-  padding: 8px 16px;
-  cursor: pointer;
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.dialog-btn:active { background: rgba(255,215,0,0.3); }
+/* credits-overlay, pause-overlay, home-confirm-overlay e dialog-* rimossi: ora su canvas */
