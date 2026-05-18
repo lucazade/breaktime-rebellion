@@ -31,11 +31,11 @@ function _drawLockIcon(x, y, color) {
 
 function drawTitleScreen() {
   var VT = CONFIG.vis.titleScreen;
-  // Sfondo blu — il resto della finestra è coperto da body.title-mode in CSS
-  var VT = CONFIG.vis.titleScreen;
-  ctx.fillStyle = VT.bgColor || '#000060'; ctx.fillRect(0, 0, W, H);
+  // Canvas trasparente — il gradiente body.title-mode CSS si vede in trasparenza
+  ctx.clearRect(0, 0, W, H);
 
-  // Logo
+  // Logo — imageSmoothingEnabled=false per pixel-art crisp
+  var VT = CONFIG.vis.titleScreen;
   var logoW = VT.logo.w, logoY = VT.logo.y;
   var logoX = Math.round((W - logoW) / 2);
   var logoH = 0;
@@ -43,6 +43,7 @@ function drawTitleScreen() {
     logoH = Math.round(_logoImage.naturalHeight / _logoImage.naturalWidth * logoW);
     ctx.save();
     ctx.setTransform(1,0,0,1,0,0);
+    ctx.imageSmoothingEnabled = false;
     ctx.drawImage(_logoImage, logoX*2, logoY*2, logoW*2, logoH*2);
     ctx.restore();
   }
@@ -50,8 +51,8 @@ function drawTitleScreen() {
   ctx.save();
   ctx.textAlign = 'center'; ctx.textBaseline = 'top';
 
-  // Tap to start (blinking, nascosta mentre parte il gioco)
-  var tapY = logoY + logoH + VT.tapText.gapY;
+  // Tap to start (blinking)
+  var tapY = Math.round(logoY + logoH + VT.tapText.gapY);
   if (!_titleStarting && Math.floor(frame / 20) % 2 === 0) {
     ctx.font = VT.tapText.fontSize + 'px "Press Start 2P"';
     ctx.fillStyle = C.gold;
@@ -59,47 +60,44 @@ function drawTitleScreen() {
   }
 
   // Controls row
-  var ctrlY = tapY + VT.tapText.fontSize + VT.controls.gapY;
-  _titleCtrlY = ctrlY; // esposto per click detection in game.js
+  var ctrlY = Math.round(tapY + VT.tapText.fontSize + VT.controls.gapY);
+  _titleCtrlY = ctrlY;
   var ct = VT.controls;
   ctx.font = '4px "Press Start 2P"';
 
+  // Level chooser
   if (LEVELS.length > 1) {
-    // Prev ‹
-    var prevDisabled = currentLevel <= 1;
-    ctx.fillStyle = prevDisabled ? C.dgray : C.white;
+    ctx.fillStyle = currentLevel <= 1 ? C.dgray : C.white;
     ctx.fillText('‹', ct.prevX + ct.prevW/2, ctrlY + 2);
-    // Level label
     ctx.fillStyle = C.gold;
     ctx.fillText(STRINGS.levelLabel + ' ' + currentLevel, ct.labelX, ctrlY + 2);
-    // Next › or lock
-    var atCeiling = currentLevel >= _btrMax;
-    var moreExist = _btrMax < LEVELS.length;
-    if (atCeiling && moreExist) {
-      _drawLockIcon(ct.nextX + 2, ctrlY + 1, C.yellow);
-    } else {
-      ctx.fillStyle = (atCeiling && !moreExist) ? C.dgray : C.white;
-      ctx.fillText('›', ct.nextX + ct.nextW/2, ctrlY + 2);
-    }
+    var atCeiling = currentLevel >= _btrMax, moreExist = _btrMax < LEVELS.length;
+    if (atCeiling && moreExist) { _drawLockIcon(ct.nextX + 2, ctrlY + 1, C.yellow); }
+    else { ctx.fillStyle = (atCeiling && !moreExist) ? C.dgray : C.white; ctx.fillText('›', ct.nextX + ct.nextW/2, ctrlY + 2); }
+  }
+
+  // Language buttons (solo se debug)
+  if (CONFIG.debug.showLangChooser) {
+    var curLang = document.documentElement.lang;
+    ['en','it'].forEach(function(lg, idx) {
+      var lx = ct.langX + idx * (ct.langW + 4);
+      var isActive = curLang === lg;
+      ctx.fillStyle = isActive ? C.gold : C.mgray;
+      ctx.fillText(lg.toUpperCase(), lx + ct.langW/2, ctrlY + 2);
+      if (isActive) { ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(lx, ctrlY, ct.langW, 8); }
+    });
   }
 
   // Audio toggle
   var audioMode = GameAudio.getMode();
-  var audioColor = audioMode === 'full' ? C.lgreen : audioMode === 'sfx' ? C.yellow : C.mgray;
-  _drawAudioIcon(ct.audioX, ctrlY, audioMode, audioColor);
+  _drawAudioIcon(ct.audioX, ctrlY, audioMode, audioMode==='full'?C.lgreen:audioMode==='sfx'?C.yellow:C.mgray);
 
-  // Keyboard legend (solo desktop con mouse)
+  // Keyboard legend (solo desktop)
   if (window.matchMedia('(pointer:fine)').matches) {
-    var legY = ctrlY + ct.btnH + VT.legend.gapY;
-    ctx.font = VT.legend.fontSize + 'px "Press Start 2P"';
+    var legY = Math.round(ctrlY + ct.btnH + VT.legend.gapY);
+    ctx.font = '4px "Press Start 2P"';
     ctx.fillStyle = C.lgray;
-    ctx.fillText(
-      '↑↓←→ ' + (STRINGS.keyMove||'Move') +
-      ' \xB7 Z ' + (STRINGS.keyAction||'Action') +
-      ' \xB7 P ' + (STRINGS.keyPause||'Pause') +
-      ' \xB7 ESC ' + (STRINGS.keyHome||'Home'),
-      W/2, legY
-    );
+    ctx.fillText('↑↓←→ '+(STRINGS.keyMove||'Move')+' · Z '+(STRINGS.keyAction||'Action')+' · P '+(STRINGS.keyPause||'Pause')+' · ESC '+(STRINGS.keyHome||'Home'), W/2, legY);
   }
 
   ctx.restore();

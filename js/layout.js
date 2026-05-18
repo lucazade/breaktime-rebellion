@@ -198,7 +198,6 @@ CONFIG.vis = {
 
   // Title screen — logo + tap to start + level chooser + audio toggle + keyboard legend
   titleScreen: {
-    bgColor:  '#000060',               // colore canvas (deve matchare il gradiente body.title-mode)
     logo:     { w: 220, y: 10 },       // larghezza logo e y top (height dall'aspect ratio)
     tapText:  { fontSize: 8, gapY: 8 },// font e gap sotto il logo
     controls: {
@@ -207,9 +206,10 @@ CONFIG.vis = {
       prevX:   20, prevW: 14,    // pulsante ‹ livello
       nextX:   90, nextW: 14,    // pulsante › o lock
       labelX:  60,               // x centro label "LVL N"
+      langX:  155, langW: 20,    // pulsanti EN / IT (solo se showLangChooser)
       audioX: 275, audioW: 22,   // pulsante audio toggle
     },
-    legend: { fontSize: 4, gapY: 8 },  // keyboard legend (solo desktop)
+    legend: { fontSize: 4, gapY: 8 },  // keyboard legend (solo desktop) — ⚠ solo 4px o 8px
   },
 
   // Fumetto di Luca (L10 fine livello) — bh calcolato: headerH + lineCount*lineH + gapTap + tapH + padBottom

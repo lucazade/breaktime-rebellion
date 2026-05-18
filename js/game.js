@@ -80,11 +80,17 @@ function _titleCanvasClick(lx, ly) {
   if (state !== 'title') return;
   var ct = CONFIG.vis.titleScreen.controls;
   if (ly >= _titleCtrlY - 2 && ly <= _titleCtrlY + ct.btnH + 2) {
-    // Siamo nella riga controlli
     if (lx >= ct.audioX && lx <= ct.audioX + ct.audioW + 4) { _titleCycleAudio(); return; }
     if (lx >= ct.prevX && lx <= ct.prevX + ct.prevW && currentLevel > 1 && LEVELS.length > 1) { currentLevel--; return; }
     if (lx >= ct.nextX && lx <= ct.nextX + ct.nextW && currentLevel < _btrMax && LEVELS.length > 1) { currentLevel++; return; }
-    return; // nella riga ma non su un pulsante → non partire
+    if (CONFIG.debug.showLangChooser) {
+      ['en','it'].forEach(function(lg, idx) {
+        var lxBtn = ct.langX + idx * (ct.langW + 4);
+        if (lx >= lxBtn && lx <= lxBtn + ct.langW) { localStorage.setItem('btr_lang', lg); location.href = location.pathname + '?lang=' + lg; }
+      });
+      return;
+    }
+    return;
   }
   _tryStart();
 }
