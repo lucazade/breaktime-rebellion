@@ -249,6 +249,10 @@ CHIUSI:
 - [X] #104 non compare piu l'immagine logo sopra la label rotateHtml
 - [X] #105 In rotatehtml non deve prendere tap o clicca altrimenti parte il gioco (non sempre, controllo)
 - [X] #106 Sulla title screen quando fai tap sta per partire il gioco prende anche altri tap e non dovrebbe
+- [X] #113 Nella zona dove Marco fa respawn non deve passare nessuno altrimenti rimuore subito se colpito (livello 10 fa respawn in un altro posto)
+- [X] #114 nella titlescreen se fai partire il gioco prima che parta la musica della title quando poi appare il gioco partono sia la musica della title che del gioco
+- [X] #115 quando muori si scurisce subito overlay con fadein (tutto giusto) ma poi il banner gameover ci mette troppo tempo ad apparire
+- [X] #109 La progress di L2 è troppo difficile che si resetta se non riesci a completarla, rimettiamo quella classica e questa che si resetta se non la completi mettiamola al pallone
 
 PER LUCA:
 - [ ] #72 Revisione punteggi (per Luca)
@@ -257,12 +261,10 @@ PER LUCA:
 
 IMPORTANTI:
 - [ ] #107 Test robustezza automatico
-- [ ] #109 La progress di L2 è troppo difficile che si resetta se non riesci a completarla, rimettiamo quella classica e questa che si resetta se non la completi mettiamola al pallone
 - [ ] #111 sistemare click su titlepage (fare screenshot prima)
-- [ ] #113 Nella zona dove Marco fa respawn non deve passare nessuno altrimenti rimuore subito se colpito (livello 10 fa respawn in un altro posto)
-- [X] #114 nella titlescreen se fai partire il gioco prima che parta la musica della title quando poi appare il gioco partono sia la musica della title che del gioco
-- [ ] #115 quando muori si scurisce subito overlay con fadein (tutto giusto) ma poi il banner gameover ci mette troppo tempo ad apparire
+- [ ] #116 il banner gameover deve chiedere se rigiocare altrimenti manda in titlescreen
 
 MINORI:
 - [ ] #76 target libreria troppo grande
 - [ ] #112 Marco deve suonare la campanella proprio sotto la campanella
+- [ ] #117 no muori per debug
