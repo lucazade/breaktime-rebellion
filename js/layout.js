@@ -3,42 +3,49 @@
 //  Edit here to change the look of the school building.
 // ═══════════════════════════════════════════════════════════
 
-CONFIG.layout = {
-  W: 320, H: 200,
-  PW: 8, PH: 16,
-  GY: 185, MY: 127, TY: 70,
-  BW: 22, BH: 14,
-  walkOffset: 6,
-  wallLeft: 10, wallRight: 10, // #78 — margini muro sx/dx (pixel logici)
-  desktopZoom: 1.0,            // zoom canvas su desktop (pointer:fine) — 1.5 = 400→600px
-};
-
-// Layout shortcut constants — used throughout all modules
-const W = CONFIG.layout.W, H = CONFIG.layout.H;
-const PW = CONFIG.layout.PW, PH = CONFIG.layout.PH;
-const GY = CONFIG.layout.GY, MY = CONFIG.layout.MY, TY = CONFIG.layout.TY;
-const BW = CONFIG.layout.BW, BH = CONFIG.layout.BH;
-const walkOffset = CONFIG.layout.walkOffset;
-
-CONFIG.colors = {
-  black:'#000000', white:'#FFFFFF',
-  blue:'#352879', lblue:'#6C5EB5',
-  red:'#68372B', pink:'#9A6759',
-  green:'#588D43', lgreen:'#9AD284',
-  brown:'#433900',
-  yellow:'#B8C76F', gold:'#FFD700',
-  dgray:'#444444', mgray:'#6C6C6C', lgray:'#959595',
-  chalk:'#D8E8D0', chalkbg:'#1A4A1A',
-  cyan:'#70A4B2',
-  desk:'#2C1800', desklt:'#4E2A00',
-  bagbody:'#4A3D8F', bagborder:'#2A1F5E',
-  bell:'#DAA520',
-  redprof:'#c3200e', greenprof:'#109f06', grayprof:'#171717', whiteprof:'#dcdcdc', cyanprof:'#0757d7',
-};
-
-// ── Visual config — edit here to adjust layout, dashed borders and canvas banners ─
-// All canvas coords are in logical 320×200 space (ctx.scale 2×).
+// Prima parte di CONFIG.vis: layout e colori (devono stare prima dei const)
 CONFIG.vis = {
+
+  layout: {
+    W: 320, H: 200,       // dimensioni canvas logiche (px)
+    PW: 8, PH: 16,        // player width × height
+    GY: 185, MY: 127, TY: 70,  // Y pavimento Ground / Middle / Top floor
+    BW: 22, BH: 14,       // board (lavagna) width × height
+    walkOffset: 6,        // px sopra la superficie dove cammina il personaggio
+    wallLeft: 10, wallRight: 10, // #78 — margini muro sx/dx (pixel logici)
+    desktopZoom: 1.0,            // zoom canvas su desktop (pointer:fine) — 1.5 = 400→600px
+  },
+
+  colors: {
+    black:'#000000', white:'#FFFFFF',
+    blue:'#352879', lblue:'#6C5EB5',
+    red:'#68372B', pink:'#9A6759',
+    green:'#588D43', lgreen:'#9AD284',
+    brown:'#433900',
+    yellow:'#B8C76F', gold:'#FFD700',
+    dgray:'#444444', mgray:'#6C6C6C', lgray:'#959595',
+    chalk:'#D8E8D0', chalkbg:'#1A4A1A',
+    cyan:'#70A4B2',
+    desk:'#2C1800', desklt:'#4E2A00',
+    bagbody:'#4A3D8F', bagborder:'#2A1F5E',
+    bell:'#DAA520',
+    redprof:'#c3200e', greenprof:'#109f06', grayprof:'#171717', whiteprof:'#dcdcdc', cyanprof:'#0757d7',
+  },
+
+};
+
+// Shortcut constants — usati in tutti i moduli
+const W = CONFIG.vis.layout.W, H = CONFIG.vis.layout.H;
+const PW = CONFIG.vis.layout.PW, PH = CONFIG.vis.layout.PH;
+const GY = CONFIG.vis.layout.GY, MY = CONFIG.vis.layout.MY, TY = CONFIG.vis.layout.TY;
+const BW = CONFIG.vis.layout.BW, BH = CONFIG.vis.layout.BH;
+const walkOffset = CONFIG.vis.layout.walkOffset;
+const wallLeft = CONFIG.vis.layout.wallLeft, wallRight = CONFIG.vis.layout.wallRight;
+
+// Resto di CONFIG.vis — usa i shortcut constants sopra
+// All canvas coords are in logical 320×200 space (ctx.scale 2×).
+Object.assign(CONFIG.vis, {
+
   // Title screen — logo + tap to start + level chooser + audio toggle + keyboard legend
   titleScreen: {
     logo:     { w: 320, borderW: 1, borderR: 5 }, // larghezza logo; y calcolato (centratura verticale); borderW=spessore bordino, borderR=raggio angoli clip
@@ -58,9 +65,9 @@ CONFIG.vis = {
 
   // Sprite personaggi — outline e colore
   char: {
-    outline:      true,
-    outlineSize:  1.0,
-    outlineColor: '#121212',
+    outline:      true,         // abilita outline intorno agli sprite
+    outlineSize:  1.0,          // spessore outline (px logici)
+    outlineColor: '#121212',    // colore outline
   },
 
   // HUD — strip in cima al canvas
@@ -75,7 +82,7 @@ CONFIG.vis = {
     fontSize:  8,                    // ⚠ solo 4px e 8px sono crispini su questo canvas (scale 2×)
     dotW:      7,                    // lato quadratino indicatore meccanica
     dotGap:    5,                    // gap tra quadratino e testo counter
-    dotOffsetY: 0,                  // offset y del dot rispetto a textY (negativo = su)
+    dotOffsetY: 0,                   // offset y del dot rispetto a textY (negativo = su)
     bgColor:   'rgba(0,0,0,0.55)',
     // Colore quadratino indicatore per ogni meccanica
     dotColors: {
@@ -136,60 +143,60 @@ CONFIG.vis = {
 
   // Banner storia (L1) — panH calcolato: padTop+titleH+titleSpacing+lineBlock+spacerH+tapH+padBottom
   storyBanner: {
-    panW: 280, wrapWidth: 220,
+    panW: 280, wrapWidth: 220,  // larghezza pannello; wrapWidth = larghezza testo
     fontSize:       8,
-    padTop:        16,
-    titleH:        10, titleSpacing: 10,
-    lineH:          8, lineSpacing:   4,
-    spacerH:       10,
-    tapH:           8,
-    padBottom:     16,
+    padTop:        16,          // spazio dal bordo superiore al titolo
+    titleH:        10, titleSpacing: 10, // altezza titolo, spacing dopo titolo
+    lineH:          8, lineSpacing:   4, // altezza riga, spacing tra righe
+    spacerH:       10,          // spazio vuoto prima del tap
+    tapH:           8,          // altezza tapContinue
+    padBottom:     16,          // spazio dal fondo al bordo inferiore
   },
 
   // Banner missione — panH calcolato: padTop+titleH+titleSpacing+lineBlock+padBottom
   missionBanner: {
-    panW: 260, wrapWidth: 200,
+    panW: 260, wrapWidth: 200,  // larghezza pannello; wrapWidth = larghezza testo
     fontSize:       8,
-    padTop:        14,
-    titleH:        10, titleSpacing: 8,
-    lineH:          8, lineSpacing:  4,
-    padBottom:     14,
+    padTop:        14,          // spazio dal bordo superiore al titolo
+    titleH:        10, titleSpacing: 8, // altezza titolo, spacing dopo titolo
+    lineH:          8, lineSpacing:  4, // altezza riga, spacing tra righe
+    padBottom:     14,          // spazio dal fondo al bordo inferiore
   },
 
   // Banner livello superato — panH calcolato: padTop+stepTitle+stepScore+tapH+padBottom
   levelComplete: {
-    panW: 260,
+    panW: 260,  // panY e bx centrati automaticamente
     fontSize:   8,   // px font corpo
-    padTop:    11,  // spazio dal bordo superiore al primo testo
-    stepTitle: 20,  // avanzamento dopo titolo (h=10 + spacing=10)
-    stepScore: 22,  // avanzamento dopo punteggio (h=8 + spacing=14)
-    tapH:       8,  // altezza tapContinue
-    padBottom: 11,  // spazio dal fondo tapContinue al bordo inferiore
+    padTop:    11,   // spazio dal bordo superiore al primo testo
+    stepTitle: 20,   // avanzamento dopo titolo (h=10 + spacing=10)
+    stepScore: 22,   // avanzamento dopo punteggio (h=8 + spacing=14)
+    tapH:       8,   // altezza tapContinue
+    padBottom: 11,   // spazio dal fondo tapContinue al bordo inferiore
   },
 
   // Banner fine gioco (L10) — panH calcolato: padTop+stepTitle+stepScore+stepBest+tapH+padBottom
   gameWin: {
-    panW: 260,
+    panW: 260,  // panY e bx centrati automaticamente
     fontSize:   8,   // px font corpo
-    padTop:    23,  // spazio dal bordo superiore al primo testo
-    stepTitle: 22,  // avanzamento dopo titolo win (h=12 + spacing=10)
-    stepScore: 12,  // avanzamento dopo punteggio (h=8 + spacing=4)
-    stepBest:  16,  // avanzamento dopo riga miglior punteggio (h=8 + spacing=8)
-    tapH:       8,  // altezza tapForTitle
-    padBottom: 23,  // spazio dal fondo tapForTitle al bordo inferiore
+    padTop:    23,   // spazio dal bordo superiore al primo testo
+    stepTitle: 22,   // avanzamento dopo titolo win (h=12 + spacing=10)
+    stepScore: 12,   // avanzamento dopo punteggio (h=8 + spacing=4)
+    stepBest:  16,   // avanzamento dopo riga miglior punteggio (h=8 + spacing=8)
+    tapH:       8,   // altezza tapForTitle
+    padBottom: 23,   // spazio dal fondo tapForTitle al bordo inferiore
   },
 
   // Banner gameover — panH calcolato: padTop+stepTitle+stepLevel+stepScore+stepConfirm+btnH+padBottom
   gameover: {
-    panW: 260,  // panY e bx centrati automaticamente
-    fontSize:     8,  // px font corpo
-    padTop:      12,  // spazio dal bordo superiore al primo testo
-    stepTitle:   18,  // avanzamento dopo "ESPULSO!"
-    stepLevel:   12,  // avanzamento dopo livello raggiunto
-    stepScore:   20,  // avanzamento dopo punteggio
-    stepConfirm: 16,  // avanzamento dopo "VUOI RIGIOCARE?" → top pulsanti
+    panW: 260,       // panY e bx centrati automaticamente
+    fontSize:     8, // px font corpo
+    padTop:      12, // spazio dal bordo superiore al primo testo
+    stepTitle:   18, // avanzamento dopo "ESPULSO!"
+    stepLevel:   12, // avanzamento dopo livello raggiunto
+    stepScore:   20, // avanzamento dopo punteggio
+    stepConfirm: 16, // avanzamento dopo "VUOI RIGIOCARE?" → top pulsanti
     btnH:        14,
-    padBottom:   12,  // spazio dal fondo pulsanti al bordo inferiore
+    padBottom:   12, // spazio dal fondo pulsanti al bordo inferiore
     siOx: 30, siW: 70,   // SI: bx+siOx, larghezza siW
     noOx: 160, noW: 70,  // NO: bx+noOx, larghezza noW
   },
@@ -210,30 +217,30 @@ CONFIG.vis = {
 
   // Overlay pausa — panH calcolato: padTop+stepTitle+btnH+padBottom
   pauseOverlay: {
-    panW: 200,
-    fontSize:   8,  // ⚠ solo 4px e 8px sono crispini
-    padTop:    14,  // spazio dal bordo superiore al titolo
-    stepTitle: 22,  // avanzamento dopo "— PAUSA —" (h=10 + spacing=12)
-    btnH:      14,  // altezza pulsante RIPRENDI
-    padBottom: 14,  // spazio dal fondo pulsante al bordo inferiore
+    panW: 200,  // panY e bx centrati automaticamente
+    fontSize:   8,   // ⚠ solo 4px e 8px sono crispini
+    padTop:    14,   // spazio dal bordo superiore al titolo
+    stepTitle: 22,   // avanzamento dopo "— PAUSA —" (h=10 + spacing=12)
+    btnH:      14,   // altezza pulsante RIPRENDI
+    padBottom: 14,   // spazio dal fondo pulsante al bordo inferiore
     resumeOx:  65, resumeW: 70,  // pulsante RIPRENDI: bx+resumeOx, larghezza resumeW
   },
 
   // Overlay home confirm — panH calcolato: padTop+stepTitle+btnH+padBottom
   homeConfirm: {
-    panW: 200,
-    fontSize:   8,  // ⚠ solo 4px e 8px sono crispini
-    padTop:    14,  // spazio dal bordo superiore alla domanda
-    stepTitle: 20,  // avanzamento dopo "TORNARE ALLA HOME?" (h=8 + spacing=12)
-    btnH:      14,  // altezza pulsanti SI/NO
-    padBottom: 14,  // spazio dal fondo pulsanti al bordo inferiore
+    panW: 200,  // panY e bx centrati automaticamente
+    fontSize:   8,   // ⚠ solo 4px e 8px sono crispini
+    padTop:    14,   // spazio dal bordo superiore alla domanda
+    stepTitle: 20,   // avanzamento dopo "TORNARE ALLA HOME?" (h=8 + spacing=12)
+    btnH:      14,   // altezza pulsanti SI/NO
+    padBottom: 14,   // spazio dal fondo pulsanti al bordo inferiore
     siOx: 20, siW: 70,   // SI: bx+siOx, larghezza siW
     noOx: 110, noW: 70,  // NO: bx+noOx, larghezza noW
   },
 
   // Credits — panH calcolato: padTop+stepTitle+stepTeam+5*(nameH+nameGap+roleH+roleGap)+btnGapAbove+btnH+padBottom
   credits: {
-    panW: 240,
+    panW: 240,  // panY e bx centrati automaticamente
     fontTitle:    8, // ⚠ solo 4px e 8px — era 6px (non crisp), portato a 8
     fontBody:     4, // nomi e ruoli
     padTop:       8,
@@ -245,10 +252,11 @@ CONFIG.vis = {
     btnH:        12, btnW: 60,     // pulsante OK
     padBottom:    10,
   },
-};
+
+});
 
 // Alias per retrocompatibilità con levels.js
 var SHARED_LAYOUT = CONFIG.vis.shared;
 
 // Applica zoom desktop come CSS custom property (letto da style.css)
-document.documentElement.style.setProperty('--btr-zoom', CONFIG.layout.desktopZoom);
+document.documentElement.style.setProperty('--btr-zoom', CONFIG.vis.layout.desktopZoom);

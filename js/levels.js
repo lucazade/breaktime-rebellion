@@ -1,5 +1,5 @@
 // Level definitions — edit here to change mechanics and NPCs per level.
-// Loaded after layout.js; SHARED_LAYOUT, CONFIG.layout and CONFIG.colors are available.
+// Loaded after layout.js; SHARED_LAYOUT, CONFIG.vis.layout and CONFIG.vis.colors are available.
 //
 // mechanics: declares which player actions are active objectives in this level.
 //   writeBoards   — spray all boards to tag them (boards are always drawn, writable only in L1)
@@ -14,7 +14,7 @@
 //   { id, name, x, y, w, h, actions:[] }
 
 var LEVELS = (function() {
-  var C = CONFIG.colors;
+  var C = CONFIG.vis.colors;
   return [
 
     // ── LEVEL 1 — Tag all boards, ring the bell ──────────────────────────────
