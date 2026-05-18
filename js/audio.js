@@ -37,6 +37,7 @@ const GameAudio = (function() {
     a.volume  = CONFIG.audio.musicVolume;
     return a;
   })() : null;
+  var _introPlayPromise = null;
 
   // Fades audio to targetVol over durationMs; returns interval id
   function _fadeAudio(audio, targetVol, durationMs, cb) {
@@ -77,16 +78,27 @@ const GameAudio = (function() {
     if (!introMusic || mode !== 'full') return;
     introMusic.currentTime = 0;
     introMusic.volume = CONFIG.audio.musicVolume;
-    introMusic.play().catch(function() {});
+    _introPlayPromise = introMusic.play() || null;
+    if (_introPlayPromise) _introPlayPromise.catch(function() {});
   }
 
   function stopIntro() {
-    if (introMusic) { introMusic.pause(); introMusic.currentTime = 0; }
+    if (!introMusic) return;
+    var p = _introPlayPromise;
+    _introPlayPromise = null;
+    if (p) {
+      // play() still pending — pause as soon as it resolves, unless a new play() started
+      p.then(function() { if (!_introPlayPromise) { introMusic.pause(); introMusic.currentTime = 0; } }).catch(function() {});
+    } else if (!introMusic.paused) {
+      introMusic.pause(); introMusic.currentTime = 0;
+    }
   }
 
   // Fade out intro independently (no callback chain) — use with CSS transitionend
   function fadeOutIntro(durationMs) {
-    if (!introMusic || introMusic.paused) return;
+    if (!introMusic) return;
+    if (_introPlayPromise) { stopIntro(); return; }   // #114: play() pending — cancel it
+    if (introMusic.paused) return;
     _fadeAudio(introMusic, 0, durationMs || 1200, stopIntro);
   }
 
