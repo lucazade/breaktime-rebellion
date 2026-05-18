@@ -39,6 +39,7 @@
     pauseTitle:           '— PAUSE —',
     btnResume:            'RESUME',
     homeConfirm:          'GO TO HOME?',
+    gameoverConfirm:      'PLAY AGAIN?',
     btnYes:               'YES',
     btnNo:                'NO',
 
@@ -137,6 +138,7 @@
     pauseTitle:           '— PAUSA —',
     btnResume:            'RIPRENDI',
     homeConfirm:          'TORNARE ALLA HOME?',
+    gameoverConfirm:      'VUOI RIGIOCARE?',
     btnYes:               'SI',
     btnNo:                'NO',
 

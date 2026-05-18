@@ -935,11 +935,12 @@ function drawEndScreen() {
 
   if (!isWin) {
     // Gameover: show current run + SI/NO choice buttons
-    const by = 48, bw = 260, bh = 108;
+    const by = 44, bw = 260, bh = 128;
     drawOverlayPanel(bx, by, bw, bh, 'rgba(60,0,0,0.88)', C.gold, [
-      { text: STRINGS.gameoverTitle, font: '8px "Press Start 2P"', color: C.redprof, height: 10, spacing: 8 },
+      { text: STRINGS.gameoverTitle,              font: '8px "Press Start 2P"', color: C.redprof, height: 10, spacing: 10 },
       { text: fmt(STRINGS.levelReached, currentLevel), font: '8px "Press Start 2P"', color: C.white, height: 8, spacing: 4 },
-      { text: scoreText, font: '8px "Press Start 2P"', color: C.white, height: 8, spacing: 0 },
+      { text: scoreText,                          font: '8px "Press Start 2P"', color: C.white,   height: 8, spacing: 12 },
+      { text: STRINGS.gameoverConfirm,            font: '8px "Press Start 2P"', color: C.gold,    height: 8, spacing: 0 },
     ]);
     // SI / NO buttons
     const btnY = by + bh - 28, btnH = 14;
