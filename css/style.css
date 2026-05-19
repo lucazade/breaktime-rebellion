@@ -367,7 +367,7 @@ body.title-mode #game-area::after { display: none !important; }
   transform: translateX(-50%);
   width: 68px; height: 38px;
   border-radius: 8px;
-  background: #0a0018;
+  background: var(--btr-btn-bg, #0a0018);
   border: 2px solid rgba(160,0,255,0.85); /* colore base — override con CSS vars per-pulsante */
   color: #fff;
   font-size: 16px;
@@ -383,16 +383,18 @@ body.title-mode #game-area::after { display: none !important; }
 
 .panel-btn:active { background: rgba(160,0,255,0.28); border-color: rgba(160,0,255,1); }
 
-/* bordi pulsanti configurabili da CONFIG.vis.layout in layout.js */
-#btn-home  { border-color: var(--btr-btn-home-border,  rgba(160,0,255,0.85)); }
-#btn-pause { border-color: var(--btr-btn-pause-border, rgba(160,0,255,0.85)); }
-#btn-info  { border-color: var(--btr-btn-info-border,  rgba(160,0,255,0.85)); }
+/* sfondo e bordi pulsanti configurabili da CONFIG.vis.layout in layout.js */
+#btn-home  { background: var(--btr-btn-home-bg,  #0a0018); border-color: var(--btr-btn-home-border,  rgba(160,0,255,0.85)); }
+#btn-pause { background: var(--btr-btn-pause-bg, #0a0018); border-color: var(--btr-btn-pause-border, rgba(160,0,255,0.85)); }
+#btn-info  { background: var(--btr-btn-info-bg,  rgba(0,0,0,0.45)); border-color: var(--btr-btn-info-border,  rgba(160,0,255,0.85)); }
+#btn-home:active,  #btn-home.pressed  { background: var(--btr-btn-home-bg-pressed,  rgba(160,0,255,0.28)); }
+#btn-pause:active, #btn-pause.pressed { background: var(--btr-btn-pause-bg-pressed, rgba(160,0,255,0.28)); }
+#btn-info:active,  #btn-info.pressed  { background: var(--btr-btn-info-bg-pressed,  rgba(160,0,255,0.28)); }
 
 .panel-btn-info {
   top: 115px;
   width: 35px; height: 35px;
   border-radius: 50%;
-  background: rgba(0,0,0,0.45);
   /*border: 1px solid rgba(255,255,255,0.3);*/
   color: rgba(255,255,255,0.85);
   /*font-style: italic;*/
