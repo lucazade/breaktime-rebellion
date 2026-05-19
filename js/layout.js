@@ -66,7 +66,7 @@ Object.assign(CONFIG.vis, {
     tapText:  { fontSize: 4, gapY: 3 },// font e gap sotto il logo
     controls: {
       fontSize: 8,       // ⚠ solo 4px e 8px sono crispini
-      gapY:     6,       // gap dopo tapText prima della riga controlli
+      gapY:     5,       // gap dopo tapText prima della riga controlli
       btnH:    10,       // altezza clickable dei pulsanti
       boxR:     2,       // raggio angoli box pulsanti
       btnColor: '#b0b0b0', // colore pulsanti abilitati (meno saturo di white)

@@ -33,7 +33,7 @@ const CONFIG = {
   debug: {
     showLangChooser:  true,
     showLegend:       false,
-    showTapToStart:   true,
+    showTapToStart:   false,
     simulateMobile:   false,
     unlockAllLevels:  false,
     godMode:          false,
