@@ -34,7 +34,7 @@ const CONFIG = {
     lang:             'auto', // 'auto' = navigator.language | 'it' | 'en'
     showTapToStart:   true,
     showLegend:       false,
-    simulateMobile:   true,
+    simulateMobile:   false,
     unlockAllLevels:  false,
     godMode:          false,
   },

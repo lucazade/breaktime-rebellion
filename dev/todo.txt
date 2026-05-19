@@ -261,6 +261,11 @@ CHIUSI:
 - [X] #119 in credits bisogna freezare il gioco
 - [X] #120 in title rendiamo la riga "tap per continuare opzionale"
 - [X] #121 visto che la riga tap per continuare è opzionale e la legend c'e' solo su pc allora tutto il canvas nella title deve essere centrato verticalmente
+- [X] #122 la label nei pulsanti dei banner deve avere testo 4px
+- [X] #123 pulsanti controlli in title troppi piccoli (switch a 8px)
+- [X] #119 quando compare un messaggio in hud nascondiamo anche cuori e punteggio
+- [X] #120 con i messaggi in hud a font size 4px i cuori rimangono troppo grandi (devono far resize)
+- [X] #122 bug pulsante pausa cambia di grafica (quando fai tap più volte sul pusante pausa a un certo punto cambia e ha sfondo arancione, vedi screenshot)
 
 PER LUCA:
 - [ ] #72 Revisione punteggi (per Luca)
@@ -268,11 +273,8 @@ PER LUCA:
 - [ ] #108 sistemare suoni (per Luca)
 
 IMPORTANTI:
-- [ ] #119 quando compare msg in hud nascondiamo cuori e punteggio
-- [ ] #120 msg in hud font size 4px
 - [ ] #121 quando il prof si allerta e strilla ehi! fa uno scatto in avanti che in precedenza non faceva
-- [ ] #122 la label nei pulsanti dei banner deve avere testo 4px
-- [ ] #123 pulsanti controlli in title troppi piccoli (switch a 8px)
+- [ ] #123 sfondo syntwave anche per title opzionale
 
 MINORI:
 - [ ] #76 target libreria troppo grande
