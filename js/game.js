@@ -46,7 +46,7 @@ var _titleStarting = false;
 var _btrMax = 1;
 
 function _initTitleState() {
-  var debug = CONFIG.debug.showLevelChooser;
+  var debug = CONFIG.debug.unlockAllLevels;
   _btrMax = debug ? LEVELS.length
     : Math.min(LEVELS.length, Math.max(1, parseInt(localStorage.getItem('btr_max_level') || '1')));
   currentLevel = Math.max(1, Math.min(_btrMax, parseInt(localStorage.getItem('btr_last_level') || '1')));

@@ -31,7 +31,7 @@ const CONFIG = {
     },
   },
   debug: {
-    showLevelChooser: true,
+    unlockAllLevels: false,
     showLangChooser:  true,
     simulateMobile:   false,
     godMode:          false,
