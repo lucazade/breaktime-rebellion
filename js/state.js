@@ -111,27 +111,6 @@ resetLevel();
 
 function setMsg(t, d) { msgText = t; msgT = d || 220; msgDuration = msgT; }
 
-// Fade #screen-fade from `from` to `to` opacity over `ms`, then call cb.
-// Uses a generation counter so that stale {once:true} listeners from cancelled
-// transitions are silently ignored — prevents double-callbacks when fadeScreen
-// is called again before a previous transition finishes (#114).
-var _fadeScreenGen = 0;
-function fadeScreen(from, to, ms, cb) {
-  var el = document.getElementById('screen-fade');
-  var gen = ++_fadeScreenGen;
-  el.style.display    = 'block';
-  el.style.transition = '';
-  el.style.opacity    = from;
-  void el.offsetWidth; // force reflow so transition fires
-  el.style.transition = 'opacity ' + (ms / 1000) + 's linear';
-  el.style.opacity    = to;
-  el.addEventListener('transitionend', function() {
-    if (_fadeScreenGen !== gen) return; // stale listener — a newer fade replaced this one
-    el.style.transition = '';
-    if (+to === 0) el.style.display = 'none';
-    if (cb) cb();
-  }, {once: true});
-}
 
 function startGame() {
   localStorage.setItem('btr_last_level', currentLevel);

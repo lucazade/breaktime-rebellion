@@ -7,15 +7,6 @@
 
 * { margin:0; padding:0; box-sizing:border-box; }
 
-#screen-fade {
-  position: fixed;
-  inset: 0;
-  background: #000;
-  z-index: 9999;
-  opacity: 0;
-  pointer-events: none;
-  display: none;
-}
 body {
   background:
     radial-gradient(ellipse at 50% 110%, rgba(255,0,180,0.32) 0%, transparent 48%),
