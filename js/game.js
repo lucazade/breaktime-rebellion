@@ -42,12 +42,14 @@ ctx.imageSmoothingEnabled = false;
   img.src = src;
 })();
 
-// Load logo for title screen canvas drawing
+// Load logo — HD version for desktop (4x canvas), standard for mobile
 (function() {
-  if (!CONFIG.images.logo) return;
+  var src = (_isDesktop && !CONFIG.debug.simulateMobile && CONFIG.images.logoHd)
+    ? CONFIG.images.logoHd : CONFIG.images.logo;
+  if (!src) return;
   var img = new Image();
   img.onload = function() { _logoImage = img; };
-  img.src = CONFIG.images.logo;
+  img.src = src;
 })();
 
 // ── Title screen state ────────────────────────────────────────────────────────
