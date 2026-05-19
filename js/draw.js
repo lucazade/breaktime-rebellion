@@ -25,6 +25,22 @@ function _drawVolumeIcon(x, y, mode, color) {
   }
 }
 
+function _dialogPanel(x, y, w, h, bgColor) {
+  var d = CONFIG.vis.dialog;
+  ctx.fillStyle = bgColor || d.panBg;
+  ctx.beginPath(); ctx.roundRect(x, y, w, h, d.panR); ctx.fill();
+  ctx.strokeStyle = d.panBorder; ctx.lineWidth = d.panBorderW;
+  ctx.beginPath(); ctx.roundRect(x+1, y+1, w-2, h-2, d.panR); ctx.stroke();
+}
+
+function _dialogBtn(x, y, w, h, color) {
+  var d = CONFIG.vis.dialog;
+  ctx.fillStyle = color;
+  ctx.beginPath(); ctx.roundRect(x, y, w, h, d.btnR); ctx.fill();
+  ctx.strokeStyle = d.btnStroke; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.roundRect(x+1, y+1, w-2, h-2, d.btnR); ctx.stroke();
+}
+
 function _drawLockIcon(x, y, color) {
   ctx.fillStyle = color;
   ctx.fillRect(x+1,y,  3,1);
@@ -1087,9 +1103,7 @@ function drawFloating() {
 }
 
 function drawOverlayPanel(bx, by, bw, bh, bgColor, borderColor, lines) {
-  ctx.fillStyle = bgColor; ctx.fillRect(bx, by, bw, bh);
-  ctx.strokeStyle = borderColor; ctx.lineWidth = 1;
-  ctx.strokeRect(bx + 1, by + 1, bw - 2, bh - 2);
+  _dialogPanel(bx, by, bw, bh, bgColor);
   ctx.save();
   ctx.textAlign = 'center';
   ctx.textBaseline = 'top';
@@ -1129,8 +1143,7 @@ function drawEndScreen() {
     const VG = CONFIG.vis.gameover;
     const _gH = VG.padTop + VG.stepTitle + VG.stepLevel + VG.stepScore + VG.stepConfirm + VG.btnH + VG.padBottom;
     const {bx:gX, by:gY} = _panPos(VG.panW, _gH);
-    ctx.fillStyle = 'rgba(60,0,0,0.88)'; ctx.fillRect(gX, gY, VG.panW, _gH);
-    ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(gX+1, gY+1, VG.panW-2, _gH-2);
+    _dialogPanel(gX, gY, VG.panW, _gH, VG.panBg);
     ctx.textAlign = 'center'; ctx.textBaseline = 'top';
     const cx = gX + VG.panW / 2;
     let ty = gY + VG.padTop;
@@ -1142,11 +1155,9 @@ function drawEndScreen() {
     ctx.fillStyle = C.gold;    ctx.fillText(STRINGS.gameoverConfirm,                 cx, ty); ty += VG.stepConfirm;
     ctx.font = VG.fontBtn + 'px ' + FF;
     const siX = gX + VG.siOx, noX = gX + VG.noOx;
-    ctx.fillStyle = 'rgba(0,90,0,0.92)'; ctx.fillRect(siX, ty, VG.siW, VG.btnH);
-    ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(siX+1, ty+1, VG.siW-2, VG.btnH-2);
+    _dialogBtn(siX, ty, VG.siW, VG.btnH, CONFIG.vis.dialog.btnColorYes);
     ctx.fillStyle = C.white; ctx.fillText(STRINGS.btnYes, siX + VG.siW/2, ty + Math.floor((VG.btnH - VG.fontBtn) / 2));
-    ctx.fillStyle = 'rgba(90,0,0,0.92)'; ctx.fillRect(noX, ty, VG.noW, VG.btnH);
-    ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(noX+1, ty+1, VG.noW-2, VG.btnH-2);
+    _dialogBtn(noX, ty, VG.noW, VG.btnH, CONFIG.vis.dialog.btnColorNo);
     ctx.fillStyle = C.white; ctx.fillText(STRINGS.btnNo, noX + VG.noW/2, ty + Math.floor((VG.btnH - VG.fontBtn) / 2));
   } else if (currentLevel === LEVELS.length) {
     const bestScore = parseInt(localStorage.getItem('btr_best_score') || '0');
@@ -1154,8 +1165,7 @@ function drawEndScreen() {
     const VW = CONFIG.vis.gameWin;
     const _wH = VW.padTop + VW.stepTitle + VW.stepScore + VW.stepBest + VW.tapH + VW.padBottom;
     const {bx:wX, by:wY} = _panPos(VW.panW, _wH);
-    ctx.fillStyle = 'rgba(0,0,40,0.92)'; ctx.fillRect(wX, wY, VW.panW, _wH);
-    ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(wX+1, wY+1, VW.panW-2, _wH-2);
+    _dialogPanel(wX, wY, VW.panW, _wH, VW.panBg);
     ctx.textAlign = 'center'; ctx.textBaseline = 'top';
     const cxW = wX + VW.panW / 2;
     let tyW = wY + VW.padTop;
@@ -1169,8 +1179,7 @@ function drawEndScreen() {
     const VL = CONFIG.vis.levelComplete;
     const _lH = VL.padTop + VL.stepTitle + VL.stepScore + VL.tapH + VL.padBottom;
     const {bx:lX, by:lY} = _panPos(VL.panW, _lH);
-    ctx.fillStyle = 'rgba(0,0,60,0.88)'; ctx.fillRect(lX, lY, VL.panW, _lH);
-    ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(lX+1, lY+1, VL.panW-2, _lH-2);
+    _dialogPanel(lX, lY, VL.panW, _lH, VL.panBg);
     ctx.textAlign = 'center'; ctx.textBaseline = 'top';
     const cxL = lX + VL.panW / 2;
     let tyL = lY + VL.padTop;
@@ -1209,8 +1218,7 @@ function drawStoryBanner() {
   const _stLineH = storyBannerLines.length * VS.lineH + Math.max(0, storyBannerLines.length - 1) * VS.lineSpacing;
   const bh = VS.padTop + VS.titleH + VS.titleSpacing + _stLineH + VS.spacerH + VS.tapH + VS.padBottom;
   const {bx, by} = _panPos(bw, bh);
-  ctx.fillStyle = 'rgba(0,0,40,0.92)'; ctx.fillRect(bx, by, bw, bh);
-  ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(bx+1, by+1, bw-2, bh-2);
+  _dialogPanel(bx, by, bw, bh, VS.panBg);
   ctx.textAlign = 'center'; ctx.textBaseline = 'top';
   ctx.font = VS.fontTitle + 'px ' + FF;
   const cxSt = bx + bw / 2;
@@ -1250,8 +1258,7 @@ function drawMissionBanner() {
   const {bx, by} = _panPos(bw, bh);
   ctx.save();
   ctx.globalAlpha = alpha;
-  ctx.fillStyle = 'rgba(0,0,40,0.88)'; ctx.fillRect(bx, by, bw, bh);
-  ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(bx+1, by+1, bw-2, bh-2);
+  _dialogPanel(bx, by, bw, bh, VM.panBg);
   ctx.textAlign = 'center'; ctx.textBaseline = 'top';
   ctx.font = VM.fontTitle + 'px ' + FF;
   const cxM = bx + bw / 2;
@@ -1272,8 +1279,7 @@ function drawPauseOverlay() {
   const VP = CONFIG.vis.pauseOverlay;
   const pH = VP.padTop + VP.stepTitle + VP.btnH + VP.padBottom;
   const {bx, by} = _panPos(VP.panW, pH);
-  ctx.fillStyle = 'rgba(0,0,40,0.92)'; ctx.fillRect(bx, by, VP.panW, pH);
-  ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(bx+1, by+1, VP.panW-2, pH-2);
+  _dialogPanel(bx, by, VP.panW, pH, VP.panBg);
   ctx.textAlign = 'center'; ctx.textBaseline = 'top';
   ctx.font = VP.fontTitle + 'px ' + FF;
   const cx = bx + VP.panW / 2;
@@ -1281,8 +1287,7 @@ function drawPauseOverlay() {
   ctx.fillStyle = C.gold; ctx.fillText(STRINGS.pauseTitle, cx, ty); ty += VP.stepTitle;
   ctx.font = VP.fontBtn + 'px ' + FF;
   const rx = bx + VP.resumeOx;
-  ctx.fillStyle = 'rgba(0,90,0,0.92)'; ctx.fillRect(rx, ty, VP.resumeW, VP.btnH);
-  ctx.strokeStyle = C.gold; ctx.strokeRect(rx+1, ty+1, VP.resumeW-2, VP.btnH-2);
+  _dialogBtn(rx, ty, VP.resumeW, VP.btnH, CONFIG.vis.dialog.btnColorYes);
   ctx.fillStyle = C.white; ctx.fillText(STRINGS.btnResume, rx + VP.resumeW/2, ty + Math.floor((VP.btnH - VP.fontBtn) / 2));
   ctx.restore();
 }
@@ -1293,8 +1298,7 @@ function drawHomeConfirm() {
   const VH = CONFIG.vis.homeConfirm;
   const hH = VH.padTop + VH.stepTitle + VH.btnH + VH.padBottom;
   const {bx, by} = _panPos(VH.panW, hH);
-  ctx.fillStyle = 'rgba(0,0,40,0.92)'; ctx.fillRect(bx, by, VH.panW, hH);
-  ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(bx+1, by+1, VH.panW-2, hH-2);
+  _dialogPanel(bx, by, VH.panW, hH, VH.panBg);
   ctx.textAlign = 'center'; ctx.textBaseline = 'top';
   ctx.font = VH.fontTitle + 'px ' + FF;
   const cx = bx + VH.panW / 2;
@@ -1302,11 +1306,9 @@ function drawHomeConfirm() {
   ctx.fillStyle = C.gold; ctx.fillText(STRINGS.homeConfirm, cx, ty); ty += VH.stepTitle;
   ctx.font = VH.fontBtn + 'px ' + FF;
   const siX = bx + VH.siOx, noX = bx + VH.noOx;
-  ctx.fillStyle = 'rgba(0,90,0,0.92)'; ctx.fillRect(siX, ty, VH.siW, VH.btnH);
-  ctx.strokeStyle = C.gold; ctx.strokeRect(siX+1, ty+1, VH.siW-2, VH.btnH-2);
+  _dialogBtn(siX, ty, VH.siW, VH.btnH, CONFIG.vis.dialog.btnColorYes);
   ctx.fillStyle = C.white; ctx.fillText(STRINGS.btnYes, siX + VH.siW/2, ty + Math.floor((VH.btnH - VH.fontBtn) / 2));
-  ctx.fillStyle = 'rgba(90,0,0,0.92)'; ctx.fillRect(noX, ty, VH.noW, VH.btnH);
-  ctx.strokeStyle = C.gold; ctx.strokeRect(noX+1, ty+1, VH.noW-2, VH.btnH-2);
+  _dialogBtn(noX, ty, VH.noW, VH.btnH, CONFIG.vis.dialog.btnColorNo);
   ctx.fillStyle = C.white; ctx.fillText(STRINGS.btnNo, noX + VH.noW/2, ty + Math.floor((VH.btnH - VH.fontBtn) / 2));
   ctx.restore();
 }
@@ -1547,8 +1549,7 @@ function drawCredits() {
            + n * (VC.nameH + VC.nameGap + VC.roleH + VC.roleGap)
            + VC.btnGapAbove + VC.btnH + VC.padBottom;
   var _cp = _panPos(VC.panW, panH); var bx = _cp.bx, by = _cp.by;
-  ctx.fillStyle = 'rgba(0,0,40,0.96)'; ctx.fillRect(bx, by, VC.panW, panH);
-  ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(bx+1, by+1, VC.panW-2, panH-2);
+  _dialogPanel(bx, by, VC.panW, panH, VC.panBg);
   ctx.textAlign = 'center'; ctx.textBaseline = 'top';
   var cx = bx + VC.panW / 2;
   var ty = by + VC.padTop;
@@ -1562,9 +1563,8 @@ function drawCredits() {
   }
   ty += VC.btnGapAbove;
   var btnX = bx + Math.round((VC.panW - VC.btnW) / 2);
-  ctx.fillStyle = 'rgba(0,90,0,0.92)'; ctx.fillRect(btnX, ty, VC.btnW, VC.btnH);
-  ctx.strokeStyle = C.gold; ctx.strokeRect(btnX+1, ty+1, VC.btnW-2, VC.btnH-2);
   ctx.font = VC.fontBtn + 'px ' + FF;
+  _dialogBtn(btnX, ty, VC.btnW, VC.btnH, CONFIG.vis.dialog.btnColorYes);
   ctx.fillStyle = C.white; ctx.fillText('OK', bx + VC.panW/2, ty + Math.floor((VC.btnH - VC.fontBtn) / 2));
   ctx.restore();
 }

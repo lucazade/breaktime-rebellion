@@ -31,11 +31,11 @@ const CONFIG = {
     },
   },
   debug: {
-    unlockAllLevels:  false,
     showLangChooser:  true,
-    showTapToStart:   true,
     showLegend:       false,
+    showTapToStart:   true,
     simulateMobile:   false,
+    unlockAllLevels:  false,
     godMode:          false,
   },
 };

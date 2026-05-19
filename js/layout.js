@@ -48,6 +48,18 @@ Object.assign(CONFIG.vis, {
 
   fontFamily: '"Press Start 2P"',  // font usato in tutti i banner — ⚠ solo 4px e 8px sono crispini
 
+  // Stile condiviso tra tutti i dialog (banner, pulsanti)
+  dialog: {
+    panBg:       'rgba(0,0,40,0.90)',         // sfondo pannello (default)
+    panBorder:   '#FFD700',                   // colore bordo pannello
+    panBorderW:  1,                           // spessore bordo pannello
+    panR:        4,                           // raggio angoli pannello
+    btnR:        2,                           // raggio angoli pulsanti
+    btnColorYes: 'rgba(0,90,0,0.92)',         // pulsante positivo (SI / OK / RIPRENDI)
+    btnColorNo:  'rgba(90,0,0,0.92)',         // pulsante negativo (NO)
+    btnStroke:   '#FFD700',                   // bordo pulsanti
+  },
+
   // Title screen — logo + tap to start + level chooser + audio toggle + keyboard legend
   titleScreen: {
     logo:     { w: 320, borderW: 1, borderR: 5 }, // larghezza logo; y calcolato (centratura verticale); borderW=spessore bordino, borderR=raggio angoli clip
@@ -149,7 +161,7 @@ Object.assign(CONFIG.vis, {
   storyBanner: {
     panW: 280, wrapWidth: 220,  // larghezza pannello; wrapWidth = larghezza testo
     fontTitle:      8,  // ⚠ solo 4px e 8px sono crispini
-    fontBody:       8,
+    fontBody:       4,
     padTop:        16,          // spazio dal bordo superiore al titolo
     titleH:        10, titleSpacing: 10, // altezza titolo, spacing dopo titolo
     lineH:          8, lineSpacing:   4, // altezza riga, spacing tra righe
@@ -162,7 +174,7 @@ Object.assign(CONFIG.vis, {
   missionBanner: {
     panW: 260, wrapWidth: 200,  // larghezza pannello; wrapWidth = larghezza testo
     fontTitle:      8,  // ⚠ solo 4px e 8px sono crispini
-    fontBody:       8,
+    fontBody:       4,
     padTop:        14,          // spazio dal bordo superiore al titolo
     titleH:        10, titleSpacing: 8, // altezza titolo, spacing dopo titolo
     lineH:          8, lineSpacing:  4, // altezza riga, spacing tra righe
@@ -230,7 +242,7 @@ Object.assign(CONFIG.vis, {
   pauseOverlay: {
     panW: 200,  // panY e bx centrati automaticamente
     fontTitle:  8,   // ⚠ solo 4px e 8px sono crispini
-    fontBtn:    8,
+    fontBtn:    4,
     padTop:    14,   // spazio dal bordo superiore al titolo
     stepTitle: 22,   // avanzamento dopo "— PAUSA —" (h=10 + spacing=12)
     btnH:      14,   // altezza pulsante RIPRENDI
@@ -242,7 +254,7 @@ Object.assign(CONFIG.vis, {
   homeConfirm: {
     panW: 200,  // panY e bx centrati automaticamente
     fontTitle:  8,   // ⚠ solo 4px e 8px sono crispini
-    fontBtn:    8,
+    fontBtn:    4,
     padTop:    14,   // spazio dal bordo superiore alla domanda
     stepTitle: 20,   // avanzamento dopo "TORNARE ALLA HOME?" (h=8 + spacing=12)
     btnH:      14,   // altezza pulsanti SI/NO
@@ -256,7 +268,7 @@ Object.assign(CONFIG.vis, {
     panW: 240,  // panY e bx centrati automaticamente
     fontTitle:    8, // ⚠ solo 4px e 8px sono crispini
     fontBody:     4, // nomi e ruoli
-    fontBtn:      8, // pulsante OK
+    fontBtn:      4, // pulsante OK
     padTop:       8,
     stepTitle:   14, // dopo "— CREDITS —" (h=6 + spacing=8)
     stepTeam:    12, // dopo nome team (h=4 + spacing=8)
