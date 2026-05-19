@@ -1379,78 +1379,78 @@ function _panPos(panW, panH) {
   return { bx: Math.round((W - panW) / 2), by: Math.round((H - panH) / 2) };
 }
 
-function _drawHeart(x, y) {
-  // 8×7 pixel art heart
-  ctx.fillRect(x+1,y,  2,1); ctx.fillRect(x+5,y,  2,1);
-  ctx.fillRect(x,  y+1,8,1); ctx.fillRect(x,  y+2,8,1); ctx.fillRect(x,  y+3,8,1);
-  ctx.fillRect(x+1,y+4,6,1); ctx.fillRect(x+2,y+5,4,1); ctx.fillRect(x+3,y+6,2,1);
+function _drawHeart(x, y, s) {
+  // pixel art heart — s=1: 8×7px | s=0.5: 4×3px
+  s = s || 1;
+  ctx.fillRect(x+1*s,y,    2*s,s); ctx.fillRect(x+5*s,y,    2*s,s);
+  ctx.fillRect(x,    y+1*s,8*s,s); ctx.fillRect(x,    y+2*s,8*s,s); ctx.fillRect(x,y+3*s,8*s,s);
+  ctx.fillRect(x+1*s,y+4*s,6*s,s); ctx.fillRect(x+2*s,y+5*s,4*s,s); ctx.fillRect(x+3*s,y+6*s,2*s,s);
 }
 
-// Pixel-art icons for HUD mechanic indicator — all 7×7, drawn with fillRect
-function _drawHudIcon(type, x, y, color) {
+// Pixel-art icons for HUD mechanic indicator — 7×7 base, scalabile via s=dotW/7
+function _drawHudIcon(type, x, y, color, s) {
+  s = s || 1;
+  ctx.save();
+  ctx.translate(x, y);
+  if (s !== 1) ctx.scale(s, s);
   ctx.fillStyle = color;
   switch (type) {
     case 'boards':   // lavagna: outline 7×7 + 2 righe gesso
-      ctx.fillRect(x,   y,   7,1); ctx.fillRect(x,   y+6, 7,1); // top/bottom
-      ctx.fillRect(x,   y+1, 1,5); ctx.fillRect(x+6, y+1, 1,5); // sides
-      ctx.fillStyle = '#fff'; ctx.fillRect(x+1, y+2, 5,1);       // chalk line 1
-                              ctx.fillRect(x+1, y+4, 5,1);       // chalk line 2
+      ctx.fillRect(0,1, 7,1); ctx.fillRect(0,6, 7,1);
+      ctx.fillRect(0,1, 1,5); ctx.fillRect(6,1, 1,5);
+      ctx.fillStyle = '#fff'; ctx.fillRect(1,2, 5,1); ctx.fillRect(1,4, 5,1);
       break;
     case 'bags':     // cartella: corpo + manico
-      ctx.fillRect(x+2, y,   3,1);                               // handle
-      ctx.fillRect(x,   y+1, 7,1); ctx.fillRect(x,   y+6, 7,1); // top/bottom
-      ctx.fillRect(x,   y+2, 1,4); ctx.fillRect(x+6, y+2, 1,4); // sides
-      ctx.fillStyle = '#2A1F5E'; ctx.fillRect(x+2, y+3, 3,1);   // clasp
+      ctx.fillRect(2,0, 3,1);
+      ctx.fillRect(0,1, 7,1); ctx.fillRect(0,6, 7,1);
+      ctx.fillRect(0,2, 1,4); ctx.fillRect(6,2, 1,4);
+      ctx.fillStyle = '#2A1F5E'; ctx.fillRect(2,3, 3,1);
       break;
     case 'machines': // distributore: rettangolo con schermo e tasto
-      ctx.fillRect(x,   y,   6,7);
-      ctx.fillStyle = '#000'; ctx.fillRect(x+1, y+1, 4,2);      // screen
-      ctx.fillStyle = '#FFD700'; ctx.fillRect(x+2, y+5, 2,1);   // button
+      ctx.fillRect(0,0, 6,7);
+      ctx.fillStyle = '#000';    ctx.fillRect(1,1, 4,2);
+      ctx.fillStyle = '#FFD700'; ctx.fillRect(2,5, 2,1);
       break;
     case 'ball':     // pallone: cerchio con cuciture
-      ctx.fillRect(x+1, y,   5,1); ctx.fillRect(x+1, y+6, 5,1);
-      ctx.fillRect(x,   y+1, 7,5);
-      ctx.fillStyle = '#000'; ctx.fillRect(x+3, y+1, 1,5);      // vertical seam
-      ctx.fillRect(x+1, y+3, 5,1);                              // horizontal seam
+      ctx.fillRect(1,0, 5,1); ctx.fillRect(1,6, 5,1);
+      ctx.fillRect(0,1, 7,5);
+      ctx.fillStyle = '#000'; ctx.fillRect(3,1, 1,5); ctx.fillRect(1,3, 5,1);
       break;
     case 'students': // alunno: testa + corpo + gambe
-      ctx.fillRect(x+2, y,   3,3);                              // head
-      ctx.fillRect(x+1, y+3, 5,2);                              // body
-      ctx.fillRect(x+1, y+5, 2,2); ctx.fillRect(x+4, y+5, 2,2);// legs
+      ctx.fillRect(2,0, 3,3);
+      ctx.fillRect(1,3, 5,2);
+      ctx.fillRect(1,5, 2,2); ctx.fillRect(4,5, 2,2);
       break;
     case 'books':    // libro: rettangolo con costa e righe
-      ctx.fillRect(x,   y,   7,7);
-      ctx.fillStyle = '#000'; ctx.fillRect(x+1, y,   1,7);      // spine
-      ctx.fillStyle = '#fff'; ctx.fillRect(x+2, y+2, 4,1);      // page lines
-                              ctx.fillRect(x+2, y+4, 4,1);
+      ctx.fillRect(0,0, 7,7);
+      ctx.fillStyle = '#000'; ctx.fillRect(1,0, 1,7);
+      ctx.fillStyle = '#fff'; ctx.fillRect(2,2, 4,1); ctx.fillRect(2,4, 4,1);
       break;
     case 'sink':     // lavandino: gocce + vasca
-      ctx.fillRect(x+1, y,   1,2); ctx.fillRect(x+5, y,   1,2);// drops
-      ctx.fillRect(x,   y+3, 7,1); ctx.fillRect(x,   y+6, 7,1);// basin top/bottom
-      ctx.fillRect(x,   y+4, 1,2); ctx.fillRect(x+6, y+4, 1,2);// basin sides
+      ctx.fillRect(1,0, 1,2); ctx.fillRect(5,0, 1,2);
+      ctx.fillRect(0,3, 7,1); ctx.fillRect(0,6, 7,1);
+      ctx.fillRect(0,4, 1,2); ctx.fillRect(6,4, 1,2);
       break;
     case 'bins':     // secchio: coperchio + corpo + miccia
-      ctx.fillRect(x+1, y+1, 5,1);                              // lid
-      ctx.fillRect(x,   y+2, 7,5);                              // body
-      ctx.fillStyle = '#FFD700'; ctx.fillRect(x+3, y,   1,2);   // fuse
-      ctx.fillStyle = '#000'; ctx.fillRect(x+2, y+4, 1,2);      // lines
-                              ctx.fillRect(x+4, y+4, 1,2);
+      ctx.fillRect(1,1, 5,1);
+      ctx.fillRect(0,2, 7,5);
+      ctx.fillStyle = '#FFD700'; ctx.fillRect(3,0, 1,2);
+      ctx.fillStyle = '#000';    ctx.fillRect(2,4, 1,2); ctx.fillRect(4,4, 1,2);
       break;
     case 'sprinklers': // fiamma: silhouette fuoco
-      ctx.fillRect(x+3, y,   1,1);
-      ctx.fillRect(x+2, y+1, 3,1); ctx.fillRect(x+1, y+2, 5,2);
-      ctx.fillRect(x,   y+4, 7,1); ctx.fillRect(x+1, y+5, 5,1); ctx.fillRect(x+2, y+6, 3,1);
+      ctx.fillRect(3,0, 1,1);
+      ctx.fillRect(2,1, 3,1); ctx.fillRect(1,2, 5,2);
+      ctx.fillRect(0,4, 7,1); ctx.fillRect(1,5, 5,1); ctx.fillRect(2,6, 3,1);
       break;
     case 'register': // registro: libro con angolo dorato
-      ctx.fillRect(x,   y,   7,7);
-      ctx.fillStyle = '#000'; ctx.fillRect(x+1, y+1, 5,1);      // lines
-                              ctx.fillRect(x+1, y+3, 5,1);
-                              ctx.fillRect(x+1, y+5, 3,1);
-      ctx.fillStyle = '#FFD700'; ctx.fillRect(x+5, y+5, 2,2);   // gold corner
+      ctx.fillRect(0,0, 7,7);
+      ctx.fillStyle = '#000';    ctx.fillRect(1,1, 5,1); ctx.fillRect(1,3, 5,1); ctx.fillRect(1,5, 3,1);
+      ctx.fillStyle = '#FFD700'; ctx.fillRect(5,5, 2,2);
       break;
     default:
-      ctx.fillRect(x, y, 7, 7);
+      ctx.fillRect(0,0, 7,7);
   }
+  ctx.restore();
 }
 
 function _hudObjInfo() {
@@ -1485,28 +1485,59 @@ function drawHUD() {
   var VH = CONFIG.vis.hud;
   ctx.save();
   var _f = VH.fontSize + 'px ' + FF;
+  var _hs = VH.heartSize || 1;
+  var _ds = VH.dotW / 7;                                          // scala icona meccanica
+  var _textY  = Math.floor((VH.rowH - VH.fontSize) / 2);          // centratura verticale testo
+  var _heartY = Math.floor((VH.rowH - 7 * _hs) / 2);              // centratura verticale cuori
+  var _iconY  = Math.floor((VH.rowH - VH.dotW) / 2);              // centratura verticale icona
   ctx.fillStyle = VH.bgColor; ctx.fillRect(0, 0, W, VH.rowH);
-  // Hearts
-  ctx.fillStyle = '#ff2244';
-  for (var _i = 0; _i < Math.max(0, lives); _i++) _drawHeart(VH.heartsX + _i * VH.heartStep, VH.textY);
-  // Score
-  ctx.font = _f; ctx.textAlign = 'right'; ctx.textBaseline = 'top';
-  ctx.fillStyle = '#ffffff'; ctx.fillText(String(score).padStart(5,'0'), VH.scoreX, VH.textY);
-  // Counter or message
-  ctx.textAlign = 'center';
+  ctx.font = _f; ctx.textBaseline = 'top';
   if (msgT > 0) {
+    // messaggio attivo: solo msg, cuori e punteggio nascosti (#119)
+    // crossfade: _ao = alpha messaggio, (1-_ao) = alpha elementi HUD
     var _el = msgDuration - msgT, _ao = Math.min(_el/15,1) * (msgT<25 ? msgT/25 : 1);
-    ctx.globalAlpha = _ao; ctx.fillStyle = '#ffffff';
-    ctx.fillText(msgText, VH.centerX, VH.textY);
-  } else if (state === 'playing') {
+
+    // Messaggio — fade in/out
+    ctx.globalAlpha = _ao; ctx.fillStyle = '#ffffff'; ctx.textAlign = 'center';
+    ctx.fillText(msgText, VH.centerX, _textY);
+
+    // Cuori + punteggio — fade out/in inverso
+    if (_ao < 1) {
+      ctx.globalAlpha = 1 - _ao;
+      ctx.fillStyle = '#ff2244';
+      for (var _i = 0; _i < Math.max(0, lives); _i++) _drawHeart(VH.heartsX + _i * VH.heartStep * _hs, _heartY, _hs);
+      ctx.textAlign = 'right'; ctx.fillStyle = '#ffffff';
+      ctx.fillText(String(score).padStart(5,'0'), VH.scoreX, _textY);
+      // Counter meccanica
+      if (state === 'playing') {
+        var _oi = _hudObjInfo();
+        var _txt = _oi.done + '/' + _oi.total;
+        var _grpW = VH.dotW + VH.dotGap + ctx.measureText(_txt).width;
+        var _sx = Math.round(VH.centerX - _grpW / 2);
+        _drawHudIcon(_oi.mechanic, _sx, _iconY, _oi.color, _ds);
+        ctx.textAlign = 'left'; ctx.fillStyle = '#44ee66';
+        ctx.fillText(_txt, _sx + VH.dotW + VH.dotGap, _textY);
+      }
+    }
+  } else {
+    // Cuori — centrati verticalmente, scalati da heartSize
+    ctx.fillStyle = '#ff2244';
+    for (var _i = 0; _i < Math.max(0, lives); _i++) _drawHeart(VH.heartsX + _i * VH.heartStep * _hs, _heartY, _hs);
+    // Punteggio
+    ctx.textAlign = 'right'; ctx.fillStyle = '#ffffff';
+    ctx.fillText(String(score).padStart(5,'0'), VH.scoreX, _textY);
+  }
+  // Counter meccanica (stato normale, nessun messaggio)
+  ctx.textAlign = 'center';
+  if (msgT <= 0 && state === 'playing') {
     var _oi = _hudObjInfo();
     var _txt = _oi.done + '/' + _oi.total;
     var _tw  = ctx.measureText(_txt).width;
     var _grpW = VH.dotW + VH.dotGap + _tw;
     var _sx = Math.round(VH.centerX - _grpW / 2);
-    _drawHudIcon(_oi.mechanic, _sx, VH.textY + VH.dotOffsetY, _oi.color);
+    _drawHudIcon(_oi.mechanic, _sx, _iconY, _oi.color, _ds);
     ctx.textAlign = 'left'; ctx.fillStyle = '#44ee66';
-    ctx.fillText(_txt, _sx + VH.dotW + VH.dotGap, VH.textY);
+    ctx.fillText(_txt, _sx + VH.dotW + VH.dotGap, _textY);
   }
   // Timer bar
   if (maxTimerTicks > 0) {

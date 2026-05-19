@@ -50,7 +50,7 @@ Object.assign(CONFIG.vis, {
 
   // ── Bezel — stile pannelli laterali mobile e sfondo desktop ──────────────
   bezel: {
-    style:             'title',               // 'synthwave' | 'title'
+    /*style:             'title',               // 'synthwave' | 'title'
     panelInnerBorder:  'rgba(0,0,0,0.7)',   // strip neon interno sidepanel — synthwave: rgba(160,0,255,0.7)
     btnHomeBorder:     'rgba(0,0,230,0.85)',  // bordo pulsante home          — synthwave: rgba(160,0,255,0.85)
     btnPauseBorder:    'rgba(0,0,180,0.85)',  // bordo pulsante pausa         — synthwave: rgba(160,0,255,0.85)
@@ -61,7 +61,20 @@ Object.assign(CONFIG.vis, {
     btnHomeBgPressed:  'rgba(0,0,100,0.35)', // sfondo home premuto           — synthwave: rgba(160,0,255,0.28)
     btnPauseBgPressed: 'rgba(0,0,100,0.35)', // sfondo pausa premuto          — synthwave: rgba(160,0,255,0.28)
     btnInfoBgPressed:  'rgba(0,0,100,0.35)', // sfondo info premuto           — synthwave: rgba(160,0,255,0.28)
-    btnGlow:           'none',               // glow pulsanti (box-shadow)    — synthwave: 0 0 8px rgba(160,0,255,0.35)
+    btnGlow:           'none',               // glow pulsanti (box-shadow)    — synthwave: 0 0 8px rgba(160,0,255,0.35)*/
+
+    style:             'synthwave',
+    panelInnerBorder:  'rgba(160,0,255,0.7)',
+    btnHomeBorder:     'rgba(160,0,255,0.85)',
+    btnPauseBorder:    'rgba(160,0,255,0.85)',
+    btnInfoBorder:     'rgba(160,0,255,0.85)',
+    btnHomeBg:         'rgba(10,0,24,1)',
+    btnPauseBg:        'rgba(10,0,24,1)',
+    btnInfoBg:         'rgba(0,0,0,0.45)',
+    btnHomeBgPressed:  'rgba(160,0,255,0.28)',
+    btnPauseBgPressed: 'rgba(160,0,255,0.28)',
+    btnInfoBgPressed:  'rgba(160,0,255,0.28)',
+    btnGlow:           '0 0 8px rgba(160,0,255,0.35)',
   },
 
   // Stile condiviso tra tutti i dialog (banner, pulsanti)
@@ -104,16 +117,15 @@ audioRightX: 310, audioPadX: 6, // pulsante audio: bordo dx fisso, larghezza cal
   // HUD — strip in cima al canvas
   hud: {
     rowH:      10,                   // altezza strip HUD
-    textY:     1,                    // y baseline testo/cuori
     heartsX:   4,                    // x primo cuore
     heartStep: 9,                    // px per cuore (8 wide + 1 gap)
+    heartSize: 1,                    // scala cuori: 1 = 8×7px | 0.5 = 4×3px
     centerX:   160,                  // x centro per counter/msg
     scoreX:    316,                  // x destro per punteggio
     timerH:    1,                    // altezza barra timer
     fontSize:  8,                    // ⚠ solo 4px e 8px sono crispini su questo canvas (scale 2×)
     dotW:      7,                    // lato quadratino indicatore meccanica
     dotGap:    5,                    // gap tra quadratino e testo counter
-    dotOffsetY: 0,                   // offset y del dot rispetto a textY (negativo = su)
     bgColor:   'rgba(0,0,0,0.55)',
     // Colore quadratino indicatore per ogni meccanica
     dotColors: {
