@@ -17,7 +17,14 @@
   display: none;
 }
 body {
-  background: #0a0a0a;
+  background:
+    radial-gradient(ellipse at 50% 110%, rgba(255,0,180,0.32) 0%, transparent 48%),
+    radial-gradient(ellipse at 50% -8%,  rgba(0,180,255,0.14) 0%, transparent 42%),
+    radial-gradient(ellipse at 0%   50%, rgba(120,0,200,0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 100% 50%, rgba(0,160,200,0.10) 0%, transparent 50%),
+    repeating-linear-gradient(90deg, transparent 0px, transparent 44px, rgba(160,0,255,0.17) 44px, rgba(160,0,255,0.17) 45px),
+    repeating-linear-gradient(0deg, transparent 0px, transparent 44px, rgba(0,200,255,0.13) 44px, rgba(0,200,255,0.13) 45px),
+    linear-gradient(160deg, #060010 0%, #0e0026 45%, #100030 60%, #060010 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -74,17 +81,13 @@ body {
     border-top: 2px solid #2a0055;
     border-bottom: 2px solid #2a0055;
     background:
-      radial-gradient(ellipse at 50% 108%, rgba(255,0,180,0.42) 0%, transparent 52%),
-      radial-gradient(ellipse at 50% -8%,  rgba(0,180,255,0.14) 0%, transparent 45%),
-      repeating-linear-gradient(
-        90deg, transparent 0px, transparent 22px,
-        rgba(160,0,255,0.22) 22px, rgba(160,0,255,0.22) 23px
-      ),
-      repeating-linear-gradient(
-        0deg, transparent 0px, transparent 28px,
-        rgba(0,200,255,0.16) 28px, rgba(0,200,255,0.16) 29px
-      ),
-      linear-gradient(180deg, #080015 0%, #12002e 55%, #080015 100%);
+      radial-gradient(ellipse at 50% 110%, rgba(255,0,180,0.32) 0%, transparent 48%),
+      radial-gradient(ellipse at 50% -8%,  rgba(0,180,255,0.14) 0%, transparent 42%),
+      radial-gradient(ellipse at 0%   50%, rgba(120,0,200,0.12) 0%, transparent 50%),
+      radial-gradient(ellipse at 100% 50%, rgba(0,160,200,0.10) 0%, transparent 50%),
+      repeating-linear-gradient(90deg, transparent 0px, transparent 44px, rgba(160,0,255,0.17) 44px, rgba(160,0,255,0.17) 45px),
+      repeating-linear-gradient(0deg, transparent 0px, transparent 44px, rgba(0,200,255,0.13) 44px, rgba(0,200,255,0.13) 45px),
+      linear-gradient(160deg, #060010 0%, #0e0026 45%, #100030 60%, #060010 100%);
   }
 
   /* Purple neon strip facing the game screen */
@@ -228,7 +231,7 @@ canvas {
 #portrait-msg {
   display: none;
   position: fixed; inset: 0;
-  background: #000080;
+  background: linear-gradient(160deg, #060010 0%, #0e0026 45%, #100030 60%, #060010 100%);
   color: #ffd700;
   font-size: clamp(12px,4vw,18px);
   align-items: center; justify-content: center;
@@ -246,24 +249,6 @@ canvas {
 /* Desktop / mouse — panels hidden; full synthwave background + 150% zoom + screen bezel */
 @media (hover: hover) and (pointer: fine) {
   #panel-left, #panel-right { display: none; }
-
-  /* Synthwave grid fills the entire page (all "black" border areas) */
-  body {
-    background:
-      radial-gradient(ellipse at 50% 110%, rgba(255,0,180,0.32) 0%, transparent 48%),
-      radial-gradient(ellipse at 50% -8%,  rgba(0,180,255,0.14) 0%, transparent 42%),
-      radial-gradient(ellipse at 0%   50%, rgba(120,0,200,0.12) 0%, transparent 50%),
-      radial-gradient(ellipse at 100% 50%, rgba(0,160,200,0.10) 0%, transparent 50%),
-      repeating-linear-gradient(
-        90deg, transparent 0px, transparent 44px,
-        rgba(160,0,255,0.17) 44px, rgba(160,0,255,0.17) 45px
-      ),
-      repeating-linear-gradient(
-        0deg, transparent 0px, transparent 44px,
-        rgba(0,200,255,0.13) 44px, rgba(0,200,255,0.13) 45px
-      ),
-      linear-gradient(160deg, #060010 0%, #0e0026 45%, #100030 60%, #060010 100%);
-  }
 
   /* Game canvas: zoom controllato da CONFIG.layout.desktopZoom in layout.js (default 1.5 → 400→600px) */
   #game-area {
@@ -317,7 +302,7 @@ body.simulate-mobile #game-area { flex: 0 0 auto !important; height: 100dvh !imp
 body.simulate-mobile #game-area::before,
 body.simulate-mobile #game-area::after { display: none !important; }
 body.simulate-mobile #panel-left,
-body.simulate-mobile #panel-right { display: flex !important; flex: 1 !important; min-width: 160px !important; height: 100dvh; position: relative; overflow: hidden; border-top: 2px solid #2a0055; border-bottom: 2px solid #2a0055; background: radial-gradient(ellipse at 50% 108%, rgba(255,0,180,.42) 0%, transparent 52%), linear-gradient(180deg, #080015 0%, #12002e 55%, #080015 100%); }
+body.simulate-mobile #panel-right { display: flex !important; flex: 1 !important; min-width: 160px !important; height: 100dvh; position: relative; overflow: hidden; border-top: 2px solid #2a0055; border-bottom: 2px solid #2a0055; background: radial-gradient(ellipse at 50% 110%, rgba(255,0,180,0.32) 0%, transparent 48%), radial-gradient(ellipse at 50% -8%, rgba(0,180,255,0.14) 0%, transparent 42%), radial-gradient(ellipse at 0% 50%, rgba(120,0,200,0.12) 0%, transparent 50%), radial-gradient(ellipse at 100% 50%, rgba(0,160,200,0.10) 0%, transparent 50%), repeating-linear-gradient(90deg, transparent 0px, transparent 44px, rgba(160,0,255,0.17) 44px, rgba(160,0,255,0.17) 45px), repeating-linear-gradient(0deg, transparent 0px, transparent 44px, rgba(0,200,255,0.13) 44px, rgba(0,200,255,0.13) 45px), linear-gradient(160deg, #060010 0%, #0e0026 45%, #100030 60%, #060010 100%); }
 body.simulate-mobile #panel-left  { border-right: 3px solid var(--btr-panel-inner-border, rgba(160,0,255,.7)) !important; }
 body.simulate-mobile #panel-right { border-left:  3px solid var(--btr-panel-inner-border, rgba(160,0,255,.7)) !important; }
 body.simulate-mobile #panel-left  #ctrl-joy    { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 1; }
@@ -343,21 +328,6 @@ body.bezel-title #panel-right {
 /* bordi interni gestiti da --btr-panel-inner-border impostato in layout.js */
 
 /* ─── TITLE MODE — copre tutto, nasconde bezel e pannelli ─── */
-body.title-mode {
-  background: linear-gradient(180deg, #000080 0%, #000040 100%) !important;
-}
-
-/* ─── TITLE STYLE: synthwave — fondo retro al posto del blu ─── */
-body.title-mode.title-synthwave {
-  background:
-    radial-gradient(ellipse at 50% 110%, rgba(255,0,180,0.32) 0%, transparent 48%),
-    radial-gradient(ellipse at 50% -8%,  rgba(0,180,255,0.14) 0%, transparent 42%),
-    radial-gradient(ellipse at 0%   50%, rgba(120,0,200,0.12) 0%, transparent 50%),
-    radial-gradient(ellipse at 100% 50%, rgba(0,160,200,0.10) 0%, transparent 50%),
-    repeating-linear-gradient(90deg, transparent 0px, transparent 44px, rgba(160,0,255,0.17) 44px, rgba(160,0,255,0.17) 45px),
-    repeating-linear-gradient(0deg, transparent 0px, transparent 44px, rgba(0,200,255,0.13) 44px, rgba(0,200,255,0.13) 45px),
-    linear-gradient(160deg, #060010 0%, #0e0026 45%, #100030 60%, #060010 100%) !important;
-}
 body.title-mode #panel-left,
 body.title-mode #panel-right { visibility: hidden !important; }
 body.title-mode #game-area {
