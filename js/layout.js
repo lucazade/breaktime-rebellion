@@ -46,7 +46,7 @@ const wallLeft = CONFIG.vis.layout.wallLeft, wallRight = CONFIG.vis.layout.wallR
 // All canvas coords are in logical 320×200 space (ctx.scale 2×).
 Object.assign(CONFIG.vis, {
 
-  fontFamily: '"Silkscreen"',  // font used in all banners — swap font here to test alternatives
+  fontFamily: '"Press Start 2P"',  // font used - alternatives: Press Start 2P or Silkscreen (both free on Google Fonts) — set as CSS variable for use in CSS too
 
   // ── Bezel — mobile side panels ────────────────────
   bezel: {
@@ -103,16 +103,16 @@ Object.assign(CONFIG.vis, {
 
   // HUD — strip in cima al canvas
   hud: {
-    rowH:      10,                   // HUD strip height
+    rowH:      8,                   // HUD strip height
     heartsX:   4,                    // x position of first heart
     heartStep: 9,                    // px per heart (8 wide + 1 gap)
-    heartSize: 1,                    // heart scale: 1 = 8×7px | 0.5 = 4×3px
+    heartSize: 0.8,                    // heart scale: 1 = 8×7px | 0.5 = 4×3px
     msgFadeFrames: 45,               // frames for the msg↔HUD crossfade (45 ≈ 0.75s at 60fps)
     centerX:   160,                  // x centre for counter/message
     scoreX:    316,                  // right x for score
     timerH:    1,                    // timer bar height
     fontSize:  6,
-    dotW:      7,                    // mechanic indicator square size
+    dotW:      5.5,                    // mechanic indicator square size
     dotGap:    5,                    // gap between icon and counter text
     bgColor:   'rgba(0,0,0,0.55)',
     // Mechanic indicator colour per mechanic type
@@ -200,7 +200,7 @@ Object.assign(CONFIG.vis, {
   levelComplete: {
     panW: 260,  // panY and bx are centred automatically
     fontTitle:  8,
-    fontBody:   8,
+    fontBody:   6,
     padTop:    11,   // space from top edge to first text
     stepTitle: 20,   // advance after title (h=10 + spacing=10)
     stepScore: 22,   // advance after score (h=8 + spacing=14)
@@ -212,7 +212,7 @@ Object.assign(CONFIG.vis, {
   gameWin: {
     panW: 260,  // panY and bx are centred automatically
     fontTitle:  8,
-    fontBody:   8,
+    fontBody:   6,
     padTop:    23,   // space from top edge to first text
     stepTitle: 22,   // advance after win title (h=12 + spacing=10)
     stepScore: 12,   // advance after score (h=8 + spacing=4)
@@ -225,8 +225,8 @@ Object.assign(CONFIG.vis, {
   gameover: {
     panW: 260,       // panY and bx are centred automatically
     fontTitle:    8,
-    fontBody:     8,
-    fontBtn:      8,
+    fontBody:     6,
+    fontBtn:      6,
     padTop:      12, // space from top edge to first text
     stepTitle:   18, // advance after "EXPELLED!"
     stepLevel:   12, // advance after level reached
@@ -241,8 +241,8 @@ Object.assign(CONFIG.vis, {
   // Luca speech bubble (L10 level end) — bh computed: headerH + lineCount*lineH + gapTap + tapH + padBottom
   lucaFumetto: {
     bw:        190,  // bubble width
-    fontTitle:   4,
-    fontBody:    4,  // body text and tap label
+    fontTitle:   8,
+    fontBody:    6,  // body text and tap label
     offsetX:    10,  // horizontal offset from Luca (PW+2)
     tailOffY:   14,  // vertical distance from tail to ly (by2 = ly - tailOffY - bh)
     headerH:    14,  // height of "Luca:" header row
@@ -257,7 +257,7 @@ Object.assign(CONFIG.vis, {
   pauseOverlay: {
     panW: 200,  // panY and bx are centred automatically
     fontTitle:  8,
-    fontBtn:    4,
+    fontBtn:    6,
     padTop:    14,   // space from top edge to title
     stepTitle: 22,   // advance after "— PAUSE —" (h=10 + spacing=12)
     btnH:      14,   // RESUME button height
@@ -269,7 +269,7 @@ Object.assign(CONFIG.vis, {
   homeConfirm: {
     panW: 200,  // panY and bx are centred automatically
     fontTitle:  8,
-    fontBtn:    4,
+    fontBtn:    6,
     padTop:    14,   // space from top edge to question
     stepTitle: 20,   // advance after "GO TO HOME?" (h=8 + spacing=12)
     btnH:      14,   // YES/NO button height
@@ -282,8 +282,8 @@ Object.assign(CONFIG.vis, {
   credits: {
     panW: 240,  // panY and bx are centred automatically
     fontTitle:    8,
-    fontBody:     4, // names and roles
-    fontBtn:      4, // OK button
+    fontBody:     6, // names and roles
+    fontBtn:      6, // OK button
     padTop:       8,
     stepTitle:   14, // after "— CREDITS —" (h=6 + spacing=8)
     stepTeam:    12, // after team name (h=4 + spacing=8)
