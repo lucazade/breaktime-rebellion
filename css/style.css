@@ -1,3 +1,10 @@
+/* Font locale — sostituisci PressStart2P.ttf con qualsiasi TTF per cambiare font */
+@font-face {
+  font-family: 'Press Start 2P';
+  src: url('../assets/fonts/PressStart2P.ttf') format('truetype');
+  font-display: block; /* evita FOUT — il font è locale, carica subito */
+}
+
 * { margin:0; padding:0; box-sizing:border-box; }
 
 #screen-fade {
@@ -329,6 +336,7 @@ body.title-mode #game-area {
   background: none !important;
 }
 body.title-mode canvas { background: none !important; }
+/*body.title-mode canvas { background: red; }*/
 body.title-mode #game-area::before,
 body.title-mode #game-area::after { display: none !important; }
 
