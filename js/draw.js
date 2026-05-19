@@ -1393,9 +1393,9 @@ function _drawHeart(x, y, s) {
   ctx.fillRect(x+1*s,y+4*s,6*s,s); ctx.fillRect(x+2*s,y+5*s,4*s,s); ctx.fillRect(x+3*s,y+6*s,2*s,s);
 }
 
-// Pixel-art icons for HUD mechanic indicator — 7×7 base, scalabile via s=dotW/7
+// Pixel-art icons for HUD mechanic indicator — 7×7 base, scale via iconScale
 function _drawHudIcon(type, x, y, color, s) {
-  // s = dotW/7: must be a positive integer — non-integer values are snapped
+  // s = iconScale: must be a positive integer — non-integer values are snapped
   s = Math.max(1, Math.round(s || 1));
   ctx.save();
   ctx.translate(Math.round(x), Math.round(y));
@@ -1528,7 +1528,7 @@ function drawHUD() {
       var _sx = Math.round(VH.centerX - _grpW / 2);
       _drawHudIcon(_oi.mechanic, _sx, _iconY, _oi.color, _ds);
       ctx.textAlign = 'left'; ctx.fillStyle = '#44ee66';
-      ctx.fillText(_txt, _sx + VH.dotW + VH.dotGap, _textY);
+      ctx.fillText(_txt, _sx + 7 * _ds + VH.dotGap, _textY);
     }
   }
   // Timer bar — always at full opacity, excluded from the crossfade
