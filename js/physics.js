@@ -161,7 +161,7 @@ function updatePlayer() {
             const t = teachers[ti];
             const tFloor = t.y > (MY+GY)/2 ? 'GY' : t.y > (TY+MY)/2 ? 'MY' : 'TY';
             if (sp.floor && sp.floor !== tFloor) continue;
-            t.alertT = 200; t.chasing = true; t.chaseX = player.x;
+            t.alertT = 200; t.chasing = true; t.chaseX = player.x; t.reactionT = 15;
           }
           let done = 0;
           for (let k = 0; k < sprinklers.length; k++) if (sprinklers[k].active) done++;

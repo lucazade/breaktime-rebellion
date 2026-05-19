@@ -17,7 +17,7 @@ function alertTeachers(bx, by) {
   for (let i = 0; i < teachers.length; i++) {
     const t = teachers[i];
     if (Math.abs(t.y - player.y) < 20 && Math.abs(t.x - bx) < t.sight) {
-      t.alertT = 120; t.chasing = true; t.chaseX = player.x;
+      t.alertT = 120; t.chasing = true; t.chaseX = player.x; t.reactionT = 15;
     }
   }
 }
@@ -30,10 +30,14 @@ function updateTeachers() {
     t.animT += 0.12;
     if (t.chasing) {
       t.alertT = Math.max(0, t.alertT - 1);
-      const dx = t.chaseX - t.x;
-      t.dir = dx > 0 ? 1 : -1;
-      t.x += t.dir * t.speed * 1.8;
-      t.animT += 0.1;
+      if (t.reactionT > 0) {
+        t.reactionT--;  // brief freeze before chasing — eliminates the visual lurch on alert
+      } else {
+        const dx = t.chaseX - t.x;
+        t.dir = dx > 0 ? 1 : -1;
+        t.x += t.dir * t.speed * 1.8;
+        t.animT += 0.1;
+      }
       const catchX = t.catchRadius || 16;
       const catchY = t.catchRadius ? Math.round(t.catchRadius * 0.7) : 12;
       if (Math.abs(t.y - player.y) < catchY && Math.abs(t.x - player.x) < catchX && player.stunT === 0 && frame !== player.stunEndedT) {
@@ -267,7 +271,7 @@ function updateBins() {
       if (Math.abs(t.x - b.x - 5) < 30) {
         t.knockedT = 90; t.chasing = false; t.alertT = 0; // knocked out
       } else {
-        t.alertT = 200; t.chasing = true; t.chaseX = b.x + 5; // rushes toward the bin
+        t.alertT = 200; t.chasing = true; t.chaseX = b.x + 5; t.reactionT = 15; // rushes toward the bin
       }
     }
 

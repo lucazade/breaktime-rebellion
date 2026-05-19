@@ -61,7 +61,7 @@ function resetLevel() {
     return {x:t.x, y:t.y, dir:t.dir, minX:t.minX, maxX:t.maxX,
             speed:t.speed, animT:0, color:t.color, name:t.name,
             sight:t.sight, alertT:0, chasing:false, chaseX:0, knockedT:0,
-            catchRadius: t.catchRadius || 0};
+            catchRadius: t.catchRadius || 0, reactionT:0};
   });
   janitors = lv.janitors.map(function(j) {
     return {x:j.x, y:j.y, dir:j.dir, minX:j.minX, maxX:j.maxX, speed:j.speed, animT:0, name:j.name, knockedT:0, soakCooldownT:0};
