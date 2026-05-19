@@ -203,7 +203,7 @@ canvas {
 }
 
 /* ─── ACTION BUTTON OVERLAY ─── */
-#ctrl-action { z-index: 50; }
+#ctrl-action { z-index: 20; } /* sotto i panel-btn (z:60) per non intercettare i loro touch */
 
 #btn-action {
   width: 82px; height: 82px;
@@ -376,9 +376,9 @@ body.title-mode #game-area::after { display: none !important; }
   -webkit-tap-highlight-color: transparent;
   align-items: center;
   justify-content: center;
-  z-index: 10;
+  z-index: 60; /* sopra #ctrl-action (z:20) */
   box-shadow: var(--btr-btn-glow, none), inset 0 1px 0 rgba(255,255,255,0.08);
-  transition: background 0.12s;
+  -webkit-appearance: none; appearance: none;
 }
 
 .panel-btn:active { background: rgba(160,0,255,0.28); border-color: rgba(160,0,255,1); }
