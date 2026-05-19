@@ -14,17 +14,6 @@ CONFIG.vis = {
     walkOffset: 6,        // px sopra la superficie dove cammina il personaggio
     wallLeft: 10, wallRight: 10, // #78 — margini muro sx/dx (pixel logici)
     desktopZoom: 1.0,            // zoom canvas su desktop (pointer:fine) — 1.5 = 400→600px
-    bezelStyle:        'title',               // stile bezel: 'synthwave' | 'title'
-    panelInnerBorder:  'rgba(0,0,200,0.7)',   // strip neon interno sidepanel — synthwave: rgba(160,0,255,0.7)
-    btnHomeBorder:     'rgba(0,0,180,0.85)',  // bordo pulsante home   — synthwave: rgba(160,0,255,0.85)
-    btnPauseBorder:    'rgba(0,0,180,0.85)',  // bordo pulsante pausa  — synthwave: rgba(160,0,255,0.85)
-    btnInfoBorder:     'rgba(0,0,180,0.85)',  // bordo pulsante info   — synthwave: rgba(160,0,255,0.85)
-    btnHomeBg:         'rgba(0,0,30,1)',      // sfondo home normale   — synthwave: rgba(10,0,24,1)
-    btnPauseBg:        'rgba(0,0,30,1)',      // sfondo pausa normale  — synthwave: rgba(10,0,24,1)
-    btnInfoBg:         'rgba(0,0,30,0.45)',   // sfondo info normale   — synthwave: rgba(0,0,0,0.45)
-    btnHomeBgPressed:  'rgba(0,0,100,0.35)',  // sfondo home premuto   — synthwave: rgba(160,0,255,0.28)
-    btnPauseBgPressed: 'rgba(0,0,100,0.35)',  // sfondo pausa premuto  — synthwave: rgba(160,0,255,0.28)
-    btnInfoBgPressed:  'rgba(0,0,100,0.35)',  // sfondo info premuto   — synthwave: rgba(160,0,255,0.28)
   },
 
   colors: {
@@ -58,6 +47,22 @@ const wallLeft = CONFIG.vis.layout.wallLeft, wallRight = CONFIG.vis.layout.wallR
 Object.assign(CONFIG.vis, {
 
   fontFamily: '"Press Start 2P"',  // font usato in tutti i banner — ⚠ solo 4px e 8px sono crispini
+
+  // ── Bezel — stile pannelli laterali mobile e sfondo desktop ──────────────
+  bezel: {
+    style:             'title',               // 'synthwave' | 'title'
+    panelInnerBorder:  'rgba(0,0,0,0.7)',   // strip neon interno sidepanel — synthwave: rgba(160,0,255,0.7)
+    btnHomeBorder:     'rgba(0,0,230,0.85)',  // bordo pulsante home          — synthwave: rgba(160,0,255,0.85)
+    btnPauseBorder:    'rgba(0,0,180,0.85)',  // bordo pulsante pausa         — synthwave: rgba(160,0,255,0.85)
+    btnInfoBorder:     'rgba(0,0,180,0.85)',  // bordo pulsante info          — synthwave: rgba(160,0,255,0.85)
+    btnHomeBg:         'rgba(0,0,30,1)',      // sfondo home normale           — synthwave: rgba(10,0,24,1)
+    btnPauseBg:        'rgba(0,0,30,1)',      // sfondo pausa normale          — synthwave: rgba(10,0,24,1)
+    btnInfoBg:         'rgba(0,0,30,1)',      // sfondo info normale           — synthwave: rgba(0,0,0,0.45)
+    btnHomeBgPressed:  'rgba(0,0,100,0.35)', // sfondo home premuto           — synthwave: rgba(160,0,255,0.28)
+    btnPauseBgPressed: 'rgba(0,0,100,0.35)', // sfondo pausa premuto          — synthwave: rgba(160,0,255,0.28)
+    btnInfoBgPressed:  'rgba(0,0,100,0.35)', // sfondo info premuto           — synthwave: rgba(160,0,255,0.28)
+    btnGlow:           'none',               // glow pulsanti (box-shadow)    — synthwave: 0 0 8px rgba(160,0,255,0.35)
+  },
 
   // Stile condiviso tra tutti i dialog (banner, pulsanti)
   dialog: {
@@ -296,15 +301,17 @@ var SHARED_LAYOUT = CONFIG.vis.shared;
 
 // Applica CSS custom properties da layout
 var _L = CONFIG.vis.layout;
+var _B = CONFIG.vis.bezel;
 document.documentElement.style.setProperty('--btr-zoom',               _L.desktopZoom);
-document.documentElement.style.setProperty('--btr-panel-inner-border',  _L.panelInnerBorder);
-document.documentElement.style.setProperty('--btr-btn-home-border',     _L.btnHomeBorder);
-document.documentElement.style.setProperty('--btr-btn-pause-border',    _L.btnPauseBorder);
-document.documentElement.style.setProperty('--btr-btn-info-border',     _L.btnInfoBorder);
-document.documentElement.style.setProperty('--btr-btn-home-bg',         _L.btnHomeBg);
-document.documentElement.style.setProperty('--btr-btn-pause-bg',        _L.btnPauseBg);
-document.documentElement.style.setProperty('--btr-btn-info-bg',         _L.btnInfoBg);
-document.documentElement.style.setProperty('--btr-btn-home-bg-pressed',  _L.btnHomeBgPressed);
-document.documentElement.style.setProperty('--btr-btn-pause-bg-pressed', _L.btnPauseBgPressed);
-document.documentElement.style.setProperty('--btr-btn-info-bg-pressed',  _L.btnInfoBgPressed);
-if (_L.bezelStyle === 'title') document.body.classList.add('bezel-title');
+document.documentElement.style.setProperty('--btr-panel-inner-border',  _B.panelInnerBorder);
+document.documentElement.style.setProperty('--btr-btn-home-border',     _B.btnHomeBorder);
+document.documentElement.style.setProperty('--btr-btn-pause-border',    _B.btnPauseBorder);
+document.documentElement.style.setProperty('--btr-btn-info-border',     _B.btnInfoBorder);
+document.documentElement.style.setProperty('--btr-btn-home-bg',         _B.btnHomeBg);
+document.documentElement.style.setProperty('--btr-btn-pause-bg',        _B.btnPauseBg);
+document.documentElement.style.setProperty('--btr-btn-info-bg',         _B.btnInfoBg);
+document.documentElement.style.setProperty('--btr-btn-home-bg-pressed',  _B.btnHomeBgPressed);
+document.documentElement.style.setProperty('--btr-btn-pause-bg-pressed', _B.btnPauseBgPressed);
+document.documentElement.style.setProperty('--btr-btn-info-bg-pressed',  _B.btnInfoBgPressed);
+document.documentElement.style.setProperty('--btr-btn-glow',                _B.btnGlow);
+if (_B.style === 'title') document.body.classList.add('bezel-title');
