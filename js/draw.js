@@ -1492,11 +1492,11 @@ function drawHUD() {
   var VH = CONFIG.vis.hud;
   ctx.save();
   var _f = VH.fontSize + 'px ' + FF;
-  var _hs = VH.heartSize || 1;
-  var _ds = VH.dotW / 7;                                          // mechanic icon scale
+  var _hs = VH.heartSize || 1;  // 1 = default 8×7px heart
+  var _ds = VH.iconScale || 1;  // 1 = default 7×7px icon
   var _textY  = Math.floor((VH.rowH - VH.fontSize) / 2);          // vertical text centering
   var _heartY = Math.floor((VH.rowH - 7 * _hs) / 2);              // vertical heart centering
-  var _iconY  = Math.floor((VH.rowH - VH.dotW) / 2);              // vertical icon centering
+  var _iconY  = Math.floor((VH.rowH - 7 * _ds) / 2);              // vertical icon centering
   ctx.fillStyle = VH.bgColor; ctx.fillRect(0, 0, W, VH.rowH);
   ctx.font = _f; ctx.textBaseline = 'top';
   // Smooth crossfade: _hudMsgAlpha approaches 1 or 0 at fixed speed,
@@ -1524,7 +1524,7 @@ function drawHUD() {
     if (state === 'playing') {
       var _oi = _hudObjInfo();
       var _txt = _oi.done + '/' + _oi.total;
-      var _grpW = VH.dotW + VH.dotGap + ctx.measureText(_txt).width;
+      var _grpW = 7 * _ds + VH.dotGap + ctx.measureText(_txt).width;
       var _sx = Math.round(VH.centerX - _grpW / 2);
       _drawHudIcon(_oi.mechanic, _sx, _iconY, _oi.color, _ds);
       ctx.textAlign = 'left'; ctx.fillStyle = '#44ee66';

@@ -106,13 +106,13 @@ Object.assign(CONFIG.vis, {
     rowH:      8,                   // HUD strip height
     heartsX:   4,                    // x position of first heart
     heartStep: 9,                    // px per heart (8 wide + 1 gap)
-    heartSize: 0.8,                    // heart scale: 1 = 8×7px | 0.5 = 4×3px
+    heartSize:  1,                    // heart scale: 1 = 8×7px, 2 = 16×14px
+    iconScale:  1,                    // mechanic icon scale: 1 = 7×7px, 2 = 14×14px
     msgFadeFrames: 45,               // frames for the msg↔HUD crossfade (45 ≈ 0.75s at 60fps)
     centerX:   160,                  // x centre for counter/message
     scoreX:    316,                  // right x for score
     timerH:    1,                    // timer bar height
     fontSize:  6,
-    dotW:      5.5,                    // mechanic indicator square size
     dotGap:    5,                    // gap between icon and counter text
     bgColor:   'rgba(0,0,0,0.55)',
     // Mechanic indicator colour per mechanic type
