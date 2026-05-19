@@ -294,18 +294,17 @@ var _pauseActive      = false;  // pausa attiva (non home-confirm)
 var _homeConfirmActive = false; // home-confirm aperta
 var _stateBeforeHome  = null;
 var _btnPause         = document.getElementById('btn-pause');
-var _pauseIcon        = _btnPause.querySelector('i');
 
 function setPaused(paused) {
   _pauseActive = paused;
   if (paused) {
     state = 'paused';
     GameAudio.pauseMusic();
-    _pauseIcon.className = 'fa-solid fa-play';
+    _btnPause.textContent = '▶';
   } else {
     state = 'playing';
     GameAudio.resumeMusic();
-    _pauseIcon.className = 'fa-solid fa-pause';
+    _btnPause.textContent = '⏸';
   }
 }
 
@@ -327,7 +326,7 @@ function triggerHome() {
 
 function goHome() {
   _pauseActive = false; _homeConfirmActive = false;
-  _pauseIcon.className = 'fa-solid fa-pause';
+  _btnPause.textContent = '⏸';
   GameAudio.fadeOutMusic(750);
   fadeScreen(0, 1, 750, function() {
     lives = 3; score = 0;
