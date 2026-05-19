@@ -266,15 +266,18 @@ CHIUSI:
 - [X] #119 quando compare un messaggio in hud nascondiamo anche cuori e punteggio
 - [X] #120 con i messaggi in hud a font size 4px i cuori rimangono troppo grandi (devono far resize)
 - [X] #122 bug pulsante pausa cambia di grafica (quando fai tap più volte sul pusante pausa a un certo punto cambia e ha sfondo arancione, vedi screenshot)
+- [X] #123 sfondo syntwave anche per title opzionale
 
 PER LUCA:
 - [ ] #72 Revisione punteggi (per Luca)
 - [ ] #85 Aggiungere banco al secondo piano (per Luca)
 - [ ] #108 sistemare suoni (per Luca)
+- [ ] #123 Sistemare logo (via orologio, lasciare copyright)
+- [ ] #124 sistemare livello preside e ultimo
 
 IMPORTANTI:
 - [ ] #121 quando il prof si allerta e strilla ehi! fa uno scatto in avanti che in precedenza non faceva
-- [ ] #123 sfondo syntwave anche per title opzionale
+
 
 MINORI:
 - [ ] #76 target libreria troppo grande

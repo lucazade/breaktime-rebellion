@@ -48,19 +48,8 @@ Object.assign(CONFIG.vis, {
 
   fontFamily: '"Silkscreen"',  // font used in all banners — swap font here to test alternatives
 
-  // ── Bezel — mobile side panels and desktop background ────────────────────
+  // ── Bezel — mobile side panels ────────────────────
   bezel: {
-    /*panelInnerBorder:  'rgba(0,0,0,0.7)',   // inner neon strip sidepanel    — synthwave: rgba(160,0,255,0.7)
-    btnHomeBorder:     'rgba(0,0,230,0.85)',  // home button border            — synthwave: rgba(160,0,255,0.85)
-    btnPauseBorder:    'rgba(0,0,180,0.85)',  // pause button border           — synthwave: rgba(160,0,255,0.85)
-    btnInfoBorder:     'rgba(0,0,180,0.85)',  // info button border            — synthwave: rgba(160,0,255,0.85)
-    btnHomeBg:         'rgba(0,0,30,1)',      // home button background        — synthwave: rgba(10,0,24,1)
-    btnPauseBg:        'rgba(0,0,30,1)',      // pause button background       — synthwave: rgba(10,0,24,1)
-    btnInfoBg:         'rgba(0,0,30,1)',      // info button background        — synthwave: rgba(0,0,0,0.45)
-    btnHomeBgPressed:  'rgba(0,0,100,0.35)', // home button pressed           — synthwave: rgba(160,0,255,0.28)
-    btnPauseBgPressed: 'rgba(0,0,100,0.35)', // pause button pressed          — synthwave: rgba(160,0,255,0.28)
-    btnInfoBgPressed:  'rgba(0,0,100,0.35)', // info button pressed           — synthwave: rgba(160,0,255,0.28)
-    btnGlow:           'none',               // button glow (box-shadow)      — synthwave: 0 0 8px rgba(160,0,255,0.35)*/
     panelInnerBorder:  'rgba(160,0,255,0.7)',
     btnHomeBorder:     'rgba(160,0,255,0.85)',
     btnPauseBorder:    'rgba(160,0,255,0.85)',
