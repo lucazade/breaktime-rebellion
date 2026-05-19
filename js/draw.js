@@ -1387,11 +1387,20 @@ function _panPos(panW, panH) {
 
 function _drawHeart(x, y, s) {
   s = s || 1;
-  if (s < 1) {
-    // Small variant: 4×3px — for HUD with fontSize 6 (heartSize: 0.5)
+  if (s < 0.5) {
+    // Tiny: 4×3px
     ctx.fillRect(x,   y,   1, 1); ctx.fillRect(x+2, y,   1, 1);
     ctx.fillRect(x,   y+1, 4, 1);
     ctx.fillRect(x+1, y+2, 2, 1);
+    return;
+  }
+  if (s < 1) {
+    // Medium: 6×5px — matches fontSize 6 in rowH 8 (heartSize: 0.5)
+    ctx.fillRect(x+1, y,   2, 1); ctx.fillRect(x+4, y,   2, 1);
+    ctx.fillRect(x,   y+1, 6, 1);
+    ctx.fillRect(x,   y+2, 6, 1);
+    ctx.fillRect(x+1, y+3, 4, 1);
+    ctx.fillRect(x+2, y+4, 2, 1);
     return;
   }
   s = Math.max(1, Math.round(s));
@@ -1403,10 +1412,20 @@ function _drawHeart(x, y, s) {
 // Pixel-art icons for HUD mechanic indicator — 7×7 base, scale via iconScale
 function _drawHudIcon(type, x, y, color, s) {
   s = s || 1;
-  if (s < 1) {
-    // Small variant: solid 4×4px dot — for HUD with fontSize 6 (iconScale: 0.5)
+  if (s < 0.5) {
+    // Tiny: solid 4×4px dot
     ctx.fillStyle = color;
     ctx.fillRect(Math.round(x), Math.round(y), 4, 4);
+    return;
+  }
+  if (s < 1) {
+    // Medium: 6×6px hollow square — matches fontSize 6 (iconScale: 0.5)
+    ctx.fillStyle = color;
+    var ix = Math.round(x), iy = Math.round(y);
+    ctx.fillRect(ix,   iy,   6, 1); // top
+    ctx.fillRect(ix,   iy+5, 6, 1); // bottom
+    ctx.fillRect(ix,   iy+1, 1, 4); // left
+    ctx.fillRect(ix+5, iy+1, 1, 4); // right
     return;
   }
   s = Math.max(1, Math.round(s));
@@ -1507,10 +1526,10 @@ function drawHUD() {
   var _f = VH.fontSize + 'px ' + FF;
   var _hs = VH.heartSize || 1;  // 1 = 8×7px | 0.5 = 4×3px (small)
   var _ds = VH.iconScale || 1;  // 1 = 7×7px | 0.5 = 4×4px (small)
-  var _heartH    = _hs < 1 ? 3 : 7 * Math.max(1, Math.round(_hs));
-  var _heartW    = _hs < 1 ? 4 : 8 * Math.max(1, Math.round(_hs));
-  var _iconSz    = _ds < 1 ? 4 : 7 * Math.max(1, Math.round(_ds));
-  var _heartStep = _hs < 1 ? _heartW + 1 : VH.heartStep * Math.max(1, Math.round(_hs));
+  var _heartH    = _hs < 0.5 ? 3 : _hs < 1 ? 5 : 7 * Math.max(1, Math.round(_hs));
+  var _heartW    = _hs < 0.5 ? 4 : _hs < 1 ? 6 : 8 * Math.max(1, Math.round(_hs));
+  var _iconSz    = _ds < 0.5 ? 4 : _ds < 1 ? 6 : 7 * Math.max(1, Math.round(_ds));
+  var _heartStep = _heartW + 1;
   var _textY  = Math.floor((VH.rowH - VH.fontSize) / 2);
   var _heartY = Math.floor((VH.rowH - _heartH) / 2);
   var _iconY  = Math.floor((VH.rowH - _iconSz)  / 2);
