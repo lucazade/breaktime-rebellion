@@ -1,28 +1,28 @@
 // Rendering — all draw functions and HUD update
 
-var _logoImage = null; // caricato da game.js come bgImage
-var FF = CONFIG.vis.fontFamily;  // shortcut font family — modificabile in layout.js
-var _hudMsgAlpha = 0; // alpha crossfade HUD: sale verso 1 quando c'è msg, scende verso 0 altrimenti
+var _logoImage = null; // loaded by game.js alongside bgImage
+var FF = CONFIG.vis.fontFamily;  // font family shortcut — editable in layout.js
+var _hudMsgAlpha = 0; // HUD crossfade alpha: rises to 1 when a message is active, falls back to 0 otherwise
 
 // ── Title screen helpers ──────────────────────────────────────────────────────
 
 
 function _drawVolumeIcon(x, y, mode, color) {
-  // icona 5×4 logici (= 10×8 px reali) — stessa altezza del font 4px
+  // 5×4 logical pixels (= 10×8 real px) — matches the 4px font height
   ctx.fillStyle = color;
   if (mode === 'mute') {
-    // X 5×4 — stessa larghezza delle barre
+    // X shape 5×4 — same width as the bar icons
     ctx.fillRect(x,   y,   1,1); ctx.fillRect(x+4, y,   1,1);
     ctx.fillRect(x+1, y+1, 1,1); ctx.fillRect(x+3, y+1, 1,1);
     ctx.fillRect(x+1, y+2, 1,1); ctx.fillRect(x+3, y+2, 1,1);
     ctx.fillRect(x,   y+3, 1,1); ctx.fillRect(x+4, y+3, 1,1);
   } else if (mode === 'sfx') {
-    ctx.fillRect(x,   y+2, 1, 2);  // barra bassa
-    ctx.fillRect(x+2, y+1, 1, 3);  // barra media
+    ctx.fillRect(x,   y+2, 1, 2);  // low bar
+    ctx.fillRect(x+2, y+1, 1, 3);  // mid bar
   } else {
-    ctx.fillRect(x,   y+2, 1, 2);  // barra bassa
-    ctx.fillRect(x+2, y+1, 1, 3);  // barra media
-    ctx.fillRect(x+4, y,   1, 4);  // barra alta
+    ctx.fillRect(x,   y+2, 1, 2);  // low bar
+    ctx.fillRect(x+2, y+1, 1, 3);  // mid bar
+    ctx.fillRect(x+4, y,   1, 4);  // high bar
   }
 }
 
@@ -57,7 +57,7 @@ function drawTitleScreen() {
   var ct = VT.controls;
   var showLegend = CONFIG.debug.showLegend;
 
-  // Altezza logo
+  // Logo height
   var logoW = VT.logo.w;
   var logoX = Math.round((W - logoW) / 2);
   var logoH = 0;
@@ -65,14 +65,14 @@ function drawTitleScreen() {
     logoH = Math.round(_logoImage.naturalHeight / _logoImage.naturalWidth * logoW);
   }
 
-  // Centratura verticale: calcola altezza totale del blocco contenuto
+  // Vertical centering: compute total height of content block
   var ctrlBlockH = ct.gapY + ct.btnH;
   var legBlockH  = showLegend ? (VT.legend.gapY  + VT.legend.fontSize + 2)  : 0;
   var totalH = logoH + ctrlBlockH + legBlockH;
   var logoY  = Math.max(0, Math.round((H - totalH) / 2));
   _titleLogoRect = logoH > 0 ? {x: logoX, y: logoY, w: logoW, h: logoH} : null;
 
-  // Logo clippato con angoli stondati + bordino
+  // Logo clipped with rounded corners + thin border
   if (logoH > 0) {
     var r = VT.logo.borderR;
     ctx.save();
@@ -103,7 +103,7 @@ function drawTitleScreen() {
   ctx.font = ct.fontSize + 'px ' + FF;
 
   ctx.lineWidth = 1;
-  var ctrlTextY = ctrlY + Math.floor((ct.btnH - ct.fontSize) / 2); // centratura verticale testo
+  var ctrlTextY = ctrlY + Math.floor((ct.btnH - ct.fontSize) / 2); // vertical text centering
   var r = ct.boxR;
   function _box(x, y, w, color) {
     ctx.strokeStyle = color; ctx.beginPath(); ctx.roundRect(x, y, w, ct.btnH, r); ctx.stroke();
@@ -129,7 +129,7 @@ function drawTitleScreen() {
     }
   }
 
-  // Tap to start — nella barra, lampeggiante (se CONFIG.debug.showTapToStart)
+  // Tap to start — shown in the controls bar, blinking (if CONFIG.debug.showTapToStart)
   if (CONFIG.debug.showTapToStart && !_titleStarting && Math.floor(frame / 20) % 2 === 0) {
     var vTap = VT.tapToStart;
     var tapX = vTap.alignX === 'left' ? 0 : vTap.alignX === 'right' ? W : W / 2;
@@ -140,7 +140,7 @@ function drawTitleScreen() {
     ctx.font = ct.fontSize + 'px ' + FF; ctx.textAlign = 'center';
   }
 
-  // Audio toggle — larghezza fissa basata sulla label più lunga tra tutti gli stati
+  // Audio toggle — fixed width based on the longest label across all modes
   var audioMode = GameAudio.getMode();
   var audioColor = audioMode==='full' ? C.lgreen : audioMode==='sfx' ? C.yellow : C.mgray;
   var audioLabel = audioMode==='full' ? STRINGS.audioFull : audioMode==='sfx' ? STRINGS.audioSfx : STRINGS.audioMute;
@@ -157,7 +157,7 @@ function drawTitleScreen() {
   ctx.fillText(audioLabel, _blockX + _iconW + _gap, ctrlTextY);
   ctx.textAlign = 'center';
 
-  // Keyboard legend — solo su desktop, riga singola con key box
+  // Keyboard legend — desktop only, single row with key boxes
   if (showLegend) {
     var lf = VT.legend.fontSize, kh = lf + 2, kr = 1, ks = 4;
     ctx.font = lf + 'px ' + FF;
@@ -257,7 +257,7 @@ function drawBell() {
   const shd = '#CC9900';
   const drk = '#332200';
 
-  // Top cap (chiude il bordo)
+  // Top cap (closes the border)
   ctx.fillStyle = out; ctx.fillRect(X+2, by-1, 2, 1);
 
   // Knob (2px)
@@ -286,14 +286,14 @@ function drawBell() {
   // Clapper (2px × 1 row)
   ctx.fillStyle = drk; ctx.fillRect(X+2, by+6, 2, 1);
 
-  // Glow pulsante quando obiettivo completato
+  // Pulsing glow when the objective is complete
   if ((allBoards || allBags || allMachines || allBall || allStudents || allBooks || allSink || allBins || allSprinklers) && !BELL.done) {
     const pulse = 0.12 + 0.08 * Math.sin(frame * 0.15);
     ctx.fillStyle = 'rgba(255,215,0,' + pulse + ')';
     ctx.beginPath(); ctx.arc(bx+3, by+3, 7, 0, Math.PI*2); ctx.fill();
   }
 
-  // Onde sonore quando suona
+  // Sound waves when ringing
   if (BELL.ringing) {
     for (let i = 1; i <= 3; i++) {
       ctx.strokeStyle = 'rgba(255,215,0,' + (0.6 - i*0.15) + ')';
@@ -951,7 +951,7 @@ function drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, chasing, knock
 
   if (spraying) {
     const sx = dir>0 ? bx+PW+2 : bx-6;
-    ctx.fillStyle = '#005050'; ctx.fillRect(sx-1, by+2, 6, 7); // bordino scuro
+    ctx.fillStyle = '#005050'; ctx.fillRect(sx-1, by+2, 6, 7); // dark outline
     ctx.fillStyle = C.cyan;   ctx.fillRect(sx,   by+3, 4, 5); // can
     for (let i = 0; i < 8; i++) {
       const t = (frame * 5 + i * 11) % 19;
@@ -1026,7 +1026,7 @@ function drawLucaEnd() {
   const ly = Math.round(GY - PH - walkOffset);
   drawChar(lx, ly, 1, 0, C.white, false, false, false, 0);
 
-  // Speech bubble — bh calcolato da CONFIG.vis.lucaFumetto
+  // Speech bubble — bh computed from CONFIG.vis.lucaFumetto
   const VF = CONFIG.vis.lucaFumetto;
   ctx.font = VF.fontBody + 'px ' + FF;
   const raw = STRINGS.lucaAppears.replace(/^[^"]*"?/, '').replace(/".*$/, '');
@@ -1396,54 +1396,54 @@ function _drawHudIcon(type, x, y, color, s) {
   if (s !== 1) ctx.scale(s, s);
   ctx.fillStyle = color;
   switch (type) {
-    case 'boards':   // lavagna: outline 7×7 + 2 righe gesso
+    case 'boards':   // board: 7×7 outline + 2 chalk lines
       ctx.fillRect(0,1, 7,1); ctx.fillRect(0,6, 7,1);
       ctx.fillRect(0,1, 1,5); ctx.fillRect(6,1, 1,5);
       ctx.fillStyle = '#fff'; ctx.fillRect(1,2, 5,1); ctx.fillRect(1,4, 5,1);
       break;
-    case 'bags':     // cartella: corpo + manico
+    case 'bags':     // bag: body + handle
       ctx.fillRect(2,0, 3,1);
       ctx.fillRect(0,1, 7,1); ctx.fillRect(0,6, 7,1);
       ctx.fillRect(0,2, 1,4); ctx.fillRect(6,2, 1,4);
       ctx.fillStyle = '#2A1F5E'; ctx.fillRect(2,3, 3,1);
       break;
-    case 'machines': // distributore: rettangolo con schermo e tasto
+    case 'machines': // vending machine: rectangle with screen and button
       ctx.fillRect(0,0, 6,7);
       ctx.fillStyle = '#000';    ctx.fillRect(1,1, 4,2);
       ctx.fillStyle = '#FFD700'; ctx.fillRect(2,5, 2,1);
       break;
-    case 'ball':     // pallone: cerchio con cuciture
+    case 'ball':     // ball: circle with seams
       ctx.fillRect(1,0, 5,1); ctx.fillRect(1,6, 5,1);
       ctx.fillRect(0,1, 7,5);
       ctx.fillStyle = '#000'; ctx.fillRect(3,1, 1,5); ctx.fillRect(1,3, 5,1);
       break;
-    case 'students': // alunno: testa + corpo + gambe
+    case 'students': // student: head + body + legs
       ctx.fillRect(2,0, 3,3);
       ctx.fillRect(1,3, 5,2);
       ctx.fillRect(1,5, 2,2); ctx.fillRect(4,5, 2,2);
       break;
-    case 'books':    // libro: rettangolo con costa e righe
+    case 'books':    // book: rectangle with spine and lines
       ctx.fillRect(0,0, 7,7);
       ctx.fillStyle = '#000'; ctx.fillRect(1,0, 1,7);
       ctx.fillStyle = '#fff'; ctx.fillRect(2,2, 4,1); ctx.fillRect(2,4, 4,1);
       break;
-    case 'sink':     // lavandino: gocce + vasca
+    case 'sink':     // sink: drops + basin
       ctx.fillRect(1,0, 1,2); ctx.fillRect(5,0, 1,2);
       ctx.fillRect(0,3, 7,1); ctx.fillRect(0,6, 7,1);
       ctx.fillRect(0,4, 1,2); ctx.fillRect(6,4, 1,2);
       break;
-    case 'bins':     // secchio: coperchio + corpo + miccia
+    case 'bins':     // bin: lid + body + fuse
       ctx.fillRect(1,1, 5,1);
       ctx.fillRect(0,2, 7,5);
       ctx.fillStyle = '#FFD700'; ctx.fillRect(3,0, 1,2);
       ctx.fillStyle = '#000';    ctx.fillRect(2,4, 1,2); ctx.fillRect(4,4, 1,2);
       break;
-    case 'sprinklers': // fiamma: silhouette fuoco
+    case 'sprinklers': // sprinkler: flame silhouette
       ctx.fillRect(3,0, 1,1);
       ctx.fillRect(2,1, 3,1); ctx.fillRect(1,2, 5,2);
       ctx.fillRect(0,4, 7,1); ctx.fillRect(1,5, 5,1); ctx.fillRect(2,6, 3,1);
       break;
-    case 'register': // registro: libro con angolo dorato
+    case 'register': // register: book with golden corner
       ctx.fillRect(0,0, 7,7);
       ctx.fillStyle = '#000';    ctx.fillRect(1,1, 5,1); ctx.fillRect(1,3, 5,1); ctx.fillRect(1,5, 3,1);
       ctx.fillStyle = '#FFD700'; ctx.fillRect(5,5, 2,2);
@@ -1487,28 +1487,28 @@ function drawHUD() {
   ctx.save();
   var _f = VH.fontSize + 'px ' + FF;
   var _hs = VH.heartSize || 1;
-  var _ds = VH.dotW / 7;                                          // scala icona meccanica
-  var _textY  = Math.floor((VH.rowH - VH.fontSize) / 2);          // centratura verticale testo
-  var _heartY = Math.floor((VH.rowH - 7 * _hs) / 2);              // centratura verticale cuori
-  var _iconY  = Math.floor((VH.rowH - VH.dotW) / 2);              // centratura verticale icona
+  var _ds = VH.dotW / 7;                                          // mechanic icon scale
+  var _textY  = Math.floor((VH.rowH - VH.fontSize) / 2);          // vertical text centering
+  var _heartY = Math.floor((VH.rowH - 7 * _hs) / 2);              // vertical heart centering
+  var _iconY  = Math.floor((VH.rowH - VH.dotW) / 2);              // vertical icon centering
   ctx.fillStyle = VH.bgColor; ctx.fillRect(0, 0, W, VH.rowH);
   ctx.font = _f; ctx.textBaseline = 'top';
-  // Crossfade fluido: _hudMsgAlpha si avvicina a 1 o 0 a velocità fissa
-  // indipendente da msgT — nessun flicker quando il timer ciclizza rapidamente
+  // Smooth crossfade: _hudMsgAlpha approaches 1 or 0 at fixed speed,
+  // independent of msgT — no flicker when messages cycle rapidly
   var _fadeSpeed = 1 / (VH.msgFadeFrames || 45);
   var _targetAlpha = msgT > 0 ? 1 : 0;
   if (_hudMsgAlpha < _targetAlpha) _hudMsgAlpha = Math.min(_targetAlpha, _hudMsgAlpha + _fadeSpeed);
   else if (_hudMsgAlpha > _targetAlpha) _hudMsgAlpha = Math.max(_targetAlpha, _hudMsgAlpha - _fadeSpeed);
   var _hudAlpha = 1 - _hudMsgAlpha;
 
-  // Messaggio — visibile a _hudMsgAlpha
+  // Message — visible at _hudMsgAlpha
   if (_hudMsgAlpha > 0) {
     ctx.globalAlpha = _hudMsgAlpha;
     ctx.fillStyle = '#ffffff'; ctx.textAlign = 'center';
     ctx.fillText(msgText, VH.centerX, _textY);
   }
 
-  // Cuori + punteggio + counter — visibili a _hudAlpha
+  // Hearts + score + counter — visible at _hudAlpha
   if (_hudAlpha > 0) {
     ctx.globalAlpha = _hudAlpha;
     ctx.fillStyle = '#ff2244';
@@ -1525,7 +1525,7 @@ function drawHUD() {
       ctx.fillText(_txt, _sx + VH.dotW + VH.dotGap, _textY);
     }
   }
-  // Timer bar — sempre a piena opacità, esclusa dal crossfade
+  // Timer bar — always at full opacity, excluded from the crossfade
   ctx.globalAlpha = 1;
   if (maxTimerTicks > 0) {
     var _pct = Math.max(0, timerTicks / maxTimerTicks);

@@ -3,7 +3,7 @@
 //  Edit here to change the look of the school building.
 // ═══════════════════════════════════════════════════════════
 
-// Prima parte di CONFIG.vis: layout e colori (devono stare prima dei const)
+// First section of CONFIG.vis: layout and colours (must come before the shortcut constants)
 CONFIG.vis = {
 
   layout: {
@@ -42,28 +42,27 @@ const BW = CONFIG.vis.layout.BW, BH = CONFIG.vis.layout.BH;
 const walkOffset = CONFIG.vis.layout.walkOffset;
 const wallLeft = CONFIG.vis.layout.wallLeft, wallRight = CONFIG.vis.layout.wallRight;
 
-// Resto di CONFIG.vis — usa i shortcut constants sopra
+// Rest of CONFIG.vis — uses the shortcut constants defined above
 // All canvas coords are in logical 320×200 space (ctx.scale 2×).
 Object.assign(CONFIG.vis, {
 
-  fontFamily: '"Press Start 2P"',  // font usato in tutti i banner — ⚠ solo 4px e 8px sono crispini
+  fontFamily: '"Press Start 2P"',  // font used in all banners — ⚠ only 4px and 8px are crisp on this canvas
 
-  // ── Bezel — stile pannelli laterali mobile e sfondo desktop ──────────────
+  bodyStyle: 'synthwave',  // global body background: 'synthwave' | 'blue'
+
+  // ── Bezel — mobile side panels and desktop background ────────────────────
   bezel: {
-    /*style:             'title',               // 'synthwave' | 'title'
-    panelInnerBorder:  'rgba(0,0,0,0.7)',   // strip neon interno sidepanel — synthwave: rgba(160,0,255,0.7)
-    btnHomeBorder:     'rgba(0,0,230,0.85)',  // bordo pulsante home          — synthwave: rgba(160,0,255,0.85)
-    btnPauseBorder:    'rgba(0,0,180,0.85)',  // bordo pulsante pausa         — synthwave: rgba(160,0,255,0.85)
-    btnInfoBorder:     'rgba(0,0,180,0.85)',  // bordo pulsante info          — synthwave: rgba(160,0,255,0.85)
-    btnHomeBg:         'rgba(0,0,30,1)',      // sfondo home normale           — synthwave: rgba(10,0,24,1)
-    btnPauseBg:        'rgba(0,0,30,1)',      // sfondo pausa normale          — synthwave: rgba(10,0,24,1)
-    btnInfoBg:         'rgba(0,0,30,1)',      // sfondo info normale           — synthwave: rgba(0,0,0,0.45)
-    btnHomeBgPressed:  'rgba(0,0,100,0.35)', // sfondo home premuto           — synthwave: rgba(160,0,255,0.28)
-    btnPauseBgPressed: 'rgba(0,0,100,0.35)', // sfondo pausa premuto          — synthwave: rgba(160,0,255,0.28)
-    btnInfoBgPressed:  'rgba(0,0,100,0.35)', // sfondo info premuto           — synthwave: rgba(160,0,255,0.28)
-    btnGlow:           'none',               // glow pulsanti (box-shadow)    — synthwave: 0 0 8px rgba(160,0,255,0.35)*/
-
-    style:             'synthwave',
+    /*panelInnerBorder:  'rgba(0,0,0,0.7)',   // inner neon strip sidepanel    — synthwave: rgba(160,0,255,0.7)
+    btnHomeBorder:     'rgba(0,0,230,0.85)',  // home button border            — synthwave: rgba(160,0,255,0.85)
+    btnPauseBorder:    'rgba(0,0,180,0.85)',  // pause button border           — synthwave: rgba(160,0,255,0.85)
+    btnInfoBorder:     'rgba(0,0,180,0.85)',  // info button border            — synthwave: rgba(160,0,255,0.85)
+    btnHomeBg:         'rgba(0,0,30,1)',      // home button background        — synthwave: rgba(10,0,24,1)
+    btnPauseBg:        'rgba(0,0,30,1)',      // pause button background       — synthwave: rgba(10,0,24,1)
+    btnInfoBg:         'rgba(0,0,30,1)',      // info button background        — synthwave: rgba(0,0,0,0.45)
+    btnHomeBgPressed:  'rgba(0,0,100,0.35)', // home button pressed           — synthwave: rgba(160,0,255,0.28)
+    btnPauseBgPressed: 'rgba(0,0,100,0.35)', // pause button pressed          — synthwave: rgba(160,0,255,0.28)
+    btnInfoBgPressed:  'rgba(0,0,100,0.35)', // info button pressed           — synthwave: rgba(160,0,255,0.28)
+    btnGlow:           'none',               // button glow (box-shadow)      — synthwave: 0 0 8px rgba(160,0,255,0.35)*/
     panelInnerBorder:  'rgba(160,0,255,0.7)',
     btnHomeBorder:     'rgba(160,0,255,0.85)',
     btnPauseBorder:    'rgba(160,0,255,0.85)',
@@ -77,59 +76,59 @@ Object.assign(CONFIG.vis, {
     btnGlow:           '0 0 8px rgba(160,0,255,0.35)',
   },
 
-  // Stile condiviso tra tutti i dialog (banner, pulsanti)
+  // Shared style for all dialog panels (banners, buttons)
   dialog: {
-    panBg:       'rgba(0,0,40,0.90)',         // sfondo pannello (default)
-    panBorder:   '#FFD700',                   // colore bordo pannello
-    panBorderW:  1,                           // spessore bordo pannello
-    panR:        4,                           // raggio angoli pannello
-    btnR:        2,                           // raggio angoli pulsanti
-    btnColorYes: 'rgba(0,90,0,0.92)',         // pulsante positivo (SI / OK / RIPRENDI)
-    btnColorNo:  'rgba(90,0,0,0.92)',         // pulsante negativo (NO)
-    btnStroke:   '#FFD700',                   // bordo pulsanti
+    panBg:       'rgba(0,0,40,0.90)',         // panel background (default)
+    panBorder:   '#FFD700',                   // panel border colour
+    panBorderW:  1,                           // panel border thickness
+    panR:        4,                           // panel corner radius
+    btnR:        2,                           // button corner radius
+    btnColorYes: 'rgba(0,90,0,0.92)',         // positive button (YES / OK / RESUME)
+    btnColorNo:  'rgba(90,0,0,0.92)',         // negative button (NO)
+    btnStroke:   '#FFD700',                   // button border colour
   },
 
   // Title screen — logo + tap to start + level chooser + audio toggle + keyboard legend
   titleScreen: {
-    // style rimosso — il fondo title segue il body (bezel.style in layout.js)
-    logo:     { w: 300, borderW: 1, borderR: 5 }, // larghezza logo; y calcolato (centratura verticale); borderW=spessore bordino, borderR=raggio angoli clip
-    tapToStart: { fontSize: 4, alignX: 'center', alignY: 'middle' }, // font e allineamento nella controls bar (alignX: left|center|right; alignY: top|middle|bottom)
+    // style removed — title background follows the body (bodyStyle in layout.js)
+    logo:     { w: 300, borderW: 1, borderR: 5 }, // logo width; y computed (vertical centering); borderW=border thickness, borderR=corner clip radius
+    tapToStart: { fontSize: 4, alignX: 'center', alignY: 'middle' }, // font and alignment in the controls bar (alignX: left|center|right; alignY: top|middle|bottom)
     controls: {
-      fontSize: 8,       // ⚠ solo 4px e 8px sono crispini
-      gapY:     8,       // gap tra logo e riga controlli
-      btnH:    10,       // altezza clickable dei pulsanti
-      boxR:     2,       // raggio angoli box pulsanti
-      btnColor: '#b0b0b0', // colore pulsanti abilitati (meno saturo di white)
-      prevX:   10, prevW: 14,    // pulsante ‹ livello
-      nextX:   76, nextW: 14,    // pulsante › o lock
-      labelX:  50,               // x centro label "LVL N"
-audioRightX: 310, audioPadX: 6, // pulsante audio: bordo dx fisso, larghezza calcolata da label più lunga
+      fontSize: 8,       // ⚠ only 4px and 8px are crisp
+      gapY:     8,       // gap between logo and controls row
+      btnH:    10,       // button clickable height
+      boxR:     2,       // button box corner radius
+      btnColor: '#b0b0b0', // enabled button colour (less saturated than white)
+      prevX:   10, prevW: 14,    // ‹ level button
+      nextX:   76, nextW: 14,    // › or lock button
+      labelX:  50,               // x centre of "LVL N" label
+audioRightX: 310, audioPadX: 6, // audio button: fixed right edge, width computed from longest label
     },
-    legend: { fontSize: 4, gapY: 6 },  // keyboard legend (solo desktop) — ⚠ solo 4px o 8px
+    legend: { fontSize: 4, gapY: 6 },  // keyboard legend (desktop only) — ⚠ only 4px or 8px
   },
 
-  // Sprite personaggi — outline e colore
+  // Character sprites — outline and colour
   char: {
-    outline:      true,         // abilita outline intorno agli sprite
-    outlineSize:  1.0,          // spessore outline (px logici)
-    outlineColor: '#121212',    // colore outline
+    outline:      true,         // enables outline around sprites
+    outlineSize:  1.0,          // outline thickness (logical px)
+    outlineColor: '#121212',    // outline colour
   },
 
   // HUD — strip in cima al canvas
   hud: {
-    rowH:      10,                   // altezza strip HUD
-    heartsX:   4,                    // x primo cuore
-    heartStep: 9,                    // px per cuore (8 wide + 1 gap)
-    heartSize: 1,                    // scala cuori: 1 = 8×7px | 0.5 = 4×3px
-    msgFadeFrames: 45,               // frame per il crossfade msg↔HUD (45 = ~0.75s a 60fps)
-    centerX:   160,                  // x centro per counter/msg
-    scoreX:    316,                  // x destro per punteggio
-    timerH:    1,                    // altezza barra timer
-    fontSize:  8,                    // ⚠ solo 4px e 8px sono crispini su questo canvas (scale 2×)
-    dotW:      7,                    // lato quadratino indicatore meccanica
-    dotGap:    5,                    // gap tra quadratino e testo counter
+    rowH:      10,                   // HUD strip height
+    heartsX:   4,                    // x position of first heart
+    heartStep: 9,                    // px per heart (8 wide + 1 gap)
+    heartSize: 1,                    // heart scale: 1 = 8×7px | 0.5 = 4×3px
+    msgFadeFrames: 45,               // frames for the msg↔HUD crossfade (45 ≈ 0.75s at 60fps)
+    centerX:   160,                  // x centre for counter/message
+    scoreX:    316,                  // right x for score
+    timerH:    1,                    // timer bar height
+    fontSize:  8,                    // ⚠ only 4px and 8px are crisp on this canvas (scale 2×)
+    dotW:      7,                    // mechanic indicator square size
+    dotGap:    5,                    // gap between icon and counter text
     bgColor:   'rgba(0,0,0,0.55)',
-    // Colore quadratino indicatore per ogni meccanica
+    // Mechanic indicator colour per mechanic type
     dotColors: {
       boards:     '#588D43',
       bags:       '#4A3D8F',
@@ -186,134 +185,134 @@ audioRightX: 310, audioPadX: 6, // pulsante audio: bordo dx fisso, larghezza cal
     exitDoor:   { x:-2, y:-14, w:14, h:30 },
   },
 
-  // Banner storia (L1) — panH calcolato: padTop+titleH+titleSpacing+lineBlock+spacerH+tapH+padBottom
+  // Story banner (L1) — panH computed: padTop+titleH+titleSpacing+lineBlock+spacerH+tapH+padBottom
   storyBanner: {
-    panW: 280, wrapWidth: 220,  // larghezza pannello; wrapWidth = larghezza testo
-    fontTitle:      8,  // ⚠ solo 4px e 8px sono crispini
+    panW: 280, wrapWidth: 220,  // panel width; wrapWidth = text wrap width
+    fontTitle:      8,  // ⚠ only 4px and 8px are crisp
     fontBody:       4,
-    padTop:        16,          // spazio dal bordo superiore al titolo
-    titleH:        10, titleSpacing: 10, // altezza titolo, spacing dopo titolo
-    lineH:          8, lineSpacing:   4, // altezza riga, spacing tra righe
-    spacerH:       10,          // spazio vuoto prima del tap
-    tapH:           8,          // altezza tapContinue
-    padBottom:     16,          // spazio dal fondo al bordo inferiore
+    padTop:        16,          // space from top edge to title
+    titleH:        10, titleSpacing: 10, // title height, spacing after title
+    lineH:          8, lineSpacing:   4, // line height, spacing between lines
+    spacerH:       10,          // blank space before tap label
+    tapH:           8,          // tapContinue label height
+    padBottom:     16,          // space from content bottom to panel edge
   },
 
-  // Banner missione — panH calcolato: padTop+titleH+titleSpacing+lineBlock+padBottom
+  // Mission banner — panH computed: padTop+titleH+titleSpacing+lineBlock+padBottom
   missionBanner: {
-    panW: 260, wrapWidth: 200,  // larghezza pannello; wrapWidth = larghezza testo
-    fontTitle:      8,  // ⚠ solo 4px e 8px sono crispini
+    panW: 260, wrapWidth: 200,  // panel width; wrapWidth = text wrap width
+    fontTitle:      8,  // ⚠ only 4px and 8px are crisp
     fontBody:       4,
-    padTop:        14,          // spazio dal bordo superiore al titolo
-    titleH:        10, titleSpacing: 8, // altezza titolo, spacing dopo titolo
-    lineH:          8, lineSpacing:  4, // altezza riga, spacing tra righe
-    padBottom:     14,          // spazio dal fondo al bordo inferiore
+    padTop:        14,          // space from top edge to title
+    titleH:        10, titleSpacing: 8, // title height, spacing after title
+    lineH:          8, lineSpacing:  4, // line height, spacing between lines
+    padBottom:     14,          // space from content bottom to panel edge
   },
 
-  // Banner livello superato — panH calcolato: padTop+stepTitle+stepScore+tapH+padBottom
+  // Level complete banner — panH computed: padTop+stepTitle+stepScore+tapH+padBottom
   levelComplete: {
-    panW: 260,  // panY e bx centrati automaticamente
-    fontTitle:  8,   // ⚠ solo 4px e 8px sono crispini
+    panW: 260,  // panY and bx are centred automatically
+    fontTitle:  8,   // ⚠ only 4px and 8px are crisp
     fontBody:   8,
-    padTop:    11,   // spazio dal bordo superiore al primo testo
-    stepTitle: 20,   // avanzamento dopo titolo (h=10 + spacing=10)
-    stepScore: 22,   // avanzamento dopo punteggio (h=8 + spacing=14)
-    tapH:       8,   // altezza tapContinue
-    padBottom: 11,   // spazio dal fondo tapContinue al bordo inferiore
+    padTop:    11,   // space from top edge to first text
+    stepTitle: 20,   // advance after title (h=10 + spacing=10)
+    stepScore: 22,   // advance after score (h=8 + spacing=14)
+    tapH:       8,   // tapContinue label height
+    padBottom: 11,   // space from tapContinue to panel edge
   },
 
-  // Banner fine gioco (L10) — panH calcolato: padTop+stepTitle+stepScore+stepBest+tapH+padBottom
+  // Game win banner (L10) — panH computed: padTop+stepTitle+stepScore+stepBest+tapH+padBottom
   gameWin: {
-    panW: 260,  // panY e bx centrati automaticamente
-    fontTitle:  8,   // ⚠ solo 4px e 8px sono crispini
+    panW: 260,  // panY and bx are centred automatically
+    fontTitle:  8,   // ⚠ only 4px and 8px are crisp
     fontBody:   8,
-    padTop:    23,   // spazio dal bordo superiore al primo testo
-    stepTitle: 22,   // avanzamento dopo titolo win (h=12 + spacing=10)
-    stepScore: 12,   // avanzamento dopo punteggio (h=8 + spacing=4)
-    stepBest:  16,   // avanzamento dopo riga miglior punteggio (h=8 + spacing=8)
-    tapH:       8,   // altezza tapForTitle
-    padBottom: 23,   // spazio dal fondo tapForTitle al bordo inferiore
+    padTop:    23,   // space from top edge to first text
+    stepTitle: 22,   // advance after win title (h=12 + spacing=10)
+    stepScore: 12,   // advance after score (h=8 + spacing=4)
+    stepBest:  16,   // advance after best score row (h=8 + spacing=8)
+    tapH:       8,   // tapForTitle label height
+    padBottom: 23,   // space from tapForTitle to panel edge
   },
 
-  // Banner gameover — panH calcolato: padTop+stepTitle+stepLevel+stepScore+stepConfirm+btnH+padBottom
+  // Game over banner — panH computed: padTop+stepTitle+stepLevel+stepScore+stepConfirm+btnH+padBottom
   gameover: {
-    panW: 260,       // panY e bx centrati automaticamente
-    fontTitle:    8, // ⚠ solo 4px e 8px sono crispini
+    panW: 260,       // panY and bx are centred automatically
+    fontTitle:    8, // ⚠ only 4px and 8px are crisp
     fontBody:     8,
     fontBtn:      8,
-    padTop:      12, // spazio dal bordo superiore al primo testo
-    stepTitle:   18, // avanzamento dopo "ESPULSO!"
-    stepLevel:   12, // avanzamento dopo livello raggiunto
-    stepScore:   20, // avanzamento dopo punteggio
-    stepConfirm: 16, // avanzamento dopo "VUOI RIGIOCARE?" → top pulsanti
+    padTop:      12, // space from top edge to first text
+    stepTitle:   18, // advance after "EXPELLED!"
+    stepLevel:   12, // advance after level reached
+    stepScore:   20, // advance after score
+    stepConfirm: 16, // advance after "PLAY AGAIN?" → button tops
     btnH:        14,
-    padBottom:   12, // spazio dal fondo pulsanti al bordo inferiore
-    siOx: 30, siW: 70,   // SI: bx+siOx, larghezza siW
-    noOx: 160, noW: 70,  // NO: bx+noOx, larghezza noW
+    padBottom:   12, // space from button bottoms to panel edge
+    siOx: 30, siW: 70,   // YES: bx+siOx, width siW
+    noOx: 160, noW: 70,  // NO: bx+noOx, width noW
   },
 
-  // Fumetto di Luca (L10 fine livello) — bh calcolato: headerH + lineCount*lineH + gapTap + tapH + padBottom
+  // Luca speech bubble (L10 level end) — bh computed: headerH + lineCount*lineH + gapTap + tapH + padBottom
   lucaFumetto: {
-    bw:        190,  // larghezza fumetto
-    fontTitle:   4,  // ⚠ solo 4px e 8px sono crispini — header "Luca:"
-    fontBody:    4,  // testo corpo e tap label
-    offsetX:    10,  // offset orizzontale da Luca (PW+2)
-    tailOffY:   14,  // distanza verticale della coda da ly (by2 = ly - tailOffY - bh)
-    headerH:    14,  // altezza riga "Luca:" in cima
-    lineH:      10,  // altezza di ogni riga di testo
-    gapTap:      4,  // gap tra testo e label tap
-    tapH:        8,  // altezza label tapContinue
-    padBottom:   6,  // margine inferiore
-    tailW: 3, tailH: 5,  // dimensione coda del fumetto
+    bw:        190,  // bubble width
+    fontTitle:   4,  // ⚠ only 4px and 8px are crisp — "Luca:" header
+    fontBody:    4,  // body text and tap label
+    offsetX:    10,  // horizontal offset from Luca (PW+2)
+    tailOffY:   14,  // vertical distance from tail to ly (by2 = ly - tailOffY - bh)
+    headerH:    14,  // height of "Luca:" header row
+    lineH:      10,  // height of each text line
+    gapTap:      4,  // gap between text and tap label
+    tapH:        8,  // tapContinue label height
+    padBottom:   6,  // bottom margin
+    tailW: 3, tailH: 5,  // speech bubble tail dimensions
   },
 
-  // Overlay pausa — panH calcolato: padTop+stepTitle+btnH+padBottom
+  // Pause overlay — panH computed: padTop+stepTitle+btnH+padBottom
   pauseOverlay: {
-    panW: 200,  // panY e bx centrati automaticamente
-    fontTitle:  8,   // ⚠ solo 4px e 8px sono crispini
+    panW: 200,  // panY and bx are centred automatically
+    fontTitle:  8,   // ⚠ only 4px and 8px are crisp
     fontBtn:    4,
-    padTop:    14,   // spazio dal bordo superiore al titolo
-    stepTitle: 22,   // avanzamento dopo "— PAUSA —" (h=10 + spacing=12)
-    btnH:      14,   // altezza pulsante RIPRENDI
-    padBottom: 14,   // spazio dal fondo pulsante al bordo inferiore
-    resumeOx:  65, resumeW: 70,  // pulsante RIPRENDI: bx+resumeOx, larghezza resumeW
+    padTop:    14,   // space from top edge to title
+    stepTitle: 22,   // advance after "— PAUSE —" (h=10 + spacing=12)
+    btnH:      14,   // RESUME button height
+    padBottom: 14,   // space from button bottom to panel edge
+    resumeOx:  65, resumeW: 70,  // RESUME button: bx+resumeOx, width resumeW
   },
 
-  // Overlay home confirm — panH calcolato: padTop+stepTitle+btnH+padBottom
+  // Home confirm overlay — panH computed: padTop+stepTitle+btnH+padBottom
   homeConfirm: {
-    panW: 200,  // panY e bx centrati automaticamente
-    fontTitle:  8,   // ⚠ solo 4px e 8px sono crispini
+    panW: 200,  // panY and bx are centred automatically
+    fontTitle:  8,   // ⚠ only 4px and 8px are crisp
     fontBtn:    4,
-    padTop:    14,   // spazio dal bordo superiore alla domanda
-    stepTitle: 20,   // avanzamento dopo "TORNARE ALLA HOME?" (h=8 + spacing=12)
-    btnH:      14,   // altezza pulsanti SI/NO
-    padBottom: 14,   // spazio dal fondo pulsanti al bordo inferiore
-    siOx: 20, siW: 70,   // SI: bx+siOx, larghezza siW
-    noOx: 110, noW: 70,  // NO: bx+noOx, larghezza noW
+    padTop:    14,   // space from top edge to question
+    stepTitle: 20,   // advance after "GO TO HOME?" (h=8 + spacing=12)
+    btnH:      14,   // YES/NO button height
+    padBottom: 14,   // space from button bottoms to panel edge
+    siOx: 20, siW: 70,   // YES: bx+siOx, width siW
+    noOx: 110, noW: 70,  // NO: bx+noOx, width noW
   },
 
-  // Credits — panH calcolato: padTop+stepTitle+stepTeam+5*(nameH+nameGap+roleH+roleGap)+btnGapAbove+btnH+padBottom
+  // Credits — panH computed: padTop+stepTitle+stepTeam+5*(nameH+nameGap+roleH+roleGap)+btnGapAbove+btnH+padBottom
   credits: {
-    panW: 240,  // panY e bx centrati automaticamente
-    fontTitle:    8, // ⚠ solo 4px e 8px sono crispini
-    fontBody:     4, // nomi e ruoli
-    fontBtn:      4, // pulsante OK
+    panW: 240,  // panY and bx are centred automatically
+    fontTitle:    8, // ⚠ only 4px and 8px are crisp
+    fontBody:     4, // names and roles
+    fontBtn:      4, // OK button
     padTop:       8,
-    stepTitle:   14, // dopo "— CREDITS —" (h=6 + spacing=8)
-    stepTeam:    12, // dopo nome team (h=4 + spacing=8)
-    nameH:        4, nameGap:  2,  // altezza nome, gap nome→ruolo
-    roleH:        4, roleGap:  6,  // altezza ruolo, gap tra membri
-    btnGapAbove:  2,               // gap prima del pulsante OK
-    btnH:        12, btnW: 60,     // pulsante OK
+    stepTitle:   14, // after "— CREDITS —" (h=6 + spacing=8)
+    stepTeam:    12, // after team name (h=4 + spacing=8)
+    nameH:        4, nameGap:  2,  // name height, gap name→role
+    roleH:        4, roleGap:  6,  // role height, gap between members
+    btnGapAbove:  2,               // gap above OK button
+    btnH:        12, btnW: 60,     // OK button
     padBottom:    10,
   },
 
 });
 
-// Alias per retrocompatibilità con levels.js
+// Alias for backwards compatibility with levels.js
 var SHARED_LAYOUT = CONFIG.vis.shared;
 
-// Applica CSS custom properties da layout
+// Apply CSS custom properties from layout
 var _L = CONFIG.vis.layout;
 var _B = CONFIG.vis.bezel;
 document.documentElement.style.setProperty('--btr-zoom',               _L.desktopZoom);
@@ -328,4 +327,4 @@ document.documentElement.style.setProperty('--btr-btn-home-bg-pressed',  _B.btnH
 document.documentElement.style.setProperty('--btr-btn-pause-bg-pressed', _B.btnPauseBgPressed);
 document.documentElement.style.setProperty('--btr-btn-info-bg-pressed',  _B.btnInfoBgPressed);
 document.documentElement.style.setProperty('--btr-btn-glow',                _B.btnGlow);
-if (_B.style === 'title') document.body.classList.add('bezel-title');
+if (CONFIG.vis.bodyStyle === 'blue') document.body.classList.add('body-blue');

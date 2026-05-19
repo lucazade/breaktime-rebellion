@@ -248,7 +248,7 @@ function updatePlayer() {
 
   if (player.y < 2) player.y = 2;
 
-  // Steal bags — hold action (L2: stealBags) or instant touch (altri livelli)
+  // Steal bags — hold action (L2: stealBags) or instant touch (other levels)
   for (let bi = 0; bi < bags.length; bi++) {
     const bag = bags[bi];
     if (bag.collected) continue;

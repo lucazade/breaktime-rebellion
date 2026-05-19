@@ -1,8 +1,8 @@
-/* Font locale — sostituisci PressStart2P.ttf con qualsiasi TTF per cambiare font */
+/* Local font — replace PressStart2P.ttf with any TTF to change the font */
 @font-face {
   font-family: 'Press Start 2P';
   src: url('../assets/fonts/PressStart2P.ttf') format('truetype');
-  font-display: block; /* evita FOUT — il font è locale, carica subito */
+  font-display: block; /* prevents FOUT — font is local, loads immediately */
 }
 
 * { margin:0; padding:0; box-sizing:border-box; }
@@ -71,7 +71,7 @@ body {
     overflow: hidden;
     border-top: 2px solid #2a0055;
     border-bottom: 2px solid #2a0055;
-    background: transparent; /* body gradient si vede attraverso — seamless */
+    background: transparent; /* body gradient shows through — seamless */
   }
 
   /* Purple neon strip facing the game screen */
@@ -190,7 +190,7 @@ canvas {
 }
 
 /* ─── ACTION BUTTON OVERLAY ─── */
-#ctrl-action { z-index: 20; } /* sotto i panel-btn (z:60) per non intercettare i loro touch */
+#ctrl-action { z-index: 20; } /* below panel-btn (z:60) so it doesn't capture panel button touches */
 
 #btn-action {
   width: 82px; height: 82px;
@@ -234,7 +234,7 @@ canvas {
 @media (hover: hover) and (pointer: fine) {
   #panel-left, #panel-right { display: none; }
 
-  /* Game canvas: zoom controllato da CONFIG.layout.desktopZoom in layout.js (default 1.5 → 400→600px) */
+  /* Game canvas: zoom controlled by CONFIG.vis.layout.desktopZoom in layout.js (default 1.5 → 400→600px) */
   #game-area {
     position: relative; /* anchors ::before/::after absolutely — keeps canvas flex-centered */
     height: min(calc(400px * var(--btr-zoom, 1.5)), 80dvh, calc(78vw / 1.6));
@@ -286,7 +286,7 @@ body.simulate-mobile #game-area { flex: 0 0 auto !important; height: 100dvh !imp
 body.simulate-mobile #game-area::before,
 body.simulate-mobile #game-area::after { display: none !important; }
 body.simulate-mobile #panel-left,
-body.simulate-mobile #panel-right { display: flex !important; flex: 1 !important; min-width: 160px !important; height: 100dvh; position: relative; overflow: hidden; border-top: 2px solid #2a0055; border-bottom: 2px solid #2a0055; background: transparent; } /* body gradient si vede attraverso */
+body.simulate-mobile #panel-right { display: flex !important; flex: 1 !important; min-width: 160px !important; height: 100dvh; position: relative; overflow: hidden; border-top: 2px solid #2a0055; border-bottom: 2px solid #2a0055; background: transparent; } /* body gradient shows through */
 body.simulate-mobile #panel-left  { border-right: 3px solid var(--btr-panel-inner-border, rgba(160,0,255,.7)) !important; }
 body.simulate-mobile #panel-right { border-left:  3px solid var(--btr-panel-inner-border, rgba(160,0,255,.7)) !important; }
 body.simulate-mobile #panel-left  #ctrl-joy    { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 1; }
@@ -294,24 +294,24 @@ body.simulate-mobile #panel-right #ctrl-action { position: absolute; bottom: 28p
 body.simulate-mobile #btn-info  { display: flex !important; }
 body.simulate-mobile .panel-btn { display: flex !important; }
 
-/* ─── BEZEL STYLE: title — sfondo gradiente blu della title screen ─── */
-body.bezel-title {
+/* ─── BODY STYLE: blue — alternative blue gradient background ─── */
+body.body-blue {
   background: linear-gradient(180deg, #000080 0%, #000040 100%) !important;
 }
-/* desktop: override sfondo synthwave */
+/* desktop: override synthwave background */
 @media (hover: hover) and (pointer: fine) {
-  body.bezel-title { background: linear-gradient(180deg, #000080 0%, #000040 100%) !important; }
+  body.body-blue { background: linear-gradient(180deg, #000080 0%, #000040 100%) !important; }
 }
-/* mobile sidebars: override sfondo synthwave */
-body.bezel-title #panel-left,
-body.bezel-title #panel-right {
+/* mobile sidebars: override synthwave background */
+body.body-blue #panel-left,
+body.body-blue #panel-right {
   background: linear-gradient(180deg, #000080 0%, #000040 100%) !important;
   border-top-color: #000060 !important;
   border-bottom-color: #000060 !important;
 }
-/* bordi interni gestiti da --btr-panel-inner-border impostato in layout.js */
+/* inner borders controlled by --btr-panel-inner-border set in layout.js */
 
-/* ─── TITLE MODE — copre tutto, nasconde bezel e pannelli ─── */
+/* ─── TITLE MODE — hides bezel and side panels ─── */
 body.title-mode #panel-left,
 body.title-mode #panel-right { visibility: hidden !important; }
 body.title-mode #game-area {
@@ -319,7 +319,7 @@ body.title-mode #game-area {
   background: none !important;
 }
 body.title-mode canvas { background: none !important; }
-/*body.title-mode canvas { background: red; }  DEBUG: mostra area canvas in title mode */
+/*body.title-mode canvas { background: red; }  DEBUG: shows canvas area in title mode */
 body.title-mode #game-area::before,
 body.title-mode #game-area::after { display: none !important; }
 
@@ -334,7 +334,7 @@ body.title-mode #game-area::after { display: none !important; }
   width: 68px; height: 38px;
   border-radius: 8px;
   background: var(--btr-btn-bg, #0a0018);
-  border: 2px solid rgba(160,0,255,0.85); /* colore base — override con CSS vars per-pulsante */
+  border: 2px solid rgba(160,0,255,0.85); /* base colour — overridden by per-button CSS vars */
   color: #fff;
   font-size: 16px;
   cursor: pointer;
@@ -342,14 +342,14 @@ body.title-mode #game-area::after { display: none !important; }
   -webkit-tap-highlight-color: transparent;
   align-items: center;
   justify-content: center;
-  z-index: 60; /* sopra #ctrl-action (z:20) */
+  z-index: 60; /* above #ctrl-action (z:20) */
   box-shadow: var(--btr-btn-glow, none), inset 0 1px 0 rgba(255,255,255,0.08);
   -webkit-appearance: none; appearance: none;
 }
 
 .panel-btn:active { background: rgba(160,0,255,0.28); border-color: rgba(160,0,255,1); }
 
-/* sfondo e bordi pulsanti configurabili da CONFIG.vis.layout in layout.js */
+/* button backgrounds and borders configurable via CONFIG.vis.bezel in layout.js */
 #btn-home  { background: var(--btr-btn-home-bg,  #0a0018); border-color: var(--btr-btn-home-border,  rgba(160,0,255,0.85)); }
 #btn-pause { background: var(--btr-btn-pause-bg, #0a0018); border-color: var(--btr-btn-pause-border, rgba(160,0,255,0.85)); }
 #btn-info  { background: var(--btr-btn-info-bg,  rgba(0,0,0,0.45)); border-color: var(--btr-btn-info-border,  rgba(160,0,255,0.85)); }

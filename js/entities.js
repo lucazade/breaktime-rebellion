@@ -52,14 +52,14 @@ function updateTeachers() {
         }
       }
     }
-    // L4: Prof.Ginnastica cammina sul pallone sgonfiato → lo reinflaziona
+    // L4: Prof.Ginnastica walks over the deflated ball → reinflates it
     if (t.name === 'Prof.Ginnastica' && gymBall && gymBall.deflated && !allBall) {
       if (Math.abs(t.x + PW/2 - gymBall.x - 4) < 12) {
         gymBall.deflated = false; gymBall.shakeT = 0; gymBall.reinflateT = 0;
         setMsg(STRINGS.ballReinflated);
       }
     }
-    // L6: Preside cammina sul libro caduto → lo rimette sullo scaffale
+    // L6: Preside walks over the dropped book → puts it back on the shelf
     if (t.name === 'Preside' && bookcase && bookcase.dropped && !allBooks) {
       if (Math.abs(t.x + PW/2 - (bookcase.x + bookcase.fallDx + 9)) < 14) {
         bookcase.dropped = false; bookcase.shakeT = 0; bookcase.resetT = 0;
@@ -145,7 +145,7 @@ function updateJanitors() {
     if (Math.abs(j.y - player.y) < 12 && Math.abs(j.x - player.x) < 14 && player.stunT === 0) {
       caughtBy(j);
     }
-    // L7: bidello entra nella pozza → asciuga il pavimento
+    // L7: janitor steps into the puddle → dries the floor
     if (levelMechanics.floodSink && sink && sink.waterLevel > 0 && !allSink && j.x < 120) {
       sink.waterLevel = 0; sink.pourT = 0;
       setMsg(STRINGS.sinkReady);
@@ -265,9 +265,9 @@ function updateBins() {
       const t = teachers[j];
       if (Math.abs(t.y - b.y) > 20) continue;
       if (Math.abs(t.x - b.x - 5) < 30) {
-        t.knockedT = 90; t.chasing = false; t.alertT = 0; // stordito
+        t.knockedT = 90; t.chasing = false; t.alertT = 0; // knocked out
       } else {
-        t.alertT = 200; t.chasing = true; t.chaseX = b.x + 5; // si precipita al secchio
+        t.alertT = 200; t.chasing = true; t.chaseX = b.x + 5; // rushes toward the bin
       }
     }
 

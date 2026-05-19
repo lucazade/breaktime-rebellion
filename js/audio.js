@@ -136,7 +136,7 @@ const GameAudio = (function() {
     var t = _gameTrack(); if (t && mode === 'full') t.play().catch(function() {});
   }
 
-  // Preload sfx — cloneNode() è istantaneo rispetto a new Audio() ogni volta
+  // Preload sfx — cloneNode() is instant compared to new Audio() every time
   var _sfxCache = {};
   Object.keys(CONFIG.audio.sfx).forEach(function(name) {
     var a = new Audio(CONFIG.audio.sfx[name]);

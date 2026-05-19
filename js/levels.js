@@ -54,7 +54,7 @@ var LEVELS = (function() {
         {x:120,  y:TY-18}, {x:182,  y:TY-18},
       ],
 
-      // GY: solo bidello; MY: solo prof; TY: prof + bidello (#117)
+      // GY: janitor only; MY: teacher only; TY: teacher + janitor (#117)
       teachers: [
         {x:80,  y:MY-PH-walkOffset, dir:-1, minX:10, maxX:305, speed:0.50, color:C.cyanprof, name:'Prof.Celeste', sight:80 },
         {x:230, y:TY-PH-walkOffset, dir:1,  minX:10, maxX:275, speed:0.60, color:C.grayprof, name:'Prof.Neri',  sight:100},

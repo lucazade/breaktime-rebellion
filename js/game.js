@@ -3,7 +3,7 @@
 const CV = document.getElementById('c');
 const ctx = CV.getContext('2d');
 
-// Aggiorna --game-h su :root così HUD e msg scalano sull'altezza reale del game-area
+// Updates --game-h on :root so HUD and messages scale with the actual game-area height
 (function() {
   var _ga = document.getElementById('game-area');
   function _updateGameH() {
@@ -13,7 +13,7 @@ const ctx = CV.getContext('2d');
   window.addEventListener('resize', _updateGameH);
 })();
 
-// #103 — nasconde il cursore dopo 2s di inattività
+// #103 — hides cursor after 2s of inactivity
 (function() {
   var _mt, _ga = document.getElementById('game-area');
   document.addEventListener('mousemove', function() {
@@ -53,7 +53,7 @@ function _initTitleState() {
   _titleStarting = false;
 }
 _initTitleState();
-document.body.classList.add('title-mode'); // attivo al caricamento (state='title')
+document.body.classList.add('title-mode'); // active on page load (state='title')
 
 window.addEventListener('_titleReset', function() {
   _titleStarting = false; _initTitleState();
@@ -74,9 +74,9 @@ function _titleCycleAudio() {
   if (next === 'full') GameAudio.playIntro();
 }
 
-var _titleCtrlY = 0;       // aggiornato da drawTitleScreen ogni frame
-var _titleLogoRect = null; // {x,y,w,h} del logo
-var _titleAudioX = 0, _titleAudioW = 0; // posizione bottone audio (larghezza dinamica)
+var _titleCtrlY = 0;       // updated by drawTitleScreen every frame
+var _titleLogoRect = null; // {x,y,w,h} of the logo
+var _titleAudioX = 0, _titleAudioW = 0; // audio button position (dynamic width)
 
 function _titleCanvasClick(lx, ly) {
   if (state !== 'title') return;
@@ -145,7 +145,7 @@ function loop(ts) {
     _accumulator -= _STEP;
   }
 
-  // Title screen: disegna canvas dedicato e salta il rendering di gioco
+  // Title screen: draw dedicated canvas and skip game rendering
   if (state === 'title') {
     drawTitleScreen();
     drawDebugOverlay();
@@ -212,7 +212,7 @@ function loop(ts) {
   drawNightOverlay();
   drawLucaEnd();
 
-  // Overlay scuro centralizzato — gestisce tutti i banner
+  // Centralised dark overlay — covers all banner panels
   var _shouldDim = state !== 'title' && (storyBannerT > 0 || storyBannerFading || missionBannerT > 0
                 || state === 'win' || state === 'gameover' || state === 'paused'
                 || _creditsActive
@@ -283,11 +283,11 @@ function _gameoverChoice(lx, ly) {
 document.getElementById('btn-action').addEventListener('touchend', function() { handleTap(); }, {passive: true});
 
 // ── Pause / Home confirm — canvas-based (no HTML overlay) ────────────────────
-var _pauseActive      = false;  // pausa attiva (non home-confirm)
-var _homeConfirmActive = false; // home-confirm aperta
+var _pauseActive      = false;  // pause is active (not home-confirm)
+var _homeConfirmActive = false; // home confirm dialog is open
 var _stateBeforeHome  = null;
 var _btnPause         = document.getElementById('btn-pause');
-// SVG inline per evitare emoji colorati OS (⏸/▶ vengono renderizzati a colori su Android/iOS)
+// Inline SVG to avoid OS-coloured emoji (⏸/▶ render in colour on Android/iOS)
 var _SVG_PAUSE = '<svg viewBox="0 -1 16 16" width="16" height="16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M3 3v10h4V3zm6 0v10h4V3z"/></svg>';
 var _SVG_PLAY  = '<svg viewBox="0 0 16 16"  width="16" height="16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l10 6-10 6z"/></svg>';
 
@@ -331,7 +331,7 @@ function goHome() {
     lives = 3; score = 0;
     resetLevel();
     state = 'title';
-    window.dispatchEvent(new Event('_titleReset')); // resetta _titleStarting e _btrMax
+    window.dispatchEvent(new Event('_titleReset')); // resets _titleStarting and _btrMax
     CV.style.opacity = '1';
     CV.addEventListener('transitionend', function() {
       CV.style.transition = '';
@@ -373,7 +373,7 @@ if (_btnInfo) {
   _btnInfo.addEventListener('touchend', function(e) { e.preventDefault(); showCredits(); }, {passive: false});
 }
 
-// ── Canvas click detection per tutti gli overlay canvas ──────────────────────
+// ── Canvas click detection for all canvas overlays ───────────────────────────
 function _panPos(panW, panH) { return { bx: Math.round((W - panW) / 2), by: Math.round((H - panH) / 2) }; }
 
 function _creditsCanvasClick(lx, ly) {
@@ -437,7 +437,7 @@ document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape' || e.key === 'n' || e.key === 'N') { e.preventDefault(); cancelHome(); }
     return;
   }
-  // Gameover choice: Enter/Y = rigioca, Escape/N = home
+  // Gameover choice: Enter/Y = play again, Escape/N = home
   if (state === 'gameover' && !endScreenFadingOut && endScreenT >= 20) {
     if (e.key === 'Enter' || e.key === ' ' || e.key === 'y' || e.key === 'Y') {
       e.preventDefault(); endScreenFadingOut = true; endScreenFadeOutCb = restartGame;
