@@ -4,6 +4,11 @@
   src: url('../assets/fonts/PressStart2P.ttf') format('truetype');
   font-display: block; /* prevents FOUT — font is local, loads immediately */
 }
+@font-face {
+  font-family: 'Silkscreen';
+  src: url('../assets/fonts/Silkscreen-Regular.ttf') format('truetype');
+  font-display: block;
+}
 
 * { margin:0; padding:0; box-sizing:border-box; }
 
@@ -26,7 +31,7 @@ body {
   touch-action: none;
   user-select: none;
   -webkit-user-select: none;
-  font-family: 'Press Start 2P', monospace;
+  font-family: var(--btr-font-family, 'Press Start 2P'), monospace;
 }
 
 #wrap { display: flex; flex-direction: column; align-items: center; }
@@ -154,8 +159,8 @@ body {
 
 canvas {
   display: block; width: 100%; height: 100%;
-  image-rendering: pixelated; 
-  background: #1a1a4a;
+  image-rendering: pixelated; /* mobile: nearest-neighbor for crisp pixel art */
+  background: transparent;
 }
 
 
@@ -234,10 +239,11 @@ canvas {
 @media (hover: hover) and (pointer: fine) {
   #panel-left, #panel-right { display: none; }
 
-  /* Game canvas: zoom controlled by CONFIG.vis.layout.desktopZoom in layout.js (default 1.5 → 400→600px) */
+  /* Desktop uses 4x canvas (1280×800). desktopZoom controls CSS display height.
+     At zoom 2.0: height = 800px CSS = canvas native height → no CSS upscaling → clean fonts at any size. */
   #game-area {
     position: relative; /* anchors ::before/::after absolutely — keeps canvas flex-centered */
-    height: min(calc(400px * var(--btr-zoom, 1.5)), 80dvh, calc(78vw / 1.6));
+    height: min(calc(400px * var(--btr-zoom, 2.0)), 80dvh, calc(78vw / 1.6));
     width: auto;
     aspect-ratio: 16/10;
     margin: 0 40px;
@@ -256,7 +262,7 @@ canvas {
     left: 50%;
     transform: translateX(-50%);
     white-space: nowrap;
-    font-family: 'Press Start 2P', monospace;
+    font-family: var(--btr-font-family, 'Press Start 2P'), monospace;
     font-size: clamp(12px, 1.1vw, 17px);
     color: rgba(255,215,0,0.92);
     letter-spacing: 5px;
@@ -277,6 +283,9 @@ canvas {
       transparent, rgba(0,210,255,0.65), rgba(160,0,255,0.45), rgba(0,210,255,0.65), transparent);
     pointer-events: none;
   }
+
+  /* 4x canvas on desktop: no CSS upscaling needed — smooth rendering for font clarity */
+  canvas { image-rendering: auto; }
 
 }
 

@@ -3,6 +3,13 @@
 const CV = document.getElementById('c');
 const ctx = CV.getContext('2d');
 
+// Desktop uses 4x canvas (1280×800) for high-quality font rendering without CSS scaling.
+// Mobile uses 2x canvas (640×400) — same logical coordinates (320×200) in both cases.
+var _isDesktop = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+var _canvasScale = (_isDesktop && !CONFIG.debug.simulateMobile) ? 4 : 2;
+CV.width  = 320 * _canvasScale;
+CV.height = 200 * _canvasScale;
+
 // Updates --game-h on :root so HUD and messages scale with the actual game-area height
 (function() {
   var _ga = document.getElementById('game-area');
@@ -22,15 +29,17 @@ const ctx = CV.getContext('2d');
     _mt = setTimeout(function() { _ga.style.cursor = 'none'; CV.style.cursor = ''; }, 2000);
   });
 })();
-ctx.scale(2, 2); // 2× resolution: 640×400 canvas, 320×200 logical coordinates
+ctx.scale(_canvasScale, _canvasScale); // logical 320×200 in both modes
 ctx.imageSmoothingEnabled = false;
 
-// Load optional hand-drawn background (640×400px, drawn bypassing ctx.scale)
+// Load background — HD version for desktop (4x canvas), standard for mobile
 (function() {
-  if (!CONFIG.images.background) return;
+  var src = (_isDesktop && !CONFIG.debug.simulateMobile && CONFIG.images.backgroundHd)
+    ? CONFIG.images.backgroundHd : CONFIG.images.background;
+  if (!src) return;
   var img = new Image();
   img.onload = function() { bgImage = img; };
-  img.src = CONFIG.images.background;
+  img.src = src;
 })();
 
 // Load logo for title screen canvas drawing

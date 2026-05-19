@@ -5,8 +5,9 @@
 // ═══════════════════════════════════════════════════════════
 const CONFIG = {
   images: {
-    background: 'assets/pics/bg.png',
-    logo:       'assets/pics/logo.png',
+    background:   'assets/pics/bg.png',      // 640×400 — mobile (2x canvas)
+    backgroundHd: 'assets/pics/bg-1600.png', // 1586×992 — desktop (4x canvas)
+    logo:         'assets/pics/logo.png',
   },
   audio: {
     musicVolume: 0.5,
@@ -34,7 +35,7 @@ const CONFIG = {
     lang:             'auto', // 'auto' = navigator.language | 'it' | 'en'
     showTapToStart:   true,
     showLegend:       false,
-    simulateMobile:   true,
+    simulateMobile:   false,
     unlockAllLevels:  false,
     godMode:          false,
   },

@@ -80,8 +80,8 @@ function drawTitleScreen() {
     ctx.roundRect(logoX, logoY, logoW, logoH, r);
     ctx.clip();
     ctx.setTransform(1,0,0,1,0,0);
-    ctx.imageSmoothingEnabled = false;
-    ctx.drawImage(_logoImage, logoX*2, logoY*2, logoW*2, logoH*2);
+    ctx.imageSmoothingEnabled = true;
+    ctx.drawImage(_logoImage, logoX*_canvasScale, logoY*_canvasScale, logoW*_canvasScale, logoH*_canvasScale);
     ctx.restore();
     if (VT.logo.borderW > 0) {
       ctx.save();
@@ -195,10 +195,15 @@ function drawTitleScreen() {
 }
 
 function drawBg() {
-  // Hand-drawn background: 640×400px, drawn at 1:1 canvas pixels (bypasses ctx.scale)
+  // Background drawn at full canvas resolution (bypasses ctx.scale).
+  // Smooth scaling so the HD source (1586×992) interpolates cleanly to canvas size.
   ctx.setTransform(1, 0, 0, 1, 0, 0);
-  if (bgImage && bgImage.complete && bgImage.naturalWidth > 0) ctx.drawImage(bgImage, 0, 0);
-  ctx.setTransform(2, 0, 0, 2, 0, 0);
+  if (bgImage && bgImage.complete && bgImage.naturalWidth > 0) {
+    ctx.imageSmoothingEnabled = true;
+    ctx.drawImage(bgImage, 0, 0, CV.width, CV.height);
+    ctx.imageSmoothingEnabled = false;
+  }
+  ctx.setTransform(_canvasScale, 0, 0, _canvasScale, 0, 0);
 }
 
 function drawDesks() {
