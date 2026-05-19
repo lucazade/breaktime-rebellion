@@ -1525,7 +1525,8 @@ function drawHUD() {
       ctx.fillText(_txt, _sx + VH.dotW + VH.dotGap, _textY);
     }
   }
-  // Timer bar
+  // Timer bar — sempre a piena opacità, esclusa dal crossfade
+  ctx.globalAlpha = 1;
   if (maxTimerTicks > 0) {
     var _pct = Math.max(0, timerTicks / maxTimerTicks);
     ctx.fillStyle = _pct > 0.6 ? '#22cc44' : _pct > 0.3 ? '#ddcc00' : '#dd1100';
