@@ -287,17 +287,20 @@ var _pauseActive      = false;  // pausa attiva (non home-confirm)
 var _homeConfirmActive = false; // home-confirm aperta
 var _stateBeforeHome  = null;
 var _btnPause         = document.getElementById('btn-pause');
+// SVG inline per evitare emoji colorati OS (⏸/▶ vengono renderizzati a colori su Android/iOS)
+var _SVG_PAUSE = '<svg viewBox="0 -1 16 16" width="16" height="16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M3 3v10h4V3zm6 0v10h4V3z"/></svg>';
+var _SVG_PLAY  = '<svg viewBox="0 0 16 16"  width="16" height="16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l10 6-10 6z"/></svg>';
 
 function setPaused(paused) {
   _pauseActive = paused;
   if (paused) {
     state = 'paused';
     GameAudio.pauseMusic();
-    _btnPause.textContent = '▶';
+    _btnPause.innerHTML = _SVG_PLAY;
   } else {
     state = 'playing';
     GameAudio.resumeMusic();
-    _btnPause.textContent = '⏸';
+    _btnPause.innerHTML = _SVG_PAUSE;
   }
 }
 
@@ -319,7 +322,7 @@ function triggerHome() {
 
 function goHome() {
   _pauseActive = false; _homeConfirmActive = false;
-  _btnPause.textContent = '⏸';
+  _btnPause.innerHTML = _SVG_PAUSE;
   GameAudio.fadeOutMusic(750);
   fadeScreen(0, 1, 750, function() {
     lives = 3; score = 0;
