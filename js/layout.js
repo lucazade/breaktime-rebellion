@@ -13,7 +13,7 @@ CONFIG.vis = {
     BW: 22, BH: 14,       // board (lavagna) width × height
     walkOffset: 6,        // px sopra la superficie dove cammina il personaggio
     wallLeft: 10, wallRight: 10, // #78 — margini muro sx/dx (pixel logici)
-    desktopZoom: 1.5,            // zoom canvas su desktop (pointer:fine) — 1.5 = 400→600px
+    desktopZoom: 2.0,            // desktop CSS display height = 400px × zoom (2.0 → 800px = 4x canvas native height, no upscaling)
   },
 
   colors: {
@@ -46,7 +46,7 @@ const wallLeft = CONFIG.vis.layout.wallLeft, wallRight = CONFIG.vis.layout.wallR
 // All canvas coords are in logical 320×200 space (ctx.scale 2×).
 Object.assign(CONFIG.vis, {
 
-  fontFamily: '"Press Start 2P"',  // font used in all banners — ⚠ only 4px and 8px are crisp on this canvas
+  fontFamily: '"Silkscreen"',  // font used in all banners — swap font here to test alternatives
 
   bodyStyle: 'synthwave',  // global body background: 'synthwave' | 'blue'
 
@@ -92,9 +92,9 @@ Object.assign(CONFIG.vis, {
   titleScreen: {
     // style removed — title background follows the body (bodyStyle in layout.js)
     logo:     { w: 300, borderW: 1, borderR: 5 }, // logo width; y computed (vertical centering); borderW=border thickness, borderR=corner clip radius
-    tapToStart: { fontSize: 4, alignX: 'center', alignY: 'middle' }, // font and alignment in the controls bar (alignX: left|center|right; alignY: top|middle|bottom)
+    tapToStart: { fontSize: 6, alignX: 'center', alignY: 'middle' }, // font and alignment in the controls bar (alignX: left|center|right; alignY: top|middle|bottom)
     controls: {
-      fontSize: 8,       // ⚠ only 4px and 8px are crisp
+      fontSize: 8,
       gapY:     8,       // gap between logo and controls row
       btnH:    10,       // button clickable height
       boxR:     2,       // button box corner radius
@@ -104,7 +104,7 @@ Object.assign(CONFIG.vis, {
       labelX:  50,               // x centre of "LVL N" label
 audioRightX: 310, audioPadX: 6, // audio button: fixed right edge, width computed from longest label
     },
-    legend: { fontSize: 4, gapY: 6 },  // keyboard legend (desktop only) — ⚠ only 4px or 8px
+    legend: { fontSize: 4, gapY: 6 },  // keyboard legend (desktop only)
   },
 
   // Character sprites — outline and colour
@@ -124,7 +124,7 @@ audioRightX: 310, audioPadX: 6, // audio button: fixed right edge, width compute
     centerX:   160,                  // x centre for counter/message
     scoreX:    316,                  // right x for score
     timerH:    1,                    // timer bar height
-    fontSize:  8,                    // ⚠ only 4px and 8px are crisp on this canvas (scale 2×)
+    fontSize:  6,
     dotW:      7,                    // mechanic indicator square size
     dotGap:    5,                    // gap between icon and counter text
     bgColor:   'rgba(0,0,0,0.55)',
@@ -188,11 +188,11 @@ audioRightX: 310, audioPadX: 6, // audio button: fixed right edge, width compute
   // Story banner (L1) — panH computed: padTop+titleH+titleSpacing+lineBlock+spacerH+tapH+padBottom
   storyBanner: {
     panW: 280, wrapWidth: 220,  // panel width; wrapWidth = text wrap width
-    fontTitle:      8,  // ⚠ only 4px and 8px are crisp
-    fontBody:       4,
+    fontTitle:      8,
+    fontBody:       6,
     padTop:        16,          // space from top edge to title
     titleH:        10, titleSpacing: 10, // title height, spacing after title
-    lineH:          8, lineSpacing:   4, // line height, spacing between lines
+    lineH:          9, lineSpacing:   4, // line height, spacing between lines
     spacerH:       10,          // blank space before tap label
     tapH:           8,          // tapContinue label height
     padBottom:     16,          // space from content bottom to panel edge
@@ -201,18 +201,18 @@ audioRightX: 310, audioPadX: 6, // audio button: fixed right edge, width compute
   // Mission banner — panH computed: padTop+titleH+titleSpacing+lineBlock+padBottom
   missionBanner: {
     panW: 260, wrapWidth: 200,  // panel width; wrapWidth = text wrap width
-    fontTitle:      8,  // ⚠ only 4px and 8px are crisp
-    fontBody:       4,
+    fontTitle:      8,
+    fontBody:       6,
     padTop:        14,          // space from top edge to title
     titleH:        10, titleSpacing: 8, // title height, spacing after title
-    lineH:          8, lineSpacing:  4, // line height, spacing between lines
+    lineH:          9, lineSpacing:  4, // line height, spacing between lines
     padBottom:     14,          // space from content bottom to panel edge
   },
 
   // Level complete banner — panH computed: padTop+stepTitle+stepScore+tapH+padBottom
   levelComplete: {
     panW: 260,  // panY and bx are centred automatically
-    fontTitle:  8,   // ⚠ only 4px and 8px are crisp
+    fontTitle:  8,
     fontBody:   8,
     padTop:    11,   // space from top edge to first text
     stepTitle: 20,   // advance after title (h=10 + spacing=10)
@@ -224,7 +224,7 @@ audioRightX: 310, audioPadX: 6, // audio button: fixed right edge, width compute
   // Game win banner (L10) — panH computed: padTop+stepTitle+stepScore+stepBest+tapH+padBottom
   gameWin: {
     panW: 260,  // panY and bx are centred automatically
-    fontTitle:  8,   // ⚠ only 4px and 8px are crisp
+    fontTitle:  8,
     fontBody:   8,
     padTop:    23,   // space from top edge to first text
     stepTitle: 22,   // advance after win title (h=12 + spacing=10)
@@ -237,7 +237,7 @@ audioRightX: 310, audioPadX: 6, // audio button: fixed right edge, width compute
   // Game over banner — panH computed: padTop+stepTitle+stepLevel+stepScore+stepConfirm+btnH+padBottom
   gameover: {
     panW: 260,       // panY and bx are centred automatically
-    fontTitle:    8, // ⚠ only 4px and 8px are crisp
+    fontTitle:    8,
     fontBody:     8,
     fontBtn:      8,
     padTop:      12, // space from top edge to first text
@@ -254,7 +254,7 @@ audioRightX: 310, audioPadX: 6, // audio button: fixed right edge, width compute
   // Luca speech bubble (L10 level end) — bh computed: headerH + lineCount*lineH + gapTap + tapH + padBottom
   lucaFumetto: {
     bw:        190,  // bubble width
-    fontTitle:   4,  // ⚠ only 4px and 8px are crisp — "Luca:" header
+    fontTitle:   4,
     fontBody:    4,  // body text and tap label
     offsetX:    10,  // horizontal offset from Luca (PW+2)
     tailOffY:   14,  // vertical distance from tail to ly (by2 = ly - tailOffY - bh)
@@ -269,7 +269,7 @@ audioRightX: 310, audioPadX: 6, // audio button: fixed right edge, width compute
   // Pause overlay — panH computed: padTop+stepTitle+btnH+padBottom
   pauseOverlay: {
     panW: 200,  // panY and bx are centred automatically
-    fontTitle:  8,   // ⚠ only 4px and 8px are crisp
+    fontTitle:  8,
     fontBtn:    4,
     padTop:    14,   // space from top edge to title
     stepTitle: 22,   // advance after "— PAUSE —" (h=10 + spacing=12)
@@ -281,7 +281,7 @@ audioRightX: 310, audioPadX: 6, // audio button: fixed right edge, width compute
   // Home confirm overlay — panH computed: padTop+stepTitle+btnH+padBottom
   homeConfirm: {
     panW: 200,  // panY and bx are centred automatically
-    fontTitle:  8,   // ⚠ only 4px and 8px are crisp
+    fontTitle:  8,
     fontBtn:    4,
     padTop:    14,   // space from top edge to question
     stepTitle: 20,   // advance after "GO TO HOME?" (h=8 + spacing=12)
@@ -294,7 +294,7 @@ audioRightX: 310, audioPadX: 6, // audio button: fixed right edge, width compute
   // Credits — panH computed: padTop+stepTitle+stepTeam+5*(nameH+nameGap+roleH+roleGap)+btnGapAbove+btnH+padBottom
   credits: {
     panW: 240,  // panY and bx are centred automatically
-    fontTitle:    8, // ⚠ only 4px and 8px are crisp
+    fontTitle:    8,
     fontBody:     4, // names and roles
     fontBtn:      4, // OK button
     padTop:       8,
@@ -327,4 +327,5 @@ document.documentElement.style.setProperty('--btr-btn-home-bg-pressed',  _B.btnH
 document.documentElement.style.setProperty('--btr-btn-pause-bg-pressed', _B.btnPauseBgPressed);
 document.documentElement.style.setProperty('--btr-btn-info-bg-pressed',  _B.btnInfoBgPressed);
 document.documentElement.style.setProperty('--btr-btn-glow',                _B.btnGlow);
+document.documentElement.style.setProperty('--btr-font-family',             CONFIG.vis.fontFamily);
 if (CONFIG.vis.bodyStyle === 'blue') document.body.classList.add('body-blue');
