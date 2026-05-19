@@ -1386,18 +1386,20 @@ function _panPos(panW, panH) {
 }
 
 function _drawHeart(x, y, s) {
-  // pixel art heart — s=1: 8×7px | s=0.5: 4×3px
+  // pixel art heart — all coords rounded to avoid sub-pixel artifacts with non-integer s
   s = s || 1;
-  ctx.fillRect(x+1*s,y,    2*s,s); ctx.fillRect(x+5*s,y,    2*s,s);
-  ctx.fillRect(x,    y+1*s,8*s,s); ctx.fillRect(x,    y+2*s,8*s,s); ctx.fillRect(x,y+3*s,8*s,s);
-  ctx.fillRect(x+1*s,y+4*s,6*s,s); ctx.fillRect(x+2*s,y+5*s,4*s,s); ctx.fillRect(x+3*s,y+6*s,2*s,s);
+  function r(v) { return Math.round(v); }
+  ctx.fillRect(r(x+1*s),r(y),      r(2*s),r(s)); ctx.fillRect(r(x+5*s),r(y),      r(2*s),r(s));
+  ctx.fillRect(r(x),    r(y+1*s),  r(8*s),r(s)); ctx.fillRect(r(x),    r(y+2*s),  r(8*s),r(s)); ctx.fillRect(r(x),r(y+3*s),r(8*s),r(s));
+  ctx.fillRect(r(x+1*s),r(y+4*s), r(6*s),r(s)); ctx.fillRect(r(x+2*s),r(y+5*s),  r(4*s),r(s)); ctx.fillRect(r(x+3*s),r(y+6*s),r(2*s),r(s));
 }
 
 // Pixel-art icons for HUD mechanic indicator — 7×7 base, scalabile via s=dotW/7
 function _drawHudIcon(type, x, y, color, s) {
   s = s || 1;
+  // Round translation to integer to avoid sub-pixel seams
   ctx.save();
-  ctx.translate(x, y);
+  ctx.translate(Math.round(x), Math.round(y));
   if (s !== 1) ctx.scale(s, s);
   ctx.fillStyle = color;
   switch (type) {
