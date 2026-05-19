@@ -7,11 +7,11 @@
 CONFIG.vis = {
 
   layout: {
-    W: 320, H: 200,       // dimensioni canvas logiche (px)
-    PW: 8, PH: 16,        // player width × height
-    GY: 185, MY: 127, TY: 70,  // Y pavimento Ground / Middle / Top floor
-    BW: 22, BH: 14,       // board (lavagna) width × height
-    walkOffset: 6,        // px sopra la superficie dove cammina il personaggio
+    W: 320, H: 200,              // dimensioni canvas logiche (px)
+    PW: 8, PH: 16,               // player width × height
+    GY: 185, MY: 127, TY: 70,    // Y pavimento Ground / Middle / Top floor
+    BW: 22, BH: 14,              // board (lavagna) width × height
+    walkOffset: 6,               // px sopra la superficie dove cammina il personaggio
     wallLeft: 10, wallRight: 10, // #78 — margini muro sx/dx (pixel logici)
     desktopZoom: 2.0,            // desktop CSS display height = 400px × zoom (2.0 → 800px = 4x canvas native height, no upscaling)
   },
@@ -67,9 +67,9 @@ Object.assign(CONFIG.vis, {
   dialog: {
     panBg:       'rgba(0,0,40,0.90)',         // panel background (default)
     panBorder:   '#FFD700',                   // panel border colour
-    panBorderW:  1,                           // panel border thickness
-    panR:        4,                           // panel corner radius
-    btnR:        2,                           // button corner radius
+    panBorderW:  1,                             // panel border thickness
+    panR:        4,                             // panel corner radius
+    btnR:        2,                             // button corner radius
     btnColorYes: 'rgba(0,90,0,0.92)',         // positive button (YES / OK / RESUME)
     btnColorNo:  'rgba(90,0,0,0.92)',         // negative button (NO)
     btnStroke:   '#FFD700',                   // button border colour
@@ -89,7 +89,7 @@ Object.assign(CONFIG.vis, {
       prevX:   10, prevW: 14,    // ‹ level button
       nextX:   76, nextW: 14,    // › or lock button
       labelX:  50,               // x centre of "LVL N" label
-audioRightX: 310, audioPadX: 6, // audio button: fixed right edge, width computed from longest label
+      audioRightX: 310, audioPadX: 6, // audio button: fixed right edge, width computed from longest label
     },
     legend: { fontSize: 4, gapY: 6 },  // keyboard legend (desktop only)
   },
