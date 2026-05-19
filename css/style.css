@@ -80,14 +80,7 @@ body {
     overflow: hidden;
     border-top: 2px solid #2a0055;
     border-bottom: 2px solid #2a0055;
-    background:
-      radial-gradient(ellipse at 50% 110%, rgba(255,0,180,0.32) 0%, transparent 48%),
-      radial-gradient(ellipse at 50% -8%,  rgba(0,180,255,0.14) 0%, transparent 42%),
-      radial-gradient(ellipse at 0%   50%, rgba(120,0,200,0.12) 0%, transparent 50%),
-      radial-gradient(ellipse at 100% 50%, rgba(0,160,200,0.10) 0%, transparent 50%),
-      repeating-linear-gradient(90deg, transparent 0px, transparent 44px, rgba(160,0,255,0.17) 44px, rgba(160,0,255,0.17) 45px),
-      repeating-linear-gradient(0deg, transparent 0px, transparent 44px, rgba(0,200,255,0.13) 44px, rgba(0,200,255,0.13) 45px),
-      linear-gradient(160deg, #060010 0%, #0e0026 45%, #100030 60%, #060010 100%);
+    background: transparent; /* body gradient si vede attraverso — seamless */
   }
 
   /* Purple neon strip facing the game screen */
@@ -302,7 +295,7 @@ body.simulate-mobile #game-area { flex: 0 0 auto !important; height: 100dvh !imp
 body.simulate-mobile #game-area::before,
 body.simulate-mobile #game-area::after { display: none !important; }
 body.simulate-mobile #panel-left,
-body.simulate-mobile #panel-right { display: flex !important; flex: 1 !important; min-width: 160px !important; height: 100dvh; position: relative; overflow: hidden; border-top: 2px solid #2a0055; border-bottom: 2px solid #2a0055; background: radial-gradient(ellipse at 50% 110%, rgba(255,0,180,0.32) 0%, transparent 48%), radial-gradient(ellipse at 50% -8%, rgba(0,180,255,0.14) 0%, transparent 42%), radial-gradient(ellipse at 0% 50%, rgba(120,0,200,0.12) 0%, transparent 50%), radial-gradient(ellipse at 100% 50%, rgba(0,160,200,0.10) 0%, transparent 50%), repeating-linear-gradient(90deg, transparent 0px, transparent 44px, rgba(160,0,255,0.17) 44px, rgba(160,0,255,0.17) 45px), repeating-linear-gradient(0deg, transparent 0px, transparent 44px, rgba(0,200,255,0.13) 44px, rgba(0,200,255,0.13) 45px), linear-gradient(160deg, #060010 0%, #0e0026 45%, #100030 60%, #060010 100%); }
+body.simulate-mobile #panel-right { display: flex !important; flex: 1 !important; min-width: 160px !important; height: 100dvh; position: relative; overflow: hidden; border-top: 2px solid #2a0055; border-bottom: 2px solid #2a0055; background: transparent; } /* body gradient si vede attraverso */
 body.simulate-mobile #panel-left  { border-right: 3px solid var(--btr-panel-inner-border, rgba(160,0,255,.7)) !important; }
 body.simulate-mobile #panel-right { border-left:  3px solid var(--btr-panel-inner-border, rgba(160,0,255,.7)) !important; }
 body.simulate-mobile #panel-left  #ctrl-joy    { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 1; }
