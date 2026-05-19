@@ -138,15 +138,18 @@ function drawTitleScreen() {
     });
   }
 
-  // Audio toggle — icona + label i18n centrati nel box
+  // Audio toggle — larghezza fissa basata sulla label più lunga tra tutti gli stati
   var audioMode = GameAudio.getMode();
   var audioColor = audioMode==='full' ? C.lgreen : audioMode==='sfx' ? C.yellow : C.mgray;
   var audioLabel = audioMode==='full' ? STRINGS.audioFull : audioMode==='sfx' ? STRINGS.audioSfx : STRINGS.audioMute;
-  _box(ct.audioX, ctrlY, ct.audioW, audioColor);
   var _iconW = 5, _gap = 3;
-  var _lblW = ctx.measureText(audioLabel).width;
-  var _blockW = _iconW + _gap + _lblW;
-  var _blockX = ct.audioX + Math.floor((ct.audioW - _blockW) / 2);
+  var _maxLblW = Math.max(ctx.measureText(STRINGS.audioFull).width, ctx.measureText(STRINGS.audioSfx).width, ctx.measureText(STRINGS.audioMute).width);
+  var _audioW = ct.audioPadX*2 + _iconW + _gap + _maxLblW;
+  var _audioX = ct.audioRightX - _audioW;
+  _titleAudioX = _audioX; _titleAudioW = _audioW;
+  _box(_audioX, ctrlY, _audioW, audioColor);
+  var _blockW = _iconW + _gap + ctx.measureText(audioLabel).width;
+  var _blockX = _audioX + Math.floor((_audioW - _blockW) / 2);
   _drawVolumeIcon(_blockX, ctrlY + Math.floor((ct.btnH - 4) / 2), audioMode, audioColor);
   ctx.fillStyle = audioColor; ctx.textAlign = 'left';
   ctx.fillText(audioLabel, _blockX + _iconW + _gap, ctrlTextY);

@@ -51,16 +51,16 @@ Object.assign(CONFIG.vis, {
     logo:     { w: 320, borderW: 1, borderR: 5 }, // larghezza logo; y calcolato (centratura verticale); borderW=spessore bordino, borderR=raggio angoli clip
     tapText:  { fontSize: 4, gapY: 3 },// font e gap sotto il logo
     controls: {
-      fontSize: 4,       // ⚠ solo 4px e 8px sono crispini
-      gapY:     3,       // gap dopo tapText prima della riga controlli
+      fontSize: 8,       // ⚠ solo 4px e 8px sono crispini
+      gapY:     8,       // gap dopo tapText prima della riga controlli
       btnH:    10,       // altezza clickable dei pulsanti
       boxR:     2,       // raggio angoli box pulsanti
       btnColor: '#b0b0b0', // colore pulsanti abilitati (meno saturo di white)
       prevX:   10, prevW: 14,    // pulsante ‹ livello
-      nextX:   55, nextW: 14,    // pulsante › o lock
-      labelX:  40,               // x centro label "LVL N"
+      nextX:   76, nextW: 14,    // pulsante › o lock
+      labelX:  50,               // x centro label "LVL N"
       langX:  135, langW: 20,    // pulsanti EN / IT (solo se showLangChooser)
-      audioX: 265, audioW: 46,   // pulsante audio toggle: icona(5) + gap(3) + label
+      audioRightX: 310, audioPadX: 6, // pulsante audio: bordo dx fisso, larghezza calcolata da label più lunga
     },
     legend: { fontSize: 4, gapY: 4 },  // keyboard legend (solo desktop) — ⚠ solo 4px o 8px
   },

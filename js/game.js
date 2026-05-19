@@ -74,14 +74,15 @@ function _titleCycleAudio() {
   if (next === 'full') GameAudio.playIntro();
 }
 
-var _titleCtrlY = 0;    // aggiornato da drawTitleScreen ogni frame
-var _titleLogoRect = null; // {x,y,w,h} del logo — aggiornato da drawTitleScreen ogni frame
+var _titleCtrlY = 0;       // aggiornato da drawTitleScreen ogni frame
+var _titleLogoRect = null; // {x,y,w,h} del logo
+var _titleAudioX = 0, _titleAudioW = 0; // posizione bottone audio (larghezza dinamica)
 
 function _titleCanvasClick(lx, ly) {
   if (state !== 'title') return;
   var ct = CONFIG.vis.titleScreen.controls;
   if (ly >= _titleCtrlY - 2 && ly <= _titleCtrlY + ct.btnH + 2) {
-    if (lx >= ct.audioX && lx <= ct.audioX + ct.audioW + 4) { _titleCycleAudio(); return; }
+    if (lx >= _titleAudioX && lx <= _titleAudioX + _titleAudioW) { _titleCycleAudio(); return; }
     if (lx >= ct.prevX && lx <= ct.prevX + ct.prevW && currentLevel > 1 && LEVELS.length > 1) { currentLevel--; return; }
     if (lx >= ct.nextX && lx <= ct.nextX + ct.nextW && currentLevel < _btrMax && LEVELS.length > 1) { currentLevel++; return; }
     if (CONFIG.debug.showLangChooser) {
