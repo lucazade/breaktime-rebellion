@@ -46,13 +46,15 @@ const wallLeft = CONFIG.vis.layout.wallLeft, wallRight = CONFIG.vis.layout.wallR
 // All canvas coords are in logical 320×200 space (ctx.scale 2×).
 Object.assign(CONFIG.vis, {
 
+  fontFamily: '"Press Start 2P"',  // font usato in tutti i banner — ⚠ solo 4px e 8px sono crispini
+
   // Title screen — logo + tap to start + level chooser + audio toggle + keyboard legend
   titleScreen: {
     logo:     { w: 320, borderW: 1, borderR: 5 }, // larghezza logo; y calcolato (centratura verticale); borderW=spessore bordino, borderR=raggio angoli clip
     tapText:  { fontSize: 4, gapY: 3 },// font e gap sotto il logo
     controls: {
       fontSize: 8,       // ⚠ solo 4px e 8px sono crispini
-      gapY:     8,       // gap dopo tapText prima della riga controlli
+      gapY:     6,       // gap dopo tapText prima della riga controlli
       btnH:    10,       // altezza clickable dei pulsanti
       boxR:     2,       // raggio angoli box pulsanti
       btnColor: '#b0b0b0', // colore pulsanti abilitati (meno saturo di white)
@@ -146,7 +148,8 @@ Object.assign(CONFIG.vis, {
   // Banner storia (L1) — panH calcolato: padTop+titleH+titleSpacing+lineBlock+spacerH+tapH+padBottom
   storyBanner: {
     panW: 280, wrapWidth: 220,  // larghezza pannello; wrapWidth = larghezza testo
-    fontSize:       8,
+    fontTitle:      8,  // ⚠ solo 4px e 8px sono crispini
+    fontBody:       8,
     padTop:        16,          // spazio dal bordo superiore al titolo
     titleH:        10, titleSpacing: 10, // altezza titolo, spacing dopo titolo
     lineH:          8, lineSpacing:   4, // altezza riga, spacing tra righe
@@ -158,7 +161,8 @@ Object.assign(CONFIG.vis, {
   // Banner missione — panH calcolato: padTop+titleH+titleSpacing+lineBlock+padBottom
   missionBanner: {
     panW: 260, wrapWidth: 200,  // larghezza pannello; wrapWidth = larghezza testo
-    fontSize:       8,
+    fontTitle:      8,  // ⚠ solo 4px e 8px sono crispini
+    fontBody:       8,
     padTop:        14,          // spazio dal bordo superiore al titolo
     titleH:        10, titleSpacing: 8, // altezza titolo, spacing dopo titolo
     lineH:          8, lineSpacing:  4, // altezza riga, spacing tra righe
@@ -168,7 +172,8 @@ Object.assign(CONFIG.vis, {
   // Banner livello superato — panH calcolato: padTop+stepTitle+stepScore+tapH+padBottom
   levelComplete: {
     panW: 260,  // panY e bx centrati automaticamente
-    fontSize:   8,   // px font corpo
+    fontTitle:  8,   // ⚠ solo 4px e 8px sono crispini
+    fontBody:   8,
     padTop:    11,   // spazio dal bordo superiore al primo testo
     stepTitle: 20,   // avanzamento dopo titolo (h=10 + spacing=10)
     stepScore: 22,   // avanzamento dopo punteggio (h=8 + spacing=14)
@@ -179,7 +184,8 @@ Object.assign(CONFIG.vis, {
   // Banner fine gioco (L10) — panH calcolato: padTop+stepTitle+stepScore+stepBest+tapH+padBottom
   gameWin: {
     panW: 260,  // panY e bx centrati automaticamente
-    fontSize:   8,   // px font corpo
+    fontTitle:  8,   // ⚠ solo 4px e 8px sono crispini
+    fontBody:   8,
     padTop:    23,   // spazio dal bordo superiore al primo testo
     stepTitle: 22,   // avanzamento dopo titolo win (h=12 + spacing=10)
     stepScore: 12,   // avanzamento dopo punteggio (h=8 + spacing=4)
@@ -191,7 +197,9 @@ Object.assign(CONFIG.vis, {
   // Banner gameover — panH calcolato: padTop+stepTitle+stepLevel+stepScore+stepConfirm+btnH+padBottom
   gameover: {
     panW: 260,       // panY e bx centrati automaticamente
-    fontSize:     8, // px font corpo
+    fontTitle:    8, // ⚠ solo 4px e 8px sono crispini
+    fontBody:     8,
+    fontBtn:      8,
     padTop:      12, // spazio dal bordo superiore al primo testo
     stepTitle:   18, // avanzamento dopo "ESPULSO!"
     stepLevel:   12, // avanzamento dopo livello raggiunto
@@ -206,7 +214,8 @@ Object.assign(CONFIG.vis, {
   // Fumetto di Luca (L10 fine livello) — bh calcolato: headerH + lineCount*lineH + gapTap + tapH + padBottom
   lucaFumetto: {
     bw:        190,  // larghezza fumetto
-    fontSize:    4,  // ⚠ solo 4px e 8px sono crispini
+    fontTitle:   4,  // ⚠ solo 4px e 8px sono crispini — header "Luca:"
+    fontBody:    4,  // testo corpo e tap label
     offsetX:    10,  // offset orizzontale da Luca (PW+2)
     tailOffY:   14,  // distanza verticale della coda da ly (by2 = ly - tailOffY - bh)
     headerH:    14,  // altezza riga "Luca:" in cima
@@ -220,7 +229,8 @@ Object.assign(CONFIG.vis, {
   // Overlay pausa — panH calcolato: padTop+stepTitle+btnH+padBottom
   pauseOverlay: {
     panW: 200,  // panY e bx centrati automaticamente
-    fontSize:   8,   // ⚠ solo 4px e 8px sono crispini
+    fontTitle:  8,   // ⚠ solo 4px e 8px sono crispini
+    fontBtn:    8,
     padTop:    14,   // spazio dal bordo superiore al titolo
     stepTitle: 22,   // avanzamento dopo "— PAUSA —" (h=10 + spacing=12)
     btnH:      14,   // altezza pulsante RIPRENDI
@@ -231,7 +241,8 @@ Object.assign(CONFIG.vis, {
   // Overlay home confirm — panH calcolato: padTop+stepTitle+btnH+padBottom
   homeConfirm: {
     panW: 200,  // panY e bx centrati automaticamente
-    fontSize:   8,   // ⚠ solo 4px e 8px sono crispini
+    fontTitle:  8,   // ⚠ solo 4px e 8px sono crispini
+    fontBtn:    8,
     padTop:    14,   // spazio dal bordo superiore alla domanda
     stepTitle: 20,   // avanzamento dopo "TORNARE ALLA HOME?" (h=8 + spacing=12)
     btnH:      14,   // altezza pulsanti SI/NO
@@ -243,8 +254,9 @@ Object.assign(CONFIG.vis, {
   // Credits — panH calcolato: padTop+stepTitle+stepTeam+5*(nameH+nameGap+roleH+roleGap)+btnGapAbove+btnH+padBottom
   credits: {
     panW: 240,  // panY e bx centrati automaticamente
-    fontTitle:    8, // ⚠ solo 4px e 8px — era 6px (non crisp), portato a 8
+    fontTitle:    8, // ⚠ solo 4px e 8px sono crispini
     fontBody:     4, // nomi e ruoli
+    fontBtn:      8, // pulsante OK
     padTop:       8,
     stepTitle:   14, // dopo "— CREDITS —" (h=6 + spacing=8)
     stepTeam:    12, // dopo nome team (h=4 + spacing=8)

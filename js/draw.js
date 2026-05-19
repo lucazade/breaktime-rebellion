@@ -1,6 +1,7 @@
 // Rendering — all draw functions and HUD update
 
 var _logoImage = null; // caricato da game.js come bgImage
+var FF = CONFIG.vis.fontFamily;  // shortcut font family — modificabile in layout.js
 
 // ── Title screen helpers ──────────────────────────────────────────────────────
 
@@ -87,7 +88,7 @@ function drawTitleScreen() {
   if (showTap) {
     var tapY = nextY + VT.tapText.gapY;
     if (!_titleStarting && Math.floor(frame / 20) % 2 === 0) {
-      ctx.font = VT.tapText.fontSize + 'px "Press Start 2P"';
+      ctx.font = VT.tapText.fontSize + 'px ' + FF;
       ctx.fillStyle = C.gold;
       ctx.fillText(STRINGS.tapToStart, W / 2, tapY);
     }
@@ -97,7 +98,7 @@ function drawTitleScreen() {
   // Controls row
   var ctrlY = nextY + ct.gapY;
   _titleCtrlY = ctrlY;
-  ctx.font = ct.fontSize + 'px "Press Start 2P"';
+  ctx.font = ct.fontSize + 'px ' + FF;
 
   ctx.lineWidth = 1;
   var ctrlTextY = ctrlY + Math.floor((ct.btnH - ct.fontSize) / 2); // centratura verticale testo
@@ -157,7 +158,7 @@ function drawTitleScreen() {
   // Keyboard legend — solo su desktop, riga singola con key box
   if (showLegend) {
     var lf = VT.legend.fontSize, kh = lf + 2, kr = 1, ks = 4;
-    ctx.font = lf + 'px "Press Start 2P"';
+    ctx.font = lf + 'px ' + FF;
     ctx.lineWidth = 1; ctx.textBaseline = 'top';
     var legY = ctrlY + ct.btnH + VT.legend.gapY;
 
@@ -236,7 +237,7 @@ function drawBoards() {
         ctx.setLineDash([]);
       }
     } else {
-      ctx.fillStyle = 'rgba(255,255,255,0.9)'; ctx.font = '4px "Press Start 2P"';
+      ctx.fillStyle = 'rgba(255,255,255,0.9)'; ctx.font = '4px ' + FF;
       ctx.fillText('MARCO', b.x+1, b.y+9);
       ctx.fillStyle = 'rgba(255,255,255,0.9)'; ctx.fillRect(b.x+1, b.y+10, BW-2, 1);
     }
@@ -491,7 +492,7 @@ function drawGuard(x, y, dir, animT, chasing, knockedT) {
   if (chasing) {
     const bub = dir>0 ? bx+PW : bx-26;
     ctx.fillStyle = 'rgba(255,255,255,0.9)'; ctx.fillRect(bub, by-14, 26, 10);
-    ctx.fillStyle = C.black; ctx.font = '4px "Press Start 2P"';
+    ctx.fillStyle = C.black; ctx.font = '4px ' + FF;
     ctx.textAlign = 'center'; ctx.textBaseline = 'top';
     ctx.fillText('STOP!', bub + 13, by - 12);
   }
@@ -718,7 +719,7 @@ function drawStudents() {
     if (s.disturbed) {
       ctx.fillStyle = '#FF2222';
       ctx.save(); ctx.textAlign = 'center';
-      ctx.font = '8px "Press Start 2P"';
+      ctx.font = '8px ' + FF;
       ctx.fillText('!', bx+4, by-19);
       ctx.restore();
     }
@@ -882,7 +883,7 @@ function drawPreside(x, y, dir, animT, bodyCol, chasing, knockedT) {
   if (chasing) {
     const bub = dir > 0 ? bx+PW : bx-26;
     ctx.fillStyle = 'rgba(255,255,255,0.9)'; ctx.fillRect(bub, by-14, 26, 10);
-    ctx.fillStyle = C.black; ctx.font = '4px "Press Start 2P"';
+    ctx.fillStyle = C.black; ctx.font = '4px ' + FF;
     ctx.fillText(STRINGS.hey, bub+1, by-7);
   }
 }
@@ -964,7 +965,7 @@ function drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, chasing, knock
   if (chasing) {
     const bub = dir>0 ? bx+PW : bx-26;
     ctx.fillStyle = 'rgba(255,255,255,0.9)'; ctx.fillRect(bub, by-14, 26, 10);
-    ctx.fillStyle = C.black; ctx.font = '4px "Press Start 2P"';
+    ctx.fillStyle = C.black; ctx.font = '4px ' + FF;
     ctx.fillText(STRINGS.hey, bub+1, by-7);
   }
 }
@@ -1025,7 +1026,7 @@ function drawLucaEnd() {
 
   // Speech bubble — bh calcolato da CONFIG.vis.lucaFumetto
   const VF = CONFIG.vis.lucaFumetto;
-  ctx.font = VF.fontSize + 'px "Press Start 2P"';
+  ctx.font = VF.fontBody + 'px ' + FF;
   const raw = STRINGS.lucaAppears.replace(/^[^"]*"?/, '').replace(/".*$/, '');
   const parts = raw.split('|');
   let lines = [];
@@ -1078,7 +1079,7 @@ function drawFloating() {
   for (let i = 0; i < floatingTexts.length; i++) {
     const t = floatingTexts[i];
     ctx.globalAlpha = Math.min(1, t.life/20);
-    ctx.fillStyle = t.color; ctx.font = '8px "Press Start 2P"';
+    ctx.fillStyle = t.color; ctx.font = '8px ' + FF;
     ctx.fillText(t.text, t.x - ctx.measureText(t.text).width/2, t.y);
     t.y -= 0.5; t.life--;
   }
@@ -1133,18 +1134,20 @@ function drawEndScreen() {
     ctx.textAlign = 'center'; ctx.textBaseline = 'top';
     const cx = gX + VG.panW / 2;
     let ty = gY + VG.padTop;
-    ctx.font = VG.fontSize + 'px "Press Start 2P"';
+    ctx.font = VG.fontTitle + 'px ' + FF;
     ctx.fillStyle = C.redprof; ctx.fillText(STRINGS.gameoverTitle,                  cx, ty); ty += VG.stepTitle;
+    ctx.font = VG.fontBody + 'px ' + FF;
     ctx.fillStyle = C.white;   ctx.fillText(fmt(STRINGS.levelReached, currentLevel), cx, ty); ty += VG.stepLevel;
     ctx.fillStyle = C.white;   ctx.fillText(scoreText,                               cx, ty); ty += VG.stepScore;
     ctx.fillStyle = C.gold;    ctx.fillText(STRINGS.gameoverConfirm,                 cx, ty); ty += VG.stepConfirm;
+    ctx.font = VG.fontBtn + 'px ' + FF;
     const siX = gX + VG.siOx, noX = gX + VG.noOx;
     ctx.fillStyle = 'rgba(0,90,0,0.92)'; ctx.fillRect(siX, ty, VG.siW, VG.btnH);
     ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(siX+1, ty+1, VG.siW-2, VG.btnH-2);
-    ctx.fillStyle = C.white; ctx.fillText(STRINGS.btnYes, siX + VG.siW/2, ty + 3);
+    ctx.fillStyle = C.white; ctx.fillText(STRINGS.btnYes, siX + VG.siW/2, ty + Math.floor((VG.btnH - VG.fontBtn) / 2));
     ctx.fillStyle = 'rgba(90,0,0,0.92)'; ctx.fillRect(noX, ty, VG.noW, VG.btnH);
     ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(noX+1, ty+1, VG.noW-2, VG.btnH-2);
-    ctx.fillStyle = C.white; ctx.fillText(STRINGS.btnNo, noX + VG.noW/2, ty + 3);
+    ctx.fillStyle = C.white; ctx.fillText(STRINGS.btnNo, noX + VG.noW/2, ty + Math.floor((VG.btnH - VG.fontBtn) / 2));
   } else if (currentLevel === LEVELS.length) {
     const bestScore = parseInt(localStorage.getItem('btr_best_score') || '0');
     const bestLevel = parseInt(localStorage.getItem('btr_best_level') || '1');
@@ -1156,8 +1159,9 @@ function drawEndScreen() {
     ctx.textAlign = 'center'; ctx.textBaseline = 'top';
     const cxW = wX + VW.panW / 2;
     let tyW = wY + VW.padTop;
-    ctx.font = VW.fontSize + 'px "Press Start 2P"';
+    ctx.font = VW.fontTitle + 'px ' + FF;
     ctx.fillStyle = C.gold;   ctx.fillText(STRINGS.winTitle, cxW, tyW); tyW += VW.stepTitle;
+    ctx.font = VW.fontBody + 'px ' + FF;
     ctx.fillStyle = C.white;  ctx.fillText(scoreText, cxW, tyW); tyW += VW.stepScore;
     ctx.fillStyle = C.yellow; ctx.fillText(STRINGS.bestLabel + ' LVL ' + bestLevel + ' — ' + String(bestScore).padStart(5,'0'), cxW, tyW); tyW += VW.stepBest;
     ctx.fillStyle = actionVisible ? C.gold : 'rgba(0,0,0,0)'; ctx.fillText(STRINGS.tapForTitle, cxW, tyW);
@@ -1170,8 +1174,9 @@ function drawEndScreen() {
     ctx.textAlign = 'center'; ctx.textBaseline = 'top';
     const cxL = lX + VL.panW / 2;
     let tyL = lY + VL.padTop;
-    ctx.font = VL.fontSize + 'px "Press Start 2P"';
+    ctx.font = VL.fontTitle + 'px ' + FF;
     ctx.fillStyle = C.gold;  ctx.fillText(STRINGS.levelComplete, cxL, tyL); tyL += VL.stepTitle;
+    ctx.font = VL.fontBody + 'px ' + FF;
     ctx.fillStyle = C.white; ctx.fillText(scoreText, cxL, tyL); tyL += VL.stepScore;
     ctx.fillStyle = actionVisible ? C.green : 'rgba(0,0,0,0)'; ctx.fillText(STRINGS.tapContinue, cxL, tyL);
   }
@@ -1181,7 +1186,7 @@ function drawEndScreen() {
 function drawStoryBanner() {
   if (storyBannerT <= 0 || state !== 'playing') return;
   if (!storyBannerLines) {
-    ctx.font = '8px "Press Start 2P"';
+    ctx.font = CONFIG.vis.storyBanner.fontBody + 'px ' + FF;
     const parts = STRINGS.storyText.split('|');
     let lines = [];
     for (let p = 0; p < parts.length; p++) {
@@ -1207,10 +1212,11 @@ function drawStoryBanner() {
   ctx.fillStyle = 'rgba(0,0,40,0.92)'; ctx.fillRect(bx, by, bw, bh);
   ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(bx+1, by+1, bw-2, bh-2);
   ctx.textAlign = 'center'; ctx.textBaseline = 'top';
-  ctx.font = VS.fontSize + 'px "Press Start 2P"';
+  ctx.font = VS.fontTitle + 'px ' + FF;
   const cxSt = bx + bw / 2;
   let tySt = by + VS.padTop;
   ctx.fillStyle = C.gold;  ctx.fillText(STRINGS.storyTitle, cxSt, tySt); tySt += VS.titleH + VS.titleSpacing;
+  ctx.font = VS.fontBody + 'px ' + FF;
   ctx.fillStyle = C.white;
   for (let i = 0; i < storyBannerLines.length; i++) {
     ctx.fillText(storyBannerLines[i], cxSt, tySt);
@@ -1224,7 +1230,7 @@ function drawStoryBanner() {
 function drawMissionBanner() {
   if (missionBannerT <= 0 || state !== 'playing') return;
   if (!missionBannerLines) {
-    ctx.font = CONFIG.vis.missionBanner.fontSize + 'px "Press Start 2P"';
+    ctx.font = CONFIG.vis.missionBanner.fontBody + 'px ' + FF;
     const text = STRINGS['mission' + currentLevel] || STRINGS.mission1;
     const words = text.split(' ');
     let line = '', lines = [];
@@ -1247,10 +1253,11 @@ function drawMissionBanner() {
   ctx.fillStyle = 'rgba(0,0,40,0.88)'; ctx.fillRect(bx, by, bw, bh);
   ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(bx+1, by+1, bw-2, bh-2);
   ctx.textAlign = 'center'; ctx.textBaseline = 'top';
-  ctx.font = VM.fontSize + 'px "Press Start 2P"';
+  ctx.font = VM.fontTitle + 'px ' + FF;
   const cxM = bx + bw / 2;
   let tyM = by + VM.padTop;
   ctx.fillStyle = C.gold;  ctx.fillText(fmt(STRINGS.missionLabel, currentLevel), cxM, tyM); tyM += VM.titleH + VM.titleSpacing;
+  ctx.font = VM.fontBody + 'px ' + FF;
   ctx.fillStyle = C.white;
   for (let i = 0; i < missionBannerLines.length; i++) {
     ctx.fillText(missionBannerLines[i], cxM, tyM);
@@ -1268,14 +1275,15 @@ function drawPauseOverlay() {
   ctx.fillStyle = 'rgba(0,0,40,0.92)'; ctx.fillRect(bx, by, VP.panW, pH);
   ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(bx+1, by+1, VP.panW-2, pH-2);
   ctx.textAlign = 'center'; ctx.textBaseline = 'top';
-  ctx.font = VP.fontSize + 'px "Press Start 2P"';
+  ctx.font = VP.fontTitle + 'px ' + FF;
   const cx = bx + VP.panW / 2;
   let ty = by + VP.padTop;
   ctx.fillStyle = C.gold; ctx.fillText(STRINGS.pauseTitle, cx, ty); ty += VP.stepTitle;
+  ctx.font = VP.fontBtn + 'px ' + FF;
   const rx = bx + VP.resumeOx;
   ctx.fillStyle = 'rgba(0,90,0,0.92)'; ctx.fillRect(rx, ty, VP.resumeW, VP.btnH);
   ctx.strokeStyle = C.gold; ctx.strokeRect(rx+1, ty+1, VP.resumeW-2, VP.btnH-2);
-  ctx.fillStyle = C.white; ctx.fillText(STRINGS.btnResume, rx + VP.resumeW/2, ty + 3);
+  ctx.fillStyle = C.white; ctx.fillText(STRINGS.btnResume, rx + VP.resumeW/2, ty + Math.floor((VP.btnH - VP.fontBtn) / 2));
   ctx.restore();
 }
 
@@ -1288,17 +1296,18 @@ function drawHomeConfirm() {
   ctx.fillStyle = 'rgba(0,0,40,0.92)'; ctx.fillRect(bx, by, VH.panW, hH);
   ctx.strokeStyle = C.gold; ctx.lineWidth = 1; ctx.strokeRect(bx+1, by+1, VH.panW-2, hH-2);
   ctx.textAlign = 'center'; ctx.textBaseline = 'top';
-  ctx.font = VH.fontSize + 'px "Press Start 2P"';
+  ctx.font = VH.fontTitle + 'px ' + FF;
   const cx = bx + VH.panW / 2;
   let ty = by + VH.padTop;
   ctx.fillStyle = C.gold; ctx.fillText(STRINGS.homeConfirm, cx, ty); ty += VH.stepTitle;
+  ctx.font = VH.fontBtn + 'px ' + FF;
   const siX = bx + VH.siOx, noX = bx + VH.noOx;
   ctx.fillStyle = 'rgba(0,90,0,0.92)'; ctx.fillRect(siX, ty, VH.siW, VH.btnH);
   ctx.strokeStyle = C.gold; ctx.strokeRect(siX+1, ty+1, VH.siW-2, VH.btnH-2);
-  ctx.fillStyle = C.white; ctx.fillText(STRINGS.btnYes, siX + VH.siW/2, ty + 3);
+  ctx.fillStyle = C.white; ctx.fillText(STRINGS.btnYes, siX + VH.siW/2, ty + Math.floor((VH.btnH - VH.fontBtn) / 2));
   ctx.fillStyle = 'rgba(90,0,0,0.92)'; ctx.fillRect(noX, ty, VH.noW, VH.btnH);
   ctx.strokeStyle = C.gold; ctx.strokeRect(noX+1, ty+1, VH.noW-2, VH.btnH-2);
-  ctx.fillStyle = C.white; ctx.fillText(STRINGS.btnNo, noX + VH.noW/2, ty + 3);
+  ctx.fillStyle = C.white; ctx.fillText(STRINGS.btnNo, noX + VH.noW/2, ty + Math.floor((VH.btnH - VH.fontBtn) / 2));
   ctx.restore();
 }
 
@@ -1488,7 +1497,7 @@ function drawHUD() {
   if (state === 'title') return;
   var VH = CONFIG.vis.hud;
   ctx.save();
-  var _f = VH.fontSize + 'px "Press Start 2P"';
+  var _f = VH.fontSize + 'px ' + FF;
   ctx.fillStyle = VH.bgColor; ctx.fillRect(0, 0, W, VH.rowH);
   // Hearts
   ctx.fillStyle = '#ff2244';
@@ -1543,9 +1552,9 @@ function drawCredits() {
   ctx.textAlign = 'center'; ctx.textBaseline = 'top';
   var cx = bx + VC.panW / 2;
   var ty = by + VC.padTop;
-  ctx.font = VC.fontTitle + 'px "Press Start 2P"'; ctx.fillStyle = C.gold;
+  ctx.font = VC.fontTitle + 'px ' + FF; ctx.fillStyle = C.gold;
   ctx.fillText('— CREDITS —', cx, ty); ty += VC.stepTitle;
-  ctx.font = VC.fontBody + 'px "Press Start 2P"'; ctx.fillStyle = C.lgreen;
+  ctx.font = VC.fontBody + 'px ' + FF; ctx.fillStyle = C.lgreen;
   ctx.fillText('LucazadeSoft Team', cx, ty); ty += VC.stepTeam;
   for (var i = 0; i < n; i++) {
     ctx.fillStyle = C.white; ctx.fillText(_CREDITS_MEMBERS[i].name, cx, ty); ty += VC.nameH + VC.nameGap;
@@ -1555,7 +1564,8 @@ function drawCredits() {
   var btnX = bx + Math.round((VC.panW - VC.btnW) / 2);
   ctx.fillStyle = 'rgba(0,90,0,0.92)'; ctx.fillRect(btnX, ty, VC.btnW, VC.btnH);
   ctx.strokeStyle = C.gold; ctx.strokeRect(btnX+1, ty+1, VC.btnW-2, VC.btnH-2);
-  ctx.fillStyle = C.white; ctx.fillText('OK', bx + VC.panW/2, ty + Math.round((VC.btnH - VC.fontBody) / 2));
+  ctx.font = VC.fontBtn + 'px ' + FF;
+  ctx.fillStyle = C.white; ctx.fillText('OK', bx + VC.panW/2, ty + Math.floor((VC.btnH - VC.fontBtn) / 2));
   ctx.restore();
 }
 
