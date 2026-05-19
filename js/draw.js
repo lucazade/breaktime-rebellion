@@ -2,6 +2,7 @@
 
 var _logoImage = null; // caricato da game.js come bgImage
 var FF = CONFIG.vis.fontFamily;  // shortcut font family — modificabile in layout.js
+var _hudMsgAlpha = 0; // alpha crossfade HUD: sale verso 1 quando c'è msg, scende verso 0 altrimenti
 
 // ── Title screen helpers ──────────────────────────────────────────────────────
 
@@ -1492,52 +1493,37 @@ function drawHUD() {
   var _iconY  = Math.floor((VH.rowH - VH.dotW) / 2);              // centratura verticale icona
   ctx.fillStyle = VH.bgColor; ctx.fillRect(0, 0, W, VH.rowH);
   ctx.font = _f; ctx.textBaseline = 'top';
-  if (msgT > 0) {
-    // messaggio attivo: solo msg, cuori e punteggio nascosti (#119)
-    // crossfade: _ao = alpha messaggio, (1-_ao) = alpha elementi HUD
-    var _el = msgDuration - msgT, _ao = Math.min(_el/15,1) * (msgT<25 ? msgT/25 : 1);
+  // Crossfade fluido: _hudMsgAlpha si avvicina a 1 o 0 a velocità fissa
+  // indipendente da msgT — nessun flicker quando il timer ciclizza rapidamente
+  var _fadeSpeed = 1 / 12;
+  var _targetAlpha = msgT > 0 ? 1 : 0;
+  if (_hudMsgAlpha < _targetAlpha) _hudMsgAlpha = Math.min(_targetAlpha, _hudMsgAlpha + _fadeSpeed);
+  else if (_hudMsgAlpha > _targetAlpha) _hudMsgAlpha = Math.max(_targetAlpha, _hudMsgAlpha - _fadeSpeed);
+  var _hudAlpha = 1 - _hudMsgAlpha;
 
-    // Messaggio — fade in/out
-    ctx.globalAlpha = _ao; ctx.fillStyle = '#ffffff'; ctx.textAlign = 'center';
+  // Messaggio — visibile a _hudMsgAlpha
+  if (_hudMsgAlpha > 0) {
+    ctx.globalAlpha = _hudMsgAlpha;
+    ctx.fillStyle = '#ffffff'; ctx.textAlign = 'center';
     ctx.fillText(msgText, VH.centerX, _textY);
+  }
 
-    // Cuori + punteggio — fade out/in inverso
-    if (_ao < 1) {
-      ctx.globalAlpha = 1 - _ao;
-      ctx.fillStyle = '#ff2244';
-      for (var _i = 0; _i < Math.max(0, lives); _i++) _drawHeart(VH.heartsX + _i * VH.heartStep * _hs, _heartY, _hs);
-      ctx.textAlign = 'right'; ctx.fillStyle = '#ffffff';
-      ctx.fillText(String(score).padStart(5,'0'), VH.scoreX, _textY);
-      // Counter meccanica
-      if (state === 'playing') {
-        var _oi = _hudObjInfo();
-        var _txt = _oi.done + '/' + _oi.total;
-        var _grpW = VH.dotW + VH.dotGap + ctx.measureText(_txt).width;
-        var _sx = Math.round(VH.centerX - _grpW / 2);
-        _drawHudIcon(_oi.mechanic, _sx, _iconY, _oi.color, _ds);
-        ctx.textAlign = 'left'; ctx.fillStyle = '#44ee66';
-        ctx.fillText(_txt, _sx + VH.dotW + VH.dotGap, _textY);
-      }
-    }
-  } else {
-    // Cuori — centrati verticalmente, scalati da heartSize
+  // Cuori + punteggio + counter — visibili a _hudAlpha
+  if (_hudAlpha > 0) {
+    ctx.globalAlpha = _hudAlpha;
     ctx.fillStyle = '#ff2244';
     for (var _i = 0; _i < Math.max(0, lives); _i++) _drawHeart(VH.heartsX + _i * VH.heartStep * _hs, _heartY, _hs);
-    // Punteggio
     ctx.textAlign = 'right'; ctx.fillStyle = '#ffffff';
     ctx.fillText(String(score).padStart(5,'0'), VH.scoreX, _textY);
-  }
-  // Counter meccanica (stato normale, nessun messaggio)
-  ctx.textAlign = 'center';
-  if (msgT <= 0 && state === 'playing') {
-    var _oi = _hudObjInfo();
-    var _txt = _oi.done + '/' + _oi.total;
-    var _tw  = ctx.measureText(_txt).width;
-    var _grpW = VH.dotW + VH.dotGap + _tw;
-    var _sx = Math.round(VH.centerX - _grpW / 2);
-    _drawHudIcon(_oi.mechanic, _sx, _iconY, _oi.color, _ds);
-    ctx.textAlign = 'left'; ctx.fillStyle = '#44ee66';
-    ctx.fillText(_txt, _sx + VH.dotW + VH.dotGap, _textY);
+    if (state === 'playing') {
+      var _oi = _hudObjInfo();
+      var _txt = _oi.done + '/' + _oi.total;
+      var _grpW = VH.dotW + VH.dotGap + ctx.measureText(_txt).width;
+      var _sx = Math.round(VH.centerX - _grpW / 2);
+      _drawHudIcon(_oi.mechanic, _sx, _iconY, _oi.color, _ds);
+      ctx.textAlign = 'left'; ctx.fillStyle = '#44ee66';
+      ctx.fillText(_txt, _sx + VH.dotW + VH.dotGap, _textY);
+    }
   }
   // Timer bar
   if (maxTimerTicks > 0) {
