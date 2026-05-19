@@ -323,14 +323,22 @@ function triggerHome() {
 function goHome() {
   _pauseActive = false; _homeConfirmActive = false;
   _btnPause.innerHTML = _SVG_PAUSE;
-  GameAudio.fadeOutMusic(750);
-  fadeScreen(0, 1, 750, function() {
+  GameAudio.fadeOutMusic(400);
+  CV.style.transition = 'opacity 0.4s linear';
+  CV.style.opacity = '0';
+  CV.style.pointerEvents = 'none';
+  CV.addEventListener('transitionend', function() {
     lives = 3; score = 0;
     resetLevel();
     state = 'title';
     window.dispatchEvent(new Event('_titleReset')); // resetta _titleStarting e _btrMax
-    fadeScreen(1, 0, 600, function() { GameAudio.playIntro(); });
-  });
+    CV.style.opacity = '1';
+    CV.addEventListener('transitionend', function() {
+      CV.style.transition = '';
+      CV.style.pointerEvents = '';
+      GameAudio.playIntro();
+    }, {once: true});
+  }, {once: true});
 }
 
 function cancelHome() {

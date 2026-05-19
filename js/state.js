@@ -136,17 +136,20 @@ function fadeScreen(from, to, ms, cb) {
 function startGame() {
   localStorage.setItem('btr_last_level', currentLevel);
   resetLevel();
-  GameAudio.fadeOutIntro(750);
-  var _sf = document.getElementById('screen-fade');
-  _sf.style.pointerEvents = 'auto';           // blocca click durante transizione
-  fadeScreen(0, 1, 750, function() {          // home → black (750ms)
+  GameAudio.fadeOutIntro(400);
+  CV.style.transition = 'opacity 0.4s linear';
+  CV.style.opacity = '0';
+  CV.style.pointerEvents = 'none';
+  CV.addEventListener('transitionend', function() {
     document.body.classList.remove('title-mode');
     state = 'playing';
     GameAudio.playMusic();
-    fadeScreen(1, 0, 600, function() {        // black → game (600ms)
-      _sf.style.pointerEvents = '';           // ripristina dopo che il gioco è visibile
-    });
-  });
+    CV.style.opacity = '1';
+    CV.addEventListener('transitionend', function() {
+      CV.style.transition = '';
+      CV.style.pointerEvents = '';
+    }, {once: true});
+  }, {once: true});
 }
 
 function nextLevel() {
