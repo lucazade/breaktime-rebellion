@@ -14,6 +14,11 @@ CONFIG.vis = {
     walkOffset: 6,        // px sopra la superficie dove cammina il personaggio
     wallLeft: 10, wallRight: 10, // #78 — margini muro sx/dx (pixel logici)
     desktopZoom: 1.0,            // zoom canvas su desktop (pointer:fine) — 1.5 = 400→600px
+    bezelStyle:        'title',               // stile bezel: 'synthwave' | 'title'
+    panelInnerBorder:  'rgba(0,0,200,0.7)',   // strip neon interno sidepanel — synthwave: rgba(160,0,255,0.7)
+    btnHomeBorder:     'rgba(0,0,180,0.85)',  // bordo pulsante home   — synthwave: rgba(160,0,255,0.85)
+    btnPauseBorder:    'rgba(0,0,180,0.85)',  // bordo pulsante pausa  — synthwave: rgba(160,0,255,0.85)
+    btnInfoBorder:     'rgba(0,0,180,0.85)',  // bordo pulsante info   — synthwave: rgba(160,0,255,0.85)
   },
 
   colors: {
@@ -283,5 +288,11 @@ audioRightX: 310, audioPadX: 6, // pulsante audio: bordo dx fisso, larghezza cal
 // Alias per retrocompatibilità con levels.js
 var SHARED_LAYOUT = CONFIG.vis.shared;
 
-// Applica zoom desktop come CSS custom property (letto da style.css)
-document.documentElement.style.setProperty('--btr-zoom', CONFIG.vis.layout.desktopZoom);
+// Applica CSS custom properties da layout
+var _L = CONFIG.vis.layout;
+document.documentElement.style.setProperty('--btr-zoom',               _L.desktopZoom);
+document.documentElement.style.setProperty('--btr-panel-inner-border', _L.panelInnerBorder);
+document.documentElement.style.setProperty('--btr-btn-home-border',    _L.btnHomeBorder);
+document.documentElement.style.setProperty('--btr-btn-pause-border',   _L.btnPauseBorder);
+document.documentElement.style.setProperty('--btr-btn-info-border',    _L.btnInfoBorder);
+if (_L.bezelStyle === 'title') document.body.classList.add('bezel-title');

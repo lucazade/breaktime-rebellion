@@ -88,8 +88,8 @@ body {
   }
 
   /* Purple neon strip facing the game screen */
-  #panel-left  { border-right: 3px solid rgba(160,0,255,0.7); }
-  #panel-right { border-left:  3px solid rgba(160,0,255,0.7); }
+  #panel-left  { border-right: 3px solid var(--btr-panel-inner-border, rgba(160,0,255,0.7)); }
+  #panel-right { border-left:  3px solid var(--btr-panel-inner-border, rgba(160,0,255,0.7)); }
 
   /* Scanline overlay */
   #panel-left::before, #panel-right::before {
@@ -318,12 +318,29 @@ body.simulate-mobile #game-area::before,
 body.simulate-mobile #game-area::after { display: none !important; }
 body.simulate-mobile #panel-left,
 body.simulate-mobile #panel-right { display: flex !important; flex: 1 !important; min-width: 160px !important; height: 100dvh; position: relative; overflow: hidden; border-top: 2px solid #2a0055; border-bottom: 2px solid #2a0055; background: radial-gradient(ellipse at 50% 108%, rgba(255,0,180,.42) 0%, transparent 52%), linear-gradient(180deg, #080015 0%, #12002e 55%, #080015 100%); }
-body.simulate-mobile #panel-left  { border-right: 3px solid rgba(160,0,255,.7) !important; }
-body.simulate-mobile #panel-right { border-left:  3px solid rgba(160,0,255,.7) !important; }
+body.simulate-mobile #panel-left  { border-right: 3px solid var(--btr-panel-inner-border, rgba(160,0,255,.7)) !important; }
+body.simulate-mobile #panel-right { border-left:  3px solid var(--btr-panel-inner-border, rgba(160,0,255,.7)) !important; }
 body.simulate-mobile #panel-left  #ctrl-joy    { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 1; }
 body.simulate-mobile #panel-right #ctrl-action { position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); z-index: 1; }
 body.simulate-mobile #btn-info  { display: flex !important; }
 body.simulate-mobile .panel-btn { display: flex !important; }
+
+/* ─── BEZEL STYLE: title — sfondo gradiente blu della title screen ─── */
+body.bezel-title {
+  background: linear-gradient(180deg, #000080 0%, #000040 100%) !important;
+}
+/* desktop: override sfondo synthwave */
+@media (hover: hover) and (pointer: fine) {
+  body.bezel-title { background: linear-gradient(180deg, #000080 0%, #000040 100%) !important; }
+}
+/* mobile sidebars: override sfondo synthwave */
+body.bezel-title #panel-left,
+body.bezel-title #panel-right {
+  background: linear-gradient(180deg, #000080 0%, #000040 100%) !important;
+  border-top-color: #000060 !important;
+  border-bottom-color: #000060 !important;
+}
+/* bordi interni gestiti da --btr-panel-inner-border impostato in layout.js */
 
 /* ─── TITLE MODE — copre tutto, nasconde bezel e pannelli ─── */
 body.title-mode {
@@ -336,7 +353,7 @@ body.title-mode #game-area {
   background: none !important;
 }
 body.title-mode canvas { background: none !important; }
-/*body.title-mode canvas { background: red; }*/
+/*body.title-mode canvas { background: red; }  DEBUG: mostra area canvas in title mode */
 body.title-mode #game-area::before,
 body.title-mode #game-area::after { display: none !important; }
 
@@ -351,7 +368,7 @@ body.title-mode #game-area::after { display: none !important; }
   width: 68px; height: 38px;
   border-radius: 8px;
   background: #0a0018;
-  border: 2px solid rgba(160,0,255,0.85);
+  border: 2px solid rgba(160,0,255,0.85); /* colore base — override con CSS vars per-pulsante */
   color: #fff;
   font-size: 16px;
   cursor: pointer;
@@ -365,6 +382,11 @@ body.title-mode #game-area::after { display: none !important; }
 }
 
 .panel-btn:active { background: rgba(160,0,255,0.28); border-color: rgba(160,0,255,1); }
+
+/* bordi pulsanti configurabili da CONFIG.vis.layout in layout.js */
+#btn-home  { border-color: var(--btr-btn-home-border,  rgba(160,0,255,0.85)); }
+#btn-pause { border-color: var(--btr-btn-pause-border, rgba(160,0,255,0.85)); }
+#btn-info  { border-color: var(--btr-btn-info-border,  rgba(160,0,255,0.85)); }
 
 .panel-btn-info {
   top: 115px;
