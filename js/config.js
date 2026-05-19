@@ -31,9 +31,9 @@ const CONFIG = {
     },
   },
   debug: {
-    showLangChooser:  true,
+    lang:             'auto', // 'auto' = navigator.language | 'it' | 'en'
+    showTapToStart:   true,
     showLegend:       false,
-    showTapToStart:   false,
     simulateMobile:   false,
     unlockAllLevels:  false,
     godMode:          false,

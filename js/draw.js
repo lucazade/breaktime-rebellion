@@ -54,7 +54,6 @@ function drawTitleScreen() {
   ctx.clearRect(0, 0, W, H);
 
   var ct = VT.controls;
-  var showTap    = CONFIG.debug.showTapToStart;
   var showLegend = CONFIG.debug.showLegend;
 
   // Altezza logo
@@ -66,10 +65,9 @@ function drawTitleScreen() {
   }
 
   // Centratura verticale: calcola altezza totale del blocco contenuto
-  var tapBlockH = showTap    ? (VT.tapText.gapY + VT.tapText.fontSize) : 0;
   var ctrlBlockH = ct.gapY + ct.btnH;
   var legBlockH  = showLegend ? (VT.legend.gapY  + VT.legend.fontSize + 2)  : 0;
-  var totalH = logoH + tapBlockH + ctrlBlockH + legBlockH;
+  var totalH = logoH + ctrlBlockH + legBlockH;
   var logoY  = Math.max(0, Math.round((H - totalH) / 2));
   _titleLogoRect = logoH > 0 ? {x: logoX, y: logoY, w: logoW, h: logoH} : null;
 
@@ -98,21 +96,8 @@ function drawTitleScreen() {
   ctx.save();
   ctx.textAlign = 'center'; ctx.textBaseline = 'top';
 
-  var nextY = logoY + logoH;
-
-  // Tap to start — solo su non-desktop (blinking)
-  if (showTap) {
-    var tapY = nextY + VT.tapText.gapY;
-    if (!_titleStarting && Math.floor(frame / 20) % 2 === 0) {
-      ctx.font = VT.tapText.fontSize + 'px ' + FF;
-      ctx.fillStyle = C.gold;
-      ctx.fillText(STRINGS.tapToStart, W / 2, tapY);
-    }
-    nextY = tapY + VT.tapText.fontSize;
-  }
-
   // Controls row
-  var ctrlY = nextY + ct.gapY;
+  var ctrlY = logoY + logoH + ct.gapY;
   _titleCtrlY = ctrlY;
   ctx.font = ct.fontSize + 'px ' + FF;
 
@@ -143,15 +128,15 @@ function drawTitleScreen() {
     }
   }
 
-  // Language buttons (solo se debug)
-  if (CONFIG.debug.showLangChooser) {
-    var curLang = document.documentElement.lang;
-    ['en','it'].forEach(function(lg, idx) {
-      var lx = ct.langX + idx * (ct.langW + 4);
-      var langColor = (curLang === lg) ? C.gold : C.mgray;
-      _box(lx, ctrlY, ct.langW, langColor);
-      ctx.fillStyle = langColor; ctx.fillText(lg.toUpperCase(), lx + ct.langW/2, ctrlTextY);
-    });
+  // Tap to start — nella barra, lampeggiante (se CONFIG.debug.showTapToStart)
+  if (CONFIG.debug.showTapToStart && !_titleStarting && Math.floor(frame / 20) % 2 === 0) {
+    var vTap = VT.tapToStart;
+    var tapX = vTap.alignX === 'left' ? 0 : vTap.alignX === 'right' ? W : W / 2;
+    var tapOffY = vTap.alignY === 'top' ? 1 : vTap.alignY === 'bottom' ? ct.btnH - vTap.fontSize - 1 : Math.floor((ct.btnH - vTap.fontSize) / 2);
+    ctx.font = vTap.fontSize + 'px ' + FF;
+    ctx.fillStyle = C.gold; ctx.textAlign = vTap.alignX;
+    ctx.fillText(STRINGS.tapToStart, tapX, ctrlY + tapOffY);
+    ctx.font = ct.fontSize + 'px ' + FF; ctx.textAlign = 'center';
   }
 
   // Audio toggle — larghezza fissa basata sulla label più lunga tra tutti gli stati

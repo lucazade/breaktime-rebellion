@@ -85,14 +85,8 @@ function _titleCanvasClick(lx, ly) {
     if (lx >= _titleAudioX && lx <= _titleAudioX + _titleAudioW) { _titleCycleAudio(); return; }
     if (lx >= ct.prevX && lx <= ct.prevX + ct.prevW && currentLevel > 1 && LEVELS.length > 1) { currentLevel--; return; }
     if (lx >= ct.nextX && lx <= ct.nextX + ct.nextW && currentLevel < _btrMax && LEVELS.length > 1) { currentLevel++; return; }
-    if (CONFIG.debug.showLangChooser) {
-      ['en','it'].forEach(function(lg, idx) {
-        var lxBtn = ct.langX + idx * (ct.langW + 4);
-        if (lx >= lxBtn && lx <= lxBtn + ct.langW) { localStorage.setItem('btr_lang', lg); location.href = location.pathname + '?lang=' + lg; }
-      });
-      return;
-    }
-    return;
+    // click sul TAP TO START nella barra
+    _tryStart(); return;
   }
   if (_titleLogoRect && lx >= _titleLogoRect.x && lx <= _titleLogoRect.x + _titleLogoRect.w
                      && ly >= _titleLogoRect.y && ly <= _titleLogoRect.y + _titleLogoRect.h) {

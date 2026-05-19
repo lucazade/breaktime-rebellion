@@ -1,9 +1,14 @@
 // i18n — default language: English; auto-override based on device locale
 // Only plain strings here — formatting with {0}, {1}… placeholders done in game.js via fmt()
 (function() {
-  var urlLang = new URLSearchParams(window.location.search).get('lang');
-  if (urlLang) localStorage.setItem('btr_lang', urlLang);
-  var lang = (urlLang || localStorage.getItem('btr_lang') || navigator.language || 'en').slice(0, 2).toLowerCase();
+  var lang = (function() {
+    if (CONFIG.debug.lang && CONFIG.debug.lang !== 'auto') return CONFIG.debug.lang;
+    var urlLang = new URLSearchParams(window.location.search).get('lang');
+    if (urlLang) { localStorage.setItem('btr_lang', urlLang); return urlLang.slice(0, 2); }
+    var stored = localStorage.getItem('btr_lang');
+    if (stored) return stored.slice(0, 2);
+    return (navigator.language || 'en').startsWith('it') ? 'it' : 'en';
+  })();
   document.documentElement.lang = lang;
 
   var en = {
