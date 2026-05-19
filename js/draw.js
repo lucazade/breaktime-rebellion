@@ -1495,7 +1495,7 @@ function drawHUD() {
   ctx.font = _f; ctx.textBaseline = 'top';
   // Crossfade fluido: _hudMsgAlpha si avvicina a 1 o 0 a velocità fissa
   // indipendente da msgT — nessun flicker quando il timer ciclizza rapidamente
-  var _fadeSpeed = 1 / 12;
+  var _fadeSpeed = 1 / (VH.msgFadeFrames || 45);
   var _targetAlpha = msgT > 0 ? 1 : 0;
   if (_hudMsgAlpha < _targetAlpha) _hudMsgAlpha = Math.min(_targetAlpha, _hudMsgAlpha + _fadeSpeed);
   else if (_hudMsgAlpha > _targetAlpha) _hudMsgAlpha = Math.max(_targetAlpha, _hudMsgAlpha - _fadeSpeed);

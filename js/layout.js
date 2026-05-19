@@ -120,6 +120,7 @@ audioRightX: 310, audioPadX: 6, // pulsante audio: bordo dx fisso, larghezza cal
     heartsX:   4,                    // x primo cuore
     heartStep: 9,                    // px per cuore (8 wide + 1 gap)
     heartSize: 1,                    // scala cuori: 1 = 8×7px | 0.5 = 4×3px
+    msgFadeFrames: 45,               // frame per il crossfade msg↔HUD (45 = ~0.75s a 60fps)
     centerX:   160,                  // x centro per counter/msg
     scoreX:    316,                  // x destro per punteggio
     timerH:    1,                    // altezza barra timer
