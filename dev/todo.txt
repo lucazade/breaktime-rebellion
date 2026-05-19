@@ -267,6 +267,7 @@ CHIUSI:
 - [X] #120 con i messaggi in hud a font size 4px i cuori rimangono troppo grandi (devono far resize)
 - [X] #122 bug pulsante pausa cambia di grafica (quando fai tap più volte sul pusante pausa a un certo punto cambia e ha sfondo arancione, vedi screenshot)
 - [X] #123 sfondo syntwave anche per title opzionale
+- [X] #125 il logo.png è 1697 × 927 , ha senso sia per desktop che per mobile a questa risoluzione?
 
 PER LUCA:
 - [ ] #72 Revisione punteggi (per Luca)
@@ -277,7 +278,6 @@ PER LUCA:
 
 IMPORTANTI:
 - [ ] #121 quando il prof si allerta e strilla ehi! fa uno scatto in avanti che in precedenza non faceva
-
 
 MINORI:
 - [ ] #76 target libreria troppo grande
