@@ -85,8 +85,7 @@ function _titleCanvasClick(lx, ly) {
     if (lx >= _titleAudioX && lx <= _titleAudioX + _titleAudioW) { _titleCycleAudio(); return; }
     if (lx >= ct.prevX && lx <= ct.prevX + ct.prevW && currentLevel > 1 && LEVELS.length > 1) { currentLevel--; return; }
     if (lx >= ct.nextX && lx <= ct.nextX + ct.nextW && currentLevel < _btrMax && LEVELS.length > 1) { currentLevel++; return; }
-    // click sul TAP TO START nella barra
-    _tryStart(); return;
+    return;
   }
   if (_titleLogoRect && lx >= _titleLogoRect.x && lx <= _titleLogoRect.x + _titleLogoRect.w
                      && ly >= _titleLogoRect.y && ly <= _titleLogoRect.y + _titleLogoRect.h) {
