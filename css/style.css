@@ -303,22 +303,6 @@ body.simulate-mobile #panel-right #ctrl-action { position: absolute; bottom: 28p
 body.simulate-mobile #btn-info  { display: flex !important; }
 body.simulate-mobile .panel-btn { display: flex !important; }
 
-/* ─── BODY STYLE: blue — alternative blue gradient background ─── */
-body.body-blue {
-  background: linear-gradient(180deg, #000080 0%, #000040 100%) !important;
-}
-/* desktop: override synthwave background */
-@media (hover: hover) and (pointer: fine) {
-  body.body-blue { background: linear-gradient(180deg, #000080 0%, #000040 100%) !important; }
-}
-/* mobile sidebars: override synthwave background */
-body.body-blue #panel-left,
-body.body-blue #panel-right {
-  background: linear-gradient(180deg, #000080 0%, #000040 100%) !important;
-  border-top-color: #000060 !important;
-  border-bottom-color: #000060 !important;
-}
-/* inner borders controlled by --btr-panel-inner-border set in layout.js */
 
 /* ─── TITLE MODE — hides bezel and side panels ─── */
 body.title-mode #panel-left,

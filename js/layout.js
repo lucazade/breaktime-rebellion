@@ -48,8 +48,6 @@ Object.assign(CONFIG.vis, {
 
   fontFamily: '"Silkscreen"',  // font used in all banners — swap font here to test alternatives
 
-  bodyStyle: 'synthwave',  // global body background: 'synthwave' | 'blue'
-
   // ── Bezel — mobile side panels and desktop background ────────────────────
   bezel: {
     /*panelInnerBorder:  'rgba(0,0,0,0.7)',   // inner neon strip sidepanel    — synthwave: rgba(160,0,255,0.7)
@@ -90,7 +88,7 @@ Object.assign(CONFIG.vis, {
 
   // Title screen — logo + tap to start + level chooser + audio toggle + keyboard legend
   titleScreen: {
-    // style removed — title background follows the body (bodyStyle in layout.js)
+    // title background follows the body synthwave gradient
     logo:     { w: 300, borderW: 1, borderR: 5 }, // logo width; y computed (vertical centering); borderW=border thickness, borderR=corner clip radius
     tapToStart: { fontSize: 6, alignX: 'center', alignY: 'middle' }, // font and alignment in the controls bar (alignX: left|center|right; alignY: top|middle|bottom)
     controls: {
@@ -328,4 +326,3 @@ document.documentElement.style.setProperty('--btr-btn-pause-bg-pressed', _B.btnP
 document.documentElement.style.setProperty('--btr-btn-info-bg-pressed',  _B.btnInfoBgPressed);
 document.documentElement.style.setProperty('--btr-btn-glow',                _B.btnGlow);
 document.documentElement.style.setProperty('--btr-font-family',             CONFIG.vis.fontFamily);
-if (CONFIG.vis.bodyStyle === 'blue') document.body.classList.add('body-blue');
