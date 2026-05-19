@@ -268,6 +268,8 @@ CHIUSI:
 - [X] #122 bug pulsante pausa cambia di grafica (quando fai tap più volte sul pusante pausa a un certo punto cambia e ha sfondo arancione, vedi screenshot)
 - [X] #123 sfondo syntwave anche per title opzionale
 - [X] #125 il logo.png è 1697 × 927 , ha senso sia per desktop che per mobile a questa risoluzione?
+- [X] #126 sistemare font 4 a 6
+- [X] #127 cuori e meccanica in hud hanno delle strane linee orizzontali se heartSize: 0.8 e dotW: 5.5
 
 PER LUCA:
 - [ ] #72 Revisione punteggi (per Luca)
@@ -275,10 +277,8 @@ PER LUCA:
 - [ ] #108 sistemare suoni (per Luca)
 - [ ] #124 Sistemare logo (via orologio)
 - [ ] #125 sistemare livello preside e ultimo
-- [ ] #126 sistemare font 4 a 6
 
 IMPORTANTI:
-- [ ] #127 cuori e meccanica in hud hanno delle strane linee orizzontali se heartSize: 0.8 e dotW: 5.5
 - [ ] #121 quando il prof si allerta e strilla ehi! fa uno scatto in avanti che in precedenza non faceva
 
 MINORI:
