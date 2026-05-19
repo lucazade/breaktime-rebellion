@@ -39,7 +39,7 @@ function drawTitleScreen() {
   var ct = VT.controls;
   var isDesktop = !CONFIG.debug.simulateMobile && window.matchMedia('(pointer:fine)').matches;
   var showTap    = !isDesktop;   // tap solo su touch — su desktop c'è la legend
-  var showLegend = isDesktop;
+  var showLegend = isDesktop && CONFIG.debug.showLegend;
 
   // Altezza logo
   var logoW = VT.logo.w;
