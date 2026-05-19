@@ -55,6 +55,7 @@ function drawTitleScreen() {
   var legBlockH  = showLegend ? (VT.legend.gapY  + VT.legend.fontSize + 2)  : 0;
   var totalH = logoH + tapBlockH + ctrlBlockH + legBlockH;
   var logoY  = Math.max(0, Math.round((H - totalH) / 2));
+  _titleLogoRect = logoH > 0 ? {x: logoX, y: logoY, w: logoW, h: logoH} : null;
 
   // Logo clippato con angoli stondati + bordino
   if (logoH > 0) {

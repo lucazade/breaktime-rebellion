@@ -19,7 +19,7 @@ const ctx = CV.getContext('2d');
   document.addEventListener('mousemove', function() {
     _ga.style.cursor = '';
     clearTimeout(_mt);
-    _mt = setTimeout(function() { _ga.style.cursor = 'none'; }, 2000);
+    _mt = setTimeout(function() { _ga.style.cursor = 'none'; CV.style.cursor = ''; }, 2000);
   });
 })();
 ctx.scale(2, 2); // 2× resolution: 640×400 canvas, 320×200 logical coordinates
@@ -74,7 +74,8 @@ function _titleCycleAudio() {
   if (next === 'full') GameAudio.playIntro();
 }
 
-var _titleCtrlY = 0; // aggiornato da drawTitleScreen ogni frame
+var _titleCtrlY = 0;    // aggiornato da drawTitleScreen ogni frame
+var _titleLogoRect = null; // {x,y,w,h} del logo — aggiornato da drawTitleScreen ogni frame
 
 function _titleCanvasClick(lx, ly) {
   if (state !== 'title') return;
@@ -92,7 +93,10 @@ function _titleCanvasClick(lx, ly) {
     }
     return;
   }
-  _tryStart();
+  if (_titleLogoRect && lx >= _titleLogoRect.x && lx <= _titleLogoRect.x + _titleLogoRect.w
+                     && ly >= _titleLogoRect.y && ly <= _titleLogoRect.y + _titleLogoRect.h) {
+    _tryStart();
+  }
 }
 
 var _lastLoopTime = 0;
@@ -395,6 +399,16 @@ function _homeConfirmCanvasClick(lx, ly) {
   if (lx >= p.bx + VH.siOx && lx <= p.bx + VH.siOx + VH.siW) { goHome(); }
   else if (lx >= p.bx + VH.noOx && lx <= p.bx + VH.noOx + VH.noW) { cancelHome(); }
 }
+
+CV.addEventListener('mousemove', function(e) {
+  if (state !== 'title') { CV.style.cursor = ''; return; }
+  if (!_titleLogoRect) return;
+  var rect = CV.getBoundingClientRect();
+  var lx = (e.clientX - rect.left) * 320 / rect.width;
+  var ly = (e.clientY - rect.top)  * 200 / rect.height;
+  var r = _titleLogoRect;
+  CV.style.cursor = (lx >= r.x && lx <= r.x + r.w && ly >= r.y && ly <= r.y + r.h) ? 'pointer' : 'default';
+});
 
 CV.addEventListener('click', function(e) {
   var rect = CV.getBoundingClientRect();
