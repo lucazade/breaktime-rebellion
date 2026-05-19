@@ -91,6 +91,7 @@ Object.assign(CONFIG.vis, {
 
   // Title screen — logo + tap to start + level chooser + audio toggle + keyboard legend
   titleScreen: {
+    style:    'synthwave',  // stile sfondo title: 'blue' | 'synthwave'
     logo:     { w: 300, borderW: 1, borderR: 5 }, // larghezza logo; y calcolato (centratura verticale); borderW=spessore bordino, borderR=raggio angoli clip
     tapToStart: { fontSize: 4, alignX: 'center', alignY: 'middle' }, // font e allineamento nella controls bar (alignX: left|center|right; alignY: top|middle|bottom)
     controls: {
@@ -328,3 +329,4 @@ document.documentElement.style.setProperty('--btr-btn-pause-bg-pressed', _B.btnP
 document.documentElement.style.setProperty('--btr-btn-info-bg-pressed',  _B.btnInfoBgPressed);
 document.documentElement.style.setProperty('--btr-btn-glow',                _B.btnGlow);
 if (_B.style === 'title') document.body.classList.add('bezel-title');
+if (CONFIG.vis.titleScreen.style === 'synthwave') document.body.classList.add('title-synthwave');

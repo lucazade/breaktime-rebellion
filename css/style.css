@@ -346,6 +346,18 @@ body.bezel-title #panel-right {
 body.title-mode {
   background: linear-gradient(180deg, #000080 0%, #000040 100%) !important;
 }
+
+/* ─── TITLE STYLE: synthwave — fondo retro al posto del blu ─── */
+body.title-mode.title-synthwave {
+  background:
+    radial-gradient(ellipse at 50% 110%, rgba(255,0,180,0.32) 0%, transparent 48%),
+    radial-gradient(ellipse at 50% -8%,  rgba(0,180,255,0.14) 0%, transparent 42%),
+    radial-gradient(ellipse at 0%   50%, rgba(120,0,200,0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 100% 50%, rgba(0,160,200,0.10) 0%, transparent 50%),
+    repeating-linear-gradient(90deg, transparent 0px, transparent 44px, rgba(160,0,255,0.17) 44px, rgba(160,0,255,0.17) 45px),
+    repeating-linear-gradient(0deg, transparent 0px, transparent 44px, rgba(0,200,255,0.13) 44px, rgba(0,200,255,0.13) 45px),
+    linear-gradient(160deg, #060010 0%, #0e0026 45%, #100030 60%, #060010 100%) !important;
+}
 body.title-mode #panel-left,
 body.title-mode #panel-right { visibility: hidden !important; }
 body.title-mode #game-area {
