@@ -283,4 +283,3 @@ PER LUCA:
 IMPORTANTI:
 
 MINORI:
-- [ ] #76 target libreria troppo grande
