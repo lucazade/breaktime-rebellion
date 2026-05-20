@@ -282,6 +282,7 @@ PER LUCA:
 - [ ] #124 Sistemare logo (via orologio)
 - [ ] #125 sistemare livello preside e ultimo troppo facili
 - [ ] #126 sistemare banner livello completato, fumetto Luca e banner finale
+- [ ] #130 rimuovere parentesi quadre da label
 
 IMPORTANTI:
 
