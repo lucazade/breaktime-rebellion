@@ -1488,13 +1488,66 @@ function _drawHudIcon(type, x, y, color, s) {
     return;
   }
   if (s < 1) {
-    // Medium: 6×5px hollow rectangle
+    // Small: dedicated 7×6px pixel-art per mechanic (7×7 originals, 1px shorter)
+    ctx.save();
+    ctx.translate(Math.round(x), Math.round(y));
     ctx.fillStyle = color;
-    var ix = Math.round(x), iy = Math.round(y);
-    ctx.fillRect(ix,   iy,   6, 1); // top
-    ctx.fillRect(ix,   iy+4, 6, 1); // bottom
-    ctx.fillRect(ix,   iy+1, 1, 3); // left
-    ctx.fillRect(ix+5, iy+1, 1, 3); // right
+    switch (type) {
+      case 'boards':
+        ctx.fillRect(0,0,7,1); ctx.fillRect(0,5,7,1);
+        ctx.fillRect(0,1,1,4); ctx.fillRect(6,1,1,4);
+        ctx.fillStyle='#fff'; ctx.fillRect(1,2,5,1); ctx.fillRect(1,4,5,1);
+        break;
+      case 'bags':
+        ctx.fillRect(2,0,3,1);
+        ctx.fillRect(0,1,7,1); ctx.fillRect(0,5,7,1);
+        ctx.fillRect(0,2,1,3); ctx.fillRect(6,2,1,3);
+        ctx.fillStyle='#2A1F5E'; ctx.fillRect(2,3,3,1);
+        break;
+      case 'machines':
+        ctx.fillRect(0,0,6,6);
+        ctx.fillStyle='#000';    ctx.fillRect(1,1,4,2);
+        ctx.fillStyle='#FFD700'; ctx.fillRect(2,4,2,1);
+        break;
+      case 'ball':
+        ctx.fillRect(1,0,5,1); ctx.fillRect(1,5,5,1);
+        ctx.fillRect(0,1,7,4);
+        ctx.fillStyle='#000'; ctx.fillRect(3,0,1,6); ctx.fillRect(0,3,7,1);
+        break;
+      case 'students':
+        ctx.fillRect(2,0,3,2);
+        ctx.fillRect(1,2,5,2);
+        ctx.fillRect(1,4,2,2); ctx.fillRect(4,4,2,2);
+        break;
+      case 'books':
+        ctx.fillRect(0,0,7,6);
+        ctx.fillStyle='#000'; ctx.fillRect(1,0,1,6);
+        ctx.fillStyle='#fff'; ctx.fillRect(2,2,4,1); ctx.fillRect(2,4,4,1);
+        break;
+      case 'sink':
+        ctx.fillRect(1,0,1,2); ctx.fillRect(5,0,1,2);
+        ctx.fillRect(0,2,7,1); ctx.fillRect(0,5,7,1);
+        ctx.fillRect(0,3,1,2); ctx.fillRect(6,3,1,2);
+        break;
+      case 'bins':
+        ctx.fillStyle='#FFD700'; ctx.fillRect(3,0,1,1);
+        ctx.fillStyle=color;     ctx.fillRect(1,1,5,1); ctx.fillRect(0,2,7,4);
+        ctx.fillStyle='#000';    ctx.fillRect(2,3,1,2); ctx.fillRect(4,3,1,2);
+        break;
+      case 'sprinklers':
+        ctx.fillRect(3,0,1,1);
+        ctx.fillRect(2,1,3,1); ctx.fillRect(1,2,5,2);
+        ctx.fillRect(0,4,7,1); ctx.fillRect(1,5,5,1);
+        break;
+      case 'register':
+        ctx.fillRect(0,0,7,6);
+        ctx.fillStyle='#000';    ctx.fillRect(1,1,5,1); ctx.fillRect(1,3,5,1); ctx.fillRect(1,5,3,1);
+        ctx.fillStyle='#FFD700'; ctx.fillRect(5,5,2,1);
+        break;
+      default:
+        ctx.fillRect(0,0,7,6);
+    }
+    ctx.restore();
     return;
   }
   s = Math.max(1, Math.round(s));
@@ -1597,7 +1650,7 @@ function drawHUD() {
   var _ds = VH.iconScale || 1;  // 1 = 7×7px | 0.5 = 4×4px (small)
   var _heartH    = _hs < 0.5 ? 3 : _hs < 1 ? 5 : 7 * Math.max(1, Math.round(_hs));
   var _heartW    = _hs < 0.5 ? 4 : _hs < 1 ? 7 : 8 * Math.max(1, Math.round(_hs));
-  var _iconSz    = _ds < 0.5 ? 4 : _ds < 1 ? 5 : 7 * Math.max(1, Math.round(_ds));
+  var _iconSz    = _ds < 0.5 ? 4 : _ds < 1 ? 6 : 7 * Math.max(1, Math.round(_ds));
   var _heartStep = _heartW + 1;
   var _textY  = Math.floor((VH.rowH - VH.fontSize) / 2);
   var _heartY = Math.floor((VH.rowH - _heartH) / 2);
