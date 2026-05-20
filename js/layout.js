@@ -107,7 +107,7 @@ Object.assign(CONFIG.vis, {
     heartsX:   4,                    // x position of first heart
     heartSize:  0.5,                 // heart: 0.5 = 7×5px (font 6), 1 = 8×7px (font 8)
     iconScale:  0.5,                 // icon:  0.5 = 6×5px (font 6), 1 = 7×7px (font 8)
-    msgFadeFrames: 45,               // frames for the msg↔HUD crossfade (45 ≈ 0.75s at 60fps)
+    msgFadeFrames: 20,               // frames for the msg↔HUD crossfade (20 ≈ 0.33s at 60fps)
     centerX:   160,                  // x centre for counter/message
     scoreX:    316,                  // right x for score
     timerH:    1,                    // timer bar height

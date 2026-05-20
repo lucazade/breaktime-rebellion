@@ -136,6 +136,7 @@ function loop(ts) {
       } else if (missionBannerT > 0) {
         missionBannerT--;
       } else if (deathFreeze) {
+        if (msgT > 0) msgT--;
         tickTransition(); // only advance the respawn/gameover countdown; everything else frozen
       } else {
         if (msgT > 0) msgT--;
@@ -334,6 +335,7 @@ function triggerHome() {
 function goHome() {
   _pauseActive = false; _homeConfirmActive = false;
   _btnPause.innerHTML = _SVG_PAUSE;
+  GameAudio.stopJingle();
   GameAudio.fadeOutMusic(400);
   CV.style.transition = 'opacity 0.4s linear';
   CV.style.opacity = '0';

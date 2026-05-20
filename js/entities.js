@@ -7,10 +7,10 @@ function ringBell() {
   score += 1000;
   addFloating(BELL.x + 10, BELL.y - 6, '+1000!', C.gold);
   addParticles(BELL.x, BELL.y, C.gold, 30);
-  setMsg(STRINGS.ringMsg);
+  msgT = 0;
   GameAudio.playSfx('bell');
   deathFreeze = true; // freeze NPCs immediately so they can't catch Marco after ringing
-  pendingTransition = { t: 120, fn: function() { deathFreeze = false; BELL.done = true; state = 'win'; endScreenT = 0; GameAudio.stopMusic(); GameAudio.playJingle('win'); } };
+  pendingTransition = { t: 70, fn: function() { deathFreeze = false; BELL.done = true; state = 'win'; endScreenT = 0; GameAudio.stopMusic(); GameAudio.playJingle('win'); } };
 }
 
 function alertTeachers(bx, by) {
@@ -86,8 +86,8 @@ function playerDied() {
     var bl = parseInt(localStorage.getItem('btr_best_level') || '0');
     if (score > bs) localStorage.setItem('btr_best_score', score);
     if (currentLevel > bl) localStorage.setItem('btr_best_level', currentLevel);
-    pendingTransition = { t: 25, fn: function() {
-      state = 'gameover'; endScreenT = 0; GameAudio.playJingle('gameover');
+    pendingTransition = { t: 22, fn: function() {
+      msgT = 0; state = 'gameover'; endScreenT = 0; GameAudio.playJingle('gameover');
     }};
   } else {
     // Lost a life but game continues: immediate respawn, teachers keep moving
@@ -126,9 +126,8 @@ function caughtBy(t) {
   t.chasing = false; t.alertT = 0;
   lives--;
   score = Math.max(0, score - 300);
-  let msg = fmt(STRINGS.caughtBy, t.name);
-  msg += lives <= 0 ? ' GAME OVER!' : '';
-  setMsg(msg);
+  if (lives > 0) setMsg(fmt(STRINGS.caughtBy, t.name), 70);
+  else msgT = 0;
   playerDied();
 }
 

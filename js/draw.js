@@ -1559,15 +1559,13 @@ function drawHUD() {
     for (var _i = 0; _i < Math.max(0, lives); _i++) _drawHeart(VH.heartsX + _i * _heartStep, _heartY, _hs);
     ctx.textAlign = 'right'; ctx.fillStyle = '#ffffff';
     ctx.fillText(String(score).padStart(5,'0'), VH.scoreX, _textY);
-    if (state === 'playing') {
-      var _oi = _hudObjInfo();
-      var _txt = _oi.done + '/' + _oi.total;
-      var _grpW = _iconSz + VH.dotGap + ctx.measureText(_txt).width;
-      var _sx = Math.round(VH.centerX - _grpW / 2);
-      _drawHudIcon(_oi.mechanic, _sx, _iconY, _oi.color, _ds);
-      ctx.textAlign = 'left'; ctx.fillStyle = '#44ee66';
-      ctx.fillText(_txt, _sx + _iconSz + VH.dotGap, _textY);
-    }
+    var _oi = _hudObjInfo();
+    var _txt = _oi.done + '/' + _oi.total;
+    var _grpW = _iconSz + VH.dotGap + ctx.measureText(_txt).width;
+    var _sx = Math.round(VH.centerX - _grpW / 2);
+    _drawHudIcon(_oi.mechanic, _sx, _iconY, _oi.color, _ds);
+    ctx.textAlign = 'left'; ctx.fillStyle = '#44ee66';
+    ctx.fillText(_txt, _sx + _iconSz + VH.dotGap, _textY);
   }
   // Timer bar — always at full opacity, excluded from the crossfade
   ctx.globalAlpha = 1;

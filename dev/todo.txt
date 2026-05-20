@@ -271,6 +271,7 @@ CHIUSI:
 - [X] #126 sistemare font 4 a 6
 - [X] #127 cuori e meccanica in hud hanno delle strane linee orizzontali se heartSize: 0.8 e dotW: 5.5
 - [X] #121 quando il prof si allerta e strilla ehi! fa uno scatto in avanti che in precedenza non faceva
+- [X] #129 testando il gioco sul portatile sul level chooser in title al posto del carattere > c'e' un immagine che non capisco (screenshot)
 
 PER LUCA:
 - [ ] #72 Revisione punteggi
@@ -281,8 +282,7 @@ PER LUCA:
 - [ ] #126 sistemare banner livello completato, fumetto Luca e banner finale
 
 IMPORTANTI:
-- [ ] #127 Espulso - vuoi rigiocare - no - musica sovrapposta
-- [ ] #128 A fine livello suoni la campanella - msg hud si deve nascondere e tornare cuori meccanica punteggio - banner livello superato
-- [ ] #129 testando il gioco sul portatile sul level chooser in title al posto del carattere > c'e' un immagine che non capisco (screenshot)
+- [ ] #127 Espulso - vuoi rigiocare - no - musica sovrapposta fine gioco e title
+- [ ] #128 A fine livello suoni la campanella - msg in hud si deve nascondere e tornare cuori meccanica punteggio - compare banner livello superato
 
 MINORI:
