@@ -18,6 +18,7 @@
     keyAction:            'Action',
     keyPause:             'Pause',
     keyHome:              'Home',
+    keyCredits:           'Credits',
     levelLabel:           'Lvl',
 
     audioFull: 'music', audioSfx: 'sfx', audioMute: 'mute',
@@ -117,6 +118,7 @@
     keyAction:            'Azione',
     keyPause:             'Pausa',
     keyHome:              'Home',
+    keyCredits:           'Crediti',
     levelLabel:           'Lvl',
 
     audioFull: 'musica', audioSfx: 'sfx', audioMute: 'muto',

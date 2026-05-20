@@ -190,13 +190,16 @@ function drawTitleScreen() {
     var twAct=ctx.measureText(STRINGS.keyAction||'action').width;
     var twPau=ctx.measureText(STRINGS.keyPause||'pause').width;
     var twHom=ctx.measureText(STRINGS.keyHome||'home').width;
-    var totalLW = _kw('<')+1+_kw('^')+1+_kw('v')+1+_kw('>') + ks+twMov + ks+_kw('Z')+ks+twAct + ks+_kw('P')+ks+twPau + ks+_kw('ESC')+ks+twHom;
+    var twCre=ctx.measureText(STRINGS.keyCredits||'credits').width;
+    var totalLW = _kw('<')+1+_kw('^')+1+_kw('v')+1+_kw('>') + ks+twMov + ks+_kw('Z')+ks+twAct + ks+_kw('C')+ks+twCre + ks+_kw('P')+ks+twPau + ks+_kw('ESC')+ks+twHom;
     var bx = Math.round((W - totalLW) / 2);
 
     bx += _key(bx,'<')+1; bx += _key(bx,'^')+1; bx += _key(bx,'v')+1; bx += _key(bx,'>');
     bx += ks; ctx.fillStyle=C.lgray; ctx.textAlign='left'; ctx.fillText(STRINGS.keyMove||'move', bx, legY+1); bx += twMov;
     bx += ks; bx += _key(bx,'Z');
     bx += ks; ctx.fillStyle=C.lgray; ctx.textAlign='left'; ctx.fillText(STRINGS.keyAction||'action', bx, legY+1); bx += twAct;
+    bx += ks; bx += _key(bx,'C');
+    bx += ks; ctx.fillStyle=C.lgray; ctx.textAlign='left'; ctx.fillText(STRINGS.keyCredits||'credits', bx, legY+1); bx += twCre;
     bx += ks; bx += _key(bx,'P');
     bx += ks; ctx.fillStyle=C.lgray; ctx.textAlign='left'; ctx.fillText(STRINGS.keyPause||'pause', bx, legY+1); bx += twPau;
     bx += ks; bx += _key(bx,'ESC');

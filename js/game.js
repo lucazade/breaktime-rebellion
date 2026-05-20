@@ -466,6 +466,8 @@ document.addEventListener('keydown', function(e) {
       e.preventDefault(); handleTap(); return;
     }
   }
+  if (e.key === 'c' || e.key === 'C') { if (_creditsActive) hideCredits(); else showCredits(); return; }
+  if (_creditsActive) { if (e.key === 'Escape') hideCredits(); return; }
   if (e.key === 'p' || e.key === 'P') triggerPause();
   if (e.key === 'Escape') triggerHome();
 });
