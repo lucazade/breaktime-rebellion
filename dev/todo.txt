@@ -269,10 +269,10 @@ CHIUSI:
 - [X] #123 sfondo syntwave anche per title opzionale
 - [X] #125 il logo.png è 1697 × 927 , ha senso sia per desktop che per mobile a questa risoluzione?
 - [X] #126 sistemare font 4 a 6
-- [X] #127 cuori e meccanica in hud hanno delle strane linee orizzontali se heartSize: 0.8 e dotW: 5.5
+- [X] #127a cuori e meccanica in hud hanno delle strane linee orizzontali se heartSize: 0.8 e dotW: 5.5
 - [X] #121 quando il prof si allerta e strilla ehi! fa uno scatto in avanti che in precedenza non faceva
 - [X] #129 testando il gioco sul portatile sul level chooser in title al posto del carattere > c'e' un immagine che non capisco (screenshot)
-- [X] #127 Espulso - vuoi rigiocare - no - musica sovrapposta fine gioco e title
+- [X] #127b Espulso - vuoi rigiocare - no - musica sovrapposta fine gioco e title
 - [X] #128 A fine livello suoni la campanella - msg in hud si deve nascondere e tornare cuori meccanica punteggio - compare banner livello superato
 
 PER LUCA:
