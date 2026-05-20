@@ -43,11 +43,13 @@ function _dialogBtn(x, y, w, h, color) {
 }
 
 function _drawLockIcon(x, y, color) {
+  // 6×6px padlock — shackle (rows 0-1) + body (rows 2-5) + 2×2 keyhole
   ctx.fillStyle = color;
-  ctx.fillRect(x+1,y,  3,1);
-  ctx.fillRect(x,  y+1,1,2); ctx.fillRect(x+4,y+1,1,2);
-  ctx.fillRect(x,  y+3,5,3);
-  ctx.fillStyle = '#000'; ctx.fillRect(x+2,y+4,1,2);
+  ctx.fillRect(x+1, y,   4, 1);  // shackle top arc
+  ctx.fillRect(x,   y+1, 1, 1);  ctx.fillRect(x+5, y+1, 1, 1);  // shackle sides
+  ctx.fillRect(x,   y+2, 6, 4);  // body
+  ctx.fillStyle = '#000';
+  ctx.fillRect(x+2, y+3, 2, 2);  // keyhole
 }
 
 function drawTitleScreen() {
@@ -121,7 +123,7 @@ function drawTitleScreen() {
     var atCeiling = currentLevel >= _btrMax, moreExist = _btrMax < LEVELS.length;
     if (atCeiling && moreExist) {
       _box(ct.nextX, ctrlY, ct.nextW, C.yellow);
-      _drawLockIcon(ct.nextX + 2, ctrlY + Math.floor((ct.btnH - 6) / 2), C.yellow);
+      _drawLockIcon(ct.nextX + Math.floor((ct.nextW - 6) / 2), ctrlY + Math.floor((ct.btnH - 6) / 2), C.yellow);
     } else {
       var nextColor = (atCeiling && !moreExist) ? C.dgray : ct.btnColor;
       _box(ct.nextX, ctrlY, ct.nextW, nextColor);

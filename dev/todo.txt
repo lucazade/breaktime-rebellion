@@ -281,5 +281,8 @@ PER LUCA:
 - [ ] #126 sistemare banner livello completato, fumetto Luca e banner finale
 
 IMPORTANTI:
+- [ ] #127 Espulso - vuoi rigiocare - no - musica sovrapposta
+- [ ] #128 A fine livello suoni la campanella - msg hud si deve nascondere e tornare cuori meccanica punteggio - banner livello superato
+- [ ] #129 testando il gioco sul portatile sul level chooser in title al posto del carattere > c'e' un immagine che non capisco (screenshot)
 
 MINORI:
