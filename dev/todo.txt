@@ -274,14 +274,14 @@ CHIUSI:
 - [X] #129 testando il gioco sul portatile sul level chooser in title al posto del carattere > c'e' un immagine che non capisco (screenshot)
 - [X] #127b Espulso - vuoi rigiocare - no - musica sovrapposta fine gioco e title
 - [X] #128 A fine livello suoni la campanella - msg in hud si deve nascondere e tornare cuori meccanica punteggio - compare banner livello superato
+- [X] #124 Sistemare logo (via orologio)
 
 PER LUCA:
 - [ ] #72 Revisione punteggi
 - [ ] #85 Aggiungere banco al secondo piano
-- [ ] #108 sistemare suoni
-- [ ] #124 Sistemare logo (via orologio)
-- [ ] #125 sistemare livello preside e ultimo troppo facili
-- [ ] #126 sistemare banner livello completato, fumetto Luca e banner finale
+- [ ] #108 aggiornare suoni
+- [ ] #125 livello preside e ultimo troppo facili
+- [ ] #126 banner livello completato, banner finale e fumetto Luca
 - [ ] #130 rimuovere parentesi quadre da label
 
 IMPORTANTI:
