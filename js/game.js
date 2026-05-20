@@ -137,6 +137,7 @@ function loop(ts) {
         missionBannerT--;
       } else if (deathFreeze) {
         if (msgT > 0) msgT--;
+        if (exitDone && nightMode) nightExpandT++;
         tickTransition(); // only advance the respawn/gameover countdown; everything else frozen
       } else {
         if (msgT > 0) msgT--;
@@ -228,7 +229,7 @@ function loop(ts) {
   var _shouldDim = state !== 'title' && (storyBannerT > 0 || storyBannerFading || missionBannerT > 0
                 || state === 'win' || state === 'gameover' || state === 'paused'
                 || _creditsActive
-                || (deathFreeze && !BELL.ringing));
+                || (deathFreeze && !BELL.ringing && !exitDone));
   bannerDimT = _shouldDim ? Math.min(bannerDimT + 1, 20) : Math.max(bannerDimT - 1, 0);
   if (bannerDimT > 0) {
     ctx.fillStyle = 'rgba(0,0,0,' + (0.45 * bannerDimT / 20) + ')';

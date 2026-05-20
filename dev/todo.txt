@@ -275,16 +275,17 @@ CHIUSI:
 - [X] #127b Espulso - vuoi rigiocare - no - musica sovrapposta fine gioco e title
 - [X] #128 A fine livello suoni la campanella - msg in hud si deve nascondere e tornare cuori meccanica punteggio - compare banner livello superato
 - [X] #124 Sistemare logo (via orologio)
+- [X] #133 rotateHtml label i18n
+- [X] #130 i18n: rimuovere parentesi quadre da label
+- [ ] #132 banner align: livello completato, banner finale e fumetto Luca
+- [ ] #134 Fumetto ehi: scritta centrata e bordo nero fumetto
 
 PER LUCA:
 - [ ] #72 Revisione punteggi
 - [ ] #85 layout: Aggiungere banco al secondo piano
 - [ ] #108 aggiornare suoni
 - [ ] #131 livelli troppo facili: preside e ultimo
-- [ ] #132 banner align: livello completato, banner finale e fumetto Luca
-- [ ] #130 i18n: rimuovere parentesi quadre da label
 
 IMPORTANTI:
-
 
 MINORI:

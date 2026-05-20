@@ -499,11 +499,16 @@ function drawNightOverlay() {
   if (!nightMode) return;
   const px = Math.round(player.x + PW/2);
   const py = Math.round(player.y + PH/2 - 2);
-  const gradient = ctx.createRadialGradient(px, py, 10, px, py, 70);
+  const t = exitDone ? Math.min(nightExpandT / 120, 1) : 0;
+  const ease = t * t * (3 - 2 * t);
+  const outerR = 70 + ease * 310;
+  const a1 = (0.80 * (1 - ease)).toFixed(2);
+  const a2 = (0.96 * (1 - ease)).toFixed(2);
+  const gradient = ctx.createRadialGradient(px, py, 10, px, py, outerR);
   gradient.addColorStop(0,    'rgba(0,0,8,0)');
   gradient.addColorStop(0.45, 'rgba(0,0,8,0)');
-  gradient.addColorStop(0.72, 'rgba(0,0,8,0.80)');
-  gradient.addColorStop(1,    'rgba(0,0,8,0.96)');
+  gradient.addColorStop(0.72, 'rgba(0,0,8,' + a1 + ')');
+  gradient.addColorStop(1,    'rgba(0,0,8,' + a2 + ')');
   ctx.fillStyle = gradient;
   ctx.fillRect(0, 0, W, H);
 }
@@ -555,11 +560,15 @@ function drawGuard(x, y, dir, animT, chasing, knockedT) {
   ctx.fillStyle = C.black; ctx.fillRect(dir>0 ? bx+4 : bx+2, by-5, 2, 2);
   ctx.fillStyle = '#825144'; ctx.fillRect(bx+2, by+1, PW-4, 1);
   if (chasing) {
-    const bub = dir>0 ? bx+PW : bx-26;
-    ctx.fillStyle = 'rgba(255,255,255,0.9)'; ctx.fillRect(bub, by-14, 26, 10);
+    const bub = dir>0 ? bx+PW+1 : bx-27;
+    const tailX = dir>0 ? bub : bub+23;
+    ctx.fillStyle = 'rgba(255,255,255,0.9)';
+    ctx.fillRect(tailX, by-4, 3, 4); ctx.fillRect(bub, by-14, 26, 10);
+    ctx.strokeStyle = '#bcbcbc'; ctx.lineWidth = 1; ctx.strokeRect(bub, by-14, 26, 10);
+    ctx.beginPath(); ctx.moveTo(tailX, by-4); ctx.lineTo(tailX, by); ctx.lineTo(tailX+3, by); ctx.lineTo(tailX+3, by-4); ctx.stroke();
     ctx.fillStyle = C.black; ctx.font = '4px ' + FF;
-    ctx.textAlign = 'center'; ctx.textBaseline = 'top';
-    ctx.fillText('STOP!', bub + 13, by - 12);
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText('STOP!', bub + 13, by - 9);
   }
 }
 
@@ -946,10 +955,15 @@ function drawPreside(x, y, dir, animT, bodyCol, chasing, knockedT) {
   ctx.fillStyle = C.pink;  ctx.fillRect(bx+2, by+1, PW-4, 1);
 
   if (chasing) {
-    const bub = dir > 0 ? bx+PW : bx-26;
-    ctx.fillStyle = 'rgba(255,255,255,0.9)'; ctx.fillRect(bub, by-14, 26, 10);
+    const bub = dir > 0 ? bx+PW+1 : bx-27;
+    const tailX = dir > 0 ? bub : bub+23;
+    ctx.fillStyle = 'rgba(255,255,255,0.9)';
+    ctx.fillRect(tailX, by-4, 3, 4); ctx.fillRect(bub, by-14, 26, 10);
+    ctx.strokeStyle = '#bcbcbc'; ctx.lineWidth = 1; ctx.strokeRect(bub, by-14, 26, 10);
+    ctx.beginPath(); ctx.moveTo(tailX, by-4); ctx.lineTo(tailX, by); ctx.lineTo(tailX+3, by); ctx.lineTo(tailX+3, by-4); ctx.stroke();
     ctx.fillStyle = C.black; ctx.font = '4px ' + FF;
-    ctx.fillText(STRINGS.hey, bub+1, by-7);
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(STRINGS.hey, bub + 13, by - 9);
   }
 }
 
@@ -1028,10 +1042,15 @@ function drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, chasing, knock
   if (!isTeacher) { ctx.fillStyle = '#3e3e3e'; ctx.fillRect(dir>0 ? bx-3 : bx+PW, by+2, 3, 6); }
 
   if (chasing) {
-    const bub = dir>0 ? bx+PW : bx-26;
-    ctx.fillStyle = 'rgba(255,255,255,0.9)'; ctx.fillRect(bub, by-14, 26, 10);
+    const bub = dir>0 ? bx+PW+1 : bx-27;
+    const tailX = dir>0 ? bub : bub+23;
+    ctx.fillStyle = 'rgba(255,255,255,0.9)';
+    ctx.fillRect(tailX, by-4, 3, 4); ctx.fillRect(bub, by-14, 26, 10);
+    ctx.strokeStyle = '#bcbcbc'; ctx.lineWidth = 1; ctx.strokeRect(bub, by-14, 26, 10);
+    ctx.beginPath(); ctx.moveTo(tailX, by-4); ctx.lineTo(tailX, by); ctx.lineTo(tailX+3, by); ctx.lineTo(tailX+3, by-4); ctx.stroke();
     ctx.fillStyle = C.black; ctx.font = '4px ' + FF;
-    ctx.fillText(STRINGS.hey, bub+1, by-7);
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(STRINGS.hey, bub + 13, by - 9);
   }
 }
 
@@ -1113,15 +1132,15 @@ function drawLucaEnd() {
   ctx.strokeRect(bx, by2, VF.bw, bh);
   ctx.fillStyle = C.gold; ctx.fillRect(bx, by2 + bh, VF.tailW, VF.tailH);
   ctx.strokeStyle = '#aa7700'; ctx.strokeRect(bx, by2 + bh, VF.tailW, VF.tailH);
-  ctx.fillStyle = '#000'; ctx.textAlign = 'left'; ctx.textBaseline = 'top';
+  ctx.fillStyle = C.redprof; ctx.textAlign = 'left'; ctx.textBaseline = 'top';
   ctx.fillText('Luca:', bx + 4, by2 + 4);
+  ctx.fillStyle = '#000';
   for (let i = 0; i < lineCount; i++) {
-    ctx.fillStyle = i === lineCount - 1 ? C.redprof : '#000';
     ctx.fillText(lines[i], bx + 4, by2 + VF.headerH + i * VF.lineH);
   }
   const tapY = by2 + VF.headerH + lineCount * VF.lineH + VF.gapTap;
   const blink = Math.floor(frame / 25) % 2 === 0;
-  ctx.fillStyle = blink ? '#554400' : 'rgba(0,0,0,0)';
+  ctx.fillStyle = blink ? '#000' : 'rgba(0,0,0,0)';
   ctx.textAlign = 'center';
   ctx.fillText(STRINGS.tapContinue, bx + VF.bw / 2, tapY);
   ctx.textAlign = 'left';

@@ -82,13 +82,13 @@ Object.assign(CONFIG.vis, {
     tapToStart: { fontSize: 6, alignX: 'center', alignY: 'middle' }, // font and alignment in the controls bar (alignX: left|center|right; alignY: top|middle|bottom)
     controls: {
       fontSize: 8,
-      gapY:     8,       // gap between logo and controls row
-      btnH:    10,       // button clickable height
-      boxR:     2,       // button box corner radius
-      btnColor: '#b0b0b0', // enabled button colour (less saturated than white)
-      prevX:   10, prevW: 14,    // ‹ level button
-      nextX:   76, nextW: 14,    // › or lock button
-      labelX:  50,               // x centre of "LVL N" label
+      gapY:     8,                    // gap between logo and controls row
+      btnH:    10,                    // button clickable height
+      boxR:     2,                    // button box corner radius
+      btnColor: '#b0b0b0',          // enabled button colour (less saturated than white)
+      prevX:   10, prevW: 14,         // ‹ level button
+      nextX:   76, nextW: 14,         // › or lock button
+      labelX:  50,                    // x centre of "LVL N" label
       audioRightX: 310, audioPadX: 6, // audio button: fixed right edge, width computed from longest label
     },
     legend: { fontSize: 4, gapY: 6 },  // keyboard legend (desktop only)
@@ -176,12 +176,12 @@ Object.assign(CONFIG.vis, {
     panW: 280, wrapWidth: 220,  // panel width; wrapWidth = text wrap width
     fontTitle:      8,
     fontBody:       6,
-    padTop:        16,          // space from top edge to title
+    padTop:        14,          // space from top edge to title
     titleH:        10, titleSpacing: 10, // title height, spacing after title
     lineH:          9, lineSpacing:   4, // line height, spacing between lines
     spacerH:       10,          // blank space before tap label
     tapH:           8,          // tapContinue label height
-    padBottom:     16,          // space from content bottom to panel edge
+    padBottom:     14,          // space from content bottom to panel edge
   },
 
   // Mission banner — panH computed: padTop+titleH+titleSpacing+lineBlock+padBottom
@@ -197,27 +197,27 @@ Object.assign(CONFIG.vis, {
 
   // Level complete banner — panH computed: padTop+stepTitle+stepScore+tapH+padBottom
   levelComplete: {
-    panW: 260,  // panY and bx are centred automatically
+    panW: 260,       // panY and bx are centred automatically
     fontTitle:  8,
     fontBody:   6,
-    padTop:    11,   // space from top edge to first text
-    stepTitle: 20,   // advance after title (h=10 + spacing=10)
-    stepScore: 22,   // advance after score (h=8 + spacing=14)
+    padTop:    14,   // space from top edge to first text
+    stepTitle: 18,   // advance after title (h=10 + spacing=10)
+    stepScore: 15,   // advance after score (h=8 + spacing=14)
     tapH:       8,   // tapContinue label height
-    padBottom: 11,   // space from tapContinue to panel edge
+    padBottom:  11,  // space from tapContinue to panel edge
   },
 
   // Game win banner (L10) — panH computed: padTop+stepTitle+stepScore+stepBest+tapH+padBottom
   gameWin: {
-    panW: 260,  // panY and bx are centred automatically
+    panW: 260,       // panY and bx are centred automatically
     fontTitle:  8,
     fontBody:   6,
-    padTop:    23,   // space from top edge to first text
+    padTop:    14,   // space from top edge to first text
     stepTitle: 22,   // advance after win title (h=12 + spacing=10)
     stepScore: 12,   // advance after score (h=8 + spacing=4)
-    stepBest:  16,   // advance after best score row (h=8 + spacing=8)
+    stepBest:  18,   // advance after best score row (h=8 + spacing=8)
     tapH:       8,   // tapForTitle label height
-    padBottom: 23,   // space from tapForTitle to panel edge
+    padBottom: 12,   // space from tapForTitle to panel edge
   },
 
   // Game over banner — panH computed: padTop+stepTitle+stepLevel+stepScore+stepConfirm+btnH+padBottom
@@ -254,7 +254,7 @@ Object.assign(CONFIG.vis, {
 
   // Pause overlay — panH computed: padTop+stepTitle+btnH+padBottom
   pauseOverlay: {
-    panW: 200,  // panY and bx are centred automatically
+    panW: 200,       // panY and bx are centred automatically
     fontTitle:  8,
     fontBtn:    6,
     padTop:    14,   // space from top edge to title
@@ -266,7 +266,7 @@ Object.assign(CONFIG.vis, {
 
   // Home confirm overlay — panH computed: padTop+stepTitle+btnH+padBottom
   homeConfirm: {
-    panW: 200,  // panY and bx are centred automatically
+    panW: 200,       // panY and bx are centred automatically
     fontTitle:  8,
     fontBtn:    6,
     padTop:    14,   // space from top edge to question
@@ -279,7 +279,7 @@ Object.assign(CONFIG.vis, {
 
   // Credits — panH computed: padTop+stepTitle+stepTeam+5*(nameH+nameGap+roleH+roleGap)+btnGapAbove+btnH+padBottom
   credits: {
-    panW: 240,  // panY and bx are centred automatically
+    panW: 240,       // panY and bx are centred automatically
     fontTitle:    8,
     fontBody:     6, // names and roles
     fontBtn:      6, // OK button
@@ -301,16 +301,16 @@ var SHARED_LAYOUT = CONFIG.vis.shared;
 // Apply CSS custom properties from layout
 var _L = CONFIG.vis.layout;
 var _B = CONFIG.vis.bezel;
-document.documentElement.style.setProperty('--btr-zoom',               _L.desktopZoom);
-document.documentElement.style.setProperty('--btr-panel-inner-border',  _B.panelInnerBorder);
-document.documentElement.style.setProperty('--btr-btn-home-border',     _B.btnHomeBorder);
-document.documentElement.style.setProperty('--btr-btn-pause-border',    _B.btnPauseBorder);
-document.documentElement.style.setProperty('--btr-btn-info-border',     _B.btnInfoBorder);
-document.documentElement.style.setProperty('--btr-btn-home-bg',         _B.btnHomeBg);
-document.documentElement.style.setProperty('--btr-btn-pause-bg',        _B.btnPauseBg);
-document.documentElement.style.setProperty('--btr-btn-info-bg',         _B.btnInfoBg);
+document.documentElement.style.setProperty('--btr-zoom',                 _L.desktopZoom);
+document.documentElement.style.setProperty('--btr-panel-inner-border',   _B.panelInnerBorder);
+document.documentElement.style.setProperty('--btr-btn-home-border',      _B.btnHomeBorder);
+document.documentElement.style.setProperty('--btr-btn-pause-border',     _B.btnPauseBorder);
+document.documentElement.style.setProperty('--btr-btn-info-border',      _B.btnInfoBorder);
+document.documentElement.style.setProperty('--btr-btn-home-bg',          _B.btnHomeBg);
+document.documentElement.style.setProperty('--btr-btn-pause-bg',         _B.btnPauseBg);
+document.documentElement.style.setProperty('--btr-btn-info-bg',          _B.btnInfoBg);
 document.documentElement.style.setProperty('--btr-btn-home-bg-pressed',  _B.btnHomeBgPressed);
 document.documentElement.style.setProperty('--btr-btn-pause-bg-pressed', _B.btnPauseBgPressed);
 document.documentElement.style.setProperty('--btr-btn-info-bg-pressed',  _B.btnInfoBgPressed);
-document.documentElement.style.setProperty('--btr-btn-glow',                _B.btnGlow);
-document.documentElement.style.setProperty('--btr-font-family',             CONFIG.vis.fontFamily);
+document.documentElement.style.setProperty('--btr-btn-glow',             _B.btnGlow);
+document.documentElement.style.setProperty('--btr-font-family',          CONFIG.vis.fontFamily);

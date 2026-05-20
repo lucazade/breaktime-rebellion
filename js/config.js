@@ -5,8 +5,8 @@
 // ═══════════════════════════════════════════════════════════
 const CONFIG = {
   images: {
-    background:   'assets/pics/bg-640.png',  // 640×400 — mobile (2x canvas)
-    backgroundHd: 'assets/pics/bg-1600.png', // 1586×992 — desktop (4x canvas)
+    background:   'assets/pics/bg-640.png',    // 640×400 — mobile (2x canvas)
+    backgroundHd: 'assets/pics/bg-1600.png',   // 1586×992 — desktop (4x canvas)
     logo:         'assets/pics/logo-640.png',  // 640×350 — mobile (2x canvas)
     logoHd:       'assets/pics/logo-1600.png', // 1697×927 — desktop (4x canvas)
   },
