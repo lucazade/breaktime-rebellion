@@ -285,6 +285,7 @@ PER LUCA:
 - [ ] #85 layout: Aggiungere banco al secondo piano
 - [ ] #108 aggiornare suoni
 - [ ] #131 livelli troppo facili: preside e ultimo
+- [ ] #132 testo mission banner più descrittivo
 
 IMPORTANTI:
 
