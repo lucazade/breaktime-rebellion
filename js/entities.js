@@ -7,7 +7,7 @@ function ringBell() {
   score += 1000;
   lastTimeBonus = Math.floor(timerTicks / 60) * 10;
   score += lastTimeBonus;
-  addFloating(BELL.x + 10, BELL.y - 6, '+1000!', C.gold);
+  addFloating(Math.max(50, Math.min(W - 50, BELL.x + 10)), BELL.y - 6, '+1000!', C.gold);
   addParticles(BELL.x, BELL.y, C.gold, 30);
   msgT = 0;
   GameAudio.playSfx('bell');
@@ -167,11 +167,10 @@ function allRegisterWin() {
 function escapeWin() {
   if (exitDone) return;
   exitDone = true;
-  score += 1000;
+  score += 5000;
   lastTimeBonus = Math.floor(timerTicks / 60) * 10;
   lastLivesBonus = lives * 500;
   score += lastTimeBonus + lastLivesBonus;
-  addFloating(exitDoor.x + 5, exitDoor.y - 10, '+1000!', C.gold);
   addParticles(exitDoor.x + 5, exitDoor.y, C.gold, 30);
   GameAudio.playSfx('door');
   deathFreeze = true;
