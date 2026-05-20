@@ -277,8 +277,8 @@ CHIUSI:
 - [X] #124 Sistemare logo (via orologio)
 - [X] #133 rotateHtml label i18n
 - [X] #130 i18n: rimuovere parentesi quadre da label
-- [ ] #132 banner align: livello completato, banner finale e fumetto Luca
-- [ ] #134 Fumetto ehi: scritta centrata e bordo nero fumetto
+- [X] #132 banner align: livello completato, banner finale e fumetto Luca
+- [X] #134 Fumetto ehi: scritta centrata e bordo nero fumetto
 
 PER LUCA:
 - [ ] #72 Revisione punteggi
