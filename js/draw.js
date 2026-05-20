@@ -5,7 +5,9 @@ var FF = CONFIG.vis.fontFamily;  // font family shortcut — editable in layout.
 var _hudMsgAlpha = 0; // HUD crossfade alpha: rises to 1 when a message is active, falls back to 0 otherwise
 var _bgCache    = null; // offscreen canvas: bgImage pre-scaled to CV size, rebuilt on first draw
 var _desksCache = null; // offscreen canvas: all desks pre-rendered at physical resolution
-var _bellGlowCache = null; // offscreen canvas: bell glow circle at r=7, drawn once
+var _bellGlowCache  = null; // offscreen canvas: bell glow circle at r=7, drawn once
+var _boardsCache    = null; // offscreen canvas: all boards (static + done state), keyed by _boardsCacheKey
+var _boardsCacheKey = null; // serialized done states e.g. "0101" — rebuild on change
 var _hudTxtCache     = { txt: null, w: 0 };  // cached measureText for HUD counter (e.g. "4/4")
 var _audioLblW       = null; // cached measureText for title audio labels {full, sfx, mute}
 var _audioMaxLblW    = 0;    // cached max of the three label widths
@@ -248,6 +250,7 @@ function drawDesks() {
 }
 
 function drawBoards() {
+  // Proximity highlight — dynamic, depends on player position each frame
   let nearestIdx = -1, nd = 9999;
   if (levelMechanics.writeBoards) {
     for (let i = 0; i < BOARDS.length; i++) {
@@ -256,25 +259,43 @@ function drawBoards() {
       if (d < nd) { nd = d; nearestIdx = i; }
     }
   }
-  for (let i = 0; i < BOARDS.length; i++) {
-    const b = BOARDS[i];
-    ctx.fillStyle = C.brown;   ctx.fillRect(b.x-1, b.y-1, BW+2, BH+2);
-    ctx.fillStyle = '#075b07'; ctx.fillRect(b.x, b.y, BW, BH);
-    if (!b.done) {
-      ctx.fillStyle = '#2c832c';
-      ctx.fillRect(b.x+2, b.y+3, BW-4, 2);
-      ctx.fillRect(b.x+2, b.y+8, BW-4, 2);
-      if (i === nearestIdx && nd < 36) {
-        ctx.strokeStyle = C.yellow; ctx.lineWidth = 1;
-        ctx.setLineDash([2,2]);
-        ctx.strokeRect(b.x-2, b.y-2, BW+4, BH+4);
-        ctx.setLineDash([]);
+
+  // Static boards — rebuild cache only when done states change
+  var _key = '';
+  for (var _i = 0; _i < BOARDS.length; _i++) _key += BOARDS[_i].done ? '1' : '0';
+  if (_key !== _boardsCacheKey) {
+    var _oc = document.createElement('canvas'); _oc.width = CV.width; _oc.height = CV.height;
+    var _octx = _oc.getContext('2d');
+    _octx.imageSmoothingEnabled = false;
+    _octx.scale(_canvasScale, _canvasScale);
+    _octx.font = '4px ' + FF;
+    for (var _j = 0; _j < BOARDS.length; _j++) {
+      var _b = BOARDS[_j];
+      _octx.fillStyle = C.brown;   _octx.fillRect(_b.x-1, _b.y-1, BW+2, BH+2);
+      _octx.fillStyle = '#075b07'; _octx.fillRect(_b.x, _b.y, BW, BH);
+      if (!_b.done) {
+        _octx.fillStyle = '#2c832c';
+        _octx.fillRect(_b.x+2, _b.y+3, BW-4, 2);
+        _octx.fillRect(_b.x+2, _b.y+8, BW-4, 2);
+      } else {
+        _octx.fillStyle = 'rgba(255,255,255,0.9)';
+        _octx.fillText('MARCO', _b.x+1, _b.y+9);
+        _octx.fillRect(_b.x+1, _b.y+10, BW-2, 1);
       }
-    } else {
-      ctx.fillStyle = 'rgba(255,255,255,0.9)'; ctx.font = '4px ' + FF;
-      ctx.fillText('MARCO', b.x+1, b.y+9);
-      ctx.fillStyle = 'rgba(255,255,255,0.9)'; ctx.fillRect(b.x+1, b.y+10, BW-2, 1);
     }
+    _boardsCache = _oc; _boardsCacheKey = _key;
+  }
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.drawImage(_boardsCache, 0, 0);
+  ctx.setTransform(_canvasScale, 0, 0, _canvasScale, 0, 0);
+
+  // Proximity dashed border — drawn live on top of cache
+  if (nearestIdx >= 0 && nd < 36) {
+    const b = BOARDS[nearestIdx];
+    ctx.strokeStyle = C.yellow; ctx.lineWidth = 1;
+    ctx.setLineDash([2,2]);
+    ctx.strokeRect(b.x-2, b.y-2, BW+4, BH+4);
+    ctx.setLineDash([]);
   }
 }
 
