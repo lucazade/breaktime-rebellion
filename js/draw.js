@@ -5,6 +5,9 @@ var FF = CONFIG.vis.fontFamily;  // font family shortcut — editable in layout.
 var _hudMsgAlpha = 0; // HUD crossfade alpha: rises to 1 when a message is active, falls back to 0 otherwise
 var _bgCache    = null; // offscreen canvas: bgImage pre-scaled to CV size, rebuilt on first draw
 var _desksCache = null; // offscreen canvas: all desks pre-rendered at physical resolution
+var _hudTxtCache     = { txt: null, w: 0 };  // cached measureText for HUD counter (e.g. "4/4")
+var _audioLblW       = null; // cached measureText for title audio labels {full, sfx, mute}
+var _audioMaxLblW    = 0;    // cached max of the three label widths
 
 // ── Title screen helpers ──────────────────────────────────────────────────────
 
@@ -149,12 +152,15 @@ function drawTitleScreen() {
   var audioColor = audioMode==='full' ? C.lgreen : audioMode==='sfx' ? C.yellow : C.mgray;
   var audioLabel = audioMode==='full' ? STRINGS.audioFull : audioMode==='sfx' ? STRINGS.audioSfx : STRINGS.audioMute;
   var _iconW = 5, _gap = 3;
-  var _maxLblW = Math.max(ctx.measureText(STRINGS.audioFull).width, ctx.measureText(STRINGS.audioSfx).width, ctx.measureText(STRINGS.audioMute).width);
-  var _audioW = ct.audioPadX*2 + _iconW + _gap + _maxLblW;
+  if (!_audioLblW) {
+    _audioLblW = { full: ctx.measureText(STRINGS.audioFull).width, sfx: ctx.measureText(STRINGS.audioSfx).width, mute: ctx.measureText(STRINGS.audioMute).width };
+    _audioMaxLblW = Math.max(_audioLblW.full, _audioLblW.sfx, _audioLblW.mute);
+  }
+  var _audioW = ct.audioPadX*2 + _iconW + _gap + _audioMaxLblW;
   var _audioX = ct.audioRightX - _audioW;
   _titleAudioX = _audioX; _titleAudioW = _audioW;
   _box(_audioX, ctrlY, _audioW, audioColor);
-  var _blockW = _iconW + _gap + ctx.measureText(audioLabel).width;
+  var _blockW = _iconW + _gap + _audioLblW[audioMode];
   var _blockX = _audioX + Math.floor((_audioW - _blockW) / 2);
   _drawVolumeIcon(_blockX, ctrlY + Math.floor((ct.btnH - 4) / 2), audioMode, audioColor);
   ctx.fillStyle = audioColor; ctx.textAlign = 'left';
@@ -1578,7 +1584,8 @@ function drawHUD() {
     ctx.fillText(String(score).padStart(5,'0'), VH.scoreX, _textY);
     var _oi = _hudObjInfo();
     var _txt = _oi.done + '/' + _oi.total;
-    var _grpW = _iconSz + VH.dotGap + ctx.measureText(_txt).width;
+    if (_txt !== _hudTxtCache.txt) { _hudTxtCache.txt = _txt; _hudTxtCache.w = ctx.measureText(_txt).width; }
+    var _grpW = _iconSz + VH.dotGap + _hudTxtCache.w;
     var _sx = Math.round(VH.centerX - _grpW / 2);
     _drawHudIcon(_oi.mechanic, _sx, _iconY, _oi.color, _ds);
     ctx.textAlign = 'left'; ctx.fillStyle = '#44ee66';
