@@ -288,10 +288,10 @@ PER LUCA:
 - [ ] #140 allineamento banner con bonus timer e vite e label
 
 IMPORTANTI:
-- [ ] #135 +1000 campanella è fuori dallo schermo
-- [ ] #131 livello 6 preside: progressbar premuta a lungo, preside percorso più breve
-- [ ] #137 livello 7 lavandino: bidello asciuga più lentamente e a piano terra bidello invece di prof
-- [ ] #139 livello 8 secchi: prof percorso più breve
-- [ ] #136 livello 10: rivedere raggio della torcia, progressbar tenuta
+- [ ] #135 il +1000 quando suona la campanella è spesso fuori dallo schermo
+- [ ] #131 L6 preside: progressbar si resetta se non completa, preside percorso più breve
+- [ ] #137 L7 lavandino: bidello asciuga dpoo un pò che cammina sull'acqua e a piano terra bidello invece di prof
+- [ ] #139 L8 secchi: prof deve fare percorso più breve
+- [ ] #136 L10: raggio della torcia più piccolo e controllare poi se guardiano ti becca, progressbar si resetta se non completa
 
 MINORI:
