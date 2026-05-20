@@ -25,6 +25,7 @@ let msgText, msgT, msgDuration;
 let actionPressed, allBoards, allBags, allMachines, allBall, allStudents, allBooks, timerTicks, maxTimerTicks;
 let machines, gymBall, paperBalls, students, throwCooldown, bookcase, sink, bins, sprinklers, register, exitDoor;
 let nightMode, registerTime, allRegister, exitDone, exitWinReady, nightExpandT;
+let lastTimeBonus, lastLivesBonus;
 let shakeTime, deflateTime, dropTime, floodTime, lighterTime;
 let allSink, allBins, allSprinklers;
 let missionBannerT, missionBannerLines;
@@ -72,7 +73,7 @@ function resetLevel() {
   player.stunT = 0; player.spraying = false; player.sprayT = 0; player.shaking = false;
   particles = []; floatingTexts = [];
   msgText = ''; msgT = 0; msgDuration = 0;
-  actionPressed = false; allBoards = false; allBags = false; allMachines = false; allBall = false; allStudents = false; allBooks = false; allSink = false; allBins = false; allSprinklers = false; allRegister = false; exitDone = false; exitWinReady = false; nightExpandT = 0;
+  actionPressed = false; allBoards = false; allBags = false; allMachines = false; allBall = false; allStudents = false; allBooks = false; allSink = false; allBins = false; allSprinklers = false; allRegister = false; exitDone = false; exitWinReady = false; nightExpandT = 0; lastTimeBonus = 0; lastLivesBonus = 0;
   machines  = (lv.machines  || []).map(function(m) { return {x:m.x, y:m.y, broken:false, shakeT:0}; });
   gymBall   = lv.gymBall ? {x:lv.gymBall.x, y:lv.gymBall.y, deflated:false, shakeT:0, deflateCount:0, reinflateT:0} : null;
   students  = (lv.students  || []).map(function(s) { return {x:s.x, y:s.y, disturbed:false, shakeT:0}; });

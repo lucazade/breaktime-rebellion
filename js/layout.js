@@ -203,6 +203,7 @@ Object.assign(CONFIG.vis, {
     padTop:    14,   // space from top edge to first text
     stepTitle: 18,   // advance after title (h=10 + spacing=10)
     stepScore: 15,   // advance after score (h=8 + spacing=14)
+    stepBonus: 12,   // advance after bonus line (conditional)
     tapH:       8,   // tapContinue label height
     padBottom:  11,  // space from tapContinue to panel edge
   },
@@ -215,6 +216,7 @@ Object.assign(CONFIG.vis, {
     padTop:    14,   // space from top edge to first text
     stepTitle: 22,   // advance after win title (h=12 + spacing=10)
     stepScore: 12,   // advance after score (h=8 + spacing=4)
+    stepBonus: 12,   // advance after each bonus line (conditional)
     stepBest:  18,   // advance after best score row (h=8 + spacing=8)
     tapH:       8,   // tapForTitle label height
     padBottom: 12,   // space from tapForTitle to panel edge

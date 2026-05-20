@@ -5,6 +5,8 @@ function ringBell() {
   BELL.ringing = true;
   BELL.ringT = 120;
   score += 1000;
+  lastTimeBonus = Math.floor(timerTicks / 60) * 10;
+  score += lastTimeBonus;
   addFloating(BELL.x + 10, BELL.y - 6, '+1000!', C.gold);
   addParticles(BELL.x, BELL.y, C.gold, 30);
   msgT = 0;
@@ -166,6 +168,9 @@ function escapeWin() {
   if (exitDone) return;
   exitDone = true;
   score += 1000;
+  lastTimeBonus = Math.floor(timerTicks / 60) * 10;
+  lastLivesBonus = lives * 500;
+  score += lastTimeBonus + lastLivesBonus;
   addFloating(exitDoor.x + 5, exitDoor.y - 10, '+1000!', C.gold);
   addParticles(exitDoor.x + 5, exitDoor.y, C.gold, 30);
   GameAudio.playSfx('door');

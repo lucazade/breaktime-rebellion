@@ -36,6 +36,8 @@
 
     scoreLabel:           'SCORE: ',
     bestLabel:            'BEST',
+    timeBonusLabel:       'TIME BONUS: ',
+    livesBonusLabel:      'LIVES BONUS: ',
     levelReached:         'LEVEL {0} REACHED',
 
     hey:                  'HEY!!',
@@ -135,6 +137,8 @@
     
     scoreLabel:           'PUNTEGGIO: ',
     bestLabel:            'MIGLIOR',
+    timeBonusLabel:       'BONUS TEMPO: ',
+    livesBonusLabel:      'BONUS VITE: ',
     levelReached:         'LIVELLO {0} RAGGIUNTO',
 
     hey:                  'EHI!!',

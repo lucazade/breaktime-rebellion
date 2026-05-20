@@ -1204,7 +1204,7 @@ function drawEndScreen() {
     const bestScore = parseInt(localStorage.getItem('btr_best_score') || '0');
     const bestLevel = parseInt(localStorage.getItem('btr_best_level') || '1');
     const VW = CONFIG.vis.gameWin;
-    const _wH = VW.padTop + VW.stepTitle + VW.stepScore + VW.stepBest + VW.tapH + VW.padBottom;
+    const _wH = VW.padTop + VW.stepTitle + VW.stepScore + (lastTimeBonus > 0 ? VW.stepBonus : 0) + (lastLivesBonus > 0 ? VW.stepBonus : 0) + VW.stepBest + VW.tapH + VW.padBottom;
     const {bx:wX, by:wY} = _panPos(VW.panW, _wH);
     _dialogPanel(wX, wY, VW.panW, _wH, VW.panBg);
     ctx.textAlign = 'center'; ctx.textBaseline = 'top';
@@ -1213,12 +1213,14 @@ function drawEndScreen() {
     ctx.font = VW.fontTitle + 'px ' + FF;
     ctx.fillStyle = C.gold;   ctx.fillText(STRINGS.winTitle, cxW, tyW); tyW += VW.stepTitle;
     ctx.font = VW.fontBody + 'px ' + FF;
+    if (lastTimeBonus > 0)  { ctx.fillStyle = C.cyan;  ctx.fillText(STRINGS.timeBonusLabel  + lastTimeBonus,  cxW, tyW); tyW += VW.stepBonus; }
+    if (lastLivesBonus > 0) { ctx.fillStyle = C.green; ctx.fillText(STRINGS.livesBonusLabel + lastLivesBonus, cxW, tyW); tyW += VW.stepBonus; }
     ctx.fillStyle = C.white;  ctx.fillText(scoreText, cxW, tyW); tyW += VW.stepScore;
     ctx.fillStyle = C.yellow; ctx.fillText(STRINGS.bestLabel + ' LVL ' + bestLevel + ' — ' + String(bestScore).padStart(5,'0'), cxW, tyW); tyW += VW.stepBest;
     ctx.fillStyle = actionVisible ? C.gold : 'rgba(0,0,0,0)'; ctx.fillText(STRINGS.tapForTitle, cxW, tyW);
   } else {
     const VL = CONFIG.vis.levelComplete;
-    const _lH = VL.padTop + VL.stepTitle + VL.stepScore + VL.tapH + VL.padBottom;
+    const _lH = VL.padTop + VL.stepTitle + VL.stepScore + (lastTimeBonus > 0 ? VL.stepBonus : 0) + VL.tapH + VL.padBottom;
     const {bx:lX, by:lY} = _panPos(VL.panW, _lH);
     _dialogPanel(lX, lY, VL.panW, _lH, VL.panBg);
     ctx.textAlign = 'center'; ctx.textBaseline = 'top';
@@ -1227,6 +1229,7 @@ function drawEndScreen() {
     ctx.font = VL.fontTitle + 'px ' + FF;
     ctx.fillStyle = C.gold;  ctx.fillText(STRINGS.levelComplete, cxL, tyL); tyL += VL.stepTitle;
     ctx.font = VL.fontBody + 'px ' + FF;
+    if (lastTimeBonus > 0) { ctx.fillStyle = C.cyan; ctx.fillText(STRINGS.timeBonusLabel + lastTimeBonus, cxL, tyL); tyL += VL.stepBonus; }
     ctx.fillStyle = C.white; ctx.fillText(scoreText, cxL, tyL); tyL += VL.stepScore;
     ctx.fillStyle = actionVisible ? C.green : 'rgba(0,0,0,0)'; ctx.fillText(STRINGS.tapContinue, cxL, tyL);
   }

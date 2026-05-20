@@ -32,7 +32,7 @@ const CONFIG = {
       explosion: 'assets/audio/sfx/explosion.wav',
       sprinkler: 'assets/audio/sfx/sprinkler.wav',
       register:  'assets/audio/sfx/register.wav',
-      door:      'assets/audio/sfx/door.wav',
+      door:      'assets/audio/sfx/door.ogg',
     },
   },
   debug: {
