@@ -281,11 +281,11 @@ CHIUSI:
 - [X] #134 Fumetto ehi: scritta centrata e bordo nero fumetto
 - [X] #108 aggiornare suoni
 - [X] #72 Revisione punteggi
+- [X] #140 allineamento banner con bonus timer e vite e label
 
 PER LUCA:
 - [ ] #85 layout: Aggiungere banco al secondo piano
 - [ ] #138 testo mission banner più descrittivo
-- [ ] #140 allineamento banner con bonus timer e vite e label
 
 IMPORTANTI:
 - [ ] #135 il +1000 quando suona la campanella è spesso fuori dallo schermo
