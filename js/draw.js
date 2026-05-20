@@ -513,7 +513,7 @@ function drawNightOverlay() {
   ctx.fillRect(0, 0, W, H);
 }
 
-function drawGuard(x, y, dir, animT, chasing, knockedT) {
+function drawGuard(x, y, dir, animT, knockedT) {
   const bx = Math.round(x), by = Math.round(y);
   if (knockedT > 0) {
     const fy = by + PH - 1;
@@ -559,17 +559,6 @@ function drawGuard(x, y, dir, animT, chasing, knockedT) {
   // Eye
   ctx.fillStyle = C.black; ctx.fillRect(dir>0 ? bx+4 : bx+2, by-5, 2, 2);
   ctx.fillStyle = '#825144'; ctx.fillRect(bx+2, by+1, PW-4, 1);
-  if (chasing) {
-    const bub = dir>0 ? bx+PW+1 : bx-27;
-    const tailX = dir>0 ? bub : bub+23;
-    ctx.fillStyle = 'rgba(255,255,255,0.9)';
-    ctx.fillRect(tailX, by-4, 3, 4); ctx.fillRect(bub, by-14, 26, 10);
-    ctx.strokeStyle = '#bcbcbc'; ctx.lineWidth = 1; ctx.strokeRect(bub, by-14, 26, 10);
-    ctx.beginPath(); ctx.moveTo(tailX, by-4); ctx.lineTo(tailX, by); ctx.lineTo(tailX+3, by); ctx.lineTo(tailX+3, by-4); ctx.stroke();
-    ctx.fillStyle = C.black; ctx.font = '4px ' + FF;
-    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    ctx.fillText('STOP!', bub + 13, by - 9);
-  }
 }
 
 function drawSprinklers() {

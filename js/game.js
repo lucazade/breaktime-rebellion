@@ -187,7 +187,7 @@ function loop(ts) {
     if (t.name === 'Preside') {
       drawPreside(t.x, t.y, t.dir, t.animT, t.color, t.chasing, t.knockedT);
     } else if (t.name === 'Guardiano') {
-      drawGuard(t.x, t.y, t.dir, t.animT, t.chasing, t.knockedT);
+      drawGuard(t.x, t.y, t.dir, t.animT, t.knockedT);
     } else {
       drawChar(t.x, t.y, t.dir, t.animT, t.color, true, false, t.chasing, t.knockedT);
     }
