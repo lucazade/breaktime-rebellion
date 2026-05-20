@@ -168,7 +168,7 @@ function escapeWin() {
   score += 1000;
   addFloating(exitDoor.x + 5, exitDoor.y - 10, '+1000!', C.gold);
   addParticles(exitDoor.x + 5, exitDoor.y, C.gold, 30);
-  GameAudio.playSfx('bell');
+  GameAudio.playSfx('door');
   deathFreeze = true;
   exitWinReady = false;
   pendingTransition = { t: 90, fn: function() { exitWinReady = true; pendingTransition = null; } };

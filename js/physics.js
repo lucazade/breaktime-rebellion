@@ -381,6 +381,7 @@ function updatePaperBalls() {
       if (Math.abs(b.x - (s.x + 5)) < 12 && Math.abs(b.y - (s.y - 10)) < 16) {
         s.disturbed = true;
         s.shakeT = 25;
+        GameAudio.playSfx('hit');
         score += 300;
         addFloating(s.x + 5, s.y - 18, '+300', C.yellow);
         addParticles(s.x + 5, s.y - 10, C.yellow, 8);
@@ -459,7 +460,7 @@ function tryAction() {
         b.fuseT = 180;
         player.dir = (player.x + PW/2 < b.x + 5) ? 1 : -1;
         setMsg(STRINGS.binLit);
-        GameAudio.playSfx('spray');
+        GameAudio.playSfx('fuse');
         break;
       }
     }
