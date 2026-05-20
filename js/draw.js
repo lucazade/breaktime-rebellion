@@ -152,15 +152,16 @@ function drawTitleScreen() {
   var audioColor = audioMode==='full' ? C.lgreen : audioMode==='sfx' ? C.yellow : C.mgray;
   var audioLabel = audioMode==='full' ? STRINGS.audioFull : audioMode==='sfx' ? STRINGS.audioSfx : STRINGS.audioMute;
   var _iconW = 5, _gap = 3;
-  if (!_audioLblW) {
+  if (!_audioLblW && document.fonts.check(ctx.font)) {
     _audioLblW = { full: ctx.measureText(STRINGS.audioFull).width, sfx: ctx.measureText(STRINGS.audioSfx).width, mute: ctx.measureText(STRINGS.audioMute).width };
     _audioMaxLblW = Math.max(_audioLblW.full, _audioLblW.sfx, _audioLblW.mute);
   }
-  var _audioW = ct.audioPadX*2 + _iconW + _gap + _audioMaxLblW;
+  var _maxLblW = _audioLblW ? _audioMaxLblW : Math.max(ctx.measureText(STRINGS.audioFull).width, ctx.measureText(STRINGS.audioSfx).width, ctx.measureText(STRINGS.audioMute).width);
+  var _audioW = ct.audioPadX*2 + _iconW + _gap + _maxLblW;
   var _audioX = ct.audioRightX - _audioW;
   _titleAudioX = _audioX; _titleAudioW = _audioW;
   _box(_audioX, ctrlY, _audioW, audioColor);
-  var _blockW = _iconW + _gap + _audioLblW[audioMode];
+  var _blockW = _iconW + _gap + (_audioLblW ? _audioLblW[audioMode] : ctx.measureText(audioLabel).width);
   var _blockX = _audioX + Math.floor((_audioW - _blockW) / 2);
   _drawVolumeIcon(_blockX, ctrlY + Math.floor((ct.btnH - 4) / 2), audioMode, audioColor);
   ctx.fillStyle = audioColor; ctx.textAlign = 'left';
