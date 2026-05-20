@@ -270,16 +270,17 @@ CHIUSI:
 - [X] #125 il logo.png è 1697 × 927 , ha senso sia per desktop che per mobile a questa risoluzione?
 - [X] #126 sistemare font 4 a 6
 - [X] #127 cuori e meccanica in hud hanno delle strane linee orizzontali se heartSize: 0.8 e dotW: 5.5
+- [X] #121 quando il prof si allerta e strilla ehi! fa uno scatto in avanti che in precedenza non faceva
 
 PER LUCA:
-- [ ] #72 Revisione punteggi (per Luca)
-- [ ] #85 Aggiungere banco al secondo piano (per Luca)
-- [ ] #108 sistemare suoni (per Luca)
+- [ ] #72 Revisione punteggi
+- [ ] #85 Aggiungere banco al secondo piano
+- [ ] #108 sistemare suoni
 - [ ] #124 Sistemare logo (via orologio)
-- [ ] #125 sistemare livello preside e ultimo
+- [ ] #125 sistemare livello preside e ultimo troppo facili
+- [ ] #126 sistemare banner livello completato, fumetto Luca e banner finale
 
 IMPORTANTI:
-- [ ] #121 quando il prof si allerta e strilla ehi! fa uno scatto in avanti che in precedenza non faceva
 
 MINORI:
 - [ ] #76 target libreria troppo grande
