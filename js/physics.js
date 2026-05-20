@@ -91,10 +91,10 @@ function updatePlayer() {
       gymBall.shakeT = 0;
     }
   }
-  if (!player.shaking && levelMechanics.dropBook && bookcase && !bookcase.dropped && K.action && !player.onStair) {
+  if (!player.shaking && levelMechanics.dropBook && bookcase && !bookcase.dropped && !allBooks && !player.onStair) {
     const dx = Math.abs(player.x + PW/2 - bookcase.x - 12);
     const dy = Math.abs(player.y + PH  - bookcase.y - 26);
-    if (dx < 20 && dy < 36) {
+    if (K.action && dx < 20 && dy < 36) {
       player.shaking = true;
       actionPressed = false;
       player.dir = (player.x + PW/2 < bookcase.x + 12) ? 1 : -1;
@@ -114,12 +114,14 @@ function updatePlayer() {
           setMsg(fmt(STRINGS.bookProgress, bookcase.dropCount, 3));
         }
       }
+    } else {
+      bookcase.shakeT = 0;
     }
   }
-  if (!player.shaking && levelMechanics.stealRegister && register && !register.stolen && K.action && !player.onStair) {
+  if (!player.shaking && levelMechanics.stealRegister && register && !register.stolen && !player.onStair) {
     const dx = Math.abs(player.x + PW/2 - register.x - 5);
     const dy = Math.abs(player.y + PH  - register.y - 8);
-    if (dx < 16 && dy < 20) {
+    if (K.action && dx < 16 && dy < 20) {
       player.shaking = true;
       actionPressed = false;
       player.dir = (player.x + PW/2 < register.x + 5) ? 1 : -1;
@@ -133,6 +135,8 @@ function updatePlayer() {
         alertTeachers(register.x + 5, register.y);
         allRegisterWin();
       }
+    } else {
+      register.stealT = 0;
     }
   }
   if (!player.shaking && levelMechanics.activateSprinkler && K.action && !player.onStair) {
@@ -461,6 +465,7 @@ function tryAction() {
         player.dir = (player.x + PW/2 < b.x + 5) ? 1 : -1;
         setMsg(STRINGS.binLit);
         GameAudio.playSfx('fuse');
+        alertTeachers(b.x + 5, b.y);
         break;
       }
     }

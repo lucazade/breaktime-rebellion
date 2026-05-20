@@ -283,15 +283,15 @@ CHIUSI:
 - [X] #72 Revisione punteggi
 - [X] #140 allineamento banner con bonus timer e vite e label
 - [X] #135 il +1000 quando suona la campanella è spesso fuori dallo schermo
+- [X] #131 L6 preside: progressbar si resetta se non completa, preside percorso più breve
+- [X] #137 L7 lavandino: bidello asciuga dpoo un pò che cammina sull'acqua e a piano terra bidello invece di prof
+- [X] #139 L8 secchi: prof deve fare percorso più breve
+- [X] #136 L10: raggio della torcia più piccolo e controllare poi se guardiano ti becca, progressbar si resetta se non completa
 
 PER LUCA:
 - [ ] #85 layout: Aggiungere banco al secondo piano
 - [ ] #138 testo mission banner più descrittivo
 
 IMPORTANTI:
-- [ ] #131 L6 preside: progressbar si resetta se non completa, preside percorso più breve
-- [ ] #137 L7 lavandino: bidello asciuga dpoo un pò che cammina sull'acqua e a piano terra bidello invece di prof
-- [ ] #139 L8 secchi: prof deve fare percorso più breve
-- [ ] #136 L10: raggio della torcia più piccolo e controllare poi se guardiano ti becca, progressbar si resetta se non completa
 
 MINORI:

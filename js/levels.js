@@ -173,9 +173,9 @@ var LEVELS = (function() {
       // Bookcase is the rightmost fixture on the ground floor (yellow room).
       bookcase: {x:288, y:GY-43, fallDx:-30, fallDy:28},
 
-      // Only the Preside patrols the ground floor — sole threat, full patrol range.
+      // Preside patrols right half — principal's office area.
       teachers: [
-        {x:260, y:GY-PH-walkOffset, dir:-1, minX:10, maxX:305, speed:1.0, color:'#1a1a4a', name:'Preside', sight:150},
+        {x:260, y:GY-PH-walkOffset, dir:-1, minX:100, maxX:305, speed:1.0, color:'#1a1a4a', name:'Preside', sight:150},
       ],
 
       janitors: [],
@@ -196,12 +196,11 @@ var LEVELS = (function() {
       // Sink in the leftmost room on the middle floor (bathroom)
       sink: {x:32, y:MY-21},
 
-      teachers: [
-        {x:200, y:GY-PH-walkOffset, dir: 1, minX:10, maxX:305, speed:0.55, color:C.redprof, name:'Prof.Rossi', sight:90},
-      ],
+      teachers: [],
 
       janitors: [
         {x:185, y:MY-PH-walkOffset, dir:-1, minX:10, maxX:220, speed:0.65, name:'Bidello'},
+        {x:200, y:GY-PH-walkOffset, dir: 1, minX:10, maxX:305, speed:0.65, name:'Bidello'},
       ],
     }),
 
@@ -223,9 +222,9 @@ var LEVELS = (function() {
       ],
 
       teachers: [
-        {x:200, y:GY-PH-walkOffset, dir: 1, minX:10, maxX:305, speed:0.60, color:C.redprof,  name:'Prof.Rossi',      sight:90},
-        {x:80,  y:MY-PH-walkOffset, dir:-1, minX:10, maxX:305, speed:0.55, color:C.greenprof,    name:'Prof.Ginnastica', sight:100},
-        {x:230, y:TY-PH-walkOffset, dir: 1, minX:10, maxX:275, speed:0.60, color:C.grayprof, name:'Prof.Neri',       sight:90},
+        {x:60,  y:GY-PH-walkOffset, dir: 1, minX:10,  maxX:160, speed:0.70, color:C.redprof,   name:'Prof.Rossi',      sight:90},
+        {x:230, y:MY-PH-walkOffset, dir:-1, minX:160, maxX:305, speed:0.70, color:C.greenprof,  name:'Prof.Ginnastica', sight:100},
+        {x:230, y:TY-PH-walkOffset, dir: 1, minX:160, maxX:275, speed:0.70, color:C.grayprof,  name:'Prof.Neri',       sight:90},
       ],
 
       janitors: [],
@@ -285,9 +284,9 @@ var LEVELS = (function() {
 
       // Three night guards — larger catch radius (within torch light)
       teachers: [
-        {x:200, y:GY-PH-walkOffset, dir: 1, minX:10, maxX:305, speed:0.50, color:'#1a1a3a', name:'Guardiano', sight:110, catchRadius:20},
-        {x:80,  y:MY-PH-walkOffset, dir:-1, minX:10, maxX:305, speed:0.45, color:'#1a1a3a', name:'Guardiano', sight:110, catchRadius:20},
-        {x:230, y:TY-PH-walkOffset, dir: 1, minX:10, maxX:275, speed:0.45, color:'#1a1a3a', name:'Guardiano', sight:100, catchRadius:20},
+        {x:200, y:GY-PH-walkOffset, dir: 1, minX:10, maxX:305, speed:0.60, color:'#1a1a3a', name:'Guardiano', sight:110, catchRadius:20},
+        {x:10,  y:MY-PH-walkOffset, dir: 1, minX:10, maxX:305, speed:0.60, color:'#1a1a3a', name:'Guardiano', sight:110, catchRadius:20},
+        {x:140, y:TY-PH-walkOffset, dir:-1, minX:10, maxX:275, speed:0.60, color:'#1a1a3a', name:'Guardiano', sight:100, catchRadius:20},
       ],
 
       janitors: [],

@@ -150,10 +150,12 @@ function updateJanitors() {
     if (Math.abs(j.y - player.y) < 12 && Math.abs(j.x - player.x) < 14 && player.stunT === 0) {
       caughtBy(j);
     }
-    // L7: janitor steps into the puddle → dries the floor
-    if (levelMechanics.floodSink && sink && sink.waterLevel > 0 && !allSink && j.x < 120) {
-      sink.waterLevel = 0; sink.pourT = 0;
-      setMsg(STRINGS.sinkReady);
+    // L7: MY-floor janitor walks in puddle for 90 frames → dries the floor
+    if (levelMechanics.floodSink && sink && sink.waterLevel > 0 && !allSink && j.x < 120 && j.y < (MY + GY) / 2) {
+      j.dryT++;
+      if (j.dryT >= 90) { j.dryT = 0; sink.waterLevel = 0; sink.pourT = 0; setMsg(STRINGS.sinkReady); }
+    } else {
+      j.dryT = 0;
     }
   }
 }

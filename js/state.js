@@ -65,7 +65,7 @@ function resetLevel() {
             catchRadius: t.catchRadius || 0, reactionT:0};
   });
   janitors = lv.janitors.map(function(j) {
-    return {x:j.x, y:j.y, dir:j.dir, minX:j.minX, maxX:j.maxX, speed:j.speed, animT:0, name:j.name, knockedT:0, soakCooldownT:0};
+    return {x:j.x, y:j.y, dir:j.dir, minX:j.minX, maxX:j.maxX, speed:j.speed, animT:0, name:j.name, knockedT:0, soakCooldownT:0, dryT:0};
   });
   player.x = lv.playerStart.x; player.y = lv.playerStart.y; player.vy = 0;
   player.dir = 1; player.animT = 0;
