@@ -3,6 +3,8 @@
 var _logoImage = null; // loaded by game.js alongside bgImage
 var FF = CONFIG.vis.fontFamily;  // font family shortcut — editable in layout.js
 var _hudMsgAlpha = 0; // HUD crossfade alpha: rises to 1 when a message is active, falls back to 0 otherwise
+var _bgCache    = null; // offscreen canvas: bgImage pre-scaled to CV size, rebuilt on first draw
+var _desksCache = null; // offscreen canvas: all desks pre-rendered at physical resolution
 
 // ── Title screen helpers ──────────────────────────────────────────────────────
 
@@ -197,28 +199,43 @@ function drawTitleScreen() {
 }
 
 function drawBg() {
-  // Background drawn at full canvas resolution (bypasses ctx.scale).
-  // Smooth scaling so the HD source (1586×992) interpolates cleanly to canvas size.
   ctx.setTransform(1, 0, 0, 1, 0, 0);
-  if (bgImage && bgImage.complete && bgImage.naturalWidth > 0) {
-    ctx.imageSmoothingEnabled = true;
-    ctx.drawImage(bgImage, 0, 0, CV.width, CV.height);
-    ctx.imageSmoothingEnabled = false;
+  if (!_bgCache && bgImage && bgImage.complete && bgImage.naturalWidth > 0) {
+    var _oc = document.createElement('canvas');
+    _oc.width = CV.width; _oc.height = CV.height;
+    var _octx = _oc.getContext('2d');
+    _octx.imageSmoothingEnabled = true;
+    _octx.drawImage(bgImage, 0, 0, CV.width, CV.height);
+    _bgCache = _oc;
   }
+  if (_bgCache) ctx.drawImage(_bgCache, 0, 0);
   ctx.setTransform(_canvasScale, 0, 0, _canvasScale, 0, 0);
 }
 
 function drawDesks() {
-  for (let i = 0; i < DESKS.length; i++) {
-    const d = DESKS[i];
-    ctx.fillStyle = '#2c1800'; ctx.fillRect(d.x-1, d.y-1, 22, 8);
-    ctx.fillStyle = C.desklt; ctx.fillRect(d.x, d.y, 20, 6);
-    ctx.fillStyle = C.desk;   ctx.fillRect(d.x, d.y+5, 20, 2);
-    ctx.fillStyle = C.brown;
-    ctx.fillRect(d.x+1, d.y+6, 2, 5);
-    ctx.fillRect(d.x+17, d.y+6, 2, 5);
-    ctx.fillStyle = C.red;   ctx.fillRect(d.x+5, d.y-2, 8, 3);
-    ctx.fillStyle = C.white; ctx.fillRect(d.x+6, d.y-2, 6, 2);
+  if (!_desksCache && DESKS.length > 0) {
+    var _oc = document.createElement('canvas');
+    _oc.width = CV.width; _oc.height = CV.height;
+    var _octx = _oc.getContext('2d');
+    _octx.imageSmoothingEnabled = false;
+    _octx.scale(_canvasScale, _canvasScale);
+    for (var _i = 0; _i < DESKS.length; _i++) {
+      var _d = DESKS[_i];
+      _octx.fillStyle = '#2c1800'; _octx.fillRect(_d.x-1, _d.y-1, 22, 8);
+      _octx.fillStyle = C.desklt;  _octx.fillRect(_d.x,   _d.y,   20, 6);
+      _octx.fillStyle = C.desk;    _octx.fillRect(_d.x,   _d.y+5, 20, 2);
+      _octx.fillStyle = C.brown;
+      _octx.fillRect(_d.x+1,  _d.y+6, 2, 5);
+      _octx.fillRect(_d.x+17, _d.y+6, 2, 5);
+      _octx.fillStyle = C.red;   _octx.fillRect(_d.x+5, _d.y-2, 8, 3);
+      _octx.fillStyle = C.white; _octx.fillRect(_d.x+6, _d.y-2, 6, 2);
+    }
+    _desksCache = _oc;
+  }
+  if (_desksCache) {
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.drawImage(_desksCache, 0, 0);
+    ctx.setTransform(_canvasScale, 0, 0, _canvasScale, 0, 0);
   }
 }
 
