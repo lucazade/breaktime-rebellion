@@ -278,9 +278,8 @@ function updateBins() {
     if (!deathFreeze && player.stunT === 0 && Math.abs(player.y - b.y) < 20 && Math.abs(player.x + PW/2 - b.x - 5) < 24) {
       lives--;
       score = Math.max(0, score - 300);
-      var blastMsg = STRINGS.binBlastHit;
-      blastMsg += lives <= 0 ? ' GAME OVER!' : '';
-      setMsg(blastMsg);
+      if (lives > 0) setMsg(STRINGS.binBlastHit);
+      else msgT = 0;
       playerDied();
       return; // skip win check this frame
     }
@@ -328,9 +327,8 @@ function updateTimer() {
   if (timerTicks <= 0) {
     timerTicks = 0;
     lives--;
-    let msg = STRINGS.timesUp;
-    msg += lives <= 0 ? ' GAME OVER!' : '';
-    setMsg(msg);
+    if (lives > 0) setMsg(STRINGS.timesUp);
+    else msgT = 0;
     playerDied();
   }
 }

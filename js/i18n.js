@@ -40,7 +40,6 @@
     hey:                  'HEY!!',
     timesUp:              "TIME'S UP!",
     caughtBy:             '{0} got you!',
-    ringMsg:              'Level complete!',
 
     pauseTitle:           '— PAUSE —',
     btnResume:            'RESUME',
@@ -140,7 +139,6 @@
     hey:                  'EHI!!',
     timesUp:              'TEMPO SCADUTO!',
     caughtBy:             '{0} ti ha preso!',
-    ringMsg:              'Livello completato!',
 
     pauseTitle:           '— PAUSA —',
     btnResume:            'RIPRENDI',
