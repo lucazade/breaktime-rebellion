@@ -285,6 +285,7 @@ CHIUSI:
 PER LUCA:
 - [ ] #85 layout: Aggiungere banco al secondo piano
 - [ ] #138 testo mission banner più descrittivo
+- [ ] #140 allineamento banner con bonus timer e vite e label
 
 IMPORTANTI:
 - [ ] #135 +1000 campanella è fuori dallo schermo
