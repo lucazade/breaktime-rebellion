@@ -809,25 +809,6 @@ function drawBags() {
     ctx.fillStyle = C.bagborder; ctx.fillRect(b.x+4, b.y-3, 6, 3);
     ctx.fillRect(b.x+6, b.y+3, 2, 4);
 
-    // Progressbar hold-to-steal
-    if (b.stealT > 0) {
-      const pct = b.stealT / bagStealTime;
-      ctx.fillStyle = '#880000'; ctx.fillRect(b.x-1, b.y-8, 16, 5);
-      ctx.fillStyle = '#2a0000'; ctx.fillRect(b.x,   b.y-7, 14, 3);
-      ctx.fillStyle = '#cc1100'; ctx.fillRect(b.x,   b.y-7, Math.round(14 * pct), 3);
-    }
-
-    // Proximity dashed border
-    if (levelMechanics.stealBags && !allBags) {
-      const pdx = Math.abs(player.x + PW/2 - b.x - 7);
-      const pdy = Math.abs(player.y + PH  - b.y - 10);
-      if (pdx < 14 && pdy < 14) {
-        ctx.strokeStyle = C.gold; ctx.lineWidth = 1;
-        ctx.setLineDash([2, 2]);
-        const _dbg = CONFIG.vis.dashed.bags; ctx.strokeRect(b.x+_dbg.x, b.y+_dbg.y, _dbg.w, _dbg.h);
-        ctx.setLineDash([]);
-      }
-    }
   }
 }
 

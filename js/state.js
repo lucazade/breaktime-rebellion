@@ -25,7 +25,7 @@ let msgText, msgT, msgDuration;
 let actionPressed, allBoards, allBags, allMachines, allBall, allStudents, allBooks, timerTicks, maxTimerTicks;
 let machines, gymBall, paperBalls, students, throwCooldown, bookcase, sink, bins, sprinklers, register, exitDoor;
 let nightMode, registerTime, allRegister, exitDone, exitWinReady, nightExpandT;
-let shakeTime, deflateTime, dropTime, floodTime, lighterTime, bagStealTime;
+let shakeTime, deflateTime, dropTime, floodTime, lighterTime;
 let allSink, allBins, allSprinklers;
 let missionBannerT, missionBannerLines;
 let storyBannerT, storyBannerLines;  // like missionBannerT but shown first on L1
@@ -55,7 +55,7 @@ function resetLevel() {
   stairs   = lv.stairs;
   DESKS    = lv.desks;
   BOARDS   = lv.boards.map(function(b)   { return {x:b.x, y:b.y, done:false}; });
-  bags     = lv.bags.map(function(b)     { return {x:b.x, y:b.y, collected:false, stealT:0}; });
+  bags     = lv.bags.map(function(b)     { return {x:b.x, y:b.y, collected:false}; });
   BELL     = {x:lv.bell.x, y:lv.bell.y, ringing:false, done:false, ringT:0};
   teachers = lv.teachers.map(function(t) {
     return {x:t.x, y:t.y, dir:t.dir, minX:t.minX, maxX:t.maxX,
@@ -91,7 +91,6 @@ function resetLevel() {
   dropTime    = lv.dropTime    || 40;
   floodTime   = lv.floodTime   || 80;
   lighterTime  = lv.lighterTime  || 80;
-  bagStealTime = lv.bagStealTime || 60;
   timerTicks  = maxTimerTicks  = (lv.timer || 0) * 60;
   storyBannerFading = false;
   storyFadeInT  = 0;

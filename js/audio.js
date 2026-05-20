@@ -113,6 +113,7 @@ const GameAudio = (function() {
   }
 
   function playMusic() {
+    _initWebAudio();
     stopJingle();
     if (mode !== 'full') return;
     var track = _gameTrack(), other = _otherTrack();
@@ -136,21 +137,47 @@ const GameAudio = (function() {
     var t = _gameTrack(); if (t && mode === 'full') t.play().catch(function() {});
   }
 
-  // Preload sfx — cloneNode() is instant compared to new Audio() every time
-  var _sfxCache = {};
+  // Web Audio API for zero-latency sfx; fallback to cloneNode if unavailable
+  var _sfxCache   = {};  // name → Audio element (fallback)
+  var _sfxRaw     = {};  // name → ArrayBuffer (prefetched)
+  var _audioCtx   = null;
+  var _sfxBuffers = {};  // name → AudioBuffer (decoded, ready to play)
+
   Object.keys(CONFIG.audio.sfx).forEach(function(name) {
-    var a = new Audio(CONFIG.audio.sfx[name]);
-    a.preload = 'auto';
-    _sfxCache[name] = a;
+    var url = CONFIG.audio.sfx[name];
+    fetch(url).then(function(r) { return r.arrayBuffer(); }).then(function(buf) {
+      _sfxRaw[name] = buf;
+      if (_audioCtx && !_sfxBuffers[name]) {
+        _audioCtx.decodeAudioData(buf.slice(0), function(decoded) { _sfxBuffers[name] = decoded; }, function() {});
+      }
+    }).catch(function() {});
+    var a = new Audio(url); a.preload = 'auto'; _sfxCache[name] = a;
   });
+
+  function _initWebAudio() {
+    if (_audioCtx) return;
+    try { _audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) { return; }
+    Object.keys(_sfxRaw).forEach(function(name) {
+      if (!_sfxRaw[name] || _sfxBuffers[name]) return;
+      _audioCtx.decodeAudioData(_sfxRaw[name].slice(0), function(buf) { _sfxBuffers[name] = buf; }, function() {});
+    });
+  }
 
   function playSfx(name) {
     if (mode === 'mute') return;
+    if (_audioCtx && _sfxBuffers[name]) {
+      if (_audioCtx.state === 'suspended') _audioCtx.resume().catch(function() {});
+      var src = _audioCtx.createBufferSource();
+      src.buffer = _sfxBuffers[name];
+      var gain = _audioCtx.createGain();
+      gain.gain.value = CONFIG.audio.sfxVolume;
+      src.connect(gain); gain.connect(_audioCtx.destination);
+      src.start(0);
+      return;
+    }
     var cached = _sfxCache[name];
     if (!cached) return;
-    var s = cached.cloneNode();
-    s.volume = CONFIG.audio.sfxVolume;
-    s.play().catch(function() {});
+    var s = cached.cloneNode(); s.volume = CONFIG.audio.sfxVolume; s.play().catch(function() {});
   }
 
   function playJingle(name) {
