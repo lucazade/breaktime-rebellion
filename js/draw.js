@@ -5,6 +5,7 @@ var FF = CONFIG.vis.fontFamily;  // font family shortcut — editable in layout.
 var _hudMsgAlpha = 0; // HUD crossfade alpha: rises to 1 when a message is active, falls back to 0 otherwise
 var _bgCache    = null; // offscreen canvas: bgImage pre-scaled to CV size, rebuilt on first draw
 var _desksCache = null; // offscreen canvas: all desks pre-rendered at physical resolution
+var _bellGlowCache = null; // offscreen canvas: bell glow circle at r=7, drawn once
 var _hudTxtCache     = { txt: null, w: 0 };  // cached measureText for HUD counter (e.g. "4/4")
 var _audioLblW       = null; // cached measureText for title audio labels {full, sfx, mute}
 var _audioMaxLblW    = 0;    // cached max of the three label widths
@@ -317,11 +318,21 @@ function drawBell() {
   // Clapper (2px × 1 row)
   ctx.fillStyle = drk; ctx.fillRect(X+2, by+6, 2, 1);
 
-  // Pulsing glow when the objective is complete
+  // Pulsing glow when the objective is complete — blit pre-rendered circle, vary only globalAlpha
   if ((allBoards || allBags || allMachines || allBall || allStudents || allBooks || allSink || allBins || allSprinklers) && !BELL.done) {
-    const pulse = 0.12 + 0.08 * Math.sin(frame * 0.15);
-    ctx.fillStyle = 'rgba(255,215,0,' + pulse + ')';
-    ctx.beginPath(); ctx.arc(bx+3, by+3, 7, 0, Math.PI*2); ctx.fill();
+    if (!_bellGlowCache) {
+      var _gc = document.createElement('canvas'); _gc.width = 16 * _canvasScale; _gc.height = 16 * _canvasScale;
+      var _gctx = _gc.getContext('2d');
+      _gctx.scale(_canvasScale, _canvasScale);
+      _gctx.fillStyle = '#FFD700';
+      _gctx.beginPath(); _gctx.arc(8, 8, 7, 0, Math.PI*2); _gctx.fill();
+      _bellGlowCache = _gc;
+    }
+    ctx.globalAlpha = 0.12 + 0.08 * Math.sin(frame * 0.15);
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.drawImage(_bellGlowCache, Math.round((bx - 5) * _canvasScale), Math.round((by - 5) * _canvasScale));
+    ctx.setTransform(_canvasScale, 0, 0, _canvasScale, 0, 0);
+    ctx.globalAlpha = 1;
   }
 
   // Sound waves when ringing
