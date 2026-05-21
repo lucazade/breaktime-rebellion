@@ -310,6 +310,7 @@ CHIUSI:
 
 PER LUCA:
 - [ ] #138 sostituire suono acqua bagno
+- [ ] #153 Alcuni elementi sono troppo alti
 
 PER CLAUDE:
-- [ ] #152 il nuovo bg (day & night) ora usa la stessa palette di logo. Farei un nuovo branch dove usiamo la palette di logo come riferimento per ricolorare tutti i personaggi e gli oggetti. I colori di base restano gli stessi ma sono più saturi e vivaci. Credo che i colori dei personaggi e  degli oggetti sono sparsi in diversi css e js (draw e layout? altri?). Che ne pensi?
+- [ ] #152 il nuovo bg (day & night) ora usa la stessa palette di logo. Farei un nuovo branch dove usiamo la palette di logo come riferimento per ricolorare tutti i personaggi e gli oggetti. I colori di base restano gli stessi ma sono più saturi e vivaci. Credo che i colori dei personaggi e  degli oggetti sono sparsi in diversi css e js (draw e layout? altri?).
