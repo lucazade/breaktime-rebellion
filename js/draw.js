@@ -1481,12 +1481,13 @@ function _drawHeart(x, y, s) {
     return;
   }
   if (s < 1) {
-    // Medium: 7×5px with tip — one full row, then taper to point
+    // Medium: 7×6px — two full rows then taper to point
     ctx.fillRect(x+1, y,   2, 1); ctx.fillRect(x+4, y,   2, 1);
     ctx.fillRect(x,   y+1, 7, 1);
-    ctx.fillRect(x+1, y+2, 5, 1);
-    ctx.fillRect(x+2, y+3, 3, 1);
-    ctx.fillRect(x+3, y+4, 1, 1);
+    ctx.fillRect(x,   y+2, 7, 1);
+    ctx.fillRect(x+1, y+3, 5, 1);
+    ctx.fillRect(x+2, y+4, 3, 1);
+    ctx.fillRect(x+3, y+5, 1, 1);
     return;
   }
   s = Math.max(1, Math.round(s));
@@ -1665,15 +1666,15 @@ function drawHUD() {
   var _f = VH.fontSize + 'px ' + FF;
   var _hs = VH.heartSize || 1;  // 1 = 8×7px | 0.5 = 4×3px (small)
   var _ds = VH.iconScale || 1;  // 1 = 7×7px | 0.5 = 4×4px (small)
-  var _heartH    = _hs < 0.5 ? 3 : _hs < 1 ? 5 : 7 * Math.max(1, Math.round(_hs));
+  var _heartH    = _hs < 0.5 ? 3 : _hs < 1 ? 6 : 7 * Math.max(1, Math.round(_hs));
   var _heartW    = _hs < 0.5 ? 4 : _hs < 1 ? 7 : 8 * Math.max(1, Math.round(_hs));
   var _iconSz    = _ds < 0.5 ? 4 : _ds < 1 ? 6 : 7 * Math.max(1, Math.round(_ds));
   var _heartStep = _heartW + 1;
-  var _textY  = Math.floor((VH.rowH - VH.fontSize) / 2);
+  var _textY  = Math.round(VH.rowH / 2);
   var _heartY = Math.floor((VH.rowH - _heartH) / 2);
   var _iconY  = Math.floor((VH.rowH - _iconSz)  / 2);
   ctx.fillStyle = VH.bgColor; ctx.fillRect(0, 0, W, VH.rowH);
-  ctx.font = _f; ctx.textBaseline = 'top';
+  ctx.font = _f; ctx.textBaseline = 'middle';
   // Smooth crossfade: _hudMsgAlpha approaches 1 or 0 at fixed speed,
   // independent of msgT — no flicker when messages cycle rapidly
   var _fadeSpeed = 1 / (VH.msgFadeFrames || 45);
