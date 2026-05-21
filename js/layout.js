@@ -114,7 +114,7 @@ Object.assign(CONFIG.vis, {
     timerAlpha: 0.80,               // timer bar opacity
     fontSize:  6,
     dotGap:    5,                    // gap between icon and counter text
-    bgColor:   'rgba(0,0,0,0.55)',
+    bgColor:   'rgba(0, 4, 75, 0.55)',
     // Mechanic indicator colour per mechanic type
     dotColors: {
       boards:     '#588D43',
