@@ -214,14 +214,29 @@ function drawTitleScreen() {
 function drawBg() {
   ctx.setTransform(1, 0, 0, 1, 0, 0);
   if (!_bgCache && bgImage && bgImage.complete && bgImage.naturalWidth > 0) {
-    var _oc = document.createElement('canvas');
-    _oc.width = CV.width; _oc.height = CV.height;
-    var _octx = _oc.getContext('2d');
-    _octx.imageSmoothingEnabled = true;
-    _octx.drawImage(bgImage, 0, 0, CV.width, CV.height);
-    _bgCache = _oc;
+    if (window.createImageBitmap) {
+      createImageBitmap(bgImage, {resizeWidth: CV.width, resizeHeight: CV.height, resizeQuality: 'high'})
+        .then(function(bmp) { _bgCache = bmp; }).catch(function() {
+          // fallback to offscreen canvas
+          var _oc = document.createElement('canvas');
+          _oc.width = CV.width; _oc.height = CV.height;
+          var _octx = _oc.getContext('2d');
+          _octx.imageSmoothingEnabled = true;
+          _octx.drawImage(bgImage, 0, 0, CV.width, CV.height);
+          _bgCache = _oc;
+        });
+      _bgCache = 'pending'; // prevent re-entry while promise resolves
+    } else {
+      var _oc = document.createElement('canvas');
+      _oc.width = CV.width; _oc.height = CV.height;
+      var _octx = _oc.getContext('2d');
+      _octx.imageSmoothingEnabled = true;
+      _octx.drawImage(bgImage, 0, 0, CV.width, CV.height);
+      _bgCache = _oc;
+    }
   }
-  if (_bgCache) ctx.drawImage(_bgCache, 0, 0);
+  if (_bgCache && _bgCache !== 'pending') ctx.drawImage(_bgCache, 0, 0);
+  else if (!_bgCache && bgImage && bgImage.complete) ctx.drawImage(bgImage, 0, 0, CV.width, CV.height);
   ctx.setTransform(_canvasScale, 0, 0, _canvasScale, 0, 0);
 }
 
