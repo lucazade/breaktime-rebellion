@@ -304,5 +304,5 @@ PER CLAUDE:
 - [ ] #142 L9: aggiungere bordino sprinkles
 - [ ] #143 L10: nascondere guardiani prima di allargare luce
 - [ ] #145 feedback quando hai finito la meccanica (ad esempio in L6 la terza volta che cade il libro si rompe?)
-- [ ] #146 controllo dead code, funzione e variabili non usate, test js bug
-- [ ] #147 profiling con firefox
+- [ ] #146 controllo generale dead code, funzione e variabili non usate, commenti e test js bug
+- [ ] #147 profiling con firefox (allegare screenshot)
