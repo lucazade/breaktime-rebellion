@@ -287,11 +287,16 @@ CHIUSI:
 - [X] #137 L7 lavandino: bidello asciuga dpoo un pò che cammina sull'acqua e a piano terra bidello invece di prof
 - [X] #139 L8 secchi: prof deve fare percorso più breve
 - [X] #136 L10: raggio della torcia più piccolo e controllare poi se guardiano ti becca, progressbar si resetta se non completa
+- [X] #85 layout: Aggiungere banco al secondo piano
 
 PER LUCA:
-- [ ] #85 layout: Aggiungere banco al secondo piano
-- [ ] #138 testo mission banner più descrittivo
+- [ ] #138 sostituire suono acqua bagno
 
-IMPORTANTI:
-
-MINORI:
+PER CLAUDE:
+- [ ] #141 < e > non allineate vert e oriz nei pulsanti
+- [ ] #142 aggiungere bordino sprinkles
+- [ ] #143 L10: spostare guardiano piano terra e nascondere guardiani prima di allargare luce
+- [ ] #144 logo su mobile sfuocato, indagare (su desktop ok)
+- [ ] #145 feedback quando hai finito la meccanica (ad esempio in L6 la terza volta che cade il libro si rompe?)
+- [ ] #146 controllo dead code, funzione e variabili non usate, test js bug
+- [ ] #147 profiling con firefox
