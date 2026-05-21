@@ -1708,13 +1708,14 @@ function drawHUD() {
     ctx.textAlign = 'left'; ctx.fillStyle = '#44ee66';
     ctx.fillText(_txt, _sx + _iconSz + VH.dotGap, _textY);
   }
-  // Timer bar — always at full opacity, excluded from the crossfade
-  ctx.globalAlpha = 1;
+  // Timer bar
+  ctx.globalAlpha = VH.timerAlpha !== undefined ? VH.timerAlpha : 1;
   if (maxTimerTicks > 0) {
     var _pct = Math.max(0, timerTicks / maxTimerTicks);
     ctx.fillStyle = _pct > 0.6 ? '#22cc44' : _pct > 0.3 ? '#ddcc00' : '#dd1100';
     ctx.fillRect(0, VH.rowH, Math.round(W * _pct), VH.timerH);
   }
+  ctx.globalAlpha = 1;
   ctx.restore();
 }
 

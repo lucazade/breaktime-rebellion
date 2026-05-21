@@ -110,7 +110,8 @@ Object.assign(CONFIG.vis, {
     msgFadeFrames: 20,               // frames for the msg↔HUD crossfade (20 ≈ 0.33s at 60fps)
     centerX:   160,                  // x centre for counter/message
     scoreX:    316,                  // right x for score
-    timerH:    1,                    // timer bar height
+    timerH:     1,                   // timer bar height
+    timerAlpha: 0.80,               // timer bar opacity
     fontSize:  6,
     dotGap:    5,                    // gap between icon and counter text
     bgColor:   'rgba(0,0,0,0.55)',
