@@ -309,7 +309,12 @@ function sinkFloodWin() {
 }
 
 function updateSink() {
-  if (!sink || sink.resetT <= 0) return;
+  if (!sink) return;
+  if (allSink) {
+    if (sink.floodSpread < W - 12) sink.floodSpread = Math.min(W - 12, sink.floodSpread + 0.3);
+    return;
+  }
+  if (sink.resetT <= 0) return;
   sink.resetT--;
   if (sink.resetT === 0) setMsg(STRINGS.sinkReady);
 }

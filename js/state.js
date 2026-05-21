@@ -80,7 +80,7 @@ function resetLevel() {
   paperBalls = [];
   throwCooldown = 0;
   bookcase    = lv.bookcase ? {x:lv.bookcase.x, y:lv.bookcase.y, fallDx:lv.bookcase.fallDx||0, fallDy:lv.bookcase.fallDy||36, dropped:false, shakeT:0, dropCount:0, resetT:0} : null;
-  sink      = lv.sink ? {x:lv.sink.x, y:lv.sink.y, waterLevel:0, pourT:0, pourCount:0, resetT:0} : null;
+  sink      = lv.sink ? {x:lv.sink.x, y:lv.sink.y, waterLevel:0, pourT:0, pourCount:0, resetT:0, floodSpread:0} : null;
   bins        = (lv.bins        || []).map(function(b) { return {x:b.x, y:b.y, lit:false, fuseT:0, exploded:false}; });
   sprinklers  = (lv.sprinklers  || []).map(function(s) { return {x:s.x, y:s.y, floor:s.floor||'', lighterT:0, active:false}; });
   register    = lv.register  ? {x:lv.register.x,  y:lv.register.y,  stolen:false, stealT:0} : null;

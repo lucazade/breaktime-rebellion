@@ -725,23 +725,23 @@ function drawSink() {
   const fy = Math.round(MY - walkOffset + 1); // floor level
 
   // Water puddle on floor — starts past the wall (x=12), grows rightward
-  if (sink.waterLevel > 0) {
-    const wx = 12; // left offset to avoid drawing over the wall
-    const rights = [0, 62, 107, 130]; // level 3: water spills into corridor
-    const w = Math.max(0, rights[sink.waterLevel] - wx);
-    // Perspective wedge (angled near origin)
-    ctx.fillStyle = 'rgba(30,90,200,0.22)';
-    ctx.fillRect(wx, fy-2, Math.min(w, 8), 2);
-    // Main body
-    ctx.fillStyle = 'rgba(30,90,200,0.28)';
-    ctx.fillRect(wx, fy, w, 4);
-    // Bright top edge (reflection)
-    ctx.fillStyle = 'rgba(100,170,255,0.55)';
-    ctx.fillRect(wx, fy, w, 1);
-    // Animated ripple lines
-    ctx.fillStyle = 'rgba(130,200,255,0.5)';
-    const rOff = Math.floor(frame / 6) % 12;
-    for (let rx = wx + rOff; rx < wx + w; rx += 12) ctx.fillRect(rx, fy+2, 5, 1);
+  if (sink.waterLevel > 0 || allSink) {
+    const wx = 12;
+    const rights = [0, 62, 107, 130];
+    const w = allSink
+      ? Math.min(Math.floor(118 + sink.floodSpread), W - 10 - wx) // cap before right wall
+      : Math.max(0, rights[sink.waterLevel] - wx);
+    if (w > 0) {
+      ctx.fillStyle = 'rgba(30,90,200,0.22)';
+      ctx.fillRect(wx, fy-2, Math.min(w, 8), 2);
+      ctx.fillStyle = 'rgba(30,90,200,0.28)';
+      ctx.fillRect(wx, fy, w, 4);
+      ctx.fillStyle = 'rgba(100,170,255,0.55)';
+      ctx.fillRect(wx, fy, w, 1);
+      ctx.fillStyle = 'rgba(130,200,255,0.5)';
+      const rOff = Math.floor(frame / 6) % 12;
+      for (let rx = wx + rOff; rx < wx + w; rx += 12) ctx.fillRect(rx, fy+2, 5, 1);
+    }
   }
 
   // Mirror — small, centered over the 12px-wide basin (bx+1 to bx+11)
