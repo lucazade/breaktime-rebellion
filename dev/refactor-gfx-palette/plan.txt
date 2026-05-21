@@ -18,14 +18,14 @@ Fase 2 (branch successivo): applicare PAL ai personaggi e agli oggetti, ricolora
 File NUOVI (estratti):
   js/gfx-palette.js   — PAL + CONFIG.colors (spostati da layout.js)
   js/gfx-layout.js    — ex layout.js senza colori e senza config UI/HUD
-  js/gfx-hud.js       — config UI: bezel, dialog, titleScreen, hud, tutti i banner, CSS vars bezel
+  js/gfx-ui.js        — config UI: bezel, dialog, titleScreen, hud, tutti i banner, CSS vars bezel
   js/gfx-chars.js     — funzioni draw personaggi (estratte da draw.js)
   js/gfx-objects.js   — funzioni draw oggetti mappa (estratte da draw.js)
 
 File MODIFICATI:
   js/draw.js          — rimane, ma senza chars e objects (solo renderer pipeline)
   index.html          — ordine di caricamento aggiornato
-  js/layout.js        — ELIMINATO (sostituito da gfx-layout.js + gfx-hud.js)
+  js/layout.js        — ELIMINATO (sostituito da gfx-layout.js + gfx-ui.js)
 
 
 ## Ordine di caricamento in index.html (finale)
@@ -33,7 +33,7 @@ File MODIFICATI:
   config.js           — primo, come adesso
   gfx-palette.js      — PAL + CONFIG.colors (deve precedere tutto)
   gfx-layout.js       — CONFIG.vis.layout + shared + shortcuts (dipende da config.js)
-  gfx-hud.js          — Object.assign(CONFIG.vis, {bezel, dialog, hud, banners...}) + CSS vars
+  gfx-ui.js          — Object.assign(CONFIG.vis, {bezel, dialog, hud, banners...}) + CSS vars
   gfx-chars.js        — funzioni draw personaggi (dipende da palette + layout shortcuts)
   gfx-objects.js      — funzioni draw oggetti (dipende da palette + layout shortcuts)
   levels.js           — invariato
@@ -74,9 +74,9 @@ File MODIFICATI:
   - Object.assign(CONFIG.vis, { shared: {...}, dashed: {...}, char: {...} })
   - var SHARED_LAYOUT = CONFIG.vis.shared
   - CSS vars: --btr-zoom, --btr-font-family  (solo questi due — non bezel)
-  NON contiene: CONFIG.vis.colors (→ gfx-palette.js), config UI/HUD/banner (→ gfx-hud.js)
+  NON contiene: CONFIG.vis.colors (→ gfx-palette.js), config UI/HUD/banner (→ gfx-ui.js)
 
-### js/gfx-hud.js
+### js/gfx-ui.js
   Contiene (tutto via Object.assign(CONFIG.vis, { ... })):
   - fontFamily
   - bezel         (mobile panels)
@@ -139,7 +139,7 @@ File MODIFICATI:
 
   1. feat: add gfx-palette.js — PAL + move CONFIG.colors from layout.js
   2. feat: rename layout.js to gfx-layout.js — layout/shared/dashed/char only
-  3. feat: add gfx-hud.js — extract UI/banner config from gfx-layout.js
+  3. feat: add gfx-ui.js — extract UI/banner config from gfx-layout.js
   4. feat: add gfx-chars.js — extract char draw functions from draw.js
   5. feat: add gfx-objects.js — extract object draw functions from draw.js
   6. chore: update index.html load order for gfx-* files
