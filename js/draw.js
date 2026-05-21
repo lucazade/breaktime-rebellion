@@ -602,6 +602,13 @@ function drawSprinklers() {
     ctx.fillStyle = '#bbb'; ctx.fillRect(bx,   by-2, 8, 2);    // deflector disc
     ctx.fillStyle = sp.active ? C.red : '#888';
     ctx.fillRect(bx+2, by, 4, 3);                              // head (red = active)
+    ctx.strokeStyle = '#555'; ctx.lineWidth = 1;               // T-border (no top)
+    ctx.beginPath();
+    ctx.moveTo(bx,   by-2); ctx.lineTo(bx,   by);   // left side of disc
+    ctx.lineTo(bx+2, by);   ctx.lineTo(bx+2, by+3); // step in + left side of head
+    ctx.lineTo(bx+6, by+3); ctx.lineTo(bx+6, by);   // bottom of head + right side of head
+    ctx.lineTo(bx+8, by);   ctx.lineTo(bx+8, by-2); // step out + right side of disc
+    ctx.stroke();
 
     // Progress bar just below the sprinkler head
     if (sp.lighterT > 0 && !sp.active) {
@@ -1087,13 +1094,14 @@ function drawSight() {
 }
 
 function drawLucaEnd() {
-  if (!exitDone || !levelMechanics.escapeExit || state === 'win') return;
+  if (!exitDone || !levelMechanics.escapeExit) return;
   // Luca stands at the exit door
   const lx = Math.round(exitDoor.x) + 1;
   const ly = Math.round(GY - PH - walkOffset);
   drawChar(lx, ly, 1, 0, C.white, false, false, false, 0);
 
-  // Speech bubble — bh computed from CONFIG.vis.lucaFumetto
+  // Speech bubble — hidden once win banner appears
+  if (state === 'win') return;
   const VF = CONFIG.vis.lucaFumetto;
   ctx.font = VF.fontBody + 'px ' + FF;
   const raw = STRINGS.lucaAppears.replace(/^[^"]*"?/, '').replace(/".*$/, '');
