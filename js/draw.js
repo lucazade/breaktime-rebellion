@@ -1,6 +1,7 @@
 // Rendering — all draw functions and HUD update
 
 var _logoImage = null; // loaded by game.js alongside bgImage
+function resetBgCache() { _bgCache = null; }
 var FF = CONFIG.vis.fontFamily;  // font family shortcut — editable in layout.js
 var _hudMsgAlpha = 0; // HUD crossfade alpha: rises to 1 when a message is active, falls back to 0 otherwise
 var _bgCache    = null; // offscreen canvas: bgImage pre-scaled to CV size, rebuilt on first draw

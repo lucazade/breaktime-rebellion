@@ -32,15 +32,20 @@ CV.height = 200 * _canvasScale;
 ctx.scale(_canvasScale, _canvasScale); // logical 320×200 in both modes
 ctx.imageSmoothingEnabled = false;
 
-// Load background — HD version for desktop (4x canvas), standard for mobile
+// Pre-load day and night backgrounds; _applyLevelBg() switches based on nightMode
+var _bgDay = null, _bgNight = null;
 (function() {
-  var src = (_isDesktop && !CONFIG.debug.simulateMobile && CONFIG.images.backgroundHd)
-    ? CONFIG.images.backgroundHd : CONFIG.images.background;
-  if (!src) return;
-  var img = new Image();
-  img.onload = function() { bgImage = img; };
-  img.src = src;
+  var hd = _isDesktop && !CONFIG.debug.simulateMobile;
+  var srcDay   = hd ? CONFIG.images.backgroundHd      : CONFIG.images.background;
+  var srcNight = hd ? CONFIG.images.backgroundNightHd : CONFIG.images.backgroundNight;
+  var d = new Image(); d.onload = function() { _bgDay = d; if (!nightMode) { bgImage = d; } }; d.src = srcDay;
+  var n = new Image(); n.onload = function() { _bgNight = n; if (nightMode)  { bgImage = n; } }; n.src = srcNight;
 })();
+
+function _applyLevelBg() {
+  bgImage = nightMode ? (_bgNight || _bgDay) : (_bgDay || _bgNight);
+  resetBgCache();
+}
 
 // Load logo — HD version preferred (higher source resolution = better downscale quality)
 (function() {

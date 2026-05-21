@@ -303,8 +303,14 @@ CHIUSI:
 - [X] #145 L10: nascondere guardiani prima di allargare luce
 - [X] #147 profiling con firefox (allegare screenshot)
 - [X] #146 controllo generale dead code, funzione e variabili non usate, commenti e test js bug
+- [X] #149 L7: dopo la terza apertura del rubinetto il bidello non deve asciugare l'acqua ma l'acqua si propaga alle aule accanto in modo progressivo
 
 PER LUCA:
 - [ ] #138 sostituire suono acqua bagno
 
 PER CLAUDE:
+- [ ] #148 i pulsanti dei livelli e dell'audio sono difficili da premere su mobile, possiamo aumentare il trigger senza ingrandire i pulsanti?
+- [ ] #150 L7: nella prima e nella seconda apertura del rubinetto l'acqua deve scorrere come fa nella terza apertura fino in fondo al piano. Il bidello fa sparire l'acqua solo quando è davanti al rubinetto.
+- [ ] #151 timerbar alpha 0.90
+
+

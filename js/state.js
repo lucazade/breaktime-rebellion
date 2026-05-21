@@ -115,6 +115,7 @@ function setMsg(t, d) { msgText = t; msgT = d || 220; msgDuration = msgT; }
 function startGame() {
   localStorage.setItem('btr_last_level', currentLevel);
   resetLevel();
+  if (typeof _applyLevelBg === 'function') _applyLevelBg();
   GameAudio.fadeOutIntro(400);
   CV.style.transition = 'opacity 0.4s linear';
   CV.style.opacity = '0';
@@ -136,6 +137,7 @@ function nextLevel() {
   var savedMax = parseInt(localStorage.getItem('btr_max_level') || '1');
   if (currentLevel > savedMax) localStorage.setItem('btr_max_level', currentLevel);
   resetLevel();
+  if (typeof _applyLevelBg === 'function') _applyLevelBg();
   state = 'playing';
   GameAudio.playMusic();
 }
@@ -143,6 +145,7 @@ function nextLevel() {
 function restartGame() {
   lives = 3; score = 0;
   resetLevel();
+  if (typeof _applyLevelBg === 'function') _applyLevelBg();
   state = 'playing';
   GameAudio.playMusic();
 }
