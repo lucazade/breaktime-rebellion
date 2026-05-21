@@ -728,10 +728,7 @@ function drawSink() {
   // Water puddle on floor — starts past the wall (x=12), grows rightward
   if (sink.waterLevel > 0 || allSink) {
     const wx = 12;
-    const rights = [0, 62, 107, 130];
-    const w = allSink
-      ? Math.min(Math.floor(118 + sink.floodSpread), W - 10 - wx) // cap before right wall
-      : Math.max(0, rights[sink.waterLevel] - wx);
+    const w = Math.min(Math.floor(sink.floodSpread), W - 10 - wx); // grows from 0 to full floor
     if (w > 0) {
       ctx.fillStyle = 'rgba(30,90,200,0.22)';
       ctx.fillRect(wx, fy-2, Math.min(w, 8), 2);

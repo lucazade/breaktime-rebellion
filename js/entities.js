@@ -150,10 +150,10 @@ function updateJanitors() {
     if (Math.abs(j.y - player.y) < 12 && Math.abs(j.x - player.x) < 14 && player.stunT === 0) {
       caughtBy(j);
     }
-    // L7: MY-floor janitor walks in puddle for 90 frames → dries the floor
-    if (levelMechanics.floodSink && sink && sink.waterLevel > 0 && !allSink && j.x < 120 && j.y < (MY + GY) / 2) {
+    // L7: janitor dries water only when in front of the sink (not anywhere on floor)
+    if (levelMechanics.floodSink && sink && sink.waterLevel > 0 && !allSink && j.y < (MY + GY) / 2 && Math.abs(j.x - (sink.x + 6)) < 30) {
       j.dryT++;
-      if (j.dryT >= 90) { j.dryT = 0; sink.waterLevel = 0; sink.pourT = 0; setMsg(STRINGS.sinkReady); }
+      if (j.dryT >= 25) { j.dryT = 0; sink.waterLevel = 0; sink.pourT = 0; sink.floodSpread = 0; setMsg(STRINGS.sinkReady); }
     } else {
       j.dryT = 0;
     }
@@ -310,13 +310,9 @@ function sinkFloodWin() {
 
 function updateSink() {
   if (!sink) return;
-  if (allSink) {
-    if (sink.floodSpread < W - 12) sink.floodSpread = Math.min(W - 12, sink.floodSpread + 0.3);
-    return;
+  if (sink.waterLevel > 0 || allSink) {
+    if (sink.floodSpread < W - 10) sink.floodSpread = Math.min(W - 10, sink.floodSpread + 0.35);
   }
-  if (sink.resetT <= 0) return;
-  sink.resetT--;
-  if (sink.resetT === 0) setMsg(STRINGS.sinkReady);
 }
 
 function bagWin() {

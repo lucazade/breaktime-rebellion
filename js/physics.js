@@ -187,6 +187,7 @@ function updatePlayer() {
         sink.pourT = 0;
         sink.pourCount++;
         sink.waterLevel = 3;
+        sink.floodSpread = 0;
         score += 300;
         addFloating(sink.x + 6, sink.y - 8, '+300', C.cyan);
         addParticles(sink.x + 6, sink.y, C.cyan, 12);
