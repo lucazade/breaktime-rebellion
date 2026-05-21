@@ -389,9 +389,9 @@ function drawGymBall() {
   if (!gymBall) return;
   const bx = Math.round(gymBall.x), by = Math.round(gymBall.y);
   if (gymBall.deflated) {
-    ctx.fillStyle = '#CC6600';
+    ctx.fillStyle = '#6c2200';
     ctx.fillRect(bx, by+5, 9, 3);
-    ctx.fillStyle = '#993300';
+    ctx.fillStyle = '#CC6600';
     ctx.fillRect(bx+1, by+6, 7, 1);
     return;
   }
@@ -401,12 +401,21 @@ function drawGymBall() {
     ctx.fillStyle = '#2a0000'; ctx.fillRect(bx-1, by-8, 11, 3);
     ctx.fillStyle = '#cc1100'; ctx.fillRect(bx-1, by-8, Math.round(11 * pct), 3);
   }
-  // Basketball
+  // Basketball — proper pixel circle body + matching circular outline
   ctx.fillStyle = '#6b2200';
-  ctx.fillRect(bx+1, by-1, 7, 1); ctx.fillRect(bx+1, by+9, 7, 1); // top/bottom
-  ctx.fillRect(bx-1, by+1, 1, 7); ctx.fillRect(bx+9, by+1, 1, 7); // left/right
+  ctx.fillRect(bx+2, by-1, 5, 1);                                              // top arc
+  ctx.fillRect(bx+1, by,   1, 1); ctx.fillRect(bx+7, by,   1, 1);             // top shoulders
+  ctx.fillRect(bx,   by+1, 1, 1); ctx.fillRect(bx+8, by+1, 1, 1);            // upper sides
+  ctx.fillRect(bx-1, by+2, 1, 5); ctx.fillRect(bx+9, by+2, 1, 5);            // mid sides
+  ctx.fillRect(bx,   by+7, 1, 1); ctx.fillRect(bx+8, by+7, 1, 1);            // lower sides
+  ctx.fillRect(bx+1, by+8, 1, 1); ctx.fillRect(bx+7, by+8, 1, 1);            // bottom shoulders
+  ctx.fillRect(bx+2, by+9, 5, 1);                                              // bottom arc
   ctx.fillStyle = '#CC6600';
-  ctx.fillRect(bx+1, by, 7, 9); ctx.fillRect(bx, by+1, 9, 7);
+  ctx.fillRect(bx+2, by,   5, 1);                                              // body row 0
+  ctx.fillRect(bx+1, by+1, 7, 1);                                              // body row 1
+  ctx.fillRect(bx,   by+2, 9, 5);                                              // body rows 2-6
+  ctx.fillRect(bx+1, by+7, 7, 1);                                              // body row 7
+  ctx.fillRect(bx+2, by+8, 5, 1);                                              // body row 8
   ctx.fillStyle = '#6b2200';
   ctx.fillRect(bx+4, by, 1, 9); ctx.fillRect(bx, by+4, 9, 1);
   ctx.fillStyle = 'rgba(255,200,100,0.5)'; ctx.fillRect(bx+1, by+1, 2, 2);
