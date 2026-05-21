@@ -113,7 +113,7 @@ function drawTitleScreen() {
   ctx.font = ct.fontSize + 'px ' + FF;
 
   ctx.lineWidth = 1;
-  var ctrlTextY = ctrlY + Math.floor((ct.btnH - ct.fontSize) / 2); // vertical text centering
+  var ctrlTextY = ctrlY + Math.floor((ct.btnH - ct.fontSize) / 2) + 1; // vertical text centering
   var r = ct.boxR;
   function _box(x, y, w, color) {
     ctx.strokeStyle = color; ctx.beginPath(); ctx.roundRect(x, y, w, ct.btnH, r); ctx.stroke();
@@ -123,7 +123,7 @@ function drawTitleScreen() {
   if (LEVELS.length > 1) {
     var prevColor = currentLevel <= 1 ? C.dgray : ct.btnColor;
     _box(ct.prevX, ctrlY, ct.prevW, prevColor);
-    ctx.fillStyle = prevColor; ctx.fillText('‹', ct.prevX + ct.prevW/2, ctrlTextY);
+    ctx.fillStyle = prevColor; ctx.fillText('<', ct.prevX + ct.prevW/2, ctrlTextY);
 
     ctx.fillStyle = C.gold;
     ctx.fillText(STRINGS.levelLabel + ' ' + currentLevel, ct.labelX, ctrlTextY);
@@ -135,7 +135,7 @@ function drawTitleScreen() {
     } else {
       var nextColor = (atCeiling && !moreExist) ? C.dgray : ct.btnColor;
       _box(ct.nextX, ctrlY, ct.nextW, nextColor);
-      ctx.fillStyle = nextColor; ctx.fillText('›', ct.nextX + ct.nextW/2, ctrlTextY);
+      ctx.fillStyle = nextColor; ctx.fillText('>', ct.nextX + ct.nextW/2, ctrlTextY);
     }
   }
 
@@ -166,7 +166,7 @@ function drawTitleScreen() {
   _box(_audioX, ctrlY, _audioW, audioColor);
   var _blockW = _iconW + _gap + (_audioLblW ? _audioLblW[audioMode] : ctx.measureText(audioLabel).width);
   var _blockX = _audioX + Math.floor((_audioW - _blockW) / 2);
-  _drawVolumeIcon(_blockX, ctrlY + Math.floor((ct.btnH - 4) / 2), audioMode, audioColor);
+  _drawVolumeIcon(_blockX, ctrlY + Math.floor((ct.btnH - 4) / 2) + 2, audioMode, audioColor);
   ctx.fillStyle = audioColor; ctx.textAlign = 'left';
   ctx.fillText(audioLabel, _blockX + _iconW + _gap, ctrlTextY);
   ctx.textAlign = 'center';
@@ -411,19 +411,31 @@ function drawBookcase() {
   const bx = Math.round(bookcase.x), by = Math.round(bookcase.y);
 
   if (bookcase.dropped) {
-    // Open book lying flat on the floor (two pages + spine)
     const fx = bx + bookcase.fallDx, fy = by + bookcase.fallDy;
-    ctx.fillStyle = '#3a1000';
-    ctx.fillRect(fx-1, fy, 1, 9); ctx.fillRect(fx+18, fy, 1, 9); // vertical borders
-    ctx.fillRect(fx-1, fy+9, 20, 1);                               // bottom border
-    ctx.fillStyle = '#3a1000'; ctx.fillRect(fx,    fy,   18, 1); // binding top
-    ctx.fillStyle = '#F5E6C0'; ctx.fillRect(fx,    fy+1,  7, 8); // left page
-    ctx.fillStyle = '#F5E6C0'; ctx.fillRect(fx+11, fy+1,  7, 8); // right page
-    ctx.fillStyle = '#6B2200'; ctx.fillRect(fx+7,  fy,    4, 9); // spine
-    ctx.fillStyle = '#999999'; ctx.fillRect(fx+1,  fy+3,  5, 1); // text lines L
-    ctx.fillStyle = '#999999'; ctx.fillRect(fx+1,  fy+5,  5, 1);
-    ctx.fillStyle = '#999999'; ctx.fillRect(fx+12, fy+3,  5, 1); // text lines R
-    ctx.fillStyle = '#999999'; ctx.fillRect(fx+12, fy+5,  5, 1);
+    if (allBooks) {
+      // 3rd drop: book split in two pieces
+      // Left half (pages + half spine)
+      ctx.fillStyle = '#3a1000'; ctx.fillRect(fx-1, fy, 1, 9); ctx.fillRect(fx-1, fy+9, 10, 1); ctx.fillRect(fx, fy, 9, 1);
+      ctx.fillStyle = '#F5E6C0'; ctx.fillRect(fx,   fy+1, 7, 8);
+      ctx.fillStyle = '#6B2200'; ctx.fillRect(fx+7, fy,   2, 9);
+      ctx.fillStyle = '#999999'; ctx.fillRect(fx+1, fy+3, 5, 1); ctx.fillRect(fx+1, fy+5, 5, 1);
+      // Right half (half spine + pages) — shifted 3px right, 2px down
+      ctx.fillStyle = '#6B2200'; ctx.fillRect(fx+12, fy+2, 2, 9);
+      ctx.fillStyle = '#3a1000'; ctx.fillRect(fx+12, fy+2, 9, 1); ctx.fillRect(fx+20, fy+2, 1, 9); ctx.fillRect(fx+12, fy+11, 9, 1);
+      ctx.fillStyle = '#F5E6C0'; ctx.fillRect(fx+14, fy+3, 6, 8);
+      ctx.fillStyle = '#999999'; ctx.fillRect(fx+15, fy+5, 4, 1); ctx.fillRect(fx+15, fy+7, 4, 1);
+    } else {
+      // 1st/2nd drop: open book lying flat
+      ctx.fillStyle = '#3a1000';
+      ctx.fillRect(fx-1, fy, 1, 9); ctx.fillRect(fx+18, fy, 1, 9);
+      ctx.fillRect(fx-1, fy+9, 20, 1);
+      ctx.fillRect(fx,    fy,   18, 1);
+      ctx.fillStyle = '#F5E6C0'; ctx.fillRect(fx,    fy+1,  7, 8);
+      ctx.fillStyle = '#F5E6C0'; ctx.fillRect(fx+11, fy+1,  7, 8);
+      ctx.fillStyle = '#6B2200'; ctx.fillRect(fx+7,  fy,    4, 9);
+      ctx.fillStyle = '#999999'; ctx.fillRect(fx+1,  fy+3,  5, 1); ctx.fillRect(fx+1,  fy+5, 5, 1);
+      ctx.fillStyle = '#999999'; ctx.fillRect(fx+12, fy+3,  5, 1); ctx.fillRect(fx+12, fy+5, 5, 1);
+    }
     return;
   }
 

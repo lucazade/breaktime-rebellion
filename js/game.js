@@ -42,10 +42,9 @@ ctx.imageSmoothingEnabled = false;
   img.src = src;
 })();
 
-// Load logo — HD version for desktop (4x canvas), standard for mobile
+// Load logo — HD version preferred (higher source resolution = better downscale quality)
 (function() {
-  var src = (_isDesktop && !CONFIG.debug.simulateMobile && CONFIG.images.logoHd)
-    ? CONFIG.images.logoHd : CONFIG.images.logo;
+  var src = (CONFIG.images.logoHd || CONFIG.images.logo);
   if (!src) return;
   var img = new Image();
   img.onload = function() { _logoImage = img; };
