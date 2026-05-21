@@ -222,7 +222,7 @@ canvas {
   position: fixed; inset: 0;
   background: linear-gradient(160deg, #060010 0%, #0e0026 45%, #100030 60%, #060010 100%);
   color: #ffd700;
-  font-size: 10px;
+  font-size: 11px;
   align-items: center; justify-content: center;
   flex-direction: column;
   text-align: center; letter-spacing: 2px; line-height: 2.5;

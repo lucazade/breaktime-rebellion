@@ -81,8 +81,8 @@ var LEVELS = (function() {
       bags: [],
 
       machines: [
-        {x:91,  y:GY-38},
-        {x:279, y:MY-38},
+        {x:91,  y:GY-37},
+        {x:279, y:MY-37},
         {x:36, y:TY-36},
       ],
 
@@ -112,7 +112,7 @@ var LEVELS = (function() {
       },
 
       bags: [],
-      gymBall: {x:288, y:MY-15},
+      gymBall: {x:218, y:MY-22},
 
       // PE teacher on the gym floor (MY), patrols ONLY the gym area so they are
       // always visible near the ball. Preside is reserved for L6.
@@ -171,7 +171,7 @@ var LEVELS = (function() {
 
       bags: [],
       // Bookcase is the rightmost fixture on the ground floor (yellow room).
-      bookcase: {x:288, y:GY-43, fallDx:-30, fallDy:28},
+      bookcase: {x:288, y:GY-43, fallDx:-25, fallDy:28},
 
       // Preside patrols right half — principal's office area.
       teachers: [
@@ -194,7 +194,7 @@ var LEVELS = (function() {
 
       bags: [],
       // Sink in the leftmost room on the middle floor (bathroom)
-      sink: {x:32, y:MY-21},
+      sink: {x:32, y:MY-20},
 
       teachers: [],
 
@@ -216,9 +216,9 @@ var LEVELS = (function() {
 
       bags: [],
       bins: [
-        {x:35,  y:GY-20}, // entrance — leftmost room, ground floor
-        {x:278, y:MY-20}, // gym — rightmost room, middle floor
-        {x:296, y:TY-3}, // terrace — rightmost room, top floor
+        {x:117,  y:GY-19}, // entrance — leftmost room, ground floor
+        {x:278, y:MY-19}, // gym — rightmost room, middle floor
+        {x:235, y:TY-13}, // terrace — rightmost room, top floor
       ],
 
       teachers: [

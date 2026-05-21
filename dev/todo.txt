@@ -307,10 +307,11 @@ CHIUSI:
 - [X] #151 timerbar alpha 0.90 configurabile
 - [X] #150 L7: nella prima e nella seconda apertura del rubinetto l'acqua deve scorrere come fa nella terza apertura fino in fondo al piano. Il bidello fa sparire l'acqua solo quando è davanti al rubinetto.
 - [X] #148 i pulsanti dei livelli e dell'audio sono difficili da premere su mobile, possiamo aumentare il trigger senza ingrandire i pulsanti? stiamo attenti a non andare sopra il trigger di logo
+- [X] #153 Alcuni elementi sono troppo alti
+- [X] #154 Al pallone mancano alcuni pixel negli angoli
 
 PER LUCA:
 - [ ] #138 sostituire suono acqua bagno
-- [ ] #153 Alcuni elementi sono troppo alti
 
 PER CLAUDE:
 - [ ] #152 il nuovo bg (day & night) ora usa la stessa palette di logo. Farei un nuovo branch dove usiamo la palette di logo come riferimento per ricolorare tutti i personaggi e gli oggetti. I colori di base restano gli stessi ma sono più saturi e vivaci. Credo che i colori dei personaggi e  degli oggetti sono sparsi in diversi css e js (draw e layout? altri?).
