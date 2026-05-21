@@ -1,0 +1,57 @@
+Crea un nuovo branch "refactor/gfx-palette".
+
+Riorganizza i file grafici secondo questa struttura:
+
+- gfx-palette.js: palette colori completa (PAL object)
+  inclusi i colori attualmente in CONFIG.colors di layout.js
+- gfx-layout.js: rinomina layout.js, rimuovi i colori
+  (vanno in gfx-palette.js), mantieni canvas e coordinate
+- gfx-hud.js: estrai da draw.js tutto ciò che riguarda
+  bezel, hud, dialog, banners, credits, titlescreen ui
+- gfx-chars.js: estrai da draw.js tutti i drawChar/drawNPC
+- gfx-objects.js: estrai da draw.js tutti gli oggetti mappa
+
+Aggiorna index.html con il nuovo ordine di caricamento.
+Valida JS dopo ogni file. Commit separato per ogni file creato.
+NON cambiare ancora i colori — solo riorganizzare.
+
+---
+
+Ordine di caricamento in index.html da rispettare:
+
+<script src="js/gfx-palette.js"></script>   <!-- prima di tutto -->
+<script src="js/gfx-layout.js"></script>     <!-- dipende da palette -->
+<script src="js/gfx-hud.js"></script>        <!-- dipende da palette -->
+<script src="js/gfx-chars.js"></script>      <!-- dipende da palette -->
+<script src="js/gfx-objects.js"></script>    <!-- dipende da palette -->
+<!-- poi il resto: levels, audio, state, input, physics, entities, draw, game, title -->
+
+---
+
+const PAL = {
+  // Struttura
+  black:       '#000000',  // outline tutto
+  white:       '#FFFFFF',  // highlights
+
+  // Ambiente
+  green:       '#33B84B',  // muri verdi
+  greenDark:   '#039C5A',  // ombre muri verdi
+  purple:      '#4E3699',  // muri viola/giacca Marco
+  purpleDark:  '#423D7C',  // ombre viola
+  yellow:      '#FEDC02',  // giallo testo/capelli
+  blue:        '#1665DC',  // pavimento/pantaloni
+  blueDark:    '#012A9F',  // pavimento scuro
+  navy:        '#16202D',  // sfondo/ombre profonde
+
+  // Legno/oggetti
+  brownDark:   '#822B14',  // banchi, porte
+  brownMid:    '#875634',  // legno medio
+  orange:      '#ED6A17',  // legno chiaro/pelle
+  orangeDark:  '#E85606',  // pelle in ombra
+
+  // Accenti
+  red:         '#D21C01',  // dettagli rossi
+  redDark:     '#5F1D1B',  // ombre rosse
+  lime:        '#D0E989',  // testo copyright
+  beige:       '#E7B260',  // lavagna, pelle chiara
+};
