@@ -96,10 +96,13 @@ var _titleAudioX = 0, _titleAudioW = 0; // audio button position (dynamic width)
 function _titleCanvasClick(lx, ly) {
   if (state !== 'title') return;
   var ct = CONFIG.vis.titleScreen.controls;
-  if (ly >= _titleCtrlY - 2 && ly <= _titleCtrlY + ct.btnH + 2) {
-    if (lx >= _titleAudioX && lx <= _titleAudioX + _titleAudioW) { _titleCycleAudio(); return; }
-    if (lx >= ct.prevX && lx <= ct.prevX + ct.prevW && currentLevel > 1 && LEVELS.length > 1) { currentLevel--; return; }
-    if (lx >= ct.nextX && lx <= ct.nextX + ct.nextW && currentLevel < _btrMax && LEVELS.length > 1) { currentLevel++; return; }
+  var tpX = 8, tpY = 6; // tap padding — larger target without changing visuals
+  var logoBottom = _titleLogoRect ? _titleLogoRect.y + _titleLogoRect.h : _titleCtrlY;
+  var padUp = Math.min(tpY, Math.max(0, _titleCtrlY - logoBottom - 1)); // don't exceed logo
+  if (ly >= _titleCtrlY - padUp && ly <= _titleCtrlY + ct.btnH + tpY) {
+    if (lx >= _titleAudioX - tpX && lx <= _titleAudioX + _titleAudioW + tpX) { _titleCycleAudio(); return; }
+    if (lx >= ct.prevX - tpX && lx <= ct.prevX + ct.prevW + tpX && currentLevel > 1 && LEVELS.length > 1) { currentLevel--; return; }
+    if (lx >= ct.nextX - tpX && lx <= ct.nextX + ct.nextW + tpX && currentLevel < _btrMax && LEVELS.length > 1) { currentLevel++; return; }
     return;
   }
   if (_titleLogoRect && lx >= _titleLogoRect.x && lx <= _titleLogoRect.x + _titleLogoRect.w
