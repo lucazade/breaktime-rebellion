@@ -10,7 +10,7 @@ Fase 1 (questo branch): riorganizzare i file grafici senza cambiare colori né c
   - Zero cambiamenti visivi: validazione JS deve dare "JS OK" dopo ogni commit
 
 Fase 2 (branch successivo): applicare PAL ai personaggi e agli oggetti, ricolorando tutti i
-  sprite per uniformarli al background day/night.
+  sprite per uniformarli al logo (riferimento palette).
 
 
 ## Struttura file risultante
