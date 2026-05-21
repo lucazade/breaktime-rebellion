@@ -6,10 +6,11 @@ Riorganizza i file grafici secondo questa struttura:
   inclusi i colori attualmente in CONFIG.colors di layout.js
 - gfx-layout.js: rinomina layout.js, rimuovi i colori
   (vanno in gfx-palette.js), mantieni canvas e coordinate
-- gfx-hud.js: estrai da draw.js tutto ciò che riguarda
+- gfx-hud.js: estrai da layout.js tutto ciò che riguarda
   bezel, hud, dialog, banners, credits, titlescreen ui
 - gfx-chars.js: estrai da draw.js tutti i drawChar/drawNPC
 - gfx-objects.js: estrai da draw.js tutti gli oggetti mappa
+- css/style.css: rimane come adesso: sfondo synthwave, pannelli mobile, ecc.
 
 Aggiorna index.html con il nuovo ordine di caricamento.
 Valida JS dopo ogni file. Commit separato per ogni file creato.
