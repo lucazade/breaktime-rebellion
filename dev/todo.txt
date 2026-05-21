@@ -300,9 +300,9 @@ PER LUCA:
 
 PER CLAUDE:
 - [ ] #141 Title: < e > non allineate vert e oriz nei pulsanti
-- [ ] #144 Title: logo su mobile sfuocato, indagare (su desktop ok)
-- [ ] #142 L9: aggiungere bordino sprinkles
-- [ ] #143 L10: nascondere guardiani prima di allargare luce
-- [ ] #145 feedback quando hai finito la meccanica (ad esempio in L6 la terza volta che cade il libro si rompe?)
+- [ ] #142 Title: logo su mobile sfuocato, indagare (su desktop ok)
+- [ ] #143 L6: la terza volta che cade il libro si rompe? (migliorare feedback fine meccanica)
+- [ ] #144 L9: aggiungere bordino sprinkles
+- [ ] #145 L10: nascondere guardiani prima di allargare luce
 - [ ] #146 controllo generale dead code, funzione e variabili non usate, commenti e test js bug
 - [ ] #147 profiling con firefox (allegare screenshot)
