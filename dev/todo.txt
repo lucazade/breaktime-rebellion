@@ -295,14 +295,16 @@ CHIUSI:
 
 Obiettivo: come da titolo
 
+CHIUSI:
+- [X] #142 Title: logo su mobile sfuocato, indagare (su desktop ok)
+- [X] #143 L6: la terza volta che cade il libro si rompe? (migliorare feedback fine meccanica)
+- [X] #141 Title: < e > non allineate vert e oriz nei pulsanti
+- [X] #144 L9: aggiungere bordino sprinkles
+- [X] #145 L10: nascondere guardiani prima di allargare luce
+- [X] #147 profiling con firefox (allegare screenshot)
+- [X] #146 controllo generale dead code, funzione e variabili non usate, commenti e test js bug
+
 PER LUCA:
 - [ ] #138 sostituire suono acqua bagno
 
 PER CLAUDE:
-- [ ] #141 Title: < e > non allineate vert e oriz nei pulsanti
-- [ ] #142 Title: logo su mobile sfuocato, indagare (su desktop ok)
-- [ ] #143 L6: la terza volta che cade il libro si rompe? (migliorare feedback fine meccanica)
-- [ ] #144 L9: aggiungere bordino sprinkles
-- [ ] #145 L10: nascondere guardiani prima di allargare luce
-- [ ] #146 controllo generale dead code, funzione e variabili non usate, commenti e test js bug
-- [ ] #147 profiling con firefox (allegare screenshot)

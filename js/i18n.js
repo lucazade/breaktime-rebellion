@@ -60,7 +60,6 @@
     allBoards:            'All vandalized! Ring the bell!',
 
     mission2:             "Steal all classmates' bags and then ring the bell!",
-    bagCollected:         'Bag stolen!',
     bagStolen:            'Bag stolen! ({0}/{1})',
     allBagsStolen:        'All stolen! Ring the bell!',
 
@@ -161,7 +160,6 @@
     allBoards:            'Tutte imbrattate! Suona la campanella!',
 
     mission2:             'Ruba tutte le cartelle e poi suona la campanella!',
-    bagCollected:         'Cartella rubata!',
     bagStolen:            'Cartella rubata! ({0}/{1})',
     allBagsStolen:        'Tutte rubate! Suona la campanella!',
 

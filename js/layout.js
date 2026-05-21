@@ -83,7 +83,7 @@ Object.assign(CONFIG.vis, {
     controls: {
       fontSize: 8,
       gapY:     8,                    // gap between logo and controls row
-      btnH:    10,                    // button clickable height
+      btnH:    11,                    // button clickable height
       boxR:     2,                    // button box corner radius
       btnColor: '#b0b0b0',          // enabled button colour (less saturated than white)
       prevX:   10, prevW: 14,         // ‹ level button

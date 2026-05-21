@@ -128,7 +128,7 @@ function loop(ts) {
       if (storyBannerT > 0) {
         if (storyBannerFading) {
           storyBannerT--;
-          if (storyBannerT <= 0) { storyBannerFading = false; storyShown = true; missionBannerT = 210; bannerChained = true; }
+          if (storyBannerT <= 0) { storyBannerFading = false; storyShown = true; missionBannerT = 210; }
         } else {
           storyFadeInT = Math.min(storyFadeInT + 1, 40);
         }
@@ -388,7 +388,6 @@ if (_btnInfo) {
 }
 
 // ── Canvas click detection for all canvas overlays ───────────────────────────
-function _panPos(panW, panH) { return { bx: Math.round((W - panW) / 2), by: Math.round((H - panH) / 2) }; }
 
 function _creditsCanvasClick(lx, ly) {
   var VC = CONFIG.vis.credits;
