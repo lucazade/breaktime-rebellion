@@ -289,14 +289,20 @@ CHIUSI:
 - [X] #136 L10: raggio della torcia più piccolo e controllare poi se guardiano ti becca, progressbar si resetta se non completa
 - [X] #85 layout: Aggiungere banco al secondo piano
 
+---
+
+## FASE 13 — Beta Testing III
+
+Obiettivo: come da titolo
+
 PER LUCA:
 - [ ] #138 sostituire suono acqua bagno
 
 PER CLAUDE:
-- [ ] #141 < e > non allineate vert e oriz nei pulsanti
-- [ ] #142 aggiungere bordino sprinkles
-- [ ] #143 L10: spostare guardiano piano terra e nascondere guardiani prima di allargare luce
-- [ ] #144 logo su mobile sfuocato, indagare (su desktop ok)
+- [ ] #141 Title: < e > non allineate vert e oriz nei pulsanti
+- [ ] #144 Title: logo su mobile sfuocato, indagare (su desktop ok)
+- [ ] #142 L9: aggiungere bordino sprinkles
+- [ ] #143 L10: nascondere guardiani prima di allargare luce
 - [ ] #145 feedback quando hai finito la meccanica (ad esempio in L6 la terza volta che cade il libro si rompe?)
 - [ ] #146 controllo dead code, funzione e variabili non usate, test js bug
 - [ ] #147 profiling con firefox

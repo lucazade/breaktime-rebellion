@@ -284,7 +284,7 @@ var LEVELS = (function() {
 
       // Three night guards — larger catch radius (within torch light)
       teachers: [
-        {x:200, y:GY-PH-walkOffset, dir: 1, minX:10, maxX:305, speed:0.60, color:'#1a1a3a', name:'Guardiano', sight:110, catchRadius:20},
+        {x:250, y:GY-PH-walkOffset, dir: 1, minX:10, maxX:305, speed:0.60, color:'#1a1a3a', name:'Guardiano', sight:110, catchRadius:20},
         {x:10,  y:MY-PH-walkOffset, dir: 1, minX:10, maxX:305, speed:0.60, color:'#1a1a3a', name:'Guardiano', sight:110, catchRadius:20},
         {x:140, y:TY-PH-walkOffset, dir:-1, minX:10, maxX:275, speed:0.60, color:'#1a1a3a', name:'Guardiano', sight:100, catchRadius:20},
       ],
