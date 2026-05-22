@@ -37,6 +37,9 @@ const CONFIG = {
       door:      'assets/audio/sfx/door.ogg',
     },
   },
+  display: {
+    desktopZoom: 2.0,  // desktop CSS zoom — 2.0 → canvas renders at 4× native (800px display height)
+  },
   debug: {
     lang:             'auto', // 'auto' = navigator.language | 'it' | 'en'
     showTapToStart:   true,

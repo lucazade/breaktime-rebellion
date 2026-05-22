@@ -13,7 +13,6 @@ CONFIG.vis = {
     BW: 22, BH: 14,              // board (lavagna) width × height
     walkOffset: 6,               // px sopra la superficie dove cammina il personaggio
     wallLeft: 10, wallRight: 10, // #78 — margini muro sx/dx (pixel logici)
-    desktopZoom: 2.0,            // desktop CSS display height = 400px × zoom (2.0 → 800px = 4x canvas native height, no upscaling)
   },
 
 };
@@ -77,4 +76,4 @@ Object.assign(CONFIG.vis, {
 var SHARED_LAYOUT = CONFIG.vis.shared;
 
 // CSS custom properties — layout only (bezel vars → gfx-ui.js)
-document.documentElement.style.setProperty('--btr-zoom', CONFIG.vis.layout.desktopZoom);
+document.documentElement.style.setProperty('--btr-zoom', CONFIG.display.desktopZoom);
