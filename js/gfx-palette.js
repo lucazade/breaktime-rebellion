@@ -53,7 +53,7 @@ const PAL_LOGO = {
   janitorSalopette:  '#1665DC',  // overalls and cap
   janitorShirt:      '#FFFFFF',  // undershirt (bodyCol)
   janitorShoes:      '#FFFFFF',
-  janitorMopHandle:  '#581e00',  // dark wood
+  janitorMopHandle:  '#862c00',
   janitorMopHead:    '#959595',  // grey bristles
 
   // ── Prof.Rossi ────────────────────────────────────────
