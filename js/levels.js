@@ -1,5 +1,5 @@
 // Level definitions — edit here to change mechanics and NPCs per level.
-// Loaded after gfx-building.js; SHARED_LAYOUT, CONFIG.vis.layout and CONFIG.vis.colors are available.
+// Loaded after gfx-building.js; SHARED_LAYOUT and CONFIG.vis.layout are available.
 //
 // mechanics: declares which player actions are active objectives in this level.
 //   writeBoards   — spray all boards to tag them (boards are always drawn, writable only in L1)

@@ -184,7 +184,6 @@ const PAL = {
   bellOutline:   '#554400',  // dark outline
   bellBody:      '#FFCC00',  // main body
   bellHighlight: '#FFE966',  // top highlight
-  bellShadow:    '#CC9900',  // shadow
   bellClapper:   '#332200',  // clapper
 
   // ── Desks ─────────────────────────────────────────────────
