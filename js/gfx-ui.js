@@ -1,6 +1,7 @@
 // ═══════════════════════════════════════════════════════════
 //  GFX UI — font, bezel, HUD, dialogs, and all banner config
-//  Layout/scene → gfx-layout.js  |  Colors → gfx-palette.js
+//  All colours reference PAL (gfx-palette.js).
+//  Layout/scene → gfx-layout.js
 // ═══════════════════════════════════════════════════════════
 
 Object.assign(CONFIG.vis, {
@@ -9,29 +10,29 @@ Object.assign(CONFIG.vis, {
 
   // ── Bezel — mobile side panels ────────────────────
   bezel: {
-    panelInnerBorder:  'rgba(160,0,255,0.7)',
-    btnHomeBorder:     'rgba(160,0,255,0.85)',
-    btnPauseBorder:    'rgba(160,0,255,0.85)',
-    btnInfoBorder:     'rgba(160,0,255,0.85)',
-    btnHomeBg:         'rgba(10,0,24,1)',
-    btnPauseBg:        'rgba(10,0,24,1)',
-    btnInfoBg:         'rgba(0,0,0,0.45)',
-    btnHomeBgPressed:  'rgba(160,0,255,0.28)',
-    btnPauseBgPressed: 'rgba(160,0,255,0.28)',
-    btnInfoBgPressed:  'rgba(160,0,255,0.28)',
-    btnGlow:           '0 0 8px rgba(160,0,255,0.35)',
+    panelInnerBorder:  PAL.bezelGlow,
+    btnHomeBorder:     PAL.bezelBorder,
+    btnPauseBorder:    PAL.bezelBorder,
+    btnInfoBorder:     PAL.bezelBorder,
+    btnHomeBg:         PAL.bezelBtnBg,
+    btnPauseBg:        PAL.bezelBtnBg,
+    btnInfoBg:         PAL.bezelInfoBg,
+    btnHomeBgPressed:  PAL.bezelPressed,
+    btnPauseBgPressed: PAL.bezelPressed,
+    btnInfoBgPressed:  PAL.bezelPressed,
+    btnGlow:           PAL.bezelShadow,
   },
 
   // Shared style for all dialog panels (banners, buttons)
   dialog: {
-    panBg:       'rgba(0,0,40,0.90)',         // panel background (default)
-    panBorder:   '#FFD700',                   // panel border colour
-    panBorderW:  1,                             // panel border thickness
-    panR:        4,                             // panel corner radius
-    btnR:        2,                             // button corner radius
-    btnColorYes: 'rgba(0,90,0,0.92)',         // positive button (YES / OK / RESUME)
-    btnColorNo:  'rgba(90,0,0,0.92)',         // negative button (NO)
-    btnStroke:   '#FFD700',                   // button border colour
+    panBg:       PAL.panelBg,
+    panBorder:   PAL.panelBorder,
+    panBorderW:  1,
+    panR:        4,
+    btnR:        2,
+    btnColorYes: PAL.btnYes,
+    btnColorNo:  PAL.btnNo,
+    btnStroke:   PAL.panelBorder,
   },
 
   // Title screen — logo + tap to start + level chooser + audio toggle + keyboard legend
@@ -43,7 +44,7 @@ Object.assign(CONFIG.vis, {
       gapY:     8,
       btnH:    11,
       boxR:     2,
-      btnColor: '#b0b0b0',
+      btnColor: PAL.btnLabel,
       prevX:   10, prevW: 14,
       nextX:   76, nextW: 14,
       labelX:  50,
@@ -65,18 +66,18 @@ Object.assign(CONFIG.vis, {
     timerAlpha: 0.80,
     fontSize:  6,
     dotGap:    5,
-    bgColor:   'rgba(0, 4, 75, 0.55)',
+    bgColor:   PAL.hudBg,
     dotColors: {
-      boards:     '#588D43',
-      bags:       '#4A3D8F',
-      machines:   '#B8C76F',
-      ball:       '#CC6600',
-      students:   '#FFFFFF',
-      books:      '#6B2200',
-      sink:       '#70A4B2',
-      bins:       '#B8C76F',
-      sprinklers: '#70A4B2',
-      register:   '#FFD700',
+      boards:     PAL.dotBoards,
+      bags:       PAL.dotBags,
+      machines:   PAL.dotMachines,
+      ball:       PAL.dotBall,
+      students:   PAL.dotStudents,
+      books:      PAL.dotBooks,
+      sink:       PAL.dotSink,
+      bins:       PAL.dotBins,
+      sprinklers: PAL.dotSprinklers,
+      register:   PAL.dotRegister,
     },
   },
 
@@ -207,9 +208,8 @@ Object.assign(CONFIG.vis, {
 });
 
 // CSS custom properties — font and bezel
-var _UI = CONFIG.vis;
-var _B  = CONFIG.vis.bezel;
-document.documentElement.style.setProperty('--btr-font-family',          _UI.fontFamily);
+var _B = CONFIG.vis.bezel;
+document.documentElement.style.setProperty('--btr-font-family',          CONFIG.vis.fontFamily);
 document.documentElement.style.setProperty('--btr-panel-inner-border',   _B.panelInnerBorder);
 document.documentElement.style.setProperty('--btr-btn-home-border',      _B.btnHomeBorder);
 document.documentElement.style.setProperty('--btr-btn-pause-border',     _B.btnPauseBorder);
