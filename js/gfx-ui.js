@@ -6,8 +6,6 @@
 
 Object.assign(CONFIG.vis, {
 
-  fontFamily: '"Press Start 2P"',  // font used — set as CSS variable for use in CSS too
-
   // ── Bezel — mobile side panels ────────────────────
   bezel: {
     panelInnerBorder:  PAL.bezelGlow,
@@ -209,7 +207,7 @@ Object.assign(CONFIG.vis, {
 
 // CSS custom properties — font and bezel
 var _B = CONFIG.vis.bezel;
-document.documentElement.style.setProperty('--btr-font-family',          CONFIG.vis.fontFamily);
+document.documentElement.style.setProperty('--btr-font-family',          CONFIG.display.fontFamily);
 document.documentElement.style.setProperty('--btr-panel-inner-border',   _B.panelInnerBorder);
 document.documentElement.style.setProperty('--btr-btn-home-border',      _B.btnHomeBorder);
 document.documentElement.style.setProperty('--btr-btn-pause-border',     _B.btnPauseBorder);

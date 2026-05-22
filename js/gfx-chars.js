@@ -1,6 +1,6 @@
 // ═══════════════════════════════════════════════════════════
 //  GFX CHARS — player/char config + sprite draw functions
-//  Depends on: gfx-palette, gfx-building, gfx-draw (FF var at runtime).
+//  Depends on: gfx-palette, gfx-building. FF defined in config.js.
 // ═══════════════════════════════════════════════════════════
 
 // Player dimensions — defined here so PH is available for playerStart
