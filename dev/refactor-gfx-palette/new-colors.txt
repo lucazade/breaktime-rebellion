@@ -1,0 +1,98 @@
+Marco — protagonista
+
+Pelle (viso, mani) #faa462
+Pelle ombra / collo #fd6935
+Capelli #581e00
+Corpo / pantaloni #015dca
+Strisce camicia #6121ac (rimuovere strisce)
+Zainetto #7f2001
+Scarpe #ba0200
+
+---
+
+Professori — gambe e dettagli condivisi
+
+Gambe / pantaloni #706f6e
+Scarpe #862c00
+Cravatta #fcd806 oppure #FEDC02
+Capelli (grigi/bianchi) #72706e
+Pelle (viso, mani) #faa462
+Pelle ombra / collo #fd6935
+
+---
+
+Prof.Rossi
+
+Corpo / giacca #D21C01
+
+---
+
+Prof.Celeste
+
+Corpo / giacca #1665DC oppure #012A9F
+
+---
+
+Prof.Neri
+
+Corpo / giacca #2f2e2d
+
+---
+
+Preside
+
+Corpo / giacca #2f2e2d oppure #16202D
+
+---
+
+Bidello
+
+salopette #1665DC
+maglietta #FFFFFF
+Pelle	#faa462
+Manico scopa #862c00
+scarpe #FFFFFF 
+cappello #1665DC
+
+---
+
+Alunni seduti
+
+Pelle (viso, mani) #faa462
+Pelle ombra / collo #fd6935
+Capelli #581e00
+Camicia	#FFFFFF
+
+---
+
+Preside
+
+Pelle (viso, mani) #faa462
+Pelle ombra / collo #fd6935
+Capelli #706f6e
+Corpo / giacca #2f2e2d
+Pantaloni #706f6e
+Scarpe #862c00
+
+---
+
+Guardiani
+
+Pelle (viso, mani) #faa462
+Pelle ombra / collo #fd6935
+Corpo / uniforme #1665DC	
+Pantaloni scuri	#2f2e2d
+cappello #2f2e2d aggiungere
+scarpe #000000
+Cuffia e Visiera cuffia rimuovere
+
+---
+
+Luca
+
+Pelle (viso, mani) #faa462
+Pelle ombra / collo #fd6935
+Capelli #581e00
+pantaloni #012A9F
+Corpo #FFFFFF'
+Scarpe #000000

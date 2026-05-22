@@ -49,8 +49,8 @@ function updatePlayer() {
           m.broken = true;
           GameAudio.playSfx('machine');
           score += 500;
-          addFloating(m.x + 5, m.y, '+500', C.yellow);
-          addParticles(m.x + 5, m.y + 9, C.yellow, 18);
+          addFloating(m.x + 5, m.y, '+500', PAL.scoreParticle);
+          addParticles(m.x + 5, m.y + 9, PAL.scoreParticle, 18);
           alertTeachers(m.x + 5, m.y + 9);
           let broken = 0;
           for (let j = 0; j < machines.length; j++) if (machines[j].broken) broken++;
@@ -78,7 +78,7 @@ function updatePlayer() {
         gymBall.deflateCount++;
         GameAudio.playSfx('deflate');
         score += 300;
-        addFloating(gymBall.x + 4, gymBall.y, '+300', C.yellow);
+        addFloating(gymBall.x + 4, gymBall.y, '+300', PAL.scoreParticle);
         alertTeachers(gymBall.x + 4, gymBall.y + 4);
         if (gymBall.deflateCount >= 3) {
           ballDeflatedWin();
@@ -105,8 +105,8 @@ function updatePlayer() {
         bookcase.dropCount++;
         GameAudio.playSfx('book');
         score += 300;
-        addFloating(bookcase.x + 3, bookcase.y, '+300', C.yellow);
-        addParticles(bookcase.x + 3, bookcase.y + 6, C.yellow, 12);
+        addFloating(bookcase.x + 3, bookcase.y, '+300', PAL.scoreParticle);
+        addParticles(bookcase.x + 3, bookcase.y + 6, PAL.scoreParticle, 12);
         alertTeachers(bookcase.x + 3, bookcase.y + 6);
         if (bookcase.dropCount >= 3) {
           bookDropWin();
@@ -130,7 +130,7 @@ function updatePlayer() {
         register.stolen = true;
         register.stealT = 0;
         score += 500;
-        addFloating(register.x, register.y - 10, '+500', C.gold);
+        addFloating(register.x, register.y - 10, '+500', PAL.gold);
         GameAudio.playSfx('register');
         alertTeachers(register.x + 5, register.y);
         allRegisterWin();
@@ -158,8 +158,8 @@ function updatePlayer() {
           sp.lighterT = 0;
           sp.active = true;
           score += 300;
-          addFloating(sp.x, sp.y - 8, '+300', C.cyan);
-          addParticles(sp.x + 4, sp.y, C.cyan, 15);
+          addFloating(sp.x, sp.y - 8, '+300', PAL.cyan);
+          addParticles(sp.x + 4, sp.y, PAL.cyan, 15);
           GameAudio.playSfx('sprinkler');
           for (let ti = 0; ti < teachers.length; ti++) {
             const t = teachers[ti];
@@ -189,8 +189,8 @@ function updatePlayer() {
         sink.waterLevel = 3;
         sink.floodSpread = 0;
         score += 300;
-        addFloating(sink.x + 6, sink.y - 8, '+300', C.cyan);
-        addParticles(sink.x + 6, sink.y, C.cyan, 12);
+        addFloating(sink.x + 6, sink.y - 8, '+300', PAL.cyan);
+        addParticles(sink.x + 6, sink.y, PAL.cyan, 12);
         GameAudio.playSfx('sink');
         alertTeachers(107, sink.y);
         if (sink.pourCount >= 3) {
@@ -262,8 +262,8 @@ function updatePlayer() {
     if (bdx < 14 && bdy < 14) {
       bag.collected = true;
       score += 200;
-      addFloating(bag.x, bag.y, '+200', C.gold);
-      addParticles(bag.x, bag.y, C.gold, 10);
+      addFloating(bag.x, bag.y, '+200', PAL.gold);
+      addParticles(bag.x, bag.y, PAL.gold, 10);
       GameAudio.playSfx('bag');
       alertTeachers(bag.x, bag.y);
       let remaining = 0;
@@ -388,8 +388,8 @@ function updatePaperBalls() {
         s.shakeT = 25;
         GameAudio.playSfx('hit');
         score += 300;
-        addFloating(s.x + 5, s.y - 18, '+300', C.yellow);
-        addParticles(s.x + 5, s.y - 10, C.yellow, 8);
+        addFloating(s.x + 5, s.y - 18, '+300', PAL.scoreParticle);
+        addParticles(s.x + 5, s.y - 10, PAL.scoreParticle, 8);
         alertTeachers(s.x + 5, s.y - 10);
         let done = 0;
         for (let k = 0; k < students.length; k++) if (students[k].disturbed) done++;
@@ -427,8 +427,8 @@ function tryAction() {
         if (!capturedBoard.done) {
           capturedBoard.done = true;
           score += 500;
-          addFloating(capturedBoard.x + BW/2, capturedBoard.y, '+500', C.chalk);
-          addParticles(capturedBoard.x + BW/2, capturedBoard.y + BH, C.chalk, 14);
+          addFloating(capturedBoard.x + BW/2, capturedBoard.y, '+500', PAL.chalkParticle);
+          addParticles(capturedBoard.x + BW/2, capturedBoard.y + BH, PAL.chalkParticle, 14);
           alertTeachers(capturedBoard.x + BW/2, capturedBoard.y);
           let done = 0;
           for (let j = 0; j < BOARDS.length; j++) if (BOARDS[j].done) done++;

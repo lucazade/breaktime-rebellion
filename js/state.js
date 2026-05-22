@@ -1,6 +1,6 @@
 // Shared state — variables and functions used across all modules
 
-const C = CONFIG.vis.colors;
+
 const DEBUG = new URLSearchParams(location.search).get('debug') === '1';
 
 // String formatter: fmt('Hello {0}, score {1}!', name, score)

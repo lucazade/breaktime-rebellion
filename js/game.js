@@ -6,7 +6,7 @@ const ctx = CV.getContext('2d');
 // Desktop uses 4x canvas (1280×800) for high-quality font rendering without CSS scaling.
 // Mobile uses 2x canvas (640×400) — same logical coordinates (320×200) in both cases.
 var _isDesktop = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-var _canvasScale = (_isDesktop && !CONFIG.debug.simulateMobile) ? 4 : 2;
+var _canvasScale = (_isDesktop && !CONFIG.display.simulateMobile) ? 4 : 2;
 CV.width  = 320 * _canvasScale;
 CV.height = 200 * _canvasScale;
 
@@ -35,7 +35,7 @@ ctx.imageSmoothingEnabled = false;
 // Pre-load day and night backgrounds; _applyLevelBg() switches based on nightMode
 var _bgDay = null, _bgNight = null;
 (function() {
-  var hd = _isDesktop && !CONFIG.debug.simulateMobile;
+  var hd = _isDesktop && !CONFIG.display.simulateMobile;
   var srcDay   = hd ? CONFIG.images.backgroundHd      : CONFIG.images.background;
   var srcNight = hd ? CONFIG.images.backgroundNightHd : CONFIG.images.backgroundNight;
   var d = new Image(); d.onload = function() { _bgDay = d; if (!nightMode) { bgImage = d; } }; d.src = srcDay;
@@ -193,18 +193,20 @@ function loop(ts) {
     const t = teachers[i];
     if (t.name === 'Preside') {
       drawPreside(t.x, t.y, t.dir, t.animT, t.color, t.chasing, t.knockedT);
+    } else if (t.name === 'Prof.Ginnastica') {
+      drawGinnastica(t.x, t.y, t.dir, t.animT, t.chasing, t.knockedT);
     } else if (t.name === 'Guardiano') {
       if (exitDone) continue;
       drawGuard(t.x, t.y, t.dir, t.animT, t.knockedT);
     } else {
-      drawChar(t.x, t.y, t.dir, t.animT, t.color, true, false, t.chasing, t.knockedT);
+      drawChar(t.x, t.y, t.dir, t.animT, t.color, COLOURS_TEACHER, false, t.chasing, t.knockedT);
     }
   }
   for (let i = 0; i < janitors.length; i++) {
     const jn = janitors[i];
     drawJanitor(jn.x, jn.y, jn.dir, jn.animT);
     if (jn.knockedT > 0 && Math.floor(frame / 4) % 2 === 0) {
-      ctx.fillStyle = C.cyan;
+      ctx.fillStyle = PAL.cyan;
       ctx.fillRect(Math.round(jn.x - 2), Math.round(jn.y),     2, 2);
       ctx.fillRect(Math.round(jn.x + 9), Math.round(jn.y - 3), 2, 2);
       ctx.fillRect(Math.round(jn.x + 4), Math.round(jn.y - 9), 2, 2);
@@ -217,12 +219,12 @@ function loop(ts) {
       const bandTop    = surfaceY - (s.fdTop || 0);     // where head appears above (tune fdTop per stair)
       const bandBottom = surfaceY + s.fdBot;  // where legs disappear below (tune fdBot per stair)
       if (player.y > bandTop - PH && player.y < bandBottom + 8) {
-        drawCharClipped(player.x, player.y, player.dir, player.animT, C.blue, false, player.spraying, false, 0, bandTop, bandBottom);
+        drawCharClipped(player.x, player.y, player.dir, player.animT, PAL.marcoShirt, COLOURS_MARCO, player.spraying, false, 0, bandTop, bandBottom);
       } else {
-        drawChar(player.x, player.y, player.dir, player.animT, C.blue, false, player.spraying, false);
+        drawChar(player.x, player.y, player.dir, player.animT, PAL.marcoShirt, COLOURS_MARCO, player.spraying, false);
       }
     } else {
-      drawChar(player.x, player.y, player.dir, player.animT, C.blue, false, player.spraying, false);
+      drawChar(player.x, player.y, player.dir, player.animT, PAL.marcoShirt, COLOURS_MARCO, player.spraying, false);
     }
   }
 
