@@ -31,21 +31,21 @@ const PAL = {
   // ── Marco ─────────────────────────────────────────────────
   marcoSkin:        '#faa462',  // face, hands
   marcoSkinShadow:  '#fd6935',  // neck, collar shadow
-  marcoHair:        '#581e00',
+  marcoHair:        '#581e00',  // dark brown
   marcoShirt:       '#6121ac',  // shirt / jacket body colour
   marcoShirtStripe: '#FFFFFF',  // centre vertical stripe on shirt
-  marcoTrousers:    '#015dca',
-  marcoShoes:       '#ba0200',
+  marcoTrousers:    '#015dca',  // blue jeans
+  marcoShoes:       '#ba0200',  // red shoes
   marcoShoeSole:    '#FFFFFF',  // white stripe at shoe base
-  marcoBackpack:    '#7f2001',
+  marcoBackpack:    '#7f2001',  // dark red backpack
 
   // ── Teachers (shared anatomy) ─────────────────────────────
   teacherSkin:       '#faa462',  // face, hands
   teacherSkinShadow: '#fd6935',  // neck, collar shadow
   teacherHair:       '#72706e',  // grey hair
-  teacherTrousers:   '#706f6e',
-  teacherShoes:      '#862c00',
-  teacherTie:        '#FEDC02',
+  teacherTrousers:   '#706f6e',  // grey
+  teacherShoes:      '#862c00',  // dark brown
+  teacherTie:        '#FEDC02',  // yellow
 
   // ── Prof.Rossi ────────────────────────────────────────────
   profRossiBody:    '#D21C01',  // jacket
@@ -61,25 +61,25 @@ const PAL = {
   presideSkinShadow: '#fd6935',  // neck, collar shadow
   presideHair:       '#706f6e',  // grey hair
   presideBody:       '#2f2e2d',  // suit jacket
-  presideTrousers:   '#706f6e',
-  presideShoes:      '#862c00',
+  presideTrousers:   '#706f6e',  // grey
+  presideShoes:      '#862c00',  // dark brown
 
   // ── Prof.Ginnastica ───────────────────────────────────────
   profGinnasticaSkin:       '#faa462',  // face, hands
   profGinnasticaSkinShadow: '#fd6935',  // neck, collar shadow
   profGinnasticaBody:       '#33B84B',  // shirt base colour
   profGinnasticaStripe:     '#FFFFFF',  // vertical shirt stripes
-  profGinnasticaTrousers:   '#706f6e',
-  profGinnasticaShoes:      '#862c00',
+  profGinnasticaTrousers:   '#706f6e',  // grey
+  profGinnasticaShoes:      '#862c00',  // dark brown
   profGinnasticaCap:        '#33B84B',  // cap (same as shirt)
 
   // ── Janitor (bidello) ─────────────────────────────────────
   janitorSkin:       '#faa462',  // face, hands
   janitorSkinShadow: '#fd6935',  // neck, collar shadow
-  janitorHair:       '#581e00',
+  janitorHair:       '#581e00',  // dark brown
   janitorSalopette:  '#1665DC',  // overalls and cap
   janitorShirt:      '#FFFFFF',  // undershirt (bodyCol)
-  janitorShoes:      '#FFFFFF',
+  janitorShoes:      '#FFFFFF',  // white
   janitorMopHandle:  '#862c00',  // broom handle
   janitorMopHead:    '#959595',  // grey bristles
 
@@ -94,17 +94,17 @@ const PAL = {
   // ── Seated students (alunni seduti) ───────────────────────
   studentSkin:       '#faa462',  // face, arms
   studentSkinShadow: '#fd6935',  // neck shadow
-  studentHair:       '#581e00',
-  studentShirt:      '#FFFFFF',
+  studentHair:       '#581e00',  // dark brown
+  studentShirt:      '#FFFFFF',  // white shirt
 
   // ── Luca ──────────────────────────────────────────────────
   lucaSkin:          '#faa462',  // face, hands
   lucaSkinShadow:    '#fd6935',  // neck, collar shadow
-  lucaHair:          '#581e00',
+  lucaHair:          '#581e00',  // dark brown
   lucaBody:          '#FFFFFF',  // shirt (bodyCol)
   lucaTie:           '#000000',  // black tie
   lucaTrousers:      '#012A9F',  // dark blue
-  lucaShoes:         '#000000',
+  lucaShoes:         '#000000',  // black
 
   // ── Characters — shared elements ──────────────────────────
   charOutline:    '#121212',               // sprite outline (near-black)
@@ -129,16 +129,16 @@ const PAL = {
   timerRed:       '#dd1100',            // timer bar < 30%
 
   // ── Mechanic dot indicators ───────────────────────────────
-  dotBoards:     '#588D43',
-  dotBags:       '#4A3D8F',
-  dotMachines:   '#B8C76F',
-  dotBall:       '#CC6600',
-  dotStudents:   '#FFFFFF',
-  dotBooks:      '#6B2200',
-  dotSink:       '#70A4B2',
-  dotBins:       '#B8C76F',
-  dotSprinklers: '#70A4B2',
-  dotRegister:   '#FFD700',
+  dotBoards:     '#588D43',  // L1 boards mechanic
+  dotBags:       '#4A3D8F',  // L2 bags mechanic
+  dotMachines:   '#B8C76F',  // L3 vending machines mechanic
+  dotBall:       '#CC6600',  // L4 gym ball mechanic
+  dotStudents:   '#FFFFFF',  // L5 students mechanic
+  dotBooks:      '#6B2200',  // L6 bookcase mechanic
+  dotSink:       '#70A4B2',  // L7 sink mechanic
+  dotBins:       '#B8C76F',  // L8 bins mechanic
+  dotSprinklers: '#70A4B2',  // L9 sprinklers mechanic
+  dotRegister:   '#FFD700',  // L10 register mechanic
 
 // ═══════════════════════════════════════════════════════════
 //  UI / DIALOGS
