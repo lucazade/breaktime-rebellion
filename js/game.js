@@ -217,12 +217,12 @@ function loop(ts) {
       const bandTop    = surfaceY - (s.fdTop || 0);     // where head appears above (tune fdTop per stair)
       const bandBottom = surfaceY + s.fdBot;  // where legs disappear below (tune fdBot per stair)
       if (player.y > bandTop - PH && player.y < bandBottom + 8) {
-        drawCharClipped(player.x, player.y, player.dir, player.animT, C.blue, false, player.spraying, false, 0, bandTop, bandBottom);
+        drawCharClipped(player.x, player.y, player.dir, player.animT, PAL.marcoTrousers, false, player.spraying, false, 0, bandTop, bandBottom);
       } else {
-        drawChar(player.x, player.y, player.dir, player.animT, C.blue, false, player.spraying, false);
+        drawChar(player.x, player.y, player.dir, player.animT, PAL.marcoTrousers, false, player.spraying, false);
       }
     } else {
-      drawChar(player.x, player.y, player.dir, player.animT, C.blue, false, player.spraying, false);
+      drawChar(player.x, player.y, player.dir, player.animT, PAL.marcoTrousers, false, player.spraying, false);
     }
   }
 

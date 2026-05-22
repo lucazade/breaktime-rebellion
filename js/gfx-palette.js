@@ -8,24 +8,36 @@
 // ── Logo palette (Phase 3 target) ────────────────────────
 const PAL_LOGO = {
   // sprite / environment
-  black:       '#000000',  // outline tutto
+  black:       '#000000',  // sprite outline
   white:       '#FFFFFF',  // highlights
-  green:       '#33B84B',  // muri verdi / bottone C macchina
-  greenDark:   '#039C5A',  // ombre muri verdi
+  green:       '#33B84B',  // green walls / bottone C macchina
+  greenDark:   '#039C5A',  // green wall shadows
   purple:      '#4E3699',  // muri viola / giacca Marco / bag
-  purpleDark:  '#423D7C',  // ombre viola / strisce Marco / bag border
-  yellow:      '#FEDC02',  // cravatta prof / bottone B
-  blue:        '#1665DC',  // pavimento / gambe prof / corpo macchina
-  blueDark:    '#012A9F',  // pavimento scuro
-  navy:        '#16202D',  // sfondo / Preside / Prof.Neri
-  brownDark:   '#822B14',  // capelli / legno banchi / porte
-  brownMid:    '#875634',  // legno medio banchi
-  orange:      '#ED6A17',  // pelle (viso, mani)
-  orangeDark:  '#E85606',  // pelle in ombra / colletto
-  red:         '#D21C01',  // bottone A / dettagli rossi / Prof.Rossi
-  redDark:     '#5F1D1B',  // ombre rosse
-  lime:        '#D0E989',  // schermo macchina attivo / timer
-  beige:       '#E7B260',  // pelle chiara (cuffia bidello) / lavagna pelle
+  purpleDark:  '#423D7C',  // purple shadows / Marco shirt / bag border
+  yellow:      '#FEDC02',  // teacher tie / button B
+  blue:        '#1665DC',  // floor / teacher legs / machine body
+  blueDark:    '#012A9F',  // floor dark
+  navy:        '#16202D',  // background / Preside / Prof.Neri
+  brownDark:   '#822B14',  // hair / desk wood / doors
+  brownMid:    '#875634',  // desk wood mid
+  orange:      '#ED6A17',  // skin (face, hands)
+  orangeDark:  '#E85606',  // skin shadow / collar
+  red:         '#D21C01',  // button A / red details / Prof.Rossi
+  redDark:     '#5F1D1B',  // red shadows
+  lime:        '#D0E989',  // active machine screen / timer
+  beige:       '#E7B260',  // light skin (janitor cap) / board skin
+
+  // ── Character colours (Phase 3) ──────────────────────────
+  skin:          '#faa462',  // skin — face and hands (all chars)
+  skinShadow:    '#fd6935',  // skin shadow / neck
+  hairDark:      '#581e00',  // dark hair (Marco, students, janitor)
+  hairGray:      '#72706e',  // grey hair (older teachers)
+  trousersGray:  '#706f6e',  // teacher trousers
+  marcoTrousers: '#015dca',  // Marco body and trousers
+  marcoShoes:    '#ba0200',  // Marco shoes
+  marcoBackpack: '#7f2001',  // Marco backpack
+  profShoes:     '#862c00',  // teacher shoes
+  profNeriBody:  '#2f2e2d',  // Prof.Neri / Preside body
 };
 
 // ── Classic palette (C64-equivalent, for ?classic A/B comparison) ────────────
@@ -48,6 +60,18 @@ const PAL_CLASSIC = {
   redDark:     '#68372B',  // C.red
   lime:        '#9AD284',  // C.lgreen
   beige:       '#D8E8D0',  // C.chalk
+
+  // ── Character colours (C64-equivalent) ───────────────────
+  skin:          '#9A6759',  // C.pink
+  skinShadow:    '#825144',  // hardcoded neck
+  hairDark:      '#433900',  // C.brown
+  hairGray:      '#959595',  // C.lgray
+  trousersGray:  '#352879',  // C.blue
+  marcoTrousers: '#352879',  // C.blue
+  marcoShoes:    '#000000',  // C.black
+  marcoBackpack: '#3e3e3e',  // hardcoded
+  profShoes:     '#000000',  // C.black
+  profNeriBody:  '#171717',  // C.grayprof
 };
 
 // Toggle: ?classic in URL → C64-equivalent look for A/B comparison
