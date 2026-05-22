@@ -1,7 +1,22 @@
 // ═══════════════════════════════════════════════════════════
-//  GFX CHARS — sprite draw functions for player, teachers, NPC
-//  Extracted from draw.js. Depends on: gfx-palette, gfx-layout, draw (FF var).
+//  GFX CHARS — player/char config + sprite draw functions
+//  Depends on: gfx-palette, gfx-layout, draw (FF var at runtime).
 // ═══════════════════════════════════════════════════════════
+
+// Player dimensions — defined here so PH is available for playerStart
+const PW = 8, PH = 16;
+
+// Player start position — added to shared (defined in gfx-layout.js) now that PH is available
+CONFIG.vis.shared.playerStart = { x: 18, y: GY - PH - walkOffset };
+
+// Character sprite config — outline settings
+Object.assign(CONFIG.vis, {
+  char: {
+    outline:      true,
+    outlineSize:  1.0,
+    outlineColor: '#121212',
+  },
+});
 
 function drawGuard(x, y, dir, animT, knockedT) {
   const bx = Math.round(x), by = Math.round(y);

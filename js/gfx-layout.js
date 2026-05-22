@@ -9,7 +9,6 @@ CONFIG.vis = {
 
   layout: {
     W: 320, H: 200,              // dimensioni canvas logiche (px)
-    PW: 8, PH: 16,               // player width × height
     GY: 185, MY: 127, TY: 70,    // Y pavimento Ground / Middle / Top floor
     BW: 22, BH: 14,              // board (lavagna) width × height
     walkOffset: 6,               // px sopra la superficie dove cammina il personaggio
@@ -21,7 +20,6 @@ CONFIG.vis = {
 
 // Shortcut constants — usati in tutti i moduli
 const W = CONFIG.vis.layout.W, H = CONFIG.vis.layout.H;
-const PW = CONFIG.vis.layout.PW, PH = CONFIG.vis.layout.PH;
 const GY = CONFIG.vis.layout.GY, MY = CONFIG.vis.layout.MY, TY = CONFIG.vis.layout.TY;
 const BW = CONFIG.vis.layout.BW, BH = CONFIG.vis.layout.BH;
 const walkOffset = CONFIG.vis.layout.walkOffset;
@@ -31,17 +29,10 @@ const wallLeft = CONFIG.vis.layout.wallLeft, wallRight = CONFIG.vis.layout.wallR
 // All canvas coords are in logical 320×200 space (ctx.scale 2×).
 Object.assign(CONFIG.vis, {
 
-  // Character sprites — outline and colour
-  char: {
-    outline:      true,         // enables outline around sprites
-    outlineSize:  1.0,          // outline thickness (logical px)
-    outlineColor: '#121212',  // outline colour
-  },
-
-  // Shared scene — stairs, boards, desks, bell and player start are the same in every level.
+  // Shared scene — stairs, boards, desks, bell are the same in every level.
   // Physical elements fixed in bg.png; only mechanics and NPCs change per level.
+  // playerStart is defined in gfx-chars.js (needs PH, which is defined there).
   shared: {
-    playerStart: { x: 18, y: GY - PH - walkOffset },
 
     // fdTop: px above the walking surface where the sprite starts to appear
     // fdBot: px below the walking surface where the sprite disappears
