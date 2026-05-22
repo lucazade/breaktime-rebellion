@@ -66,7 +66,7 @@ function drawTitleScreen() {
   ctx.clearRect(0, 0, W, H);
 
   var ct = VT.controls;
-  var showLegend = CONFIG.debug.showLegend;
+  var showLegend = CONFIG.display.showLegend;
 
   // Logo height
   var logoW = VT.logo.w;
@@ -140,8 +140,8 @@ function drawTitleScreen() {
     }
   }
 
-  // Tap to start — shown in the controls bar, blinking (if CONFIG.debug.showTapToStart)
-  if (CONFIG.debug.showTapToStart && !_titleStarting && Math.floor(frame / 20) % 2 === 0) {
+  // Tap to start — shown in the controls bar, blinking (if CONFIG.display.showTapToStart)
+  if (CONFIG.display.showTapToStart && !_titleStarting && Math.floor(frame / 20) % 2 === 0) {
     var vTap = VT.tapToStart;
     var tapX = vTap.alignX === 'left' ? 0 : vTap.alignX === 'right' ? W : W / 2;
     var tapOffY = vTap.alignY === 'top' ? 1 : vTap.alignY === 'bottom' ? ct.btnH - vTap.fontSize - 1 : Math.floor((ct.btnH - vTap.fontSize) / 2);

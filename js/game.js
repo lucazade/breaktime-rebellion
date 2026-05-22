@@ -6,7 +6,7 @@ const ctx = CV.getContext('2d');
 // Desktop uses 4x canvas (1280×800) for high-quality font rendering without CSS scaling.
 // Mobile uses 2x canvas (640×400) — same logical coordinates (320×200) in both cases.
 var _isDesktop = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-var _canvasScale = (_isDesktop && !CONFIG.debug.simulateMobile) ? 4 : 2;
+var _canvasScale = (_isDesktop && !CONFIG.display.simulateMobile) ? 4 : 2;
 CV.width  = 320 * _canvasScale;
 CV.height = 200 * _canvasScale;
 
@@ -35,7 +35,7 @@ ctx.imageSmoothingEnabled = false;
 // Pre-load day and night backgrounds; _applyLevelBg() switches based on nightMode
 var _bgDay = null, _bgNight = null;
 (function() {
-  var hd = _isDesktop && !CONFIG.debug.simulateMobile;
+  var hd = _isDesktop && !CONFIG.display.simulateMobile;
   var srcDay   = hd ? CONFIG.images.backgroundHd      : CONFIG.images.background;
   var srcNight = hd ? CONFIG.images.backgroundNightHd : CONFIG.images.backgroundNight;
   var d = new Image(); d.onload = function() { _bgDay = d; if (!nightMode) { bgImage = d; } }; d.src = srcDay;
