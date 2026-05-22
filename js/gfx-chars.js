@@ -327,9 +327,9 @@ function drawJanitor(x, y, dir, animT) {
   // Salopette: two narrow straps over white shirt, full-width bib below
   // Bib extends 1px on the mop side so it visually connects to the handle.
   ctx.fillStyle = PAL.janitorSalopette;
-  ctx.fillRect(bx+2, by+2, 1, 2);                         // left strap  (by+2→by+3)
-  ctx.fillRect(bx+5, by+2, 1, 2);                         // right strap (by+2→by+3)
-  ctx.fillRect(dir > 0 ? bx : bx-1, by+4, PW+1, 6);      // full-width bib + mop edge (by+4→by+9)
+  ctx.fillRect(bx+2, by+2, 1, 3);  // left strap  (by+2→by+4)
+  ctx.fillRect(bx+5, by+2, 1, 3);  // right strap (by+2→by+4)
+  ctx.fillRect(bx,   by+5, PW, 5); // full-width bib (by+5→by+9)
 
   // Cap (same colour as salopette)
   ctx.fillStyle = PAL.janitorSalopette;
