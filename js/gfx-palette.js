@@ -183,10 +183,13 @@ const PAL = {
   boardDark:  '#075b07',  // board background (dark green)
   boardChalk: '#2c832c',  // chalk line hints
 
-  // ── Ball / wood / books ───────────────────────────────────
+  // ── Ball / wood / desks / books ──────────────────────────
   ballBody:    '#CC6600',  // basketball orange
   woodDark:    '#6b2200',  // dark reddish-brown wood (ball outline, bookcase spine)
   woodOutline: '#3a1000',  // book / bookcase dark wood outline
+  brown:       '#433900',  // desk chair wood
+  desk:        '#2C1800',  // desk top dark
+  desklt:      '#4E2A00',  // desk top light
   pageColor:   '#F5E6C0',  // open book pages
   pageLines:   '#999999',  // page text lines
 
@@ -219,6 +222,9 @@ const PAL = {
   waterSplash:     'rgba(100,180,255,0.38)', // splash droplet
   waterDrip:       'rgba(68,136,204,0.6)',   // drip from ceiling
 
+  // ── Bags ──────────────────────────────────────────────────
+  bagborder: '#2A1F5E',  // bag border (dark blue)
+
   // ── Object overlays ───────────────────────────────────────
   ballHighlight:   'rgba(255,200,100,0.5)',  // ball shine
   mirrorHighlight: 'rgba(255,255,255,0.45)', // mirror glass shine
@@ -234,12 +240,6 @@ const PAL = {
   gray6:   '#888888',  // sink drain / sprinkler inactive
   gray8:   '#aaaaaa',  // sink tap handle
   gray10:  '#d8d8d8',  // sink basin inner
-
-  // ── Legacy (to be revised in phase 4) ─────────────────────
-  brown:     '#433900',  // desk chair wood
-  desk:      '#2C1800',  // desk top dark
-  desklt:    '#4E2A00',  // desk top light
-  bagborder: '#2A1F5E',  // bag border
 
 // ═══════════════════════════════════════════════════════════
 //  DEBUG
