@@ -44,6 +44,61 @@ const PAL = {
   // ── HUD ──────────────────────────────────────────────────
   hudBg:       'rgba(0,4,75,0.55)', // HUD strip background
 
+  // ── Progress bars (shared across all objects) ────────────
+  barBg:         '#880000',  // progress bar background
+  barDark:       '#2a0000',  // progress bar dark inner
+  barFill:       '#cc1100',  // progress bar fill
+
+  // ── Bell ─────────────────────────────────────────────────
+  bellOutline:   '#554400',
+  bellBody:      '#FFCC00',
+  bellHighlight: '#FFE966',
+  bellShadow:    '#CC9900',
+  bellClapper:   '#332200',
+
+  // ── Board ────────────────────────────────────────────────
+  boardDark:     '#075b07',  // board dark green background
+  boardChalk:    '#2c832c',  // chalk line hints
+
+  // ── Ball / shared wood ───────────────────────────────────
+  ballBody:      '#CC6600',  // basketball orange
+  woodDark:      '#6b2200',  // dark reddish-brown wood (ball outline, bookcase spine)
+
+  // ── Books / bookcase ─────────────────────────────────────
+  woodOutline:   '#3a1000',  // book/bookcase dark wood outline
+  pageColor:     '#F5E6C0',  // open book pages
+  pageLines:     '#999999',  // page text lines
+
+  // ── Register ─────────────────────────────────────────────
+  registerCover: '#8B0000',  // register cover dark red
+  registerSpine: '#6B0000',  // register spine darker red
+  registerEdge:  '#AA2200',  // register top edge highlight
+  registerPages: '#F0E8D0',  // register page color
+
+  // ── Mirror / sink ────────────────────────────────────────
+  mirrorFrame:   '#1a3a5c',
+  mirrorGlass:   '#7ab8d8',
+  waterDrop:     '#4488cc',  // dripping water
+
+  // ── Grays (sink, sprinklers, misc fixtures) ───────────────
+  charred:       '#2a1a00',  // charred debris
+  gray1:         '#333333',  // charred debris dark
+  gray3:         '#555555',  // sprinkler border
+  gray4:         '#666666',  // sink basin outer
+  gray5:         '#777777',  // sink tap
+  gray6:         '#888888',  // sink drain, sprinkler inactive
+  gray8:         '#aaaaaa',  // sink tap handle
+  gray10:        '#d8d8d8',  // sink basin inner
+
+  // ── Bins ─────────────────────────────────────────────────
+  binBody:       '#228B22',  // bin body green
+  binLid:        '#1a7a1a',  // bin lid darker green
+  binShadow:     '#1a6e1a',  // bin left shadow
+  binDark:       '#0d4d0d',  // bin rim/border darkest green
+
+  // ── Fire / explosion ─────────────────────────────────────
+  flame:         '#FF6600',  // lighter flame, fuse animation
+
   // ── Characters ───────────────────────────────────────────
   charOutline:    '#121212',           // sprite outline (CONFIG.vis.char.outlineColor)
   shadow:         'rgba(0,0,0,0.2)',   // character ground shadow

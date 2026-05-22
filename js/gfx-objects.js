@@ -12,7 +12,7 @@ function drawDesks() {
     _octx.scale(_canvasScale, _canvasScale);
     for (var _i = 0; _i < DESKS.length; _i++) {
       var _d = DESKS[_i];
-      _octx.fillStyle = '#2c1800'; _octx.fillRect(_d.x-1, _d.y-1, 22, 8);
+      _octx.fillStyle = C.desk; _octx.fillRect(_d.x-1, _d.y-1, 22, 8);
       _octx.fillStyle = C.desklt;  _octx.fillRect(_d.x,   _d.y,   20, 6);
       _octx.fillStyle = C.desk;    _octx.fillRect(_d.x,   _d.y+5, 20, 2);
       _octx.fillStyle = C.brown;
@@ -53,9 +53,9 @@ function drawBoards() {
     for (var _j = 0; _j < BOARDS.length; _j++) {
       var _b = BOARDS[_j];
       _octx.fillStyle = C.brown;   _octx.fillRect(_b.x-1, _b.y-1, BW+2, BH+2);
-      _octx.fillStyle = '#075b07'; _octx.fillRect(_b.x, _b.y, BW, BH);
+      _octx.fillStyle = PAL.boardDark; _octx.fillRect(_b.x, _b.y, BW, BH);
       if (!_b.done) {
-        _octx.fillStyle = '#2c832c';
+        _octx.fillStyle = PAL.boardChalk;
         _octx.fillRect(_b.x+2, _b.y+3, BW-4, 2);
         _octx.fillRect(_b.x+2, _b.y+8, BW-4, 2);
       } else {
@@ -85,11 +85,11 @@ function drawBell() {
   const sw = BELL.ringing ? Math.round(Math.sin(frame * 0.6) * 3) : 0;
   const X  = bx + sw;
 
-  const out = '#554400';
-  const col = '#FFCC00';
-  const hi  = '#FFE966';
-  const shd = '#CC9900';
-  const drk = '#332200';
+  const out = PAL.bellOutline;
+  const col = PAL.bellBody;
+  const hi  = PAL.bellHighlight;
+  const shd = PAL.bellShadow;
+  const drk = PAL.bellClapper;
 
   // Top cap (closes the border)
   ctx.fillStyle = out; ctx.fillRect(X+2, by-1, 2, 1);
@@ -126,7 +126,7 @@ function drawBell() {
       var _gc = document.createElement('canvas'); _gc.width = 16 * _canvasScale; _gc.height = 16 * _canvasScale;
       var _gctx = _gc.getContext('2d');
       _gctx.scale(_canvasScale, _canvasScale);
-      _gctx.fillStyle = '#FFD700';
+      _gctx.fillStyle = PAL.panelBorder;
       _gctx.beginPath(); _gctx.arc(8, 8, 7, 0, Math.PI*2); _gctx.fill();
       _bellGlowCache = _gc;
     }
@@ -151,20 +151,20 @@ function drawGymBall() {
   if (!gymBall) return;
   const bx = Math.round(gymBall.x), by = Math.round(gymBall.y);
   if (gymBall.deflated) {
-    ctx.fillStyle = '#6c2200';
+    ctx.fillStyle = PAL.woodDark;
     ctx.fillRect(bx, by+5, 9, 3);
-    ctx.fillStyle = '#CC6600';
+    ctx.fillStyle = PAL.ballBody;
     ctx.fillRect(bx+1, by+6, 7, 1);
     return;
   }
   if (gymBall.shakeT > 0) {
     const pct = gymBall.shakeT / deflateTime;
-    ctx.fillStyle = '#880000'; ctx.fillRect(bx-2, by-9, 13, 5);
-    ctx.fillStyle = '#2a0000'; ctx.fillRect(bx-1, by-8, 11, 3);
-    ctx.fillStyle = '#cc1100'; ctx.fillRect(bx-1, by-8, Math.round(11 * pct), 3);
+    ctx.fillStyle = PAL.barBg; ctx.fillRect(bx-2, by-9, 13, 5);
+    ctx.fillStyle = PAL.barDark; ctx.fillRect(bx-1, by-8, 11, 3);
+    ctx.fillStyle = PAL.barFill; ctx.fillRect(bx-1, by-8, Math.round(11 * pct), 3);
   }
   // Basketball — proper pixel circle body + matching circular outline
-  ctx.fillStyle = '#6b2200';
+  ctx.fillStyle = PAL.woodDark;
   ctx.fillRect(bx+2, by-1, 5, 1);                                              // top arc
   ctx.fillRect(bx+1, by,   1, 1); ctx.fillRect(bx+7, by,   1, 1);             // top shoulders
   ctx.fillRect(bx,   by+1, 1, 1); ctx.fillRect(bx+8, by+1, 1, 1);            // upper sides
@@ -172,13 +172,13 @@ function drawGymBall() {
   ctx.fillRect(bx,   by+7, 1, 1); ctx.fillRect(bx+8, by+7, 1, 1);            // lower sides
   ctx.fillRect(bx+1, by+8, 1, 1); ctx.fillRect(bx+7, by+8, 1, 1);            // bottom shoulders
   ctx.fillRect(bx+2, by+9, 5, 1);                                              // bottom arc
-  ctx.fillStyle = '#CC6600';
+  ctx.fillStyle = PAL.ballBody;
   ctx.fillRect(bx+2, by,   5, 1);                                              // body row 0
   ctx.fillRect(bx+1, by+1, 7, 1);                                              // body row 1
   ctx.fillRect(bx,   by+2, 9, 5);                                              // body rows 2-6
   ctx.fillRect(bx+1, by+7, 7, 1);                                              // body row 7
   ctx.fillRect(bx+2, by+8, 5, 1);                                              // body row 8
-  ctx.fillStyle = '#6b2200';
+  ctx.fillStyle = PAL.woodDark;
   ctx.fillRect(bx+4, by, 1, 9); ctx.fillRect(bx, by+4, 9, 1);
   ctx.fillStyle = 'rgba(255,200,100,0.5)'; ctx.fillRect(bx+1, by+1, 2, 2);
   if (!allBall) {
@@ -202,26 +202,26 @@ function drawBookcase() {
     if (allBooks) {
       // 3rd drop: book split in two pieces
       // Left half (pages + half spine)
-      ctx.fillStyle = '#3a1000'; ctx.fillRect(fx-1, fy, 1, 9); ctx.fillRect(fx-1, fy+9, 10, 1); ctx.fillRect(fx, fy, 9, 1);
-      ctx.fillStyle = '#F5E6C0'; ctx.fillRect(fx,   fy+1, 7, 8);
-      ctx.fillStyle = '#6B2200'; ctx.fillRect(fx+7, fy,   2, 9);
-      ctx.fillStyle = '#999999'; ctx.fillRect(fx+1, fy+3, 5, 1); ctx.fillRect(fx+1, fy+5, 5, 1);
+      ctx.fillStyle = PAL.woodOutline; ctx.fillRect(fx-1, fy, 1, 9); ctx.fillRect(fx-1, fy+9, 10, 1); ctx.fillRect(fx, fy, 9, 1);
+      ctx.fillStyle = PAL.pageColor; ctx.fillRect(fx,   fy+1, 7, 8);
+      ctx.fillStyle = PAL.woodDark; ctx.fillRect(fx+7, fy,   2, 9);
+      ctx.fillStyle = PAL.pageLines; ctx.fillRect(fx+1, fy+3, 5, 1); ctx.fillRect(fx+1, fy+5, 5, 1);
       // Right half (half spine + pages) — shifted 3px right, 2px down
-      ctx.fillStyle = '#6B2200'; ctx.fillRect(fx+12, fy+2, 2, 9);
-      ctx.fillStyle = '#3a1000'; ctx.fillRect(fx+12, fy+2, 9, 1); ctx.fillRect(fx+20, fy+2, 1, 9); ctx.fillRect(fx+12, fy+11, 9, 1);
-      ctx.fillStyle = '#F5E6C0'; ctx.fillRect(fx+14, fy+3, 6, 8);
-      ctx.fillStyle = '#999999'; ctx.fillRect(fx+15, fy+5, 4, 1); ctx.fillRect(fx+15, fy+7, 4, 1);
+      ctx.fillStyle = PAL.woodDark; ctx.fillRect(fx+12, fy+2, 2, 9);
+      ctx.fillStyle = PAL.woodOutline; ctx.fillRect(fx+12, fy+2, 9, 1); ctx.fillRect(fx+20, fy+2, 1, 9); ctx.fillRect(fx+12, fy+11, 9, 1);
+      ctx.fillStyle = PAL.pageColor; ctx.fillRect(fx+14, fy+3, 6, 8);
+      ctx.fillStyle = PAL.pageLines; ctx.fillRect(fx+15, fy+5, 4, 1); ctx.fillRect(fx+15, fy+7, 4, 1);
     } else {
       // 1st/2nd drop: open book lying flat
-      ctx.fillStyle = '#3a1000';
+      ctx.fillStyle = PAL.woodOutline;
       ctx.fillRect(fx-1, fy, 1, 9); ctx.fillRect(fx+18, fy, 1, 9);
       ctx.fillRect(fx-1, fy+9, 20, 1);
       ctx.fillRect(fx,    fy,   18, 1);
-      ctx.fillStyle = '#F5E6C0'; ctx.fillRect(fx,    fy+1,  7, 8);
-      ctx.fillStyle = '#F5E6C0'; ctx.fillRect(fx+11, fy+1,  7, 8);
-      ctx.fillStyle = '#6B2200'; ctx.fillRect(fx+7,  fy,    4, 9);
-      ctx.fillStyle = '#999999'; ctx.fillRect(fx+1,  fy+3,  5, 1); ctx.fillRect(fx+1,  fy+5, 5, 1);
-      ctx.fillStyle = '#999999'; ctx.fillRect(fx+12, fy+3,  5, 1); ctx.fillRect(fx+12, fy+5, 5, 1);
+      ctx.fillStyle = PAL.pageColor; ctx.fillRect(fx,    fy+1,  7, 8);
+      ctx.fillStyle = PAL.pageColor; ctx.fillRect(fx+11, fy+1,  7, 8);
+      ctx.fillStyle = PAL.woodDark; ctx.fillRect(fx+7,  fy,    4, 9);
+      ctx.fillStyle = PAL.pageLines; ctx.fillRect(fx+1,  fy+3,  5, 1); ctx.fillRect(fx+1,  fy+5, 5, 1);
+      ctx.fillStyle = PAL.pageLines; ctx.fillRect(fx+12, fy+3,  5, 1); ctx.fillRect(fx+12, fy+5, 5, 1);
     }
     return;
   }
@@ -229,9 +229,9 @@ function drawBookcase() {
   // Progress bar while shaking; no book sprite (bg.png shows it in place)
   if (bookcase.shakeT > 0) {
     const pct = bookcase.shakeT / dropTime;
-    ctx.fillStyle = '#880000'; ctx.fillRect(bx-14, by-6, 9, 5);
-    ctx.fillStyle = '#2a0000'; ctx.fillRect(bx-13, by-5, 7, 3);
-    ctx.fillStyle = '#cc1100'; ctx.fillRect(bx-13, by-5, Math.round(7 * pct), 3);
+    ctx.fillStyle = PAL.barBg; ctx.fillRect(bx-14, by-6, 9, 5);
+    ctx.fillStyle = PAL.barDark; ctx.fillRect(bx-13, by-5, 7, 3);
+    ctx.fillStyle = PAL.barFill; ctx.fillRect(bx-13, by-5, Math.round(7 * pct), 3);
   }
 
   // Proximity dashed border — full bookcase area
@@ -251,23 +251,23 @@ function drawRegister() {
   if (!register || register.stolen) return;
   const bx = Math.round(register.x), by = Math.round(register.y);
   // Book cover (dark red register)
-  ctx.fillStyle = '#8B0000'; ctx.fillRect(bx, by-2, 10, 14);
-  ctx.fillStyle = '#6B0000'; ctx.fillRect(bx, by-2, 1, 14);  // spine
-  ctx.fillStyle = '#AA2200'; ctx.fillRect(bx+1, by-2, 9, 1); // top edge
+  ctx.fillStyle = PAL.registerCover; ctx.fillRect(bx, by-2, 10, 14);
+  ctx.fillStyle = PAL.registerSpine; ctx.fillRect(bx, by-2, 1, 14);  // spine
+  ctx.fillStyle = PAL.registerEdge; ctx.fillRect(bx+1, by-2, 9, 1); // top edge
   // Pages
-  ctx.fillStyle = '#F0E8D0'; ctx.fillRect(bx+2, by-1, 7, 12);
+  ctx.fillStyle = PAL.registerPages; ctx.fillRect(bx+2, by-1, 7, 12);
   // Grade lines
-  ctx.fillStyle = '#888'; ctx.fillRect(bx+3, by+2, 5, 1);
+  ctx.fillStyle = PAL.gray6; ctx.fillRect(bx+3, by+2, 5, 1);
   ctx.fillStyle = C.red;   ctx.fillRect(bx+3, by+4, 5, 1);
-  ctx.fillStyle = '#888'; ctx.fillRect(bx+3, by+6, 5, 1);
+  ctx.fillStyle = PAL.gray6; ctx.fillRect(bx+3, by+6, 5, 1);
   ctx.fillStyle = C.red;   ctx.fillRect(bx+3, by+8, 5, 1);
 
   // Progress bar while stealing
   if (register.stealT > 0) {
     const pct = register.stealT / registerTime;
-    ctx.fillStyle = '#880000'; ctx.fillRect(bx-2, by-7, 14, 4);
-    ctx.fillStyle = '#2a0000'; ctx.fillRect(bx-1, by-6, 12, 2);
-    ctx.fillStyle = '#cc1100'; ctx.fillRect(bx-1, by-6, Math.round(12 * pct), 2);
+    ctx.fillStyle = PAL.barBg; ctx.fillRect(bx-2, by-7, 14, 4);
+    ctx.fillStyle = PAL.barDark; ctx.fillRect(bx-1, by-6, 12, 2);
+    ctx.fillStyle = PAL.barFill; ctx.fillRect(bx-1, by-6, Math.round(12 * pct), 2);
   }
 
   // Proximity border
@@ -320,10 +320,10 @@ function drawSprinklers() {
     }
 
     // Sprinkler fixture — disc + head only (no stem above ceiling)
-    ctx.fillStyle = '#bbb'; ctx.fillRect(bx,   by-2, 8, 2);    // deflector disc
-    ctx.fillStyle = sp.active ? C.red : '#888';
+    ctx.fillStyle = PAL.guardCapVisor; ctx.fillRect(bx,   by-2, 8, 2);    // deflector disc
+    ctx.fillStyle = sp.active ? C.red : PAL.gray6;
     ctx.fillRect(bx+2, by, 4, 3);                              // head (red = active)
-    ctx.strokeStyle = '#555'; ctx.lineWidth = 1;               // T-border (no top)
+    ctx.strokeStyle = PAL.gray3; ctx.lineWidth = 1;               // T-border (no top)
     ctx.beginPath();
     ctx.moveTo(bx,   by-2); ctx.lineTo(bx,   by);   // left side of disc
     ctx.lineTo(bx+2, by);   ctx.lineTo(bx+2, by+3); // step in + left side of head
@@ -334,9 +334,9 @@ function drawSprinklers() {
     // Progress bar just below the sprinkler head
     if (sp.lighterT > 0 && !sp.active) {
       const pct = sp.lighterT / lighterTime;
-      ctx.fillStyle = '#880000'; ctx.fillRect(bx-1, by+8, 10, 4);
-      ctx.fillStyle = '#2a0000'; ctx.fillRect(bx, by+9, 8, 2);
-      ctx.fillStyle = '#cc1100'; ctx.fillRect(bx, by+9, Math.round(8 * pct), 2);
+      ctx.fillStyle = PAL.barBg; ctx.fillRect(bx-1, by+8, 10, 4);
+      ctx.fillStyle = PAL.barDark; ctx.fillRect(bx, by+9, 8, 2);
+      ctx.fillStyle = PAL.barFill; ctx.fillRect(bx, by+9, Math.round(8 * pct), 2);
     }
 
     // Proximity dashed border — same floor only
@@ -346,7 +346,7 @@ function drawSprinklers() {
         const pdx = Math.abs(player.x + PW/2 - sp.x - 4);
         const pdy = Math.abs(player.y - sp.y);
         if (pdx < 16 && pdy < 50) {
-          ctx.strokeStyle = '#FF6600'; ctx.lineWidth = 1;
+          ctx.strokeStyle = PAL.flame; ctx.lineWidth = 1;
           ctx.setLineDash([2, 2]);
           const _ds = CONFIG.vis.dashed.sprinklers; ctx.strokeRect(bx+_ds.x, by+_ds.y, _ds.w, _ds.h);
           ctx.setLineDash([]);
@@ -360,7 +360,7 @@ function drawSprinklers() {
     const fx = Math.round(player.x + PW/2 - 1);
     const fy = Math.round(player.y) - 4;
     const flicker = Math.floor(frame / 2) % 3;
-    ctx.fillStyle = '#FF6600'; ctx.fillRect(fx, fy - flicker,     2, 3);
+    ctx.fillStyle = PAL.flame; ctx.fillRect(fx, fy - flicker,     2, 3);
     ctx.fillStyle = C.yellow;  ctx.fillRect(fx, fy - flicker - 2, 2, 2);
   }
 }
@@ -372,21 +372,21 @@ function drawBins() {
 
     if (b.exploded) {
       // Charred debris
-      ctx.fillStyle = '#2a1a00'; ctx.fillRect(bx-2, by-5, 13, 5);
-      ctx.fillStyle = '#444';    ctx.fillRect(bx-4, by-7,  3, 2);
-      ctx.fillStyle = '#444';    ctx.fillRect(bx+11,by-8,  3, 2);
-      ctx.fillStyle = '#333';    ctx.fillRect(bx+2, by-9,  2, 3);
+      ctx.fillStyle = PAL.charred; ctx.fillRect(bx-2, by-5, 13, 5);
+      ctx.fillStyle = C.dgray;    ctx.fillRect(bx-4, by-7,  3, 2);
+      ctx.fillStyle = C.dgray;    ctx.fillRect(bx+11,by-8,  3, 2);
+      ctx.fillStyle = PAL.gray1;    ctx.fillRect(bx+2, by-9,  2, 3);
       continue;
     }
 
     // Lid
-    ctx.fillStyle = '#1a7a1a'; ctx.fillRect(bx, by-14, 10, 3);
-    ctx.fillStyle = '#0d4d0d'; ctx.fillRect(bx+1, by-15, 8, 1); // top rim
+    ctx.fillStyle = PAL.binLid; ctx.fillRect(bx, by-14, 10, 3);
+    ctx.fillStyle = PAL.binDark; ctx.fillRect(bx+1, by-15, 8, 1); // top rim
     // Body
-    ctx.fillStyle = '#228B22'; ctx.fillRect(bx, by-11, 10, 11);
-    ctx.fillStyle = '#1a6e1a'; ctx.fillRect(bx, by-11, 1, 11); // left shadow
+    ctx.fillStyle = PAL.binBody; ctx.fillRect(bx, by-11, 10, 11);
+    ctx.fillStyle = PAL.binShadow; ctx.fillRect(bx, by-11, 1, 11); // left shadow
     // Dark green border (overwrite existing edge pixels, no external expansion)
-    ctx.fillStyle = '#0d4d0d';
+    ctx.fillStyle = PAL.binDark;
     ctx.fillRect(bx,   by-14, 1,  14); // left
     ctx.fillRect(bx+9, by-14, 1,  14); // right
     ctx.fillRect(bx,   by-1,  10,  1); // bottom
@@ -401,14 +401,14 @@ function drawBins() {
     if (b.lit) {
       const speed = b.fuseT > 90 ? 8 : b.fuseT > 40 ? 5 : 2;
       if (Math.floor(frame / speed) % 2 === 0) {
-        ctx.fillStyle = '#FF6600'; ctx.fillRect(bx+4, by-16, 2, 3);
+        ctx.fillStyle = PAL.flame; ctx.fillRect(bx+4, by-16, 2, 3);
         ctx.fillStyle = C.yellow;  ctx.fillRect(bx+4, by-17, 2, 1);
       }
       // Fuse countdown bar
       const pct = b.fuseT / 180;
-      ctx.fillStyle = '#880000'; ctx.fillRect(bx-2, by-25, 14, 4);
-      ctx.fillStyle = '#2a0000'; ctx.fillRect(bx-1, by-24, 12, 2);
-      ctx.fillStyle = '#cc1100'; ctx.fillRect(bx-1, by-24, Math.round(12 * pct), 2);
+      ctx.fillStyle = PAL.barBg; ctx.fillRect(bx-2, by-25, 14, 4);
+      ctx.fillStyle = PAL.barDark; ctx.fillRect(bx-1, by-24, 12, 2);
+      ctx.fillStyle = PAL.barFill; ctx.fillRect(bx-1, by-24, Math.round(12 * pct), 2);
     }
 
     // Proximity dashed border
@@ -448,24 +448,24 @@ function drawSink() {
   }
 
   // Mirror — small, centered over the 12px-wide basin (bx+1 to bx+11)
-  ctx.fillStyle = '#1a3a5c'; ctx.fillRect(bx+1, by-20, 10,  8); // dark frame
-  ctx.fillStyle = '#7ab8d8'; ctx.fillRect(bx+2, by-19,  8,  6); // glass
+  ctx.fillStyle = PAL.mirrorFrame; ctx.fillRect(bx+1, by-20, 10,  8); // dark frame
+  ctx.fillStyle = PAL.mirrorGlass; ctx.fillRect(bx+2, by-19,  8,  6); // glass
   ctx.fillStyle = 'rgba(255,255,255,0.45)'; ctx.fillRect(bx+3, by-18, 2, 3); // highlight
 
   // Tap (wall pipe below mirror gap)
-  ctx.fillStyle = '#777'; ctx.fillRect(bx+5, by-10, 2, 3);
-  ctx.fillStyle = '#aaa'; ctx.fillRect(bx+4, by-10, 1, 1);
+  ctx.fillStyle = PAL.gray5; ctx.fillRect(bx+5, by-10, 2, 3);
+  ctx.fillStyle = PAL.gray8; ctx.fillRect(bx+4, by-10, 1, 1);
 
   // Sink basin
-  ctx.fillStyle = '#666'; ctx.fillRect(bx-1, by-9, 14, 10);
-  ctx.fillStyle = '#b0b0b0'; ctx.fillRect(bx,   by-8, 12, 8);
-  ctx.fillStyle = '#d8d8d8'; ctx.fillRect(bx+1, by-7, 10, 6);
-  ctx.fillStyle = '#888';    ctx.fillRect(bx+5, by-2,  2, 1); // drain
+  ctx.fillStyle = PAL.gray4; ctx.fillRect(bx-1, by-9, 14, 10);
+  ctx.fillStyle = PAL.btnLabel; ctx.fillRect(bx,   by-8, 12, 8);
+  ctx.fillStyle = PAL.gray10; ctx.fillRect(bx+1, by-7, 10, 6);
+  ctx.fillStyle = PAL.gray6;    ctx.fillRect(bx+5, by-2,  2, 1); // drain
 
   // Dripping animation while pouring
   if (sink.pourT > 0) {
     const drop = Math.floor(frame / 3) % 5;
-    ctx.fillStyle = '#4488cc';
+    ctx.fillStyle = PAL.waterDrop;
     ctx.fillRect(bx+5, by-8+drop, 2, 2);
     if (drop >= 3) {
       ctx.fillStyle = 'rgba(68,136,204,0.6)';
@@ -476,9 +476,9 @@ function drawSink() {
   // Progress bar (left of sink) while pouring
   if (sink.pourT > 0) {
     const pct = sink.pourT / floodTime;
-    ctx.fillStyle = '#880000'; ctx.fillRect(bx+2, by-26, 9, 5);
-    ctx.fillStyle = '#2a0000'; ctx.fillRect(bx+3, by-25, 7, 3);
-    ctx.fillStyle = '#cc1100'; ctx.fillRect(bx+3, by-25, Math.round(7 * pct), 3);
+    ctx.fillStyle = PAL.barBg; ctx.fillRect(bx+2, by-26, 9, 5);
+    ctx.fillStyle = PAL.barDark; ctx.fillRect(bx+3, by-25, 7, 3);
+    ctx.fillStyle = PAL.barFill; ctx.fillRect(bx+3, by-25, Math.round(7 * pct), 3);
   }
 
   // Proximity dashed border — tight around basin only
@@ -539,9 +539,9 @@ function drawMachines() {
     // Progress bar while shaking
     if (!m.broken && m.shakeT > 0) {
       const pct = m.shakeT / shakeTime;
-      ctx.fillStyle = '#880000'; ctx.fillRect(mx-2, my-9, 14, 5);
-      ctx.fillStyle = '#2a0000'; ctx.fillRect(mx-1, my-8, 12, 3);
-      ctx.fillStyle = '#cc1100'; ctx.fillRect(mx-1, my-8, Math.round(12 * pct), 3);
+      ctx.fillStyle = PAL.barBg; ctx.fillRect(mx-2, my-9, 14, 5);
+      ctx.fillStyle = PAL.barDark; ctx.fillRect(mx-1, my-8, 12, 3);
+      ctx.fillStyle = PAL.barFill; ctx.fillRect(mx-1, my-8, Math.round(12 * pct), 3);
     }
 
     // Proximity highlight (dashed border)
