@@ -34,6 +34,7 @@ const PAL_LOGO = {
   marcoShirt:       '#6121ac',
   marcoTrousers:    '#015dca',
   marcoShoes:       '#ba0200',
+  marcoShoeSole:    '#FFFFFF',  // white stripe at shoe base
   marcoBackpack:    '#7f2001',
 
   // ── Teachers (shared anatomy) ─────────────────────────
@@ -82,6 +83,7 @@ const PAL_CLASSIC = {
   marcoShirt:       '#6C5EB5',  // C.lblue
   marcoTrousers:    '#352879',  // C.blue
   marcoShoes:       '#000000',  // C.black
+  marcoShoeSole:    '#000000',  // invisible in classic (no sole stripe)
   marcoBackpack:    '#3e3e3e',  // hardcoded
 
   // ── Teachers (C64-equivalent) ────────────────────────
