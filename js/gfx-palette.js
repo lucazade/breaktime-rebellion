@@ -32,6 +32,7 @@ const PAL_LOGO = {
   marcoSkinShadow:  '#fd6935',
   marcoHair:        '#581e00',
   marcoShirt:       '#6121ac',
+  marcoShirtStripe: '#FFFFFF',  // centre vertical stripe on Marco's shirt
   marcoTrousers:    '#015dca',
   marcoShoes:       '#ba0200',
   marcoShoeSole:    '#FFFFFF',  // white stripe at shoe base
@@ -81,6 +82,7 @@ const PAL_CLASSIC = {
   marcoSkinShadow:  '#825144',  // hardcoded neck
   marcoHair:        '#433900',  // C.brown
   marcoShirt:       '#6C5EB5',  // C.lblue
+  marcoShirtStripe: '#6C5EB5',  // same as shirt — invisible in classic
   marcoTrousers:    '#352879',  // C.blue
   marcoShoes:       '#000000',  // C.black
   marcoShoeSole:    '#000000',  // invisible in classic (no sole stripe)

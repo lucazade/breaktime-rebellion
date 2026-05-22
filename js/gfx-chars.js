@@ -199,8 +199,8 @@ function drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, chasing, knock
   ctx.fillStyle = shoeSoleColor; ctx.fillRect(bx, by+14+leg, 4, 1); ctx.fillRect(bx+3, by+14-leg, 4, 1);
 
   ctx.fillStyle = bodyCol; ctx.fillRect(bx, by+2, PW, 8);
-  if (isTeacher) { ctx.fillStyle = PAL.teacherTie; ctx.fillRect(bx+3, by+2, 2, 6); }
-  // Marco: no shirt stripes
+  if (isTeacher) { ctx.fillStyle = PAL.teacherTie;        ctx.fillRect(bx+3, by+2, 2, 6); }
+  else            { ctx.fillStyle = PAL.marcoShirtStripe;  ctx.fillRect(bx+4, by+2, 1, 8); }
 
   ctx.fillStyle = isTeacher ? PAL.teacherSkin : PAL.marcoSkin;
   ctx.fillRect(dir>0 ? bx-2 : bx+PW, by+5, 2, 4);
