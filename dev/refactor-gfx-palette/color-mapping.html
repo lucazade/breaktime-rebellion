@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>Breaktime — Phase 3 Color Mapping</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: monospace; font-size: 13px; background: #111; color: #ddd; padding: 24px; }
+  h1 { font-size: 16px; color: #ffd700; margin-bottom: 20px; letter-spacing: 2px; }
+  h2 { font-size: 12px; color: #aaa; margin: 28px 0 8px; letter-spacing: 1px; text-transform: uppercase; border-bottom: 1px solid #333; padding-bottom: 4px; }
+
+  /* PAL reference strip */
+  .pal-strip { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 24px; }
+  .pal-chip { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+  .pal-chip .swatch { width: 36px; height: 36px; border: 1px solid #555; border-radius: 3px; }
+  .pal-chip .name { font-size: 9px; color: #888; }
+  .pal-chip .hex  { font-size: 9px; color: #aaa; }
+
+  /* Mapping table */
+  table { width: 100%; border-collapse: collapse; margin-bottom: 8px; }
+  th { text-align: left; color: #666; font-weight: normal; font-size: 11px; padding: 4px 8px; border-bottom: 1px solid #222; }
+  td { padding: 6px 8px; border-bottom: 1px solid #1e1e1e; vertical-align: middle; }
+  td:first-child { color: #ccc; width: 200px; }
+
+  .cell { display: flex; align-items: center; gap: 8px; }
+  .swatch { width: 28px; height: 28px; border: 1px solid #444; border-radius: 3px; flex-shrink: 0; }
+  .hex { font-size: 11px; color: #aaa; }
+  .label { font-size: 11px; color: #888; }
+  .arrow { color: #555; padding: 0 4px; }
+
+  tr:hover td { background: #1a1a1a; }
+  .note { font-size: 11px; color: #f90; padding: 2px 8px 2px 0; }
+  .unchanged { opacity: 0.4; }
+</style>
+</head>
+<body>
+
+<h1>BREAKTIME — PHASE 3 COLOR MAPPING</h1>
+
+<!-- PAL reference -->
+<h2>PAL Logo Palette (reference)</h2>
+<div class="pal-strip" id="pal-strip"></div>
+
+<!-- Mapping tables -->
+<div id="groups"></div>
+
+<script>
+const PAL_LOGO = {
+  black:      '#000000',
+  white:      '#FFFFFF',
+  green:      '#33B84B',
+  greenDark:  '#039C5A',
+  purple:     '#4E3699',
+  purpleDark: '#423D7C',
+  yellow:     '#FEDC02',
+  blue:       '#1665DC',
+  blueDark:   '#012A9F',
+  navy:       '#16202D',
+  brownDark:  '#822B14',
+  brownMid:   '#875634',
+  orange:     '#ED6A17',
+  orangeDark: '#E85606',
+  red:        '#D21C01',
+  redDark:    '#5F1D1B',
+  lime:       '#D0E989',
+  beige:      '#E7B260',
+};
+
+// Groups: [ element, currentHex, currentLabel, palSlot OR null (unchanged) ]
+const GROUPS = [
+  {
+    title: 'Marco — protagonista',
+    rows: [
+      ['Pelle (viso, mani)',      '#9A6759', 'C.pink',    'orange'],
+      ['Pelle ombra / collo',     '#825144', 'hardcoded', null],
+      ['Capelli',                 '#433900', 'C.brown',   'brownDark'],
+      ['Corpo / pantaloni',       '#6C6C6C', 'C.mgray',   'navy'],
+      ['Strisce camicia',         '#6C5EB5', 'C.lblue',   'purpleDark'],
+      ['Zainetto',                '#3e3e3e', 'hardcoded', null],
+      ['Scarpe',                  '#000000', 'C.black',   'black'],
+    ]
+  },
+  {
+    title: 'Professori — gambe e dettagli condivisi',
+    rows: [
+      ['Gambe / pantaloni',       '#352879', 'C.blue',    'blue'],
+      ['Scarpe',                  '#000000', 'C.black',   'black'],
+      ['Cravatta',                '#B8C76F', 'C.yellow',  'yellow'],
+      ['Capelli (grigi/bianchi)', '#959595', 'C.lgray',   'beige'],
+      ['Pelle (viso, mani)',      '#9A6759', 'C.pink',    'orange'],
+      ['Pelle ombra / collo',     '#825144', 'hardcoded', null],
+    ]
+  },
+  {
+    title: 'Prof.Rossi',
+    rows: [
+      ['Corpo / giacca',          '#c3200e', 'C.redprof', 'red'],
+    ]
+  },
+  {
+    title: 'Prof.Celeste',
+    rows: [
+      ['Corpo / giacca',          '#0757d7', 'C.cyanprof (levels.js)', 'blue'],
+    ]
+  },
+  {
+    title: 'Prof.Neri',
+    rows: [
+      ['Corpo / giacca',          '#171717', 'C.grayprof (levels.js)', 'navy'],
+    ]
+  },
+  {
+    title: 'Preside',
+    rows: [
+      ['Corpo / giacca',          '#1a1a4a', 'hardcoded (levels.js)', 'brownMid'],
+    ]
+  },
+  {
+    title: 'Guardiani (L10)',
+    rows: [
+      ['Corpo / uniforme',        '#1a1a3a', 'PAL.guardUniform', 'navy'],
+      ['Pantaloni scuri',         '#111111', 'PAL.guardTrousers', 'navy'],
+      ['Cuffia',                  '#dddddd', 'PAL.guardCap',     'beige'],
+      ['Visiera cuffia',          '#bbbbbb', 'PAL.guardCapVisor','white'],
+    ]
+  },
+  {
+    title: 'Bidello',
+    rows: [
+      ['Corpo / tuta',            '#6C6C6C', 'C.mgray',   'navy'],
+      ['Pelle',                   '#9A6759', 'C.pink',    'orange'],
+      ['Manico scopa',            '#433900', 'C.brown',   'brownDark'],
+    ]
+  },
+  {
+    title: 'Alunni seduti',
+    rows: [
+      ['Capelli',                 '#433900', 'C.brown',   'brownDark'],
+      ['Pelle',                   '#9A6759', 'C.pink',    'orange'],
+      ['Camicia',                 '#FFFFFF', 'C.white',   'white'],
+      ['Mani',                    '#9A6759', 'C.pink',    'orange'],
+    ]
+  },
+  {
+    title: 'Cartelle (bags)',
+    rows: [
+      ['Corpo bag',               '#4A3D8F', 'C.bagbody',   'purple'],
+      ['Bordo bag',               '#2A1F5E', 'C.bagborder', 'purpleDark'],
+    ]
+  },
+  {
+    title: 'Macchine distributrici',
+    rows: [
+      ['Corpo macchina',          '#352879', 'C.blue',    'blue'],
+      ['Schermo attivo',          '#9AD284', 'C.lgreen',  'lime'],
+      ['Schermo rotto',           '#444444', 'C.dgray',   'navy'],
+      ['Pannello bottoni bg',     '#6C5EB5', 'C.lblue',   'purpleDark'],
+      ['Bottone A (rosso)',       '#68372B', 'C.red',     'red'],
+      ['Bottone B (giallo)',      '#B8C76F', 'C.yellow',  'yellow'],
+      ['Bottone C (verde)',       '#588D43', 'C.green',   'green'],
+    ]
+  },
+  {
+    title: 'Spray can (L1)',
+    rows: [
+      ['Corpo spray',             '#70A4B2', 'C.cyan',    'blue'],
+      ['Particelle verdi',        '#8CD88C', 'hardcoded', null],
+    ]
+  },
+  {
+    title: 'Banchi',
+    rows: [
+      ['Legno scuro (top)',       '#2C1800', 'C.desk',    'brownDark'],
+      ['Legno chiaro',            '#4E2A00', 'C.desklt',  'brownMid'],
+      ['Gambe',                   '#433900', 'C.brown',   'brownDark'],
+    ]
+  },
+  {
+    title: 'Lavagne',
+    rows: [
+      ['Cornice legno',           '#433900', 'C.brown',   'brownDark'],
+      ['Superficie',              'PAL.boardDark already', '', null],
+    ]
+  },
+];
+
+// Render PAL strip
+const strip = document.getElementById('pal-strip');
+Object.entries(PAL_LOGO).forEach(([name, hex]) => {
+  strip.innerHTML += `<div class="pal-chip">
+    <div class="swatch" style="background:${hex}"></div>
+    <div class="name">${name}</div>
+    <div class="hex">${hex}</div>
+  </div>`;
+});
+
+// Render groups
+const container = document.getElementById('groups');
+GROUPS.forEach(g => {
+  let html = `<h2>${g.title}</h2>
+  <table>
+    <tr><th>Elemento</th><th>Attuale</th><th></th><th>PAL Logo</th></tr>`;
+
+  g.rows.forEach(([elem, curHex, curLabel, palSlot]) => {
+    const palHex = palSlot ? PAL_LOGO[palSlot] : null;
+    const unchanged = palHex === curHex || palSlot === null && curHex === '';
+    const rowClass = (!palSlot) ? ' class="unchanged"' : '';
+
+    const current = `<div class="cell">
+      <div class="swatch" style="background:${curHex || 'transparent'}"></div>
+      <div><div class="hex">${curHex}</div><div class="label">${curLabel}</div></div>
+    </div>`;
+
+    const target = palSlot
+      ? `<div class="cell">
+          <div class="swatch" style="background:${palHex}"></div>
+          <div><div class="hex">${palHex}</div><div class="label">PAL.${palSlot}</div></div>
+        </div>`
+      : `<span class="label" style="color:#555">— invariato —</span>`;
+
+    html += `<tr${rowClass}><td>${elem}</td><td>${current}</td><td class="arrow">→</td><td>${target}</td></tr>`;
+  });
+
+  html += '</table>';
+  container.innerHTML += html;
+});
+</script>
+</body>
+</html>

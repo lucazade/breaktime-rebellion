@@ -1,0 +1,46 @@
+Marco — protagonista
+
+Pelle (viso, mani) #faa462
+Pelle ombra / collo #fd6935
+Capelli #581e00
+Corpo / pantaloni #015dca
+Strisce camicia #6121ac (rimuovere strisce)
+Zainetto #7f2001
+Scarpe #ba0200
+
+---
+
+Professori — gambe e dettagli condivisi
+
+Gambe / pantaloni #706f6e
+Scarpe #862c00
+Cravatta #fcd806 oppure #FEDC02
+Capelli (grigi/bianchi) #72706e
+Pelle (viso, mani) #faa462
+Pelle ombra / collo #fd6935
+
+---
+
+Prof.Rossi
+
+Corpo / giacca #D21C01
+
+---
+
+Prof.Celeste
+
+Corpo / giacca #1665DC oppure #012A9F
+
+---
+
+Prof.Neri
+
+Corpo / giacca #2f2e2d
+
+---
+
+Preside
+
+Corpo / giacca #2f2e2d oppure #16202D
+
+---
