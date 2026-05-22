@@ -46,6 +46,16 @@ const PAL_LOGO = {
   teacherShoes:      '#862c00',
   teacherTie:        '#FEDC02',
 
+  // ── Bidello (janitor) ─────────────────────────────────
+  janitorSkin:       '#faa462',
+  janitorSkinShadow: '#fd6935',
+  janitorHair:       '#581e00',
+  janitorSalopette:  '#1665DC',  // overalls and cap
+  janitorShirt:      '#FFFFFF',  // undershirt (bodyCol)
+  janitorShoes:      '#FFFFFF',
+  janitorMopHandle:  '#581e00',  // dark wood
+  janitorMopHead:    '#959595',  // grey bristles
+
   // ── Prof.Rossi ────────────────────────────────────────
   profRossiBody:    '#D21C01',
 
@@ -95,6 +105,16 @@ const PAL_CLASSIC = {
   teacherTrousers:   '#352879',  // C.blue
   teacherShoes:      '#000000',  // C.black
   teacherTie:        '#B8C76F',  // C.yellow
+
+  // ── Bidello (C64-equivalent) ─────────────────────────
+  janitorSkin:       '#9A6759',  // C.pink
+  janitorSkinShadow: '#825144',
+  janitorHair:       '#433900',  // C.brown
+  janitorSalopette:  '#6C6C6C',  // C.mgray (old body colour)
+  janitorShirt:      '#FFFFFF',
+  janitorShoes:      '#000000',  // C.black
+  janitorMopHandle:  '#433900',  // C.brown
+  janitorMopHead:    '#959595',  // C.lgray
 
   // ── Professors (C64-equivalent) ──────────────────────
   profRossiBody:    '#c3200e',  // C.redprof

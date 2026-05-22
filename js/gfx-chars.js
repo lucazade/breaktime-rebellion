@@ -47,14 +47,12 @@ const COLOURS_TEACHER = {
   knockable:   true,
 };
 
-// Placeholder colours for characters not yet Phase-3 recoloured.
-// Replace when bidello/Luca get their own PAL entries.
 const COLOURS_JANITOR = {
-  skin:        PAL.teacherSkin,
-  skinShadow:  PAL.teacherSkinShadow,
-  hair:        PAL.teacherHair,
-  trousers:    PAL.teacherTrousers,
-  shoes:       PAL.teacherShoes,
+  skin:        PAL.janitorSkin,
+  skinShadow:  PAL.janitorSkinShadow,
+  hair:        PAL.janitorHair,
+  trousers:    PAL.janitorSalopette,  // overalls
+  shoes:       PAL.janitorShoes,
   shoeSole:    null,
   tie:         null,
   stripe:      null,
@@ -310,24 +308,37 @@ function drawCharClipped(x, y, dir, animT, bodyCol, colours, spraying, chasing, 
 }
 
 function drawJanitor(x, y, dir, animT) {
-  drawChar(x, y, dir, animT, C.mgray, COLOURS_JANITOR, false, false);
+  drawChar(x, y, dir, animT, PAL.janitorShirt, COLOURS_JANITOR, false, false);
   const bx = Math.round(x), by = Math.round(y);
   const mx = dir > 0 ? bx+PW : bx-1;
+
+  // Salopette bib + suspender straps — drawn on top of white undershirt
   if (CONFIG.vis.char.outline) {
     const s = CONFIG.vis.char.outlineSize || 1;
     ctx.fillStyle = CONFIG.vis.char.outlineColor;
+    // cap
     ctx.fillRect(bx+1-s, by-9-s, PW-2+s*2, 3+s*2);
     ctx.fillRect((dir>0 ? bx+PW-1 : bx-1)-s, by-7-s, 3+s*2, 1+s*2);
+    // mop
     ctx.fillRect(mx-s, by+4-s, 1+s*2, 12+s*2);
     ctx.fillRect(mx-1-s, by+14-s, 3+s*2, 2+s*2);
     ctx.fillRect(mx-2-s, by+16-s, 5+s*2, 1+s*2);
   }
-  ctx.fillStyle = C.blue;
+  // Salopette bib: suspender straps (top) + chest bib panel
+  ctx.fillStyle = PAL.janitorSalopette;
+  ctx.fillRect(bx+2, by+2, 1, 2);  // left strap
+  ctx.fillRect(bx+5, by+2, 1, 2);  // right strap
+  ctx.fillRect(bx+2, by+4, 4, 5);  // bib panel
+
+  // Cap (same colour as salopette)
+  ctx.fillStyle = PAL.janitorSalopette;
   ctx.fillRect(bx+1, by-9, PW-2, 3);
   ctx.fillRect(dir>0 ? bx+PW-1 : bx-1, by-7, 3, 1);
-  ctx.fillStyle = C.brown;
+
+  // Mop / broom
+  ctx.fillStyle = PAL.janitorMopHandle;
   ctx.fillRect(mx, by+4, 1, 12);
-  ctx.fillStyle = C.lgray;
+  ctx.fillStyle = PAL.janitorMopHead;
   ctx.fillRect(mx-1, by+14, 3, 2);
   ctx.fillStyle = PAL.white;
   ctx.fillRect(mx-2, by+16, 5, 1);
