@@ -1,7 +1,7 @@
 // ═══════════════════════════════════════════════════════════
 //  CONFIG — assets, audio and debug flags only.
 //  Timers, shake times and NPC lists live in js/levels.js.
-//  Layout, palette and scene structure are in js/layout.js.
+//  Building geometry, palette and scene structure are in js/gfx-building.js and js/gfx-*.js.
 // ═══════════════════════════════════════════════════════════
 const CONFIG = {
   images: {

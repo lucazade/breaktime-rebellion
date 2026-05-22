@@ -1,7 +1,7 @@
 // ═══════════════════════════════════════════════════════════
 //  GFX UI — font, bezel, HUD, dialogs, and all banner config
 //  All colours reference PAL (gfx-palette.js).
-//  Layout/scene → gfx-layout.js
+//  Building/scene → gfx-building.js
 // ═══════════════════════════════════════════════════════════
 
 Object.assign(CONFIG.vis, {

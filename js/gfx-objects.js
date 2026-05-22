@@ -120,7 +120,6 @@ function drawBell() {
   const out = PAL.bellOutline;
   const col = PAL.bellBody;
   const hi  = PAL.bellHighlight;
-  const shd = PAL.bellShadow;
   const drk = PAL.bellClapper;
 
   // Top cap (closes the border)

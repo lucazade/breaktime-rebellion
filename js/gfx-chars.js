@@ -1,12 +1,12 @@
 // ═══════════════════════════════════════════════════════════
 //  GFX CHARS — player/char config + sprite draw functions
-//  Depends on: gfx-palette, gfx-layout, draw (FF var at runtime).
+//  Depends on: gfx-palette, gfx-building, gfx-draw (FF var at runtime).
 // ═══════════════════════════════════════════════════════════
 
 // Player dimensions — defined here so PH is available for playerStart
 const PW = 8, PH = 16;
 
-// Player start position — added to shared (defined in gfx-layout.js) now that PH is available
+// Player start position — added to shared (defined in gfx-building.js) now that PH is available
 CONFIG.vis.shared.playerStart = { x: 18, y: GY - PH - walkOffset };
 
 // Character sprite config — outline settings
