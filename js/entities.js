@@ -7,8 +7,8 @@ function ringBell() {
   score += 1000;
   lastTimeBonus = Math.floor(timerTicks / 60) * 10;
   score += lastTimeBonus;
-  addFloating(Math.max(50, Math.min(W - 50, BELL.x + 10)), BELL.y - 6, '+1000!', C.gold);
-  addParticles(BELL.x, BELL.y, C.gold, 30);
+  addFloating(Math.max(50, Math.min(W - 50, BELL.x + 10)), BELL.y - 6, '+1000!', PAL.gold);
+  addParticles(BELL.x, BELL.y, PAL.gold, 30);
   msgT = 0;
   GameAudio.playSfx('bell');
   deathFreeze = true; // freeze NPCs immediately so they can't catch Marco after ringing
@@ -77,7 +77,7 @@ function updateTeachers() {
 
 function playerDied() {
   player.spraying = false; player.shaking = false; player.vy = 0;
-  addParticles(player.x + PW/2, player.y, C.red, 20);
+  addParticles(player.x + PW/2, player.y, PAL.redDark, 20);
   GameAudio.playSfx('caught');
   if (lives <= 0) {
     // Game over: freeze everything, fade out music, then show banner + gameover jingle
@@ -173,7 +173,7 @@ function escapeWin() {
   lastTimeBonus = Math.floor(timerTicks / 60) * 10;
   lastLivesBonus = lives * 500;
   score += lastTimeBonus + lastLivesBonus;
-  addParticles(exitDoor.x + 5, exitDoor.y, C.gold, 30);
+  addParticles(exitDoor.x + 5, exitDoor.y, PAL.gold, 30);
   GameAudio.playSfx('door');
   deathFreeze = true;
   exitWinReady = false;
@@ -198,7 +198,7 @@ function updateSprinklers() {
       if (jan.knockedT > 0 || jan.soakCooldownT > 0) continue;
       if (sp.floor === janFloor && Math.abs(jan.x + PW/2 - sp.x - 4) < 10) {
         jan.knockedT = 120;
-        addParticles(jan.x + 4, jan.y, C.cyan, 10);
+        addParticles(jan.x + 4, jan.y, PAL.cyan, 10);
       }
     }
   }
@@ -264,9 +264,9 @@ function updateBins() {
     b.lit = false;
     b.exploded = true;
     addParticles(b.x + 5, b.y - 7, '#FF6600', 18);
-    addParticles(b.x + 5, b.y - 7, C.yellow, 12);
-    addParticles(b.x + 5, b.y - 7, C.red,    8);
-    addFloating(b.x - 8, b.y - 26, 'BOOM!', C.gold);
+    addParticles(b.x + 5, b.y - 7, PAL.yellow, 12);
+    addParticles(b.x + 5, b.y - 7, PAL.redDark,    8);
+    addFloating(b.x - 8, b.y - 26, 'BOOM!', PAL.gold);
     GameAudio.playSfx('explosion');
 
     // Teachers on same floor: knocked if close, alerted if far
@@ -293,7 +293,7 @@ function updateBins() {
     let done = 0;
     for (let k = 0; k < bins.length; k++) if (bins[k].exploded) done++;
     score += 300;
-    addFloating(b.x + 5, b.y - 18, '+300', C.yellow);
+    addFloating(b.x + 5, b.y - 18, '+300', PAL.yellow);
     if (done >= bins.length) {
       binExplodeWin();
     } else {

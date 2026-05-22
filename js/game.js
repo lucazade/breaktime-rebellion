@@ -206,7 +206,7 @@ function loop(ts) {
     const jn = janitors[i];
     drawJanitor(jn.x, jn.y, jn.dir, jn.animT);
     if (jn.knockedT > 0 && Math.floor(frame / 4) % 2 === 0) {
-      ctx.fillStyle = C.cyan;
+      ctx.fillStyle = PAL.cyan;
       ctx.fillRect(Math.round(jn.x - 2), Math.round(jn.y),     2, 2);
       ctx.fillRect(Math.round(jn.x + 9), Math.round(jn.y - 3), 2, 2);
       ctx.fillRect(Math.round(jn.x + 4), Math.round(jn.y - 9), 2, 2);

@@ -121,19 +121,19 @@ function drawTitleScreen() {
 
   // Level chooser
   if (LEVELS.length > 1) {
-    var prevColor = currentLevel <= 1 ? C.dgray : ct.btnColor;
+    var prevColor = currentLevel <= 1 ? PAL.dgray : ct.btnColor;
     _box(ct.prevX, ctrlY, ct.prevW, prevColor);
     ctx.fillStyle = prevColor; ctx.fillText('<', ct.prevX + ct.prevW/2, ctrlTextY);
 
-    ctx.fillStyle = C.gold;
+    ctx.fillStyle = PAL.gold;
     ctx.fillText(STRINGS.levelLabel + ' ' + currentLevel, ct.labelX, ctrlTextY);
 
     var atCeiling = currentLevel >= _btrMax, moreExist = _btrMax < LEVELS.length;
     if (atCeiling && moreExist) {
-      _box(ct.nextX, ctrlY, ct.nextW, C.yellow);
-      _drawLockIcon(ct.nextX + Math.floor((ct.nextW - 6) / 2), ctrlY + Math.floor((ct.btnH - 6) / 2), C.yellow);
+      _box(ct.nextX, ctrlY, ct.nextW, PAL.yellow);
+      _drawLockIcon(ct.nextX + Math.floor((ct.nextW - 6) / 2), ctrlY + Math.floor((ct.btnH - 6) / 2), PAL.yellow);
     } else {
-      var nextColor = (atCeiling && !moreExist) ? C.dgray : ct.btnColor;
+      var nextColor = (atCeiling && !moreExist) ? PAL.dgray : ct.btnColor;
       _box(ct.nextX, ctrlY, ct.nextW, nextColor);
       ctx.fillStyle = nextColor; ctx.fillText('>', ct.nextX + ct.nextW/2, ctrlTextY);
     }
@@ -145,14 +145,14 @@ function drawTitleScreen() {
     var tapX = vTap.alignX === 'left' ? 0 : vTap.alignX === 'right' ? W : W / 2;
     var tapOffY = vTap.alignY === 'top' ? 1 : vTap.alignY === 'bottom' ? ct.btnH - vTap.fontSize - 1 : Math.floor((ct.btnH - vTap.fontSize) / 2);
     ctx.font = vTap.fontSize + 'px ' + FF;
-    ctx.fillStyle = C.gold; ctx.textAlign = vTap.alignX;
+    ctx.fillStyle = PAL.gold; ctx.textAlign = vTap.alignX;
     ctx.fillText(STRINGS.tapToStart, tapX, ctrlY + tapOffY);
     ctx.font = ct.fontSize + 'px ' + FF; ctx.textAlign = 'center';
   }
 
   // Audio toggle — fixed width based on the longest label across all modes
   var audioMode = GameAudio.getMode();
-  var audioColor = audioMode==='full' ? C.lgreen : audioMode==='sfx' ? C.yellow : C.mgray;
+  var audioColor = audioMode==='full' ? PAL.lgreen : audioMode==='sfx' ? PAL.yellow : PAL.mgray;
   var audioLabel = audioMode==='full' ? STRINGS.audioFull : audioMode==='sfx' ? STRINGS.audioSfx : STRINGS.audioMute;
   var _iconW = 5, _gap = 3;
   if (!_audioLblW && document.fonts.check(ctx.font)) {
@@ -181,8 +181,8 @@ function drawTitleScreen() {
     function _kw(c) { return ctx.measureText(c).width + 4; }
     function _key(x, c) {
       var kw = _kw(c);
-      ctx.strokeStyle = C.lgray; ctx.beginPath(); ctx.roundRect(x, legY, kw, kh, kr); ctx.stroke();
-      ctx.fillStyle = C.lgray; ctx.textAlign = 'center'; ctx.fillText(c, x + kw/2, legY + 1);
+      ctx.strokeStyle = PAL.lgray; ctx.beginPath(); ctx.roundRect(x, legY, kw, kh, kr); ctx.stroke();
+      ctx.fillStyle = PAL.lgray; ctx.textAlign = 'center'; ctx.fillText(c, x + kw/2, legY + 1);
       return kw;
     }
 
@@ -195,15 +195,15 @@ function drawTitleScreen() {
     var bx = Math.round((W - totalLW) / 2);
 
     bx += _key(bx,'<')+1; bx += _key(bx,'^')+1; bx += _key(bx,'v')+1; bx += _key(bx,'>');
-    bx += ks; ctx.fillStyle=C.lgray; ctx.textAlign='left'; ctx.fillText(STRINGS.keyMove||'move', bx, legY+1); bx += twMov;
+    bx += ks; ctx.fillStyle=PAL.lgray; ctx.textAlign='left'; ctx.fillText(STRINGS.keyMove||'move', bx, legY+1); bx += twMov;
     bx += ks; bx += _key(bx,'Z');
-    bx += ks; ctx.fillStyle=C.lgray; ctx.textAlign='left'; ctx.fillText(STRINGS.keyAction||'action', bx, legY+1); bx += twAct;
+    bx += ks; ctx.fillStyle=PAL.lgray; ctx.textAlign='left'; ctx.fillText(STRINGS.keyAction||'action', bx, legY+1); bx += twAct;
     bx += ks; bx += _key(bx,'C');
-    bx += ks; ctx.fillStyle=C.lgray; ctx.textAlign='left'; ctx.fillText(STRINGS.keyCredits||'credits', bx, legY+1); bx += twCre;
+    bx += ks; ctx.fillStyle=PAL.lgray; ctx.textAlign='left'; ctx.fillText(STRINGS.keyCredits||'credits', bx, legY+1); bx += twCre;
     bx += ks; bx += _key(bx,'P');
-    bx += ks; ctx.fillStyle=C.lgray; ctx.textAlign='left'; ctx.fillText(STRINGS.keyPause||'pause', bx, legY+1); bx += twPau;
+    bx += ks; ctx.fillStyle=PAL.lgray; ctx.textAlign='left'; ctx.fillText(STRINGS.keyPause||'pause', bx, legY+1); bx += twPau;
     bx += ks; bx += _key(bx,'ESC');
-    bx += ks; ctx.fillStyle=C.lgray; ctx.textAlign='left'; ctx.fillText(STRINGS.keyHome||'home', bx, legY+1);
+    bx += ks; ctx.fillStyle=PAL.lgray; ctx.textAlign='left'; ctx.fillText(STRINGS.keyHome||'home', bx, legY+1);
 
     ctx.textAlign = 'center';
   }
@@ -340,17 +340,17 @@ function drawEndScreen() {
     const cx = gX + VG.panW / 2;
     let ty = gY + VG.padTop;
     ctx.font = VG.fontTitle + 'px ' + FF;
-    ctx.fillStyle = C.redprof; ctx.fillText(STRINGS.gameoverTitle,                  cx, ty); ty += VG.stepTitle;
+    ctx.fillStyle = PAL.profRossiBody; ctx.fillText(STRINGS.gameoverTitle,                  cx, ty); ty += VG.stepTitle;
     ctx.font = VG.fontBody + 'px ' + FF;
-    ctx.fillStyle = C.white;   ctx.fillText(fmt(STRINGS.levelReached, currentLevel), cx, ty); ty += VG.stepLevel;
-    ctx.fillStyle = C.white;   ctx.fillText(scoreText,                               cx, ty); ty += VG.stepScore;
-    ctx.fillStyle = C.gold;    ctx.fillText(STRINGS.gameoverConfirm,                 cx, ty); ty += VG.stepConfirm;
+    ctx.fillStyle = PAL.white;   ctx.fillText(fmt(STRINGS.levelReached, currentLevel), cx, ty); ty += VG.stepLevel;
+    ctx.fillStyle = PAL.white;   ctx.fillText(scoreText,                               cx, ty); ty += VG.stepScore;
+    ctx.fillStyle = PAL.gold;    ctx.fillText(STRINGS.gameoverConfirm,                 cx, ty); ty += VG.stepConfirm;
     ctx.font = VG.fontBtn + 'px ' + FF;
     const siX = gX + VG.siOx, noX = gX + VG.noOx;
     _dialogBtn(siX, ty, VG.siW, VG.btnH, CONFIG.vis.dialog.btnColorYes);
-    ctx.fillStyle = C.white; ctx.fillText(STRINGS.btnYes, siX + VG.siW/2, ty + Math.floor((VG.btnH - VG.fontBtn) / 2));
+    ctx.fillStyle = PAL.white; ctx.fillText(STRINGS.btnYes, siX + VG.siW/2, ty + Math.floor((VG.btnH - VG.fontBtn) / 2));
     _dialogBtn(noX, ty, VG.noW, VG.btnH, CONFIG.vis.dialog.btnColorNo);
-    ctx.fillStyle = C.white; ctx.fillText(STRINGS.btnNo, noX + VG.noW/2, ty + Math.floor((VG.btnH - VG.fontBtn) / 2));
+    ctx.fillStyle = PAL.white; ctx.fillText(STRINGS.btnNo, noX + VG.noW/2, ty + Math.floor((VG.btnH - VG.fontBtn) / 2));
   } else if (currentLevel === LEVELS.length) {
     const bestScore = parseInt(localStorage.getItem('btr_best_score') || '0');
     const bestLevel = parseInt(localStorage.getItem('btr_best_level') || '1');
@@ -362,13 +362,13 @@ function drawEndScreen() {
     const cxW = wX + VW.panW / 2;
     let tyW = wY + VW.padTop;
     ctx.font = VW.fontTitle + 'px ' + FF;
-    ctx.fillStyle = C.gold;   ctx.fillText(STRINGS.winTitle, cxW, tyW); tyW += VW.stepTitle;
+    ctx.fillStyle = PAL.gold;   ctx.fillText(STRINGS.winTitle, cxW, tyW); tyW += VW.stepTitle;
     ctx.font = VW.fontBody + 'px ' + FF;
-    if (lastTimeBonus > 0)  { ctx.fillStyle = C.cyan;  ctx.fillText(STRINGS.timeBonusLabel  + lastTimeBonus,  cxW, tyW); tyW += VW.stepBonus; }
-    if (lastLivesBonus > 0) { ctx.fillStyle = C.green; ctx.fillText(STRINGS.livesBonusLabel + lastLivesBonus, cxW, tyW); tyW += VW.stepBonus; }
-    ctx.fillStyle = C.white;  ctx.fillText(scoreText, cxW, tyW); tyW += VW.stepScore;
-    ctx.fillStyle = C.yellow; ctx.fillText(STRINGS.bestLabel + ' LVL ' + bestLevel + ' — ' + String(bestScore).padStart(5,'0'), cxW, tyW); tyW += VW.stepBest;
-    ctx.fillStyle = actionVisible ? C.gold : PAL.transparent; ctx.fillText(STRINGS.tapForTitle, cxW, tyW);
+    if (lastTimeBonus > 0)  { ctx.fillStyle = PAL.cyan;  ctx.fillText(STRINGS.timeBonusLabel  + lastTimeBonus,  cxW, tyW); tyW += VW.stepBonus; }
+    if (lastLivesBonus > 0) { ctx.fillStyle = PAL.green; ctx.fillText(STRINGS.livesBonusLabel + lastLivesBonus, cxW, tyW); tyW += VW.stepBonus; }
+    ctx.fillStyle = PAL.white;  ctx.fillText(scoreText, cxW, tyW); tyW += VW.stepScore;
+    ctx.fillStyle = PAL.yellow; ctx.fillText(STRINGS.bestLabel + ' LVL ' + bestLevel + ' — ' + String(bestScore).padStart(5,'0'), cxW, tyW); tyW += VW.stepBest;
+    ctx.fillStyle = actionVisible ? PAL.gold : PAL.transparent; ctx.fillText(STRINGS.tapForTitle, cxW, tyW);
   } else {
     const VL = CONFIG.vis.levelComplete;
     const _lH = VL.padTop + VL.stepTitle + VL.stepScore + (lastTimeBonus > 0 ? VL.stepBonus : 0) + VL.tapH + VL.padBottom;
@@ -378,11 +378,11 @@ function drawEndScreen() {
     const cxL = lX + VL.panW / 2;
     let tyL = lY + VL.padTop;
     ctx.font = VL.fontTitle + 'px ' + FF;
-    ctx.fillStyle = C.gold;  ctx.fillText(STRINGS.levelComplete, cxL, tyL); tyL += VL.stepTitle;
+    ctx.fillStyle = PAL.gold;  ctx.fillText(STRINGS.levelComplete, cxL, tyL); tyL += VL.stepTitle;
     ctx.font = VL.fontBody + 'px ' + FF;
-    if (lastTimeBonus > 0) { ctx.fillStyle = C.cyan; ctx.fillText(STRINGS.timeBonusLabel + lastTimeBonus, cxL, tyL); tyL += VL.stepBonus; }
-    ctx.fillStyle = C.white; ctx.fillText(scoreText, cxL, tyL); tyL += VL.stepScore;
-    ctx.fillStyle = actionVisible ? C.green : PAL.transparent; ctx.fillText(STRINGS.tapContinue, cxL, tyL);
+    if (lastTimeBonus > 0) { ctx.fillStyle = PAL.cyan; ctx.fillText(STRINGS.timeBonusLabel + lastTimeBonus, cxL, tyL); tyL += VL.stepBonus; }
+    ctx.fillStyle = PAL.white; ctx.fillText(scoreText, cxL, tyL); tyL += VL.stepScore;
+    ctx.fillStyle = actionVisible ? PAL.green : PAL.transparent; ctx.fillText(STRINGS.tapContinue, cxL, tyL);
   }
   ctx.restore();
 }
@@ -418,15 +418,15 @@ function drawStoryBanner() {
   ctx.font = VS.fontTitle + 'px ' + FF;
   const cxSt = bx + bw / 2;
   let tySt = by + VS.padTop;
-  ctx.fillStyle = C.gold;  ctx.fillText(STRINGS.storyTitle, cxSt, tySt); tySt += VS.titleH + VS.titleSpacing;
+  ctx.fillStyle = PAL.gold;  ctx.fillText(STRINGS.storyTitle, cxSt, tySt); tySt += VS.titleH + VS.titleSpacing;
   ctx.font = VS.fontBody + 'px ' + FF;
-  ctx.fillStyle = C.white;
+  ctx.fillStyle = PAL.white;
   for (let i = 0; i < storyBannerLines.length; i++) {
     ctx.fillText(storyBannerLines[i], cxSt, tySt);
     tySt += VS.lineH + (i < storyBannerLines.length - 1 ? VS.lineSpacing : VS.spacerH);
   }
   const blink = Math.floor(frame / 25) % 2 === 0;
-  ctx.fillStyle = blink ? C.gold : PAL.transparent; ctx.fillText(STRINGS.tapContinue, cxSt, tySt);
+  ctx.fillStyle = blink ? PAL.gold : PAL.transparent; ctx.fillText(STRINGS.tapContinue, cxSt, tySt);
   ctx.restore();
 }
 
@@ -458,9 +458,9 @@ function drawMissionBanner() {
   ctx.font = VM.fontTitle + 'px ' + FF;
   const cxM = bx + bw / 2;
   let tyM = by + VM.padTop;
-  ctx.fillStyle = C.gold;  ctx.fillText(fmt(STRINGS.missionLabel, currentLevel), cxM, tyM); tyM += VM.titleH + VM.titleSpacing;
+  ctx.fillStyle = PAL.gold;  ctx.fillText(fmt(STRINGS.missionLabel, currentLevel), cxM, tyM); tyM += VM.titleH + VM.titleSpacing;
   ctx.font = VM.fontBody + 'px ' + FF;
-  ctx.fillStyle = C.white;
+  ctx.fillStyle = PAL.white;
   for (let i = 0; i < missionBannerLines.length; i++) {
     ctx.fillText(missionBannerLines[i], cxM, tyM);
     if (i < missionBannerLines.length - 1) tyM += VM.lineH + VM.lineSpacing;
@@ -479,11 +479,11 @@ function drawPauseOverlay() {
   ctx.font = VP.fontTitle + 'px ' + FF;
   const cx = bx + VP.panW / 2;
   let ty = by + VP.padTop;
-  ctx.fillStyle = C.gold; ctx.fillText(STRINGS.pauseTitle, cx, ty); ty += VP.stepTitle;
+  ctx.fillStyle = PAL.gold; ctx.fillText(STRINGS.pauseTitle, cx, ty); ty += VP.stepTitle;
   ctx.font = VP.fontBtn + 'px ' + FF;
   const rx = bx + VP.resumeOx;
   _dialogBtn(rx, ty, VP.resumeW, VP.btnH, CONFIG.vis.dialog.btnColorYes);
-  ctx.fillStyle = C.white; ctx.fillText(STRINGS.btnResume, rx + VP.resumeW/2, ty + Math.floor((VP.btnH - VP.fontBtn) / 2));
+  ctx.fillStyle = PAL.white; ctx.fillText(STRINGS.btnResume, rx + VP.resumeW/2, ty + Math.floor((VP.btnH - VP.fontBtn) / 2));
   ctx.restore();
 }
 
@@ -498,13 +498,13 @@ function drawHomeConfirm() {
   ctx.font = VH.fontTitle + 'px ' + FF;
   const cx = bx + VH.panW / 2;
   let ty = by + VH.padTop;
-  ctx.fillStyle = C.gold; ctx.fillText(STRINGS.homeConfirm, cx, ty); ty += VH.stepTitle;
+  ctx.fillStyle = PAL.gold; ctx.fillText(STRINGS.homeConfirm, cx, ty); ty += VH.stepTitle;
   ctx.font = VH.fontBtn + 'px ' + FF;
   const siX = bx + VH.siOx, noX = bx + VH.noOx;
   _dialogBtn(siX, ty, VH.siW, VH.btnH, CONFIG.vis.dialog.btnColorYes);
-  ctx.fillStyle = C.white; ctx.fillText(STRINGS.btnYes, siX + VH.siW/2, ty + Math.floor((VH.btnH - VH.fontBtn) / 2));
+  ctx.fillStyle = PAL.white; ctx.fillText(STRINGS.btnYes, siX + VH.siW/2, ty + Math.floor((VH.btnH - VH.fontBtn) / 2));
   _dialogBtn(noX, ty, VH.noW, VH.btnH, CONFIG.vis.dialog.btnColorNo);
-  ctx.fillStyle = C.white; ctx.fillText(STRINGS.btnNo, noX + VH.noW/2, ty + Math.floor((VH.btnH - VH.fontBtn) / 2));
+  ctx.fillStyle = PAL.white; ctx.fillText(STRINGS.btnNo, noX + VH.noW/2, ty + Math.floor((VH.btnH - VH.fontBtn) / 2));
   ctx.restore();
 }
 
@@ -638,7 +638,7 @@ function _drawHudIcon(type, x, y, color, s) {
         ctx.fillRect(2,0,3,1);
         ctx.fillRect(0,1,7,1); ctx.fillRect(0,5,7,1);
         ctx.fillRect(0,2,1,3); ctx.fillRect(6,2,1,3);
-        ctx.fillStyle=C.bagborder; ctx.fillRect(2,3,3,1);
+        ctx.fillStyle=PAL.bagborder; ctx.fillRect(2,3,3,1);
         break;
       case 'machines':
         ctx.fillRect(0,0,6,6);
@@ -701,7 +701,7 @@ function _drawHudIcon(type, x, y, color, s) {
       ctx.fillRect(2,0, 3,1);
       ctx.fillRect(0,1, 7,1); ctx.fillRect(0,6, 7,1);
       ctx.fillRect(0,2, 1,4); ctx.fillRect(6,2, 1,4);
-      ctx.fillStyle = C.bagborder; ctx.fillRect(2,3, 3,1);
+      ctx.fillStyle = PAL.bagborder; ctx.fillRect(2,3, 3,1);
       break;
     case 'machines': // vending machine: rectangle with screen and button
       ctx.fillRect(0,0, 6,7);
@@ -856,19 +856,19 @@ function drawCredits() {
   ctx.textAlign = 'center'; ctx.textBaseline = 'top';
   var cx = bx + VC.panW / 2;
   var ty = by + VC.padTop;
-  ctx.font = VC.fontTitle + 'px ' + FF; ctx.fillStyle = C.gold;
+  ctx.font = VC.fontTitle + 'px ' + FF; ctx.fillStyle = PAL.gold;
   ctx.fillText('— CREDITS —', cx, ty); ty += VC.stepTitle;
-  ctx.font = VC.fontBody + 'px ' + FF; ctx.fillStyle = C.lgreen;
+  ctx.font = VC.fontBody + 'px ' + FF; ctx.fillStyle = PAL.lgreen;
   ctx.fillText('LucazadeSoft Team', cx, ty); ty += VC.stepTeam;
   for (var i = 0; i < n; i++) {
-    ctx.fillStyle = C.white; ctx.fillText(_CREDITS_MEMBERS[i].name, cx, ty); ty += VC.nameH + VC.nameGap;
-    ctx.fillStyle = C.cyan;  ctx.fillText(_CREDITS_MEMBERS[i].role, cx, ty); ty += VC.roleH + VC.roleGap;
+    ctx.fillStyle = PAL.white; ctx.fillText(_CREDITS_MEMBERS[i].name, cx, ty); ty += VC.nameH + VC.nameGap;
+    ctx.fillStyle = PAL.cyan;  ctx.fillText(_CREDITS_MEMBERS[i].role, cx, ty); ty += VC.roleH + VC.roleGap;
   }
   ty += VC.btnGapAbove;
   var btnX = bx + Math.round((VC.panW - VC.btnW) / 2);
   ctx.font = VC.fontBtn + 'px ' + FF;
   _dialogBtn(btnX, ty, VC.btnW, VC.btnH, CONFIG.vis.dialog.btnColorYes);
-  ctx.fillStyle = C.white; ctx.fillText('OK', bx + VC.panW/2, ty + Math.floor((VC.btnH - VC.fontBtn) / 2));
+  ctx.fillStyle = PAL.white; ctx.fillText('OK', bx + VC.panW/2, ty + Math.floor((VC.btnH - VC.fontBtn) / 2));
   ctx.restore();
 }
 

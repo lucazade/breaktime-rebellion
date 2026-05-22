@@ -14,7 +14,6 @@
 //   { id, name, x, y, w, h, actions:[] }
 
 var LEVELS = (function() {
-  var C = CONFIG.colors;
   return [
 
     // ── LEVEL 1 — Tag all boards, ring the bell ──────────────────────────────

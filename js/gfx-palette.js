@@ -1,12 +1,8 @@
 // ═══════════════════════════════════════════════════════════
 //  GFX PALETTE — single source of truth for all colours
-//  PAL_LOGO: logo reference palette (Phase 3 target)
-//  PAL_CLASSIC: C64-equivalent values for A/B comparison (?classic URL param)
-//  UI/HUD colours follow PAL regardless of toggle.
 // ═══════════════════════════════════════════════════════════
 
-// ── Logo palette (Phase 3 target) ────────────────────────
-const PAL_LOGO = {
+const PAL = {
   // sprite / environment
   black:       '#000000',  // sprite outline
   white:       '#FFFFFF',  // highlights
@@ -104,109 +100,8 @@ const PAL_LOGO = {
   lucaTie:           '#000000',  // tie
   lucaTrousers:      '#012A9F',  // dark blue
   lucaShoes:         '#000000',
-};
 
-// ── Classic palette (C64-equivalent, for ?classic A/B comparison) ────────────
-const PAL_CLASSIC = {
-  black:       '#000000',
-  white:       '#FFFFFF',
-  green:       '#588D43',  // C.green
-  greenDark:   '#1A4A1A',  // C.chalkbg (board bg)
-  purple:      '#352879',  // C.blue (trousers/jacket)
-  purpleDark:  '#6C5EB5',  // C.lblue (Marco stripes)
-  yellow:      '#B8C76F',  // C.yellow
-  blue:        '#352879',  // C.blue (teacher legs/machine)
-  blueDark:    '#2A1F5E',  // C.bagborder (dark blue)
-  navy:        '#171717',  // C.grayprof (Prof.Neri/Preside)
-  brownDark:   '#433900',  // C.brown (hair/wood)
-  brownMid:    '#4E2A00',  // C.desklt
-  orange:      '#9A6759',  // C.pink (skin)
-  orangeDark:  '#68372B',  // C.red (skin shadow)
-  red:         '#c3200e',  // C.redprof
-  redDark:     '#68372B',  // C.red
-  lime:        '#9AD284',  // C.lgreen
-  beige:       '#D8E8D0',  // C.chalk
-
-  // ── Marco (C64-equivalent) ───────────────────────────────
-  marcoSkin:        '#9A6759',  // C.pink
-  marcoSkinShadow:  '#825144',  // hardcoded neck
-  marcoHair:        '#433900',  // C.brown
-  marcoShirt:       '#6C5EB5',  // C.lblue
-  marcoShirtStripe: '#6C5EB5',  // same as shirt — invisible in classic
-  marcoTrousers:    '#352879',  // C.blue
-  marcoShoes:       '#000000',  // C.black
-  marcoShoeSole:    '#000000',  // invisible in classic (no sole stripe)
-  marcoBackpack:    '#3e3e3e',  // hardcoded
-
-  // ── Teachers (C64-equivalent) ────────────────────────
-  teacherSkin:       '#9A6759',  // C.pink
-  teacherSkinShadow: '#825144',  // hardcoded neck
-  teacherHair:       '#959595',  // C.lgray
-  teacherTrousers:   '#352879',  // C.blue
-  teacherShoes:      '#000000',  // C.black
-  teacherTie:        '#B8C76F',  // C.yellow
-
-  // ── Bidello (C64-equivalent) ─────────────────────────
-  janitorSkin:       '#9A6759',  // C.pink
-  janitorSkinShadow: '#825144',
-  janitorHair:       '#433900',  // C.brown
-  janitorSalopette:  '#6C6C6C',  // C.mgray (old body colour)
-  janitorShirt:      '#FFFFFF',
-  janitorShoes:      '#000000',  // C.black
-  janitorMopHandle:  '#433900',  // C.brown
-  janitorMopHead:    '#959595',  // C.lgray
-
-  // ── Alunni seduti (C64-equivalent) ───────────────────
-  studentSkin:       '#9A6759',  // C.pink
-  studentSkinShadow: '#825144',
-  studentHair:       '#433900',  // C.brown
-  studentShirt:      '#FFFFFF',
-
-  // ── Professors (C64-equivalent) ──────────────────────
-  profRossiBody:    '#c3200e',  // C.redprof
-  profCelesteBody:  '#0757d7',  // C.cyanprof
-  profNeriBody:     '#171717',  // C.grayprof
-
-  // ── Preside (C64-equivalent) ─────────────────────────
-  presideSkin:       '#9A6759',  // C.pink
-  presideSkinShadow: '#825144',
-  presideHair:       '#959595',  // C.lgray
-  presideBody:       '#171717',  // C.grayprof
-  presideTrousers:   '#352879',  // C.blue
-  presideShoes:      '#000000',  // C.black
-
-  // ── Guardiani (C64-equivalent) ────────────────────────
-  guardSkin:         '#9A6759',  // C.pink
-  guardSkinShadow:   '#825144',
-  guardUniform:      '#352879',  // C.blue
-  guardTrousers:     '#171717',  // C.grayprof
-  guardCap:          '#171717',  // C.grayprof
-  guardBadge:        '#B8C76F',  // C.yellow
-
-  // ── Prof.Ginnastica (C64-equivalent) ─────────────────
-  profGinnasticaSkin:       '#9A6759',  // C.pink
-  profGinnasticaSkinShadow: '#825144',
-  profGinnasticaBody:       '#109f06',  // C.greenprof
-  profGinnasticaStripe:     '#D8E8D0',  // C.chalk
-  profGinnasticaTrousers:   '#352879',  // C.blue
-  profGinnasticaShoes:      '#000000',  // C.black
-  profGinnasticaCap:        '#109f06',  // C.greenprof
-
-  // ── Luca (C64-equivalent) ─────────────────────────────
-  lucaSkin:          '#9A6759',  // C.pink
-  lucaSkinShadow:    '#825144',
-  lucaHair:          '#433900',  // C.brown
-  lucaBody:          '#FFFFFF',  // white shirt
-  lucaTie:           '#000000',  // C.black
-  lucaTrousers:      '#2A1F5E',  // C.bagborder (dark blue)
-  lucaShoes:         '#000000',  // C.black
-};
-
-// Toggle: ?classic in URL → C64-equivalent look for A/B comparison
-const _useClassic = new URLSearchParams(location.search).has('classic');
-
-// All remaining PAL entries (UI, HUD, objects) are shared between both modes
-const PAL = Object.assign(_useClassic ? PAL_CLASSIC : PAL_LOGO, {
+  // ── UI / HUD / objects ───────────────────────────────────
 
   // ── Transparency ─────────────────────────────────────────
   transparent:        'rgba(0,0,0,0)',       // invisible state for blinking text
@@ -329,6 +224,20 @@ const PAL = Object.assign(_useClassic ? PAL_CLASSIC : PAL_LOGO, {
   // ── Fire / explosion ─────────────────────────────────────
   flame:         '#FF6600',  // lighter flame, fuse animation
 
+  // ── UI colours ───────────────────────────────────────────
+  gold:           '#FFD700',  // floating text, win/score banners, Luca bubble
+  dgray:          '#444444',  // disabled buttons, dim UI elements
+  cyan:           '#70A4B2',  // sprinkler/water particles, keyboard legend
+  lgreen:         '#9AD284',  // credits roles, audio button
+  lgray:          '#959595',  // keyboard legend, paper ball highlight
+  mgray:          '#6C6C6C',  // audio muted button
+
+  // ── Object colours (legacy — to be revised in fase 4) ───
+  brown:          '#433900',  // desk chair wood
+  desk:           '#2C1800',  // desk top dark
+  desklt:         '#4E2A00',  // desk top light
+  bagborder:      '#2A1F5E',  // bag border
+
   // ── Characters ───────────────────────────────────────────
   charOutline:    '#121212',           // sprite outline (CONFIG.vis.char.outlineColor)
   shadow:         'rgba(0,0,0,0.2)',   // character ground shadow
@@ -349,23 +258,5 @@ const PAL = Object.assign(_useClassic ? PAL_CLASSIC : PAL_LOGO, {
   dotBins:       '#B8C76F',
   dotSprinklers: '#70A4B2',
   dotRegister:   '#FFD700',
-});
-
-CONFIG.colors = {
-  black:'#000000', white:'#FFFFFF',
-  blue:'#352879', lblue:'#6C5EB5',
-  red:'#68372B', pink:'#9A6759',
-  green:'#588D43', lgreen:'#9AD284',
-  brown:'#433900',
-  yellow:'#B8C76F', gold:'#FFD700',
-  dgray:'#444444', mgray:'#6C6C6C', lgray:'#959595',
-  chalk:'#D8E8D0', chalkbg:'#1A4A1A',
-  cyan:'#70A4B2',
-  desk:'#2C1800', desklt:'#4E2A00',
-  bagbody:'#4A3D8F', bagborder:'#2A1F5E',
-  bell:'#DAA520',
-  redprof:'#c3200e', greenprof:'#109f06', grayprof:'#171717', whiteprof:'#dcdcdc', cyanprof:'#0757d7',
 };
 
-// Global shortcut — available to all scripts including levels.js (loads before state.js)
-var C = CONFIG.colors;

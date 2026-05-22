@@ -44,14 +44,14 @@ function drawDesks() {
     _octx.scale(_canvasScale, _canvasScale);
     for (var _i = 0; _i < DESKS.length; _i++) {
       var _d = DESKS[_i];
-      _octx.fillStyle = C.desk; _octx.fillRect(_d.x-1, _d.y-1, 22, 8);
-      _octx.fillStyle = C.desklt;  _octx.fillRect(_d.x,   _d.y,   20, 6);
-      _octx.fillStyle = C.desk;    _octx.fillRect(_d.x,   _d.y+5, 20, 2);
-      _octx.fillStyle = C.brown;
+      _octx.fillStyle = PAL.desk; _octx.fillRect(_d.x-1, _d.y-1, 22, 8);
+      _octx.fillStyle = PAL.desklt;  _octx.fillRect(_d.x,   _d.y,   20, 6);
+      _octx.fillStyle = PAL.desk;    _octx.fillRect(_d.x,   _d.y+5, 20, 2);
+      _octx.fillStyle = PAL.brown;
       _octx.fillRect(_d.x+1,  _d.y+6, 2, 5);
       _octx.fillRect(_d.x+17, _d.y+6, 2, 5);
-      _octx.fillStyle = C.red;   _octx.fillRect(_d.x+5, _d.y-2, 8, 3);
-      _octx.fillStyle = C.white; _octx.fillRect(_d.x+6, _d.y-2, 6, 2);
+      _octx.fillStyle = PAL.redDark;   _octx.fillRect(_d.x+5, _d.y-2, 8, 3);
+      _octx.fillStyle = PAL.white; _octx.fillRect(_d.x+6, _d.y-2, 6, 2);
     }
     _desksCache = _oc;
   }
@@ -84,7 +84,7 @@ function drawBoards() {
     _octx.font = '4px ' + FF;
     for (var _j = 0; _j < BOARDS.length; _j++) {
       var _b = BOARDS[_j];
-      _octx.fillStyle = C.brown;   _octx.fillRect(_b.x-1, _b.y-1, BW+2, BH+2);
+      _octx.fillStyle = PAL.brown;   _octx.fillRect(_b.x-1, _b.y-1, BW+2, BH+2);
       _octx.fillStyle = PAL.boardDark; _octx.fillRect(_b.x, _b.y, BW, BH);
       if (!_b.done) {
         _octx.fillStyle = PAL.boardChalk;
@@ -105,7 +105,7 @@ function drawBoards() {
   // Proximity dashed border — drawn live on top of cache
   if (nearestIdx >= 0 && nd < 36) {
     const b = BOARDS[nearestIdx];
-    ctx.strokeStyle = C.yellow; ctx.lineWidth = 1;
+    ctx.strokeStyle = PAL.yellow; ctx.lineWidth = 1;
     ctx.setLineDash([2,2]);
     ctx.strokeRect(b.x-2, b.y-2, BW+4, BH+4);
     ctx.setLineDash([]);
@@ -216,7 +216,7 @@ function drawGymBall() {
     const pdx = Math.abs(player.x + PW/2 - gymBall.x - 4);
     const pdy = Math.abs(player.y + PH  - gymBall.y - 9);
     if (pdx < 14 && pdy < 14) {
-      ctx.strokeStyle = C.yellow; ctx.lineWidth = 1;
+      ctx.strokeStyle = PAL.yellow; ctx.lineWidth = 1;
       ctx.setLineDash([2, 2]);
       const _dg = CONFIG.vis.dashed.gymBall; ctx.strokeRect(bx+_dg.x, by+_dg.y, _dg.w, _dg.h);
       ctx.setLineDash([]);
@@ -270,7 +270,7 @@ function drawBookcase() {
     const pdx = Math.abs(player.x + PW/2 - bookcase.x - 12);
     const pdy = Math.abs(player.y + PH  - bookcase.y - 26);
     if (pdx < 20 && pdy < 36) {
-      ctx.strokeStyle = C.yellow; ctx.lineWidth = 1;
+      ctx.strokeStyle = PAL.yellow; ctx.lineWidth = 1;
       ctx.setLineDash([2, 2]);
       const _db = CONFIG.vis.dashed.bookcase; ctx.strokeRect(bx+_db.x, by+_db.y, _db.w, _db.h);
       ctx.setLineDash([]);
@@ -289,9 +289,9 @@ function drawRegister() {
   ctx.fillStyle = PAL.registerPages; ctx.fillRect(bx+2, by-1, 7, 12);
   // Grade lines
   ctx.fillStyle = PAL.gray6; ctx.fillRect(bx+3, by+2, 5, 1);
-  ctx.fillStyle = C.red;   ctx.fillRect(bx+3, by+4, 5, 1);
+  ctx.fillStyle = PAL.redDark;   ctx.fillRect(bx+3, by+4, 5, 1);
   ctx.fillStyle = PAL.gray6; ctx.fillRect(bx+3, by+6, 5, 1);
-  ctx.fillStyle = C.red;   ctx.fillRect(bx+3, by+8, 5, 1);
+  ctx.fillStyle = PAL.redDark;   ctx.fillRect(bx+3, by+8, 5, 1);
 
   // Progress bar while stealing
   if (register.stealT > 0) {
@@ -306,7 +306,7 @@ function drawRegister() {
     const pdx = Math.abs(player.x + PW/2 - register.x - 5);
     const pdy = Math.abs(player.y + PH  - register.y - 8);
     if (pdx < 16 && pdy < 20) {
-      ctx.strokeStyle = C.gold; ctx.lineWidth = 1;
+      ctx.strokeStyle = PAL.gold; ctx.lineWidth = 1;
       ctx.setLineDash([2, 2]);
       const _dr = CONFIG.vis.dashed.register; ctx.strokeRect(bx+_dr.x, by+_dr.y, _dr.w, _dr.h);
       ctx.setLineDash([]);
@@ -321,7 +321,7 @@ function drawExitDoor() {
   const pdy = Math.abs(player.y + PH  - exitDoor.y - 10);
   if (pdx < 22 && pdy < 30) {
     const blink = Math.floor(frame / 10) % 2 === 0;
-    ctx.strokeStyle = blink ? C.gold : C.green; ctx.lineWidth = 1;
+    ctx.strokeStyle = blink ? PAL.gold : PAL.green; ctx.lineWidth = 1;
     ctx.setLineDash([3, 2]);
     const _de = CONFIG.vis.dashed.exitDoor; ctx.strokeRect(bx+_de.x, by+_de.y, _de.w, _de.h);
     ctx.setLineDash([]);
@@ -352,7 +352,7 @@ function drawSprinklers() {
 
     // Sprinkler fixture — disc + head only (no stem above ceiling)
     ctx.fillStyle = PAL.guardCapVisor; ctx.fillRect(bx,   by-2, 8, 2);    // deflector disc
-    ctx.fillStyle = sp.active ? C.red : PAL.gray6;
+    ctx.fillStyle = sp.active ? PAL.redDark : PAL.gray6;
     ctx.fillRect(bx+2, by, 4, 3);                              // head (red = active)
     ctx.strokeStyle = PAL.gray3; ctx.lineWidth = 1;               // T-border (no top)
     ctx.beginPath();
@@ -392,7 +392,7 @@ function drawSprinklers() {
     const fy = Math.round(player.y) - 4;
     const flicker = Math.floor(frame / 2) % 3;
     ctx.fillStyle = PAL.flame; ctx.fillRect(fx, fy - flicker,     2, 3);
-    ctx.fillStyle = C.yellow;  ctx.fillRect(fx, fy - flicker - 2, 2, 2);
+    ctx.fillStyle = PAL.yellow;  ctx.fillRect(fx, fy - flicker - 2, 2, 2);
   }
 }
 
@@ -404,8 +404,8 @@ function drawBins() {
     if (b.exploded) {
       // Charred debris
       ctx.fillStyle = PAL.charred; ctx.fillRect(bx-2, by-5, 13, 5);
-      ctx.fillStyle = C.dgray;    ctx.fillRect(bx-4, by-7,  3, 2);
-      ctx.fillStyle = C.dgray;    ctx.fillRect(bx+11,by-8,  3, 2);
+      ctx.fillStyle = PAL.dgray;    ctx.fillRect(bx-4, by-7,  3, 2);
+      ctx.fillStyle = PAL.dgray;    ctx.fillRect(bx+11,by-8,  3, 2);
       ctx.fillStyle = PAL.gray1;    ctx.fillRect(bx+2, by-9,  2, 3);
       continue;
     }
@@ -433,7 +433,7 @@ function drawBins() {
       const speed = b.fuseT > 90 ? 8 : b.fuseT > 40 ? 5 : 2;
       if (Math.floor(frame / speed) % 2 === 0) {
         ctx.fillStyle = PAL.flame; ctx.fillRect(bx+4, by-16, 2, 3);
-        ctx.fillStyle = C.yellow;  ctx.fillRect(bx+4, by-17, 2, 1);
+        ctx.fillStyle = PAL.yellow;  ctx.fillRect(bx+4, by-17, 2, 1);
       }
       // Fuse countdown bar
       const pct = b.fuseT / 180;
@@ -447,7 +447,7 @@ function drawBins() {
       const pdx = Math.abs(player.x + PW/2 - b.x - 5);
       const pdy = Math.abs(player.y + PH  - b.y - 7);
       if (pdx < 16 && pdy < 20) {
-        ctx.strokeStyle = C.yellow; ctx.lineWidth = 1;
+        ctx.strokeStyle = PAL.yellow; ctx.lineWidth = 1;
         ctx.setLineDash([2, 2]);
         const _dbn = CONFIG.vis.dashed.bins; ctx.strokeRect(bx+_dbn.x, by+_dbn.y, _dbn.w, _dbn.h);
         ctx.setLineDash([]);
@@ -517,7 +517,7 @@ function drawSink() {
     const pdx = Math.abs(player.x + PW/2 - sink.x - 6);
     const pdy = Math.abs(player.y + PH  - sink.y - 10);
     if (pdx < 14 && pdy < 20) {
-      ctx.strokeStyle = C.cyan; ctx.lineWidth = 1;
+      ctx.strokeStyle = PAL.cyan; ctx.lineWidth = 1;
       ctx.setLineDash([2, 2]);
       const _dsk = CONFIG.vis.dashed.sink; ctx.strokeRect(bx+_dsk.x, by+_dsk.y, _dsk.w, _dsk.h);
       ctx.setLineDash([]);
@@ -528,8 +528,8 @@ function drawSink() {
 function drawPaperBalls() {
   for (let i = 0; i < paperBalls.length; i++) {
     const b = paperBalls[i];
-    ctx.fillStyle = C.white; ctx.fillRect(Math.round(b.x), Math.round(b.y), 3, 3);
-    ctx.fillStyle = C.lgray; ctx.fillRect(Math.round(b.x)+1, Math.round(b.y)+1, 1, 1);
+    ctx.fillStyle = PAL.white; ctx.fillRect(Math.round(b.x), Math.round(b.y), 3, 3);
+    ctx.fillStyle = PAL.lgray; ctx.fillRect(Math.round(b.x)+1, Math.round(b.y)+1, 1, 1);
   }
 }
 
@@ -537,9 +537,9 @@ function drawBags() {
   for (let i = 0; i < bags.length; i++) {
     const b = bags[i];
     if (b.collected) continue;
-    ctx.fillStyle = C.bagborder; ctx.fillRect(b.x, b.y, 14, 10);
-    ctx.fillStyle = C.bagbody;   ctx.fillRect(b.x+1, b.y+1, 12, 8);
-    ctx.fillStyle = C.bagborder; ctx.fillRect(b.x+4, b.y-3, 6, 3);
+    ctx.fillStyle = PAL.bagborder; ctx.fillRect(b.x, b.y, 14, 10);
+    ctx.fillStyle = PAL.dotBags;   ctx.fillRect(b.x+1, b.y+1, 12, 8);
+    ctx.fillStyle = PAL.bagborder; ctx.fillRect(b.x+4, b.y-3, 6, 3);
     ctx.fillRect(b.x+6, b.y+3, 2, 4);
 
   }
@@ -552,15 +552,15 @@ function drawMachines() {
     const mx = Math.round(m.x) + wobble, my = Math.round(m.y);
 
     ctx.fillStyle = C.blue;   ctx.fillRect(mx,   my,    10, 18); // body
-    ctx.fillStyle = m.broken ? C.dgray : C.lgreen;
+    ctx.fillStyle = m.broken ? PAL.dgray : PAL.lgreen;
                               ctx.fillRect(mx+1, my+1,   8,  6); // screen
     if (!m.broken) {
       ctx.fillStyle = C.blue; ctx.fillRect(mx+4, my+2,   2,  4); // can icon on screen
     }
     ctx.fillStyle = C.mgray;  ctx.fillRect(mx,   my+7,  10,  1); // divider
     ctx.fillStyle = C.lblue;  ctx.fillRect(mx+1, my+8,   8,  6); // button panel bg
-    ctx.fillStyle = C.red;    ctx.fillRect(mx+2, my+9,   2,  2); // button A
-    ctx.fillStyle = C.yellow; ctx.fillRect(mx+5, my+9,   2,  2); // button B
+    ctx.fillStyle = PAL.redDark;    ctx.fillRect(mx+2, my+9,   2,  2); // button A
+    ctx.fillStyle = PAL.yellow; ctx.fillRect(mx+5, my+9,   2,  2); // button B
     ctx.fillStyle = C.lgreen; ctx.fillRect(mx+2, my+12,  2,  2); // button C
     ctx.fillStyle = C.black;  ctx.fillRect(mx+3, my+15,  4,  1); // coin slot
     if (m.broken) {
@@ -580,7 +580,7 @@ function drawMachines() {
       const pdx = Math.abs(player.x + PW/2 - m.x - 5);
       const pdy = Math.abs(player.y + PH  - m.y - 18);
       if (pdx < 14 && pdy < 20) {
-        ctx.strokeStyle = C.yellow; ctx.lineWidth = 1;
+        ctx.strokeStyle = PAL.yellow; ctx.lineWidth = 1;
         ctx.setLineDash([2, 2]);
         const _dm = CONFIG.vis.dashed.machines; ctx.strokeRect(mx+_dm.x, my+_dm.y, _dm.w, _dm.h);
         ctx.setLineDash([]);
