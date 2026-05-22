@@ -1,6 +1,6 @@
 # Refactor #152 — GFX Palette & File Reorganization
 # Branch: refactor/gfx-phase2
-# Stato: FASE 2 COMPLETATA (in test — merge su main dopo Fase 3)
+# Stato: FASE 2 COMPLETATA e TESTATA (tutti 10 livelli OK, v0.9.5 APK in preparazione)
 
 ## Obiettivo
 
