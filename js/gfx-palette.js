@@ -183,13 +183,17 @@ const PAL = {
   boardDark:  '#075b07',  // board background (dark green)
   boardChalk: '#2c832c',  // chalk line hints
 
-  // ── Ball / wood / desks / books ──────────────────────────
+  // ── Ball ──────────────────────────────────────────────────
   ballBody:    '#CC6600',  // basketball orange
-  woodDark:    '#6b2200',  // dark reddish-brown wood (ball outline, bookcase spine)
-  woodOutline: '#3a1000',  // book / bookcase dark wood outline
-  brown:       '#433900',  // desk chair wood
+
+  // ── Desks ─────────────────────────────────────────────────
+  brown:       '#433900',  // chair wood (dark brown)
   desk:        '#2C1800',  // desk top dark
   desklt:      '#4E2A00',  // desk top light
+  woodDark:    '#6b2200',  // shared dark wood (ball outline, bookcase spine)
+
+  // ── Books / bookcase ──────────────────────────────────────
+  woodOutline: '#3a1000',  // dark wood outline
   pageColor:   '#F5E6C0',  // open book pages
   pageLines:   '#999999',  // page text lines
 
