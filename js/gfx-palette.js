@@ -184,7 +184,8 @@ const PAL = {
   boardChalk: '#2c832c',  // chalk line hints
 
   // ── Ball ──────────────────────────────────────────────────
-  ballBody:    '#CC6600',  // basketball orange
+  ballBody:      '#CC6600',              // basketball orange
+  ballHighlight: 'rgba(255,200,100,0.5)', // ball shine
 
   // ── Desks ─────────────────────────────────────────────────
   brown:       '#433900',  // chair wood (dark brown)
@@ -204,20 +205,23 @@ const PAL = {
   registerPages: '#F0E8D0',  // page colour
 
   // ── Sink / mirror ─────────────────────────────────────────
-  mirrorFrame: '#1a3a5c',  // frame (dark blue)
-  mirrorGlass: '#7ab8d8',  // glass reflection
-  waterDrop:   '#4488cc',  // dripping water drop
+  mirrorFrame:     '#1a3a5c',              // frame (dark blue)
+  mirrorGlass:     '#7ab8d8',              // glass reflection
+  mirrorHighlight: 'rgba(255,255,255,0.45)', // glass shine
+  waterDrop:       '#4488cc',              // dripping water drop
 
   // ── Bins ──────────────────────────────────────────────────
-  binBody:   '#228B22',  // body (green)
-  binLid:    '#1a7a1a',  // lid (darker green)
-  binShadow: '#1a6e1a',  // left shadow
-  binDark:   '#0d4d0d',  // rim / border
+  binBody:     '#228B22',              // body (green)
+  binLid:      '#1a7a1a',              // lid (darker green)
+  binShadow:   '#1a6e1a',              // left shadow
+  binDark:     '#0d4d0d',              // rim / border
+  binRecycle:  'rgba(255,255,255,0.75)', // recycle symbol
 
   // ── Fire / explosion ──────────────────────────────────────
   flame: '#FF6600',  // lighter flame, fuse animation
 
   // ── Water (sink / sprinklers) ─────────────────────────────
+  cyan:            '#70A4B2',                // sprinkler / water particles
   waterPuddleDark: 'rgba(30,90,200,0.22)',   // puddle dark layer
   waterPuddleMain: 'rgba(30,90,200,0.28)',   // puddle main layer
   waterHighlight:  'rgba(100,170,255,0.55)', // puddle highlight
@@ -228,12 +232,6 @@ const PAL = {
 
   // ── Bags ──────────────────────────────────────────────────
   bagborder: '#2A1F5E',  // bag border (dark blue)
-
-  // ── Object overlays ───────────────────────────────────────
-  ballHighlight:   'rgba(255,200,100,0.5)',  // ball shine
-  mirrorHighlight: 'rgba(255,255,255,0.45)', // mirror glass shine
-  binRecycle:      'rgba(255,255,255,0.75)', // recycle symbol on bin
-  cyan:            '#70A4B2',                // sprinkler / water particles
 
   // ── Grays (fixtures) ──────────────────────────────────────
   charred: '#2a1a00',  // charred debris (dark brown)
