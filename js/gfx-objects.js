@@ -182,7 +182,7 @@ function drawGymBall() {
   if (!gymBall) return;
   const bx = Math.round(gymBall.x), by = Math.round(gymBall.y);
   if (gymBall.deflated) {
-    ctx.fillStyle = PAL.woodDark;
+    ctx.fillStyle = PAL.ballWood;
     ctx.fillRect(bx, by+5, 9, 3);
     ctx.fillStyle = PAL.ballBody;
     ctx.fillRect(bx+1, by+6, 7, 1);
@@ -195,7 +195,7 @@ function drawGymBall() {
     ctx.fillStyle = PAL.barFill; ctx.fillRect(bx-1, by-8, Math.round(11 * pct), 3);
   }
   // Basketball — proper pixel circle body + matching circular outline
-  ctx.fillStyle = PAL.woodDark;
+  ctx.fillStyle = PAL.ballWood;
   ctx.fillRect(bx+2, by-1, 5, 1);                                              // top arc
   ctx.fillRect(bx+1, by,   1, 1); ctx.fillRect(bx+7, by,   1, 1);             // top shoulders
   ctx.fillRect(bx,   by+1, 1, 1); ctx.fillRect(bx+8, by+1, 1, 1);            // upper sides
@@ -209,7 +209,7 @@ function drawGymBall() {
   ctx.fillRect(bx,   by+2, 9, 5);                                              // body rows 2-6
   ctx.fillRect(bx+1, by+7, 7, 1);                                              // body row 7
   ctx.fillRect(bx+2, by+8, 5, 1);                                              // body row 8
-  ctx.fillStyle = PAL.woodDark;
+  ctx.fillStyle = PAL.ballWood;
   ctx.fillRect(bx+4, by, 1, 9); ctx.fillRect(bx, by+4, 9, 1);
   ctx.fillStyle = PAL.ballHighlight; ctx.fillRect(bx+1, by+1, 2, 2);
   if (!allBall) {
@@ -233,24 +233,24 @@ function drawBookcase() {
     if (allBooks) {
       // 3rd drop: book split in two pieces
       // Left half (pages + half spine)
-      ctx.fillStyle = PAL.woodOutline; ctx.fillRect(fx-1, fy, 1, 9); ctx.fillRect(fx-1, fy+9, 10, 1); ctx.fillRect(fx, fy, 9, 1);
+      ctx.fillStyle = PAL.bookcaseOutline; ctx.fillRect(fx-1, fy, 1, 9); ctx.fillRect(fx-1, fy+9, 10, 1); ctx.fillRect(fx, fy, 9, 1);
       ctx.fillStyle = PAL.pageColor; ctx.fillRect(fx,   fy+1, 7, 8);
-      ctx.fillStyle = PAL.woodDark; ctx.fillRect(fx+7, fy,   2, 9);
+      ctx.fillStyle = PAL.bookcaseWood; ctx.fillRect(fx+7, fy,   2, 9);
       ctx.fillStyle = PAL.pageLines; ctx.fillRect(fx+1, fy+3, 5, 1); ctx.fillRect(fx+1, fy+5, 5, 1);
       // Right half (half spine + pages) — shifted 3px right, 2px down
-      ctx.fillStyle = PAL.woodDark; ctx.fillRect(fx+12, fy+2, 2, 9);
-      ctx.fillStyle = PAL.woodOutline; ctx.fillRect(fx+12, fy+2, 9, 1); ctx.fillRect(fx+20, fy+2, 1, 9); ctx.fillRect(fx+12, fy+11, 9, 1);
+      ctx.fillStyle = PAL.bookcaseWood; ctx.fillRect(fx+12, fy+2, 2, 9);
+      ctx.fillStyle = PAL.bookcaseOutline; ctx.fillRect(fx+12, fy+2, 9, 1); ctx.fillRect(fx+20, fy+2, 1, 9); ctx.fillRect(fx+12, fy+11, 9, 1);
       ctx.fillStyle = PAL.pageColor; ctx.fillRect(fx+14, fy+3, 6, 8);
       ctx.fillStyle = PAL.pageLines; ctx.fillRect(fx+15, fy+5, 4, 1); ctx.fillRect(fx+15, fy+7, 4, 1);
     } else {
       // 1st/2nd drop: open book lying flat
-      ctx.fillStyle = PAL.woodOutline;
+      ctx.fillStyle = PAL.bookcaseOutline;
       ctx.fillRect(fx-1, fy, 1, 9); ctx.fillRect(fx+18, fy, 1, 9);
       ctx.fillRect(fx-1, fy+9, 20, 1);
       ctx.fillRect(fx,    fy,   18, 1);
       ctx.fillStyle = PAL.pageColor; ctx.fillRect(fx,    fy+1,  7, 8);
       ctx.fillStyle = PAL.pageColor; ctx.fillRect(fx+11, fy+1,  7, 8);
-      ctx.fillStyle = PAL.woodDark; ctx.fillRect(fx+7,  fy,    4, 9);
+      ctx.fillStyle = PAL.bookcaseWood; ctx.fillRect(fx+7,  fy,    4, 9);
       ctx.fillStyle = PAL.pageLines; ctx.fillRect(fx+1,  fy+3,  5, 1); ctx.fillRect(fx+1,  fy+5, 5, 1);
       ctx.fillStyle = PAL.pageLines; ctx.fillRect(fx+12, fy+3,  5, 1); ctx.fillRect(fx+12, fy+5, 5, 1);
     }

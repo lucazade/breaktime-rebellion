@@ -19,13 +19,17 @@ const PAL = {
   marcoShoeSole:    '#FFFFFF',  // white stripe at shoe base
   marcoBackpack:    '#7f2001',  // backpack
 
-  // ── Teachers (shared anatomy) ─────────────────────────────
+  // ── Teachers ─────────────────────────────────────────────
   teacherSkin:       '#faa462',  // face, hands
   teacherSkinShadow: '#fd6935',  // neck, collar shadow
   teacherHair:       '#72706e',  // hair, shared by all teacher types
   teacherTrousers:   '#706f6e',  // trousers, shared by all teacher types
   teacherShoes:      '#862c00',  // shoes, shared by all teacher types
   teacherTie:        '#FEDC02',  // tie, shared by all teacher types
+  sightCone:         'rgba(255,200,0,0.18)',  // NPC sight cone fill
+  speechBubble:      'rgba(255,255,255,0.9)', // NPC speech bubble fill
+  speechBorder:      '#bcbcbc', // NPC speech bubble border
+  speechText:        '#000000', // NPC speech bubble text / tap-to-continue label
 
   // ── Prof.Rossi ────────────────────────────────────────────
   profRossiBody:    '#D21C01',  // jacket
@@ -36,25 +40,7 @@ const PAL = {
   // ── Prof.Neri ─────────────────────────────────────────────
   profNeriBody:     '#2f2e2d',  // jacket
 
-  // ── Preside ───────────────────────────────────────────────
-  presideSkin:       '#faa462',  // face, hands
-  presideSkinShadow: '#fd6935',  // neck, collar shadow
-  presideHair:       '#706f6e',  // hair (grey)
-  presideBody:       '#2f2e2d',  // suit jacket
-  presideTrousers:   '#706f6e',  // trousers
-  presideShoes:      '#862c00',  // shoes
-  presideCuff:       '#FFFFFF',  // white shirt cuff visible at sleeve end
-
-  // ── Prof.Ginnastica ───────────────────────────────────────
-  profGinnasticaSkin:       '#faa462',  // face, hands
-  profGinnasticaSkinShadow: '#fd6935',  // neck, collar shadow
-  profGinnasticaBody:       '#33B84B',  // shirt / jacket body colour
-  profGinnasticaStripe:     '#FFFFFF',  // vertical shirt stripes
-  profGinnasticaTrousers:   '#706f6e',  // trousers
-  profGinnasticaShoes:      '#862c00',  // shoes
-  profGinnasticaCap:        '#33B84B',  // cap (same colour as shirt)
-
-  // ── Janitor (bidello) ─────────────────────────────────────
+  // ── Janitor ───────────────────────────────────────────────
   janitorSkin:       '#faa462',  // face, hands
   janitorSkinShadow: '#fd6935',  // neck, collar shadow
   janitorHair:       '#581e00',  // hair
@@ -65,7 +51,32 @@ const PAL = {
   janitorMopHead:    '#959595',  // bristles
   janitorMopTip:     '#FFFFFF',  // white bristle tip row
 
-  // ── Guards (guardiani) ────────────────────────────────────
+  // ── Prof.Ginnastica ───────────────────────────────────────
+  profGinnasticaSkin:       '#faa462',  // face, hands
+  profGinnasticaSkinShadow: '#fd6935',  // neck, collar shadow
+  profGinnasticaBody:       '#33B84B',  // shirt / jacket body colour
+  profGinnasticaStripe:     '#FFFFFF',  // vertical shirt stripes
+  profGinnasticaTrousers:   '#706f6e',  // trousers
+  profGinnasticaShoes:      '#862c00',  // shoes
+  profGinnasticaCap:        '#33B84B',  // cap (same colour as shirt)
+
+  // ── Seated students ───────────────────────────────────────
+  studentSkin:       '#faa462',  // face, arms
+  studentSkinShadow: '#fd6935',  // neck shadow
+  studentHair:       '#581e00',  // hair
+  studentShirt:      '#FFFFFF',  // shirt
+  exclamation:       '#FF2222',  // student exclamation mark when disturbed
+
+  // ── Preside ───────────────────────────────────────────────
+  presideSkin:       '#faa462',  // face, hands
+  presideSkinShadow: '#fd6935',  // neck, collar shadow
+  presideHair:       '#706f6e',  // hair (grey)
+  presideBody:       '#2f2e2d',  // suit jacket
+  presideTrousers:   '#706f6e',  // trousers
+  presideShoes:      '#862c00',  // shoes
+  presideCuff:       '#FFFFFF',  // white shirt cuff visible at sleeve end
+
+  // ── Guards ────────────────────────────────────────────────
   guardSkin:         '#faa462',  // face, hands
   guardSkinShadow:   '#fd6935',  // neck, collar shadow
   guardUniform:      '#1665DC',  // jacket / body
@@ -73,12 +84,6 @@ const PAL = {
   guardCap:          '#2f2e2d',  // cap (same colour as trousers)
   guardBadge:        '#FEDC02',  // chest badge
   guardShoes:        '#000000',  // shoes
-
-  // ── Seated students (alunni seduti) ───────────────────────
-  studentSkin:       '#faa462',  // face, arms
-  studentSkinShadow: '#fd6935',  // neck shadow
-  studentHair:       '#581e00',  // hair
-  studentShirt:      '#FFFFFF',  // shirt
 
   // ── Luca ──────────────────────────────────────────────────
   lucaSkin:          '#faa462',  // face, hands
@@ -88,26 +93,18 @@ const PAL = {
   lucaTie:           '#000000',  // tie
   lucaTrousers:      '#012A9F',  // trousers
   lucaShoes:         '#000000',  // shoes
+  bubbleBorder:      '#aa7700',  // Luca speech bubble border (dark gold)
 
   // ── Characters — shared elements ──────────────────────────
+  charEye:      '#000000',               // eye colour (all characters)
   charOutline:  '#121212',               // sprite outline (near-black)
   shadow:       'rgba(0,0,0,0.2)',       // ground shadow under characters
-  sightCone:    'rgba(255,200,0,0.18)',  // NPC sight cone fill
-  charEye:      '#000000',              // eye colour (all characters)
-  speechBubble: 'rgba(255,255,255,0.9)', // NPC speech bubble fill
-  speechBorder: '#bcbcbc',              // NPC speech bubble border
-  speechText:   '#000000',              // NPC speech bubble text / tap-to-continue label
-  bubbleBorder: '#aa7700',              // Luca speech bubble border (dark gold)
-  sprayCanDark: '#005050',              // spray can dark outline
-  sprayCanBody: '#1665DC',              // spray can body
-
-  // ── Character exclamation ─────────────────────────────────
-  exclamation:  '#FF2222',  // student exclamation mark when disturbed
 
 // ═══════════════════════════════════════════════════════════
 //  HUD
 // ═══════════════════════════════════════════════════════════
 
+  // ── HUD ──────────────────────────────────────────────────
   transparent:      'rgba(0,0,0,0)',      // invisible — used for blinking text off-state
   hudBg:            'rgba(0,4,75,0.55)', // HUD strip background
   hudText:          '#FFFFFF',           // score and proximity message text
@@ -135,20 +132,6 @@ const PAL = {
 //  UI / DIALOGS
 // ═══════════════════════════════════════════════════════════
 
-  // ── In-game banners (story, mission, win, gameover, pause) ─
-  gold:               '#FFD700',  // banner title / overlay accent colour
-  bannerText:         '#FFFFFF',  // story / mission / gameover / win / level-complete body text
-  bestScoreHighlight: '#FEDC02',  // best score / level text in win screen
-  livesBonusText:     '#33B84B',  // lives bonus line in win screen
-  tapContinueColor:   '#33B84B',  // "tap to continue" prompt in level-complete screen
-
-  // ── Dialog panels ─────────────────────────────────────────
-  panelBg:     'rgba(0,0,40,0.90)', // dialog panel background
-  panelBorder: '#FFD700',            // dialog panel border / HUD icon gold accent
-  btnYes:      'rgba(0,90,0,0.92)', // yes / OK / resume button background
-  btnNo:       'rgba(90,0,0,0.92)', // no / cancel button background
-  btnText:     '#FFFFFF',            // dialog button labels (yes / no / resume / OK)
-
   // ── Title screen ──────────────────────────────────────────
   dgray:          '#444444',  // disabled level chooser button
   lgreen:         '#9AD284',  // audio button (full mode) / credits member role text
@@ -158,7 +141,6 @@ const PAL = {
   titleHighlight: '#FEDC02',  // active next-level button / SFX audio mode highlight
   logoBorder:     '#000000',  // logo image border
   lockIconDetail: '#000000',  // keyhole detail in lock icon (locked levels)
-  creditsText:    '#FFFFFF',  // credits member names and OK button
 
   // ── Bezel (mobile side panels) ────────────────────────────
   bezelGlow:    'rgba(160,0,255,0.7)',           // panel inner glow border
@@ -167,6 +149,19 @@ const PAL = {
   bezelInfoBg:  'rgba(0,0,0,0.45)',              // info button background
   bezelPressed: 'rgba(160,0,255,0.28)',          // button pressed state overlay
   bezelShadow:  '0 0 8px rgba(160,0,255,0.35)', // CSS box-shadow on panels
+
+  // ── In-game banners (story, mission, win, gameover, pause) ─
+  panelBg:            'rgba(0,0,40,0.90)', // dialog panel background
+  panelBorder:        '#FFD700',           // dialog panel border / HUD icon gold accent
+  btnYes:             'rgba(0,90,0,0.92)', // yes / OK / resume button background
+  btnNo:              'rgba(90,0,0,0.92)', // no / cancel button background
+  btnText:            '#FFFFFF',  // dialog button labels (yes / no / resume / OK)
+  gold:               '#FFD700',  // banner title / overlay accent colour
+  bannerText:         '#FFFFFF',  // story / mission / gameover / win / level-complete body text
+  bestScoreHighlight: '#FEDC02',  // best score / level text in win screen
+  livesBonusText:     '#33B84B',  // lives bonus line in win screen
+  tapContinueColor:   '#33B84B',  // "tap to continue" prompt in level-complete screen
+  creditsText:        '#FFFFFF',  // credits member names and OK button
 
 // ═══════════════════════════════════════════════════════════
 //  GAME OBJECTS
@@ -197,16 +192,17 @@ const PAL = {
   boardChalk:    '#2c832c',  // chalk line hints on board surface
   chalkParticle: '#FFFFFF',  // chalk particles when a board is tagged
 
+  // ── Spray ────────────────────────────────────────────
+  sprayCanDark: '#005050',   // spray can dark outline
+  sprayCanBody: '#1665DC',   // spray can body
+
   // ── Ball ──────────────────────────────────────────────────
   ballBody:      '#CC6600',               // basketball body
   ballHighlight: 'rgba(255,200,100,0.5)', // ball shine overlay
+  ballWood:      '#6b2200',               // ball outline and seam lines
 
   // ── Paper balls ───────────────────────────────────────────
   paperBall: '#FFFFFF',  // paper ball thrown at students (L5)
-
-  // ── Shared wood ───────────────────────────────────────────
-  woodDark:    '#6b2200',  // dark reddish-brown wood (ball outline, bookcase spine, desks)
-  woodOutline: '#3a1000',  // darkest wood outline (bookcase, book covers)
 
   // ── Desks ─────────────────────────────────────────────────
   brown:         '#433900',  // chair wood
@@ -224,8 +220,10 @@ const PAL = {
   machineInk:         '#000000',  // coin slot / open hatch when broken
 
   // ── Books / bookcase ──────────────────────────────────────
-  pageColor:   '#F5E6C0',  // open book pages
-  pageLines:   '#999999',  // page text lines
+  bookcaseWood:    '#6b2200',  // bookcase spine and book covers
+  bookcaseOutline: '#3a1000',  // darkest wood outline
+  pageColor:       '#F5E6C0',  // open book pages
+  pageLines:       '#999999',  // page text lines
 
   // ── Class register ────────────────────────────────────────
   registerCover: '#8B0000',  // cover
