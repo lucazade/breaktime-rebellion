@@ -18,6 +18,64 @@ Object.assign(CONFIG.vis, {
   },
 });
 
+// ── Character colour sets — one per character type, fully explicit ────────────
+// drawChar reads only from the colours object — no character-specific logic inside.
+
+const COLOURS_MARCO = {
+  skin:        PAL.marcoSkin,
+  skinShadow:  PAL.marcoSkinShadow,
+  hair:        PAL.marcoHair,
+  trousers:    PAL.marcoTrousers,
+  shoes:       PAL.marcoShoes,
+  shoeSole:    PAL.marcoShoeSole,
+  tie:         null,
+  stripe:      PAL.marcoShirtStripe,
+  backpack:    PAL.marcoBackpack,
+  knockable:   false,
+};
+
+const COLOURS_TEACHER = {
+  skin:        PAL.teacherSkin,
+  skinShadow:  PAL.teacherSkinShadow,
+  hair:        PAL.teacherHair,
+  trousers:    PAL.teacherTrousers,
+  shoes:       PAL.teacherShoes,
+  shoeSole:    null,
+  tie:         PAL.teacherTie,
+  stripe:      null,
+  backpack:    null,
+  knockable:   true,
+};
+
+// Placeholder colours for characters not yet Phase-3 recoloured.
+// Replace when bidello/Luca get their own PAL entries.
+const COLOURS_JANITOR = {
+  skin:        PAL.teacherSkin,
+  skinShadow:  PAL.teacherSkinShadow,
+  hair:        PAL.teacherHair,
+  trousers:    PAL.teacherTrousers,
+  shoes:       PAL.teacherShoes,
+  shoeSole:    null,
+  tie:         null,
+  stripe:      null,
+  backpack:    null,
+  knockable:   false,
+};
+
+const COLOURS_LUCA = {
+  skin:        PAL.marcoSkin,
+  skinShadow:  PAL.marcoSkinShadow,
+  hair:        PAL.marcoHair,
+  trousers:    PAL.marcoTrousers,
+  shoes:       PAL.marcoShoes,
+  shoeSole:    null,
+  tie:         null,
+  stripe:      null,
+  backpack:    null,
+  knockable:   false,
+};
+
+
 function drawGuard(x, y, dir, animT, knockedT) {
   const bx = Math.round(x), by = Math.round(y);
   if (knockedT > 0) {
@@ -150,13 +208,13 @@ function drawPreside(x, y, dir, animT, bodyCol, chasing, knockedT) {
   }
 }
 
-function drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, chasing, knockedT) {
+function drawChar(x, y, dir, animT, bodyCol, colours, spraying, chasing, knockedT) {
   const bx = Math.round(x), by = Math.round(y);
 
-  // Knocked-down state — draw teacher lying flat on floor
-  if (isTeacher && knockedT > 0) {
-    const fy = by + PH - 1; // floor level
-    ctx.fillStyle = PAL.shadow; ctx.fillRect(bx-4, fy+2, 18, 2); // shadow
+  // Knocked-down state (teachers only)
+  if (colours.knockable && knockedT > 0) {
+    const fy = by + PH - 1;
+    ctx.fillStyle = PAL.shadow; ctx.fillRect(bx-4, fy+2, 18, 2);
     if (CONFIG.vis.char.outline) {
       const s = CONFIG.vis.char.outlineSize || 1;
       ctx.fillStyle = CONFIG.vis.char.outlineColor;
@@ -164,9 +222,9 @@ function drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, chasing, knock
       ctx.fillRect((dir>0 ? bx+12 : bx-6)-s, fy-4-s, 6+s*2, 5+s*2);
       ctx.fillRect((dir>0 ? bx-4 : bx+8)-s, fy-2-s, 4+s*2, 3+s*2);
     }
-    ctx.fillStyle = bodyCol;         ctx.fillRect(bx-2, fy-3, 14, 4); // body horizontal
-    ctx.fillStyle = PAL.teacherSkin; ctx.fillRect(dir > 0 ? bx+12 : bx-6, fy-4, 6, 5); // head
-    ctx.fillStyle = PAL.teacherTrousers; ctx.fillRect(dir > 0 ? bx-4 : bx+8, fy-2, 4, 3); // feet
+    ctx.fillStyle = bodyCol;           ctx.fillRect(bx-2, fy-3, 14, 4);
+    ctx.fillStyle = colours.skin;      ctx.fillRect(dir > 0 ? bx+12 : bx-6, fy-4, 6, 5);
+    ctx.fillStyle = colours.trousers;  ctx.fillRect(dir > 0 ? bx-4 : bx+8, fy-2, 4, 3);
     return;
   }
 
@@ -184,37 +242,36 @@ function drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, chasing, knock
     ctx.fillRect(bx-s, by+2-s, PW+s*2, 8+s*2);
     ctx.fillRect((dir>0 ? bx-2 : bx+PW)-s, by+5-s, 2+s*2, 4+s*2);
     ctx.fillRect((dir>0 ? bx+PW : bx-2)-s, by+5-s, 2+s*2, 4+s*2);
-    if (!isTeacher) ctx.fillRect((dir>0 ? bx-3 : bx+PW)-s, by+2-s, 3+s*2, 7+s*2);
+    if (colours.backpack) ctx.fillRect((dir>0 ? bx-3 : bx+PW)-s, by+2-s, 3+s*2, 7+s*2);
     ctx.fillRect(bx+2-s, by+1-s, PW-4+s*2, 1+s*2);
     ctx.fillRect(bx+1-s, by-8-s, PW-2+s*2, 10+s*2);
   }
 
-  ctx.fillStyle = isTeacher ? PAL.teacherTrousers : PAL.marcoTrousers;
+  ctx.fillStyle = colours.trousers;
   ctx.fillRect(bx+1, by+10, 3, 4+leg);
   ctx.fillRect(bx+4, by+10, 3, 4-leg);
-  // shoes: top row = shoe colour, bottom row = sole colour (same for teachers)
-  const shoeTopColor = isTeacher ? PAL.teacherShoes : PAL.marcoShoes;
-  const shoeSoleColor = isTeacher ? PAL.teacherShoes : PAL.marcoShoeSole;
-  ctx.fillStyle = shoeTopColor;  ctx.fillRect(bx, by+13+leg, 4, 1); ctx.fillRect(bx+3, by+13-leg, 4, 1);
-  ctx.fillStyle = shoeSoleColor; ctx.fillRect(bx, by+14+leg, 4, 1); ctx.fillRect(bx+3, by+14-leg, 4, 1);
+  ctx.fillStyle = colours.shoes;
+  ctx.fillRect(bx, by+13+leg, 4, 1); ctx.fillRect(bx+3, by+13-leg, 4, 1);
+  ctx.fillStyle = colours.shoeSole || colours.shoes;
+  ctx.fillRect(bx, by+14+leg, 4, 1); ctx.fillRect(bx+3, by+14-leg, 4, 1);
 
   ctx.fillStyle = bodyCol; ctx.fillRect(bx, by+2, PW, 8);
-  if (isTeacher) { ctx.fillStyle = PAL.teacherTie;        ctx.fillRect(bx+3, by+2, 2, 6); }
-  else            { ctx.fillStyle = PAL.marcoShirtStripe;  ctx.fillRect(bx+4, by+2, 1, 8); }
+  if (colours.tie)    { ctx.fillStyle = colours.tie;    ctx.fillRect(bx+3, by+2, 2, 6); }
+  if (colours.stripe) { ctx.fillStyle = colours.stripe; ctx.fillRect(bx+4, by+2, 1, 8); }
 
-  ctx.fillStyle = isTeacher ? PAL.teacherSkin : PAL.marcoSkin;
+  ctx.fillStyle = colours.skin;
   ctx.fillRect(dir>0 ? bx-2 : bx+PW, by+5, 2, 4);
   ctx.fillRect(dir>0 ? bx+PW : bx-2, by+5, 2, 4);
 
-  ctx.fillStyle = isTeacher ? PAL.teacherSkin : PAL.marcoSkin; ctx.fillRect(bx+1, by-7, PW-2, 8);
-  ctx.fillStyle = isTeacher ? PAL.teacherHair : PAL.marcoHair; ctx.fillRect(bx+1, by-8, PW-2, 2);
-  ctx.fillStyle = PAL.black;       ctx.fillRect(dir>0 ? bx+4 : bx+2, by-5, 2, 2);
-  ctx.fillStyle = isTeacher ? PAL.teacherSkinShadow : PAL.marcoSkinShadow; ctx.fillRect(bx+2, by+1, PW-4, 1);
+  ctx.fillStyle = colours.skin;       ctx.fillRect(bx+1, by-7, PW-2, 8);
+  ctx.fillStyle = colours.hair;       ctx.fillRect(bx+1, by-8, PW-2, 2);
+  ctx.fillStyle = PAL.black;          ctx.fillRect(dir>0 ? bx+4 : bx+2, by-5, 2, 2);
+  ctx.fillStyle = colours.skinShadow; ctx.fillRect(bx+2, by+1, PW-4, 1);
 
   if (spraying) {
     const sx = dir>0 ? bx+PW+2 : bx-6;
-    ctx.fillStyle = PAL.sprayCanDark; ctx.fillRect(sx-1, by+2, 6, 7); // dark outline
-    ctx.fillStyle = PAL.blue;   ctx.fillRect(sx,   by+3, 4, 5); // can
+    ctx.fillStyle = PAL.sprayCanDark; ctx.fillRect(sx-1, by+2, 6, 7);
+    ctx.fillStyle = PAL.blue;         ctx.fillRect(sx,   by+3, 4, 5);
     for (let i = 0; i < 8; i++) {
       const t = (frame * 5 + i * 11) % 19;
       const dist = 2 + i * 2 + (t % 3);
@@ -224,7 +281,7 @@ function drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, chasing, knock
       ctx.fillRect(sx + (dir>0 ? 4+dist : -1-dist), by+5+oy-lift, 1, 1);
     }
   }
-  if (!isTeacher) { ctx.fillStyle = PAL.marcoBackpack; ctx.fillRect(dir>0 ? bx-3 : bx+PW, by+2, 3, 7); }
+  if (colours.backpack) { ctx.fillStyle = colours.backpack; ctx.fillRect(dir>0 ? bx-3 : bx+PW, by+2, 3, 7); }
 
   if (chasing) {
     const bub = dir>0 ? bx+PW+1 : bx-27;
@@ -241,19 +298,19 @@ function drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, chasing, knock
 
 // Draw a character clipped to exclude the floor band [bandTop, bandBottom].
 // Used when Marco is on a stair and his body crosses a floor.
-function drawCharClipped(x, y, dir, animT, bodyCol, isTeacher, spraying, chasing, knockedT, bandTop, bandBottom) {
+function drawCharClipped(x, y, dir, animT, bodyCol, colours, spraying, chasing, knockedT, bandTop, bandBottom) {
   ctx.save();
   ctx.beginPath(); ctx.rect(0, 0, W, bandTop); ctx.clip();
-  drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, chasing, knockedT);
+  drawChar(x, y, dir, animT, bodyCol, colours, spraying, chasing, knockedT);
   ctx.restore();
   ctx.save();
   ctx.beginPath(); ctx.rect(0, bandBottom, W, H - bandBottom); ctx.clip();
-  drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, chasing, knockedT);
+  drawChar(x, y, dir, animT, bodyCol, colours, spraying, chasing, knockedT);
   ctx.restore();
 }
 
 function drawJanitor(x, y, dir, animT) {
-  drawChar(x, y, dir, animT, C.mgray, false, false, false);
+  drawChar(x, y, dir, animT, C.mgray, COLOURS_JANITOR, false, false);
   const bx = Math.round(x), by = Math.round(y);
   const mx = dir > 0 ? bx+PW : bx-1;
   if (CONFIG.vis.char.outline) {
