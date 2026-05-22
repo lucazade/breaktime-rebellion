@@ -324,11 +324,11 @@ function drawJanitor(x, y, dir, animT) {
     ctx.fillRect(mx-1-s, by+14-s, 3+s*2, 2+s*2);
     ctx.fillRect(mx-2-s, by+16-s, 5+s*2, 1+s*2);
   }
-  // Salopette bib: suspender straps (top) + chest bib panel
+  // Salopette: two narrow straps over white shirt, full-width bib below
   ctx.fillStyle = PAL.janitorSalopette;
-  ctx.fillRect(bx+2, by+2, 1, 2);  // left strap
-  ctx.fillRect(bx+5, by+2, 1, 2);  // right strap
-  ctx.fillRect(bx+2, by+4, 4, 5);  // bib panel
+  ctx.fillRect(bx+2, by+2, 1, 3);  // left strap  (by+2→by+4)
+  ctx.fillRect(bx+5, by+2, 1, 3);  // right strap (by+2→by+4)
+  ctx.fillRect(bx,   by+5, PW, 4); // full-width bib (by+5→by+8)
 
   // Cap (same colour as salopette)
   ctx.fillStyle = PAL.janitorSalopette;
