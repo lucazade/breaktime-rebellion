@@ -30,7 +30,7 @@ function drawGuard(x, y, dir, animT, knockedT) {
       ctx.fillRect((dir>0 ? bx+12 : bx-6)-s, fy-4-s, 6+s*2, 5+s*2);
     }
     ctx.fillStyle = PAL.guardUniform; ctx.fillRect(bx-2, fy-3, 14, 4);
-    ctx.fillStyle = PAL.skin;   ctx.fillRect(dir > 0 ? bx+12 : bx-6, fy-4, 6, 5);
+    ctx.fillStyle = PAL.teacherSkin; ctx.fillRect(dir > 0 ? bx+12 : bx-6, fy-4, 6, 5);
     return;
   }
   const leg = Math.sin(animT) * 2.5;
@@ -55,15 +55,15 @@ function drawGuard(x, y, dir, animT, knockedT) {
   // Dark uniform body
   ctx.fillStyle = PAL.guardUniform; ctx.fillRect(bx, by+2, PW, 8);
   // Arms
-  ctx.fillStyle = PAL.skin; ctx.fillRect(dir>0 ? bx-2 : bx+PW, by+5, 2, 4); ctx.fillRect(dir>0 ? bx+PW : bx-2, by+5, 2, 4);
+  ctx.fillStyle = PAL.teacherSkin; ctx.fillRect(dir>0 ? bx-2 : bx+PW, by+5, 2, 4); ctx.fillRect(dir>0 ? bx+PW : bx-2, by+5, 2, 4);
   // Head
-  ctx.fillStyle = PAL.skin; ctx.fillRect(bx+1, by-7, PW-2, 8);
+  ctx.fillStyle = PAL.teacherSkin; ctx.fillRect(bx+1, by-7, PW-2, 8);
   // White cap
   ctx.fillStyle = PAL.guardCap; ctx.fillRect(bx, by-8, PW, 3);
   ctx.fillStyle = PAL.guardCapVisor; ctx.fillRect(dir>0 ? bx-2 : bx+PW-1, by-7, 3, 2); // cap visor
   // Eye
   ctx.fillStyle = PAL.black; ctx.fillRect(dir>0 ? bx+4 : bx+2, by-5, 2, 2);
-  ctx.fillStyle = PAL.skinShadow; ctx.fillRect(bx+2, by+1, PW-4, 1);
+  ctx.fillStyle = PAL.teacherSkinShadow; ctx.fillRect(bx+2, by+1, PW-4, 1);
 }
 
 function drawPreside(x, y, dir, animT, bodyCol, chasing, knockedT) {
@@ -80,8 +80,8 @@ function drawPreside(x, y, dir, animT, bodyCol, chasing, knockedT) {
       ctx.fillRect((dir>0 ? bx-4 : bx+8)-s, fy-2-s, 4+s*2, 3+s*2);
     }
     ctx.fillStyle = bodyCol; ctx.fillRect(bx-2, fy-3, 14, 4);
-    ctx.fillStyle = PAL.skin;  ctx.fillRect(dir > 0 ? bx+12 : bx-6, fy-4, 6, 5);
-    ctx.fillStyle = PAL.trousersGray; ctx.fillRect(dir > 0 ? bx-4 : bx+8, fy-2, 4, 3);
+    ctx.fillStyle = PAL.teacherSkin; ctx.fillRect(dir > 0 ? bx+12 : bx-6, fy-4, 6, 5);
+    ctx.fillStyle = PAL.teacherTrousers; ctx.fillRect(dir > 0 ? bx-4 : bx+8, fy-2, 4, 3);
     return;
   }
 
@@ -107,10 +107,10 @@ function drawPreside(x, y, dir, animT, bodyCol, chasing, knockedT) {
   }
 
   // Legs — same as teacher
-  ctx.fillStyle = PAL.trousersGray;
+  ctx.fillStyle = PAL.teacherTrousers;
   ctx.fillRect(bx+1, by+10, 3, 4+leg);
   ctx.fillRect(bx+4, by+10, 3, 4-leg);
-  ctx.fillStyle = PAL.profShoes;
+  ctx.fillStyle = PAL.teacherShoes;
   ctx.fillRect(bx,   by+13+leg, 4, 2);
   ctx.fillRect(bx+3, by+13-leg, 4, 2);
 
@@ -127,15 +127,15 @@ function drawPreside(x, y, dir, animT, bodyCol, chasing, knockedT) {
   ctx.fillStyle = PAL.white;          // cuff
   ctx.fillRect(frontX, by+11, 2, 1);
   ctx.fillRect(backX,  by+11, 2, 1);
-  ctx.fillStyle = PAL.skin;           // hand
+  ctx.fillStyle = PAL.teacherSkin;    // hand
   ctx.fillRect(frontX, by+12, 2, 2);
   ctx.fillRect(backX,  by+12, 2, 2);
 
   // Head
-  ctx.fillStyle = PAL.skin;  ctx.fillRect(bx+1, by-7, PW-2, 8);
-  ctx.fillStyle = PAL.white; ctx.fillRect(bx+1, by-8, PW-2, 2); // white hair — older
-  ctx.fillStyle = PAL.black; ctx.fillRect(dir > 0 ? bx+4 : bx+2, by-5, 2, 2); // eye, no glasses
-  ctx.fillStyle = PAL.skinShadow; ctx.fillRect(bx+2, by+1, PW-4, 1);
+  ctx.fillStyle = PAL.teacherSkin;  ctx.fillRect(bx+1, by-7, PW-2, 8);
+  ctx.fillStyle = PAL.white;        ctx.fillRect(bx+1, by-8, PW-2, 2); // white hair — older
+  ctx.fillStyle = PAL.black;        ctx.fillRect(dir > 0 ? bx+4 : bx+2, by-5, 2, 2); // eye
+  ctx.fillStyle = PAL.teacherSkinShadow; ctx.fillRect(bx+2, by+1, PW-4, 1);
 
   if (chasing) {
     const bub = dir > 0 ? bx+PW+1 : bx-27;
@@ -165,8 +165,8 @@ function drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, chasing, knock
       ctx.fillRect((dir>0 ? bx-4 : bx+8)-s, fy-2-s, 4+s*2, 3+s*2);
     }
     ctx.fillStyle = bodyCol;         ctx.fillRect(bx-2, fy-3, 14, 4); // body horizontal
-    ctx.fillStyle = PAL.skin;        ctx.fillRect(dir > 0 ? bx+12 : bx-6, fy-4, 6, 5); // head
-    ctx.fillStyle = PAL.trousersGray; ctx.fillRect(dir > 0 ? bx-4 : bx+8, fy-2, 4, 3); // feet
+    ctx.fillStyle = PAL.teacherSkin; ctx.fillRect(dir > 0 ? bx+12 : bx-6, fy-4, 6, 5); // head
+    ctx.fillStyle = PAL.teacherTrousers; ctx.fillRect(dir > 0 ? bx-4 : bx+8, fy-2, 4, 3); // feet
     return;
   }
 
@@ -189,25 +189,25 @@ function drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, chasing, knock
     ctx.fillRect(bx+1-s, by-8-s, PW-2+s*2, 10+s*2);
   }
 
-  ctx.fillStyle = isTeacher ? PAL.trousersGray : PAL.marcoTrousers;
+  ctx.fillStyle = isTeacher ? PAL.teacherTrousers : PAL.marcoTrousers;
   ctx.fillRect(bx+1, by+10, 3, 4+leg);
   ctx.fillRect(bx+4, by+10, 3, 4-leg);
-  ctx.fillStyle = isTeacher ? PAL.profShoes : PAL.marcoShoes;
+  ctx.fillStyle = isTeacher ? PAL.teacherShoes : PAL.marcoShoes;
   ctx.fillRect(bx,   by+13+leg, 4, 2);
   ctx.fillRect(bx+3, by+13-leg, 4, 2);
 
   ctx.fillStyle = bodyCol; ctx.fillRect(bx, by+2, PW, 8);
-  if (isTeacher) { ctx.fillStyle = PAL.yellow; ctx.fillRect(bx+3, by+2, 2, 6); }
+  if (isTeacher) { ctx.fillStyle = PAL.teacherTie; ctx.fillRect(bx+3, by+2, 2, 6); }
   // Marco: no shirt stripes
 
-  ctx.fillStyle = PAL.skin;
+  ctx.fillStyle = isTeacher ? PAL.teacherSkin : PAL.marcoSkin;
   ctx.fillRect(dir>0 ? bx-2 : bx+PW, by+5, 2, 4);
   ctx.fillRect(dir>0 ? bx+PW : bx-2, by+5, 2, 4);
 
-  ctx.fillStyle = PAL.skin;       ctx.fillRect(bx+1, by-7, PW-2, 8);
-  ctx.fillStyle = isTeacher ? PAL.hairGray : PAL.hairDark; ctx.fillRect(bx+1, by-8, PW-2, 2);
-  ctx.fillStyle = PAL.black;      ctx.fillRect(dir>0 ? bx+4 : bx+2, by-5, 2, 2);
-  ctx.fillStyle = PAL.skinShadow; ctx.fillRect(bx+2, by+1, PW-4, 1);
+  ctx.fillStyle = isTeacher ? PAL.teacherSkin : PAL.marcoSkin; ctx.fillRect(bx+1, by-7, PW-2, 8);
+  ctx.fillStyle = isTeacher ? PAL.teacherHair : PAL.marcoHair; ctx.fillRect(bx+1, by-8, PW-2, 2);
+  ctx.fillStyle = PAL.black;       ctx.fillRect(dir>0 ? bx+4 : bx+2, by-5, 2, 2);
+  ctx.fillStyle = isTeacher ? PAL.teacherSkinShadow : PAL.marcoSkinShadow; ctx.fillRect(bx+2, by+1, PW-4, 1);
 
   if (spraying) {
     const sx = dir>0 ? bx+PW+2 : bx-6;
@@ -334,11 +334,11 @@ function drawStudents() {
       ctx.fillRect(bx-4-so, by-3-so,  2+so*2, 3+so*2);
       ctx.fillRect(bx+2-so, by-3-so,  2+so*2, 3+so*2);
     }
-    ctx.fillStyle = C.brown; ctx.fillRect(bx-2, by-17, 5, 2);
-    ctx.fillStyle = PAL.skin;  ctx.fillRect(bx-2, by-15, 5, 7);
+    ctx.fillStyle = PAL.marcoHair; ctx.fillRect(bx-2, by-17, 5, 2);
+    ctx.fillStyle = PAL.teacherSkin;  ctx.fillRect(bx-2, by-15, 5, 7);
     ctx.fillStyle = PAL.black; ctx.fillRect(bx-2, by-13, 2, 2);
     ctx.fillStyle = PAL.white; ctx.fillRect(bx-3, by-8, 7, 6);
-    ctx.fillStyle = PAL.skin;
+    ctx.fillStyle = PAL.teacherSkin;
     ctx.fillRect(bx-4, by-3, 2, 3);
     ctx.fillRect(bx+2, by-3, 2, 3);
     if (s.disturbed) {

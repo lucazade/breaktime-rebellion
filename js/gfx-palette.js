@@ -27,18 +27,31 @@ const PAL_LOGO = {
   lime:        '#D0E989',  // active machine screen / timer
   beige:       '#E7B260',  // light skin (janitor cap) / board skin
 
-  // ── Character colours (Phase 3) ──────────────────────────
-  skin:          '#faa462',  // skin — face and hands (all chars)
-  skinShadow:    '#fd6935',  // skin shadow / neck
-  hairDark:      '#581e00',  // dark hair (Marco, students, janitor)
-  hairGray:      '#72706e',  // grey hair (older teachers)
-  trousersGray:  '#706f6e',  // teacher trousers
-  marcoShirt:    '#6121ac',  // Marco shirt / sweater
-  marcoTrousers: '#015dca',  // Marco trousers
-  marcoShoes:    '#ba0200',  // Marco shoes
-  marcoBackpack: '#7f2001',  // Marco backpack
-  profShoes:     '#862c00',  // teacher shoes
-  profNeriBody:  '#2f2e2d',  // Prof.Neri / Preside body
+  // ── Marco ────────────────────────────────────────────────
+  marcoSkin:        '#faa462',
+  marcoSkinShadow:  '#fd6935',
+  marcoHair:        '#581e00',
+  marcoShirt:       '#6121ac',
+  marcoTrousers:    '#015dca',
+  marcoShoes:       '#ba0200',
+  marcoBackpack:    '#7f2001',
+
+  // ── Teachers (shared anatomy) ─────────────────────────
+  teacherSkin:       '#faa462',
+  teacherSkinShadow: '#fd6935',
+  teacherHair:       '#72706e',
+  teacherTrousers:   '#706f6e',
+  teacherShoes:      '#862c00',
+  teacherTie:        '#FEDC02',
+
+  // ── Prof.Rossi ────────────────────────────────────────
+  profRossiBody:    '#D21C01',
+
+  // ── Prof.Celeste ──────────────────────────────────────
+  profCelesteBody:  '#1665DC',
+
+  // ── Prof.Neri / Preside ───────────────────────────────
+  profNeriBody:     '#2f2e2d',
 };
 
 // ── Classic palette (C64-equivalent, for ?classic A/B comparison) ────────────
@@ -62,18 +75,27 @@ const PAL_CLASSIC = {
   lime:        '#9AD284',  // C.lgreen
   beige:       '#D8E8D0',  // C.chalk
 
-  // ── Character colours (C64-equivalent) ───────────────────
-  skin:          '#9A6759',  // C.pink
-  skinShadow:    '#825144',  // hardcoded neck
-  hairDark:      '#433900',  // C.brown
-  hairGray:      '#959595',  // C.lgray
-  trousersGray:  '#352879',  // C.blue
-  marcoShirt:    '#6C5EB5',  // C.lblue (classic stripe colour)
-  marcoTrousers: '#352879',  // C.blue
-  marcoShoes:    '#000000',  // C.black
-  marcoBackpack: '#3e3e3e',  // hardcoded
-  profShoes:     '#000000',  // C.black
-  profNeriBody:  '#171717',  // C.grayprof
+  // ── Marco (C64-equivalent) ───────────────────────────────
+  marcoSkin:        '#9A6759',  // C.pink
+  marcoSkinShadow:  '#825144',  // hardcoded neck
+  marcoHair:        '#433900',  // C.brown
+  marcoShirt:       '#6C5EB5',  // C.lblue
+  marcoTrousers:    '#352879',  // C.blue
+  marcoShoes:       '#000000',  // C.black
+  marcoBackpack:    '#3e3e3e',  // hardcoded
+
+  // ── Teachers (C64-equivalent) ────────────────────────
+  teacherSkin:       '#9A6759',  // C.pink
+  teacherSkinShadow: '#825144',  // hardcoded neck
+  teacherHair:       '#959595',  // C.lgray
+  teacherTrousers:   '#352879',  // C.blue
+  teacherShoes:      '#000000',  // C.black
+  teacherTie:        '#B8C76F',  // C.yellow
+
+  // ── Professors (C64-equivalent) ──────────────────────
+  profRossiBody:    '#c3200e',  // C.redprof
+  profCelesteBody:  '#0757d7',  // C.cyanprof
+  profNeriBody:     '#171717',  // C.grayprof
 };
 
 // Toggle: ?classic in URL → C64-equivalent look for A/B comparison
