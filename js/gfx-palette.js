@@ -1,30 +1,60 @@
 // ═══════════════════════════════════════════════════════════
 //  GFX PALETTE — single source of truth for all colours
-//  Sprite/env colours (Phase 3 recolouring reference)
-//  UI/HUD colours (used by gfx-ui.js from Phase 2)
-//  CONFIG.colors: C64 game palette, alias C = CONFIG.colors (state.js)
+//  PAL_LOGO: logo reference palette (Phase 3 target)
+//  PAL_CLASSIC: C64-equivalent values for A/B comparison (?classic URL param)
+//  UI/HUD colours follow PAL regardless of toggle.
 // ═══════════════════════════════════════════════════════════
 
-const PAL = {
-  // ── Sprite / environment (logo reference palette) ────────
+// ── Logo palette (Phase 3 target) ────────────────────────
+const PAL_LOGO = {
+  // sprite / environment
   black:       '#000000',  // outline tutto
   white:       '#FFFFFF',  // highlights
-  green:       '#33B84B',  // muri verdi
+  green:       '#33B84B',  // muri verdi / bottone C macchina
   greenDark:   '#039C5A',  // ombre muri verdi
-  purple:      '#4E3699',  // muri viola/giacca Marco
-  purpleDark:  '#423D7C',  // ombre viola
-  yellow:      '#FEDC02',  // giallo testo/capelli
-  blue:        '#1665DC',  // pavimento/pantaloni
+  purple:      '#4E3699',  // muri viola / giacca Marco / bag
+  purpleDark:  '#423D7C',  // ombre viola / strisce Marco / bag border
+  yellow:      '#FEDC02',  // cravatta prof / bottone B
+  blue:        '#1665DC',  // pavimento / gambe prof / corpo macchina
   blueDark:    '#012A9F',  // pavimento scuro
-  navy:        '#16202D',  // sfondo/ombre profonde
-  brownDark:   '#822B14',  // banchi, porte
-  brownMid:    '#875634',  // legno medio
-  orange:      '#ED6A17',  // legno chiaro/pelle
-  orangeDark:  '#E85606',  // pelle in ombra
-  red:         '#D21C01',  // dettagli rossi
+  navy:        '#16202D',  // sfondo / Preside / Prof.Neri
+  brownDark:   '#822B14',  // capelli / legno banchi / porte
+  brownMid:    '#875634',  // legno medio banchi
+  orange:      '#ED6A17',  // pelle (viso, mani)
+  orangeDark:  '#E85606',  // pelle in ombra / colletto
+  red:         '#D21C01',  // bottone A / dettagli rossi / Prof.Rossi
   redDark:     '#5F1D1B',  // ombre rosse
-  lime:        '#D0E989',  // testo copyright
-  beige:       '#E7B260',  // lavagna, pelle chiara
+  lime:        '#D0E989',  // schermo macchina attivo / timer
+  beige:       '#E7B260',  // pelle chiara (cuffia bidello) / lavagna pelle
+};
+
+// ── Classic palette (C64-equivalent, for ?classic A/B comparison) ────────────
+const PAL_CLASSIC = {
+  black:       '#000000',
+  white:       '#FFFFFF',
+  green:       '#588D43',  // C.green
+  greenDark:   '#1A4A1A',  // C.chalkbg (board bg)
+  purple:      '#352879',  // C.blue (trousers/jacket)
+  purpleDark:  '#6C5EB5',  // C.lblue (Marco stripes)
+  yellow:      '#B8C76F',  // C.yellow
+  blue:        '#352879',  // C.blue (teacher legs/machine)
+  blueDark:    '#2A1F5E',  // C.bagborder (dark blue)
+  navy:        '#171717',  // C.grayprof (Prof.Neri/Preside)
+  brownDark:   '#433900',  // C.brown (hair/wood)
+  brownMid:    '#4E2A00',  // C.desklt
+  orange:      '#9A6759',  // C.pink (skin)
+  orangeDark:  '#68372B',  // C.red (skin shadow)
+  red:         '#c3200e',  // C.redprof
+  redDark:     '#68372B',  // C.red
+  lime:        '#9AD284',  // C.lgreen
+  beige:       '#D8E8D0',  // C.chalk
+};
+
+// Toggle: ?classic in URL → C64-equivalent look for A/B comparison
+const _useClassic = new URLSearchParams(location.search).has('classic');
+
+// All remaining PAL entries (UI, HUD, objects) are shared between both modes
+const PAL = Object.assign(_useClassic ? PAL_CLASSIC : PAL_LOGO, {
 
   // ── Transparency ─────────────────────────────────────────
   transparent:        'rgba(0,0,0,0)',       // invisible state for blinking text
@@ -173,7 +203,7 @@ const PAL = {
   dotBins:       '#B8C76F',
   dotSprinklers: '#70A4B2',
   dotRegister:   '#FFD700',
-};
+});
 
 CONFIG.colors = {
   black:'#000000', white:'#FFFFFF',
