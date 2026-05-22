@@ -86,7 +86,7 @@ function drawGuard(x, y, dir, animT, knockedT) {
       ctx.fillRect((dir>0 ? bx+12 : bx-6)-s, fy-4-s, 6+s*2, 5+s*2);
     }
     ctx.fillStyle = PAL.guardUniform; ctx.fillRect(bx-2, fy-3, 14, 4);
-    ctx.fillStyle = PAL.teacherSkin; ctx.fillRect(dir > 0 ? bx+12 : bx-6, fy-4, 6, 5);
+    ctx.fillStyle = PAL.guardSkin; ctx.fillRect(dir > 0 ? bx+12 : bx-6, fy-4, 6, 5);
     return;
   }
   const leg = Math.sin(animT) * 2.5;
@@ -102,24 +102,20 @@ function drawGuard(x, y, dir, animT, knockedT) {
     ctx.fillRect((dir>0 ? bx-2 : bx+PW)-s, by+5-s, 2+s*2, 4+s*2);
     ctx.fillRect((dir>0 ? bx+PW : bx-2)-s, by+5-s, 2+s*2, 4+s*2);
     ctx.fillRect(bx+2-s, by+1-s, PW-4+s*2, 1+s*2);
-    ctx.fillRect(bx-s, by-8-s, PW+s*2, 11+s*2);
-    ctx.fillRect((dir>0 ? bx-2 : bx+PW-1)-s, by-7-s, 3+s*2, 2+s*2);
+    ctx.fillRect(bx+1-s, by-9-s, PW-2+s*2, 3+s);    // cap — 3 rows, no bottom expansion
+    ctx.fillRect((dir>0 ? bx+PW-1 : bx-1)-s, by-7-s, 3+s*2, 1+s*2); // cap brim
+    ctx.fillRect(bx+1-s, by-7-s, PW-2+s*2, 8+s*2); // head
   }
-  // Dark trousers
   ctx.fillStyle = PAL.guardTrousers; ctx.fillRect(bx+1, by+10, 3, 4+leg); ctx.fillRect(bx+4, by+10, 3, 4-leg);
-  ctx.fillStyle = PAL.black; ctx.fillRect(bx, by+13+leg, 4, 2); ctx.fillRect(bx+3, by+13-leg, 4, 2);
-  // Dark uniform body
-  ctx.fillStyle = PAL.guardUniform; ctx.fillRect(bx, by+2, PW, 8);
-  // Arms
-  ctx.fillStyle = PAL.teacherSkin; ctx.fillRect(dir>0 ? bx-2 : bx+PW, by+5, 2, 4); ctx.fillRect(dir>0 ? bx+PW : bx-2, by+5, 2, 4);
-  // Head
-  ctx.fillStyle = PAL.teacherSkin; ctx.fillRect(bx+1, by-7, PW-2, 8);
-  // White cap
-  ctx.fillStyle = PAL.guardCap; ctx.fillRect(bx, by-8, PW, 3);
-  ctx.fillStyle = PAL.guardCapVisor; ctx.fillRect(dir>0 ? bx-2 : bx+PW-1, by-7, 3, 2); // cap visor
-  // Eye
-  ctx.fillStyle = PAL.black; ctx.fillRect(dir>0 ? bx+4 : bx+2, by-5, 2, 2);
-  ctx.fillStyle = PAL.teacherSkinShadow; ctx.fillRect(bx+2, by+1, PW-4, 1);
+  ctx.fillStyle = PAL.black;         ctx.fillRect(bx, by+13+leg, 4, 2);   ctx.fillRect(bx+3, by+13-leg, 4, 2);
+  ctx.fillStyle = PAL.guardUniform;  ctx.fillRect(bx, by+2, PW, 8);
+  ctx.fillStyle = PAL.guardBadge;    ctx.fillRect(dir>0 ? bx+4 : bx+2, by+4, 2, 2); // chest badge
+  ctx.fillStyle = PAL.guardSkin;     ctx.fillRect(dir>0 ? bx-2 : bx+PW, by+5, 2, 4); ctx.fillRect(dir>0 ? bx+PW : bx-2, by+5, 2, 4);
+  ctx.fillStyle = PAL.guardSkin;     ctx.fillRect(bx+1, by-7, PW-2, 8);
+  ctx.fillStyle = PAL.guardCap;      ctx.fillRect(bx+1, by-9, PW-2, 3);
+  ctx.fillStyle = PAL.guardCap;      ctx.fillRect(dir>0 ? bx+PW-1 : bx-1, by-7, 3, 1);
+  ctx.fillStyle = PAL.black;         ctx.fillRect(dir>0 ? bx+4 : bx+2, by-5, 2, 2);
+  ctx.fillStyle = PAL.guardSkinShadow; ctx.fillRect(bx+2, by+1, PW-4, 1);
 }
 
 function drawPreside(x, y, dir, animT, bodyCol, chasing, knockedT) {
@@ -136,8 +132,8 @@ function drawPreside(x, y, dir, animT, bodyCol, chasing, knockedT) {
       ctx.fillRect((dir>0 ? bx-4 : bx+8)-s, fy-2-s, 4+s*2, 3+s*2);
     }
     ctx.fillStyle = bodyCol; ctx.fillRect(bx-2, fy-3, 14, 4);
-    ctx.fillStyle = PAL.teacherSkin; ctx.fillRect(dir > 0 ? bx+12 : bx-6, fy-4, 6, 5);
-    ctx.fillStyle = PAL.teacherTrousers; ctx.fillRect(dir > 0 ? bx-4 : bx+8, fy-2, 4, 3);
+    ctx.fillStyle = PAL.presideSkin; ctx.fillRect(dir > 0 ? bx+12 : bx-6, fy-4, 6, 5);
+    ctx.fillStyle = PAL.presideTrousers; ctx.fillRect(dir > 0 ? bx-4 : bx+8, fy-2, 4, 3);
     return;
   }
 
@@ -162,11 +158,10 @@ function drawPreside(x, y, dir, animT, bodyCol, chasing, knockedT) {
     ctx.fillRect(bx+1-s, by-8-s, PW-2+s*2, 10+s*2);
   }
 
-  // Legs — same as teacher
-  ctx.fillStyle = PAL.teacherTrousers;
+  ctx.fillStyle = PAL.presideTrousers;
   ctx.fillRect(bx+1, by+10, 3, 4+leg);
   ctx.fillRect(bx+4, by+10, 3, 4-leg);
-  ctx.fillStyle = PAL.teacherShoes;
+  ctx.fillStyle = PAL.presideShoes;
   ctx.fillRect(bx,   by+13+leg, 4, 2);
   ctx.fillRect(bx+3, by+13-leg, 4, 2);
 
@@ -174,24 +169,24 @@ function drawPreside(x, y, dir, animT, bodyCol, chasing, knockedT) {
   ctx.fillStyle = bodyCol;
   ctx.fillRect(bx-1, by+2, PW+2, 8);
 
-  // Long sleeves: jacket colour + white shirt cuff + pink hand
+  // Long sleeves: jacket colour + white shirt cuff + hand
   const frontX = dir > 0 ? bx-2 : bx+PW;
   const backX  = dir > 0 ? bx+PW : bx-2;
   ctx.fillStyle = bodyCol;
   ctx.fillRect(frontX, by+5, 2, 7);
   ctx.fillRect(backX,  by+5, 2, 7);
-  ctx.fillStyle = PAL.white;          // cuff
+  ctx.fillStyle = PAL.white;            // cuff
   ctx.fillRect(frontX, by+11, 2, 1);
   ctx.fillRect(backX,  by+11, 2, 1);
-  ctx.fillStyle = PAL.teacherSkin;    // hand
+  ctx.fillStyle = PAL.presideSkin;      // hand
   ctx.fillRect(frontX, by+12, 2, 2);
   ctx.fillRect(backX,  by+12, 2, 2);
 
   // Head
-  ctx.fillStyle = PAL.teacherSkin;  ctx.fillRect(bx+1, by-7, PW-2, 8);
-  ctx.fillStyle = PAL.white;        ctx.fillRect(bx+1, by-8, PW-2, 2); // white hair — older
-  ctx.fillStyle = PAL.black;        ctx.fillRect(dir > 0 ? bx+4 : bx+2, by-5, 2, 2); // eye
-  ctx.fillStyle = PAL.teacherSkinShadow; ctx.fillRect(bx+2, by+1, PW-4, 1);
+  ctx.fillStyle = PAL.presideSkin;      ctx.fillRect(bx+1, by-7, PW-2, 8);
+  ctx.fillStyle = PAL.presideHair;      ctx.fillRect(bx+1, by-8, PW-2, 2);
+  ctx.fillStyle = PAL.black;            ctx.fillRect(dir > 0 ? bx+4 : bx+2, by-5, 2, 2); // eye
+  ctx.fillStyle = PAL.presideSkinShadow; ctx.fillRect(bx+2, by+1, PW-4, 1);
 
   if (chasing) {
     const bub = dir > 0 ? bx+PW+1 : bx-27;

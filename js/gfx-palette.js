@@ -68,8 +68,24 @@ const PAL_LOGO = {
   // ── Prof.Celeste ──────────────────────────────────────
   profCelesteBody:  '#1665DC',
 
-  // ── Prof.Neri / Preside ───────────────────────────────
+  // ── Prof.Neri ─────────────────────────────────────────
   profNeriBody:     '#2f2e2d',
+
+  // ── Preside ───────────────────────────────────────────
+  presideSkin:       '#faa462',
+  presideSkinShadow: '#fd6935',
+  presideHair:       '#706f6e',
+  presideBody:       '#2f2e2d',  // suit/jacket
+  presideTrousers:   '#706f6e',
+  presideShoes:      '#862c00',
+
+  // ── Guardiani ─────────────────────────────────────────
+  guardSkin:         '#faa462',
+  guardSkinShadow:   '#fd6935',
+  guardUniform:      '#1665DC',  // body/jacket
+  guardTrousers:     '#2f2e2d',  // dark trousers
+  guardCap:          '#2f2e2d',  // cappellino (same as trousers)
+  guardBadge:        '#FEDC02',  // chest badge (yellow)
 };
 
 // ── Classic palette (C64-equivalent, for ?classic A/B comparison) ────────────
@@ -132,6 +148,22 @@ const PAL_CLASSIC = {
   profRossiBody:    '#c3200e',  // C.redprof
   profCelesteBody:  '#0757d7',  // C.cyanprof
   profNeriBody:     '#171717',  // C.grayprof
+
+  // ── Preside (C64-equivalent) ─────────────────────────
+  presideSkin:       '#9A6759',  // C.pink
+  presideSkinShadow: '#825144',
+  presideHair:       '#959595',  // C.lgray
+  presideBody:       '#171717',  // C.grayprof
+  presideTrousers:   '#352879',  // C.blue
+  presideShoes:      '#000000',  // C.black
+
+  // ── Guardiani (C64-equivalent) ────────────────────────
+  guardSkin:         '#9A6759',  // C.pink
+  guardSkinShadow:   '#825144',
+  guardUniform:      '#352879',  // C.blue
+  guardTrousers:     '#171717',  // C.grayprof
+  guardCap:          '#171717',  // C.grayprof
+  guardBadge:        '#B8C76F',  // C.yellow
 };
 
 // Toggle: ?classic in URL → C64-equivalent look for A/B comparison
@@ -267,10 +299,6 @@ const PAL = Object.assign(_useClassic ? PAL_CLASSIC : PAL_LOGO, {
   speechBubble:   'rgba(255,255,255,0.9)', // NPC speech bubble fill
   speechBorder:   '#bcbcbc',           // NPC speech bubble border
   bubbleBorder:   '#aa7700',           // Luca speech bubble border (dark gold)
-  guardUniform:   '#1a1a3a',           // Guardiano body/uniform
-  guardTrousers:  '#111111',           // Guardiano dark trousers
-  guardCap:       '#dddddd',           // Guardiano cap
-  guardCapVisor:  '#bbbbbb',           // Guardiano cap visor
   backpack:       '#3e3e3e',           // Marco backpack
   neck:           '#825144',           // character neck colour
   sprayCanDark:   '#005050',           // spray can dark outline

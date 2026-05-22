@@ -175,7 +175,7 @@ var LEVELS = (function() {
 
       // Preside patrols right half — principal's office area.
       teachers: [
-        {x:260, y:GY-PH-walkOffset, dir:-1, minX:100, maxX:305, speed:1.0, color:PAL.profNeriBody, name:'Preside', sight:150},
+        {x:260, y:GY-PH-walkOffset, dir:-1, minX:100, maxX:305, speed:1.0, color:PAL.presideBody, name:'Preside', sight:150},
       ],
 
       janitors: [],

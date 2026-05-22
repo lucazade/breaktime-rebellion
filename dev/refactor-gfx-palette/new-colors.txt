@@ -44,3 +44,44 @@ Preside
 Corpo / giacca #2f2e2d oppure #16202D
 
 ---
+
+Bidello
+
+salopette #1665DC
+maglietta #FFFFFF
+Pelle	#faa462
+Manico scopa #862c00
+scarpe #FFFFFF 
+cappello #1665DC
+
+---
+
+Alunni seduti
+
+Pelle (viso, mani) #faa462
+Pelle ombra / collo #fd6935
+Capelli #581e00
+Camicia	#FFFFFF
+
+---
+
+Preside
+
+Pelle (viso, mani) #faa462
+Pelle ombra / collo #fd6935
+Capelli #706f6e
+Corpo / giacca #2f2e2d
+Pantaloni #706f6e
+Scarpe #862c00
+
+---
+
+Guardiani
+
+Pelle (viso, mani) #faa462
+Pelle ombra / collo #fd6935
+Corpo / uniforme #1665DC	
+Pantaloni scuri	#2f2e2d
+cappello #2f2e2d aggiungere
+scarpe #000000
+Cuffia e Visiera cuffia rimuovere
