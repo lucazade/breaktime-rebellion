@@ -4,115 +4,115 @@
 
 const PAL = {
 
-  // ── Ambiente / sprite base ────────────────────────────────
+  // ── Environment / sprite base ─────────────────────────────
   black:       '#000000',  // sprite outline
   white:       '#FFFFFF',  // highlights
-  green:       '#33B84B',  // green walls / bottone C macchina
+  green:       '#33B84B',  // green walls / vending machine button C
   greenDark:   '#039C5A',  // green wall shadows
-  purple:      '#4E3699',  // muri viola / giacca Marco / bag
+  purple:      '#4E3699',  // purple walls / Marco jacket / bag
   purpleDark:  '#423D7C',  // purple shadows / Marco shirt / bag border
-  yellow:      '#FEDC02',  // teacher tie / button B
+  yellow:      '#FEDC02',  // teacher tie / vending machine button B
   blue:        '#1665DC',  // floor / teacher legs / machine body
-  blueDark:    '#012A9F',  // floor dark
+  blueDark:    '#012A9F',  // floor dark stripe
   navy:        '#16202D',  // background
   brownDark:   '#822B14',  // hair / desk wood / doors
-  brownMid:    '#875634',  // desk wood mid
+  brownMid:    '#875634',  // desk wood mid tone
   orange:      '#ED6A17',  // skin (face, hands)
   orangeDark:  '#E85606',  // skin shadow / collar
-  red:         '#D21C01',  // button A / red details / Prof.Rossi
+  red:         '#D21C01',  // vending machine button A / Prof.Rossi jacket
   redDark:     '#5F1D1B',  // red shadows
-  lime:        '#D0E989',  // active machine screen / timer
-  beige:       '#E7B260',  // light skin (janitor cap) / board skin
+  lime:        '#D0E989',  // active machine screen / timer bar
+  beige:       '#E7B260',  // light skin / board frame
 
 // ═══════════════════════════════════════════════════════════
-//  PERSONAGGI
+//  CHARACTERS
 // ═══════════════════════════════════════════════════════════
 
   // ── Marco ─────────────────────────────────────────────────
-  marcoSkin:        '#faa462',
-  marcoSkinShadow:  '#fd6935',
+  marcoSkin:        '#faa462',  // face, hands
+  marcoSkinShadow:  '#fd6935',  // neck, collar shadow
   marcoHair:        '#581e00',
-  marcoShirt:       '#6121ac',
-  marcoShirtStripe: '#FFFFFF',  // centre vertical stripe on Marco's shirt
+  marcoShirt:       '#6121ac',  // shirt / jacket body colour
+  marcoShirtStripe: '#FFFFFF',  // centre vertical stripe on shirt
   marcoTrousers:    '#015dca',
   marcoShoes:       '#ba0200',
   marcoShoeSole:    '#FFFFFF',  // white stripe at shoe base
   marcoBackpack:    '#7f2001',
 
   // ── Teachers (shared anatomy) ─────────────────────────────
-  teacherSkin:       '#faa462',
-  teacherSkinShadow: '#fd6935',
-  teacherHair:       '#72706e',
+  teacherSkin:       '#faa462',  // face, hands
+  teacherSkinShadow: '#fd6935',  // neck, collar shadow
+  teacherHair:       '#72706e',  // grey hair
   teacherTrousers:   '#706f6e',
   teacherShoes:      '#862c00',
   teacherTie:        '#FEDC02',
 
   // ── Prof.Rossi ────────────────────────────────────────────
-  profRossiBody:    '#D21C01',
+  profRossiBody:    '#D21C01',  // jacket
 
   // ── Prof.Celeste ──────────────────────────────────────────
-  profCelesteBody:  '#1665DC',
+  profCelesteBody:  '#1665DC',  // jacket
 
   // ── Prof.Neri ─────────────────────────────────────────────
-  profNeriBody:     '#2f2e2d',
+  profNeriBody:     '#2f2e2d',  // jacket
 
   // ── Preside ───────────────────────────────────────────────
-  presideSkin:       '#faa462',
-  presideSkinShadow: '#fd6935',
-  presideHair:       '#706f6e',
-  presideBody:       '#2f2e2d',
+  presideSkin:       '#faa462',  // face, hands
+  presideSkinShadow: '#fd6935',  // neck, collar shadow
+  presideHair:       '#706f6e',  // grey hair
+  presideBody:       '#2f2e2d',  // suit jacket
   presideTrousers:   '#706f6e',
   presideShoes:      '#862c00',
 
   // ── Prof.Ginnastica ───────────────────────────────────────
-  profGinnasticaSkin:       '#faa462',
-  profGinnasticaSkinShadow: '#fd6935',
-  profGinnasticaBody:       '#33B84B',
+  profGinnasticaSkin:       '#faa462',  // face, hands
+  profGinnasticaSkinShadow: '#fd6935',  // neck, collar shadow
+  profGinnasticaBody:       '#33B84B',  // shirt base colour
   profGinnasticaStripe:     '#FFFFFF',  // vertical shirt stripes
   profGinnasticaTrousers:   '#706f6e',
   profGinnasticaShoes:      '#862c00',
-  profGinnasticaCap:        '#33B84B',
+  profGinnasticaCap:        '#33B84B',  // cap (same as shirt)
 
-  // ── Bidello ───────────────────────────────────────────────
-  janitorSkin:       '#faa462',
-  janitorSkinShadow: '#fd6935',
+  // ── Janitor (bidello) ─────────────────────────────────────
+  janitorSkin:       '#faa462',  // face, hands
+  janitorSkinShadow: '#fd6935',  // neck, collar shadow
   janitorHair:       '#581e00',
   janitorSalopette:  '#1665DC',  // overalls and cap
   janitorShirt:      '#FFFFFF',  // undershirt (bodyCol)
   janitorShoes:      '#FFFFFF',
-  janitorMopHandle:  '#862c00',
+  janitorMopHandle:  '#862c00',  // broom handle
   janitorMopHead:    '#959595',  // grey bristles
 
-  // ── Guardiani ─────────────────────────────────────────────
-  guardSkin:         '#faa462',
-  guardSkinShadow:   '#fd6935',
-  guardUniform:      '#1665DC',
-  guardTrousers:     '#2f2e2d',
-  guardCap:          '#2f2e2d',
+  // ── Guards (guardiani) ────────────────────────────────────
+  guardSkin:         '#faa462',  // face, hands
+  guardSkinShadow:   '#fd6935',  // neck, collar shadow
+  guardUniform:      '#1665DC',  // jacket / body
+  guardTrousers:     '#2f2e2d',  // dark trousers
+  guardCap:          '#2f2e2d',  // cap (same as trousers)
   guardBadge:        '#FEDC02',  // chest badge
 
-  // ── Alunni seduti ─────────────────────────────────────────
-  studentSkin:       '#faa462',
-  studentSkinShadow: '#fd6935',
+  // ── Seated students (alunni seduti) ───────────────────────
+  studentSkin:       '#faa462',  // face, arms
+  studentSkinShadow: '#fd6935',  // neck shadow
   studentHair:       '#581e00',
   studentShirt:      '#FFFFFF',
 
   // ── Luca ──────────────────────────────────────────────────
-  lucaSkin:          '#faa462',
-  lucaSkinShadow:    '#fd6935',
+  lucaSkin:          '#faa462',  // face, hands
+  lucaSkinShadow:    '#fd6935',  // neck, collar shadow
   lucaHair:          '#581e00',
-  lucaBody:          '#FFFFFF',  // white shirt (bodyCol)
-  lucaTie:           '#000000',
-  lucaTrousers:      '#012A9F',
+  lucaBody:          '#FFFFFF',  // shirt (bodyCol)
+  lucaTie:           '#000000',  // black tie
+  lucaTrousers:      '#012A9F',  // dark blue
   lucaShoes:         '#000000',
 
-  // ── Personaggi — elementi condivisi ───────────────────────
-  charOutline:    '#121212',               // sprite outline
-  shadow:         'rgba(0,0,0,0.2)',       // character ground shadow
+  // ── Characters — shared elements ──────────────────────────
+  charOutline:    '#121212',               // sprite outline (near-black)
+  shadow:         'rgba(0,0,0,0.2)',       // ground shadow under characters
   sightCone:      'rgba(255,200,0,0.18)',  // NPC sight cone fill
   speechBubble:   'rgba(255,255,255,0.9)', // NPC speech bubble fill
   speechBorder:   '#bcbcbc',              // NPC speech bubble border
-  bubbleBorder:   '#aa7700',              // Luca speech bubble border
+  bubbleBorder:   '#aa7700',              // Luca speech bubble border (dark gold)
   sprayCanDark:   '#005050',              // spray can dark outline
   exclamation:    '#FF2222',              // student exclamation mark
 
@@ -120,15 +120,15 @@ const PAL = {
 //  HUD
 // ═══════════════════════════════════════════════════════════
 
-  transparent:    'rgba(0,0,0,0)',     // invisible state for blinking text
-  hudBg:          'rgba(0,4,75,0.55)',
-  hearts:         '#ff2244',
-  hudCounter:     '#44ee66',
-  timerGreen:     '#22cc44',           // timer bar >= 60%
-  timerYellow:    '#ddcc00',           // timer bar 30–60%
-  timerRed:       '#dd1100',           // timer bar < 30%
+  transparent:    'rgba(0,0,0,0)',      // invisible (blinking text off state)
+  hudBg:          'rgba(0,4,75,0.55)', // HUD strip background
+  hearts:         '#ff2244',            // lives hearts
+  hudCounter:     '#44ee66',            // object counter text
+  timerGreen:     '#22cc44',            // timer bar >= 60%
+  timerYellow:    '#ddcc00',            // timer bar 30–60%
+  timerRed:       '#dd1100',            // timer bar < 30%
 
-  // ── Dot colours (mechanic indicators) ─────────────────────
+  // ── Mechanic dot indicators ───────────────────────────────
   dotBoards:     '#588D43',
   dotBags:       '#4A3D8F',
   dotMachines:   '#B8C76F',
@@ -144,122 +144,122 @@ const PAL = {
 //  UI / DIALOGS
 // ═══════════════════════════════════════════════════════════
 
-  gold:           '#FFD700',           // floating text, win/score banners
-  dgray:          '#444444',           // disabled buttons
-  lgreen:         '#9AD284',           // credits roles, audio button (full)
-  lgray:          '#959595',           // keyboard legend
-  mgray:          '#6C6C6C',           // audio muted button
-  panelBg:        'rgba(0,0,40,0.90)',
-  panelBorder:    '#FFD700',
-  btnYes:         'rgba(0,90,0,0.92)',
-  btnNo:          'rgba(90,0,0,0.92)',
-  btnLabel:       '#b0b0b0',           // enabled button label (title screen)
+  gold:        '#FFD700',            // floating score text, win/gameover banners
+  dgray:       '#444444',            // disabled buttons
+  lgreen:      '#9AD284',            // credits roles, audio button (full mode)
+  lgray:       '#959595',            // keyboard legend text
+  mgray:       '#6C6C6C',            // audio muted button
+  panelBg:     'rgba(0,0,40,0.90)', // dialog panel background
+  panelBorder: '#FFD700',            // dialog panel border (gold)
+  btnYes:      'rgba(0,90,0,0.92)', // yes / OK / resume button
+  btnNo:       'rgba(90,0,0,0.92)', // no / cancel button
+  btnLabel:    '#b0b0b0',            // enabled button label (title screen)
 
   // ── Bezel (mobile side panels) ────────────────────────────
-  bezelGlow:      'rgba(160,0,255,0.7)',
-  bezelBorder:    'rgba(160,0,255,0.85)',
-  bezelBtnBg:     'rgba(10,0,24,1)',
-  bezelInfoBg:    'rgba(0,0,0,0.45)',
-  bezelPressed:   'rgba(160,0,255,0.28)',
-  bezelShadow:    '0 0 8px rgba(160,0,255,0.35)',
+  bezelGlow:    'rgba(160,0,255,0.7)',           // panel inner glow border
+  bezelBorder:  'rgba(160,0,255,0.85)',          // button borders
+  bezelBtnBg:   'rgba(10,0,24,1)',               // button background (home / pause)
+  bezelInfoBg:  'rgba(0,0,0,0.45)',              // info button background
+  bezelPressed: 'rgba(160,0,255,0.28)',          // button pressed state
+  bezelShadow:  '0 0 8px rgba(160,0,255,0.35)', // CSS box-shadow
 
 // ═══════════════════════════════════════════════════════════
-//  OGGETTI DI GIOCO
+//  GAME OBJECTS
 // ═══════════════════════════════════════════════════════════
 
   // ── Progress bars ─────────────────────────────────────────
-  barBg:          '#880000',
-  barDark:        '#2a0000',
-  barFill:        '#cc1100',
+  barBg:   '#880000',  // progress bar background
+  barDark: '#2a0000',  // progress bar dark inner
+  barFill: '#cc1100',  // progress bar fill
 
-  // ── Campanella ────────────────────────────────────────────
-  bellOutline:    '#554400',
-  bellBody:       '#FFCC00',
-  bellHighlight:  '#FFE966',
-  bellShadow:     '#CC9900',
-  bellClapper:    '#332200',
+  // ── Bell ──────────────────────────────────────────────────
+  bellOutline:   '#554400',  // dark outline
+  bellBody:      '#FFCC00',  // main body
+  bellHighlight: '#FFE966',  // top highlight
+  bellShadow:    '#CC9900',  // shadow
+  bellClapper:   '#332200',  // clapper (dark)
 
-  // ── Lavagna ───────────────────────────────────────────────
-  boardDark:      '#075b07',
-  boardChalk:     '#2c832c',
+  // ── Chalkboard ────────────────────────────────────────────
+  boardDark:  '#075b07',  // board background (dark green)
+  boardChalk: '#2c832c',  // chalk line hints
 
-  // ── Pallone / legno / libri ───────────────────────────────
-  ballBody:       '#CC6600',
-  woodDark:       '#6b2200',
-  woodOutline:    '#3a1000',
-  pageColor:      '#F5E6C0',
-  pageLines:      '#999999',
+  // ── Ball / wood / books ───────────────────────────────────
+  ballBody:    '#CC6600',  // basketball orange
+  woodDark:    '#6b2200',  // dark reddish-brown wood (ball outline, bookcase spine)
+  woodOutline: '#3a1000',  // book / bookcase dark wood outline
+  pageColor:   '#F5E6C0',  // open book pages
+  pageLines:   '#999999',  // page text lines
 
-  // ── Registro ──────────────────────────────────────────────
-  registerCover:  '#8B0000',
-  registerSpine:  '#6B0000',
-  registerEdge:   '#AA2200',
-  registerPages:  '#F0E8D0',
+  // ── Class register ────────────────────────────────────────
+  registerCover: '#8B0000',  // cover (dark red)
+  registerSpine: '#6B0000',  // spine (darker red)
+  registerEdge:  '#AA2200',  // top edge highlight
+  registerPages: '#F0E8D0',  // page colour
 
-  // ── Lavandino / specchio ──────────────────────────────────
-  mirrorFrame:    '#1a3a5c',
-  mirrorGlass:    '#7ab8d8',
-  waterDrop:      '#4488cc',
+  // ── Sink / mirror ─────────────────────────────────────────
+  mirrorFrame: '#1a3a5c',  // frame (dark blue)
+  mirrorGlass: '#7ab8d8',  // glass reflection
+  waterDrop:   '#4488cc',  // dripping water drop
 
-  // ── Secchi ────────────────────────────────────────────────
-  binBody:        '#228B22',
-  binLid:         '#1a7a1a',
-  binShadow:      '#1a6e1a',
-  binDark:        '#0d4d0d',
+  // ── Bins ──────────────────────────────────────────────────
+  binBody:   '#228B22',  // body (green)
+  binLid:    '#1a7a1a',  // lid (darker green)
+  binShadow: '#1a6e1a',  // left shadow
+  binDark:   '#0d4d0d',  // rim / border
 
-  // ── Fuoco / esplosione ────────────────────────────────────
-  flame:          '#FF6600',
+  // ── Fire / explosion ──────────────────────────────────────
+  flame: '#FF6600',  // lighter flame, fuse animation
 
-  // ── Acqua (sink / sprinklers) ─────────────────────────────
-  waterPuddleDark:  'rgba(30,90,200,0.22)',
-  waterPuddleMain:  'rgba(30,90,200,0.28)',
-  waterHighlight:   'rgba(100,170,255,0.55)',
-  waterRipple:      'rgba(130,200,255,0.5)',
-  waterStream:      'rgba(60,140,255,0.45)',
-  waterSplash:      'rgba(100,180,255,0.38)',
-  waterDrip:        'rgba(68,136,204,0.6)',
+  // ── Water (sink / sprinklers) ─────────────────────────────
+  waterPuddleDark: 'rgba(30,90,200,0.22)',   // puddle dark layer
+  waterPuddleMain: 'rgba(30,90,200,0.28)',   // puddle main layer
+  waterHighlight:  'rgba(100,170,255,0.55)', // puddle highlight
+  waterRipple:     'rgba(130,200,255,0.5)',  // ripple ring
+  waterStream:     'rgba(60,140,255,0.45)',  // falling stream
+  waterSplash:     'rgba(100,180,255,0.38)', // splash droplet
+  waterDrip:       'rgba(68,136,204,0.6)',   // drip from ceiling
 
-  // ── Overlay oggetti ───────────────────────────────────────
-  ballHighlight:    'rgba(255,200,100,0.5)',
-  mirrorHighlight:  'rgba(255,255,255,0.45)',
-  binRecycle:       'rgba(255,255,255,0.75)',
-  cyan:             '#70A4B2',  // sprinkler/water particles
+  // ── Object overlays ───────────────────────────────────────
+  ballHighlight:   'rgba(255,200,100,0.5)',  // ball shine
+  mirrorHighlight: 'rgba(255,255,255,0.45)', // mirror glass shine
+  binRecycle:      'rgba(255,255,255,0.75)', // recycle symbol on bin
+  cyan:            '#70A4B2',                // sprinkler / water particles
 
-  // ── Grigi (fixtures) ──────────────────────────────────────
-  charred:        '#2a1a00',
-  gray1:          '#333333',
-  gray3:          '#555555',
-  gray4:          '#666666',
-  gray5:          '#777777',
-  gray6:          '#888888',
-  gray8:          '#aaaaaa',
-  gray10:         '#d8d8d8',
+  // ── Grays (fixtures) ──────────────────────────────────────
+  charred: '#2a1a00',  // charred debris (dark brown)
+  gray1:   '#333333',  // charred debris dark
+  gray3:   '#555555',  // sprinkler border
+  gray4:   '#666666',  // sink basin outer
+  gray5:   '#777777',  // sink tap
+  gray6:   '#888888',  // sink drain / sprinkler inactive
+  gray8:   '#aaaaaa',  // sink tap handle
+  gray10:  '#d8d8d8',  // sink basin inner
 
-  // ── Legacy (da aggiornare in fase 4) ──────────────────────
-  brown:          '#433900',  // desk chair wood
-  desk:           '#2C1800',  // desk top dark
-  desklt:         '#4E2A00',  // desk top light
-  bagborder:      '#2A1F5E',  // bag border
+  // ── Legacy (to be revised in phase 4) ─────────────────────
+  brown:     '#433900',  // desk chair wood
+  desk:      '#2C1800',  // desk top dark
+  desklt:    '#4E2A00',  // desk top light
+  bagborder: '#2A1F5E',  // bag border
 
 // ═══════════════════════════════════════════════════════════
 //  DEBUG
 // ═══════════════════════════════════════════════════════════
 
-  debugOverlayBg:   'rgba(0,0,0,0.6)',
-  debugStairFill:   'rgba(255,120,0,0.22)',
-  debugStairOutline:'rgba(255,140,0,0.85)',
-  debugStairCyan:   'rgba(0,200,255,0.6)',
-  debugBoardGreen:  'rgba(0,255,80,0.85)',
-  debugBagPurple:   'rgba(100,100,255,0.9)',
-  debugBellGold:    'rgba(255,215,0,0.9)',
-  debugDeskYellow:  'rgba(255,220,0,0.65)',
-  debugFloorYellow: 'rgba(255,255,0,0.7)',
-  debugPlayerPink:  'rgba(255,80,255,0.9)',
-  debugCyan:        '#00E8FF',
-  debugGreen:       '#00FF50',
-  debugBlue:        '#8888FF',
-  debugOrange:      '#FF9900',
-  debugOrangeR:     '#FF4400',
-  debugMagenta:     '#FF66FF',
-  debugYellow:      '#FFFF00',
+  debugOverlayBg:    'rgba(0,0,0,0.6)',      // debug panel background
+  debugStairFill:    'rgba(255,120,0,0.22)', // stair zone fill
+  debugStairOutline: 'rgba(255,140,0,0.85)', // stair zone border
+  debugStairCyan:    'rgba(0,200,255,0.6)',  // stair endpoint marker
+  debugBoardGreen:   'rgba(0,255,80,0.85)',  // board hitbox
+  debugBagPurple:    'rgba(100,100,255,0.9)',// bag hitbox
+  debugBellGold:     'rgba(255,215,0,0.9)',  // bell hitbox
+  debugDeskYellow:   'rgba(255,220,0,0.65)', // desk hitbox
+  debugFloorYellow:  'rgba(255,255,0,0.7)',  // floor line colour
+  debugPlayerPink:   'rgba(255,80,255,0.9)', // player hitbox
+  debugCyan:         '#00E8FF',              // floor line labels (TY/MY/GY)
+  debugGreen:        '#00FF50',              // board hitbox label
+  debugBlue:         '#8888FF',              // bag hitbox label
+  debugOrange:       '#FF9900',              // stair coordinate label
+  debugOrangeR:      '#FF4400',              // stair endpoint dot
+  debugMagenta:      '#FF66FF',              // player hitbox label
+  debugYellow:       '#FFFF00',              // floor line stroke
 };
