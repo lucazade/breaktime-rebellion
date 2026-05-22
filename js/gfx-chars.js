@@ -338,7 +338,7 @@ function drawLucaEnd() {
   // Luca stands at the exit door
   const lx = Math.round(exitDoor.x) + 1;
   const ly = Math.round(GY - PH - walkOffset);
-  drawChar(lx, ly, 1, 0, PAL.white, false, false, false, 0);
+  drawChar(lx, ly, 1, 0, PAL.white, COLOURS_LUCA, false, false, 0);
 
   // Speech bubble — hidden once win banner appears
   if (state === 'win') return;
