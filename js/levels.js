@@ -117,7 +117,7 @@ var LEVELS = (function() {
       // PE teacher on the gym floor (MY), patrols ONLY the gym area so they are
       // always visible near the ball. Preside is reserved for L6.
       teachers: [
-        {x:255, y:MY-PH-walkOffset, dir:1, minX:110, maxX:305, speed:0.80, color:C.greenprof, name:'Prof.Ginnastica', sight:130},
+        {x:255, y:MY-PH-walkOffset, dir:1, minX:110, maxX:305, speed:0.80, color:PAL.profGinnasticaBody, name:'Prof.Ginnastica', sight:130},
         {x:200, y:GY-PH-walkOffset, dir:1, minX:10,  maxX:305, speed:0.55, color:PAL.profRossiBody,  name:'Prof.Rossi', sight:90},
         {x:230, y:TY-PH-walkOffset, dir:1, minX:10,  maxX:275, speed:0.60, color:PAL.profNeriBody, name:'Prof.Neri',  sight:100},
       ],
@@ -223,7 +223,7 @@ var LEVELS = (function() {
 
       teachers: [
         {x:60,  y:GY-PH-walkOffset, dir: 1, minX:10,  maxX:160, speed:0.70, color:PAL.profRossiBody,   name:'Prof.Rossi',      sight:90},
-        {x:230, y:MY-PH-walkOffset, dir:-1, minX:160, maxX:305, speed:0.70, color:C.greenprof,  name:'Prof.Ginnastica', sight:100},
+        {x:230, y:MY-PH-walkOffset, dir:-1, minX:160, maxX:305, speed:0.70, color:PAL.profGinnasticaBody, name:'Prof.Ginnastica', sight:100},
         {x:230, y:TY-PH-walkOffset, dir: 1, minX:160, maxX:275, speed:0.70, color:PAL.profNeriBody,  name:'Prof.Neri',       sight:90},
       ],
 

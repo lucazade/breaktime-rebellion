@@ -87,6 +87,15 @@ const PAL_LOGO = {
   guardCap:          '#2f2e2d',  // cappellino (same as trousers)
   guardBadge:        '#FEDC02',  // chest badge (yellow)
 
+  // ── Prof.Ginnastica ───────────────────────────────────
+  profGinnasticaSkin:       '#faa462',
+  profGinnasticaSkinShadow: '#fd6935',
+  profGinnasticaBody:       '#33B84B',  // shirt base colour
+  profGinnasticaStripe:     '#FFFFFF',  // vertical shirt stripes
+  profGinnasticaTrousers:   '#706f6e',
+  profGinnasticaShoes:      '#862c00',
+  profGinnasticaCap:        '#33B84B',  // cap
+
   // ── Luca ──────────────────────────────────────────────
   lucaSkin:          '#faa462',
   lucaSkinShadow:    '#fd6935',
@@ -173,6 +182,15 @@ const PAL_CLASSIC = {
   guardTrousers:     '#171717',  // C.grayprof
   guardCap:          '#171717',  // C.grayprof
   guardBadge:        '#B8C76F',  // C.yellow
+
+  // ── Prof.Ginnastica (C64-equivalent) ─────────────────
+  profGinnasticaSkin:       '#9A6759',  // C.pink
+  profGinnasticaSkinShadow: '#825144',
+  profGinnasticaBody:       '#109f06',  // C.greenprof
+  profGinnasticaStripe:     '#D8E8D0',  // C.chalk
+  profGinnasticaTrousers:   '#352879',  // C.blue
+  profGinnasticaShoes:      '#000000',  // C.black
+  profGinnasticaCap:        '#109f06',  // C.greenprof
 
   // ── Luca (C64-equivalent) ─────────────────────────────
   lucaSkin:          '#9A6759',  // C.pink

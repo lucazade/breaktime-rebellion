@@ -73,6 +73,42 @@ const COLOURS_LUCA = {
   knockable:   false,
 };
 
+const COLOURS_GINNASTICA = {
+  skin:        PAL.profGinnasticaSkin,
+  skinShadow:  PAL.profGinnasticaSkinShadow,
+  hair:        PAL.teacherHair,
+  trousers:    PAL.profGinnasticaTrousers,
+  shoes:       PAL.profGinnasticaShoes,
+  shoeSole:    null,
+  tie:         null,
+  stripe:      null,  // stripes drawn in drawGinnastica
+  backpack:    null,
+  knockable:   true,
+};
+
+function drawGinnastica(x, y, dir, animT, chasing, knockedT) {
+  drawChar(x, y, dir, animT, PAL.profGinnasticaBody, COLOURS_GINNASTICA, false, chasing, knockedT);
+  if (knockedT > 0) return;
+  const bx = Math.round(x), by = Math.round(y);
+
+  // Vertical stripes on shirt
+  ctx.fillStyle = PAL.profGinnasticaStripe;
+  ctx.fillRect(bx+1, by+2, 1, 8);
+  ctx.fillRect(bx+3, by+2, 1, 8);
+  ctx.fillRect(bx+5, by+2, 1, 8);
+
+  // Cap — same style as janitor/guard
+  if (CONFIG.vis.char.outline) {
+    const s = CONFIG.vis.char.outlineSize || 1;
+    ctx.fillStyle = CONFIG.vis.char.outlineColor;
+    ctx.fillRect(bx+1-s, by-9-s, PW-2+s*2, 3+s*2);
+    ctx.fillRect((dir>0 ? bx+PW-1 : bx-1)-s, by-7-s, 3+s*2, 1+s*2);
+  }
+  ctx.fillStyle = PAL.profGinnasticaCap;
+  ctx.fillRect(bx+1, by-9, PW-2, 3);
+  ctx.fillRect(dir>0 ? bx+PW-1 : bx-1, by-7, 3, 1);
+}
+
 
 function drawGuard(x, y, dir, animT, knockedT) {
   const bx = Math.round(x), by = Math.round(y);
@@ -102,7 +138,7 @@ function drawGuard(x, y, dir, animT, knockedT) {
     ctx.fillRect((dir>0 ? bx-2 : bx+PW)-s, by+5-s, 2+s*2, 4+s*2);
     ctx.fillRect((dir>0 ? bx+PW : bx-2)-s, by+5-s, 2+s*2, 4+s*2);
     ctx.fillRect(bx+2-s, by+1-s, PW-4+s*2, 1+s*2);
-    ctx.fillRect(bx+1-s, by-9-s, PW-2+s*2, 3+s);    // cap — 3 rows, no bottom expansion
+    ctx.fillRect(bx+1-s, by-9-s, PW-2+s*2, 3+s*2);   // cap
     ctx.fillRect((dir>0 ? bx+PW-1 : bx-1)-s, by-7-s, 3+s*2, 1+s*2); // cap brim
     ctx.fillRect(bx+1-s, by-7-s, PW-2+s*2, 8+s*2); // head
   }

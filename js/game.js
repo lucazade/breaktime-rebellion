@@ -193,6 +193,8 @@ function loop(ts) {
     const t = teachers[i];
     if (t.name === 'Preside') {
       drawPreside(t.x, t.y, t.dir, t.animT, t.color, t.chasing, t.knockedT);
+    } else if (t.name === 'Prof.Ginnastica') {
+      drawGinnastica(t.x, t.y, t.dir, t.animT, t.chasing, t.knockedT);
     } else if (t.name === 'Guardiano') {
       if (exitDone) continue;
       drawGuard(t.x, t.y, t.dir, t.animT, t.knockedT);
