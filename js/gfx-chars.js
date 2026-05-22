@@ -14,7 +14,7 @@ Object.assign(CONFIG.vis, {
   char: {
     outline:      true,
     outlineSize:  1.0,
-    outlineColor: '#121212',
+    outlineColor: PAL.charOutline,
   },
 });
 
@@ -22,19 +22,19 @@ function drawGuard(x, y, dir, animT, knockedT) {
   const bx = Math.round(x), by = Math.round(y);
   if (knockedT > 0) {
     const fy = by + PH - 1;
-    ctx.fillStyle = 'rgba(0,0,0,0.2)'; ctx.fillRect(bx-4, fy+2, 18, 2);
+    ctx.fillStyle = PAL.shadow; ctx.fillRect(bx-4, fy+2, 18, 2);
     if (CONFIG.vis.char.outline) {
       const s = CONFIG.vis.char.outlineSize || 1;
       ctx.fillStyle = CONFIG.vis.char.outlineColor;
       ctx.fillRect(bx-2-s, fy-3-s, 14+s*2, 4+s*2);
       ctx.fillRect((dir>0 ? bx+12 : bx-6)-s, fy-4-s, 6+s*2, 5+s*2);
     }
-    ctx.fillStyle = '#1a1a3a'; ctx.fillRect(bx-2, fy-3, 14, 4);
+    ctx.fillStyle = PAL.guardUniform; ctx.fillRect(bx-2, fy-3, 14, 4);
     ctx.fillStyle = C.pink;   ctx.fillRect(dir > 0 ? bx+12 : bx-6, fy-4, 6, 5);
     return;
   }
   const leg = Math.sin(animT) * 2.5;
-  ctx.fillStyle = 'rgba(0,0,0,0.2)'; ctx.fillRect(bx-1, by+PH, PW, 2);
+  ctx.fillStyle = PAL.shadow; ctx.fillRect(bx-1, by+PH, PW, 2);
   if (CONFIG.vis.char.outline) {
     const s = CONFIG.vis.char.outlineSize || 1;
     ctx.fillStyle = CONFIG.vis.char.outlineColor;
@@ -50,20 +50,20 @@ function drawGuard(x, y, dir, animT, knockedT) {
     ctx.fillRect((dir>0 ? bx-2 : bx+PW-1)-s, by-7-s, 3+s*2, 2+s*2);
   }
   // Dark trousers
-  ctx.fillStyle = '#111'; ctx.fillRect(bx+1, by+10, 3, 4+leg); ctx.fillRect(bx+4, by+10, 3, 4-leg);
+  ctx.fillStyle = PAL.guardTrousers; ctx.fillRect(bx+1, by+10, 3, 4+leg); ctx.fillRect(bx+4, by+10, 3, 4-leg);
   ctx.fillStyle = C.black; ctx.fillRect(bx, by+13+leg, 4, 2); ctx.fillRect(bx+3, by+13-leg, 4, 2);
   // Dark uniform body
-  ctx.fillStyle = '#1a1a3a'; ctx.fillRect(bx, by+2, PW, 8);
+  ctx.fillStyle = PAL.guardUniform; ctx.fillRect(bx, by+2, PW, 8);
   // Arms
   ctx.fillStyle = C.pink; ctx.fillRect(dir>0 ? bx-2 : bx+PW, by+5, 2, 4); ctx.fillRect(dir>0 ? bx+PW : bx-2, by+5, 2, 4);
   // Head
   ctx.fillStyle = C.pink; ctx.fillRect(bx+1, by-7, PW-2, 8);
   // White cap
-  ctx.fillStyle = '#ddd'; ctx.fillRect(bx, by-8, PW, 3);
-  ctx.fillStyle = '#bbb'; ctx.fillRect(dir>0 ? bx-2 : bx+PW-1, by-7, 3, 2); // cap visor
+  ctx.fillStyle = PAL.guardCap; ctx.fillRect(bx, by-8, PW, 3);
+  ctx.fillStyle = PAL.guardCapVisor; ctx.fillRect(dir>0 ? bx-2 : bx+PW-1, by-7, 3, 2); // cap visor
   // Eye
   ctx.fillStyle = C.black; ctx.fillRect(dir>0 ? bx+4 : bx+2, by-5, 2, 2);
-  ctx.fillStyle = '#825144'; ctx.fillRect(bx+2, by+1, PW-4, 1);
+  ctx.fillStyle = PAL.neck; ctx.fillRect(bx+2, by+1, PW-4, 1);
 }
 
 function drawPreside(x, y, dir, animT, bodyCol, chasing, knockedT) {
@@ -71,7 +71,7 @@ function drawPreside(x, y, dir, animT, bodyCol, chasing, knockedT) {
 
   if (knockedT > 0) {
     const fy = by + PH - 1;
-    ctx.fillStyle = 'rgba(0,0,0,0.2)'; ctx.fillRect(bx-4, fy+2, 18, 2);
+    ctx.fillStyle = PAL.shadow; ctx.fillRect(bx-4, fy+2, 18, 2);
     if (CONFIG.vis.char.outline) {
       const s = CONFIG.vis.char.outlineSize || 1;
       ctx.fillStyle = CONFIG.vis.char.outlineColor;
@@ -88,7 +88,7 @@ function drawPreside(x, y, dir, animT, bodyCol, chasing, knockedT) {
   const leg = Math.sin(animT) * 2.5;
 
   // Shadow slightly wider for heavier build
-  ctx.fillStyle = 'rgba(0,0,0,0.2)'; ctx.fillRect(bx-2, by+PH, PW+4, 2);
+  ctx.fillStyle = PAL.shadow; ctx.fillRect(bx-2, by+PH, PW+4, 2);
 
   if (CONFIG.vis.char.outline) {
     const s = CONFIG.vis.char.outlineSize || 1;
@@ -140,9 +140,9 @@ function drawPreside(x, y, dir, animT, bodyCol, chasing, knockedT) {
   if (chasing) {
     const bub = dir > 0 ? bx+PW+1 : bx-27;
     const tailX = dir > 0 ? bub : bub+23;
-    ctx.fillStyle = 'rgba(255,255,255,0.9)';
+    ctx.fillStyle = PAL.speechBubble;
     ctx.fillRect(tailX, by-4, 3, 4); ctx.fillRect(bub, by-14, 26, 10);
-    ctx.strokeStyle = '#bcbcbc'; ctx.lineWidth = 1; ctx.strokeRect(bub, by-14, 26, 10);
+    ctx.strokeStyle = PAL.speechBorder; ctx.lineWidth = 1; ctx.strokeRect(bub, by-14, 26, 10);
     ctx.beginPath(); ctx.moveTo(tailX, by-4); ctx.lineTo(tailX, by); ctx.lineTo(tailX+3, by); ctx.lineTo(tailX+3, by-4); ctx.stroke();
     ctx.fillStyle = C.black; ctx.font = '4px ' + FF;
     ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
@@ -156,7 +156,7 @@ function drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, chasing, knock
   // Knocked-down state — draw teacher lying flat on floor
   if (isTeacher && knockedT > 0) {
     const fy = by + PH - 1; // floor level
-    ctx.fillStyle = 'rgba(0,0,0,0.2)'; ctx.fillRect(bx-4, fy+2, 18, 2); // shadow
+    ctx.fillStyle = PAL.shadow; ctx.fillRect(bx-4, fy+2, 18, 2); // shadow
     if (CONFIG.vis.char.outline) {
       const s = CONFIG.vis.char.outlineSize || 1;
       ctx.fillStyle = CONFIG.vis.char.outlineColor;
@@ -172,7 +172,7 @@ function drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, chasing, knock
 
   const leg = Math.sin(animT) * 2.5;
 
-  ctx.fillStyle = 'rgba(0,0,0,0.2)'; ctx.fillRect(bx-1, by+PH, PW, 2);
+  ctx.fillStyle = PAL.shadow; ctx.fillRect(bx-1, by+PH, PW, 2);
 
   if (CONFIG.vis.char.outline) {
     const s = CONFIG.vis.char.outlineSize || 1;
@@ -207,11 +207,11 @@ function drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, chasing, knock
   ctx.fillStyle = C.pink; ctx.fillRect(bx+1, by-7, PW-2, 8);
   ctx.fillStyle = isTeacher ? C.lgray : C.brown; ctx.fillRect(bx+1, by-8, PW-2, 2);
   ctx.fillStyle = C.black; ctx.fillRect(dir>0 ? bx+4 : bx+2, by-5, 2, 2);
-  ctx.fillStyle = '#825144'; ctx.fillRect(bx+2, by+1, PW-4, 1);
+  ctx.fillStyle = PAL.neck; ctx.fillRect(bx+2, by+1, PW-4, 1);
 
   if (spraying) {
     const sx = dir>0 ? bx+PW+2 : bx-6;
-    ctx.fillStyle = '#005050'; ctx.fillRect(sx-1, by+2, 6, 7); // dark outline
+    ctx.fillStyle = PAL.sprayCanDark; ctx.fillRect(sx-1, by+2, 6, 7); // dark outline
     ctx.fillStyle = C.cyan;   ctx.fillRect(sx,   by+3, 4, 5); // can
     for (let i = 0; i < 8; i++) {
       const t = (frame * 5 + i * 11) % 19;
@@ -222,14 +222,14 @@ function drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, chasing, knock
       ctx.fillRect(sx + (dir>0 ? 4+dist : -1-dist), by+5+oy-lift, 1, 1);
     }
   }
-  if (!isTeacher) { ctx.fillStyle = '#3e3e3e'; ctx.fillRect(dir>0 ? bx-3 : bx+PW, by+2, 3, 6); }
+  if (!isTeacher) { ctx.fillStyle = PAL.backpack; ctx.fillRect(dir>0 ? bx-3 : bx+PW, by+2, 3, 6); }
 
   if (chasing) {
     const bub = dir>0 ? bx+PW+1 : bx-27;
     const tailX = dir>0 ? bub : bub+23;
-    ctx.fillStyle = 'rgba(255,255,255,0.9)';
+    ctx.fillStyle = PAL.speechBubble;
     ctx.fillRect(tailX, by-4, 3, 4); ctx.fillRect(bub, by-14, 26, 10);
-    ctx.strokeStyle = '#bcbcbc'; ctx.lineWidth = 1; ctx.strokeRect(bub, by-14, 26, 10);
+    ctx.strokeStyle = PAL.speechBorder; ctx.lineWidth = 1; ctx.strokeRect(bub, by-14, 26, 10);
     ctx.beginPath(); ctx.moveTo(tailX, by-4); ctx.lineTo(tailX, by); ctx.lineTo(tailX+3, by); ctx.lineTo(tailX+3, by-4); ctx.stroke();
     ctx.fillStyle = C.black; ctx.font = '4px ' + FF;
     ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
@@ -302,19 +302,19 @@ function drawLucaEnd() {
   const bh = VF.headerH + lineCount * VF.lineH + VF.gapTap + VF.tapH + VF.padBottom;
   const bx = lx + VF.offsetX, by2 = ly - VF.tailOffY - bh;
   ctx.fillStyle = C.gold; ctx.fillRect(bx, by2, VF.bw, bh);
-  ctx.strokeStyle = '#aa7700'; ctx.lineWidth = 1;
+  ctx.strokeStyle = PAL.bubbleBorder; ctx.lineWidth = 1;
   ctx.strokeRect(bx, by2, VF.bw, bh);
   ctx.fillStyle = C.gold; ctx.fillRect(bx, by2 + bh, VF.tailW, VF.tailH);
-  ctx.strokeStyle = '#aa7700'; ctx.strokeRect(bx, by2 + bh, VF.tailW, VF.tailH);
+  ctx.strokeStyle = PAL.bubbleBorder; ctx.strokeRect(bx, by2 + bh, VF.tailW, VF.tailH);
   ctx.fillStyle = C.redprof; ctx.textAlign = 'left'; ctx.textBaseline = 'top';
   ctx.fillText('Luca:', bx + 4, by2 + 4);
-  ctx.fillStyle = '#000';
+  ctx.fillStyle = PAL.black;
   for (let i = 0; i < lineCount; i++) {
     ctx.fillText(lines[i], bx + 4, by2 + VF.headerH + i * VF.lineH);
   }
   const tapY = by2 + VF.headerH + lineCount * VF.lineH + VF.gapTap;
   const blink = Math.floor(frame / 25) % 2 === 0;
-  ctx.fillStyle = blink ? '#000' : 'rgba(0,0,0,0)';
+  ctx.fillStyle = blink ? PAL.black : 'rgba(0,0,0,0)';
   ctx.textAlign = 'center';
   ctx.fillText(STRINGS.tapContinue, bx + VF.bw / 2, tapY);
   ctx.textAlign = 'left';
@@ -342,7 +342,7 @@ function drawStudents() {
     ctx.fillRect(bx-4, by-3, 2, 3);
     ctx.fillRect(bx+2, by-3, 2, 3);
     if (s.disturbed) {
-      ctx.fillStyle = '#FF2222';
+      ctx.fillStyle = PAL.exclamation;
       ctx.save(); ctx.textAlign = 'center';
       ctx.font = '8px ' + FF;
       ctx.fillText('!', bx+4, by-19);

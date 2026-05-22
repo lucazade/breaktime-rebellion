@@ -44,6 +44,21 @@ const PAL = {
   // ── HUD ──────────────────────────────────────────────────
   hudBg:       'rgba(0,4,75,0.55)', // HUD strip background
 
+  // ── Characters ───────────────────────────────────────────
+  charOutline:    '#121212',           // sprite outline (CONFIG.vis.char.outlineColor)
+  shadow:         'rgba(0,0,0,0.2)',   // character ground shadow
+  speechBubble:   'rgba(255,255,255,0.9)', // NPC speech bubble fill
+  speechBorder:   '#bcbcbc',           // NPC speech bubble border
+  bubbleBorder:   '#aa7700',           // Luca speech bubble border (dark gold)
+  guardUniform:   '#1a1a3a',           // Guardiano body/uniform
+  guardTrousers:  '#111111',           // Guardiano dark trousers
+  guardCap:       '#dddddd',           // Guardiano cap
+  guardCapVisor:  '#bbbbbb',           // Guardiano cap visor
+  backpack:       '#3e3e3e',           // Marco backpack
+  neck:           '#825144',           // character neck colour
+  sprayCanDark:   '#005050',           // spray can dark outline
+  exclamation:    '#FF2222',           // student exclamation mark
+
   // HUD mechanic dot colours
   dotBoards:     '#588D43',
   dotBags:       '#4A3D8F',
