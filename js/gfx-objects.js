@@ -59,7 +59,7 @@ function drawBoards() {
         _octx.fillRect(_b.x+2, _b.y+3, BW-4, 2);
         _octx.fillRect(_b.x+2, _b.y+8, BW-4, 2);
       } else {
-        _octx.fillStyle = 'rgba(255,255,255,0.9)';
+        _octx.fillStyle = PAL.speechBubble;
         _octx.fillText('MARCO', _b.x+1, _b.y+9);
         _octx.fillRect(_b.x+1, _b.y+10, BW-2, 1);
       }
@@ -180,7 +180,7 @@ function drawGymBall() {
   ctx.fillRect(bx+2, by+8, 5, 1);                                              // body row 8
   ctx.fillStyle = PAL.woodDark;
   ctx.fillRect(bx+4, by, 1, 9); ctx.fillRect(bx, by+4, 9, 1);
-  ctx.fillStyle = 'rgba(255,200,100,0.5)'; ctx.fillRect(bx+1, by+1, 2, 2);
+  ctx.fillStyle = PAL.ballHighlight; ctx.fillRect(bx+1, by+1, 2, 2);
   if (!allBall) {
     const pdx = Math.abs(player.x + PW/2 - gymBall.x - 4);
     const pdy = Math.abs(player.y + PH  - gymBall.y - 9);
@@ -306,7 +306,7 @@ function drawSprinklers() {
     // Water umbrella when active (widens toward floor)
     if (sp.active) {
       const range = floorY - by - 4;
-      ctx.fillStyle = 'rgba(60,140,255,0.45)';
+      ctx.fillStyle = PAL.waterStream;
       for (let wy = by + 4; wy < floorY; wy += 4) {
         const spread = Math.floor((wy - by - 4) / range * 5); // 0→5 spread
         const wx = Math.floor(Math.sin((wy + frame * 0.5) * 0.6) * 1);
@@ -315,7 +315,7 @@ function drawSprinklers() {
         if (spread >= 2) ctx.fillRect(bx + 3 + wx, wy, 2, 3); // centre
       }
       // Floor splash (wider at base)
-      ctx.fillStyle = 'rgba(100,180,255,0.38)';
+      ctx.fillStyle = PAL.waterSplash;
       ctx.fillRect(bx - 6, floorY - 2, 20, 3);
     }
 
@@ -392,7 +392,7 @@ function drawBins() {
     ctx.fillRect(bx,   by-1,  10,  1); // bottom
 
     // Triangle (vertex up) as recycle symbol
-    ctx.fillStyle = 'rgba(255,255,255,0.75)';
+    ctx.fillStyle = PAL.binRecycle;
     ctx.fillRect(bx+4, by-9, 2, 1); // top vertex
     ctx.fillRect(bx+3, by-8, 4, 1); // middle
     ctx.fillRect(bx+2, by-7, 6, 1); // base
@@ -435,13 +435,13 @@ function drawSink() {
     const wx = 12;
     const w = Math.min(Math.floor(sink.floodSpread), W - 10 - wx); // grows from 0 to full floor
     if (w > 0) {
-      ctx.fillStyle = 'rgba(30,90,200,0.22)';
+      ctx.fillStyle = PAL.waterPuddleDark;
       ctx.fillRect(wx, fy-2, Math.min(w, 8), 2);
-      ctx.fillStyle = 'rgba(30,90,200,0.28)';
+      ctx.fillStyle = PAL.waterPuddleMain;
       ctx.fillRect(wx, fy, w, 4);
-      ctx.fillStyle = 'rgba(100,170,255,0.55)';
+      ctx.fillStyle = PAL.waterHighlight;
       ctx.fillRect(wx, fy, w, 1);
-      ctx.fillStyle = 'rgba(130,200,255,0.5)';
+      ctx.fillStyle = PAL.waterRipple;
       const rOff = Math.floor(frame / 6) % 12;
       for (let rx = wx + rOff; rx < wx + w; rx += 12) ctx.fillRect(rx, fy+2, 5, 1);
     }
@@ -450,7 +450,7 @@ function drawSink() {
   // Mirror — small, centered over the 12px-wide basin (bx+1 to bx+11)
   ctx.fillStyle = PAL.mirrorFrame; ctx.fillRect(bx+1, by-20, 10,  8); // dark frame
   ctx.fillStyle = PAL.mirrorGlass; ctx.fillRect(bx+2, by-19,  8,  6); // glass
-  ctx.fillStyle = 'rgba(255,255,255,0.45)'; ctx.fillRect(bx+3, by-18, 2, 3); // highlight
+  ctx.fillStyle = PAL.mirrorHighlight; ctx.fillRect(bx+3, by-18, 2, 3); // highlight
 
   // Tap (wall pipe below mirror gap)
   ctx.fillStyle = PAL.gray5; ctx.fillRect(bx+5, by-10, 2, 3);
@@ -468,7 +468,7 @@ function drawSink() {
     ctx.fillStyle = PAL.waterDrop;
     ctx.fillRect(bx+5, by-8+drop, 2, 2);
     if (drop >= 3) {
-      ctx.fillStyle = 'rgba(68,136,204,0.6)';
+      ctx.fillStyle = PAL.waterDrip;
       ctx.fillRect(bx+3, by-3, 2, 1); ctx.fillRect(bx+7, by-3, 2, 1);
     }
   }

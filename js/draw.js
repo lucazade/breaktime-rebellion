@@ -246,7 +246,7 @@ function drawSight() {
   for (let i = 0; i < teachers.length; i++) {
     const t = teachers[i];
     if (t.chasing || t.name === 'Guardiano') continue; // guards have no visible sight cone
-    ctx.fillStyle = 'rgba(255,200,0,0.18)';
+    ctx.fillStyle = PAL.sightCone;
     const rx = t.dir>0 ? t.x+PW : t.x-t.sight;
     ctx.fillRect(rx, t.y-2, t.sight, PH+4);
   }
@@ -351,7 +351,7 @@ function drawEndScreen() {
     if (lastLivesBonus > 0) { ctx.fillStyle = C.green; ctx.fillText(STRINGS.livesBonusLabel + lastLivesBonus, cxW, tyW); tyW += VW.stepBonus; }
     ctx.fillStyle = C.white;  ctx.fillText(scoreText, cxW, tyW); tyW += VW.stepScore;
     ctx.fillStyle = C.yellow; ctx.fillText(STRINGS.bestLabel + ' LVL ' + bestLevel + ' — ' + String(bestScore).padStart(5,'0'), cxW, tyW); tyW += VW.stepBest;
-    ctx.fillStyle = actionVisible ? C.gold : 'rgba(0,0,0,0)'; ctx.fillText(STRINGS.tapForTitle, cxW, tyW);
+    ctx.fillStyle = actionVisible ? C.gold : PAL.transparent; ctx.fillText(STRINGS.tapForTitle, cxW, tyW);
   } else {
     const VL = CONFIG.vis.levelComplete;
     const _lH = VL.padTop + VL.stepTitle + VL.stepScore + (lastTimeBonus > 0 ? VL.stepBonus : 0) + VL.tapH + VL.padBottom;
@@ -365,7 +365,7 @@ function drawEndScreen() {
     ctx.font = VL.fontBody + 'px ' + FF;
     if (lastTimeBonus > 0) { ctx.fillStyle = C.cyan; ctx.fillText(STRINGS.timeBonusLabel + lastTimeBonus, cxL, tyL); tyL += VL.stepBonus; }
     ctx.fillStyle = C.white; ctx.fillText(scoreText, cxL, tyL); tyL += VL.stepScore;
-    ctx.fillStyle = actionVisible ? C.green : 'rgba(0,0,0,0)'; ctx.fillText(STRINGS.tapContinue, cxL, tyL);
+    ctx.fillStyle = actionVisible ? C.green : PAL.transparent; ctx.fillText(STRINGS.tapContinue, cxL, tyL);
   }
   ctx.restore();
 }
@@ -409,7 +409,7 @@ function drawStoryBanner() {
     tySt += VS.lineH + (i < storyBannerLines.length - 1 ? VS.lineSpacing : VS.spacerH);
   }
   const blink = Math.floor(frame / 25) % 2 === 0;
-  ctx.fillStyle = blink ? C.gold : 'rgba(0,0,0,0)'; ctx.fillText(STRINGS.tapContinue, cxSt, tySt);
+  ctx.fillStyle = blink ? C.gold : PAL.transparent; ctx.fillText(STRINGS.tapContinue, cxSt, tySt);
   ctx.restore();
 }
 
@@ -498,34 +498,34 @@ function drawDebugOverlay() {
   ctx.textAlign = 'left';
 
   [{y:TY, label:'TY='+TY}, {y:MY, label:'MY='+MY}, {y:GY, label:'GY='+GY}].forEach(function(fl) {
-    ctx.strokeStyle = 'rgba(255,255,0,0.7)';
+    ctx.strokeStyle = PAL.debugFloorYellow;
     ctx.lineWidth = 0.5;
     ctx.setLineDash([4, 3]);
     ctx.beginPath(); ctx.moveTo(0, fl.y); ctx.lineTo(W, fl.y); ctx.stroke();
     ctx.setLineDash([]);
-    ctx.fillStyle = 'rgba(0,0,0,0.6)'; ctx.fillRect(1, fl.y-6, 26, 7);
+    ctx.fillStyle = PAL.debugOverlayBg; ctx.fillRect(1, fl.y-6, 26, 7);
     ctx.fillStyle = PAL.debugYellow; ctx.fillText(fl.label, 2, fl.y-1);
   });
 
   [107, 213].forEach(function(dx) {
-    ctx.strokeStyle = 'rgba(0,200,255,0.6)';
+    ctx.strokeStyle = PAL.debugStairCyan;
     ctx.lineWidth = 0.5;
     ctx.setLineDash([3, 2]);
     ctx.beginPath(); ctx.moveTo(dx, 0); ctx.lineTo(dx, H); ctx.stroke();
     ctx.setLineDash([]);
-    ctx.fillStyle = 'rgba(0,0,0,0.6)'; ctx.fillRect(dx+1, 2, 20, 7);
+    ctx.fillStyle = PAL.debugOverlayBg; ctx.fillRect(dx+1, 2, 20, 7);
     ctx.fillStyle = PAL.debugCyan; ctx.fillText('x='+dx, dx+2, 8);
   });
 
   stairs.forEach(function(s, i) {
     var lx = Math.min(s.x1,s.x2), rx = Math.max(s.x1,s.x2);
     var ty = Math.min(s.y1,s.y2), by2 = Math.max(s.y1,s.y2);
-    ctx.fillStyle = 'rgba(255,120,0,0.22)';
+    ctx.fillStyle = PAL.debugStairFill;
     ctx.fillRect(lx-2, ty, rx-lx+4, by2-ty);
-    ctx.strokeStyle = 'rgba(255,140,0,0.85)';
+    ctx.strokeStyle = PAL.debugStairOutline;
     ctx.lineWidth = 0.5;
     ctx.strokeRect(lx-2, ty, rx-lx+4, by2-ty);
-    ctx.fillStyle = 'rgba(0,0,0,0.6)'; ctx.fillRect(lx-2, ty-8, 55, 7);
+    ctx.fillStyle = PAL.debugOverlayBg; ctx.fillRect(lx-2, ty-8, 55, 7);
     ctx.fillStyle = PAL.debugOrange;
     ctx.fillText('S'+i+' ('+s.x1+','+s.y1+')→('+s.x2+','+s.y2+')', lx-1, ty-2);
     ctx.fillStyle = PAL.debugOrangeR;
@@ -534,34 +534,34 @@ function drawDebugOverlay() {
   });
 
   bags.forEach(function(b) {
-    ctx.strokeStyle = 'rgba(100,100,255,0.9)';
+    ctx.strokeStyle = PAL.debugBagPurple;
     ctx.lineWidth = 0.5;
     ctx.strokeRect(b.x, b.y, 14, 10);
     ctx.fillStyle = PAL.debugBlue; ctx.fillText('bag', b.x, b.y-2);
   });
 
   BOARDS.forEach(function(b) {
-    ctx.strokeStyle = 'rgba(0,255,80,0.85)';
+    ctx.strokeStyle = PAL.debugBoardGreen;
     ctx.lineWidth = 0.5;
     ctx.strokeRect(b.x, b.y, BW, BH);
     ctx.fillStyle = PAL.debugGreen; ctx.fillText('brd', b.x, b.y-2);
   });
 
   DESKS.forEach(function(d) {
-    ctx.strokeStyle = 'rgba(255,220,0,0.65)';
+    ctx.strokeStyle = PAL.debugDeskYellow;
     ctx.lineWidth = 0.5;
     ctx.strokeRect(d.x, d.y, 20, 11);
   });
 
-  ctx.strokeStyle = 'rgba(255,215,0,0.9)';
+  ctx.strokeStyle = PAL.debugBellGold;
   ctx.lineWidth = 0.5;
   ctx.strokeRect(BELL.x-2, BELL.y-1, 10, 9);
   ctx.fillStyle = PAL.panelBorder; ctx.fillText('bell', BELL.x-2, BELL.y-2);
 
-  ctx.strokeStyle = 'rgba(255,80,255,0.9)';
+  ctx.strokeStyle = PAL.debugPlayerPink;
   ctx.lineWidth = 0.5;
   ctx.strokeRect(player.x, player.y, PW, PH);
-  ctx.fillStyle = 'rgba(0,0,0,0.6)'; ctx.fillRect(player.x, player.y-8, 36, 7);
+  ctx.fillStyle = PAL.debugOverlayBg; ctx.fillRect(player.x, player.y-8, 36, 7);
   ctx.fillStyle = PAL.debugMagenta;
   ctx.fillText('P('+Math.round(player.x)+','+Math.round(player.y)+')', player.x+1, player.y-2);
 

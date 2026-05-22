@@ -26,6 +26,38 @@ const PAL = {
   lime:        '#D0E989',  // testo copyright
   beige:       '#E7B260',  // lavagna, pelle chiara
 
+  // ── Transparency ─────────────────────────────────────────
+  transparent:        'rgba(0,0,0,0)',       // invisible state for blinking text
+
+  // ── Sight cone ───────────────────────────────────────────
+  sightCone:          'rgba(255,200,0,0.18)',// teacher sight cone fill
+
+  // ── Water effects (sink / sprinklers) ────────────────────
+  waterPuddleDark:    'rgba(30,90,200,0.22)',
+  waterPuddleMain:    'rgba(30,90,200,0.28)',
+  waterHighlight:     'rgba(100,170,255,0.55)',
+  waterRipple:        'rgba(130,200,255,0.5)',
+  waterStream:        'rgba(60,140,255,0.45)',
+  waterSplash:        'rgba(100,180,255,0.38)',
+  waterDrip:          'rgba(68,136,204,0.6)',
+
+  // ── Object overlays ──────────────────────────────────────
+  ballHighlight:      'rgba(255,200,100,0.5)', // ball shine
+  mirrorHighlight:    'rgba(255,255,255,0.45)',  // mirror glass shine
+  binRecycle:         'rgba(255,255,255,0.75)',  // recycle symbol on bin
+
+  // ── Debug overlay rgba ───────────────────────────────────
+  debugOverlayBg:     'rgba(0,0,0,0.6)',
+  debugStairFill:     'rgba(255,120,0,0.22)',
+  debugStairOutline:  'rgba(255,140,0,0.85)',
+  debugStairCyan:     'rgba(0,200,255,0.6)',
+  debugBoardGreen:    'rgba(0,255,80,0.85)',
+  debugBagPurple:     'rgba(100,100,255,0.9)',
+  debugBellGold:      'rgba(255,215,0,0.9)',
+  debugDeskYellow:    'rgba(255,220,0,0.65)',
+  debugFloorYellow:   'rgba(255,255,0,0.7)',
+  debugPlayerPink:    'rgba(255,80,255,0.9)',
+
   // ── HUD / game ───────────────────────────────────────────
   hearts:       '#ff2244',  // lives hearts
   hudCounter:   '#44ee66',  // object counter text

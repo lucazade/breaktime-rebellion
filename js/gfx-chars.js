@@ -314,7 +314,7 @@ function drawLucaEnd() {
   }
   const tapY = by2 + VF.headerH + lineCount * VF.lineH + VF.gapTap;
   const blink = Math.floor(frame / 25) % 2 === 0;
-  ctx.fillStyle = blink ? PAL.black : 'rgba(0,0,0,0)';
+  ctx.fillStyle = blink ? PAL.black : PAL.transparent;
   ctx.textAlign = 'center';
   ctx.fillText(STRINGS.tapContinue, bx + VF.bw / 2, tapY);
   ctx.textAlign = 'left';
