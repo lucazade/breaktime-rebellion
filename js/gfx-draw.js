@@ -242,6 +242,24 @@ function drawBg() {
 }
 
 
+function drawNightOverlay() {
+  if (!nightMode) return;
+  const px = Math.round(player.x + PW/2);
+  const py = Math.round(player.y + PH/2 - 2);
+  const t = exitDone ? Math.min(nightExpandT / 120, 1) : 0;
+  const ease = t * t * (3 - 2 * t);
+  const outerR = 45 + ease * 335;
+  const a1 = (0.80 * (1 - ease)).toFixed(2);
+  const a2 = (0.96 * (1 - ease)).toFixed(2);
+  const gradient = ctx.createRadialGradient(px, py, 10, px, py, outerR);
+  gradient.addColorStop(0,    'rgba(0,0,8,0)');
+  gradient.addColorStop(0.45, 'rgba(0,0,8,0)');
+  gradient.addColorStop(0.72, 'rgba(0,0,8,' + a1 + ')');
+  gradient.addColorStop(1,    'rgba(0,0,8,' + a2 + ')');
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, W, H);
+}
+
 function drawSight() {
   for (let i = 0; i < teachers.length; i++) {
     const t = teachers[i];
