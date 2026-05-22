@@ -1,40 +1,82 @@
 # Refactor #152 — GFX Palette & File Reorganization
 # Branch: refactor/gfx-palette
-# Stato: PIANIFICATO — non ancora iniziato
+# Stato: FASE 1 COMPLETATA (branch refactor/gfx-palette, merge su main da fare)
 
 ## Obiettivo
 
-Fase 1 (questo branch): riorganizzare i file grafici senza cambiare colori né comportamento.
+Tre fasi distinte, ognuna su branch separato.
+
+Fase 1 (COMPLETATA): riorganizzare i file grafici senza cambiare colori né comportamento.
   - Separare palette, layout, HUD config, chars e objects in file dedicati (gfx-*.js)
   - Definire PAL (palette logo) per uso futuro — non ancora applicata
   - Zero cambiamenti visivi: validazione JS deve dare "JS OK" dopo ogni commit
 
-Fase 2 (branch successivo): applicare PAL ai personaggi e agli oggetti, ricolorando tutti i
+Fase 2 (prossimo branch): affinamenti strutturali — colori e responsabilità dei file.
+  - Centralizzare TUTTI i colori in gfx-palette.js: sprite, UI, bezel, dialog, ecc.
+  - Tutti i file gfx-* puntano a PAL.xxx — niente più hex sparsi o C.xxx
+  - Spostare PW/PH e playerStart da gfx-layout.js a gfx-chars.js (appartengono al player)
+  - Spostare char outline config da gfx-layout.js a gfx-chars.js
+  - Spostare drawStudents da gfx-objects.js a gfx-chars.js (è un NPC, non un oggetto mappa)
+  - Zero cambiamenti visivi
+
+Fase 3 (branch successivo): applicare PAL ai personaggi e agli oggetti, ricolorando tutti i
   sprite per uniformarli al logo (riferimento palette).
 
 
-## Struttura file risultante
+## Struttura file risultante (dopo Fase 1)
 
-File NUOVI (estratti):
+File CREATI in Fase 1:
   js/gfx-palette.js   — PAL + CONFIG.colors (spostati da layout.js)
-  js/gfx-layout.js    — ex layout.js senza colori e senza config UI/HUD
+  js/gfx-layout.js    — ex layout.js: layout, shortcuts, shared (senza playerStart), dashed
   js/gfx-ui.js        — config UI: bezel, dialog, titleScreen, hud, tutti i banner, CSS vars bezel
   js/gfx-chars.js     — funzioni draw personaggi (estratte da draw.js)
   js/gfx-objects.js   — funzioni draw oggetti mappa (estratte da draw.js)
 
-File MODIFICATI:
-  js/draw.js          — rimane, ma senza chars e objects (solo renderer pipeline)
+File MODIFICATI in Fase 1:
+  js/draw.js          — solo renderer pipeline (drawBg, drawHUD, drawSight, drawParticles, ecc.)
   index.html          — ordine di caricamento aggiornato
-  js/layout.js        — ELIMINATO (sostituito da gfx-layout.js + gfx-ui.js)
+
+File ELIMINATI in Fase 1:
+  js/layout.js        — sostituito da gfx-layout.js + gfx-ui.js
 
 
-## Ordine di caricamento in index.html (finale)
+## Struttura file risultante (dopo Fase 2)
+
+Rispetto a Fase 1, le variazioni sono:
+
+  js/gfx-palette.js   — PAL estesa con colori UI (bezel, dialog, panel) + CONFIG.colors (da eliminare in Fase 3)
+  js/gfx-layout.js    — SOLO geometria: W, H, GY, MY, TY, BW, BH, walkOffset, wallLeft/Right +
+                         scale, boards, desks, bell, dashed — senza PW/PH, senza playerStart, senza char
+  js/gfx-ui.js        — config UI aggiornato: punta a PAL.xxx per i colori
+  js/gfx-chars.js     — aggiunge: const PW, PH; CONFIG.vis.shared.playerStart; char outline config
+                         drawStudents spostato qui da gfx-objects.js
+                         funzioni draw puntano a PAL.xxx
+  js/gfx-objects.js   — senza drawStudents; funzioni draw puntano a PAL.xxx
+
+
+## Nota tecnica: PW/PH e playerStart
+
+PW/PH si definiscono in gfx-chars.js (dopo gfx-layout.js).
+playerStart si aggiunge a CONFIG.vis.shared in gfx-chars.js dopo aver definito PH:
+
+  // gfx-layout.js — shared senza playerStart
+  shared: { stairs: [...], boards: [...], desks: [...], bell: {...} }
+
+  // gfx-chars.js — PH disponibile qui, aggiungiamo playerStart all'oggetto esistente
+  const PW = 8, PH = 16;
+  CONFIG.vis.shared.playerStart = { x: 18, y: GY - PH - walkOffset };
+
+SHARED_LAYOUT è un riferimento all'oggetto — levels.js e state.js (che caricano dopo) vedono
+playerStart perché è lo stesso oggetto in memoria.
+
+
+## Ordine di caricamento in index.html (Fase 1 — invariato in Fase 2)
 
   config.js           — primo, come adesso
   gfx-palette.js      — PAL + CONFIG.colors (deve precedere tutto)
   gfx-layout.js       — CONFIG.vis.layout + shared + shortcuts (dipende da config.js)
-  gfx-ui.js          — Object.assign(CONFIG.vis, {bezel, dialog, hud, banners...}) + CSS vars
-  gfx-chars.js        — funzioni draw personaggi (dipende da palette + layout shortcuts)
+  gfx-ui.js           — Object.assign(CONFIG.vis, {bezel, dialog, hud, banners...}) + CSS vars
+  gfx-chars.js        — PW, PH, playerStart, char config + funzioni draw personaggi
   gfx-objects.js      — funzioni draw oggetti (dipende da palette + layout shortcuts)
   levels.js           — invariato
   i18n.js             — invariato
@@ -43,124 +85,51 @@ File MODIFICATI:
   input.js            — invariato
   physics.js          — invariato
   entities.js         — invariato
-  draw.js             — invariato (senza chars/objects estratti)
+  draw.js             — renderer pipeline (senza chars/objects estratti)
   game.js             — invariato
   title.js            — invariato
 
 
-## Dettaglio contenuto di ogni nuovo file
+## Piano commit Fase 1 (COMPLETATI)
 
-### js/gfx-palette.js
-  const PAL = {
-    black, white,
-    green, greenDark, purple, purpleDark, yellow, blue, blueDark, navy,
-    brownDark, brownMid, orange, orangeDark,
-    red, redDark, lime, beige
-  }
-  // CONFIG.colors — palette C64 attuale, identica a quella attuale in layout.js
-  // spostata qui, C = CONFIG.colors in state.js continua a funzionare
-  CONFIG.colors = {
-    black, white, blue, lblue, red, pink, green, lgreen, brown,
-    yellow, gold, dgray, mgray, lgray, chalk, chalkbg, cyan,
-    desk, desklt, bagbody, bagborder, bell,
-    redprof, greenprof, grayprof, whiteprof, cyanprof
-  }
-  NOTA: PAL non è ancora usata — è la reference per Fase 2.
-
-### js/gfx-layout.js
-  Contiene:
-  - CONFIG.vis = { layout: {...} }  (W, H, PW, PH, GY, MY, TY, BW, BH, walkOffset, wallLeft, wallRight, desktopZoom)
-  - Shortcut constants: W, H, PW, PH, GY, MY, TY, BW, BH, walkOffset, wallLeft, wallRight
-  - Object.assign(CONFIG.vis, { shared: {...}, dashed: {...}, char: {...} })
-  - var SHARED_LAYOUT = CONFIG.vis.shared
-  - CSS vars: --btr-zoom, --btr-font-family  (solo questi due — non bezel)
-  NON contiene: CONFIG.vis.colors (→ gfx-palette.js), config UI/HUD/banner (→ gfx-ui.js)
-
-### js/gfx-ui.js
-  Contiene (tutto via Object.assign(CONFIG.vis, { ... })):
-  - fontFamily
-  - bezel         (mobile panels)
-  - dialog        (shared panel style)
-  - titleScreen   (logo, controls, legend)
-  - hud           (cuori, score, timer, dotColors)
-  - storyBanner, missionBanner, levelComplete, gameWin, gameover
-  - pauseOverlay, homeConfirm, credits, lucaFumetto
-  - CSS vars bezel: da --btr-panel-inner-border a --btr-btn-glow
-
-### js/gfx-chars.js
-  Estratte da draw.js:
-  - drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, chasing, knockedT)
-  - drawCharClipped(x, y, dir, animT, bodyCol, isTeacher, spraying, chasing, knockedT, bandTop, bandBottom)
-  - drawJanitor(x, y, dir, animT)
-  - drawGuard(x, y, dir, animT, knockedT)
-  - drawPreside(x, y, dir, animT, bodyCol, chasing, knockedT)
-  - drawLucaEnd()
-  NOTA: drawChar usa ctx globale — ok perché è chiamata a runtime, non a definizione
-
-### js/gfx-objects.js
-  Estratte da draw.js:
-  - drawDesks()
-  - drawBoards()
-  - drawBell()
-  - drawGymBall()
-  - drawBookcase()
-  - drawRegister()
-  - drawExitDoor()
-  - drawBags()
-  - drawMachines()
-  - drawSink()
-  - drawBins()
-  - drawSprinklers()
-  - drawStudents()
-  - drawPaperBalls()
-
-### js/draw.js (rimane — renderer pipeline)
-  Rimangono in draw.js dopo estrazione:
-  - drawTitleScreen()       (usata da title.js)
-  - drawBg()                (background + ImageBitmap cache)
-  - resetBgCache()
-  - drawNightOverlay()
-  - drawSight()
-  - drawParticles()
-  - drawFloating()
-  - drawOverlayPanel()      (helper condiviso per banner)
-  - drawHUD()
-  - drawEndScreen()
-  - drawStoryBanner()
-  - drawMissionBanner()
-  - drawPauseOverlay()
-  - drawHomeConfirm()
-  - drawCredits()
-  - drawDebugOverlay()
-  - Helper privati: _drawHeart, _drawHudIcon, _panPos, _dialogPanel, _dialogBtn, _wrapText
+  1. ✅ feat: add gfx-palette.js — PAL + move CONFIG.colors from layout.js
+  2. ✅ feat: replace layout.js with gfx-layout.js + gfx-ui.js
+  3. ✅ feat: add gfx-chars.js — extract char draw functions from draw.js
+  4. ✅ feat: add gfx-objects.js — extract object draw functions from draw.js
 
 
-## Piano commit (uno per file)
+## Piano commit Fase 2 (prossimo branch)
 
-  1. feat: add gfx-palette.js — PAL + move CONFIG.colors from layout.js
-  2. feat: rename layout.js to gfx-layout.js — layout/shared/dashed/char only
-  3. feat: add gfx-ui.js — extract UI/banner config from gfx-layout.js
-  4. feat: add gfx-chars.js — extract char draw functions from draw.js
-  5. feat: add gfx-objects.js — extract object draw functions from draw.js
-  6. chore: update index.html load order for gfx-* files
+  1. feat: extend PAL with UI colors — bezel, dialog, panel backgrounds
+  2. feat: gfx-ui.js uses PAL for all colors
+  3. feat: move PW/PH + playerStart + char config from gfx-layout.js to gfx-chars.js
+  4. feat: move drawStudents from gfx-objects.js to gfx-chars.js
+  5. feat: gfx-chars.js uses PAL for all colors
+  6. feat: gfx-objects.js uses PAL for all colors
+  7. feat: draw.js uses PAL for all colors (sight cone, particles, ecc.)
+  8. chore: update CLAUDE.md — struttura file aggiornata
 
   Validazione JS obbligatoria dopo ogni commit.
-  CLAUDE.md va aggiornato (struttura file) nell'ultimo commit o in uno separato.
+  Zero cambiamenti visivi in tutta la Fase 2.
+
+
+## Piano commit Fase 3 (branch successivo)
+
+  Ricolorazione sprite: sostituire i colori C64 con i colori PAL del logo.
+  Da pianificare in dettaglio prima di iniziare.
+  Riferimento palette: dev/refactor-gfx-palette/palette-from-logo.png
+
 
 ## Note importanti
 
-- layout.js viene ELIMINATO — non rinominato. gfx-layout.js è un file nuovo.
-  Questo perché git rename + modifica contestuale in una commit sono più puliti
-  rispetto a modify-in-place con nomi temporanei.
+- C = CONFIG.colors in state.js NON cambia fino a Fase 3 (o fine Fase 2).
+  In Fase 3 si valuta se eliminare CONFIG.colors e usare solo PAL.
 
-- C = CONFIG.colors in state.js NON cambia. gfx-palette.js carica prima di state.js
-  quindi CONFIG.colors è disponibile quando state.js esegue const C = CONFIG.colors.
-
-- PAL è definita in gfx-palette.js ma non referenziata da nessun altro file in Fase 1.
-  Serve solo come riferimento pronto per Fase 2.
+- PAL è definita in gfx-palette.js. In Fase 1 non è referenziata da nessun altro file.
+  In Fase 2 tutti i file gfx-* la useranno.
 
 - draw.js rimane con il nome attuale (non diventa gfx-draw.js) per minimizzare le
   modifiche al resto del codice che dipende da draw.js.
 
-- Alla fine di Fase 1 il gioco deve essere identico a prima: stessi colori, stesso
+- Alla fine di ogni fase il gioco deve essere identico a prima: stessi colori, stesso
   comportamento, stessa performance.
