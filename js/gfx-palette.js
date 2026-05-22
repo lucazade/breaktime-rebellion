@@ -42,8 +42,8 @@ const PAL = {
   presideHair:       '#706f6e',  // grey hair
   presideBody:       '#2f2e2d',  // suit jacket
   presideTrousers:   '#706f6e',  // grey
-  presideShoes:      '#862c00',
-  presideCuff:       '#FFFFFF',  // white shirt cuff visible at sleeve end  // dark brown
+  presideShoes:      '#862c00',  // dark brown
+  presideCuff:       '#FFFFFF',  // white shirt cuff visible at sleeve end
 
   // ── Prof.Ginnastica ───────────────────────────────────────
   profGinnasticaSkin:       '#faa462',  // face, hands
@@ -141,7 +141,6 @@ const PAL = {
   bestScoreHighlight: '#FEDC02',  // best score / level text in win screen
   livesBonusText:     '#33B84B',  // lives bonus line in win screen
   tapContinueColor:   '#33B84B',  // "tap to continue" in level-complete screen
-  chalkParticle:      '#FFFFFF',  // chalk particles when board is tagged
 
   // ── Dialog panels ─────────────────────────────────────────
   panelBg:     'rgba(0,0,40,0.90)', // dialog panel background
@@ -185,15 +184,20 @@ const PAL = {
   bellShadow:    '#CC9900',  // shadow
   bellClapper:   '#332200',  // clapper (dark)
 
+  // ── Object interaction ────────────────────────────────────
+  objectActiveBorder: '#FEDC02',  // dashed yellow border when object is interactive (boards, ball, bookcase, bins, machines)
+
   // ── Chalkboard ────────────────────────────────────────────
-  boardDark:  '#075b07',  // board background (dark green)
-  boardChalk: '#2c832c',  // chalk line hints
+  boardDark:     '#075b07',  // board background (dark green)
+  boardChalk:    '#2c832c',  // chalk line hints
+  chalkParticle: '#FFFFFF',  // chalk particles when board is tagged
 
   // ── Ball ──────────────────────────────────────────────────
-  ballBody:          '#CC6600',               // basketball orange
-  ballHighlight:     'rgba(255,200,100,0.5)', // ball shine
-  objectActiveBorder:'#FEDC02',               // yellow border on interactive objects (boards, ball, bookcase, bins, machines)
-  paperBall:         '#FFFFFF',               // paper ball thrown at students
+  ballBody:      '#CC6600',               // basketball orange
+  ballHighlight: 'rgba(255,200,100,0.5)', // ball shine
+
+  // ── Paper balls ───────────────────────────────────────────
+  paperBall: '#FFFFFF',  // paper ball thrown at students
 
   // ── Desks ─────────────────────────────────────────────────
   brown:         '#433900',  // chair wood (dark brown)
