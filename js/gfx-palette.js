@@ -203,19 +203,27 @@ const PAL = {
   registerSpine: '#6B0000',  // spine (darker red)
   registerEdge:  '#AA2200',  // top edge highlight
   registerPages: '#F0E8D0',  // page colour
+  registerLine:  '#888888',  // grade lines on pages
 
   // ── Sink / mirror ─────────────────────────────────────────
-  mirrorFrame:     '#1a3a5c',              // frame (dark blue)
-  mirrorGlass:     '#7ab8d8',              // glass reflection
+  mirrorFrame:     '#1a3a5c',               // frame (dark blue)
+  mirrorGlass:     '#7ab8d8',               // glass reflection
   mirrorHighlight: 'rgba(255,255,255,0.45)', // glass shine
-  waterDrop:       '#4488cc',              // dripping water drop
+  waterDrop:       '#4488cc',               // dripping water drop
+  sinkBasinOuter:  '#666666',               // basin outer shell
+  sinkTap:         '#777777',               // tap body
+  sinkTapHandle:   '#aaaaaa',               // tap handle
+  sinkBasinInner:  '#d8d8d8',               // basin inner (light)
+  sinkDrain:       '#888888',               // drain
 
   // ── Bins ──────────────────────────────────────────────────
-  binBody:     '#228B22',              // body (green)
-  binLid:      '#1a7a1a',              // lid (darker green)
-  binShadow:   '#1a6e1a',              // left shadow
-  binDark:     '#0d4d0d',              // rim / border
-  binRecycle:  'rgba(255,255,255,0.75)', // recycle symbol
+  binBody:        '#228B22',               // body (green)
+  binLid:         '#1a7a1a',               // lid (darker green)
+  binShadow:      '#1a6e1a',               // left shadow
+  binDark:        '#0d4d0d',               // rim / border
+  binRecycle:     'rgba(255,255,255,0.75)', // recycle symbol
+  charred:        '#2a1a00',               // explosion debris (dark brown)
+  binCharredDark: '#333333',               // explosion debris dark layer
 
   // ── Fire / explosion ──────────────────────────────────────
   flame: '#FF6600',  // lighter flame, fuse animation
@@ -230,18 +238,13 @@ const PAL = {
   waterSplash:     'rgba(100,180,255,0.38)', // splash droplet
   waterDrip:       'rgba(68,136,204,0.6)',   // drip from ceiling
 
+  // ── Sprinklers ────────────────────────────────────────────
+  sprinklerDisc:     '#bbbbbb',  // deflector disc (light grey)
+  sprinklerBorder:   '#555555',  // T-pipe border
+  sprinklerInactive: '#888888',  // head colour when inactive
+
   // ── Bags ──────────────────────────────────────────────────
   bagborder: '#2A1F5E',  // bag border (dark blue)
-
-  // ── Grays (fixtures) ──────────────────────────────────────
-  charred: '#2a1a00',  // charred debris (dark brown)
-  gray1:   '#333333',  // charred debris dark
-  gray3:   '#555555',  // sprinkler border
-  gray4:   '#666666',  // sink basin outer
-  gray5:   '#777777',  // sink tap
-  gray6:   '#888888',  // sink drain / sprinkler inactive
-  gray8:   '#aaaaaa',  // sink tap handle
-  gray10:  '#d8d8d8',  // sink basin inner
 
 // ═══════════════════════════════════════════════════════════
 //  DEBUG

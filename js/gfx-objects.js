@@ -288,9 +288,9 @@ function drawRegister() {
   // Pages
   ctx.fillStyle = PAL.registerPages; ctx.fillRect(bx+2, by-1, 7, 12);
   // Grade lines
-  ctx.fillStyle = PAL.gray6; ctx.fillRect(bx+3, by+2, 5, 1);
-  ctx.fillStyle = PAL.redDark;   ctx.fillRect(bx+3, by+4, 5, 1);
-  ctx.fillStyle = PAL.gray6; ctx.fillRect(bx+3, by+6, 5, 1);
+  ctx.fillStyle = PAL.registerLine; ctx.fillRect(bx+3, by+2, 5, 1);
+  ctx.fillStyle = PAL.redDark;     ctx.fillRect(bx+3, by+4, 5, 1);
+  ctx.fillStyle = PAL.registerLine; ctx.fillRect(bx+3, by+6, 5, 1);
   ctx.fillStyle = PAL.redDark;   ctx.fillRect(bx+3, by+8, 5, 1);
 
   // Progress bar while stealing
@@ -351,10 +351,10 @@ function drawSprinklers() {
     }
 
     // Sprinkler fixture — disc + head only (no stem above ceiling)
-    ctx.fillStyle = PAL.guardCapVisor; ctx.fillRect(bx,   by-2, 8, 2);    // deflector disc
-    ctx.fillStyle = sp.active ? PAL.redDark : PAL.gray6;
+    ctx.fillStyle = PAL.sprinklerDisc; ctx.fillRect(bx,   by-2, 8, 2);    // deflector disc
+    ctx.fillStyle = sp.active ? PAL.redDark : PAL.sprinklerInactive;
     ctx.fillRect(bx+2, by, 4, 3);                              // head (red = active)
-    ctx.strokeStyle = PAL.gray3; ctx.lineWidth = 1;               // T-border (no top)
+    ctx.strokeStyle = PAL.sprinklerBorder; ctx.lineWidth = 1;               // T-border (no top)
     ctx.beginPath();
     ctx.moveTo(bx,   by-2); ctx.lineTo(bx,   by);   // left side of disc
     ctx.lineTo(bx+2, by);   ctx.lineTo(bx+2, by+3); // step in + left side of head
@@ -406,7 +406,7 @@ function drawBins() {
       ctx.fillStyle = PAL.charred; ctx.fillRect(bx-2, by-5, 13, 5);
       ctx.fillStyle = PAL.dgray;    ctx.fillRect(bx-4, by-7,  3, 2);
       ctx.fillStyle = PAL.dgray;    ctx.fillRect(bx+11,by-8,  3, 2);
-      ctx.fillStyle = PAL.gray1;    ctx.fillRect(bx+2, by-9,  2, 3);
+      ctx.fillStyle = PAL.binCharredDark;    ctx.fillRect(bx+2, by-9,  2, 3);
       continue;
     }
 
@@ -484,14 +484,14 @@ function drawSink() {
   ctx.fillStyle = PAL.mirrorHighlight; ctx.fillRect(bx+3, by-18, 2, 3); // highlight
 
   // Tap (wall pipe below mirror gap)
-  ctx.fillStyle = PAL.gray5; ctx.fillRect(bx+5, by-10, 2, 3);
-  ctx.fillStyle = PAL.gray8; ctx.fillRect(bx+4, by-10, 1, 1);
+  ctx.fillStyle = PAL.sinkTap; ctx.fillRect(bx+5, by-10, 2, 3);
+  ctx.fillStyle = PAL.sinkTapHandle; ctx.fillRect(bx+4, by-10, 1, 1);
 
   // Sink basin
-  ctx.fillStyle = PAL.gray4; ctx.fillRect(bx-1, by-9, 14, 10);
+  ctx.fillStyle = PAL.sinkBasinOuter; ctx.fillRect(bx-1, by-9, 14, 10);
   ctx.fillStyle = PAL.btnLabel; ctx.fillRect(bx,   by-8, 12, 8);
-  ctx.fillStyle = PAL.gray10; ctx.fillRect(bx+1, by-7, 10, 6);
-  ctx.fillStyle = PAL.gray6;    ctx.fillRect(bx+5, by-2,  2, 1); // drain
+  ctx.fillStyle = PAL.sinkBasinInner; ctx.fillRect(bx+1, by-7, 10, 6);
+  ctx.fillStyle = PAL.sinkDrain; ctx.fillRect(bx+5, by-2,  2, 1); // drain
 
   // Dripping animation while pouring
   if (sink.pourT > 0) {
