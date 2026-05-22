@@ -319,3 +319,34 @@ function drawLucaEnd() {
   ctx.fillText(STRINGS.tapContinue, bx + VF.bw / 2, tapY);
   ctx.textAlign = 'left';
 }
+
+function drawStudents() {
+  for (let i = 0; i < students.length; i++) {
+    const s = students[i];
+    const wobble = s.shakeT > 0 ? Math.round(Math.sin(s.shakeT * 0.9) * 2) : 0;
+    const bx = Math.round(s.x + 5) + wobble;
+    const by = Math.round(s.y);
+    if (CONFIG.vis.char.outline) {
+      const so = CONFIG.vis.char.outlineSize || 1;
+      ctx.fillStyle = CONFIG.vis.char.outlineColor;
+      ctx.fillRect(bx-2-so, by-17-so, 5+so*2, 9+so*2);
+      ctx.fillRect(bx-3-so, by-8-so,  7+so*2, 6+so*2);
+      ctx.fillRect(bx-4-so, by-3-so,  2+so*2, 3+so*2);
+      ctx.fillRect(bx+2-so, by-3-so,  2+so*2, 3+so*2);
+    }
+    ctx.fillStyle = C.brown; ctx.fillRect(bx-2, by-17, 5, 2);
+    ctx.fillStyle = C.pink;  ctx.fillRect(bx-2, by-15, 5, 7);
+    ctx.fillStyle = C.black; ctx.fillRect(bx-2, by-13, 2, 2);
+    ctx.fillStyle = C.white; ctx.fillRect(bx-3, by-8, 7, 6);
+    ctx.fillStyle = C.pink;
+    ctx.fillRect(bx-4, by-3, 2, 3);
+    ctx.fillRect(bx+2, by-3, 2, 3);
+    if (s.disturbed) {
+      ctx.fillStyle = '#FF2222';
+      ctx.save(); ctx.textAlign = 'center';
+      ctx.font = '8px ' + FF;
+      ctx.fillText('!', bx+4, by-19);
+      ctx.restore();
+    }
+  }
+}
