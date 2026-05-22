@@ -33,7 +33,8 @@ const PAL_LOGO = {
   hairDark:      '#581e00',  // dark hair (Marco, students, janitor)
   hairGray:      '#72706e',  // grey hair (older teachers)
   trousersGray:  '#706f6e',  // teacher trousers
-  marcoTrousers: '#015dca',  // Marco body and trousers
+  marcoShirt:    '#6121ac',  // Marco shirt / sweater
+  marcoTrousers: '#015dca',  // Marco trousers
   marcoShoes:    '#ba0200',  // Marco shoes
   marcoBackpack: '#7f2001',  // Marco backpack
   profShoes:     '#862c00',  // teacher shoes
@@ -67,6 +68,7 @@ const PAL_CLASSIC = {
   hairDark:      '#433900',  // C.brown
   hairGray:      '#959595',  // C.lgray
   trousersGray:  '#352879',  // C.blue
+  marcoShirt:    '#6C5EB5',  // C.lblue (classic stripe colour)
   marcoTrousers: '#352879',  // C.blue
   marcoShoes:    '#000000',  // C.black
   marcoBackpack: '#3e3e3e',  // hardcoded
