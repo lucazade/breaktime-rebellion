@@ -310,7 +310,7 @@ function drawCharClipped(x, y, dir, animT, bodyCol, colours, spraying, chasing, 
 function drawJanitor(x, y, dir, animT) {
   drawChar(x, y, dir, animT, PAL.janitorShirt, COLOURS_JANITOR, false, false);
   const bx = Math.round(x), by = Math.round(y);
-  const mx = dir > 0 ? bx+PW+1 : bx-2;
+  const mx = dir > 0 ? bx+PW+2 : bx-3;
 
   // Salopette bib + suspender straps — drawn on top of white undershirt
   if (CONFIG.vis.char.outline) {
