@@ -16,22 +16,6 @@ CONFIG.vis = {
     desktopZoom: 2.0,            // desktop CSS display height = 400px × zoom (2.0 → 800px = 4x canvas native height, no upscaling)
   },
 
-  colors: {
-    black:'#000000', white:'#FFFFFF',
-    blue:'#352879', lblue:'#6C5EB5',
-    red:'#68372B', pink:'#9A6759',
-    green:'#588D43', lgreen:'#9AD284',
-    brown:'#433900',
-    yellow:'#B8C76F', gold:'#FFD700',
-    dgray:'#444444', mgray:'#6C6C6C', lgray:'#959595',
-    chalk:'#D8E8D0', chalkbg:'#1A4A1A',
-    cyan:'#70A4B2',
-    desk:'#2C1800', desklt:'#4E2A00',
-    bagbody:'#4A3D8F', bagborder:'#2A1F5E',
-    bell:'#DAA520',
-    redprof:'#c3200e', greenprof:'#109f06', grayprof:'#171717', whiteprof:'#dcdcdc', cyanprof:'#0757d7',
-  },
-
 };
 
 // Shortcut constants — usati in tutti i moduli
