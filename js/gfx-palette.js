@@ -56,6 +56,12 @@ const PAL_LOGO = {
   janitorMopHandle:  '#862c00',
   janitorMopHead:    '#959595',  // grey bristles
 
+  // ── Alunni seduti (seated students) ──────────────────
+  studentSkin:       '#faa462',
+  studentSkinShadow: '#fd6935',
+  studentHair:       '#581e00',
+  studentShirt:      '#FFFFFF',
+
   // ── Prof.Rossi ────────────────────────────────────────
   profRossiBody:    '#D21C01',
 
@@ -115,6 +121,12 @@ const PAL_CLASSIC = {
   janitorShoes:      '#000000',  // C.black
   janitorMopHandle:  '#433900',  // C.brown
   janitorMopHead:    '#959595',  // C.lgray
+
+  // ── Alunni seduti (C64-equivalent) ───────────────────
+  studentSkin:       '#9A6759',  // C.pink
+  studentSkinShadow: '#825144',
+  studentHair:       '#433900',  // C.brown
+  studentShirt:      '#FFFFFF',
 
   // ── Professors (C64-equivalent) ──────────────────────
   profRossiBody:    '#c3200e',  // C.redprof

@@ -400,16 +400,18 @@ function drawStudents() {
     if (CONFIG.vis.char.outline) {
       const so = CONFIG.vis.char.outlineSize || 1;
       ctx.fillStyle = CONFIG.vis.char.outlineColor;
-      ctx.fillRect(bx-2-so, by-17-so, 5+so*2, 9+so*2);
-      ctx.fillRect(bx-3-so, by-8-so,  7+so*2, 6+so*2);
+      ctx.fillRect(bx-2-so, by-17-so, 5+so*2, 8+so);   // head — ends at by-10, no expansion into neck row
+      ctx.fillRect(bx-1-so, by-9-so,  3+so*2, 1+so*2); // neck — 3px outline
+      ctx.fillRect(bx-3-so, by-8-so,  7+so*2, 6+so*2); // shirt — full expansion covers shoulder corners at by-9
       ctx.fillRect(bx-4-so, by-3-so,  2+so*2, 3+so*2);
       ctx.fillRect(bx+2-so, by-3-so,  2+so*2, 3+so*2);
     }
-    ctx.fillStyle = PAL.marcoHair; ctx.fillRect(bx-2, by-17, 5, 2);
-    ctx.fillStyle = PAL.teacherSkin;  ctx.fillRect(bx-2, by-15, 5, 7);
-    ctx.fillStyle = PAL.black; ctx.fillRect(bx-2, by-13, 2, 2);
-    ctx.fillStyle = PAL.white; ctx.fillRect(bx-3, by-8, 7, 6);
-    ctx.fillStyle = PAL.teacherSkin;
+    ctx.fillStyle = PAL.studentHair;       ctx.fillRect(bx-2, by-17, 5, 2);
+    ctx.fillStyle = PAL.studentSkin;       ctx.fillRect(bx-2, by-15, 5, 6);  // face — 6 rows, ends at by-10
+    ctx.fillStyle = PAL.black;             ctx.fillRect(bx-2, by-13, 2, 2);
+    ctx.fillStyle = PAL.studentSkinShadow; ctx.fillRect(bx-1, by-9,  3, 1);  // neck
+    ctx.fillStyle = PAL.studentShirt;      ctx.fillRect(bx-3, by-8,  7, 6);
+    ctx.fillStyle = PAL.studentSkin;
     ctx.fillRect(bx-4, by-3, 2, 3);
     ctx.fillRect(bx+2, by-3, 2, 3);
     if (s.disturbed) {
