@@ -190,3 +190,6 @@ CONFIG.colors = {
   bell:'#DAA520',
   redprof:'#c3200e', greenprof:'#109f06', grayprof:'#171717', whiteprof:'#dcdcdc', cyanprof:'#0757d7',
 };
+
+// Global shortcut — available to all scripts including levels.js (loads before state.js)
+var C = CONFIG.colors;

@@ -1,6 +1,6 @@
 // Shared state — variables and functions used across all modules
 
-const C = CONFIG.vis.colors;
+// C = CONFIG.colors is defined in gfx-palette.js (loads before levels.js)
 const DEBUG = new URLSearchParams(location.search).get('debug') === '1';
 
 // String formatter: fmt('Hello {0}, score {1}!', name, score)
