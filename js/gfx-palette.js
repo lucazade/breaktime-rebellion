@@ -86,6 +86,15 @@ const PAL_LOGO = {
   guardTrousers:     '#2f2e2d',  // dark trousers
   guardCap:          '#2f2e2d',  // cappellino (same as trousers)
   guardBadge:        '#FEDC02',  // chest badge (yellow)
+
+  // ── Luca ──────────────────────────────────────────────
+  lucaSkin:          '#faa462',
+  lucaSkinShadow:    '#fd6935',
+  lucaHair:          '#581e00',
+  lucaBody:          '#FFFFFF',  // white shirt (bodyCol)
+  lucaTie:           '#000000',  // tie
+  lucaTrousers:      '#012A9F',  // dark blue
+  lucaShoes:         '#000000',
 };
 
 // ── Classic palette (C64-equivalent, for ?classic A/B comparison) ────────────
@@ -164,6 +173,15 @@ const PAL_CLASSIC = {
   guardTrousers:     '#171717',  // C.grayprof
   guardCap:          '#171717',  // C.grayprof
   guardBadge:        '#B8C76F',  // C.yellow
+
+  // ── Luca (C64-equivalent) ─────────────────────────────
+  lucaSkin:          '#9A6759',  // C.pink
+  lucaSkinShadow:    '#825144',
+  lucaHair:          '#433900',  // C.brown
+  lucaBody:          '#FFFFFF',  // white shirt
+  lucaTie:           '#000000',  // C.black
+  lucaTrousers:      '#2A1F5E',  // C.bagborder (dark blue)
+  lucaShoes:         '#000000',  // C.black
 };
 
 // Toggle: ?classic in URL → C64-equivalent look for A/B comparison
@@ -299,8 +317,6 @@ const PAL = Object.assign(_useClassic ? PAL_CLASSIC : PAL_LOGO, {
   speechBubble:   'rgba(255,255,255,0.9)', // NPC speech bubble fill
   speechBorder:   '#bcbcbc',           // NPC speech bubble border
   bubbleBorder:   '#aa7700',           // Luca speech bubble border (dark gold)
-  backpack:       '#3e3e3e',           // Marco backpack
-  neck:           '#825144',           // character neck colour
   sprayCanDark:   '#005050',           // spray can dark outline
   exclamation:    '#FF2222',           // student exclamation mark
 

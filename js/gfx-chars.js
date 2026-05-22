@@ -61,13 +61,13 @@ const COLOURS_JANITOR = {
 };
 
 const COLOURS_LUCA = {
-  skin:        PAL.marcoSkin,
-  skinShadow:  PAL.marcoSkinShadow,
-  hair:        PAL.marcoHair,
-  trousers:    PAL.marcoTrousers,
-  shoes:       PAL.marcoShoes,
+  skin:        PAL.lucaSkin,
+  skinShadow:  PAL.lucaSkinShadow,
+  hair:        PAL.lucaHair,
+  trousers:    PAL.lucaTrousers,
+  shoes:       PAL.lucaShoes,
   shoeSole:    null,
-  tie:         null,
+  tie:         PAL.lucaTie,
   stripe:      null,
   backpack:    null,
   knockable:   false,
@@ -345,7 +345,7 @@ function drawLucaEnd() {
   // Luca stands at the exit door
   const lx = Math.round(exitDoor.x) + 1;
   const ly = Math.round(GY - PH - walkOffset);
-  drawChar(lx, ly, 1, 0, PAL.white, COLOURS_LUCA, false, false, 0);
+  drawChar(lx, ly, 1, 0, PAL.lucaBody, COLOURS_LUCA, false, false, 0);
 
   // Speech bubble — hidden once win banner appears
   if (state === 'win') return;

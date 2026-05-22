@@ -85,3 +85,14 @@ Pantaloni scuri	#2f2e2d
 cappello #2f2e2d aggiungere
 scarpe #000000
 Cuffia e Visiera cuffia rimuovere
+
+---
+
+Luca
+
+Pelle (viso, mani) #faa462
+Pelle ombra / collo #fd6935
+Capelli #581e00
+pantaloni #012A9F
+Corpo #FFFFFF'
+Scarpe #000000
