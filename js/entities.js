@@ -77,7 +77,7 @@ function updateTeachers() {
 
 function playerDied() {
   player.spraying = false; player.shaking = false; player.vy = 0;
-  addParticles(player.x + PW/2, player.y, PAL.redDark, 20);
+  addParticles(player.x + PW/2, player.y, PAL.deathParticle, 20);
   GameAudio.playSfx('caught');
   if (lives <= 0) {
     // Game over: freeze everything, fade out music, then show banner + gameover jingle
@@ -264,8 +264,8 @@ function updateBins() {
     b.lit = false;
     b.exploded = true;
     addParticles(b.x + 5, b.y - 7, '#FF6600', 18);
-    addParticles(b.x + 5, b.y - 7, PAL.yellow, 12);
-    addParticles(b.x + 5, b.y - 7, PAL.redDark,    8);
+    addParticles(b.x + 5, b.y - 7, PAL.scoreParticle, 12);
+    addParticles(b.x + 5, b.y - 7, PAL.explosionParticle,    8);
     addFloating(b.x - 8, b.y - 26, 'BOOM!', PAL.gold);
     GameAudio.playSfx('explosion');
 
@@ -293,7 +293,7 @@ function updateBins() {
     let done = 0;
     for (let k = 0; k < bins.length; k++) if (bins[k].exploded) done++;
     score += 300;
-    addFloating(b.x + 5, b.y - 18, '+300', PAL.yellow);
+    addFloating(b.x + 5, b.y - 18, '+300', PAL.scoreParticle);
     if (done >= bins.length) {
       binExplodeWin();
     } else {

@@ -4,26 +4,6 @@
 
 const PAL = {
 
-  // ── Environment / sprite base ─────────────────────────────
-  black:       '#000000',  // sprite outline
-  white:       '#FFFFFF',  // highlights
-  green:       '#33B84B',  // green walls / vending machine button C
-  greenDark:   '#039C5A',  // green wall shadows
-  purple:      '#4E3699',  // purple walls / Marco jacket / bag
-  purpleDark:  '#423D7C',  // purple shadows / Marco shirt / bag border
-  yellow:      '#FEDC02',  // teacher tie / vending machine button B
-  blue:        '#1665DC',  // floor / teacher legs / machine body
-  blueDark:    '#012A9F',  // floor dark stripe
-  navy:        '#16202D',  // background
-  brownDark:   '#822B14',  // hair / desk wood / doors
-  brownMid:    '#875634',  // desk wood mid tone
-  orange:      '#ED6A17',  // skin (face, hands)
-  orangeDark:  '#E85606',  // skin shadow / collar
-  red:         '#D21C01',  // vending machine button A / Prof.Rossi jacket
-  redDark:     '#5F1D1B',  // red shadows
-  lime:        '#D0E989',  // active machine screen / timer bar
-  beige:       '#E7B260',  // light skin / board frame
-
 // ═══════════════════════════════════════════════════════════
 //  CHARACTERS
 // ═══════════════════════════════════════════════════════════
@@ -62,7 +42,8 @@ const PAL = {
   presideHair:       '#706f6e',  // grey hair
   presideBody:       '#2f2e2d',  // suit jacket
   presideTrousers:   '#706f6e',  // grey
-  presideShoes:      '#862c00',  // dark brown
+  presideShoes:      '#862c00',
+  presideCuff:       '#FFFFFF',  // white shirt cuff visible at sleeve end  // dark brown
 
   // ── Prof.Ginnastica ───────────────────────────────────────
   profGinnasticaSkin:       '#faa462',  // face, hands
@@ -82,6 +63,7 @@ const PAL = {
   janitorShoes:      '#FFFFFF',  // white
   janitorMopHandle:  '#862c00',  // broom handle
   janitorMopHead:    '#959595',  // grey bristles
+  janitorMopTip:     '#FFFFFF',  // white bristle tip row
 
   // ── Guards (guardiani) ────────────────────────────────────
   guardSkin:         '#faa462',  // face, hands
@@ -90,6 +72,7 @@ const PAL = {
   guardTrousers:     '#2f2e2d',  // dark trousers
   guardCap:          '#2f2e2d',  // cap (same as trousers)
   guardBadge:        '#FEDC02',  // chest badge
+  guardShoes:        '#000000',  // shoes
 
   // ── Seated students (alunni seduti) ───────────────────────
   studentSkin:       '#faa462',  // face, arms
@@ -110,23 +93,30 @@ const PAL = {
   charOutline:    '#121212',               // sprite outline (near-black)
   shadow:         'rgba(0,0,0,0.2)',       // ground shadow under characters
   sightCone:      'rgba(255,200,0,0.18)',  // NPC sight cone fill
+  charEye:        '#000000',              // eye colour (all characters)
   speechBubble:   'rgba(255,255,255,0.9)', // NPC speech bubble fill
   speechBorder:   '#bcbcbc',              // NPC speech bubble border
+  speechText:     '#000000',              // NPC speech bubble text / tap-to-continue
   bubbleBorder:   '#aa7700',              // Luca speech bubble border (dark gold)
   sprayCanDark:   '#005050',              // spray can dark outline
+  sprayCanBody:   '#1665DC',              // spray can body
   exclamation:    '#FF2222',              // student exclamation mark
+  deathParticle:  '#5F1D1B',              // player caught — death particles
 
 // ═══════════════════════════════════════════════════════════
 //  HUD
 // ═══════════════════════════════════════════════════════════
 
-  transparent:    'rgba(0,0,0,0)',      // invisible (blinking text off state)
-  hudBg:          'rgba(0,4,75,0.55)', // HUD strip background
-  hearts:         '#ff2244',            // lives hearts
-  hudCounter:     '#44ee66',            // object counter text
-  timerGreen:     '#22cc44',            // timer bar >= 60%
-  timerYellow:    '#ddcc00',            // timer bar 30–60%
-  timerRed:       '#dd1100',            // timer bar < 30%
+  transparent:       'rgba(0,0,0,0)',      // invisible (blinking text off state)
+  hudBg:             'rgba(0,4,75,0.55)', // HUD strip background
+  hudText:           '#FFFFFF',           // score and proximity message text
+  hearts:            '#ff2244',           // lives hearts
+  hudCounter:        '#44ee66',           // object counter text
+  timerGreen:        '#22cc44',           // timer bar >= 60%
+  timerYellow:       '#ddcc00',           // timer bar 30–60%
+  timerRed:          '#dd1100',           // timer bar < 30%
+  hudIconDetail:     '#000000',           // dark detail lines in mechanic icons
+  hudIconHighlight:  '#FFFFFF',           // light detail lines in mechanic icons
 
   // ── Mechanic dot indicators ───────────────────────────────
   dotBoards:     '#588D43',  // L1 boards mechanic
@@ -145,20 +135,31 @@ const PAL = {
 // ═══════════════════════════════════════════════════════════
 
   // ── In-game banners (story, mission, win, gameover, pause) ─
-  gold: '#FFD700',  // banner / overlay text colour
+  gold:               '#FFD700',  // banner title / overlay text colour
+  bannerText:         '#FFFFFF',  // story / mission / gameover / win / level-complete text
+  scoreParticle:      '#FEDC02',  // floating score text and particles
+  bestScoreHighlight: '#FEDC02',  // best score / level text in win screen
+  livesBonusText:     '#33B84B',  // lives bonus line in win screen
+  tapContinueColor:   '#33B84B',  // "tap to continue" in level-complete screen
+  chalkParticle:      '#FFFFFF',  // chalk particles when board is tagged
 
   // ── Dialog panels ─────────────────────────────────────────
   panelBg:     'rgba(0,0,40,0.90)', // dialog panel background
   panelBorder: '#FFD700',            // dialog panel border (gold)
   btnYes:      'rgba(0,90,0,0.92)', // yes / OK / resume button
   btnNo:       'rgba(90,0,0,0.92)', // no / cancel button
+  btnText:     '#FFFFFF',            // dialog button labels (yes / no / resume / OK)
+  creditsText: '#FFFFFF',            // credits member names and OK button
 
   // ── Title screen ──────────────────────────────────────────
-  dgray:    '#444444',  // disabled level chooser button
-  lgreen:   '#9AD284',  // audio button (full mode) / credits roles
-  lgray:    '#959595',  // keyboard legend text
-  mgray:    '#6C6C6C',  // audio muted button
-  btnLabel: '#b0b0b0',  // enabled level chooser button label
+  dgray:          '#444444',  // disabled level chooser button
+  lgreen:         '#9AD284',  // audio button (full mode) / credits roles
+  lgray:          '#959595',  // keyboard legend text
+  mgray:          '#6C6C6C',  // audio muted button
+  btnLabel:       '#b0b0b0',  // enabled level chooser button label
+  titleHighlight: '#FEDC02',  // active next-level button / SFX audio mode
+  logoBorder:     '#000000',  // title screen logo border
+  lockIconDetail: '#000000',  // keyhole detail in lock icon
 
   // ── Bezel (mobile side panels) ────────────────────────────
   bezelGlow:    'rgba(160,0,255,0.7)',           // panel inner glow border
@@ -189,14 +190,26 @@ const PAL = {
   boardChalk: '#2c832c',  // chalk line hints
 
   // ── Ball ──────────────────────────────────────────────────
-  ballBody:      '#CC6600',              // basketball orange
-  ballHighlight: 'rgba(255,200,100,0.5)', // ball shine
+  ballBody:          '#CC6600',               // basketball orange
+  ballHighlight:     'rgba(255,200,100,0.5)', // ball shine
+  objectActiveBorder:'#FEDC02',               // yellow border on interactive objects (boards, ball, bookcase, bins, machines)
+  paperBall:         '#FFFFFF',               // paper ball thrown at students
 
   // ── Desks ─────────────────────────────────────────────────
-  brown:       '#433900',  // chair wood (dark brown)
-  desk:        '#2C1800',  // desk top dark
-  desklt:      '#4E2A00',  // desk top light
-  woodDark:    '#6b2200',  // shared dark wood (ball outline, bookcase spine)
+  brown:         '#433900',  // chair wood (dark brown)
+  desk:          '#2C1800',  // desk top dark
+  desklt:        '#4E2A00',  // desk top light
+  deskHighlight: '#FFFFFF',  // desk surface highlight (white top stripe)
+  chairSeat:     '#5F1D1B',  // chair seat (dark red-brown)
+  woodDark:      '#6b2200',  // shared dark wood (ball outline, bookcase spine)
+
+  // ── Vending machines ──────────────────────────────────────
+  machineBody:        '#1665DC',  // machine body (blue)
+  machineButtonPanel: '#6C5EB5',  // button panel background
+  machineButtonA:     '#5F1D1B',  // button A (dark red)
+  machineButtonB:     '#FEDC02',  // button B (yellow)
+  machineButtonC:     '#9AD284',  // button C (green)
+  machineInk:         '#000000',  // coin slot / open hatch
 
   // ── Books / bookcase ──────────────────────────────────────
   woodOutline: '#3a1000',  // dark wood outline
@@ -208,7 +221,8 @@ const PAL = {
   registerSpine: '#6B0000',  // spine (darker red)
   registerEdge:  '#AA2200',  // top edge highlight
   registerPages: '#F0E8D0',  // page colour
-  registerLine:  '#888888',  // grade lines on pages
+  registerLine:  '#888888',  // grey grade lines on pages
+  registerGrade: '#5F1D1B',  // red grade lines (bad marks)
 
   // ── Sink / mirror ─────────────────────────────────────────
   mirrorFrame:     '#1a3a5c',               // frame (dark blue)
@@ -223,16 +237,18 @@ const PAL = {
   sinkDrain:       '#888888',               // drain
 
   // ── Bins ──────────────────────────────────────────────────
-  binBody:        '#228B22',               // body (green)
-  binLid:         '#1a7a1a',               // lid (darker green)
-  binShadow:      '#1a6e1a',               // left shadow
-  binDark:        '#0d4d0d',               // rim / border
-  binRecycle:     'rgba(255,255,255,0.75)', // recycle symbol
-  charred:        '#2a1a00',               // explosion debris (dark brown)
-  binCharredDark: '#333333',               // explosion debris dark layer
+  binBody:           '#228B22',               // body (green)
+  binLid:            '#1a7a1a',               // lid (darker green)
+  binShadow:         '#1a6e1a',               // left shadow
+  binDark:           '#0d4d0d',               // rim / border
+  binRecycle:        'rgba(255,255,255,0.75)', // recycle symbol
+  charred:           '#2a1a00',               // explosion debris (dark brown)
+  binCharredDark:    '#333333',               // explosion debris dark layer
+  explosionParticle: '#5F1D1B',               // bin explosion particles
 
   // ── Fire / explosion ──────────────────────────────────────
-  flame: '#FF6600',  // lighter flame, fuse animation
+  flame:        '#FF6600',  // lighter / fuse flame (orange)
+  lighterSpark: '#FEDC02',  // lighter flame tip / fuse spark (yellow)
 
   // ── Water (sink / sprinklers) ─────────────────────────────
   cyan:            '#70A4B2',                // sprinkler / water particles
@@ -245,9 +261,11 @@ const PAL = {
   waterDrip:       'rgba(68,136,204,0.6)',   // drip from ceiling
 
   // ── Sprinklers ────────────────────────────────────────────
-  sprinklerDisc:     '#bbbbbb',  // deflector disc (light grey)
-  sprinklerBorder:   '#555555',  // T-pipe border
-  sprinklerInactive: '#888888',  // head colour when inactive
+  sprinklerDisc:        '#bbbbbb',  // deflector disc (light grey)
+  sprinklerBorder:      '#555555',  // T-pipe border
+  sprinklerInactive:    '#888888',  // head colour when inactive
+  sprinklerActive:      '#5F1D1B',  // head colour when active (red)
+  sprinklerActiveBorder:'#33B84B',  // active border blink (green)
 
   // ── Bags ──────────────────────────────────────────────────
   bagborder: '#2A1F5E',  // bag border (dark blue)

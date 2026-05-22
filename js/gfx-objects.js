@@ -50,8 +50,8 @@ function drawDesks() {
       _octx.fillStyle = PAL.brown;
       _octx.fillRect(_d.x+1,  _d.y+6, 2, 5);
       _octx.fillRect(_d.x+17, _d.y+6, 2, 5);
-      _octx.fillStyle = PAL.redDark;   _octx.fillRect(_d.x+5, _d.y-2, 8, 3);
-      _octx.fillStyle = PAL.white; _octx.fillRect(_d.x+6, _d.y-2, 6, 2);
+      _octx.fillStyle = PAL.chairSeat; _octx.fillRect(_d.x+5, _d.y-2, 8, 3);
+      _octx.fillStyle = PAL.deskHighlight; _octx.fillRect(_d.x+6, _d.y-2, 6, 2);
     }
     _desksCache = _oc;
   }
@@ -105,7 +105,7 @@ function drawBoards() {
   // Proximity dashed border — drawn live on top of cache
   if (nearestIdx >= 0 && nd < 36) {
     const b = BOARDS[nearestIdx];
-    ctx.strokeStyle = PAL.yellow; ctx.lineWidth = 1;
+    ctx.strokeStyle = PAL.objectActiveBorder; ctx.lineWidth = 1;
     ctx.setLineDash([2,2]);
     ctx.strokeRect(b.x-2, b.y-2, BW+4, BH+4);
     ctx.setLineDash([]);
@@ -216,7 +216,7 @@ function drawGymBall() {
     const pdx = Math.abs(player.x + PW/2 - gymBall.x - 4);
     const pdy = Math.abs(player.y + PH  - gymBall.y - 9);
     if (pdx < 14 && pdy < 14) {
-      ctx.strokeStyle = PAL.yellow; ctx.lineWidth = 1;
+      ctx.strokeStyle = PAL.objectActiveBorder; ctx.lineWidth = 1;
       ctx.setLineDash([2, 2]);
       const _dg = CONFIG.vis.dashed.gymBall; ctx.strokeRect(bx+_dg.x, by+_dg.y, _dg.w, _dg.h);
       ctx.setLineDash([]);
@@ -270,7 +270,7 @@ function drawBookcase() {
     const pdx = Math.abs(player.x + PW/2 - bookcase.x - 12);
     const pdy = Math.abs(player.y + PH  - bookcase.y - 26);
     if (pdx < 20 && pdy < 36) {
-      ctx.strokeStyle = PAL.yellow; ctx.lineWidth = 1;
+      ctx.strokeStyle = PAL.objectActiveBorder; ctx.lineWidth = 1;
       ctx.setLineDash([2, 2]);
       const _db = CONFIG.vis.dashed.bookcase; ctx.strokeRect(bx+_db.x, by+_db.y, _db.w, _db.h);
       ctx.setLineDash([]);
@@ -289,9 +289,9 @@ function drawRegister() {
   ctx.fillStyle = PAL.registerPages; ctx.fillRect(bx+2, by-1, 7, 12);
   // Grade lines
   ctx.fillStyle = PAL.registerLine; ctx.fillRect(bx+3, by+2, 5, 1);
-  ctx.fillStyle = PAL.redDark;     ctx.fillRect(bx+3, by+4, 5, 1);
+  ctx.fillStyle = PAL.registerGrade; ctx.fillRect(bx+3, by+4, 5, 1);
   ctx.fillStyle = PAL.registerLine; ctx.fillRect(bx+3, by+6, 5, 1);
-  ctx.fillStyle = PAL.redDark;   ctx.fillRect(bx+3, by+8, 5, 1);
+  ctx.fillStyle = PAL.registerGrade; ctx.fillRect(bx+3, by+8, 5, 1);
 
   // Progress bar while stealing
   if (register.stealT > 0) {
@@ -321,7 +321,7 @@ function drawExitDoor() {
   const pdy = Math.abs(player.y + PH  - exitDoor.y - 10);
   if (pdx < 22 && pdy < 30) {
     const blink = Math.floor(frame / 10) % 2 === 0;
-    ctx.strokeStyle = blink ? PAL.gold : PAL.green; ctx.lineWidth = 1;
+    ctx.strokeStyle = blink ? PAL.gold : PAL.sprinklerActiveBorder; ctx.lineWidth = 1;
     ctx.setLineDash([3, 2]);
     const _de = CONFIG.vis.dashed.exitDoor; ctx.strokeRect(bx+_de.x, by+_de.y, _de.w, _de.h);
     ctx.setLineDash([]);
@@ -352,7 +352,7 @@ function drawSprinklers() {
 
     // Sprinkler fixture — disc + head only (no stem above ceiling)
     ctx.fillStyle = PAL.sprinklerDisc; ctx.fillRect(bx,   by-2, 8, 2);    // deflector disc
-    ctx.fillStyle = sp.active ? PAL.redDark : PAL.sprinklerInactive;
+    ctx.fillStyle = sp.active ? PAL.sprinklerActive : PAL.sprinklerInactive;
     ctx.fillRect(bx+2, by, 4, 3);                              // head (red = active)
     ctx.strokeStyle = PAL.sprinklerBorder; ctx.lineWidth = 1;               // T-border (no top)
     ctx.beginPath();
@@ -392,7 +392,7 @@ function drawSprinklers() {
     const fy = Math.round(player.y) - 4;
     const flicker = Math.floor(frame / 2) % 3;
     ctx.fillStyle = PAL.flame; ctx.fillRect(fx, fy - flicker,     2, 3);
-    ctx.fillStyle = PAL.yellow;  ctx.fillRect(fx, fy - flicker - 2, 2, 2);
+    ctx.fillStyle = PAL.lighterSpark;  ctx.fillRect(fx, fy - flicker - 2, 2, 2);
   }
 }
 
@@ -433,7 +433,7 @@ function drawBins() {
       const speed = b.fuseT > 90 ? 8 : b.fuseT > 40 ? 5 : 2;
       if (Math.floor(frame / speed) % 2 === 0) {
         ctx.fillStyle = PAL.flame; ctx.fillRect(bx+4, by-16, 2, 3);
-        ctx.fillStyle = PAL.yellow;  ctx.fillRect(bx+4, by-17, 2, 1);
+        ctx.fillStyle = PAL.lighterSpark;  ctx.fillRect(bx+4, by-17, 2, 1);
       }
       // Fuse countdown bar
       const pct = b.fuseT / 180;
@@ -447,7 +447,7 @@ function drawBins() {
       const pdx = Math.abs(player.x + PW/2 - b.x - 5);
       const pdy = Math.abs(player.y + PH  - b.y - 7);
       if (pdx < 16 && pdy < 20) {
-        ctx.strokeStyle = PAL.yellow; ctx.lineWidth = 1;
+        ctx.strokeStyle = PAL.objectActiveBorder; ctx.lineWidth = 1;
         ctx.setLineDash([2, 2]);
         const _dbn = CONFIG.vis.dashed.bins; ctx.strokeRect(bx+_dbn.x, by+_dbn.y, _dbn.w, _dbn.h);
         ctx.setLineDash([]);
@@ -528,7 +528,7 @@ function drawSink() {
 function drawPaperBalls() {
   for (let i = 0; i < paperBalls.length; i++) {
     const b = paperBalls[i];
-    ctx.fillStyle = PAL.white; ctx.fillRect(Math.round(b.x), Math.round(b.y), 3, 3);
+    ctx.fillStyle = PAL.paperBall; ctx.fillRect(Math.round(b.x), Math.round(b.y), 3, 3);
     ctx.fillStyle = PAL.lgray; ctx.fillRect(Math.round(b.x)+1, Math.round(b.y)+1, 1, 1);
   }
 }
@@ -551,20 +551,20 @@ function drawMachines() {
     const wobble = (!m.broken && m.shakeT > 0) ? Math.round(Math.sin(frame * 1.5) * 1) : 0;
     const mx = Math.round(m.x) + wobble, my = Math.round(m.y);
 
-    ctx.fillStyle = C.blue;   ctx.fillRect(mx,   my,    10, 18); // body
+    ctx.fillStyle = PAL.machineBody;   ctx.fillRect(mx,   my,    10, 18); // body
     ctx.fillStyle = m.broken ? PAL.dgray : PAL.lgreen;
                               ctx.fillRect(mx+1, my+1,   8,  6); // screen
     if (!m.broken) {
-      ctx.fillStyle = C.blue; ctx.fillRect(mx+4, my+2,   2,  4); // can icon on screen
+      ctx.fillStyle = PAL.machineBody; ctx.fillRect(mx+4, my+2,   2,  4); // can icon on screen
     }
-    ctx.fillStyle = C.mgray;  ctx.fillRect(mx,   my+7,  10,  1); // divider
-    ctx.fillStyle = C.lblue;  ctx.fillRect(mx+1, my+8,   8,  6); // button panel bg
-    ctx.fillStyle = PAL.redDark;    ctx.fillRect(mx+2, my+9,   2,  2); // button A
-    ctx.fillStyle = PAL.yellow; ctx.fillRect(mx+5, my+9,   2,  2); // button B
-    ctx.fillStyle = C.lgreen; ctx.fillRect(mx+2, my+12,  2,  2); // button C
-    ctx.fillStyle = C.black;  ctx.fillRect(mx+3, my+15,  4,  1); // coin slot
+    ctx.fillStyle = PAL.mgray;  ctx.fillRect(mx,   my+7,  10,  1); // divider
+    ctx.fillStyle = PAL.machineButtonPanel;  ctx.fillRect(mx+1, my+8,   8,  6); // button panel bg
+    ctx.fillStyle = PAL.machineButtonA; ctx.fillRect(mx+2, my+9,   2,  2); // button A
+    ctx.fillStyle = PAL.machineButtonB; ctx.fillRect(mx+5, my+9,   2,  2); // button B
+    ctx.fillStyle = PAL.machineButtonC; ctx.fillRect(mx+2, my+12,  2,  2); // button C
+    ctx.fillStyle = PAL.machineInk;  ctx.fillRect(mx+3, my+15,  4,  1); // coin slot
     if (m.broken) {
-      ctx.fillStyle = C.black; ctx.fillRect(mx+2, my+14, 5, 3);  // open hatch
+      ctx.fillStyle = PAL.machineInk; ctx.fillRect(mx+2, my+14, 5, 3);  // open hatch
     }
 
     // Progress bar while shaking
@@ -580,7 +580,7 @@ function drawMachines() {
       const pdx = Math.abs(player.x + PW/2 - m.x - 5);
       const pdy = Math.abs(player.y + PH  - m.y - 18);
       if (pdx < 14 && pdy < 20) {
-        ctx.strokeStyle = PAL.yellow; ctx.lineWidth = 1;
+        ctx.strokeStyle = PAL.objectActiveBorder; ctx.lineWidth = 1;
         ctx.setLineDash([2, 2]);
         const _dm = CONFIG.vis.dashed.machines; ctx.strokeRect(mx+_dm.x, my+_dm.y, _dm.w, _dm.h);
         ctx.setLineDash([]);

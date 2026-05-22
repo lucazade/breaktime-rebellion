@@ -143,14 +143,14 @@ function drawGuard(x, y, dir, animT, knockedT) {
     ctx.fillRect(bx+1-s, by-7-s, PW-2+s*2, 8+s*2); // head
   }
   ctx.fillStyle = PAL.guardTrousers; ctx.fillRect(bx+1, by+10, 3, 4+leg); ctx.fillRect(bx+4, by+10, 3, 4-leg);
-  ctx.fillStyle = PAL.black;         ctx.fillRect(bx, by+13+leg, 4, 2);   ctx.fillRect(bx+3, by+13-leg, 4, 2);
+  ctx.fillStyle = PAL.guardShoes;    ctx.fillRect(bx, by+13+leg, 4, 2);   ctx.fillRect(bx+3, by+13-leg, 4, 2);
   ctx.fillStyle = PAL.guardUniform;  ctx.fillRect(bx, by+2, PW, 8);
   ctx.fillStyle = PAL.guardBadge;    ctx.fillRect(dir>0 ? bx+4 : bx+2, by+4, 2, 2); // chest badge
   ctx.fillStyle = PAL.guardSkin;     ctx.fillRect(dir>0 ? bx-2 : bx+PW, by+5, 2, 4); ctx.fillRect(dir>0 ? bx+PW : bx-2, by+5, 2, 4);
   ctx.fillStyle = PAL.guardSkin;     ctx.fillRect(bx+1, by-7, PW-2, 8);
   ctx.fillStyle = PAL.guardCap;      ctx.fillRect(bx+1, by-9, PW-2, 3);
   ctx.fillStyle = PAL.guardCap;      ctx.fillRect(dir>0 ? bx+PW-1 : bx-1, by-7, 3, 1);
-  ctx.fillStyle = PAL.black;         ctx.fillRect(dir>0 ? bx+4 : bx+2, by-5, 2, 2);
+  ctx.fillStyle = PAL.charEye;         ctx.fillRect(dir>0 ? bx+4 : bx+2, by-5, 2, 2);
   ctx.fillStyle = PAL.guardSkinShadow; ctx.fillRect(bx+2, by+1, PW-4, 1);
 }
 
@@ -211,7 +211,7 @@ function drawPreside(x, y, dir, animT, bodyCol, chasing, knockedT) {
   ctx.fillStyle = bodyCol;
   ctx.fillRect(frontX, by+5, 2, 7);
   ctx.fillRect(backX,  by+5, 2, 7);
-  ctx.fillStyle = PAL.white;            // cuff
+  ctx.fillStyle = PAL.presideCuff;      // cuff
   ctx.fillRect(frontX, by+11, 2, 1);
   ctx.fillRect(backX,  by+11, 2, 1);
   ctx.fillStyle = PAL.presideSkin;      // hand
@@ -221,7 +221,7 @@ function drawPreside(x, y, dir, animT, bodyCol, chasing, knockedT) {
   // Head
   ctx.fillStyle = PAL.presideSkin;      ctx.fillRect(bx+1, by-7, PW-2, 8);
   ctx.fillStyle = PAL.presideHair;      ctx.fillRect(bx+1, by-8, PW-2, 2);
-  ctx.fillStyle = PAL.black;            ctx.fillRect(dir > 0 ? bx+4 : bx+2, by-5, 2, 2); // eye
+  ctx.fillStyle = PAL.charEye;            ctx.fillRect(dir > 0 ? bx+4 : bx+2, by-5, 2, 2); // eye
   ctx.fillStyle = PAL.presideSkinShadow; ctx.fillRect(bx+2, by+1, PW-4, 1);
 
   if (chasing) {
@@ -231,7 +231,7 @@ function drawPreside(x, y, dir, animT, bodyCol, chasing, knockedT) {
     ctx.fillRect(tailX, by-4, 3, 4); ctx.fillRect(bub, by-14, 26, 10);
     ctx.strokeStyle = PAL.speechBorder; ctx.lineWidth = 1; ctx.strokeRect(bub, by-14, 26, 10);
     ctx.beginPath(); ctx.moveTo(tailX, by-4); ctx.lineTo(tailX, by); ctx.lineTo(tailX+3, by); ctx.lineTo(tailX+3, by-4); ctx.stroke();
-    ctx.fillStyle = PAL.black; ctx.font = '4px ' + FF;
+    ctx.fillStyle = PAL.speechText; ctx.font = '4px ' + FF;
     ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
     ctx.fillText(STRINGS.hey, bub + 13, by - 9);
   }
@@ -294,13 +294,13 @@ function drawChar(x, y, dir, animT, bodyCol, colours, spraying, chasing, knocked
 
   ctx.fillStyle = colours.skin;       ctx.fillRect(bx+1, by-7, PW-2, 8);
   ctx.fillStyle = colours.hair;       ctx.fillRect(bx+1, by-8, PW-2, 2);
-  ctx.fillStyle = PAL.black;          ctx.fillRect(dir>0 ? bx+4 : bx+2, by-5, 2, 2);
+  ctx.fillStyle = PAL.charEye;          ctx.fillRect(dir>0 ? bx+4 : bx+2, by-5, 2, 2);
   ctx.fillStyle = colours.skinShadow; ctx.fillRect(bx+2, by+1, PW-4, 1);
 
   if (spraying) {
     const sx = dir>0 ? bx+PW+2 : bx-6;
     ctx.fillStyle = PAL.sprayCanDark; ctx.fillRect(sx-1, by+2, 6, 7);
-    ctx.fillStyle = PAL.blue;         ctx.fillRect(sx,   by+3, 4, 5);
+    ctx.fillStyle = PAL.sprayCanBody;         ctx.fillRect(sx,   by+3, 4, 5);
     for (let i = 0; i < 8; i++) {
       const t = (frame * 5 + i * 11) % 19;
       const dist = 2 + i * 2 + (t % 3);
@@ -319,7 +319,7 @@ function drawChar(x, y, dir, animT, bodyCol, colours, spraying, chasing, knocked
     ctx.fillRect(tailX, by-4, 3, 4); ctx.fillRect(bub, by-14, 26, 10);
     ctx.strokeStyle = PAL.speechBorder; ctx.lineWidth = 1; ctx.strokeRect(bub, by-14, 26, 10);
     ctx.beginPath(); ctx.moveTo(tailX, by-4); ctx.lineTo(tailX, by); ctx.lineTo(tailX+3, by); ctx.lineTo(tailX+3, by-4); ctx.stroke();
-    ctx.fillStyle = PAL.black; ctx.font = '4px ' + FF;
+    ctx.fillStyle = PAL.speechText; ctx.font = '4px ' + FF;
     ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
     ctx.fillText(STRINGS.hey, bub + 13, by - 9);
   }
@@ -372,7 +372,7 @@ function drawJanitor(x, y, dir, animT) {
   ctx.fillRect(mx, by+4, 1, 12);
   ctx.fillStyle = PAL.janitorMopHead;
   ctx.fillRect(mx-1, by+14, 3, 2);
-  ctx.fillStyle = PAL.white;
+  ctx.fillStyle = PAL.janitorMopTip;
   ctx.fillRect(mx-2, by+16, 5, 1);
 }
 
@@ -410,13 +410,13 @@ function drawLucaEnd() {
   ctx.strokeStyle = PAL.bubbleBorder; ctx.strokeRect(bx, by2 + bh, VF.tailW, VF.tailH);
   ctx.fillStyle = PAL.profRossiBody; ctx.textAlign = 'left'; ctx.textBaseline = 'top';
   ctx.fillText('Luca:', bx + 4, by2 + 4);
-  ctx.fillStyle = PAL.black;
+  ctx.fillStyle = PAL.speechText;
   for (let i = 0; i < lineCount; i++) {
     ctx.fillText(lines[i], bx + 4, by2 + VF.headerH + i * VF.lineH);
   }
   const tapY = by2 + VF.headerH + lineCount * VF.lineH + VF.gapTap;
   const blink = Math.floor(frame / 25) % 2 === 0;
-  ctx.fillStyle = blink ? PAL.black : PAL.transparent;
+  ctx.fillStyle = blink ? PAL.speechText : PAL.transparent;
   ctx.textAlign = 'center';
   ctx.fillText(STRINGS.tapContinue, bx + VF.bw / 2, tapY);
   ctx.textAlign = 'left';
@@ -439,7 +439,7 @@ function drawStudents() {
     }
     ctx.fillStyle = PAL.studentHair;       ctx.fillRect(bx-2, by-17, 5, 2);
     ctx.fillStyle = PAL.studentSkin;       ctx.fillRect(bx-2, by-15, 5, 6);  // face — 6 rows, ends at by-10
-    ctx.fillStyle = PAL.black;             ctx.fillRect(bx-2, by-13, 2, 2);
+    ctx.fillStyle = PAL.charEye;           ctx.fillRect(bx-2, by-13, 2, 2);
     ctx.fillStyle = PAL.studentSkinShadow; ctx.fillRect(bx-1, by-9,  3, 1);  // neck
     ctx.fillStyle = PAL.studentShirt;      ctx.fillRect(bx-3, by-8,  7, 6);
     ctx.fillStyle = PAL.studentSkin;

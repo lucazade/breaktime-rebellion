@@ -56,7 +56,7 @@ function _drawLockIcon(x, y, color) {
   ctx.fillRect(x+1, y,   4, 1);  // shackle top arc
   ctx.fillRect(x,   y+1, 1, 1);  ctx.fillRect(x+5, y+1, 1, 1);  // shackle sides
   ctx.fillRect(x,   y+2, 6, 4);  // body
-  ctx.fillStyle = PAL.black;
+  ctx.fillStyle = PAL.lockIconDetail;
   ctx.fillRect(x+2, y+3, 2, 2);  // keyhole
 }
 
@@ -95,7 +95,7 @@ function drawTitleScreen() {
     ctx.restore();
     if (VT.logo.borderW > 0) {
       ctx.save();
-      ctx.strokeStyle = PAL.black;
+      ctx.strokeStyle = PAL.logoBorder;
       ctx.lineWidth = VT.logo.borderW;
       ctx.beginPath();
       ctx.roundRect(logoX, logoY, logoW, logoH, r);
@@ -130,8 +130,8 @@ function drawTitleScreen() {
 
     var atCeiling = currentLevel >= _btrMax, moreExist = _btrMax < LEVELS.length;
     if (atCeiling && moreExist) {
-      _box(ct.nextX, ctrlY, ct.nextW, PAL.yellow);
-      _drawLockIcon(ct.nextX + Math.floor((ct.nextW - 6) / 2), ctrlY + Math.floor((ct.btnH - 6) / 2), PAL.yellow);
+      _box(ct.nextX, ctrlY, ct.nextW, PAL.titleHighlight);
+      _drawLockIcon(ct.nextX + Math.floor((ct.nextW - 6) / 2), ctrlY + Math.floor((ct.btnH - 6) / 2), PAL.titleHighlight);
     } else {
       var nextColor = (atCeiling && !moreExist) ? PAL.dgray : ct.btnColor;
       _box(ct.nextX, ctrlY, ct.nextW, nextColor);
@@ -152,7 +152,7 @@ function drawTitleScreen() {
 
   // Audio toggle — fixed width based on the longest label across all modes
   var audioMode = GameAudio.getMode();
-  var audioColor = audioMode==='full' ? PAL.lgreen : audioMode==='sfx' ? PAL.yellow : PAL.mgray;
+  var audioColor = audioMode==='full' ? PAL.lgreen : audioMode==='sfx' ? PAL.titleHighlight : PAL.mgray;
   var audioLabel = audioMode==='full' ? STRINGS.audioFull : audioMode==='sfx' ? STRINGS.audioSfx : STRINGS.audioMute;
   var _iconW = 5, _gap = 3;
   if (!_audioLblW && document.fonts.check(ctx.font)) {
@@ -342,15 +342,15 @@ function drawEndScreen() {
     ctx.font = VG.fontTitle + 'px ' + FF;
     ctx.fillStyle = PAL.profRossiBody; ctx.fillText(STRINGS.gameoverTitle,                  cx, ty); ty += VG.stepTitle;
     ctx.font = VG.fontBody + 'px ' + FF;
-    ctx.fillStyle = PAL.white;   ctx.fillText(fmt(STRINGS.levelReached, currentLevel), cx, ty); ty += VG.stepLevel;
-    ctx.fillStyle = PAL.white;   ctx.fillText(scoreText,                               cx, ty); ty += VG.stepScore;
+    ctx.fillStyle = PAL.bannerText;   ctx.fillText(fmt(STRINGS.levelReached, currentLevel), cx, ty); ty += VG.stepLevel;
+    ctx.fillStyle = PAL.bannerText;   ctx.fillText(scoreText,                               cx, ty); ty += VG.stepScore;
     ctx.fillStyle = PAL.gold;    ctx.fillText(STRINGS.gameoverConfirm,                 cx, ty); ty += VG.stepConfirm;
     ctx.font = VG.fontBtn + 'px ' + FF;
     const siX = gX + VG.siOx, noX = gX + VG.noOx;
     _dialogBtn(siX, ty, VG.siW, VG.btnH, CONFIG.vis.dialog.btnColorYes);
-    ctx.fillStyle = PAL.white; ctx.fillText(STRINGS.btnYes, siX + VG.siW/2, ty + Math.floor((VG.btnH - VG.fontBtn) / 2));
+    ctx.fillStyle = PAL.btnText; ctx.fillText(STRINGS.btnYes, siX + VG.siW/2, ty + Math.floor((VG.btnH - VG.fontBtn) / 2));
     _dialogBtn(noX, ty, VG.noW, VG.btnH, CONFIG.vis.dialog.btnColorNo);
-    ctx.fillStyle = PAL.white; ctx.fillText(STRINGS.btnNo, noX + VG.noW/2, ty + Math.floor((VG.btnH - VG.fontBtn) / 2));
+    ctx.fillStyle = PAL.btnText; ctx.fillText(STRINGS.btnNo, noX + VG.noW/2, ty + Math.floor((VG.btnH - VG.fontBtn) / 2));
   } else if (currentLevel === LEVELS.length) {
     const bestScore = parseInt(localStorage.getItem('btr_best_score') || '0');
     const bestLevel = parseInt(localStorage.getItem('btr_best_level') || '1');
@@ -365,9 +365,9 @@ function drawEndScreen() {
     ctx.fillStyle = PAL.gold;   ctx.fillText(STRINGS.winTitle, cxW, tyW); tyW += VW.stepTitle;
     ctx.font = VW.fontBody + 'px ' + FF;
     if (lastTimeBonus > 0)  { ctx.fillStyle = PAL.cyan;  ctx.fillText(STRINGS.timeBonusLabel  + lastTimeBonus,  cxW, tyW); tyW += VW.stepBonus; }
-    if (lastLivesBonus > 0) { ctx.fillStyle = PAL.green; ctx.fillText(STRINGS.livesBonusLabel + lastLivesBonus, cxW, tyW); tyW += VW.stepBonus; }
-    ctx.fillStyle = PAL.white;  ctx.fillText(scoreText, cxW, tyW); tyW += VW.stepScore;
-    ctx.fillStyle = PAL.yellow; ctx.fillText(STRINGS.bestLabel + ' LVL ' + bestLevel + ' — ' + String(bestScore).padStart(5,'0'), cxW, tyW); tyW += VW.stepBest;
+    if (lastLivesBonus > 0) { ctx.fillStyle = PAL.livesBonusText; ctx.fillText(STRINGS.livesBonusLabel + lastLivesBonus, cxW, tyW); tyW += VW.stepBonus; }
+    ctx.fillStyle = PAL.bannerText;  ctx.fillText(scoreText, cxW, tyW); tyW += VW.stepScore;
+    ctx.fillStyle = PAL.bestScoreHighlight; ctx.fillText(STRINGS.bestLabel + ' LVL ' + bestLevel + ' — ' + String(bestScore).padStart(5,'0'), cxW, tyW); tyW += VW.stepBest;
     ctx.fillStyle = actionVisible ? PAL.gold : PAL.transparent; ctx.fillText(STRINGS.tapForTitle, cxW, tyW);
   } else {
     const VL = CONFIG.vis.levelComplete;
@@ -381,8 +381,8 @@ function drawEndScreen() {
     ctx.fillStyle = PAL.gold;  ctx.fillText(STRINGS.levelComplete, cxL, tyL); tyL += VL.stepTitle;
     ctx.font = VL.fontBody + 'px ' + FF;
     if (lastTimeBonus > 0) { ctx.fillStyle = PAL.cyan; ctx.fillText(STRINGS.timeBonusLabel + lastTimeBonus, cxL, tyL); tyL += VL.stepBonus; }
-    ctx.fillStyle = PAL.white; ctx.fillText(scoreText, cxL, tyL); tyL += VL.stepScore;
-    ctx.fillStyle = actionVisible ? PAL.green : PAL.transparent; ctx.fillText(STRINGS.tapContinue, cxL, tyL);
+    ctx.fillStyle = PAL.bannerText; ctx.fillText(scoreText, cxL, tyL); tyL += VL.stepScore;
+    ctx.fillStyle = actionVisible ? PAL.tapContinueColor : PAL.transparent; ctx.fillText(STRINGS.tapContinue, cxL, tyL);
   }
   ctx.restore();
 }
@@ -420,7 +420,7 @@ function drawStoryBanner() {
   let tySt = by + VS.padTop;
   ctx.fillStyle = PAL.gold;  ctx.fillText(STRINGS.storyTitle, cxSt, tySt); tySt += VS.titleH + VS.titleSpacing;
   ctx.font = VS.fontBody + 'px ' + FF;
-  ctx.fillStyle = PAL.white;
+  ctx.fillStyle = PAL.bannerText;
   for (let i = 0; i < storyBannerLines.length; i++) {
     ctx.fillText(storyBannerLines[i], cxSt, tySt);
     tySt += VS.lineH + (i < storyBannerLines.length - 1 ? VS.lineSpacing : VS.spacerH);
@@ -460,7 +460,7 @@ function drawMissionBanner() {
   let tyM = by + VM.padTop;
   ctx.fillStyle = PAL.gold;  ctx.fillText(fmt(STRINGS.missionLabel, currentLevel), cxM, tyM); tyM += VM.titleH + VM.titleSpacing;
   ctx.font = VM.fontBody + 'px ' + FF;
-  ctx.fillStyle = PAL.white;
+  ctx.fillStyle = PAL.bannerText;
   for (let i = 0; i < missionBannerLines.length; i++) {
     ctx.fillText(missionBannerLines[i], cxM, tyM);
     if (i < missionBannerLines.length - 1) tyM += VM.lineH + VM.lineSpacing;
@@ -483,7 +483,7 @@ function drawPauseOverlay() {
   ctx.font = VP.fontBtn + 'px ' + FF;
   const rx = bx + VP.resumeOx;
   _dialogBtn(rx, ty, VP.resumeW, VP.btnH, CONFIG.vis.dialog.btnColorYes);
-  ctx.fillStyle = PAL.white; ctx.fillText(STRINGS.btnResume, rx + VP.resumeW/2, ty + Math.floor((VP.btnH - VP.fontBtn) / 2));
+  ctx.fillStyle = PAL.btnText; ctx.fillText(STRINGS.btnResume, rx + VP.resumeW/2, ty + Math.floor((VP.btnH - VP.fontBtn) / 2));
   ctx.restore();
 }
 
@@ -502,9 +502,9 @@ function drawHomeConfirm() {
   ctx.font = VH.fontBtn + 'px ' + FF;
   const siX = bx + VH.siOx, noX = bx + VH.noOx;
   _dialogBtn(siX, ty, VH.siW, VH.btnH, CONFIG.vis.dialog.btnColorYes);
-  ctx.fillStyle = PAL.white; ctx.fillText(STRINGS.btnYes, siX + VH.siW/2, ty + Math.floor((VH.btnH - VH.fontBtn) / 2));
+  ctx.fillStyle = PAL.btnText; ctx.fillText(STRINGS.btnYes, siX + VH.siW/2, ty + Math.floor((VH.btnH - VH.fontBtn) / 2));
   _dialogBtn(noX, ty, VH.noW, VH.btnH, CONFIG.vis.dialog.btnColorNo);
-  ctx.fillStyle = PAL.white; ctx.fillText(STRINGS.btnNo, noX + VH.noW/2, ty + Math.floor((VH.btnH - VH.fontBtn) / 2));
+  ctx.fillStyle = PAL.btnText; ctx.fillText(STRINGS.btnNo, noX + VH.noW/2, ty + Math.floor((VH.btnH - VH.fontBtn) / 2));
   ctx.restore();
 }
 
@@ -632,7 +632,7 @@ function _drawHudIcon(type, x, y, color, s) {
       case 'boards':
         ctx.fillRect(0,0,7,1); ctx.fillRect(0,5,7,1);
         ctx.fillRect(0,1,1,4); ctx.fillRect(6,1,1,4);
-        ctx.fillStyle=PAL.white; ctx.fillRect(1,2,5,1); ctx.fillRect(1,4,5,1);
+        ctx.fillStyle=PAL.hudIconHighlight; ctx.fillRect(1,2,5,1); ctx.fillRect(1,4,5,1);
         break;
       case 'bags':
         ctx.fillRect(2,0,3,1);
@@ -642,13 +642,13 @@ function _drawHudIcon(type, x, y, color, s) {
         break;
       case 'machines':
         ctx.fillRect(0,0,6,6);
-        ctx.fillStyle=PAL.black;    ctx.fillRect(1,1,4,2);
+        ctx.fillStyle=PAL.hudIconDetail;    ctx.fillRect(1,1,4,2);
         ctx.fillStyle=PAL.panelBorder; ctx.fillRect(2,4,2,1);
         break;
       case 'ball':
         ctx.fillRect(1,0,5,1); ctx.fillRect(1,5,5,1);
         ctx.fillRect(0,1,7,4);
-        ctx.fillStyle=PAL.black; ctx.fillRect(3,0,1,6); ctx.fillRect(0,3,7,1);
+        ctx.fillStyle=PAL.hudIconDetail; ctx.fillRect(3,0,1,6); ctx.fillRect(0,3,7,1);
         break;
       case 'students':
         ctx.fillRect(2,0,3,2);
@@ -657,8 +657,8 @@ function _drawHudIcon(type, x, y, color, s) {
         break;
       case 'books':
         ctx.fillRect(0,0,7,6);
-        ctx.fillStyle=PAL.black; ctx.fillRect(1,0,1,6);
-        ctx.fillStyle=PAL.white; ctx.fillRect(2,2,4,1); ctx.fillRect(2,4,4,1);
+        ctx.fillStyle=PAL.hudIconDetail; ctx.fillRect(1,0,1,6);
+        ctx.fillStyle=PAL.hudIconHighlight; ctx.fillRect(2,2,4,1); ctx.fillRect(2,4,4,1);
         break;
       case 'sink':
         ctx.fillRect(1,0,1,2); ctx.fillRect(5,0,1,2);
@@ -668,7 +668,7 @@ function _drawHudIcon(type, x, y, color, s) {
       case 'bins':
         ctx.fillStyle=PAL.panelBorder; ctx.fillRect(3,0,1,1);
         ctx.fillStyle=color;     ctx.fillRect(1,1,5,1); ctx.fillRect(0,2,7,4);
-        ctx.fillStyle=PAL.black;    ctx.fillRect(2,3,1,2); ctx.fillRect(4,3,1,2);
+        ctx.fillStyle=PAL.hudIconDetail;    ctx.fillRect(2,3,1,2); ctx.fillRect(4,3,1,2);
         break;
       case 'sprinklers':
         ctx.fillRect(3,0,1,1);
@@ -677,7 +677,7 @@ function _drawHudIcon(type, x, y, color, s) {
         break;
       case 'register':
         ctx.fillRect(0,0,7,6);
-        ctx.fillStyle=PAL.black;    ctx.fillRect(1,1,5,1); ctx.fillRect(1,3,5,1); ctx.fillRect(1,5,3,1);
+        ctx.fillStyle=PAL.hudIconDetail;    ctx.fillRect(1,1,5,1); ctx.fillRect(1,3,5,1); ctx.fillRect(1,5,3,1);
         ctx.fillStyle=PAL.panelBorder; ctx.fillRect(5,5,2,1);
         break;
       default:
@@ -695,7 +695,7 @@ function _drawHudIcon(type, x, y, color, s) {
     case 'boards':   // board: 7×7 outline + 2 chalk lines
       ctx.fillRect(0,1, 7,1); ctx.fillRect(0,6, 7,1);
       ctx.fillRect(0,1, 1,5); ctx.fillRect(6,1, 1,5);
-      ctx.fillStyle = PAL.white; ctx.fillRect(1,2, 5,1); ctx.fillRect(1,4, 5,1);
+      ctx.fillStyle = PAL.hudIconHighlight; ctx.fillRect(1,2, 5,1); ctx.fillRect(1,4, 5,1);
       break;
     case 'bags':     // bag: body + handle
       ctx.fillRect(2,0, 3,1);
@@ -705,13 +705,13 @@ function _drawHudIcon(type, x, y, color, s) {
       break;
     case 'machines': // vending machine: rectangle with screen and button
       ctx.fillRect(0,0, 6,7);
-      ctx.fillStyle = PAL.black;    ctx.fillRect(1,1, 4,2);
+      ctx.fillStyle = PAL.hudIconDetail;    ctx.fillRect(1,1, 4,2);
       ctx.fillStyle = PAL.panelBorder; ctx.fillRect(2,5, 2,1);
       break;
     case 'ball':     // ball: circle with seams
       ctx.fillRect(1,0, 5,1); ctx.fillRect(1,6, 5,1);
       ctx.fillRect(0,1, 7,5);
-      ctx.fillStyle = PAL.black; ctx.fillRect(3,1, 1,5); ctx.fillRect(1,3, 5,1);
+      ctx.fillStyle = PAL.hudIconDetail; ctx.fillRect(3,1, 1,5); ctx.fillRect(1,3, 5,1);
       break;
     case 'students': // student: head + body + legs
       ctx.fillRect(2,0, 3,3);
@@ -720,8 +720,8 @@ function _drawHudIcon(type, x, y, color, s) {
       break;
     case 'books':    // book: rectangle with spine and lines
       ctx.fillRect(0,0, 7,7);
-      ctx.fillStyle = PAL.black; ctx.fillRect(1,0, 1,7);
-      ctx.fillStyle = PAL.white; ctx.fillRect(2,2, 4,1); ctx.fillRect(2,4, 4,1);
+      ctx.fillStyle = PAL.hudIconDetail; ctx.fillRect(1,0, 1,7);
+      ctx.fillStyle = PAL.hudIconHighlight; ctx.fillRect(2,2, 4,1); ctx.fillRect(2,4, 4,1);
       break;
     case 'sink':     // sink: drops + basin
       ctx.fillRect(1,0, 1,2); ctx.fillRect(5,0, 1,2);
@@ -732,7 +732,7 @@ function _drawHudIcon(type, x, y, color, s) {
       ctx.fillRect(1,1, 5,1);
       ctx.fillRect(0,2, 7,5);
       ctx.fillStyle = PAL.panelBorder; ctx.fillRect(3,0, 1,2);
-      ctx.fillStyle = PAL.black;    ctx.fillRect(2,4, 1,2); ctx.fillRect(4,4, 1,2);
+      ctx.fillStyle = PAL.hudIconDetail;    ctx.fillRect(2,4, 1,2); ctx.fillRect(4,4, 1,2);
       break;
     case 'sprinklers': // sprinkler: flame silhouette
       ctx.fillRect(3,0, 1,1);
@@ -741,7 +741,7 @@ function _drawHudIcon(type, x, y, color, s) {
       break;
     case 'register': // register: book with golden corner
       ctx.fillRect(0,0, 7,7);
-      ctx.fillStyle = PAL.black;    ctx.fillRect(1,1, 5,1); ctx.fillRect(1,3, 5,1); ctx.fillRect(1,5, 3,1);
+      ctx.fillStyle = PAL.hudIconDetail;    ctx.fillRect(1,1, 5,1); ctx.fillRect(1,3, 5,1); ctx.fillRect(1,5, 3,1);
       ctx.fillStyle = PAL.panelBorder; ctx.fillRect(5,5, 2,2);
       break;
     default:
@@ -804,7 +804,7 @@ function drawHUD() {
   // Message — visible at _hudMsgAlpha
   if (_hudMsgAlpha > 0) {
     ctx.globalAlpha = _hudMsgAlpha;
-    ctx.fillStyle = PAL.white; ctx.textAlign = 'center';
+    ctx.fillStyle = PAL.hudText; ctx.textAlign = 'center';
     ctx.fillText(msgText, VH.centerX, _textY);
   }
 
@@ -813,7 +813,7 @@ function drawHUD() {
     ctx.globalAlpha = _hudAlpha;
     ctx.fillStyle = PAL.hearts;
     for (var _i = 0; _i < Math.max(0, lives); _i++) _drawHeart(VH.heartsX + _i * _heartStep, _heartY, _hs);
-    ctx.textAlign = 'right'; ctx.fillStyle = PAL.white;
+    ctx.textAlign = 'right'; ctx.fillStyle = PAL.hudText;
     ctx.fillText(String(score).padStart(5,'0'), VH.scoreX, _textY);
     var _oi = _hudObjInfo();
     var _txt = _oi.done + '/' + _oi.total;
@@ -861,14 +861,14 @@ function drawCredits() {
   ctx.font = VC.fontBody + 'px ' + FF; ctx.fillStyle = PAL.lgreen;
   ctx.fillText('LucazadeSoft Team', cx, ty); ty += VC.stepTeam;
   for (var i = 0; i < n; i++) {
-    ctx.fillStyle = PAL.white; ctx.fillText(_CREDITS_MEMBERS[i].name, cx, ty); ty += VC.nameH + VC.nameGap;
+    ctx.fillStyle = PAL.creditsText; ctx.fillText(_CREDITS_MEMBERS[i].name, cx, ty); ty += VC.nameH + VC.nameGap;
     ctx.fillStyle = PAL.cyan;  ctx.fillText(_CREDITS_MEMBERS[i].role, cx, ty); ty += VC.roleH + VC.roleGap;
   }
   ty += VC.btnGapAbove;
   var btnX = bx + Math.round((VC.panW - VC.btnW) / 2);
   ctx.font = VC.fontBtn + 'px ' + FF;
   _dialogBtn(btnX, ty, VC.btnW, VC.btnH, CONFIG.vis.dialog.btnColorYes);
-  ctx.fillStyle = PAL.white; ctx.fillText('OK', bx + VC.panW/2, ty + Math.floor((VC.btnH - VC.fontBtn) / 2));
+  ctx.fillStyle = PAL.creditsText; ctx.fillText('OK', bx + VC.panW/2, ty + Math.floor((VC.btnH - VC.fontBtn) / 2));
   ctx.restore();
 }
 

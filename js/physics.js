@@ -49,8 +49,8 @@ function updatePlayer() {
           m.broken = true;
           GameAudio.playSfx('machine');
           score += 500;
-          addFloating(m.x + 5, m.y, '+500', PAL.yellow);
-          addParticles(m.x + 5, m.y + 9, PAL.yellow, 18);
+          addFloating(m.x + 5, m.y, '+500', PAL.scoreParticle);
+          addParticles(m.x + 5, m.y + 9, PAL.scoreParticle, 18);
           alertTeachers(m.x + 5, m.y + 9);
           let broken = 0;
           for (let j = 0; j < machines.length; j++) if (machines[j].broken) broken++;
@@ -78,7 +78,7 @@ function updatePlayer() {
         gymBall.deflateCount++;
         GameAudio.playSfx('deflate');
         score += 300;
-        addFloating(gymBall.x + 4, gymBall.y, '+300', PAL.yellow);
+        addFloating(gymBall.x + 4, gymBall.y, '+300', PAL.scoreParticle);
         alertTeachers(gymBall.x + 4, gymBall.y + 4);
         if (gymBall.deflateCount >= 3) {
           ballDeflatedWin();
@@ -105,8 +105,8 @@ function updatePlayer() {
         bookcase.dropCount++;
         GameAudio.playSfx('book');
         score += 300;
-        addFloating(bookcase.x + 3, bookcase.y, '+300', PAL.yellow);
-        addParticles(bookcase.x + 3, bookcase.y + 6, PAL.yellow, 12);
+        addFloating(bookcase.x + 3, bookcase.y, '+300', PAL.scoreParticle);
+        addParticles(bookcase.x + 3, bookcase.y + 6, PAL.scoreParticle, 12);
         alertTeachers(bookcase.x + 3, bookcase.y + 6);
         if (bookcase.dropCount >= 3) {
           bookDropWin();
@@ -388,8 +388,8 @@ function updatePaperBalls() {
         s.shakeT = 25;
         GameAudio.playSfx('hit');
         score += 300;
-        addFloating(s.x + 5, s.y - 18, '+300', PAL.yellow);
-        addParticles(s.x + 5, s.y - 10, PAL.yellow, 8);
+        addFloating(s.x + 5, s.y - 18, '+300', PAL.scoreParticle);
+        addParticles(s.x + 5, s.y - 10, PAL.scoreParticle, 8);
         alertTeachers(s.x + 5, s.y - 10);
         let done = 0;
         for (let k = 0; k < students.length; k++) if (students[k].disturbed) done++;
@@ -427,8 +427,8 @@ function tryAction() {
         if (!capturedBoard.done) {
           capturedBoard.done = true;
           score += 500;
-          addFloating(capturedBoard.x + BW/2, capturedBoard.y, '+500', PAL.white);
-          addParticles(capturedBoard.x + BW/2, capturedBoard.y + BH, PAL.white, 14);
+          addFloating(capturedBoard.x + BW/2, capturedBoard.y, '+500', PAL.chalkParticle);
+          addParticles(capturedBoard.x + BW/2, capturedBoard.y + BH, PAL.chalkParticle, 14);
           alertTeachers(capturedBoard.x + BW/2, capturedBoard.y);
           let done = 0;
           for (let j = 0; j < BOARDS.length; j++) if (BOARDS[j].done) done++;
