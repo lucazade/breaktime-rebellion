@@ -184,7 +184,7 @@ function drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, chasing, knock
     ctx.fillRect(bx-s, by+2-s, PW+s*2, 8+s*2);
     ctx.fillRect((dir>0 ? bx-2 : bx+PW)-s, by+5-s, 2+s*2, 4+s*2);
     ctx.fillRect((dir>0 ? bx+PW : bx-2)-s, by+5-s, 2+s*2, 4+s*2);
-    if (!isTeacher) ctx.fillRect((dir>0 ? bx-3 : bx+PW)-s, by+2-s, 3+s*2, 6+s*2);
+    if (!isTeacher) ctx.fillRect((dir>0 ? bx-3 : bx+PW)-s, by+2-s, 3+s*2, 8+s*2);
     ctx.fillRect(bx+2-s, by+1-s, PW-4+s*2, 1+s*2);
     ctx.fillRect(bx+1-s, by-8-s, PW-2+s*2, 10+s*2);
   }
@@ -222,7 +222,7 @@ function drawChar(x, y, dir, animT, bodyCol, isTeacher, spraying, chasing, knock
       ctx.fillRect(sx + (dir>0 ? 4+dist : -1-dist), by+5+oy-lift, 1, 1);
     }
   }
-  if (!isTeacher) { ctx.fillStyle = PAL.marcoBackpack; ctx.fillRect(dir>0 ? bx-3 : bx+PW, by+2, 3, 6); }
+  if (!isTeacher) { ctx.fillStyle = PAL.marcoBackpack; ctx.fillRect(dir>0 ? bx-3 : bx+PW, by+2, 3, 8); }
 
   if (chasing) {
     const bub = dir>0 ? bx+PW+1 : bx-27;
