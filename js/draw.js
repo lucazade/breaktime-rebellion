@@ -57,7 +57,7 @@ function _drawLockIcon(x, y, color) {
   ctx.fillRect(x+1, y,   4, 1);  // shackle top arc
   ctx.fillRect(x,   y+1, 1, 1);  ctx.fillRect(x+5, y+1, 1, 1);  // shackle sides
   ctx.fillRect(x,   y+2, 6, 4);  // body
-  ctx.fillStyle = '#000';
+  ctx.fillStyle = PAL.black;
   ctx.fillRect(x+2, y+3, 2, 2);  // keyhole
 }
 
@@ -96,7 +96,7 @@ function drawTitleScreen() {
     ctx.restore();
     if (VT.logo.borderW > 0) {
       ctx.save();
-      ctx.strokeStyle = '#000';
+      ctx.strokeStyle = PAL.black;
       ctx.lineWidth = VT.logo.borderW;
       ctx.beginPath();
       ctx.roundRect(logoX, logoY, logoW, logoH, r);
@@ -504,7 +504,7 @@ function drawDebugOverlay() {
     ctx.beginPath(); ctx.moveTo(0, fl.y); ctx.lineTo(W, fl.y); ctx.stroke();
     ctx.setLineDash([]);
     ctx.fillStyle = 'rgba(0,0,0,0.6)'; ctx.fillRect(1, fl.y-6, 26, 7);
-    ctx.fillStyle = '#FFFF00'; ctx.fillText(fl.label, 2, fl.y-1);
+    ctx.fillStyle = PAL.debugYellow; ctx.fillText(fl.label, 2, fl.y-1);
   });
 
   [107, 213].forEach(function(dx) {
@@ -514,7 +514,7 @@ function drawDebugOverlay() {
     ctx.beginPath(); ctx.moveTo(dx, 0); ctx.lineTo(dx, H); ctx.stroke();
     ctx.setLineDash([]);
     ctx.fillStyle = 'rgba(0,0,0,0.6)'; ctx.fillRect(dx+1, 2, 20, 7);
-    ctx.fillStyle = '#00E8FF'; ctx.fillText('x='+dx, dx+2, 8);
+    ctx.fillStyle = PAL.debugCyan; ctx.fillText('x='+dx, dx+2, 8);
   });
 
   stairs.forEach(function(s, i) {
@@ -526,9 +526,9 @@ function drawDebugOverlay() {
     ctx.lineWidth = 0.5;
     ctx.strokeRect(lx-2, ty, rx-lx+4, by2-ty);
     ctx.fillStyle = 'rgba(0,0,0,0.6)'; ctx.fillRect(lx-2, ty-8, 55, 7);
-    ctx.fillStyle = '#FF9900';
+    ctx.fillStyle = PAL.debugOrange;
     ctx.fillText('S'+i+' ('+s.x1+','+s.y1+')→('+s.x2+','+s.y2+')', lx-1, ty-2);
-    ctx.fillStyle = '#FF4400';
+    ctx.fillStyle = PAL.debugOrangeR;
     ctx.fillRect(s.x1-1, s.y1-1, 3, 3);
     ctx.fillRect(s.x2-1, s.y2-1, 3, 3);
   });
@@ -537,14 +537,14 @@ function drawDebugOverlay() {
     ctx.strokeStyle = 'rgba(100,100,255,0.9)';
     ctx.lineWidth = 0.5;
     ctx.strokeRect(b.x, b.y, 14, 10);
-    ctx.fillStyle = '#8888FF'; ctx.fillText('bag', b.x, b.y-2);
+    ctx.fillStyle = PAL.debugBlue; ctx.fillText('bag', b.x, b.y-2);
   });
 
   BOARDS.forEach(function(b) {
     ctx.strokeStyle = 'rgba(0,255,80,0.85)';
     ctx.lineWidth = 0.5;
     ctx.strokeRect(b.x, b.y, BW, BH);
-    ctx.fillStyle = '#00FF50'; ctx.fillText('brd', b.x, b.y-2);
+    ctx.fillStyle = PAL.debugGreen; ctx.fillText('brd', b.x, b.y-2);
   });
 
   DESKS.forEach(function(d) {
@@ -556,13 +556,13 @@ function drawDebugOverlay() {
   ctx.strokeStyle = 'rgba(255,215,0,0.9)';
   ctx.lineWidth = 0.5;
   ctx.strokeRect(BELL.x-2, BELL.y-1, 10, 9);
-  ctx.fillStyle = '#FFD700'; ctx.fillText('bell', BELL.x-2, BELL.y-2);
+  ctx.fillStyle = PAL.panelBorder; ctx.fillText('bell', BELL.x-2, BELL.y-2);
 
   ctx.strokeStyle = 'rgba(255,80,255,0.9)';
   ctx.lineWidth = 0.5;
   ctx.strokeRect(player.x, player.y, PW, PH);
   ctx.fillStyle = 'rgba(0,0,0,0.6)'; ctx.fillRect(player.x, player.y-8, 36, 7);
-  ctx.fillStyle = '#FF66FF';
+  ctx.fillStyle = PAL.debugMagenta;
   ctx.fillText('P('+Math.round(player.x)+','+Math.round(player.y)+')', player.x+1, player.y-2);
 
   ctx.restore();
@@ -615,23 +615,23 @@ function _drawHudIcon(type, x, y, color, s) {
       case 'boards':
         ctx.fillRect(0,0,7,1); ctx.fillRect(0,5,7,1);
         ctx.fillRect(0,1,1,4); ctx.fillRect(6,1,1,4);
-        ctx.fillStyle='#fff'; ctx.fillRect(1,2,5,1); ctx.fillRect(1,4,5,1);
+        ctx.fillStyle=PAL.white; ctx.fillRect(1,2,5,1); ctx.fillRect(1,4,5,1);
         break;
       case 'bags':
         ctx.fillRect(2,0,3,1);
         ctx.fillRect(0,1,7,1); ctx.fillRect(0,5,7,1);
         ctx.fillRect(0,2,1,3); ctx.fillRect(6,2,1,3);
-        ctx.fillStyle='#2A1F5E'; ctx.fillRect(2,3,3,1);
+        ctx.fillStyle=C.bagborder; ctx.fillRect(2,3,3,1);
         break;
       case 'machines':
         ctx.fillRect(0,0,6,6);
-        ctx.fillStyle='#000';    ctx.fillRect(1,1,4,2);
-        ctx.fillStyle='#FFD700'; ctx.fillRect(2,4,2,1);
+        ctx.fillStyle=PAL.black;    ctx.fillRect(1,1,4,2);
+        ctx.fillStyle=PAL.panelBorder; ctx.fillRect(2,4,2,1);
         break;
       case 'ball':
         ctx.fillRect(1,0,5,1); ctx.fillRect(1,5,5,1);
         ctx.fillRect(0,1,7,4);
-        ctx.fillStyle='#000'; ctx.fillRect(3,0,1,6); ctx.fillRect(0,3,7,1);
+        ctx.fillStyle=PAL.black; ctx.fillRect(3,0,1,6); ctx.fillRect(0,3,7,1);
         break;
       case 'students':
         ctx.fillRect(2,0,3,2);
@@ -640,8 +640,8 @@ function _drawHudIcon(type, x, y, color, s) {
         break;
       case 'books':
         ctx.fillRect(0,0,7,6);
-        ctx.fillStyle='#000'; ctx.fillRect(1,0,1,6);
-        ctx.fillStyle='#fff'; ctx.fillRect(2,2,4,1); ctx.fillRect(2,4,4,1);
+        ctx.fillStyle=PAL.black; ctx.fillRect(1,0,1,6);
+        ctx.fillStyle=PAL.white; ctx.fillRect(2,2,4,1); ctx.fillRect(2,4,4,1);
         break;
       case 'sink':
         ctx.fillRect(1,0,1,2); ctx.fillRect(5,0,1,2);
@@ -649,9 +649,9 @@ function _drawHudIcon(type, x, y, color, s) {
         ctx.fillRect(0,3,1,2); ctx.fillRect(6,3,1,2);
         break;
       case 'bins':
-        ctx.fillStyle='#FFD700'; ctx.fillRect(3,0,1,1);
+        ctx.fillStyle=PAL.panelBorder; ctx.fillRect(3,0,1,1);
         ctx.fillStyle=color;     ctx.fillRect(1,1,5,1); ctx.fillRect(0,2,7,4);
-        ctx.fillStyle='#000';    ctx.fillRect(2,3,1,2); ctx.fillRect(4,3,1,2);
+        ctx.fillStyle=PAL.black;    ctx.fillRect(2,3,1,2); ctx.fillRect(4,3,1,2);
         break;
       case 'sprinklers':
         ctx.fillRect(3,0,1,1);
@@ -660,8 +660,8 @@ function _drawHudIcon(type, x, y, color, s) {
         break;
       case 'register':
         ctx.fillRect(0,0,7,6);
-        ctx.fillStyle='#000';    ctx.fillRect(1,1,5,1); ctx.fillRect(1,3,5,1); ctx.fillRect(1,5,3,1);
-        ctx.fillStyle='#FFD700'; ctx.fillRect(5,5,2,1);
+        ctx.fillStyle=PAL.black;    ctx.fillRect(1,1,5,1); ctx.fillRect(1,3,5,1); ctx.fillRect(1,5,3,1);
+        ctx.fillStyle=PAL.panelBorder; ctx.fillRect(5,5,2,1);
         break;
       default:
         ctx.fillRect(0,0,7,6);
@@ -678,23 +678,23 @@ function _drawHudIcon(type, x, y, color, s) {
     case 'boards':   // board: 7×7 outline + 2 chalk lines
       ctx.fillRect(0,1, 7,1); ctx.fillRect(0,6, 7,1);
       ctx.fillRect(0,1, 1,5); ctx.fillRect(6,1, 1,5);
-      ctx.fillStyle = '#fff'; ctx.fillRect(1,2, 5,1); ctx.fillRect(1,4, 5,1);
+      ctx.fillStyle = PAL.white; ctx.fillRect(1,2, 5,1); ctx.fillRect(1,4, 5,1);
       break;
     case 'bags':     // bag: body + handle
       ctx.fillRect(2,0, 3,1);
       ctx.fillRect(0,1, 7,1); ctx.fillRect(0,6, 7,1);
       ctx.fillRect(0,2, 1,4); ctx.fillRect(6,2, 1,4);
-      ctx.fillStyle = '#2A1F5E'; ctx.fillRect(2,3, 3,1);
+      ctx.fillStyle = C.bagborder; ctx.fillRect(2,3, 3,1);
       break;
     case 'machines': // vending machine: rectangle with screen and button
       ctx.fillRect(0,0, 6,7);
-      ctx.fillStyle = '#000';    ctx.fillRect(1,1, 4,2);
-      ctx.fillStyle = '#FFD700'; ctx.fillRect(2,5, 2,1);
+      ctx.fillStyle = PAL.black;    ctx.fillRect(1,1, 4,2);
+      ctx.fillStyle = PAL.panelBorder; ctx.fillRect(2,5, 2,1);
       break;
     case 'ball':     // ball: circle with seams
       ctx.fillRect(1,0, 5,1); ctx.fillRect(1,6, 5,1);
       ctx.fillRect(0,1, 7,5);
-      ctx.fillStyle = '#000'; ctx.fillRect(3,1, 1,5); ctx.fillRect(1,3, 5,1);
+      ctx.fillStyle = PAL.black; ctx.fillRect(3,1, 1,5); ctx.fillRect(1,3, 5,1);
       break;
     case 'students': // student: head + body + legs
       ctx.fillRect(2,0, 3,3);
@@ -703,8 +703,8 @@ function _drawHudIcon(type, x, y, color, s) {
       break;
     case 'books':    // book: rectangle with spine and lines
       ctx.fillRect(0,0, 7,7);
-      ctx.fillStyle = '#000'; ctx.fillRect(1,0, 1,7);
-      ctx.fillStyle = '#fff'; ctx.fillRect(2,2, 4,1); ctx.fillRect(2,4, 4,1);
+      ctx.fillStyle = PAL.black; ctx.fillRect(1,0, 1,7);
+      ctx.fillStyle = PAL.white; ctx.fillRect(2,2, 4,1); ctx.fillRect(2,4, 4,1);
       break;
     case 'sink':     // sink: drops + basin
       ctx.fillRect(1,0, 1,2); ctx.fillRect(5,0, 1,2);
@@ -714,8 +714,8 @@ function _drawHudIcon(type, x, y, color, s) {
     case 'bins':     // bin: lid + body + fuse
       ctx.fillRect(1,1, 5,1);
       ctx.fillRect(0,2, 7,5);
-      ctx.fillStyle = '#FFD700'; ctx.fillRect(3,0, 1,2);
-      ctx.fillStyle = '#000';    ctx.fillRect(2,4, 1,2); ctx.fillRect(4,4, 1,2);
+      ctx.fillStyle = PAL.panelBorder; ctx.fillRect(3,0, 1,2);
+      ctx.fillStyle = PAL.black;    ctx.fillRect(2,4, 1,2); ctx.fillRect(4,4, 1,2);
       break;
     case 'sprinklers': // sprinkler: flame silhouette
       ctx.fillRect(3,0, 1,1);
@@ -724,8 +724,8 @@ function _drawHudIcon(type, x, y, color, s) {
       break;
     case 'register': // register: book with golden corner
       ctx.fillRect(0,0, 7,7);
-      ctx.fillStyle = '#000';    ctx.fillRect(1,1, 5,1); ctx.fillRect(1,3, 5,1); ctx.fillRect(1,5, 3,1);
-      ctx.fillStyle = '#FFD700'; ctx.fillRect(5,5, 2,2);
+      ctx.fillStyle = PAL.black;    ctx.fillRect(1,1, 5,1); ctx.fillRect(1,3, 5,1); ctx.fillRect(1,5, 3,1);
+      ctx.fillStyle = PAL.panelBorder; ctx.fillRect(5,5, 2,2);
       break;
     default:
       ctx.fillRect(0,0, 7,7);
@@ -757,7 +757,7 @@ function _hudObjInfo() {
   } else {
     for (var i=0;i<BOARDS.length;i++) if(BOARDS[i].done) done++; total=BOARDS.length; mechanic='boards';
   }
-  return { done:done, total:total, color:dc[mechanic]||'#44ee66', mechanic:mechanic };
+  return { done:done, total:total, color:dc[mechanic]||PAL.hudCounter, mechanic:mechanic };
 }
 
 function drawHUD() {
@@ -787,16 +787,16 @@ function drawHUD() {
   // Message — visible at _hudMsgAlpha
   if (_hudMsgAlpha > 0) {
     ctx.globalAlpha = _hudMsgAlpha;
-    ctx.fillStyle = '#ffffff'; ctx.textAlign = 'center';
+    ctx.fillStyle = PAL.white; ctx.textAlign = 'center';
     ctx.fillText(msgText, VH.centerX, _textY);
   }
 
   // Hearts + score + counter — visible at _hudAlpha
   if (_hudAlpha > 0) {
     ctx.globalAlpha = _hudAlpha;
-    ctx.fillStyle = '#ff2244';
+    ctx.fillStyle = PAL.hearts;
     for (var _i = 0; _i < Math.max(0, lives); _i++) _drawHeart(VH.heartsX + _i * _heartStep, _heartY, _hs);
-    ctx.textAlign = 'right'; ctx.fillStyle = '#ffffff';
+    ctx.textAlign = 'right'; ctx.fillStyle = PAL.white;
     ctx.fillText(String(score).padStart(5,'0'), VH.scoreX, _textY);
     var _oi = _hudObjInfo();
     var _txt = _oi.done + '/' + _oi.total;
@@ -804,14 +804,14 @@ function drawHUD() {
     var _grpW = _iconSz + VH.dotGap + _hudTxtCache.w;
     var _sx = Math.round(VH.centerX - _grpW / 2);
     _drawHudIcon(_oi.mechanic, _sx, _iconY, _oi.color, _ds);
-    ctx.textAlign = 'left'; ctx.fillStyle = '#44ee66';
+    ctx.textAlign = 'left'; ctx.fillStyle = PAL.hudCounter;
     ctx.fillText(_txt, _sx + _iconSz + VH.dotGap, _textY);
   }
   // Timer bar
   ctx.globalAlpha = VH.timerAlpha !== undefined ? VH.timerAlpha : 1;
   if (maxTimerTicks > 0) {
     var _pct = Math.max(0, timerTicks / maxTimerTicks);
-    ctx.fillStyle = _pct > 0.6 ? '#22cc44' : _pct > 0.3 ? '#ddcc00' : '#dd1100';
+    ctx.fillStyle = _pct > 0.6 ? PAL.timerGreen : _pct > 0.3 ? PAL.timerYellow : PAL.timerRed;
     ctx.fillRect(0, VH.rowH, Math.round(W * _pct), VH.timerH);
   }
   ctx.globalAlpha = 1;

@@ -26,6 +26,22 @@ const PAL = {
   lime:        '#D0E989',  // testo copyright
   beige:       '#E7B260',  // lavagna, pelle chiara
 
+  // ── HUD / game ───────────────────────────────────────────
+  hearts:       '#ff2244',  // lives hearts
+  hudCounter:   '#44ee66',  // object counter text
+  timerGreen:   '#22cc44',  // timer bar >= 60%
+  timerYellow:  '#ddcc00',  // timer bar 30–60%
+  timerRed:     '#dd1100',  // timer bar < 30%
+
+  // ── Debug overlay (drawDebugOverlay only) ────────────────
+  debugCyan:    '#00E8FF',  // floor line labels (TY/MY/GY)
+  debugGreen:   '#00FF50',  // board hitbox labels
+  debugBlue:    '#8888FF',  // bag hitbox labels
+  debugOrange:  '#FF9900',  // stair coordinate labels
+  debugOrangeR: '#FF4400',  // stair endpoint dots
+  debugMagenta: '#FF66FF',  // player hitbox label
+  debugYellow:  '#FFFF00',  // floor line colour
+
   // ── Bezel — mobile side panels ───────────────────────────
   bezelGlow:        'rgba(160,0,255,0.7)',          // panel inner border
   bezelBorder:      'rgba(160,0,255,0.85)',         // button borders
