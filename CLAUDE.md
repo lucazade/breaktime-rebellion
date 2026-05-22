@@ -15,8 +15,12 @@ robots.txt          ← noindex pre-release
 css/
   style.css         ← tutti gli stili
 js/                 ← ordine di caricamento obbligatorio:
-  config.js         ← CONFIG (images, audio, debug) — primo
-  layout.js         ← CONFIG.layout, CONFIG.colors, shortcut constants, SHARED_LAYOUT
+  config.js         ← CONFIG (images, audio, debug, display) — primo
+  gfx-palette.js    ← const PAL — unica sorgente di tutti i colori
+  gfx-building.js   ← geometria canvas (GY/MY/TY, walkOffset, SHARED_LAYOUT)
+  gfx-ui.js         ← CONFIG.vis (titleScreen, HUD, banners) — dati UI
+  gfx-chars.js      ← PW/PH, COLOURS_*, drawChar/drawJanitor/drawPreside/drawGuard/drawGinnastica
+  gfx-objects.js    ← drawDesks/Boards/Bell/Machines/... + dati SHARED_LAYOUT
   levels.js         ← LEVELS[] con mechanics + NPC per livello
   i18n.js           ← STRINGS EN/IT
   audio.js          ← GameAudio (music + sfx manager)
@@ -24,9 +28,9 @@ js/                 ← ordine di caricamento obbligatorio:
   input.js          ← tastiera, touch buttons, joystick analogico
   physics.js        ← updatePlayer, stair/floor collision, tryAction
   entities.js       ← teachers, janitors, bell, timer, particles
-  draw.js           ← tutte le draw* + updateHUD
+  gfx-draw.js       ← drawTitleScreen, drawHUD, drawBanners, drawNightOverlay, drawDebugOverlay
   game.js           ← canvas setup + loop puro
-  title.js          ← title screen, level chooser, audio toggle, service worker
+  title.js          ← title screen events, service worker
 assets/
   pics/
     logo.png        ← logo title screen
@@ -36,11 +40,26 @@ assets/
   icon-512.png      ← icona PWA 512×512
 dev/
   todo.txt          ← piano di implementazione a fasi
+  refactor-gfx-palette/
+    new-colors.txt  ← colori scelti per personaggio (riferimento)
 ```
 
 ## Stack
 
-HTML5 Canvas + JS vanilla, nessun framework. Font: Press Start 2P (Google Fonts). Palette: C64 autentica.
+HTML5 Canvas + JS vanilla, nessun framework. Font: Press Start 2P (Google Fonts).
+Palette: logo reference (PAL), voci esplicite per ogni personaggio/oggetto.
+
+## Palette colori (gfx-palette.js)
+
+`const PAL` è l'unica sorgente di verità per tutti i colori. Struttura:
+
+- **CHARACTERS** — una sezione per personaggio con voci esplicite (skin, hair, trousers, shoes…)
+- **HUD** — strip, timer, dot indicators meccaniche
+- **UI / DIALOGS** — title screen, dialog panels, bezel mobile, banners
+- **GAME OBJECTS** — per ogni oggetto (bell, board, ball, desks, machines, register, sink, bins, sprinklers…)
+- **DEBUG** — overlay debug
+
+Ogni `drawXxx` function usa esclusivamente `PAL.nomeEsplicito` — nessun colore hardcoded.
 
 ## Controlli
 
@@ -64,7 +83,6 @@ Il codice è diviso in moduli distinti che comunicano via variabili globali cond
 - Non modificare mai `lv.stairs`, `lv.boards` ecc. direttamente durante il gioco
 
 **Variabili globali chiave** (definite in `state.js`, usate ovunque):
-- `C` — alias `CONFIG.colors`
 - `player`, `teachers`, `janitors`, `BOARDS`, `bags`, `BELL`, `DESKS`, `stairs`
 - `lives`, `score`, `state`, `frame`, `currentLevel`
 - `levelMechanics` — mechanics attive nel livello corrente (da `lv.mechanics`)
@@ -79,7 +97,7 @@ Il codice è diviso in moduli distinti che comunicano via variabili globali cond
 
 Tutti i dati di ogni livello sono in `LEVELS[]`.
 Ogni livello è `Object.assign({}, SHARED_LAYOUT, { ... })`.
-`SHARED_LAYOUT` (in layout.js) contiene scale, lavagne, banchi, campanella e playerStart — fissi in tutti i livelli.
+`SHARED_LAYOUT` (in gfx-building.js/gfx-objects.js) contiene scale, lavagne, banchi, campanella e playerStart — fissi in tutti i livelli.
 
 Ogni livello contiene:
 ```js
@@ -123,7 +141,7 @@ Ogni livello contiene:
   nightMode:  true/false,              // L10
 }
 ```
-Le coordinate usano `GY`, `MY`, `TY`, `PH`, `walkOffset` (da `layout.js`) per restare leggibili.
+Le coordinate usano `GY`, `MY`, `TY`, `PH`, `walkOffset` (da `gfx-building.js`) per restare leggibili.
 
 **Scale (`stairs`):** `fdTop` = px sopra la superficie dove la testa appare; `fdBot` = px sotto dove le gambe spariscono. Valori attuali: `fdTop:4, fdBot:12` su tutte le scale.
 
@@ -150,27 +168,29 @@ Le coordinate usano `GY`, `MY`, `TY`, `PH`, `walkOffset` (da `layout.js`) per re
 - Mostra: floor lines (TY/MY/GY), stair boxes con coordinate, hitbox tutti gli oggetti
 - Utile per allineare `bg-640.png` con la logica
 
-**Clip sprite sulle scale:** `drawCharClipped()` in draw.js disegna Marco in due passate (sopra e sotto la banda del pavimento) quando `player.onStair` è true. La banda è `[surfaceY - fdTop, surfaceY + fdBot]`.
+**Clip sprite sulle scale:** `drawCharClipped()` in gfx-chars.js disegna Marco in due passate (sopra e sotto la banda del pavimento) quando `player.onStair` è true. La banda è `[surfaceY - fdTop, surfaceY + fdBot]`.
 
 ## CONFIG (js/config.js)
 
 - `CONFIG.layout` — W, H, PW, PH, GY, MY, TY, BW, BH, walkOffset
-- `CONFIG.colors` — palette C64 (alias `C` in state.js, disponibile globalmente)
 - `CONFIG.images` — percorsi immagini (`background: 'assets/pics/bg-640.png'`)
 - `CONFIG.audio` — `musicVolume`, `sfxVolume`, `music`, `introMusic`, `bossMusic`, `sfx` map
-- `CONFIG.debug.showLevelChooser` — `true` sblocca tutti i livelli nel chooser
+- `CONFIG.display` — `desktopZoom`, `fontFamily`, `showTapToStart`, `showLegend`, `simulateMobile`
+- `CONFIG.debug.unlockAllLevels` — `true` sblocca tutti i livelli nel chooser
 
 ## NPC sprites
 
-- **Prof.Rossi** (`C.redprof`): patrol GY, sight 90
-- **Prof.Celeste** (`C.cyanprof`): patrol MY, sight 80
-- **Prof.Neri** (`C.grayprof`): patrol TY, sight 100, maxX=275
-- **Prof.Ginnastica** (`C.green`): L4, patrol MY area palestra
-- **Preside** (`'#1a1a4a'`): L6, `drawPreside()`, velocità 1.0, sight 150
-- **Guardiano** (`'#1a1a3a'`): L10, `drawGuard()`, `catchRadius:20`, NO cono visivo, NO caduta a terra
-- **Bidello**: `drawJanitor()`, patrol corto, no chasing; se colpito da sprinkler → `knockedT`
+Ogni personaggio ha il suo draw function e `COLOURS_*` object in `gfx-chars.js`:
 
-**Catch behavior:** `caughtBy(t)` inverte `t.dir` e resetta `chasing` — l'NPC rimbalza via invece di seguire Marco al respawn. I Guardiani NON cadono a terra (`knockedT`), invertono solo direzione.
+- **Prof.Rossi** (`PAL.profRossiBody`): `drawChar` + `COLOURS_TEACHER`, patrol GY, sight 90
+- **Prof.Celeste** (`PAL.profCelesteBody`): `drawChar` + `COLOURS_TEACHER`, patrol MY, sight 80
+- **Prof.Neri** (`PAL.profNeriBody`): `drawChar` + `COLOURS_TEACHER`, patrol TY, sight 100
+- **Prof.Ginnastica** (`PAL.profGinnasticaBody`): `drawGinnastica()`, L4/L8, cap + strisce
+- **Preside** (`PAL.presideBody`): `drawPreside()`, L6, velocità 1.0, sight 150
+- **Guardiano** (`PAL.guardUniform`): `drawGuard()`, L10, `catchRadius:20`, NO cono visivo
+- **Bidello**: `drawJanitor()` (drawChar + salopette + scopa), patrol corto
+
+**Catch behavior:** `caughtBy(t)` inverte `t.dir` e resetta `chasing`. I Guardiani NON cadono a terra, invertono solo direzione.
 
 ## Audio
 
@@ -191,7 +211,7 @@ Le coordinate usano `GY`, `MY`, `TY`, `PH`, `walkOffset` (da `layout.js`) per re
 ```bash
 node -e "
 const fs=require('fs');
-const files=['js/config.js','js/layout.js','js/levels.js','js/i18n.js','js/audio.js','js/state.js','js/input.js','js/physics.js','js/entities.js','js/draw.js','js/game.js','js/title.js'];
+const files=['js/config.js','js/gfx-palette.js','js/gfx-building.js','js/gfx-ui.js','js/gfx-chars.js','js/gfx-objects.js','js/levels.js','js/i18n.js','js/audio.js','js/state.js','js/input.js','js/physics.js','js/entities.js','js/gfx-draw.js','js/game.js','js/title.js'];
 const src=files.map(f=>fs.readFileSync(f,'utf8')).join('\n');
 try{new Function(src);console.log('JS OK');}catch(e){console.log('ERRORE:',e.message);}
 "
