@@ -187,6 +187,13 @@ const PAL = {
   bellShadow:    '#CC9900',  // shadow
   bellClapper:   '#332200',  // clapper
 
+  // ── Desks ─────────────────────────────────────────────────
+  brown:         '#433900',  // chair wood
+  desk:          '#2C1800',  // desk top dark layer
+  desklt:        '#4E2A00',  // desk top light layer
+  deskHighlight: '#FFFFFF',  // desk surface white highlight stripe
+  chairSeat:     '#5F1D1B',  // chair seat (dark red-brown)
+
   // ── Chalkboard ────────────────────────────────────────────
   boardDark:     '#075b07',  // board background (dark green)
   boardChalk:    '#2c832c',  // chalk line hints on board surface
@@ -196,20 +203,8 @@ const PAL = {
   sprayCanDark: '#005050',   // spray can dark outline
   sprayCanBody: '#1665DC',   // spray can body
 
-  // ── Ball ──────────────────────────────────────────────────
-  ballBody:      '#CC6600',               // basketball body
-  ballHighlight: 'rgba(255,200,100,0.5)', // ball shine overlay
-  ballWood:      '#6b2200',               // ball outline and seam lines
-
-  // ── Paper balls ───────────────────────────────────────────
-  paperBall: '#FFFFFF',  // paper ball thrown at students (L5)
-
-  // ── Desks ─────────────────────────────────────────────────
-  brown:         '#433900',  // chair wood
-  desk:          '#2C1800',  // desk top dark layer
-  desklt:        '#4E2A00',  // desk top light layer
-  deskHighlight: '#FFFFFF',  // desk surface white highlight stripe
-  chairSeat:     '#5F1D1B',  // chair seat (dark red-brown)
+  // ── Bags ──────────────────────────────────────────────────
+  bagborder: '#2A1F5E',      // bag border stripe
 
   // ── Vending machines ──────────────────────────────────────
   machineBody:        '#1665DC',  // machine body
@@ -219,31 +214,37 @@ const PAL = {
   machineButtonC:     '#9AD284',  // button C (green)
   machineInk:         '#000000',  // coin slot / open hatch when broken
 
+  // ── Ball ──────────────────────────────────────────────────
+  ballBody:      '#CC6600',               // basketball body
+  ballHighlight: 'rgba(255,200,100,0.5)', // ball shine overlay
+  ballWood:      '#6b2200',               // ball outline and seam lines
+
+  // ── Paper balls ───────────────────────────────────────────
+  paperBall: '#FFFFFF',  // paper ball thrown at students (L5)
+
   // ── Books / bookcase ──────────────────────────────────────
   bookcaseWood:    '#6b2200',  // bookcase spine and book covers
   bookcaseOutline: '#3a1000',  // darkest wood outline
   pageColor:       '#F5E6C0',  // open book pages
   pageLines:       '#999999',  // page text lines
 
-  // ── Class register ────────────────────────────────────────
-  registerCover: '#8B0000',  // cover
-  registerSpine: '#6B0000',  // spine (slightly darker)
-  registerEdge:  '#AA2200',  // top edge highlight
-  registerPages: '#F0E8D0',  // page area
-  registerLine:  '#888888',  // grey grade lines on pages
-  registerGrade: '#5F1D1B',  // red grade lines (bad marks)
-
   // ── Sink / mirror ─────────────────────────────────────────
-  mirrorFrame:     '#1a3a5c',               // mirror frame
-  mirrorGlass:     '#7ab8d8',               // mirror glass reflection
-  mirrorHighlight: 'rgba(255,255,255,0.45)', // mirror glass shine overlay
-  waterDrop:       '#4488cc',               // water drop dripping from tap
-  sinkBasinOuter:  '#666666',               // basin outer shell
-  sinkTap:         '#777777',               // tap body
-  sinkTapHandle:   '#aaaaaa',               // tap handle
-  sinkBasinMid:    '#b0b0b0',               // basin mid layer
-  sinkBasinInner:  '#d8d8d8',               // basin inner (lightest)
-  sinkDrain:       '#888888',               // drain at basin bottom
+  mirrorFrame:      '#1a3a5c',               // mirror frame
+  mirrorGlass:      '#7ab8d8',               // mirror glass reflection
+  mirrorHighlight:  'rgba(255,255,255,0.45)', // mirror glass shine overlay
+  waterDrop:        '#4488cc',               // water drop dripping from tap
+  sinkBasinOuter:   '#666666',               // basin outer shell
+  sinkTap:          '#777777',               // tap body
+  sinkTapHandle:    '#aaaaaa',               // tap handle
+  sinkBasinMid:     '#b0b0b0',               // basin mid layer
+  sinkBasinInner:   '#d8d8d8',               // basin inner (lightest)
+  sinkDrain:        '#888888',               // drain at basin bottom
+  sinkActiveBorder: '#70A4B2',               // dashed border when sink is interactive
+  waterPuddleDark:  'rgba(30,90,200,0.22)',  // flood puddle dark layer
+  waterPuddleMain:  'rgba(30,90,200,0.28)',  // flood puddle main layer
+  waterHighlight:   'rgba(100,170,255,0.55)', // flood puddle surface highlight
+  waterRipple:      'rgba(130,200,255,0.5)', // flood ripple ring
+  waterDrip:        'rgba(68,136,204,0.6)',  // water drip from ceiling during flood
 
   // ── Bins ──────────────────────────────────────────────────
   binBody:        '#228B22',               // body
@@ -258,25 +259,22 @@ const PAL = {
   flame:        '#FF6600',  // lighter / fuse flame
   lighterSpark: '#FEDC02',  // lighter flame tip / fuse spark
 
-  // ── Bags ──────────────────────────────────────────────────
-  bagborder: '#2A1F5E',  // bag border stripe
-
-  // ── Water (sink / sprinklers) ─────────────────────────────
-  cyan:            '#70A4B2',                // water / sprinkler particles
-  waterPuddleDark: 'rgba(30,90,200,0.22)',   // puddle dark layer
-  waterPuddleMain: 'rgba(30,90,200,0.28)',   // puddle main layer
-  waterHighlight:  'rgba(100,170,255,0.55)', // puddle surface highlight
-  waterRipple:     'rgba(130,200,255,0.5)',  // ripple ring
-  waterStream:     'rgba(60,140,255,0.45)',  // falling water stream
-  waterSplash:     'rgba(100,180,255,0.38)', // splash droplet
-  waterDrip:       'rgba(68,136,204,0.6)',   // water drip from ceiling
-
   // ── Sprinklers ────────────────────────────────────────────
-  sprinklerDisc:        '#bbbbbb',  // deflector disc
-  sprinklerBorder:      '#555555',  // T-pipe border
-  sprinklerInactive:    '#888888',  // head when inactive
-  sprinklerActive:      '#5F1D1B',  // head when triggered (red)
-  sprinklerActiveBorder:'#33B84B',  // dashed border blink when active
+  sprinklerDisc:        '#bbbbbb',               // deflector disc
+  sprinklerBorder:      '#555555',               // T-pipe border
+  sprinklerInactive:    '#888888',               // head when inactive
+  sprinklerActive:      '#5F1D1B',               // head when triggered (red)
+  sprinklerActiveBorder:'#33B84B',               // dashed border blink when active
+  waterStream:          'rgba(60,140,255,0.45)', // water stream spraying from head
+  waterSplash:          'rgba(100,180,255,0.38)', // splash droplet on floor
+
+  // ── Class register ────────────────────────────────────────
+  registerCover: '#8B0000',  // cover
+  registerSpine: '#6B0000',  // spine (slightly darker)
+  registerEdge:  '#AA2200',  // top edge highlight
+  registerPages: '#F0E8D0',  // page area
+  registerLine:  '#888888',  // grey grade lines on pages
+  registerGrade: '#5F1D1B',  // red grade lines (bad marks)
 
 // ═══════════════════════════════════════════════════════════
 //  DEBUG
