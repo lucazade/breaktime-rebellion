@@ -144,16 +144,21 @@ const PAL = {
 //  UI / DIALOGS
 // ═══════════════════════════════════════════════════════════
 
-  gold:        '#FFD700',            // floating score text, win/gameover banners
-  dgray:       '#444444',            // disabled buttons
-  lgreen:      '#9AD284',            // credits roles, audio button (full mode)
-  lgray:       '#959595',            // keyboard legend text
-  mgray:       '#6C6C6C',            // audio muted button
+  // ── In-game banners (story, mission, win, gameover, pause) ─
+  gold: '#FFD700',  // banner / overlay text colour
+
+  // ── Dialog panels ─────────────────────────────────────────
   panelBg:     'rgba(0,0,40,0.90)', // dialog panel background
   panelBorder: '#FFD700',            // dialog panel border (gold)
   btnYes:      'rgba(0,90,0,0.92)', // yes / OK / resume button
   btnNo:       'rgba(90,0,0,0.92)', // no / cancel button
-  btnLabel:    '#b0b0b0',            // enabled button label (title screen)
+
+  // ── Title screen ──────────────────────────────────────────
+  dgray:    '#444444',  // disabled level chooser button
+  lgreen:   '#9AD284',  // audio button (full mode) / credits roles
+  lgray:    '#959595',  // keyboard legend text
+  mgray:    '#6C6C6C',  // audio muted button
+  btnLabel: '#b0b0b0',  // enabled level chooser button label
 
   // ── Bezel (mobile side panels) ────────────────────────────
   bezelGlow:    'rgba(160,0,255,0.7)',           // panel inner glow border
@@ -213,6 +218,7 @@ const PAL = {
   sinkBasinOuter:  '#666666',               // basin outer shell
   sinkTap:         '#777777',               // tap body
   sinkTapHandle:   '#aaaaaa',               // tap handle
+  sinkBasinMid:    '#b0b0b0',               // basin mid layer
   sinkBasinInner:  '#d8d8d8',               // basin inner (light)
   sinkDrain:       '#888888',               // drain
 

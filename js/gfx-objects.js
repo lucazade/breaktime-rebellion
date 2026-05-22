@@ -489,7 +489,7 @@ function drawSink() {
 
   // Sink basin
   ctx.fillStyle = PAL.sinkBasinOuter; ctx.fillRect(bx-1, by-9, 14, 10);
-  ctx.fillStyle = PAL.btnLabel; ctx.fillRect(bx,   by-8, 12, 8);
+  ctx.fillStyle = PAL.sinkBasinMid; ctx.fillRect(bx,   by-8, 12, 8);
   ctx.fillStyle = PAL.sinkBasinInner; ctx.fillRect(bx+1, by-7, 10, 6);
   ctx.fillStyle = PAL.sinkDrain; ctx.fillRect(bx+5, by-2,  2, 1); // drain
 
