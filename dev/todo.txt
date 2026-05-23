@@ -315,6 +315,9 @@ CHIUSI:
 - [X] #157 Controllo progressbar tutte la stessa lunghezza
 - [X] #158 L6 preside accorciare braccia
 - [X] #172 cambiare cartelle immagini
+- [X] #173 aggiornare screenshot in readme
+- [X] #171 quando muori, respawni e appena finisce immortalità se c'e' un bidello rimuori subito. Soluzioni?
+Durante il respawn non puoi neache muoverti, è un comportamento corretto essere bloccati? Ricordiamoci che nel momento che ti beccano cambiano anche direzione.
 
 PER LUCA:
 - [ ] #159 SFX sostituire suono acqua bagno
@@ -329,8 +332,5 @@ PER LUCA:
 - [ ] #168 L6 bidelli ai piani superiori
 - [ ] #169 L8 ricolorare secchi e prof piano intermedio
 - [ ] #170 L10 ricolorare maglia guardiano blu scuro
-- [ ] #173 aggiornare screenshot in readme
 
 PER CLAUDE:
-- [ ] #171 quando muori, respawni e appena finisce immortalità se c'e' un bidello rimuori subito. Soluzioni?
-Durante il respawn non puoi neache muoverti, è un comportamento corretto essere bloccati? Ricordiamoci che nel momento che ti beccano cambiano anche direzione.
