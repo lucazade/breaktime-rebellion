@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/pics/logo-640.png" alt="Breaktime Rebellion" width="480">
+  <img src="assets/pics/logo/logo-640.png" alt="Breaktime Rebellion" width="480">
 </p>
 
 <p align="center">
@@ -20,9 +20,9 @@
 ## Screenshots
 
 <p align="center">
-  <img src="assets/pics/bg-1600-day.png" width="47%" alt="Day levels">
+  <img src="assets/pics/screenshots/intro.png.png" width="47%" alt="Day levels">
   &nbsp;
-  <img src="assets/pics/bg-1600-night.png" width="47%" alt="Night level (L10)">
+  <img src="assets/pics/screenshots/L1.png" width="47%" alt="Night level (L10)">
 </p>
 
 > *Left: day levels (L1–L9) · Right: night mode — Level 10, the final heist*
