@@ -33,22 +33,23 @@ Object.assign(CONFIG.vis, {
     btnStroke:   PAL.panelBorder,
   },
 
-  // Title screen — logo + tap to start + level chooser + audio toggle + keyboard legend
+  // Title screen — logo (pulsing gold glow) + controls row + optional keyboard legend
+  // Controls row layout: [< Lvl >]  [EASY/MED/HARD]  [music/sfx/mute]
   titleScreen: {
     logo:     { w: 300, borderW: 1, borderR: 5 },
     controls: {
       fontSize: 8,
-      gapY:     12,
-      btnH:    11,
-      boxR:     2,
+      gapY:     12,              // gap between logo bottom and controls row
+      btnH:     11,
+      boxR:      2,
       btnColor: PAL.btnLabel,
-      prevX:   10, prevW: 14,
-      nextX:   76, nextW: 14,
-      labelX:  50,
-      diffX: 134, diffW: 52,
-      audioRightX: 310, audioPadX: 6,
+      prevX:   10, prevW: 14,   // < button (level chooser)
+      nextX:   76, nextW: 14,   // > button (level chooser)
+      labelX:  50,               // level label center
+      diffX:  134, diffW: 52,   // difficulty toggle, centered in canvas
+      audioRightX: 310, audioPadX: 6, // audio toggle, right-aligned
     },
-    legend: { fontSize: 4, gapY: 6 },
+    legend: { fontSize: 4, gapY: 6 }, // desktop keyboard legend (showLegend: false in prod)
   },
 
   // HUD — strip in cima al canvas
