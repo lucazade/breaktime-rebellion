@@ -320,4 +320,4 @@ ricolora bags
 rocolora distributore
 
 PER CLAUDE:
-- [ ] #155 aggiungere suono per indicare che la meccanica del livello è completa e che quindi si può suonare la campanella. Da applicare ad ogni livello. Suono da usare assets/audio/sfx/mech-completed.wav
+- [ ] #155 aggiungere suono per indicare che la meccanica del livello è completa e che quindi si può suonare la campanella. Da applicare ad ogni livello. Fare attenzione a non sovrappore il suono a quello della meccanica ma suonarlo subito dopo! Suono da usare assets/audio/sfx/mech-completed.wav
