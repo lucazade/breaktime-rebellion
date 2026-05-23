@@ -33,7 +33,7 @@ Object.assign(CONFIG.vis, {
     btnStroke:   PAL.panelBorder,
   },
 
-  // Title screen — logo (pulsing gold glow) + controls row + optional keyboard legend
+  // Title screen — logo (pulsing gold glow) + controls row + HTML keyboard legend (desktop)
   // Controls row layout: [< Lvl >]  [EASY/MED/HARD]  [music/sfx/mute]
   titleScreen: {
     logo:     { w: 300, borderW: 1, borderR: 5 },
@@ -49,7 +49,6 @@ Object.assign(CONFIG.vis, {
       diffX:  134, diffW: 52,   // difficulty toggle, centered in canvas
       audioRightX: 310, audioPadX: 6, // audio toggle, right-aligned
     },
-    legend: {}, // removed — legend now rendered as HTML DOM element
   },
 
   // HUD — strip in cima al canvas

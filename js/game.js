@@ -61,7 +61,7 @@ function _applyLevelBg() {
 // Keyboard legend — HTML DOM element below the game area (desktop only)
 var _legendEl = document.getElementById('legend');
 (function() {
-  if (!_legendEl || !CONFIG.display.showLegend || !_isDesktop || CONFIG.display.simulateMobile) return;
+  if (!_legendEl || !_isDesktop || CONFIG.display.simulateMobile) return;
   var ff = CONFIG.display.fontFamily;
   var col = PAL.lgray;
   var ks = 'display:inline-block;border:1px solid '+col+';border-radius:2px;padding:1px 4px;margin:0 1px;font-family:'+ff+';font-size:8px;color:'+col+';line-height:1.5;vertical-align:middle;';
@@ -86,7 +86,7 @@ var _legendEl = document.getElementById('legend');
 
 function _showLegend(v) {
   if (!_legendEl) return;
-  _legendEl.style.display = (v && CONFIG.display.showLegend && _isDesktop && !CONFIG.display.simulateMobile) ? 'block' : 'none';
+  _legendEl.style.display = (v && _isDesktop && !CONFIG.display.simulateMobile) ? 'block' : 'none';
 }
 
 var _titleStarting = false;
