@@ -311,6 +311,7 @@ CHIUSI:
 - [X] #154 Al pallone mancano alcuni pixel negli angoli
 - [X] #152 il nuovo bg (day & night) ora usa la stessa palette di logo. Farei un nuovo branch dove usiamo la palette di logo come riferimento per ricolorare tutti i personaggi e gli oggetti. I colori di base restano gli stessi ma sono più saturi e vivaci. Credo che i colori dei personaggi e  degli oggetti sono sparsi in diversi css e js (draw e layout? altri?).
 - [X] #155 aggiungere suono per indicare che la meccanica del livello è completa e che quindi si può suonare la campanella. Da applicare ad ogni livello. Fare attenzione a non sovrappore il suono a quello della meccanica ma suonarlo subito dopo! Suono da usare assets/audio/sfx/mech-completed.wav
+- [X] #156 L7 e L9 target oggetto e punteggio floating devono essere gialli come negli altri livelli
 
 PER LUCA:
 - [ ] #159 SFX sostituire suono acqua bagno
@@ -327,6 +328,7 @@ PER LUCA:
 - [ ] #170 L10 ricolorare maglia guardiano blu scuro
 
 PER CLAUDE:
-- [ ] #156 L7 e L9 target oggetto e punteggio floating devono essere gialli come negli altri livelli
 - [ ] #157 Controllo progressbar tutte la stessa lunghezza
 - [ ] #158 L6 preside accorciare braccia
+- [ ] #171 quando muori, respawni e appena finisce immortalità se c'e' un bidello rimuori subito. Soluzioni?
+Durante il respawn non puoi neache muoverti, è un comportamento corretto essere bloccati? Ricordiamoci che nel momento che ti beccano cambiano anche direzione.
