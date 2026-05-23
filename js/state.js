@@ -116,6 +116,7 @@ function startGame() {
   localStorage.setItem('btr_last_level', currentLevel);
   resetLevel();
   if (typeof _applyLevelBg === 'function') _applyLevelBg();
+  GameAudio.primeAudio();
   GameAudio.fadeOutIntro(400);
   CV.style.transition = 'opacity 0.4s linear';
   CV.style.opacity = '0';

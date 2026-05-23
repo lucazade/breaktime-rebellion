@@ -112,6 +112,12 @@ const GameAudio = (function() {
     });
   }
 
+  // Initialize WebAudio context immediately (call during a user-gesture to avoid hardware pop).
+  function primeAudio() {
+    _initWebAudio();
+    if (_audioCtx && _audioCtx.state === 'suspended') _audioCtx.resume().catch(function() {});
+  }
+
   function playMusic() {
     _initWebAudio();
     stopJingle();
@@ -120,8 +126,9 @@ const GameAudio = (function() {
     if (other) { other.pause(); other.currentTime = 0; }
     if (!track) return;
     track.currentTime = 0;
-    track.volume = CONFIG.audio.musicVolume;
+    track.volume = 0;
     track.play().catch(function() {});
+    _fadeAudio(track, CONFIG.audio.musicVolume, 300);
   }
 
   function stopMusic() {
@@ -213,5 +220,5 @@ const GameAudio = (function() {
     jingle.play().catch(function() {});
   }
 
-  return { playIntro: playIntro, stopIntro: stopIntro, fadeOutIntro: fadeOutIntro, fadeOutMusic: fadeOutMusic, playMusic: playMusic, stopMusic: stopMusic, pauseMusic: pauseMusic, resumeMusic: resumeMusic, playSfx: playSfx, playSfxThen: playSfxThen, playJingle: playJingle, stopJingle: stopJingle, setMode: setMode, getMode: getMode };
+  return { primeAudio: primeAudio, playIntro: playIntro, stopIntro: stopIntro, fadeOutIntro: fadeOutIntro, fadeOutMusic: fadeOutMusic, playMusic: playMusic, stopMusic: stopMusic, pauseMusic: pauseMusic, resumeMusic: resumeMusic, playSfx: playSfx, playSfxThen: playSfxThen, playJingle: playJingle, stopJingle: stopJingle, setMode: setMode, getMode: getMode };
 })();
