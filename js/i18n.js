@@ -52,7 +52,7 @@
     btnNo:                'NO',
 
     storyTitle:           '— 1987 —',
-    storyText:            "Luca dares Marco to pull off a string of pranks to become the school legend.|Marco never backs down from a dare.",
+    storyText:            "Luca challenges Marco to a series of school rebellions to become a school legend. Marco, of course, doesn't back down!",
 
     mission1:             'Vandalize all boards and then ring the bell!',
     getCloser:            'Vandalize the board!',
@@ -152,7 +152,7 @@
     btnNo:                'NO',
 
     storyTitle:           '— 1987 —',
-    storyText:            "Luca sfida Marco a fare una serie di marachelle per diventare la leggenda della scuola.|Marco ovviamente non si tira indietro!",
+    storyText:            "Luca sfida Marco a fare una serie di azioni di ribellione scolastica per diventare la leggenda della scuola.|Marco ovviamente non si tira indietro!",
 
     mission1:             'Imbratta tutte le lavagne e poi suona la campanella!',
     getCloser:            'Imbratta la lavagna!',
@@ -185,8 +185,8 @@
     bookReset:            'Rimesso a posto! Rifallo!',
     bookDropped:          'Tutti caduti! Suona la campanella!',
 
-    mission7:             'Allaga il bagno!',
-    sinkHint:             'Tieni premuto per aprire il rubinetto e poi suona la campanella!',
+    mission7:             'Allaga il bagno e poi suona la campanella!',
+    sinkHint:             'Tieni premuto per aprire il rubinetto!',
     sinkProgress:         'Bagno allagato! ({0}/{1})',
     sinkReady:            'Apri ancora!',
     sinkFlooded:          'Bagno Allagato! Suona la campanella!',
