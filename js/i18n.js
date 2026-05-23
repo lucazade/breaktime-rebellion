@@ -22,6 +22,7 @@
     levelLabel:           'Lvl',
 
     audioFull: 'music', audioSfx: 'sfx', audioMute: 'mute',
+    difficulty_easy: 'EASY', difficulty_medium: 'MED', difficulty_hard: 'HARD',
     tapToStart:           'TAP TO START',
     reloadLose:           'TAP TO TRY AGAIN',
     reloadNext:           'TAP FOR NEXT LEVEL',
@@ -122,6 +123,7 @@
     levelLabel:           'Lvl',
 
     audioFull: 'musica', audioSfx: 'sfx', audioMute: 'muto',
+    difficulty_easy: 'EASY', difficulty_medium: 'MED', difficulty_hard: 'HARD',
     tapToStart:           'TOCCA PER INIZIARE',
     reloadLose:           'TOCCA PER RIPROVARE',
     reloadNext:           'TOCCA PER IL LIVELLO SUCCESSIVO',

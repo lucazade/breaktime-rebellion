@@ -46,6 +46,7 @@ Object.assign(CONFIG.vis, {
       prevX:   10, prevW: 14,
       nextX:   76, nextW: 14,
       labelX:  50,
+      diffX: 134, diffW: 52,
       audioRightX: 310, audioPadX: 6,
     },
     legend: { fontSize: 4, gapY: 6 },

@@ -89,6 +89,12 @@ function _titleCycleAudio() {
   if (next === 'full') GameAudio.playIntro();
 }
 
+function _titleCycleDifficulty() {
+  var modes = ['easy', 'medium', 'hard'];
+  gameDifficulty = modes[(modes.indexOf(gameDifficulty) + 1) % modes.length];
+  localStorage.setItem('btr_difficulty', gameDifficulty);
+}
+
 var _titleCtrlY = 0;       // updated by drawTitleScreen every frame
 var _titleLogoRect = null; // {x,y,w,h} of the logo
 var _titleAudioX = 0, _titleAudioW = 0; // audio button position (dynamic width)
@@ -101,6 +107,7 @@ function _titleCanvasClick(lx, ly) {
   var padUp = Math.min(tpY, Math.max(0, _titleCtrlY - logoBottom - 1)); // don't exceed logo
   if (ly >= _titleCtrlY - padUp && ly <= _titleCtrlY + ct.btnH + tpY) {
     if (lx >= _titleAudioX - tpX && lx <= _titleAudioX + _titleAudioW + tpX) { _titleCycleAudio(); return; }
+    if (lx >= ct.diffX - tpX && lx <= ct.diffX + ct.diffW + tpX) { _titleCycleDifficulty(); return; }
     if (lx >= ct.prevX - tpX && lx <= ct.prevX + ct.prevW + tpX && currentLevel > 1 && LEVELS.length > 1) { currentLevel--; return; }
     if (lx >= ct.nextX - tpX && lx <= ct.nextX + ct.nextW + tpX && currentLevel < _btrMax && LEVELS.length > 1) { currentLevel++; return; }
     return;

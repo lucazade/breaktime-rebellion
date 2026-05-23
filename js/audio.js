@@ -126,6 +126,7 @@ const GameAudio = (function() {
     if (other) { other.pause(); other.currentTime = 0; }
     if (!track) return;
     track.currentTime = 0;
+    track.playbackRate = 1.0;
     track.volume = 0;
     track.play().catch(function() {});
     _fadeAudio(track, CONFIG.audio.musicVolume, 300);
@@ -220,5 +221,10 @@ const GameAudio = (function() {
     jingle.play().catch(function() {});
   }
 
-  return { primeAudio: primeAudio, playIntro: playIntro, stopIntro: stopIntro, fadeOutIntro: fadeOutIntro, fadeOutMusic: fadeOutMusic, playMusic: playMusic, stopMusic: stopMusic, pauseMusic: pauseMusic, resumeMusic: resumeMusic, playSfx: playSfx, playSfxThen: playSfxThen, playJingle: playJingle, stopJingle: stopJingle, setMode: setMode, getMode: getMode };
+  function setMusicRate(rate) {
+    var t = _gameTrack();
+    if (t) t.playbackRate = rate;
+  }
+
+  return { primeAudio: primeAudio, playIntro: playIntro, stopIntro: stopIntro, fadeOutIntro: fadeOutIntro, fadeOutMusic: fadeOutMusic, playMusic: playMusic, stopMusic: stopMusic, pauseMusic: pauseMusic, resumeMusic: resumeMusic, playSfx: playSfx, playSfxThen: playSfxThen, playJingle: playJingle, stopJingle: stopJingle, setMode: setMode, getMode: getMode, setMusicRate: setMusicRate };
 })();

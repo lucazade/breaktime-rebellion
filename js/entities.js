@@ -320,8 +320,11 @@ function updateTimer() {
   if (missionBannerT > 0) return;
   if (player.stunT > 0) return;
   timerTicks--;
+  var _pct = timerTicks / maxTimerTicks;
+  GameAudio.setMusicRate(_pct >= 0.5 ? 1.0 : 1.0 + (0.5 - _pct) * 0.6);
   if (timerTicks <= 0) {
     timerTicks = 0;
+    GameAudio.setMusicRate(1.0);
     lives--;
     if (lives > 0) setMsg(STRINGS.timesUp);
     else msgT = 0;

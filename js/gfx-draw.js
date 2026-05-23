@@ -102,6 +102,19 @@ function drawTitleScreen() {
       ctx.stroke();
       ctx.restore();
     }
+    // Pulsing glow — replaces "tap to start" as interaction invite
+    if (!_titleStarting) {
+      var _ga = 0.3 + 0.3 * Math.sin(frame * Math.PI / 60);
+      ctx.save();
+      ctx.strokeStyle = PAL.gold;
+      ctx.lineWidth = 1.5;
+      ctx.globalAlpha = _ga;
+      ctx.beginPath(); ctx.roundRect(logoX-3, logoY-3, logoW+6, logoH+6, r+3); ctx.stroke();
+      ctx.lineWidth = 0.5;
+      ctx.globalAlpha = _ga * 0.45;
+      ctx.beginPath(); ctx.roundRect(logoX-6, logoY-6, logoW+12, logoH+12, r+6); ctx.stroke();
+      ctx.restore();
+    }
   }
 
   ctx.save();
@@ -139,16 +152,12 @@ function drawTitleScreen() {
     }
   }
 
-  // Tap to start — shown in the controls bar, blinking (if CONFIG.display.showTapToStart)
-  if (CONFIG.display.showTapToStart && !_titleStarting && Math.floor(frame / 20) % 2 === 0) {
-    var vTap = VT.tapToStart;
-    var tapX = vTap.alignX === 'left' ? 0 : vTap.alignX === 'right' ? W : W / 2;
-    var tapOffY = vTap.alignY === 'top' ? 1 : vTap.alignY === 'bottom' ? ct.btnH - vTap.fontSize - 1 : Math.floor((ct.btnH - vTap.fontSize) / 2);
-    ctx.font = vTap.fontSize + 'px ' + FF;
-    ctx.fillStyle = PAL.gold; ctx.textAlign = vTap.alignX;
-    ctx.fillText(STRINGS.tapToStart, tapX, ctrlY + tapOffY);
-    ctx.font = ct.fontSize + 'px ' + FF; ctx.textAlign = 'center';
-  }
+  // Difficulty toggle — centered between level chooser and audio
+  var diffColor = gameDifficulty === 'hard' ? PAL.timerRed : gameDifficulty === 'medium' ? PAL.timerYellow : PAL.timerGreen;
+  _box(ct.diffX, ctrlY, ct.diffW, diffColor);
+  ctx.fillStyle = diffColor; ctx.textAlign = 'center';
+  ctx.fillText(STRINGS['difficulty_' + gameDifficulty] || gameDifficulty.toUpperCase(), ct.diffX + ct.diffW / 2, ctrlTextY);
+  ctx.textAlign = 'center';
 
   // Audio toggle — fixed width based on the longest label across all modes
   var audioMode = GameAudio.getMode();

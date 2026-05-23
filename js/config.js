@@ -41,7 +41,7 @@ const CONFIG = {
   display: {
     desktopZoom:    2.0,                 // desktop CSS zoom — 2.0 → canvas renders at 4× native (800px display height)
     fontFamily:     '"Press Start 2P"',  // canvas font — used everywhere via FF shortcut + --btr-font-family CSS var
-    showTapToStart: true,                // "TAP TO START" blink on title screen
+    showTapToStart: false,               // replaced by difficulty button + logo glow
     showLegend:     false,               // keyboard legend row on title screen (desktop only)
     simulateMobile: false,               // force mobile layout on desktop (for testing)
   },
