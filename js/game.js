@@ -62,14 +62,9 @@ function _applyLevelBg() {
 var _legendEl = document.getElementById('legend');
 (function() {
   if (!_legendEl || !_isDesktop || CONFIG.display.simulateMobile) return;
-  var ff = CONFIG.display.fontFamily;
-  var col = PAL.lgray;
-  var ks = 'display:inline-block;border:1px solid '+col+';border-radius:2px;padding:1px 4px;margin:0 1px;font-family:'+ff+';font-size:8px;color:'+col+';line-height:1.5;vertical-align:middle;';
-  var ts = 'font-family:'+ff+';font-size:8px;color:'+col+';margin:0 8px 0 3px;vertical-align:middle;';
-  function _key(lbl) { var e=document.createElement('span'); e.style.cssText=ks; e.textContent=lbl; return e; }
-  function _lbl(lbl) { var e=document.createElement('span'); e.style.cssText=ts; e.textContent=lbl; return e; }
+  function _key(lbl) { var e=document.createElement('span'); e.className='leg-key'; e.textContent=lbl; return e; }
+  function _lbl(lbl) { var e=document.createElement('span'); e.className='leg-lbl'; e.textContent=lbl; return e; }
   var wrap = document.createElement('div');
-  wrap.style.cssText = 'display:inline-flex;align-items:center;';
   [
     [['<','^','v','>'], STRINGS.keyMove],
     [['Z'],             STRINGS.keyAction],
@@ -81,12 +76,11 @@ var _legendEl = document.getElementById('legend');
     wrap.appendChild(_lbl(g[1]));
   });
   _legendEl.appendChild(wrap);
-  _legendEl.style.cssText = 'position:fixed;bottom:8px;left:0;right:0;text-align:center;pointer-events:none;display:none;';
 })();
 
 function _showLegend(v) {
   if (!_legendEl) return;
-  _legendEl.style.display = (v && _isDesktop && !CONFIG.display.simulateMobile) ? 'block' : 'none';
+  _legendEl.classList.toggle('visible', !!(v && _isDesktop && !CONFIG.display.simulateMobile));
 }
 
 var _titleStarting = false;

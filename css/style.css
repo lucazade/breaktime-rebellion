@@ -288,6 +288,25 @@ canvas {
   /* 4x canvas on desktop: no CSS upscaling needed — smooth rendering for font clarity */
   canvas { image-rendering: auto; }
 
+  /* Keyboard legend — fixed footer on title screen */
+  #legend {
+    position: fixed; bottom: 8px; left: 0; right: 0;
+    text-align: center; pointer-events: none; display: none;
+  }
+  #legend.visible { display: block; }
+  #legend > div { display: inline-flex; align-items: center; }
+  #legend .leg-key {
+    display: inline-block;
+    border: 1px solid #959595; border-radius: 2px;
+    padding: 1px 4px; margin: 0 1px;
+    font-family: var(--btr-font-family, monospace); font-size: 8px;
+    color: #959595; line-height: 1.5; vertical-align: middle;
+  }
+  #legend .leg-lbl {
+    font-family: var(--btr-font-family, monospace); font-size: 8px;
+    color: #959595; margin: 0 8px 0 3px; vertical-align: middle;
+  }
+
 }
 
 /* ─── SIMULATE MOBILE — debug flag CONFIG.debug.simulateMobile ─── */
