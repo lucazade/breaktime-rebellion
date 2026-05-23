@@ -161,8 +161,8 @@ function updatePlayer() {
           sp.lighterT = 0;
           sp.active = true;
           score += 300;
-          addFloating(sp.x, sp.y - 8, '+300', PAL.cyan);
-          addParticles(sp.x + 4, sp.y, PAL.cyan, 15);
+          addFloating(sp.x, sp.y - 8, '+300', PAL.scoreParticle);
+          addParticles(sp.x + 4, sp.y, PAL.scoreParticle, 15);
           for (let ti = 0; ti < teachers.length; ti++) {
             const t = teachers[ti];
             const tFloor = t.y > (MY+GY)/2 ? 'GY' : t.y > (TY+MY)/2 ? 'MY' : 'TY';
@@ -197,8 +197,8 @@ function updatePlayer() {
         sink.waterLevel = 3;
         sink.floodSpread = 0;
         score += 300;
-        addFloating(sink.x + 6, sink.y - 8, '+300', PAL.cyan);
-        addParticles(sink.x + 6, sink.y, PAL.cyan, 12);
+        addFloating(sink.x + 6, sink.y - 8, '+300', PAL.scoreParticle);
+        addParticles(sink.x + 6, sink.y, PAL.scoreParticle, 12);
         alertTeachers(107, sink.y);
         if (sink.pourCount >= 3) {
           GameAudio.playSfxThen('sink', function() { setTimeout(function() { GameAudio.playSfx('mechCompleted'); }, 250); });

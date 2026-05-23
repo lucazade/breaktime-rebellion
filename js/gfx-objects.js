@@ -377,7 +377,7 @@ function drawSprinklers() {
         const pdx = Math.abs(player.x + PW/2 - sp.x - 4);
         const pdy = Math.abs(player.y - sp.y);
         if (pdx < 16 && pdy < 50) {
-          ctx.strokeStyle = PAL.flame; ctx.lineWidth = 1;
+          ctx.strokeStyle = PAL.objectActiveBorder; ctx.lineWidth = 1;
           ctx.setLineDash([2, 2]);
           const _ds = CONFIG.vis.dashed.sprinklers; ctx.strokeRect(bx+_ds.x, by+_ds.y, _ds.w, _ds.h);
           ctx.setLineDash([]);
@@ -517,7 +517,7 @@ function drawSink() {
     const pdx = Math.abs(player.x + PW/2 - sink.x - 6);
     const pdy = Math.abs(player.y + PH  - sink.y - 10);
     if (pdx < 14 && pdy < 20) {
-      ctx.strokeStyle = PAL.sinkActiveBorder; ctx.lineWidth = 1;
+      ctx.strokeStyle = PAL.objectActiveBorder; ctx.lineWidth = 1;
       ctx.setLineDash([2, 2]);
       const _dsk = CONFIG.vis.dashed.sink; ctx.strokeRect(bx+_dsk.x, by+_dsk.y, _dsk.w, _dsk.h);
       ctx.setLineDash([]);
