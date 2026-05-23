@@ -310,23 +310,23 @@ CHIUSI:
 - [X] #153 Alcuni elementi sono troppo alti
 - [X] #154 Al pallone mancano alcuni pixel negli angoli
 - [X] #152 il nuovo bg (day & night) ora usa la stessa palette di logo. Farei un nuovo branch dove usiamo la palette di logo come riferimento per ricolorare tutti i personaggi e gli oggetti. I colori di base restano gli stessi ma sono più saturi e vivaci. Credo che i colori dei personaggi e  degli oggetti sono sparsi in diversi css e js (draw e layout? altri?).
+- [X] #155 aggiungere suono per indicare che la meccanica del livello è completa e che quindi si può suonare la campanella. Da applicare ad ogni livello. Fare attenzione a non sovrappore il suono a quello della meccanica ma suonarlo subito dopo! Suono da usare assets/audio/sfx/mech-completed.wav
 
 PER LUCA:
-SFX sostituire suono acqua bagno
-SFX sostituire suono mech-completed
-HUD ricolora meccaniche
-CHAR ricolora collo
-L1 ricolora prof rossi, verdi, celeste
-L2 ricolora bags
-L3 ricolora distributore
-L4 ricolora prof Ginnastica: verde più scuro
-L5 velocità professori e patrol ristretto
-L6 bidelli ai piani superiori
-L8 ricolorare secchi e prof piano intermedio
-L10 ricolorare maglia guardiano blu scuro
+- [ ] #159 SFX sostituire suono acqua bagno
+- [ ] #160 SFX sostituire suono mech-completed
+- [ ] #161 HUD ricolora meccaniche
+- [ ] #162 CHAR ricolora collo
+- [ ] #163 L1 ricolora prof rossi, verdi, celeste
+- [ ] #164 L2 ricolora bags
+- [ ] #165 L3 ricolora distributore
+- [ ] #166 L4 ricolora prof Ginnastica: verde più scuro
+- [ ] #167 L5 velocità professori e patrol ristretto
+- [ ] #168 L6 bidelli ai piani superiori
+- [ ] #169 L8 ricolorare secchi e prof piano intermedio
+- [ ] #170 L10 ricolorare maglia guardiano blu scuro
 
 PER CLAUDE:
-- [ ] #155 aggiungere suono per indicare che la meccanica del livello è completa e che quindi si può suonare la campanella. Da applicare ad ogni livello. Fare attenzione a non sovrappore il suono a quello della meccanica ma suonarlo subito dopo! Suono da usare assets/audio/sfx/mech-completed.wav
--> L6 preside accorciare braccia
--> L7 e L9 target oggetto e punteggio floating devono essere gialli come negli altri livelli
--> Controllo progressbar tutte la stessa lunghezza
+- [ ] #156 L7 e L9 target oggetto e punteggio floating devono essere gialli come negli altri livelli
+- [ ] #157 Controllo progressbar tutte la stessa lunghezza
+- [ ] #158 L6 preside accorciare braccia
