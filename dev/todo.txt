@@ -326,6 +326,8 @@ PER LUCA:
 - [ ] #168 L6 bidelli ai piani superiori
 - [ ] #169 L8 ricolorare secchi e prof piano intermedio
 - [ ] #170 L10 ricolorare maglia guardiano blu scuro
+- [ ] #172 cambiare cartelle immagini
+- [ ] #173 aggiornare screenshot in readme
 
 PER CLAUDE:
 - [ ] #157 Controllo progressbar tutte la stessa lunghezza
