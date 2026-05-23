@@ -279,6 +279,7 @@ const PAL = {
 //  DEBUG
 // ═══════════════════════════════════════════════════════════
 
+  // ── Debug ─────────────────────────────────────────────────
   debugOverlayBg:    'rgba(0,0,0,0.6)',      // debug panel background
   debugStairFill:    'rgba(255,120,0,0.22)', // stair zone fill
   debugStairOutline: 'rgba(255,140,0,0.85)', // stair zone border
