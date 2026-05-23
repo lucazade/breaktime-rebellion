@@ -190,9 +190,9 @@ function drawGymBall() {
   }
   if (gymBall.shakeT > 0) {
     const pct = gymBall.shakeT / deflateTime;
-    ctx.fillStyle = PAL.barBg; ctx.fillRect(bx-2, by-9, 13, 5);
-    ctx.fillStyle = PAL.barDark; ctx.fillRect(bx-1, by-8, 11, 3);
-    ctx.fillStyle = PAL.barFill; ctx.fillRect(bx-1, by-8, Math.round(11 * pct), 3);
+    ctx.fillStyle = PAL.barBg; ctx.fillRect(bx-2, by-9, 14, 5);
+    ctx.fillStyle = PAL.barDark; ctx.fillRect(bx-1, by-8, 12, 3);
+    ctx.fillStyle = PAL.barFill; ctx.fillRect(bx-1, by-8, Math.round(12 * pct), 3);
   }
   // Basketball — proper pixel circle body + matching circular outline
   ctx.fillStyle = PAL.ballWood;
@@ -260,9 +260,9 @@ function drawBookcase() {
   // Progress bar while shaking; no book sprite (bg.png shows it in place)
   if (bookcase.shakeT > 0) {
     const pct = bookcase.shakeT / dropTime;
-    ctx.fillStyle = PAL.barBg; ctx.fillRect(bx-14, by-6, 9, 5);
-    ctx.fillStyle = PAL.barDark; ctx.fillRect(bx-13, by-5, 7, 3);
-    ctx.fillStyle = PAL.barFill; ctx.fillRect(bx-13, by-5, Math.round(7 * pct), 3);
+    ctx.fillStyle = PAL.barBg; ctx.fillRect(bx-16, by-6, 14, 5);
+    ctx.fillStyle = PAL.barDark; ctx.fillRect(bx-15, by-5, 12, 3);
+    ctx.fillStyle = PAL.barFill; ctx.fillRect(bx-15, by-5, Math.round(12 * pct), 3);
   }
 
   // Proximity dashed border — full bookcase area
@@ -296,9 +296,9 @@ function drawRegister() {
   // Progress bar while stealing
   if (register.stealT > 0) {
     const pct = register.stealT / registerTime;
-    ctx.fillStyle = PAL.barBg; ctx.fillRect(bx-2, by-7, 14, 4);
-    ctx.fillStyle = PAL.barDark; ctx.fillRect(bx-1, by-6, 12, 2);
-    ctx.fillStyle = PAL.barFill; ctx.fillRect(bx-1, by-6, Math.round(12 * pct), 2);
+    ctx.fillStyle = PAL.barBg; ctx.fillRect(bx-2, by-12, 14, 5);
+    ctx.fillStyle = PAL.barDark; ctx.fillRect(bx-1, by-11, 12, 3);
+    ctx.fillStyle = PAL.barFill; ctx.fillRect(bx-1, by-11, Math.round(12 * pct), 3);
   }
 
   // Proximity border
@@ -365,9 +365,9 @@ function drawSprinklers() {
     // Progress bar just below the sprinkler head
     if (sp.lighterT > 0 && !sp.active) {
       const pct = sp.lighterT / lighterTime;
-      ctx.fillStyle = PAL.barBg; ctx.fillRect(bx-1, by+8, 10, 4);
-      ctx.fillStyle = PAL.barDark; ctx.fillRect(bx, by+9, 8, 2);
-      ctx.fillStyle = PAL.barFill; ctx.fillRect(bx, by+9, Math.round(8 * pct), 2);
+      ctx.fillStyle = PAL.barBg; ctx.fillRect(bx-3, by+8, 14, 5);
+      ctx.fillStyle = PAL.barDark; ctx.fillRect(bx-2, by+9, 12, 3);
+      ctx.fillStyle = PAL.barFill; ctx.fillRect(bx-2, by+9, Math.round(12 * pct), 3);
     }
 
     // Proximity dashed border — same floor only
@@ -437,9 +437,9 @@ function drawBins() {
       }
       // Fuse countdown bar
       const pct = b.fuseT / 180;
-      ctx.fillStyle = PAL.barBg; ctx.fillRect(bx-2, by-25, 14, 4);
-      ctx.fillStyle = PAL.barDark; ctx.fillRect(bx-1, by-24, 12, 2);
-      ctx.fillStyle = PAL.barFill; ctx.fillRect(bx-1, by-24, Math.round(12 * pct), 2);
+      ctx.fillStyle = PAL.barBg; ctx.fillRect(bx-2, by-25, 14, 5);
+      ctx.fillStyle = PAL.barDark; ctx.fillRect(bx-1, by-24, 12, 3);
+      ctx.fillStyle = PAL.barFill; ctx.fillRect(bx-1, by-24, Math.round(12 * pct), 3);
     }
 
     // Proximity dashed border
@@ -507,9 +507,9 @@ function drawSink() {
   // Progress bar (left of sink) while pouring
   if (sink.pourT > 0) {
     const pct = sink.pourT / floodTime;
-    ctx.fillStyle = PAL.barBg; ctx.fillRect(bx+2, by-26, 9, 5);
-    ctx.fillStyle = PAL.barDark; ctx.fillRect(bx+3, by-25, 7, 3);
-    ctx.fillStyle = PAL.barFill; ctx.fillRect(bx+3, by-25, Math.round(7 * pct), 3);
+    ctx.fillStyle = PAL.barBg; ctx.fillRect(bx-1, by-27, 14, 5);
+    ctx.fillStyle = PAL.barDark; ctx.fillRect(bx, by-26, 12, 3);
+    ctx.fillStyle = PAL.barFill; ctx.fillRect(bx, by-26, Math.round(12 * pct), 3);
   }
 
   // Proximity dashed border — tight around basin only
