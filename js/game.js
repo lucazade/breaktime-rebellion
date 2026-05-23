@@ -32,6 +32,11 @@ CV.height = 200 * _canvasScale;
 ctx.scale(_canvasScale, _canvasScale); // logical 320×200 in both modes
 ctx.imageSmoothingEnabled = false;
 
+// Prime WebAudio on the very first user gesture so the AudioContext is already
+// running by the time the game starts — prevents the hardware pop/thump on game start.
+document.addEventListener('pointerdown', function() { GameAudio.primeAudio(); }, {once: true});
+document.addEventListener('keydown',     function() { GameAudio.primeAudio(); }, {once: true});
+
 // Pre-load day and night backgrounds; _applyLevelBg() switches based on nightMode
 var _bgDay = null, _bgNight = null;
 (function() {
