@@ -5,12 +5,12 @@
 // ═══════════════════════════════════════════════════════════
 const CONFIG = {
   images: {
-    background:        'assets/pics/bg-640-day.png',    // L1-L9 mobile (2x canvas)
-    backgroundHd:      'assets/pics/bg-1600-day.png',   // L1-L9 desktop (4x canvas)
-    backgroundNight:   'assets/pics/bg-640-night.png',  // L10 mobile
-    backgroundNightHd: 'assets/pics/bg-1600-night.png', // L10 desktop
-    logo:              'assets/pics/logo-640.png',      // 640×350 — mobile (2x canvas)
-    logoHd:            'assets/pics/logo-1600.png',     // 1697×927 — desktop (4x canvas)
+    background:        'assets/pics/bg/bg-640-day.png',    // L1-L9 mobile (2x canvas)
+    backgroundHd:      'assets/pics/bg/bg-1600-day.png',   // L1-L9 desktop (4x canvas)
+    backgroundNight:   'assets/pics/bg/bg-640-night.png',  // L10 mobile
+    backgroundNightHd: 'assets/pics/bg/bg-1600-night.png', // L10 desktop
+    logo:              'assets/pics/logo/logo-640.png',      // 640×350 — mobile (2x canvas)
+    logoHd:            'assets/pics/logo/logo-1600.png',     // 1697×927 — desktop (4x canvas)
   },
   audio: {
     musicVolume: 0.5,

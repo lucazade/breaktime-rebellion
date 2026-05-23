@@ -70,7 +70,7 @@ const PAL = {
   // ── Preside ───────────────────────────────────────────────
   presideSkin:       '#faa462',  // face, hands
   presideSkinShadow: '#fd6935',  // neck, collar shadow
-  presideHair:       '#706f6e',  // hair (grey)
+  presideHair:       '#FFFFFF',  // hair (white)
   presideBody:       '#2f2e2d',  // suit jacket
   presideTrousers:   '#706f6e',  // trousers
   presideShoes:      '#862c00',  // shoes
