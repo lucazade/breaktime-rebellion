@@ -335,8 +335,8 @@ PER LUCA:
 - [ ] #178 Icona BR
 
 PER CLAUDE:
-- [ ] #172 su mobile joypad e pulsanti sono un pò scomodi perchè vicino ai bordi del telefono, farli più grandi ridurebbe il canvas.. ma se il trigger dei controlli è anche nella prossimità? alternative?
-- [ ] #173 ref.171 in L9 se ti becca bidello al piano intermedio, respawni e ti uccide il bidello vicino a dove respawni (al piano terra).. "In updatePlayer() quando stunT sta per scadere, controlliamo se c'è un NPC entro raggio pericoloso" è valido in questo caso?
+- [ ] #178 su mobile joypad e pulsanti sono un pò scomodi perchè vicino ai bordi del telefono, farli più grandi ridurebbe il canvas.. ma se il trigger dei controlli è anche nella prossimità? alternative?
+- [ ] #179 ref.171 in L9 se ti becca bidello al piano intermedio, respawni e ti uccide il bidello vicino a dove respawni (al piano terra).. "In updatePlayer() quando stunT sta per scadere, controlliamo se c'è un NPC entro raggio pericoloso" è valido in questo caso?
 - [ ] #174 il gioco attualmente è a un buon grado di difficoltà ma non impossibile. Facciamo un easy medium e hard (teniamo l'attuale come easy)? Decidiamo dove mostrare in title il selettore difficoltà e cosa cambiare tra un livello di difficoltà e l'altro
 - [ ] #175 Velocità musica aumenta se tempo diminuisce
 - [ ] #176 Quando musica è attiva e si clicca su logo e si apre il gioco si sente un bump dall' altoparlante del telefono
