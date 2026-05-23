@@ -49,7 +49,7 @@ Object.assign(CONFIG.vis, {
       diffX:  134, diffW: 52,   // difficulty toggle, centered in canvas
       audioRightX: 310, audioPadX: 6, // audio toggle, right-aligned
     },
-    legend: { fontSize: 4, gapY: 6 }, // desktop keyboard legend (showLegend: false in prod)
+    legend: {}, // removed — legend now rendered as HTML DOM element
   },
 
   // HUD — strip in cima al canvas

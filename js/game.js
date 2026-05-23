@@ -57,6 +57,38 @@ function _applyLevelBg() {
 })();
 
 // ── Title screen state ────────────────────────────────────────────────────────
+
+// Keyboard legend — HTML DOM element below the game area (desktop only)
+var _legendEl = document.getElementById('legend');
+(function() {
+  if (!_legendEl || !CONFIG.display.showLegend || !_isDesktop || CONFIG.display.simulateMobile) return;
+  var ff = CONFIG.display.fontFamily;
+  var col = PAL.lgray;
+  var ks = 'display:inline-block;border:1px solid '+col+';border-radius:2px;padding:1px 4px;margin:0 1px;font-family:'+ff+';font-size:8px;color:'+col+';line-height:1.5;vertical-align:middle;';
+  var ts = 'font-family:'+ff+';font-size:8px;color:'+col+';margin:0 8px 0 3px;vertical-align:middle;';
+  function _key(lbl) { var e=document.createElement('span'); e.style.cssText=ks; e.textContent=lbl; return e; }
+  function _lbl(lbl) { var e=document.createElement('span'); e.style.cssText=ts; e.textContent=lbl; return e; }
+  var wrap = document.createElement('div');
+  wrap.style.cssText = 'display:inline-flex;align-items:center;';
+  [
+    [['<','^','v','>'], STRINGS.keyMove],
+    [['Z'],             STRINGS.keyAction],
+    [['C'],             STRINGS.keyCredits],
+    [['P'],             STRINGS.keyPause],
+    [['ESC'],           STRINGS.keyHome],
+  ].forEach(function(g) {
+    g[0].forEach(function(k) { wrap.appendChild(_key(k)); });
+    wrap.appendChild(_lbl(g[1]));
+  });
+  _legendEl.appendChild(wrap);
+  _legendEl.style.cssText = 'position:fixed;bottom:8px;left:0;right:0;text-align:center;pointer-events:none;display:none;';
+})();
+
+function _showLegend(v) {
+  if (!_legendEl) return;
+  _legendEl.style.display = (v && CONFIG.display.showLegend && _isDesktop && !CONFIG.display.simulateMobile) ? 'block' : 'none';
+}
+
 var _titleStarting = false;
 var _btrMax = 1;
 
@@ -66,6 +98,7 @@ function _initTitleState() {
     : Math.min(LEVELS.length, Math.max(1, parseInt(localStorage.getItem('btr_max_level') || '1')));
   currentLevel = Math.max(1, Math.min(_btrMax, parseInt(localStorage.getItem('btr_last_level') || '1')));
   _titleStarting = false;
+  _showLegend(true);
 }
 _initTitleState();
 document.body.classList.add('title-mode'); // active on page load (state='title')
@@ -79,6 +112,7 @@ function _tryStart() {
   if (_titleStarting || state !== 'title') return;
   if (window.innerWidth <= window.innerHeight) return; // portrait
   _titleStarting = true;
+  _showLegend(false);
   startGame();
 }
 

@@ -65,7 +65,6 @@ function drawTitleScreen() {
   ctx.clearRect(0, 0, W, H);
 
   var ct = VT.controls;
-  var showLegend = CONFIG.display.showLegend;
 
   // Logo height
   var logoW = VT.logo.w;
@@ -77,8 +76,7 @@ function drawTitleScreen() {
 
   // Vertical centering: compute total height of content block
   var ctrlBlockH = ct.gapY + ct.btnH;
-  var legBlockH  = showLegend ? (VT.legend.gapY  + VT.legend.fontSize + 2)  : 0;
-  var totalH = logoH + ctrlBlockH + legBlockH;
+  var totalH = logoH + ctrlBlockH;
   var logoY  = Math.max(0, Math.round((H - totalH) / 2));
   _titleLogoRect = logoH > 0 ? {x: logoX, y: logoY, w: logoW, h: logoH} : null;
 
@@ -179,43 +177,6 @@ function drawTitleScreen() {
   ctx.fillStyle = audioColor; ctx.textAlign = 'left';
   ctx.fillText(audioLabel, _blockX + _iconW + _gap, ctrlTextY);
   ctx.textAlign = 'center';
-
-  // Keyboard legend — desktop only, single row with key boxes
-  if (showLegend) {
-    var lf = VT.legend.fontSize, kh = lf + 2, kr = 1, ks = 4;
-    ctx.font = lf + 'px ' + FF;
-    ctx.lineWidth = 1; ctx.textBaseline = 'top';
-    var legY = ctrlY + ct.btnH + VT.legend.gapY;
-
-    function _kw(c) { return ctx.measureText(c).width + 4; }
-    function _key(x, c) {
-      var kw = _kw(c);
-      ctx.strokeStyle = PAL.lgray; ctx.beginPath(); ctx.roundRect(x, legY, kw, kh, kr); ctx.stroke();
-      ctx.fillStyle = PAL.lgray; ctx.textAlign = 'center'; ctx.fillText(c, x + kw/2, legY + 1);
-      return kw;
-    }
-
-    var twMov=ctx.measureText(STRINGS.keyMove||'move').width;
-    var twAct=ctx.measureText(STRINGS.keyAction||'action').width;
-    var twPau=ctx.measureText(STRINGS.keyPause||'pause').width;
-    var twHom=ctx.measureText(STRINGS.keyHome||'home').width;
-    var twCre=ctx.measureText(STRINGS.keyCredits||'credits').width;
-    var totalLW = _kw('<')+1+_kw('^')+1+_kw('v')+1+_kw('>') + ks+twMov + ks+_kw('Z')+ks+twAct + ks+_kw('C')+ks+twCre + ks+_kw('P')+ks+twPau + ks+_kw('ESC')+ks+twHom;
-    var bx = Math.round((W - totalLW) / 2);
-
-    bx += _key(bx,'<')+1; bx += _key(bx,'^')+1; bx += _key(bx,'v')+1; bx += _key(bx,'>');
-    bx += ks; ctx.fillStyle=PAL.lgray; ctx.textAlign='left'; ctx.fillText(STRINGS.keyMove||'move', bx, legY+1); bx += twMov;
-    bx += ks; bx += _key(bx,'Z');
-    bx += ks; ctx.fillStyle=PAL.lgray; ctx.textAlign='left'; ctx.fillText(STRINGS.keyAction||'action', bx, legY+1); bx += twAct;
-    bx += ks; bx += _key(bx,'C');
-    bx += ks; ctx.fillStyle=PAL.lgray; ctx.textAlign='left'; ctx.fillText(STRINGS.keyCredits||'credits', bx, legY+1); bx += twCre;
-    bx += ks; bx += _key(bx,'P');
-    bx += ks; ctx.fillStyle=PAL.lgray; ctx.textAlign='left'; ctx.fillText(STRINGS.keyPause||'pause', bx, legY+1); bx += twPau;
-    bx += ks; bx += _key(bx,'ESC');
-    bx += ks; ctx.fillStyle=PAL.lgray; ctx.textAlign='left'; ctx.fillText(STRINGS.keyHome||'home', bx, legY+1);
-
-    ctx.textAlign = 'center';
-  }
 
   ctx.restore();
 }
