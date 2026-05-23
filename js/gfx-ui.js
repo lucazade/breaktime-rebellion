@@ -36,10 +36,9 @@ Object.assign(CONFIG.vis, {
   // Title screen — logo + tap to start + level chooser + audio toggle + keyboard legend
   titleScreen: {
     logo:     { w: 300, borderW: 1, borderR: 5 },
-    tapToStart: { fontSize: 6, alignX: 'center', alignY: 'middle' },
     controls: {
       fontSize: 8,
-      gapY:     8,
+      gapY:     12,
       btnH:    11,
       boxR:     2,
       btnColor: PAL.btnLabel,

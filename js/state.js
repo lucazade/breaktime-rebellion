@@ -59,12 +59,13 @@ function resetLevel() {
   BOARDS   = lv.boards.map(function(b)   { return {x:b.x, y:b.y, done:false}; });
   bags     = lv.bags.map(function(b)     { return {x:b.x, y:b.y, collected:false}; });
   BELL     = {x:lv.bell.x, y:lv.bell.y, ringing:false, done:false, ringT:0};
-  var _dS = gameDifficulty === 'hard' ? 1.5 : gameDifficulty === 'medium' ? 1.2 : 1.0;
-  var _dT = gameDifficulty === 'hard' ? 0.6 : gameDifficulty === 'medium' ? 0.8 : 1.0;
+  var _dSight = gameDifficulty === 'hard' ? 1.7 : gameDifficulty === 'medium' ? 1.3 : 1.0;
+  var _dSpeed = gameDifficulty === 'hard' ? 1.5 : gameDifficulty === 'medium' ? 1.2 : 1.0;
+  var _dT     = gameDifficulty === 'hard' ? 0.6 : gameDifficulty === 'medium' ? 0.8 : 1.0;
   teachers = lv.teachers.map(function(t) {
     return {x:t.x, y:t.y, dir:t.dir, minX:t.minX, maxX:t.maxX,
-            speed:t.speed * _dS, animT:0, color:t.color, name:t.name,
-            sight:Math.round(t.sight * _dS), alertT:0, chasing:false, chaseX:0, knockedT:0,
+            speed:Math.min(t.speed * _dSpeed, 1.0), animT:0, color:t.color, name:t.name,
+            sight:Math.round(t.sight * _dSight), alertT:0, chasing:false, chaseX:0, knockedT:0,
             catchRadius: t.catchRadius || 0, reactionT:0};
   });
   janitors = lv.janitors.map(function(j) {
