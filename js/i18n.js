@@ -2,7 +2,6 @@
 // Only plain strings here — formatting with {0}, {1}… placeholders done in game.js via fmt()
 (function() {
   var lang = (function() {
-    if (CONFIG.debug.lang && CONFIG.debug.lang !== 'auto') return CONFIG.debug.lang;
     var urlLang = new URLSearchParams(window.location.search).get('lang');
     if (urlLang) { localStorage.setItem('btr_lang', urlLang); return urlLang.slice(0, 2); }
     var stored = localStorage.getItem('btr_lang');

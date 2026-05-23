@@ -45,7 +45,6 @@ const CONFIG = {
     simulateMobile: false,               // force mobile layout on desktop (for testing)
   },
   debug: {
-    lang:           'auto', // 'auto' = navigator.language | 'it' | 'en'
     unlockAllLevels: false,
     godMode:         false,
   },
