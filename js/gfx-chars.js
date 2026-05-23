@@ -188,8 +188,8 @@ function drawPreside(x, y, dir, animT, bodyCol, chasing, knockedT) {
     ctx.fillRect(bx-s,   by+13+leg-s, 4+s*2, 2+s*2);
     ctx.fillRect(bx+3-s, by+13-leg-s, 4+s*2, 2+s*2);
     ctx.fillRect(bx-1-s, by+2-s, PW+2+s*2, 8+s*2);
-    ctx.fillRect(fX-s, by+5-s, 2+s*2, 9+s*2);
-    ctx.fillRect(bkX-s, by+5-s, 2+s*2, 9+s*2);
+    ctx.fillRect(fX-s, by+5-s, 2+s*2, 5+s*2);
+    ctx.fillRect(bkX-s, by+5-s, 2+s*2, 5+s*2);
     ctx.fillRect(bx+2-s, by+1-s, PW-4+s*2, 1+s*2);
     ctx.fillRect(bx+1-s, by-8-s, PW-2+s*2, 10+s*2);
   }
@@ -209,14 +209,14 @@ function drawPreside(x, y, dir, animT, bodyCol, chasing, knockedT) {
   const frontX = dir > 0 ? bx-2 : bx+PW;
   const backX  = dir > 0 ? bx+PW : bx-2;
   ctx.fillStyle = bodyCol;
-  ctx.fillRect(frontX, by+5, 2, 7);
-  ctx.fillRect(backX,  by+5, 2, 7);
+  ctx.fillRect(frontX, by+5, 2, 4);
+  ctx.fillRect(backX,  by+5, 2, 4);
   ctx.fillStyle = PAL.presideCuff;      // cuff
-  ctx.fillRect(frontX, by+11, 2, 1);
-  ctx.fillRect(backX,  by+11, 2, 1);
+  ctx.fillRect(frontX, by+8, 2, 1);
+  ctx.fillRect(backX,  by+8, 2, 1);
   ctx.fillStyle = PAL.presideSkin;      // hand
-  ctx.fillRect(frontX, by+12, 2, 2);
-  ctx.fillRect(backX,  by+12, 2, 2);
+  ctx.fillRect(frontX, by+9, 2, 1);
+  ctx.fillRect(backX,  by+9, 2, 1);
 
   // Head
   ctx.fillStyle = PAL.presideSkin;      ctx.fillRect(bx+1, by-7, PW-2, 8);
