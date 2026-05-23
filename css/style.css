@@ -294,7 +294,8 @@ canvas {
     text-align: center; pointer-events: none; display: none;
   }
   #legend.visible { display: block; }
-  #legend > div { display: inline-flex; align-items: center; }
+  #legend > div { display: inline-flex; align-items: center; gap: 16px; }
+  #legend .leg-group { display: inline-flex; align-items: center; }
   #legend .leg-key {
     display: inline-block;
     border: 1px solid #959595; border-radius: 2px;
@@ -304,7 +305,7 @@ canvas {
   }
   #legend .leg-lbl {
     font-family: var(--btr-font-family, monospace); font-size: 8px;
-    color: #959595; margin: 0 8px 0 3px; vertical-align: middle;
+    color: #959595; margin: 0 0 0 3px; vertical-align: middle;
   }
 
 }

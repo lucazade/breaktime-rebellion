@@ -72,8 +72,11 @@ var _legendEl = document.getElementById('legend');
     [['P'],             STRINGS.keyPause],
     [['ESC'],           STRINGS.keyHome],
   ].forEach(function(g) {
-    g[0].forEach(function(k) { wrap.appendChild(_key(k)); });
-    wrap.appendChild(_lbl(g[1]));
+    var grp = document.createElement('span');
+    grp.className = 'leg-group';
+    g[0].forEach(function(k) { grp.appendChild(_key(k)); });
+    grp.appendChild(_lbl(g[1]));
+    wrap.appendChild(grp);
   });
   _legendEl.appendChild(wrap);
 })();
