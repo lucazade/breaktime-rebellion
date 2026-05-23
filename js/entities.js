@@ -267,7 +267,15 @@ function updateBins() {
     addParticles(b.x + 5, b.y - 7, PAL.scoreParticle, 12);
     addParticles(b.x + 5, b.y - 7, PAL.explosionParticle,    8);
     addFloating(b.x - 8, b.y - 26, 'BOOM!', PAL.gold);
-    GameAudio.playSfx('explosion');
+    // Determine if this is the last bin so we can decide which sfx call to use below
+    var _binsAllDone = 0;
+    for (var _bk = 0; _bk < bins.length; _bk++) if (bins[_bk].exploded) _binsAllDone++;
+    var _isLastBin = (_binsAllDone >= bins.length);
+    if (_isLastBin) {
+      GameAudio.playSfxThen('explosion', function() { setTimeout(function() { GameAudio.playSfx('mechCompleted'); }, 250); });
+    } else {
+      GameAudio.playSfx('explosion');
+    }
 
     // Teachers on same floor: knocked if close, alerted if far
     for (let j = 0; j < teachers.length; j++) {
@@ -290,14 +298,12 @@ function updateBins() {
       return; // skip win check this frame
     }
 
-    let done = 0;
-    for (let k = 0; k < bins.length; k++) if (bins[k].exploded) done++;
     score += 300;
     addFloating(b.x + 5, b.y - 18, '+300', PAL.scoreParticle);
-    if (done >= bins.length) {
+    if (_isLastBin) {
       binExplodeWin();
     } else {
-      setMsg(fmt(STRINGS.binExploded, done, bins.length));
+      setMsg(fmt(STRINGS.binExploded, _binsAllDone, bins.length));
     }
   }
 }

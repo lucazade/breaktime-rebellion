@@ -33,8 +33,9 @@ const CONFIG = {
       fuse:      'assets/audio/sfx/fuse.mp3',
       explosion: 'assets/audio/sfx/explosion.wav',
       sprinkler: 'assets/audio/sfx/sprinkler.wav',
-      register:  'assets/audio/sfx/register.wav',
-      door:      'assets/audio/sfx/door.ogg',
+      register:      'assets/audio/sfx/register.wav',
+      door:          'assets/audio/sfx/door.ogg',
+      mechCompleted: 'assets/audio/sfx/mech-completed.wav',
     },
   },
   display: {

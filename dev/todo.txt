@@ -312,12 +312,21 @@ CHIUSI:
 - [X] #152 il nuovo bg (day & night) ora usa la stessa palette di logo. Farei un nuovo branch dove usiamo la palette di logo come riferimento per ricolorare tutti i personaggi e gli oggetti. I colori di base restano gli stessi ma sono più saturi e vivaci. Credo che i colori dei personaggi e  degli oggetti sono sparsi in diversi css e js (draw e layout? altri?).
 
 PER LUCA:
-sostituire suono acqua bagno
-ricolora meccaniche
-ricolora collo
-ricolora prof rossi, verdi, celeste
-ricolora bags
-rocolora distributore
+SFX sostituire suono acqua bagno
+SFX sostituire suono mech-completed
+HUD ricolora meccaniche
+CHAR ricolora collo
+L1 ricolora prof rossi, verdi, celeste
+L2 ricolora bags
+L3 ricolora distributore
+L4 ricolora prof Ginnastica: verde più scuro
+L5 velocità professori e patrol ristretto
+L6 bidelli ai piani superiori
+L8 ricolorare secchi e prof piano intermedio
+L10 ricolorare maglia guardiano blu scuro
 
 PER CLAUDE:
 - [ ] #155 aggiungere suono per indicare che la meccanica del livello è completa e che quindi si può suonare la campanella. Da applicare ad ogni livello. Fare attenzione a non sovrappore il suono a quello della meccanica ma suonarlo subito dopo! Suono da usare assets/audio/sfx/mech-completed.wav
+-> L6 preside accorciare braccia
+-> L7 e L9 target oggetto e punteggio floating devono essere gialli come negli altri livelli
+-> Controllo progressbar tutte la stessa lunghezza

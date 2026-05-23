@@ -180,6 +180,29 @@ const GameAudio = (function() {
     var s = cached.cloneNode(); s.volume = CONFIG.audio.sfxVolume; s.play().catch(function() {});
   }
 
+  // Like playSfx but calls cb when the sound finishes playing.
+  // In mute mode cb is called immediately (the sound won't play).
+  function playSfxThen(name, cb) {
+    if (mode === 'mute') { if (cb) cb(); return; }
+    if (_audioCtx && _sfxBuffers[name]) {
+      if (_audioCtx.state === 'suspended') _audioCtx.resume().catch(function() {});
+      var src = _audioCtx.createBufferSource();
+      src.buffer = _sfxBuffers[name];
+      var gain = _audioCtx.createGain();
+      gain.gain.value = CONFIG.audio.sfxVolume;
+      src.connect(gain); gain.connect(_audioCtx.destination);
+      if (cb) src.onended = cb;
+      src.start(0);
+      return;
+    }
+    var cached = _sfxCache[name];
+    if (!cached) { if (cb) cb(); return; }
+    var s = cached.cloneNode();
+    s.volume = CONFIG.audio.sfxVolume;
+    if (cb) s.addEventListener('ended', cb);
+    s.play().catch(function() {});
+  }
+
   function playJingle(name) {
     stopJingle();
     if (mode !== 'full') return; // jingles are music — silent in sfx-only and mute modes
@@ -190,5 +213,5 @@ const GameAudio = (function() {
     jingle.play().catch(function() {});
   }
 
-  return { playIntro: playIntro, stopIntro: stopIntro, fadeOutIntro: fadeOutIntro, fadeOutMusic: fadeOutMusic, playMusic: playMusic, stopMusic: stopMusic, pauseMusic: pauseMusic, resumeMusic: resumeMusic, playSfx: playSfx, playJingle: playJingle, stopJingle: stopJingle, setMode: setMode, getMode: getMode };
+  return { playIntro: playIntro, stopIntro: stopIntro, fadeOutIntro: fadeOutIntro, fadeOutMusic: fadeOutMusic, playMusic: playMusic, stopMusic: stopMusic, pauseMusic: pauseMusic, resumeMusic: resumeMusic, playSfx: playSfx, playSfxThen: playSfxThen, playJingle: playJingle, stopJingle: stopJingle, setMode: setMode, getMode: getMode };
 })();

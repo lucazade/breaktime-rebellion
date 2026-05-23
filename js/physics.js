@@ -47,7 +47,6 @@ function updatePlayer() {
         m.shakeT++;
         if (m.shakeT >= shakeTime) {
           m.broken = true;
-          GameAudio.playSfx('machine');
           score += 500;
           addFloating(m.x + 5, m.y, '+500', PAL.scoreParticle);
           addParticles(m.x + 5, m.y + 9, PAL.scoreParticle, 18);
@@ -55,8 +54,10 @@ function updatePlayer() {
           let broken = 0;
           for (let j = 0; j < machines.length; j++) if (machines[j].broken) broken++;
           if (broken === machines.length) {
+            GameAudio.playSfxThen('machine', function() { setTimeout(function() { GameAudio.playSfx('mechCompleted'); }, 250); });
             machineWin();
           } else {
+            GameAudio.playSfx('machine');
             setMsg(fmt(STRINGS.machineBroken, broken, machines.length));
           }
         }
@@ -76,13 +77,14 @@ function updatePlayer() {
         gymBall.deflated = true;
         gymBall.shakeT = 0;
         gymBall.deflateCount++;
-        GameAudio.playSfx('deflate');
         score += 300;
         addFloating(gymBall.x + 4, gymBall.y, '+300', PAL.scoreParticle);
         alertTeachers(gymBall.x + 4, gymBall.y + 4);
         if (gymBall.deflateCount >= 3) {
+          GameAudio.playSfxThen('deflate', function() { setTimeout(function() { GameAudio.playSfx('mechCompleted'); }, 250); });
           ballDeflatedWin();
         } else {
+          GameAudio.playSfx('deflate');
           gymBall.reinflateT = 240;
           setMsg(fmt(STRINGS.ballProgress, gymBall.deflateCount, 3));
         }
@@ -103,14 +105,15 @@ function updatePlayer() {
         bookcase.dropped = true;
         bookcase.shakeT = 0;
         bookcase.dropCount++;
-        GameAudio.playSfx('book');
         score += 300;
         addFloating(bookcase.x + 3, bookcase.y, '+300', PAL.scoreParticle);
         addParticles(bookcase.x + 3, bookcase.y + 6, PAL.scoreParticle, 12);
         alertTeachers(bookcase.x + 3, bookcase.y + 6);
         if (bookcase.dropCount >= 3) {
+          GameAudio.playSfxThen('book', function() { setTimeout(function() { GameAudio.playSfx('mechCompleted'); }, 250); });
           bookDropWin();
         } else {
+          GameAudio.playSfx('book');
           setMsg(fmt(STRINGS.bookProgress, bookcase.dropCount, 3));
         }
       }
@@ -131,7 +134,7 @@ function updatePlayer() {
         register.stealT = 0;
         score += 500;
         addFloating(register.x, register.y - 10, '+500', PAL.gold);
-        GameAudio.playSfx('register');
+        GameAudio.playSfxThen('register', function() { setTimeout(function() { GameAudio.playSfx('mechCompleted'); }, 250); });
         alertTeachers(register.x + 5, register.y);
         allRegisterWin();
       }
@@ -160,7 +163,6 @@ function updatePlayer() {
           score += 300;
           addFloating(sp.x, sp.y - 8, '+300', PAL.cyan);
           addParticles(sp.x + 4, sp.y, PAL.cyan, 15);
-          GameAudio.playSfx('sprinkler');
           for (let ti = 0; ti < teachers.length; ti++) {
             const t = teachers[ti];
             const tFloor = t.y > (MY+GY)/2 ? 'GY' : t.y > (TY+MY)/2 ? 'MY' : 'TY';
@@ -169,7 +171,13 @@ function updatePlayer() {
           }
           let done = 0;
           for (let k = 0; k < sprinklers.length; k++) if (sprinklers[k].active) done++;
-          if (done >= sprinklers.length) { allSprinklersWin(); } else { setMsg(fmt(STRINGS.sprinklerLit, done, sprinklers.length)); }
+          if (done >= sprinklers.length) {
+            GameAudio.playSfxThen('sprinkler', function() { setTimeout(function() { GameAudio.playSfx('mechCompleted'); }, 250); });
+            allSprinklersWin();
+          } else {
+            GameAudio.playSfx('sprinkler');
+            setMsg(fmt(STRINGS.sprinklerLit, done, sprinklers.length));
+          }
         }
         break;
       }
@@ -191,11 +199,12 @@ function updatePlayer() {
         score += 300;
         addFloating(sink.x + 6, sink.y - 8, '+300', PAL.cyan);
         addParticles(sink.x + 6, sink.y, PAL.cyan, 12);
-        GameAudio.playSfx('sink');
         alertTeachers(107, sink.y);
         if (sink.pourCount >= 3) {
+          GameAudio.playSfxThen('sink', function() { setTimeout(function() { GameAudio.playSfx('mechCompleted'); }, 250); });
           sinkFloodWin();
         } else {
+          GameAudio.playSfx('sink');
           setMsg(fmt(STRINGS.sinkProgress, sink.pourCount, 3));
         }
       }
@@ -264,11 +273,16 @@ function updatePlayer() {
       score += 200;
       addFloating(bag.x, bag.y, '+200', PAL.gold);
       addParticles(bag.x, bag.y, PAL.gold, 10);
-      GameAudio.playSfx('bag');
       alertTeachers(bag.x, bag.y);
       let remaining = 0;
       for (let bj = 0; bj < bags.length; bj++) if (!bags[bj].collected) remaining++;
-      if (remaining === 0) { bagWin(); } else { setMsg(fmt(STRINGS.bagStolen, bags.length - remaining, bags.length)); }
+      if (remaining === 0) {
+        GameAudio.playSfxThen('bag', function() { setTimeout(function() { GameAudio.playSfx('mechCompleted'); }, 250); });
+        bagWin();
+      } else {
+        GameAudio.playSfx('bag');
+        setMsg(fmt(STRINGS.bagStolen, bags.length - remaining, bags.length));
+      }
       break;
     }
   }
@@ -386,7 +400,6 @@ function updatePaperBalls() {
       if (Math.abs(b.x - (s.x + 5)) < 12 && Math.abs(b.y - (s.y - 10)) < 16) {
         s.disturbed = true;
         s.shakeT = 25;
-        GameAudio.playSfx('hit');
         score += 300;
         addFloating(s.x + 5, s.y - 18, '+300', PAL.scoreParticle);
         addParticles(s.x + 5, s.y - 10, PAL.scoreParticle, 8);
@@ -394,8 +407,10 @@ function updatePaperBalls() {
         let done = 0;
         for (let k = 0; k < students.length; k++) if (students[k].disturbed) done++;
         if (done === students.length) {
+          GameAudio.playSfxThen('hit', function() { setTimeout(function() { GameAudio.playSfx('mechCompleted'); }, 250); });
           allStudentsWin();
         } else {
+          GameAudio.playSfx('hit');
           setMsg(fmt(STRINGS.studentHit, done, students.length));
         }
         hit = true; break;
@@ -435,6 +450,7 @@ function tryAction() {
           if (done === BOARDS.length) {
             allBoards = true;
             setMsg(STRINGS.allBoards);
+            setTimeout(function() { GameAudio.playSfx('mechCompleted'); }, 250);
           } else {
             setMsg(fmt(STRINGS.boardTagged, done, BOARDS.length));
           }
