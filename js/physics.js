@@ -29,7 +29,21 @@ function clampX(x) { return Math.max(wallLeft, Math.min(W - PW - wallRight, x));
 
 function updatePlayer() {
   if (state !== 'playing') return;
-  if (player.stunT > 0) { if (--player.stunT === 0) player.stunEndedT = frame; return; }
+  if (player.stunT > 0) {
+    if (--player.stunT === 0) {
+      // Extend stun if any NPC is still dangerously close to Marco's position
+      const _dangerR = 30;
+      let _danger = false;
+      for (let _i = 0; _i < teachers.length && !_danger; _i++) {
+        if (Math.abs(teachers[_i].y - player.y) < 16 && Math.abs(teachers[_i].x - player.x) < _dangerR) _danger = true;
+      }
+      for (let _i = 0; _i < janitors.length && !_danger; _i++) {
+        if (Math.abs(janitors[_i].y - player.y) < 16 && Math.abs(janitors[_i].x - player.x) < _dangerR) _danger = true;
+      }
+      if (_danger) { player.stunT = 10; } else { player.stunEndedT = frame; }
+    }
+    return;
+  }
   if (player.spraying) { player.sprayT--; if (player.sprayT <= 0) player.spraying = false; return; }
 
   // Vending machine shake — hold action near machine to smash it

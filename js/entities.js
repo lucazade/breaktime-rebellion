@@ -96,27 +96,11 @@ function playerDied() {
     const ps = LEVELS[currentLevel - 1].playerStart;
     player.x = ps.x; player.y = ps.y; player.vy = 0;
     player.onStair = false; player.currentStair = null;
-    player.stunT = 120;
+    player.stunT = 50;
     timerTicks = maxTimerTicks;
     // Stop all teachers from chasing on respawn (player.stunT=120 prevents re-catch; direction already reversed in caughtBy)
     for (let i = 0; i < teachers.length; i++) {
       teachers[i].chasing = false; teachers[i].alertT = 0;
-    }
-    // #113: push any NPC within 50px of respawn zone away so Marco can't die immediately after stun ends
-    var _safeR = 50;
-    for (let i = 0; i < teachers.length; i++) {
-      var _t = teachers[i];
-      if (Math.abs(_t.y - ps.y) < 16 && Math.abs(_t.x - ps.x) < _safeR) {
-        _t.x = ps.x < (_t.minX + _t.maxX) / 2 ? Math.min(_t.maxX, ps.x + _safeR) : Math.max(_t.minX, ps.x - _safeR);
-        _t.dir = _t.x > ps.x ? 1 : -1;
-      }
-    }
-    for (let i = 0; i < janitors.length; i++) {
-      var _j = janitors[i];
-      if (Math.abs(_j.y - ps.y) < 16 && Math.abs(_j.x - ps.x) < _safeR) {
-        _j.x = ps.x < (_j.minX + _j.maxX) / 2 ? Math.min(_j.maxX, ps.x + _safeR) : Math.max(_j.minX, ps.x - _safeR);
-        _j.dir = _j.x > ps.x ? 1 : -1;
-      }
     }
   }
 }
@@ -124,7 +108,6 @@ function playerDied() {
 function caughtBy(t) {
   if (deathFreeze || player.stunT > 0 || frame === player.stunEndedT) return;
   if (CONFIG.debug.godMode) return;
-  t.dir = -t.dir; // bounce away after catch so they don't follow Marco to respawn
   t.chasing = false; t.alertT = 0;
   lives--;
   score = Math.max(0, score - 300);
