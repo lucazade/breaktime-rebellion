@@ -20,9 +20,9 @@
 ## Screenshots
 
 <p align="center">
-  <img src="assets/pics/screenshots/intro.png" width="47%" alt="Day levels">
+  <img src="assets/pics/screenshots/L1.png" width="47%" alt="Day levels">
   &nbsp;
-  <img src="assets/pics/screenshots/L1.png" width="47%" alt="Night level (L10)">
+  <img src="assets/pics/screenshots/L2.png" width="47%" alt="Night level (L10)">
 </p>
 
 > *Left: day levels (L1–L9) · Right: night mode — Level 10, the final heist*
