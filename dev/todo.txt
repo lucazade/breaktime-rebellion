@@ -347,5 +347,5 @@ PER LUCA:
 - [ ] #180 GENERIC Ricolorare banchi
 
 PER CLAUDE:
-- [ ] #181 Il selettore del livello deve essere per livello di difficoltà 
+- [X] #181 Il selettore del livello deve essere per livello di difficoltà
 - [ ] #183 Notion: Aggiornare files in Struttura del progetto

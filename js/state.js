@@ -117,7 +117,7 @@ function setMsg(t, d) { msgText = t; msgT = d || 220; msgDuration = msgT; }
 
 
 function startGame() {
-  localStorage.setItem('btr_last_level', currentLevel);
+  localStorage.setItem('btr_last_level_' + gameDifficulty, currentLevel);
   resetLevel();
   if (typeof _applyLevelBg === 'function') _applyLevelBg();
   GameAudio.primeAudio();
@@ -139,8 +139,8 @@ function startGame() {
 
 function nextLevel() {
   currentLevel++;
-  var savedMax = parseInt(localStorage.getItem('btr_max_level') || '1');
-  if (currentLevel > savedMax) localStorage.setItem('btr_max_level', currentLevel);
+  var savedMax = parseInt(localStorage.getItem('btr_max_level_' + gameDifficulty) || '1');
+  if (currentLevel > savedMax) localStorage.setItem('btr_max_level_' + gameDifficulty, currentLevel);
   resetLevel();
   if (typeof _applyLevelBg === 'function') _applyLevelBg();
   state = 'playing';

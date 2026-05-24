@@ -95,10 +95,17 @@ var _titleStarting = false;
 var _btrMax = 1;
 
 function _initTitleState() {
+  // One-time migration: copy old single-key progress to easy slot
+  if (!localStorage.getItem('btr_max_level_easy') && localStorage.getItem('btr_max_level')) {
+    localStorage.setItem('btr_max_level_easy',  localStorage.getItem('btr_max_level'));
+    localStorage.setItem('btr_last_level_easy', localStorage.getItem('btr_last_level') || '1');
+    localStorage.removeItem('btr_max_level');
+    localStorage.removeItem('btr_last_level');
+  }
   var debug = CONFIG.debug.unlockAllLevels;
   _btrMax = debug ? LEVELS.length
-    : Math.min(LEVELS.length, Math.max(1, parseInt(localStorage.getItem('btr_max_level') || '1')));
-  currentLevel = Math.max(1, Math.min(_btrMax, parseInt(localStorage.getItem('btr_last_level') || '1')));
+    : Math.min(LEVELS.length, Math.max(1, parseInt(localStorage.getItem('btr_max_level_' + gameDifficulty) || '1')));
+  currentLevel = Math.max(1, Math.min(_btrMax, parseInt(localStorage.getItem('btr_last_level_' + gameDifficulty) || '1')));
   _titleStarting = false;
   _showLegend(true);
 }
@@ -129,6 +136,10 @@ function _titleCycleDifficulty() {
   var modes = ['easy', 'medium', 'hard'];
   gameDifficulty = modes[(modes.indexOf(gameDifficulty) + 1) % modes.length];
   localStorage.setItem('btr_difficulty', gameDifficulty);
+  var debug = CONFIG.debug.unlockAllLevels;
+  _btrMax = debug ? LEVELS.length
+    : Math.min(LEVELS.length, Math.max(1, parseInt(localStorage.getItem('btr_max_level_' + gameDifficulty) || '1')));
+  currentLevel = Math.max(1, Math.min(_btrMax, parseInt(localStorage.getItem('btr_last_level_' + gameDifficulty) || '1')));
 }
 
 var _titleCtrlY = 0;       // updated by drawTitleScreen every frame
