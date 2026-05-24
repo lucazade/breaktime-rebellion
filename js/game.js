@@ -277,6 +277,7 @@ function loop(ts) {
   drawFloating();
   drawNightOverlay();
   drawLucaEnd();
+  drawHUD();
 
   // Centralised dark overlay — covers all banner panels
   var _shouldDim = state !== 'title' && (storyBannerT > 0 || storyBannerFading || missionBannerT > 0
@@ -298,7 +299,6 @@ function loop(ts) {
   drawPauseOverlay();
   drawHomeConfirm();
   drawCredits();
-  drawHUD();
   drawDebugOverlay();
   requestAnimationFrame(loop);
 }

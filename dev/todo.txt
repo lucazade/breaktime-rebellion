@@ -323,6 +323,7 @@ Durante il respawn non puoi neache muoverti, è un comportamento corretto essere
 - [X] #178 su mobile joypad e pulsanti sono un pò scomodi perchè vicino ai bordi del telefono, farli più grandi ridurebbe il canvas.. ma se il trigger dei controlli è anche nella prossimità? alternative?
 - [X] #174 il gioco attualmente è a un buon grado di difficoltà ma non impossibile. Facciamo un easy medium e hard (teniamo l'attuale come easy)? Decidiamo dove mostrare in title il selettore difficoltà e cosa cambiare tra un livello di difficoltà e l'altro
 - [X] #175 Velocità musica aumenta se tempo diminuisce
+- [X] #182 I cuori, l'icona mechanic e i caratteri della hud sembra che non siano scuriti quando ci sono i banner come il resto del canvas
 
 DA VERIFICARE:
 - [?] #179 ref.171 in L9 se ti becca bidello al piano intermedio, respawni e ti uccide il bidello vicino a dove respawni (al piano terra).. "In updatePlayer() quando stunT sta per scadere, controlliamo se c'è un NPC entro raggio pericoloso" è valido in questo caso?
@@ -347,5 +348,4 @@ PER LUCA:
 
 PER CLAUDE:
 - [ ] #181 Il selettore del livello deve essere per livello di difficoltà 
-- [ ] #182 I cuori, l'icona mechanic e i caratteri della hud sembra che non siano scuriti quando ci sono i banner come il resto del canvas
 - [ ] #183 Notion: Aggiornare files in Struttura del progetto
