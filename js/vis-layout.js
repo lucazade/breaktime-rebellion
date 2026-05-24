@@ -1,7 +1,6 @@
 // ═══════════════════════════════════════════════════════════
-//  GFX BUILDING — school building geometry: canvas size, floors, stairs
-//  Scene objects (boards, desks, bell, dashed) → gfx-objects.js
-//  Colors → gfx-palette.js  |  UI/banners → gfx-ui.js
+//  VIS LAYOUT — building geometry + fixed scene object positions
+//  Colors → palette.js  |  UI config → vis-ui.js
 // ═══════════════════════════════════════════════════════════
 
 // First section of CONFIG.vis: layout (must come before the shortcut constants)
@@ -24,9 +23,8 @@ const BW = CONFIG.vis.layout.BW, BH = CONFIG.vis.layout.BH;
 const walkOffset = CONFIG.vis.layout.walkOffset;
 const wallLeft = CONFIG.vis.layout.wallLeft, wallRight = CONFIG.vis.layout.wallRight;
 
-// Shared scene — stairs are structural (fixed in bg.png, same every level).
-// boards, desks, bell and dashed are defined in gfx-objects.js.
-// playerStart is defined in gfx-chars.js (needs PH, which is defined there).
+// Shared scene layout — fixed in bg.png, same every level.
+// playerStart is defined in draw-chars.js (needs PH, which is defined there).
 CONFIG.vis.shared = {
 
   // fdTop: px above the walking surface where the sprite starts to appear
@@ -38,9 +36,36 @@ CONFIG.vis.shared = {
     {x1:232, y1:MY-walkOffset, x2:285, y2:TY-walkOffset, fdTop:4, fdBot:12},  // MY→TY dx
   ],
 
+  boards: [
+    {x:130, y:GY-44},
+    {x:130, y:MY-43},
+    {x:72,  y:TY-41}, {x:130, y:TY-41},
+  ],
+
+  desks: [
+    {x:155, y:GY-22}, {x:179, y:GY-22},
+    {x:155, y:MY-22}, {x:179, y:MY-22},
+    {x:62,  y:TY-20}, {x:85,  y:TY-20}, {x:158, y:TY-20}, {x:182, y:TY-20},
+  ],
+
+  bell: { x: 7, y: GY - 49 },
+
 };
 
 // Alias for backwards compatibility with levels.js
 var SHARED_LAYOUT = CONFIG.vis.shared;
 
-// CSS custom properties — font-family is set by gfx-ui.js
+// Proximity dashed border offsets — { x, y, w, h } from object top-left
+CONFIG.vis.dashed = {
+  gymBall:    { x:-2, y:-2,  w:13, h:13 },
+  bookcase:   { x:0,  y:-8,  w:28, h:46 },
+  sprinklers: { x:-2, y:-4,  w:12, h:9  },
+  bins:       { x:-2, y:-16, w:14, h:18 },
+  sink:       { x:-2, y:-11, w:16, h:13 },
+  bags:       { x:-1, y:-1,  w:16, h:12 },
+  machines:   { x:-2, y:-2,  w:14, h:22 },
+  register:   { x:-2, y:-4,  w:14, h:18 },
+  exitDoor:   { x:-2, y:-14, w:14, h:30 },
+};
+
+// CSS custom properties — font-family is set by vis-ui.js

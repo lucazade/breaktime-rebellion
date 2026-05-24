@@ -1,39 +1,8 @@
 // ═══════════════════════════════════════════════════════════
-//  GFX OBJECTS — scene object data + sprite draw functions
-//  Data (boards, desks, bell, dashed) and draw functions live here.
-//  Building geometry (floors, stairs) → gfx-building.js
-//  Colors → gfx-palette.js
+//  DRAW OBJECTS — sprite draw functions for scene objects
+//  Layout data (positions, dashed) → vis-layout.js
+//  Colors → palette.js
 // ═══════════════════════════════════════════════════════════
-
-// Scene object positions — same in every level, fixed in bg.png.
-// Added to CONFIG.vis.shared (created in gfx-building.js) now that
-// GY/MY/TY/BW/BH/walkOffset shortcuts are available.
-Object.assign(CONFIG.vis.shared, {
-  boards: [
-    {x:130, y:GY-44},
-    {x:130, y:MY-43},
-    {x:72,  y:TY-41}, {x:130, y:TY-41},
-  ],
-  desks: [
-    {x:155, y:GY-22}, {x:179, y:GY-22},
-    {x:155, y:MY-22}, {x:179, y:MY-22},
-    {x:62,  y:TY-20}, {x:85,  y:TY-20}, {x:158, y:TY-20}, {x:182, y:TY-20},
-  ],
-  bell: { x: 7, y: GY - 49 },
-});
-
-// Proximity dashed border offsets — { x, y, w, h } from object top-left
-CONFIG.vis.dashed = {
-  gymBall:    { x:-2, y:-2,  w:13, h:13 },
-  bookcase:   { x:0,  y:-8,  w:28, h:46 },
-  sprinklers: { x:-2, y:-4,  w:12, h:9  },
-  bins:       { x:-2, y:-16, w:14, h:18 },
-  sink:       { x:-2, y:-11, w:16, h:13 },
-  bags:       { x:-1, y:-1,  w:16, h:12 },
-  machines:   { x:-2, y:-2,  w:14, h:22 },
-  register:   { x:-2, y:-4,  w:14, h:18 },
-  exitDoor:   { x:-2, y:-14, w:14, h:30 },
-};
 
 function drawDesks() {
   if (!_desksCache && DESKS.length > 0) {
