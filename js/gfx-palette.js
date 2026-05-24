@@ -141,6 +141,9 @@ const PAL = {
   titleHighlight: '#FEDC02',  // active next-level button / SFX audio mode highlight
   logoBorder:     '#000000',  // logo image border
   lockIconDetail: '#000000',  // keyhole detail in lock icon (locked levels)
+  diffEasy:       '#22cc44',  // difficulty selector — easy
+  diffMedium:     '#ddcc00',  // difficulty selector — medium
+  diffHard:       '#dd1100',  // difficulty selector — hard
 
   // ── Bezel (mobile side panels) ────────────────────────────
   bezelGlow:    'rgba(160,0,255,0.7)',           // panel inner glow border

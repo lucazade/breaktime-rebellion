@@ -151,7 +151,7 @@ function drawTitleScreen() {
   }
 
   // Difficulty toggle — centered between level chooser and audio
-  var diffColor = gameDifficulty === 'hard' ? PAL.timerRed : gameDifficulty === 'medium' ? PAL.timerYellow : PAL.timerGreen;
+  var diffColor = gameDifficulty === 'hard' ? PAL.diffHard : gameDifficulty === 'medium' ? PAL.diffMedium : PAL.diffEasy;
   _box(ct.diffX, ctrlY, ct.diffW, diffColor);
   ctx.fillStyle = diffColor; ctx.textAlign = 'center';
   ctx.fillText(STRINGS['difficulty_' + gameDifficulty] || gameDifficulty.toUpperCase(), ct.diffX + ct.diffW / 2, ctrlTextY);
