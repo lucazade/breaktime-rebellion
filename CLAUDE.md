@@ -33,11 +33,15 @@ js/                 ← ordine di caricamento obbligatorio:
   title.js          ← title screen events, service worker
 assets/
   pics/
-    logo.png        ← logo title screen
-    bg-640.png      ← background disegnato a mano (640×400px)
+    bg/
+      bg-1600-day.png   ← background giorno (1600×1000px)
+      bg-1600-night.png ← background notte L10 (1600×1000px)
+    logo/
+      logo-1600.png     ← logo title screen (1600px wide)
   audio/            ← musica e sfx
-  icon-192.png      ← icona PWA 192×192
-  icon-512.png      ← icona PWA 512×512
+  icons/
+    icon-192.png    ← icona PWA 192×192
+    icon-512.png    ← icona PWA 512×512
 dev/
   todo.txt          ← piano di implementazione a fasi
   refactor-gfx-palette/
@@ -157,25 +161,26 @@ Le coordinate usano `GY`, `MY`, `TY`, `PH`, `walkOffset` (da `gfx-building.js`) 
 
 ## Canvas e background
 
-**Risoluzione 2×:** canvas element `640×400`, `ctx.scale(2,2)` → coordinate logiche `320×200`. `ctx.imageSmoothingEnabled = false`.
+**Risoluzione 5×:** canvas element `1600×1000`, `ctx.scale(5,5)` → coordinate logiche `320×200`. `ctx.imageSmoothingEnabled = false`.
+CSS scala sempre DOWN (mai upscale) → nessuna distorsione su qualsiasi viewport.
 
-**Background bitmap** (`assets/pics/bg-640.png`, 640×400px):
-- `drawBg()` lo disegna a 1:1 (bypass `ctx.scale` con `setTransform`)
+**Background bitmap** (`assets/pics/bg/bg-1600-day.png`, 1600×1000px):
+- `drawBg()` lo disegna a 1:1 (bypass `ctx.scale` con `setTransform`) scalato a CV.width×CV.height via `createImageBitmap`
 - Muri, pavimenti, scale sono nel PNG — non esistono funzioni draw per questi elementi
 - Oggetti interattivi (banchi, lavagne, campanella, cartelle) sono sempre disegnati via codice sopra il PNG
 
 **Debug overlay (`?debug=1`):**
 - Mostra: floor lines (TY/MY/GY), stair boxes con coordinate, hitbox tutti gli oggetti
-- Utile per allineare `bg-640.png` con la logica
+- Utile per allineare il background PNG con la logica
 
 **Clip sprite sulle scale:** `drawCharClipped()` in gfx-chars.js disegna Marco in due passate (sopra e sotto la banda del pavimento) quando `player.onStair` è true. La banda è `[surfaceY - fdTop, surfaceY + fdBot]`.
 
 ## CONFIG (js/config.js)
 
 - `CONFIG.layout` — W, H, PW, PH, GY, MY, TY, BW, BH, walkOffset
-- `CONFIG.images` — percorsi immagini (`background: 'assets/pics/bg-640.png'`)
+- `CONFIG.images` — `background`, `backgroundNight`, `logo` (tutti 1600px)
 - `CONFIG.audio` — `musicVolume`, `sfxVolume`, `music`, `introMusic`, `bossMusic`, `sfx` map
-- `CONFIG.display` — `desktopZoom`, `fontFamily`, `showTapToStart`, `showLegend`, `simulateMobile`
+- `CONFIG.display` — `fontFamily`, `showSidePanels` (mostra pannelli arcade su desktop per testing)
 - `CONFIG.debug.unlockAllLevels` — `true` sblocca tutti i livelli nel chooser
 
 ## NPC sprites
