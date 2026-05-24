@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-  <strong>An arcade game set in an Italian high school of the '80s/'90s.</strong><br>
+  <strong>An arcade game set in an high school of the '80s/'90s.</strong><br>
   Inspired by the classic <em>Skool Daze (1984)</em> — cause chaos, dodge teachers, don't get caught.
 </p>
 
