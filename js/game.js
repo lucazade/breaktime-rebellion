@@ -228,7 +228,7 @@ function handleTap() {
 // #111: gameover choice — detect SI/NO button tap (logical canvas coords 320×200)
 function _gameoverChoice(lx, ly) {
   if (state !== 'gameover' || endScreenFadingOut || endScreenT < 20) return;
-  var VG = CONFIG.vis.gameover;
+  var VG = CONFIG.ui.gameover;
   var _gH = VG.padTop + VG.stepTitle + VG.stepLevel + VG.stepScore + VG.stepConfirm + VG.btnH + VG.padBottom;
   var _gp = _panPos(VG.panW, _gH); var bx = _gp.bx;
   var btnY = _gp.by + VG.padTop + VG.stepTitle + VG.stepLevel + VG.stepScore + VG.stepConfirm;

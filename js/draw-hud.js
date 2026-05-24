@@ -166,7 +166,7 @@ function _drawHudIcon(type, x, y, color, s) {
 
 function _hudObjInfo() {
   var done = 0, total = 0, mechanic = 'boards';
-  var dc = CONFIG.vis.hud.dotColors;
+  var dc = CONFIG.ui.hud.dotColors;
   if (bags.length > 0) {
     for (var i=0;i<bags.length;i++) if(bags[i].collected) done++; total=bags.length; mechanic='bags';
   } else if (levelMechanics.shakeMachines) {
@@ -193,7 +193,7 @@ function _hudObjInfo() {
 
 function drawHUD() {
   if (state === 'title') return;
-  var VH = CONFIG.vis.hud;
+  var VH = CONFIG.ui.hud;
   ctx.save();
   var _f = VH.fontSize + 'px ' + FF;
   var _hs = VH.heartSize || 1;  // 1 = 8×7px | 0.5 = 4×3px (small)

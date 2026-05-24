@@ -81,7 +81,7 @@ function hideCredits() {
 }
 
 function _pauseCanvasClick(lx, ly) {
-  var VP = CONFIG.vis.pauseOverlay;
+  var VP = CONFIG.ui.pauseOverlay;
   var pH = VP.padTop + VP.stepTitle + VP.btnH + VP.padBottom;
   var p = _panPos(VP.panW, pH);
   var btnY = p.by + VP.padTop + VP.stepTitle;
@@ -89,7 +89,7 @@ function _pauseCanvasClick(lx, ly) {
 }
 
 function _homeConfirmCanvasClick(lx, ly) {
-  var VH = CONFIG.vis.homeConfirm;
+  var VH = CONFIG.ui.homeConfirm;
   var hH = VH.padTop + VH.stepTitle + VH.btnH + VH.padBottom;
   var p = _panPos(VH.panW, hH);
   var btnY = p.by + VH.padTop + VH.stepTitle;
@@ -99,7 +99,7 @@ function _homeConfirmCanvasClick(lx, ly) {
 }
 
 function _creditsCanvasClick(lx, ly) {
-  var VC = CONFIG.vis.credits;
+  var VC = CONFIG.ui.credits;
   var n = _CREDITS_MEMBERS ? _CREDITS_MEMBERS.length : 5;
   var panH = VC.padTop + VC.stepTitle + VC.stepTeam + n*(VC.nameH+VC.nameGap+VC.roleH+VC.roleGap) + VC.btnGapAbove + VC.btnH + VC.padBottom;
   var p = _panPos(VC.panW, panH);

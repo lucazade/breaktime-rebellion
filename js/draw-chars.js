@@ -84,9 +84,9 @@ function drawGinnastica(x, y, dir, animT, chasing, knockedT) {
   ctx.fillRect(bx+5, by+2, 1, 8);
 
   // Cap — same style as janitor/guard
-  if (CONFIG.vis.char.outline) {
-    const s = CONFIG.vis.char.outlineSize || 1;
-    ctx.fillStyle = CONFIG.vis.char.outlineColor;
+  if (CONFIG.ui.char.outline) {
+    const s = CONFIG.ui.char.outlineSize || 1;
+    ctx.fillStyle = CONFIG.ui.char.outlineColor;
     ctx.fillRect(bx+1-s, by-9-s, PW-2+s*2, 3+s*2);
     ctx.fillRect((dir>0 ? bx+PW-1 : bx-1)-s, by-7-s, 3+s*2, 1+s*2);
   }
@@ -101,9 +101,9 @@ function drawGuard(x, y, dir, animT, knockedT) {
   if (knockedT > 0) {
     const fy = by + PH - 1;
     ctx.fillStyle = PAL.shadow; ctx.fillRect(bx-4, fy+2, 18, 2);
-    if (CONFIG.vis.char.outline) {
-      const s = CONFIG.vis.char.outlineSize || 1;
-      ctx.fillStyle = CONFIG.vis.char.outlineColor;
+    if (CONFIG.ui.char.outline) {
+      const s = CONFIG.ui.char.outlineSize || 1;
+      ctx.fillStyle = CONFIG.ui.char.outlineColor;
       ctx.fillRect(bx-2-s, fy-3-s, 14+s*2, 4+s*2);
       ctx.fillRect((dir>0 ? bx+12 : bx-6)-s, fy-4-s, 6+s*2, 5+s*2);
     }
@@ -113,9 +113,9 @@ function drawGuard(x, y, dir, animT, knockedT) {
   }
   const leg = Math.sin(animT) * 2.5;
   ctx.fillStyle = PAL.shadow; ctx.fillRect(bx-1, by+PH, PW, 2);
-  if (CONFIG.vis.char.outline) {
-    const s = CONFIG.vis.char.outlineSize || 1;
-    ctx.fillStyle = CONFIG.vis.char.outlineColor;
+  if (CONFIG.ui.char.outline) {
+    const s = CONFIG.ui.char.outlineSize || 1;
+    ctx.fillStyle = CONFIG.ui.char.outlineColor;
     ctx.fillRect(bx+1-s, by+10-s, 3+s*2, 4+leg+s*2);
     ctx.fillRect(bx+4-s, by+10-s, 3+s*2, 4-leg+s*2);
     ctx.fillRect(bx-s,   by+13+leg-s, 4+s*2, 2+s*2);
@@ -146,9 +146,9 @@ function drawPreside(x, y, dir, animT, bodyCol, chasing, knockedT) {
   if (knockedT > 0) {
     const fy = by + PH - 1;
     ctx.fillStyle = PAL.shadow; ctx.fillRect(bx-4, fy+2, 18, 2);
-    if (CONFIG.vis.char.outline) {
-      const s = CONFIG.vis.char.outlineSize || 1;
-      ctx.fillStyle = CONFIG.vis.char.outlineColor;
+    if (CONFIG.ui.char.outline) {
+      const s = CONFIG.ui.char.outlineSize || 1;
+      ctx.fillStyle = CONFIG.ui.char.outlineColor;
       ctx.fillRect(bx-2-s, fy-3-s, 14+s*2, 4+s*2);
       ctx.fillRect((dir>0 ? bx+12 : bx-6)-s, fy-4-s, 6+s*2, 5+s*2);
       ctx.fillRect((dir>0 ? bx-4 : bx+8)-s, fy-2-s, 4+s*2, 3+s*2);
@@ -164,11 +164,11 @@ function drawPreside(x, y, dir, animT, bodyCol, chasing, knockedT) {
   // Shadow slightly wider for heavier build
   ctx.fillStyle = PAL.shadow; ctx.fillRect(bx-2, by+PH, PW+4, 2);
 
-  if (CONFIG.vis.char.outline) {
-    const s = CONFIG.vis.char.outlineSize || 1;
+  if (CONFIG.ui.char.outline) {
+    const s = CONFIG.ui.char.outlineSize || 1;
     const fX = dir>0 ? bx-2 : bx+PW;
     const bkX = dir>0 ? bx+PW : bx-2;
-    ctx.fillStyle = CONFIG.vis.char.outlineColor;
+    ctx.fillStyle = CONFIG.ui.char.outlineColor;
     ctx.fillRect(bx+1-s, by+10-s, 3+s*2, 4+leg+s*2);
     ctx.fillRect(bx+4-s, by+10-s, 3+s*2, 4-leg+s*2);
     ctx.fillRect(bx-s,   by+13+leg-s, 4+s*2, 2+s*2);
@@ -230,9 +230,9 @@ function drawChar(x, y, dir, animT, bodyCol, colours, spraying, chasing, knocked
   if (colours.knockable && knockedT > 0) {
     const fy = by + PH - 1;
     ctx.fillStyle = PAL.shadow; ctx.fillRect(bx-4, fy+2, 18, 2);
-    if (CONFIG.vis.char.outline) {
-      const s = CONFIG.vis.char.outlineSize || 1;
-      ctx.fillStyle = CONFIG.vis.char.outlineColor;
+    if (CONFIG.ui.char.outline) {
+      const s = CONFIG.ui.char.outlineSize || 1;
+      ctx.fillStyle = CONFIG.ui.char.outlineColor;
       ctx.fillRect(bx-2-s, fy-3-s, 14+s*2, 4+s*2);
       ctx.fillRect((dir>0 ? bx+12 : bx-6)-s, fy-4-s, 6+s*2, 5+s*2);
       ctx.fillRect((dir>0 ? bx-4 : bx+8)-s, fy-2-s, 4+s*2, 3+s*2);
@@ -247,9 +247,9 @@ function drawChar(x, y, dir, animT, bodyCol, colours, spraying, chasing, knocked
 
   ctx.fillStyle = PAL.shadow; ctx.fillRect(bx-1, by+PH, PW, 2);
 
-  if (CONFIG.vis.char.outline) {
-    const s = CONFIG.vis.char.outlineSize || 1;
-    ctx.fillStyle = CONFIG.vis.char.outlineColor;
+  if (CONFIG.ui.char.outline) {
+    const s = CONFIG.ui.char.outlineSize || 1;
+    ctx.fillStyle = CONFIG.ui.char.outlineColor;
     ctx.fillRect(bx+1-s, by+10-s, 3+s*2, 4+leg+s*2);
     ctx.fillRect(bx+4-s, by+10-s, 3+s*2, 4-leg+s*2);
     ctx.fillRect(bx-s,   by+13+leg-s, 4+s*2, 2+s*2);
@@ -330,9 +330,9 @@ function drawJanitor(x, y, dir, animT) {
   const mx = dir > 0 ? bx+PW+2 : bx-3;
 
   // Salopette bib + suspender straps — drawn on top of white undershirt
-  if (CONFIG.vis.char.outline) {
-    const s = CONFIG.vis.char.outlineSize || 1;
-    ctx.fillStyle = CONFIG.vis.char.outlineColor;
+  if (CONFIG.ui.char.outline) {
+    const s = CONFIG.ui.char.outlineSize || 1;
+    ctx.fillStyle = CONFIG.ui.char.outlineColor;
     // cap
     ctx.fillRect(bx+1-s, by-9-s, PW-2+s*2, 3+s*2);
     ctx.fillRect((dir>0 ? bx+PW-1 : bx-1)-s, by-7-s, 3+s*2, 1+s*2);
@@ -371,7 +371,7 @@ function drawLucaEnd() {
 
   // Speech bubble — hidden once win banner appears
   if (state === 'win') return;
-  const VF = CONFIG.vis.lucaFumetto;
+  const VF = CONFIG.ui.lucaFumetto;
   ctx.font = VF.fontBody + 'px ' + FF;
   const raw = STRINGS.lucaAppears.replace(/^[^"]*"?/, '').replace(/".*$/, '');
   const parts = raw.split('|');
@@ -414,9 +414,9 @@ function drawStudents() {
     const wobble = s.shakeT > 0 ? Math.round(Math.sin(s.shakeT * 0.9) * 2) : 0;
     const bx = Math.round(s.x + 5) + wobble;
     const by = Math.round(s.y);
-    if (CONFIG.vis.char.outline) {
-      const so = CONFIG.vis.char.outlineSize || 1;
-      ctx.fillStyle = CONFIG.vis.char.outlineColor;
+    if (CONFIG.ui.char.outline) {
+      const so = CONFIG.ui.char.outlineSize || 1;
+      ctx.fillStyle = CONFIG.ui.char.outlineColor;
       ctx.fillRect(bx-2-so, by-17-so, 5+so*2, 8+so);   // head — ends at by-10, no expansion into neck row
       ctx.fillRect(bx-1-so, by-9-so,  3+so*2, 1+so*2); // neck — 3px outline
       ctx.fillRect(bx-3-so, by-8-so,  7+so*2, 6+so*2); // shirt — full expansion covers shoulder corners at by-9

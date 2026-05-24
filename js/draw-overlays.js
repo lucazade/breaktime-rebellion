@@ -9,7 +9,7 @@ var _CREDITS_MEMBERS = [
 ];
 
 function _dialogPanel(x, y, w, h, bgColor) {
-  var d = CONFIG.vis.dialog;
+  var d = CONFIG.ui.dialog;
   ctx.fillStyle = bgColor || d.panBg;
   ctx.beginPath(); ctx.roundRect(x, y, w, h, d.panR); ctx.fill();
   ctx.strokeStyle = d.panBorder; ctx.lineWidth = d.panBorderW;
@@ -17,7 +17,7 @@ function _dialogPanel(x, y, w, h, bgColor) {
 }
 
 function _dialogBtn(x, y, w, h, color) {
-  var d = CONFIG.vis.dialog;
+  var d = CONFIG.ui.dialog;
   ctx.fillStyle = color;
   ctx.beginPath(); ctx.roundRect(x, y, w, h, d.btnR); ctx.fill();
   ctx.strokeStyle = d.btnStroke; ctx.lineWidth = 1;
@@ -33,7 +33,7 @@ function drawEndScreen() {
   const fadeAlpha = Math.min(1, endScreenT / 20);
   ctx.save();
   ctx.globalAlpha = fadeAlpha;
-  const bx = Math.round(W / 2 - CONFIG.vis.gameover.panW / 2);
+  const bx = Math.round(W / 2 - CONFIG.ui.gameover.panW / 2);
   const isWin = state === 'win';
   const scoreText = STRINGS.scoreLabel + String(score).padStart(5, '0');
   const actionText = isWin
@@ -42,7 +42,7 @@ function drawEndScreen() {
   const actionVisible = Math.floor(frame / 20) % 2 === 0;
 
   if (!isWin) {
-    const VG = CONFIG.vis.gameover;
+    const VG = CONFIG.ui.gameover;
     const _gH = VG.padTop + VG.stepTitle + VG.stepLevel + VG.stepScore + VG.stepConfirm + VG.btnH + VG.padBottom;
     const {bx:gX, by:gY} = _panPos(VG.panW, _gH);
     _dialogPanel(gX, gY, VG.panW, _gH, VG.panBg);
@@ -57,14 +57,14 @@ function drawEndScreen() {
     ctx.fillStyle = PAL.gold;    ctx.fillText(STRINGS.gameoverConfirm,                 cx, ty); ty += VG.stepConfirm;
     ctx.font = VG.fontBtn + 'px ' + FF;
     const siX = gX + VG.siOx, noX = gX + VG.noOx;
-    _dialogBtn(siX, ty, VG.siW, VG.btnH, CONFIG.vis.dialog.btnColorYes);
+    _dialogBtn(siX, ty, VG.siW, VG.btnH, CONFIG.ui.dialog.btnColorYes);
     ctx.fillStyle = PAL.btnText; ctx.fillText(STRINGS.btnYes, siX + VG.siW/2, ty + Math.floor((VG.btnH - VG.fontBtn) / 2));
-    _dialogBtn(noX, ty, VG.noW, VG.btnH, CONFIG.vis.dialog.btnColorNo);
+    _dialogBtn(noX, ty, VG.noW, VG.btnH, CONFIG.ui.dialog.btnColorNo);
     ctx.fillStyle = PAL.btnText; ctx.fillText(STRINGS.btnNo, noX + VG.noW/2, ty + Math.floor((VG.btnH - VG.fontBtn) / 2));
   } else if (currentLevel === LEVELS.length) {
     const bestScore = parseInt(localStorage.getItem('btr_best_score') || '0');
     const bestLevel = parseInt(localStorage.getItem('btr_best_level') || '1');
-    const VW = CONFIG.vis.gameWin;
+    const VW = CONFIG.ui.gameWin;
     const _wH = VW.padTop + VW.stepTitle + VW.stepScore + (lastTimeBonus > 0 ? VW.stepBonus : 0) + (lastLivesBonus > 0 ? VW.stepBonus : 0) + VW.stepBest + VW.tapH + VW.padBottom;
     const {bx:wX, by:wY} = _panPos(VW.panW, _wH);
     _dialogPanel(wX, wY, VW.panW, _wH, VW.panBg);
@@ -80,7 +80,7 @@ function drawEndScreen() {
     ctx.fillStyle = PAL.bestScoreHighlight; ctx.fillText(STRINGS.bestLabel + ' LVL ' + bestLevel + ' — ' + String(bestScore).padStart(5,'0'), cxW, tyW); tyW += VW.stepBest;
     ctx.fillStyle = actionVisible ? PAL.gold : PAL.transparent; ctx.fillText(STRINGS.tapForTitle, cxW, tyW);
   } else {
-    const VL = CONFIG.vis.levelComplete;
+    const VL = CONFIG.ui.levelComplete;
     const _lH = VL.padTop + VL.stepTitle + VL.stepScore + (lastTimeBonus > 0 ? VL.stepBonus : 0) + VL.tapH + VL.padBottom;
     const {bx:lX, by:lY} = _panPos(VL.panW, _lH);
     _dialogPanel(lX, lY, VL.panW, _lH, VL.panBg);
@@ -100,7 +100,7 @@ function drawEndScreen() {
 function drawStoryBanner() {
   if (storyBannerT <= 0 || state !== 'playing') return;
   if (!storyBannerLines) {
-    ctx.font = CONFIG.vis.storyBanner.fontBody + 'px ' + FF;
+    ctx.font = CONFIG.ui.storyBanner.fontBody + 'px ' + FF;
     const parts = STRINGS.storyText.split('|');
     let lines = [];
     for (let p = 0; p < parts.length; p++) {
@@ -108,7 +108,7 @@ function drawStoryBanner() {
       let line = '';
       for (let i = 0; i < words.length; i++) {
         const test = line + (line ? ' ' : '') + words[i];
-        if (ctx.measureText(test).width > CONFIG.vis.storyBanner.wrapWidth) { lines.push(line); line = words[i]; }
+        if (ctx.measureText(test).width > CONFIG.ui.storyBanner.wrapWidth) { lines.push(line); line = words[i]; }
         else line = test;
       }
       if (line) lines.push(line);
@@ -118,7 +118,7 @@ function drawStoryBanner() {
   const storyPanelAlpha = storyBannerFading ? Math.max(0, storyBannerT / 20) : Math.min(1, storyFadeInT / 40);
   ctx.save();
   ctx.globalAlpha = storyPanelAlpha;
-  const VS = CONFIG.vis.storyBanner;
+  const VS = CONFIG.ui.storyBanner;
   const bw = VS.panW;
   const _stLineH = storyBannerLines.length * VS.lineH + Math.max(0, storyBannerLines.length - 1) * VS.lineSpacing;
   const bh = VS.padTop + VS.titleH + VS.titleSpacing + _stLineH + VS.spacerH + VS.tapH + VS.padBottom;
@@ -143,20 +143,20 @@ function drawStoryBanner() {
 function drawMissionBanner() {
   if (missionBannerT <= 0 || state !== 'playing') return;
   if (!missionBannerLines) {
-    ctx.font = CONFIG.vis.missionBanner.fontBody + 'px ' + FF;
+    ctx.font = CONFIG.ui.missionBanner.fontBody + 'px ' + FF;
     const text = STRINGS['mission' + currentLevel] || STRINGS.mission1;
     const words = text.split(' ');
     let line = '', lines = [];
     for (let i = 0; i < words.length; i++) {
       const test = line + (line ? ' ' : '') + words[i];
-      if (ctx.measureText(test).width > CONFIG.vis.missionBanner.wrapWidth) { lines.push(line); line = words[i]; }
+      if (ctx.measureText(test).width > CONFIG.ui.missionBanner.wrapWidth) { lines.push(line); line = words[i]; }
       else line = test;
     }
     if (line) lines.push(line);
     missionBannerLines = lines;
   }
   const alpha = missionBannerT < 40 ? missionBannerT / 40 : missionBannerT > 170 ? (210 - missionBannerT) / 40 : 1;
-  const VM = CONFIG.vis.missionBanner;
+  const VM = CONFIG.ui.missionBanner;
   const bw = VM.panW;
   const _msLineH = missionBannerLines.length * VM.lineH + Math.max(0, missionBannerLines.length - 1) * VM.lineSpacing;
   const bh = VM.padTop + VM.titleH + VM.titleSpacing + _msLineH + VM.padBottom;
@@ -181,7 +181,7 @@ function drawMissionBanner() {
 function drawPauseOverlay() {
   if (state !== 'paused' || !_pauseActive) return;
   ctx.save();
-  const VP = CONFIG.vis.pauseOverlay;
+  const VP = CONFIG.ui.pauseOverlay;
   const pH = VP.padTop + VP.stepTitle + VP.btnH + VP.padBottom;
   const {bx, by} = _panPos(VP.panW, pH);
   _dialogPanel(bx, by, VP.panW, pH, VP.panBg);
@@ -192,7 +192,7 @@ function drawPauseOverlay() {
   ctx.fillStyle = PAL.gold; ctx.fillText(STRINGS.pauseTitle, cx, ty); ty += VP.stepTitle;
   ctx.font = VP.fontBtn + 'px ' + FF;
   const rx = bx + VP.resumeOx;
-  _dialogBtn(rx, ty, VP.resumeW, VP.btnH, CONFIG.vis.dialog.btnColorYes);
+  _dialogBtn(rx, ty, VP.resumeW, VP.btnH, CONFIG.ui.dialog.btnColorYes);
   ctx.fillStyle = PAL.btnText; ctx.fillText(STRINGS.btnResume, rx + VP.resumeW/2, ty + Math.floor((VP.btnH - VP.fontBtn) / 2));
   ctx.restore();
 }
@@ -200,7 +200,7 @@ function drawPauseOverlay() {
 function drawHomeConfirm() {
   if (!_homeConfirmActive) return;
   ctx.save();
-  const VH = CONFIG.vis.homeConfirm;
+  const VH = CONFIG.ui.homeConfirm;
   const hH = VH.padTop + VH.stepTitle + VH.btnH + VH.padBottom;
   const {bx, by} = _panPos(VH.panW, hH);
   _dialogPanel(bx, by, VH.panW, hH, VH.panBg);
@@ -211,9 +211,9 @@ function drawHomeConfirm() {
   ctx.fillStyle = PAL.gold; ctx.fillText(STRINGS.homeConfirm, cx, ty); ty += VH.stepTitle;
   ctx.font = VH.fontBtn + 'px ' + FF;
   const siX = bx + VH.siOx, noX = bx + VH.noOx;
-  _dialogBtn(siX, ty, VH.siW, VH.btnH, CONFIG.vis.dialog.btnColorYes);
+  _dialogBtn(siX, ty, VH.siW, VH.btnH, CONFIG.ui.dialog.btnColorYes);
   ctx.fillStyle = PAL.btnText; ctx.fillText(STRINGS.btnYes, siX + VH.siW/2, ty + Math.floor((VH.btnH - VH.fontBtn) / 2));
-  _dialogBtn(noX, ty, VH.noW, VH.btnH, CONFIG.vis.dialog.btnColorNo);
+  _dialogBtn(noX, ty, VH.noW, VH.btnH, CONFIG.ui.dialog.btnColorNo);
   ctx.fillStyle = PAL.btnText; ctx.fillText(STRINGS.btnNo, noX + VH.noW/2, ty + Math.floor((VH.btnH - VH.fontBtn) / 2));
   ctx.restore();
 }
@@ -221,7 +221,7 @@ function drawHomeConfirm() {
 function drawCredits() {
   if (!_creditsActive) return;
   ctx.save();
-  var VC = CONFIG.vis.credits;
+  var VC = CONFIG.ui.credits;
   var n = _CREDITS_MEMBERS.length;
   var panH = VC.padTop + VC.stepTitle + VC.stepTeam
            + n * (VC.nameH + VC.nameGap + VC.roleH + VC.roleGap)
@@ -242,7 +242,7 @@ function drawCredits() {
   ty += VC.btnGapAbove;
   var btnX = bx + Math.round((VC.panW - VC.btnW) / 2);
   ctx.font = VC.fontBtn + 'px ' + FF;
-  _dialogBtn(btnX, ty, VC.btnW, VC.btnH, CONFIG.vis.dialog.btnColorYes);
+  _dialogBtn(btnX, ty, VC.btnW, VC.btnH, CONFIG.ui.dialog.btnColorYes);
   ctx.fillStyle = PAL.creditsText; ctx.fillText('OK', bx + VC.panW/2, ty + Math.floor((VC.btnH - VC.fontBtn) / 2));
   ctx.restore();
 }

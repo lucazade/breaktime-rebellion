@@ -35,7 +35,7 @@ function _drawLockIcon(x, y, color) {
 }
 
 function drawTitleScreen() {
-  var VT = CONFIG.vis.titleScreen;
+  var VT = CONFIG.ui.titleScreen;
   ctx.clearRect(0, 0, W, H);
 
   var ct = VT.controls;

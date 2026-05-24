@@ -1,11 +1,11 @@
 // ═══════════════════════════════════════════════════════════
-//  VIS UI — HUD, dialogs, banners, and character sprite config
+//  UI — HUD, dialogs, banners, and character sprite config
 //  All colours reference PAL (palette.js).
 //  Scene geometry → scene.js
 //  Mobile panel buttons (home/pause/info) are styled entirely in CSS.
 // ═══════════════════════════════════════════════════════════
 
-Object.assign(CONFIG.vis, {
+CONFIG.ui = {
 
   char: {
     outline:      true,
@@ -214,7 +214,7 @@ Object.assign(CONFIG.vis, {
     padBottom:    10,  // bottom padding
   },
 
-});
+};
 
 // CSS custom property — font family only (panel buttons are fully CSS-managed)
 document.documentElement.style.setProperty('--btr-font-family', CONFIG.display.fontFamily);

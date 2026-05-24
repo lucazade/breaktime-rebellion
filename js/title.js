@@ -82,7 +82,7 @@ function _titleCycleDifficulty() {
 
 function _titleCanvasClick(lx, ly) {
   if (state !== 'title') return;
-  var ct = CONFIG.vis.titleScreen.controls;
+  var ct = CONFIG.ui.titleScreen.controls;
   var tpX = 8, tpY = 6; // tap padding — larger target without changing visuals
   var logoBottom = _titleLogoRect ? _titleLogoRect.y + _titleLogoRect.h : _titleCtrlY;
   var padUp = Math.min(tpY, Math.max(0, _titleCtrlY - logoBottom - 1)); // don't exceed logo
