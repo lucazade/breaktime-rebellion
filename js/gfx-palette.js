@@ -148,14 +148,6 @@ const PAL = {
   audioSfx:       '#0076fd',  // audio - SFX-only mode button highlight
   audioMute:      '#444444',  // audio - audio muted button
 
-  // ── Bezel (mobile side panels) ────────────────────────────
-  bezelGlow:    'rgba(160,0,255,0.7)',           // panel inner glow border
-  bezelBorder:  'rgba(160,0,255,0.85)',          // action button borders
-  bezelBtnBg:   'rgba(10,0,24,1)',               // button background (home / pause)
-  bezelInfoBg:  'rgba(0,0,0,0.45)',              // info button background
-  bezelPressed: 'rgba(160,0,255,0.28)',          // button pressed state overlay
-  bezelShadow:  '0 0 8px rgba(160,0,255,0.35)',  // CSS box-shadow on panels
-
   // ── In-game banners (story, mission, win, gameover, pause) ─
   panelBg:            'rgba(0,0,40,0.90)', // dialog panel background
   panelBorder:        '#FFD700',           // dialog panel border / HUD icon gold accent
