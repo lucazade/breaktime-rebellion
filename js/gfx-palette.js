@@ -137,17 +137,16 @@ const PAL = {
   logoGlow:       '#FFD700',  // logo - pulsing glow stroke colour
 
   dgray:          '#444444',  // level - disabled level chooser button
-  btnLabel:       '#b0b0b0',  // level - enabled level chooser button label
-  lockIconDetail: '#000000',  // level - keyhole detail in lock icon (locked levels)
-  levelLocked:    '#FEDC02',  // level - locked next-level button / lock icon
+  btnLabel:       '#FEDC02',  // level - enabled level chooser button label
+  levelLocked:    '#444444',  // level - locked next-level button / lock icon
 
-  diffEasy:       '#22cc44',  // difficulty selector — easy
-  diffMedium:     '#ddcc00',  // difficulty selector — medium
-  diffHard:       '#dd1100',  // difficulty selector — hard
+  diffEasy:       '#00ff00',  // difficulty selector — easy
+  diffMedium:     '#FEDC02',  // difficulty selector — medium
+  diffHard:       '#ff0000',  // difficulty selector — hard
 
-  audioFull:      '#9AD284',  // audio - audio button (full mode)
-  audioSfx:       '#FEDC02',  // audio - SFX-only mode button highlight
-  mgray:          '#6C6C6C',  // audio - audio muted button
+  audioFull:      '#16c0fc',  // audio - audio button (full mode)
+  audioSfx:       '#0076fd',  // audio - SFX-only mode button highlight
+  mgray:          '#444444',  // audio - audio muted button
 
   // ── Bezel (mobile side panels) ────────────────────────────
   bezelGlow:    'rgba(160,0,255,0.7)',           // panel inner glow border

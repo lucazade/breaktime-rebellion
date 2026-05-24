@@ -51,13 +51,14 @@ function _dialogBtn(x, y, w, h, color) {
 }
 
 function _drawLockIcon(x, y, color) {
-  // 6×6px padlock — shackle (rows 0-1) + body (rows 2-5) + 2×2 keyhole
+  // 6×6px padlock — shackle (rows 0-1) + body (rows 2-5) + transparent keyhole
   ctx.fillStyle = color;
   ctx.fillRect(x+1, y,   4, 1);  // shackle top arc
   ctx.fillRect(x,   y+1, 1, 1);  ctx.fillRect(x+5, y+1, 1, 1);  // shackle sides
   ctx.fillRect(x,   y+2, 6, 4);  // body
-  ctx.fillStyle = PAL.lockIconDetail;
-  ctx.fillRect(x+2, y+3, 2, 2);  // keyhole
+  ctx.globalCompositeOperation = 'destination-out';
+  ctx.fillRect(x+2, y+3, 2, 2);  // keyhole cutout
+  ctx.globalCompositeOperation = 'source-over';
 }
 
 function drawTitleScreen() {
