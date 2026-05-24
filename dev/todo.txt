@@ -332,10 +332,12 @@ DA VERIFICARE:
 - [?] #176 bump altoparlante ancora presente
 
 PER LUCA:
+- [ ] #184 Aggiornare screenshots readme
+- [ ] #178 Icona BR
 - [ ] #159 SFX sostituire suono acqua bagno
 - [ ] #160 SFX sostituire suono mech-completed
 - [ ] #161 HUD ricolora meccaniche
-- [ ] #162 CHAR ricolora collo
+- [ ] #179 TITLE Colori audio in titlescreen
 - [ ] #163 L1 ricolora prof rossi, verdi, celeste
 - [ ] #164 L2 ricolora bags
 - [ ] #165 L3 ricolora distributore
@@ -344,10 +346,9 @@ PER LUCA:
 - [ ] #168 L6 bidelli ai piani superiori
 - [ ] #169 L8 ricolorare secchi e prof piano intermedio
 - [ ] #170 L10 ricolorare maglia guardiano blu scuro
-- [ ] #178 Icona BR
-- [ ] #179 TITLE Colori audio in titlescreen
+- [ ] #162 CHAR ricolora collo
 - [ ] #180 GENERIC Ricolorare banchi
-- [ ] #184 Aggiornare screenshots readme
+se ci sono bidelli non ci può essere prof. celeste
 
 PER CLAUDE:
 
