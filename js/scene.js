@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════════
-//  VIS LAYOUT — building geometry + fixed scene object positions
+//  SCENE — building geometry + fixed scene object positions
 //  Colors → palette.js  |  UI config → vis-ui.js
 // ═══════════════════════════════════════════════════════════
 
@@ -69,13 +69,6 @@ CONFIG.vis.dashed = {
   machines:   { x:-2, y:-2,  w:14, h:22 },
   register:   { x:-2, y:-4,  w:14, h:18 },
   exitDoor:   { x:-2, y:-14, w:14, h:30 },
-};
-
-// Character sprite config — outline settings
-CONFIG.vis.char = {
-  outline:      true,
-  outlineSize:  1.0,
-  outlineColor: PAL.charOutline,
 };
 
 // CSS custom properties — font-family is set by vis-ui.js

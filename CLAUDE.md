@@ -17,7 +17,7 @@ css/
 js/                 ← ordine di caricamento obbligatorio:
   config.js         ← CONFIG (images, audio, debug, display) — primo
   palette.js        ← const PAL — unica sorgente di tutti i colori
-  vis-layout.js     ← geometria canvas (GY/MY/TY, walkOffset) + posizioni oggetti + proximity dashed
+  scene.js          ← geometria canvas (GY/MY/TY, PW/PH, walkOffset) + posizioni oggetti + proximity dashed
   vis-ui.js         ← CONFIG.vis (titleScreen, HUD, banners) — dati UI
   draw-chars.js     ← PW/PH, COLOURS_*, drawChar/drawJanitor/drawPreside/drawGuard/drawGinnastica
   draw-objects.js   ← drawDesks/Boards/Bell/Machines/... + dati SHARED_LAYOUT
@@ -220,7 +220,7 @@ Ogni personaggio ha il suo draw function e `COLOURS_*` object in `gfx-chars.js`:
 ```bash
 node -e "
 const fs=require('fs');
-const files=['js/config.js','js/palette.js','js/vis-layout.js','js/vis-ui.js','js/draw-chars.js','js/draw-objects.js','js/levels.js','js/i18n.js','js/audio.js','js/state.js','js/input.js','js/physics.js','js/entities.js','js/draw-game.js','js/draw-title.js','js/draw-hud.js','js/draw-overlays.js','js/menus.js','js/game.js','js/title.js'];
+const files=['js/config.js','js/palette.js','js/scene.js','js/vis-ui.js','js/draw-chars.js','js/draw-objects.js','js/levels.js','js/i18n.js','js/audio.js','js/state.js','js/input.js','js/physics.js','js/entities.js','js/draw-game.js','js/draw-title.js','js/draw-hud.js','js/draw-overlays.js','js/menus.js','js/game.js','js/title.js'];
 const src=files.map(f=>fs.readFileSync(f,'utf8')).join('\n');
 try{new Function(src);console.log('JS OK');}catch(e){console.log('ERRORE:',e.message);}
 "
