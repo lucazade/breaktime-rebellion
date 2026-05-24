@@ -7,10 +7,7 @@
 const W=320, H=200, GY=185, MY=127, TY=70, BW=22, BH=14, PW=8, PH=16;
 const walkOffset=6, wallLeft=10, wallRight=10;
 
-// Canvas layout constants
 CONFIG.scene = {
-
-  layout: { W, H, GY, MY, TY, BW, BH, PW, PH, walkOffset, wallLeft, wallRight },
 
   dashed: {
     gymBall:    { x:-2, y:-2,  w:13, h:13 },

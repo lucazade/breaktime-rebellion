@@ -1,5 +1,5 @@
 // Level definitions — edit here to change mechanics and NPCs per level.
-// Loaded after scene.js; CONFIG.level and CONFIG.scene.layout are available.
+// Loaded after scene.js; CONFIG.level and CONFIG.scene are available.
 //
 // mechanics: declares which player actions are active objectives in this level.
 //   writeBoards   — spray all boards to tag them (boards are always drawn, writable only in L1)
