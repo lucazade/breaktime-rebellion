@@ -154,7 +154,7 @@ const PAL = {
   bezelBtnBg:   'rgba(10,0,24,1)',               // button background (home / pause)
   bezelInfoBg:  'rgba(0,0,0,0.45)',              // info button background
   bezelPressed: 'rgba(160,0,255,0.28)',          // button pressed state overlay
-  bezelShadow:  '0 0 8px rgba(160,0,255,0.35)', // CSS box-shadow on panels
+  bezelShadow:  '0 0 8px rgba(160,0,255,0.35)',  // CSS box-shadow on panels
 
   // ── In-game banners (story, mission, win, gameover, pause) ─
   panelBg:            'rgba(0,0,40,0.90)', // dialog panel background
@@ -217,11 +217,11 @@ const PAL = {
   machineScreenBroken: '#444444',  // screen when broken
   machineDivider:      '#444444',  // horizontal divider between screen and button panel
   machineBody:         '#1665DC',  // machine body
-  machineButtonPanel: '#6C5EB5',  // button panel background
-  machineButtonA:     '#5F1D1B',  // button A (red — damages machines)
-  machineButtonB:     '#FEDC02',  // button B (yellow)
-  machineButtonC:     '#9AD284',  // button C (green)
-  machineInk:         '#000000',  // coin slot / open hatch when broken
+  machineButtonPanel: '#6C5EB5',   // button panel background
+  machineButtonA:     '#5F1D1B',   // button A (red — damages machines)
+  machineButtonB:     '#FEDC02',   // button B (yellow)
+  machineButtonC:     '#9AD284',   // button C (green)
+  machineInk:         '#000000',   // coin slot / open hatch when broken
 
   // ── Ball ──────────────────────────────────────────────────
   ballBody:      '#CC6600',               // basketball body
