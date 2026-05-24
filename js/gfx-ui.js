@@ -8,199 +8,217 @@ Object.assign(CONFIG.vis, {
 
   // ── Bezel — mobile side panels ────────────────────
   bezel: {
-    panelInnerBorder:  PAL.bezelGlow,
-    btnHomeBorder:     PAL.bezelBorder,
-    btnPauseBorder:    PAL.bezelBorder,
-    btnInfoBorder:     PAL.bezelBorder,
-    btnHomeBg:         PAL.bezelBtnBg,
-    btnPauseBg:        PAL.bezelBtnBg,
-    btnInfoBg:         PAL.bezelInfoBg,
-    btnHomeBgPressed:  PAL.bezelPressed,
-    btnPauseBgPressed: PAL.bezelPressed,
-    btnInfoBgPressed:  PAL.bezelPressed,
-    btnGlow:           PAL.bezelShadow,
+    panelInnerBorder:  PAL.bezelGlow,     // inner glow border of the side panel
+    btnHomeBorder:     PAL.bezelBorder,   // Home button border
+    btnPauseBorder:    PAL.bezelBorder,   // Pause button border
+    btnInfoBorder:     PAL.bezelBorder,   // Info button border
+    btnHomeBg:         PAL.bezelBtnBg,    // Home button background
+    btnPauseBg:        PAL.bezelBtnBg,    // Pause button background
+    btnInfoBg:         PAL.bezelInfoBg,   // Info button background (distinct color)
+    btnHomeBgPressed:  PAL.bezelPressed,  // Home button pressed background
+    btnPauseBgPressed: PAL.bezelPressed,  // Pause button pressed background
+    btnInfoBgPressed:  PAL.bezelPressed,  // Info button pressed background
+    btnGlow:           PAL.bezelShadow,   // drop shadow/glow around bezel buttons
   },
 
   // Shared style for all dialog panels (banners, buttons)
   dialog: {
-    panBg:       PAL.panelBg,
-    panBorder:   PAL.panelBorder,
-    panBorderW:  1,
-    panR:        4,
-    btnR:        2,
-    btnColorYes: PAL.btnYes,
-    btnColorNo:  PAL.btnNo,
-    btnStroke:   PAL.panelBorder,
+    panBg:       PAL.panelBg,      // panel background
+    panBorder:   PAL.panelBorder,  // panel border color
+    panBorderW:  1,                // panel border width (px)
+    panR:        4,                // panel corner radius (px)
+    btnR:        2,                // button corner radius (px)
+    btnColorYes: PAL.btnYes,       // confirm button color (Yes/Resume)
+    btnColorNo:  PAL.btnNo,        // cancel button color (No/Exit)
+    btnStroke:   PAL.panelBorder,  // button border color
   },
 
   // Title screen — logo (pulsing gold glow) + controls row + HTML keyboard legend (desktop)
   // Controls row layout: [< Lvl >]  [EASY/MED/HARD]  [music/sfx/mute]
   titleScreen: {
-    logo:     { w: 300, borderW: 1, borderR: 5 },
+    logo: {
+      w:       300,  // logo area width (px, logical coords)
+      borderW:   1,  // logo frame border width
+      borderR:   5,  // logo frame corner radius
+    },
     controls: {
-      fontSize: 8,
-      gapY:     12,              // gap between logo bottom and controls row
-      btnH:     11,
-      boxR:      2,
-      btnColor: PAL.btnLabel,
-      prevX:   10, prevW: 14,   // < button (level chooser)
-      nextX:   76, nextW: 14,   // > button (level chooser)
-      labelX:  50,               // level label center
-      diffX:  134, diffW: 52,   // difficulty toggle, centered in canvas
-      audioRightX: 310, audioPadX: 6, // audio toggle, right-aligned
+      fontSize:    8,   // label font size
+      gapY:       12,   // vertical gap between logo bottom and controls row
+      btnH:       11,   // button height (level/difficulty/audio)
+      boxR:        2,   // button corner radius
+      btnColor: PAL.btnLabel, // label color on buttons
+      prevX:      10,   // X of < button (previous level)
+      prevW:      14,   // < button width
+      nextX:      76,   // X of > button (next level)
+      nextW:      14,   // > button width
+      labelX:     50,   // X center of level number label
+      diffX:     134,   // X of difficulty toggle button (centered in canvas)
+      diffW:      52,   // difficulty toggle button width
+      audioRightX: 310, // X right edge of audio button (right-aligned)
+      audioPadX:    6,  // horizontal inner padding of audio button
     },
   },
 
-  // HUD — strip in cima al canvas
+  // HUD — strip at the top of the canvas
   hud: {
-    rowH:      8,
-    heartsX:   4,
-    heartSize:  0.5,
-    iconScale:  0.5,
-    msgFadeFrames: 20,
-    centerX:   160,
-    scoreX:    316,
-    timerH:     1,
-    timerAlpha: 0.80,
-    fontSize:  6,
-    dotGap:    5,
-    bgColor:   PAL.hudBg,
+    rowH:          8,          // HUD strip height (px)
+    heartsX:       4,          // X origin of hearts row
+    heartSize:     0.5,        // heart draw scale
+    iconScale:     0.5,        // current mechanic icon scale
+    msgFadeFrames: 20,         // fade-out frames for proximity hint message
+    centerX:       160,        // canvas center X for centered HUD text
+    scoreX:        316,        // score right edge X (right-aligned)
+    timerH:        1,          // timer bar height below HUD strip (px)
+    timerAlpha:    0.80,       // timer bar opacity
+    fontSize:      6,          // HUD text font size
+    dotGap:        5,          // gap between mechanic indicator dots
+    bgColor:       PAL.hudBg,  // HUD strip background color
     dotColors: {
-      boards:     PAL.dotBoards,
-      bags:       PAL.dotBags,
-      machines:   PAL.dotMachines,
-      ball:       PAL.dotBall,
-      students:   PAL.dotStudents,
-      books:      PAL.dotBooks,
-      sink:       PAL.dotSink,
-      bins:       PAL.dotBins,
-      sprinklers: PAL.dotSprinklers,
-      register:   PAL.dotRegister,
+      boards:     PAL.dotBoards,     // dot: boards to spray
+      bags:       PAL.dotBags,       // dot: bags to steal
+      machines:   PAL.dotMachines,   // dot: vending machines to break
+      ball:       PAL.dotBall,       // dot: ball to deflate
+      students:   PAL.dotStudents,   // dot: students to hit with paper
+      books:      PAL.dotBooks,      // dot: books to knock off
+      sink:       PAL.dotSink,       // dot: sink to flood
+      bins:       PAL.dotBins,       // dot: bins to plant firecrackers in
+      sprinklers: PAL.dotSprinklers, // dot: sprinklers to activate
+      register:   PAL.dotRegister,   // dot: register to steal
     },
   },
 
   // Story banner (L1) — panH computed: padTop+titleH+titleSpacing+lineBlock+spacerH+tapH+padBottom
   storyBanner: {
-    panW: 280, wrapWidth: 220,
-    fontTitle:      8,
-    fontBody:       6,
-    padTop:        14,
-    titleH:        10, titleSpacing: 10,
-    lineH:          9, lineSpacing:   4,
-    spacerH:       10,
-    tapH:           8,
-    padBottom:     14,
+    panW:        280,  // panel width
+    wrapWidth:   220,  // max text width (word wrap)
+    fontTitle:     8,  // title font size
+    fontBody:      6,  // body font size
+    padTop:       14,  // top padding
+    titleH:       10,  // title row height
+    titleSpacing: 10,  // gap below title
+    lineH:         9,  // height per text line
+    lineSpacing:   4,  // gap between lines
+    spacerH:      10,  // spacer between body text and "tap to continue"
+    tapH:          8,  // "tap to continue" row height
+    padBottom:    14,  // bottom padding
   },
 
   // Mission banner — panH computed: padTop+titleH+titleSpacing+lineBlock+padBottom
   missionBanner: {
-    panW: 260, wrapWidth: 200,
-    fontTitle:      8,
-    fontBody:       6,
-    padTop:        14,
-    titleH:        10, titleSpacing: 8,
-    lineH:          9, lineSpacing:  4,
-    padBottom:     14,
+    panW:        260,  // panel width
+    wrapWidth:   200,  // max text width
+    fontTitle:     8,  // title font size
+    fontBody:      6,  // mission text font size
+    padTop:       14,  // top padding
+    titleH:       10,  // title row height
+    titleSpacing:  8,  // gap below title
+    lineH:         9,  // height per text line
+    lineSpacing:   4,  // gap between lines
+    padBottom:    14,  // bottom padding
   },
 
   // Level complete banner — panH computed: padTop+stepTitle+stepScore+tapH+padBottom
   levelComplete: {
-    panW: 260,
-    fontTitle:  8,
-    fontBody:   6,
-    padTop:    14,
-    stepTitle: 18,
-    stepScore: 15,
-    stepBonus: 12,
-    tapH:       8,
-    padBottom:  11,
+    panW:      260,  // panel width
+    fontTitle:   8,  // title font size
+    fontBody:    6,  // score/bonus font size
+    padTop:     14,  // top padding
+    stepTitle:  18,  // Y offset from padTop to title
+    stepScore:  15,  // Y offset from title to score row
+    stepBonus:  12,  // Y offset from score to bonus row
+    tapH:        8,  // "tap to continue" row height
+    padBottom:  11,  // bottom padding
   },
 
   // Game win banner (L10) — panH computed: padTop+stepTitle+stepScore+stepBest+tapH+padBottom
   gameWin: {
-    panW: 260,
-    fontTitle:  8,
-    fontBody:   6,
-    padTop:    14,
-    stepTitle: 22,
-    stepScore: 12,
-    stepBonus: 12,
-    stepBest:  18,
-    tapH:       8,
-    padBottom: 12,
+    panW:      260,  // panel width
+    fontTitle:   8,  // title font size
+    fontBody:    6,  // text font size
+    padTop:     14,  // top padding
+    stepTitle:  22,  // Y offset to title
+    stepScore:  12,  // Y offset to final score
+    stepBonus:  12,  // Y offset to bonus row
+    stepBest:   18,  // Y offset to personal best row
+    tapH:        8,  // "tap to continue" row height
+    padBottom:  12,  // bottom padding
   },
 
   // Game over banner — panH computed: padTop+stepTitle+stepLevel+stepScore+stepConfirm+btnH+padBottom
   gameover: {
-    panW: 260,
-    fontTitle:    8,
-    fontBody:     6,
-    fontBtn:      6,
-    padTop:      12,
-    stepTitle:   18,
-    stepLevel:   12,
-    stepScore:   20,
-    stepConfirm: 16,
-    btnH:        14,
-    padBottom:   12,
-    siOx: 30, siW: 70,
-    noOx: 160, noW: 70,
+    panW:        260,  // panel width
+    fontTitle:     8,  // title font size
+    fontBody:      6,  // text font size
+    fontBtn:       6,  // Yes/No button font size
+    padTop:       12,  // top padding
+    stepTitle:    18,  // Y offset to "GAME OVER" title
+    stepLevel:    12,  // Y offset to level reached row
+    stepScore:    20,  // Y offset to final score
+    stepConfirm:  16,  // Y offset to "try again?" prompt
+    btnH:         14,  // Yes/No button area height
+    padBottom:    12,  // bottom padding
+    siOx:  30, siW:  70,  // Yes button X offset and width
+    noOx: 160, noW:  70,  // No button X offset and width
   },
 
   // Luca speech bubble (L10 level end) — bh computed: headerH + lineCount*lineH + gapTap + tapH + padBottom
   lucaFumetto: {
-    bw:        190,
-    fontTitle:   8,
-    fontBody:    6,
-    offsetX:    10,
-    tailOffY:   14,
-    headerH:    14,
-    lineH:      10,
-    gapTap:      4,
-    tapH:        8,
-    padBottom:   6,
-    tailW: 3, tailH: 5,
+    bw:        190,  // bubble width
+    fontTitle:   8,  // bubble header font size
+    fontBody:    6,  // bubble body font size
+    offsetX:    10,  // X offset relative to Luca's position
+    tailOffY:   14,  // Y offset of the bubble tail
+    headerH:    14,  // header area height
+    lineH:      10,  // height per text line
+    gapTap:      4,  // gap between text and "tap" row
+    tapH:        8,  // "tap to continue" row height
+    padBottom:   6,  // bottom padding
+    tailW: 3, tailH: 5,  // bubble tail dimensions
   },
 
   // Pause overlay — panH computed: padTop+stepTitle+btnH+padBottom
   pauseOverlay: {
-    panW: 200,
-    fontTitle:  8,
-    fontBtn:    6,
-    padTop:    14,
-    stepTitle: 22,
-    btnH:      14,
-    padBottom: 14,
-    resumeOx:  65, resumeW: 70,
+    panW:      200,  // panel width
+    fontTitle:   8,  // title font size
+    fontBtn:     6,  // resume button font size
+    padTop:     14,  // top padding
+    stepTitle:  22,  // Y offset to title
+    btnH:       14,  // resume button area height
+    padBottom:  14,  // bottom padding
+    resumeOx:   65,  // Resume button X offset
+    resumeW:    70,  // Resume button width
   },
 
   // Home confirm overlay — panH computed: padTop+stepTitle+btnH+padBottom
   homeConfirm: {
-    panW: 200,
-    fontTitle:  8,
-    fontBtn:    6,
-    padTop:    14,
-    stepTitle: 20,
-    btnH:      14,
-    padBottom: 14,
-    siOx: 20, siW: 70,
-    noOx: 110, noW: 70,
+    panW:      200,  // panel width
+    fontTitle:   8,  // title font size
+    fontBtn:     6,  // button font size
+    padTop:     14,  // top padding
+    stepTitle:  20,  // Y offset to "Go to menu?" title
+    btnH:       14,  // button area height
+    padBottom:  14,  // bottom padding
+    siOx:  20, siW:  70,  // Yes button X offset and width
+    noOx: 110, noW:  70,  // No button X offset and width
   },
 
   // Credits — panH computed: padTop+stepTitle+stepTeam+5*(nameH+nameGap+roleH+roleGap)+btnGapAbove+btnH+padBottom
   credits: {
-    panW: 240,
-    fontTitle:    8,
-    fontBody:     6,
-    fontBtn:      6,
-    padTop:       8,
-    stepTitle:   14,
-    stepTeam:    12,
-    nameH:        4, nameGap:  2,
-    roleH:        4, roleGap:  6,
-    btnGapAbove:  2,
-    btnH:        12, btnW: 60,
-    padBottom:    10,
+    panW:        240,  // panel width
+    fontTitle:     8,  // "CREDITS" title font size
+    fontBody:      6,  // name font size
+    fontBtn:       6,  // close button font size
+    padTop:        8,  // top padding
+    stepTitle:    14,  // Y offset to title
+    stepTeam:     12,  // gap from title to first team entry
+    nameH:         4,  // name row height
+    nameGap:       2,  // gap between name and role
+    roleH:         4,  // role row height
+    roleGap:       6,  // gap between role and next name
+    btnGapAbove:   2,  // gap above close button
+    btnH:         12,  // close button height
+    btnW:         60,  // close button width
+    padBottom:    10,  // bottom padding
   },
 
 });
