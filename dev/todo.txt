@@ -342,5 +342,10 @@ PER LUCA:
 - [ ] #169 L8 ricolorare secchi e prof piano intermedio
 - [ ] #170 L10 ricolorare maglia guardiano blu scuro
 - [ ] #178 Icona BR
+- [ ] #179 TITLE Colori audio in titlescreen
+- [ ] #180 GENERIC Ricolorare banchi
 
 PER CLAUDE:
+- [ ] #181 Il selettore del livello deve essere per livello di difficoltà 
+- [ ] #182 I cuori, l'icona mechanic e i caratteri della hud sembra che non siano scuriti quando ci sono i banner come il resto del canvas
+- [ ] #183 Notion: Aggiornare files in Struttura del progetto
