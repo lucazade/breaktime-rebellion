@@ -95,18 +95,6 @@ body {
     pointer-events: none;
   }
 
-  /* Coin-slot decoration */
-  #panel-left::after, #panel-right::after {
-    content: '';
-    position: absolute;
-    top: 9%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 28px; height: 4px;
-    background: #04000f;
-    border-radius: 2px;
-    box-shadow: 0 0 0 2px #1a0040, 0 0 10px rgba(0,200,255,0.3);
-  }
 
   /* Controls: absolute inside panel, anchored to bottom */
   #panel-left #ctrl-joy {
