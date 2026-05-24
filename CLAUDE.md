@@ -180,7 +180,7 @@ CSS scala sempre DOWN (mai upscale) → nessuna distorsione su qualsiasi viewpor
 - `CONFIG.layout` — W, H, PW, PH, GY, MY, TY, BW, BH, walkOffset
 - `CONFIG.images` — `background`, `backgroundNight`, `logo` (tutti 1600px)
 - `CONFIG.audio` — `musicVolume`, `sfxVolume`, `music`, `introMusic`, `bossMusic`, `sfx` map
-- `CONFIG.display` — `fontFamily`, `showSidePanels` (mostra pannelli arcade su desktop per testing)
+- `CONFIG.display` — `fontFamily`
 - `CONFIG.debug.unlockAllLevels` — `true` sblocca tutti i livelli nel chooser
 
 ## NPC sprites

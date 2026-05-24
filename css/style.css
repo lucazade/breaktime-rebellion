@@ -44,7 +44,7 @@ body {
   height: 100dvh;
 }
 
-/* ─── PANELS — hidden by default; shown on mobile / show-side-panels ─── */
+/* ─── PANELS — hidden by default; shown on mobile via media query ─── */
 #panel-left, #panel-right {
   display: none;
   flex: 0 0 140px;
@@ -162,6 +162,9 @@ canvas {
 }
 
 
+/* Legend hidden everywhere; shown only on desktop via .visible class */
+#legend { display: none; }
+
 /* ─── DESKTOP: decorations above/below the screen, keyboard legend ─── */
 @media (hover: hover) and (pointer: fine) {
 
@@ -198,7 +201,7 @@ canvas {
   /* Keyboard legend — fixed footer on title screen */
   #legend {
     position: fixed; bottom: 8px; left: 0; right: 0;
-    text-align: center; pointer-events: none; display: none;
+    text-align: center; pointer-events: none;
   }
   #legend.visible { display: block; }
   #legend > div { display: inline-flex; align-items: center; gap: 25px; }
@@ -220,7 +223,7 @@ canvas {
 
 /* ─── PANEL BUTTONS (home / pause / info) ─── */
 .panel-btn {
-  display: none; /* shown via media query or show-side-panels */
+  display: none; /* shown via mobile media query */
   position: absolute;
   top: 48px;
   left: 50%;
@@ -313,22 +316,6 @@ canvas {
 
   .panel-btn { display: flex; }
 }
-
-
-/* ─── SIMULATE MOBILE — shows panels on desktop for testing ─── */
-/* Only adds panel visibility; game-area and canvas rules are the same as all other contexts. */
-body.show-side-panels #panel-left,
-body.show-side-panels #panel-right { display: flex !important; }
-
-body.show-side-panels #panel-left  #ctrl-joy    { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); z-index: 1; }
-body.show-side-panels #panel-right #ctrl-action { position: absolute; bottom: 48px; left: 50%; transform: translateX(-50%); z-index: 1; }
-
-body.show-side-panels #btn-info  { display: flex !important; }
-body.show-side-panels .panel-btn { display: flex !important; }
-
-/* Hide desktop decorations when panels are visible */
-body.show-side-panels #game-area::before,
-body.show-side-panels #game-area::after { display: none !important; }
 
 
 /* ─── TITLE MODE — no bezel, no panels ─── */

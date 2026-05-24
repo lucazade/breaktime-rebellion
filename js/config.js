@@ -36,8 +36,7 @@ const CONFIG = {
     },
   },
   display: {
-    fontFamily:     '"Press Start 2P"',  // canvas font — used everywhere via FF shortcut + --btr-font-family CSS var
-    showSidePanels: false,               // show arcade side panels on desktop (for testing)
+    fontFamily: '"Press Start 2P"',  // canvas font — used everywhere via FF shortcut + --btr-font-family CSS var
   },
   debug: {
     unlockAllLevels: false,
@@ -48,4 +47,3 @@ const CONFIG = {
 // Global font shortcut — available to all gfx-* files from the very first script
 var FF = CONFIG.display.fontFamily;
 
-if (CONFIG.display.showSidePanels) document.body.classList.add('show-side-panels');
