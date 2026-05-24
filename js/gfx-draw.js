@@ -335,7 +335,7 @@ function drawEndScreen() {
     ctx.font = VW.fontTitle + 'px ' + FF;
     ctx.fillStyle = PAL.gold;   ctx.fillText(STRINGS.winTitle, cxW, tyW); tyW += VW.stepTitle;
     ctx.font = VW.fontBody + 'px ' + FF;
-    if (lastTimeBonus > 0)  { ctx.fillStyle = PAL.cyan;  ctx.fillText(STRINGS.timeBonusLabel  + lastTimeBonus,  cxW, tyW); tyW += VW.stepBonus; }
+    if (lastTimeBonus > 0)  { ctx.fillStyle = PAL.timeBonusText;  ctx.fillText(STRINGS.timeBonusLabel  + lastTimeBonus,  cxW, tyW); tyW += VW.stepBonus; }
     if (lastLivesBonus > 0) { ctx.fillStyle = PAL.livesBonusText; ctx.fillText(STRINGS.livesBonusLabel + lastLivesBonus, cxW, tyW); tyW += VW.stepBonus; }
     ctx.fillStyle = PAL.bannerText;  ctx.fillText(scoreText, cxW, tyW); tyW += VW.stepScore;
     ctx.fillStyle = PAL.bestScoreHighlight; ctx.fillText(STRINGS.bestLabel + ' LVL ' + bestLevel + ' — ' + String(bestScore).padStart(5,'0'), cxW, tyW); tyW += VW.stepBest;
@@ -351,7 +351,7 @@ function drawEndScreen() {
     ctx.font = VL.fontTitle + 'px ' + FF;
     ctx.fillStyle = PAL.gold;  ctx.fillText(STRINGS.levelComplete, cxL, tyL); tyL += VL.stepTitle;
     ctx.font = VL.fontBody + 'px ' + FF;
-    if (lastTimeBonus > 0) { ctx.fillStyle = PAL.cyan; ctx.fillText(STRINGS.timeBonusLabel + lastTimeBonus, cxL, tyL); tyL += VL.stepBonus; }
+    if (lastTimeBonus > 0) { ctx.fillStyle = PAL.timeBonusText; ctx.fillText(STRINGS.timeBonusLabel + lastTimeBonus, cxL, tyL); tyL += VL.stepBonus; }
     ctx.fillStyle = PAL.bannerText; ctx.fillText(scoreText, cxL, tyL); tyL += VL.stepScore;
     ctx.fillStyle = actionVisible ? PAL.tapContinueColor : PAL.transparent; ctx.fillText(STRINGS.tapContinue, cxL, tyL);
   }
@@ -833,7 +833,7 @@ function drawCredits() {
   ctx.fillText('LucazadeSoft Team', cx, ty); ty += VC.stepTeam;
   for (var i = 0; i < n; i++) {
     ctx.fillStyle = PAL.creditsText; ctx.fillText(_CREDITS_MEMBERS[i].name, cx, ty); ty += VC.nameH + VC.nameGap;
-    ctx.fillStyle = PAL.cyan;  ctx.fillText(_CREDITS_MEMBERS[i].role, cx, ty); ty += VC.roleH + VC.roleGap;
+    ctx.fillStyle = PAL.creditsMemberRole;  ctx.fillText(_CREDITS_MEMBERS[i].role, cx, ty); ty += VC.roleH + VC.roleGap;
   }
   ty += VC.btnGapAbove;
   var btnX = bx + Math.round((VC.panW - VC.btnW) / 2);

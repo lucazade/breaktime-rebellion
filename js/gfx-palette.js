@@ -160,8 +160,9 @@ const PAL = {
   livesBonusText:     '#33B84B',  // lives bonus line in win screen
   tapContinueColor:   '#33B84B',  // "tap to continue" prompt in level-complete screen
   creditsText:        '#FFFFFF',  // credits member names and OK button
-  creditsRole:        '#9AD284',  // credits team name / member role text
-  cyan:               '#00d2ff',  // neon cyan accent — time bonus label, credits role text
+  creditsRole:        '#9AD284',  // credits team name ("LucazadeSoft Team")
+  creditsMemberRole:  '#00d2ff',  // credits individual role labels (Orchestrator, Lead Developer…)
+  timeBonusText:      '#00d2ff',  // time bonus label on win / gameover screens
 
 // ═══════════════════════════════════════════════════════════
 //  GAME OBJECTS
