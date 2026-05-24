@@ -17,7 +17,7 @@ css/
 js/                 ← ordine di caricamento obbligatorio:
   config.js         ← CONFIG (images, audio, debug, display) — primo
   palette.js        ← const PAL — unica sorgente di tutti i colori
-  scene.js          ← CONFIG.scene: geometria canvas (GY/MY/TY, PW/PH, walkOffset) + posizioni oggetti + proximity dashed
+  scene.js          ← CONFIG.scene (layout + dashed) + CONFIG.level (base livello: scale, lavagne, banchi, campanella)
   ui.js             ← CONFIG.ui (char, titleScreen, HUD, banners, dialogs) — dati UI
   draw-chars.js     ← COLOURS_*, drawChar/drawJanitor/drawPreside/drawGuard/drawGinnastica
   draw-objects.js   ← drawDesks/Boards/Bell/Machines/... (solo rendering)
@@ -104,8 +104,8 @@ Il codice è diviso in moduli distinti che comunicano via variabili globali cond
 ## LEVELS (js/levels.js)
 
 Tutti i dati di ogni livello sono in `LEVELS[]`.
-Ogni livello è `Object.assign({}, CONFIG.scene.shared, { ... })`.
-`CONFIG.scene.shared` (in `scene.js`) contiene scale, lavagne, banchi, campanella e playerStart — fissi in tutti i livelli.
+Ogni livello è `Object.assign({}, CONFIG.level, { ... })`.
+`CONFIG.level` (in `scene.js`) contiene scale, lavagne, banchi, campanella e playerStart — fissi in tutti i livelli.
 
 Ogni livello contiene:
 ```js
