@@ -5,14 +5,14 @@
 //  Mobile panel buttons (home/pause/info) are styled entirely in CSS.
 // ═══════════════════════════════════════════════════════════
 
-// Character sprite config — outline settings
-CONFIG.vis.char = {
-  outline:      true,
-  outlineSize:  1.0,
-  outlineColor: PAL.charOutline,
-};
-
 Object.assign(CONFIG.vis, {
+
+  char: {
+    outline:      true,
+    outlineSize:  1.0,
+    outlineColor: PAL.charOutline,
+  },
+
 
   // Shared style for all dialog panels (banners, buttons)
   dialog: {
