@@ -161,6 +161,7 @@ const PAL = {
   tapContinueColor:   '#33B84B',  // "tap to continue" prompt in level-complete screen
   creditsText:        '#FFFFFF',  // credits member names and OK button
   creditsRole:        '#9AD284',  // credits team name / member role text
+  cyan:               '#00d2ff',  // neon cyan accent — time bonus label, credits role text
 
 // ═══════════════════════════════════════════════════════════
 //  GAME OBJECTS
