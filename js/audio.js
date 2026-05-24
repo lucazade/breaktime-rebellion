@@ -62,8 +62,14 @@ const GameAudio = (function() {
     mode = m;
     localStorage.setItem('btr_audio', m);
     if (mode !== 'full') {
-      if (bgMusic)    bgMusic.pause();
-      if (introMusic) introMusic.pause();
+      // Fade out before pausing to prevent hardware speaker pop
+      [introMusic, bgMusic, bossMusic].forEach(function(t) {
+        if (!t || t.paused) return;
+        _fadeAudio(t, 0, 250, function() {
+          if (mode !== 'full') t.pause();
+          else t.volume = CONFIG.audio.musicVolume; // restore if user switched back
+        });
+      });
     }
     // Callers resume the right track after switching back to 'full'
   }
