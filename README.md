@@ -33,7 +33,7 @@
 
 Ten levels. Ten missions. One legendary school year.
 
-- 🏫 3-floor school with oblique-perspective bitmap background, hand-drawn pixel art
+- 🏫 3-floor school with oblique-perspective bitmap background
 - 👨‍🏫 Multiple NPCs with patrol AI and line-of-sight detection
 - 📱 Playable on Android (PWA / Capacitor APK) and desktop browser
 - 🎮 Analog joystick overlay for mobile, keyboard for desktop
@@ -43,7 +43,7 @@ Ten levels. Ten missions. One legendary school year.
 
 ## The Story
 
-> *One Linux sysadmin, no budget, two weeks, and a virtual AI team. A game that actually ships.*
+> *One Linux sysadmin, no budget, one month, and a virtual AI team. A game that actually ships.*
 
 Breaktime Rebellion was built entirely in **May 2026** by Luca Forina as a personal project, with an AI virtual team handling every creative and technical role:
 
@@ -55,7 +55,7 @@ Breaktime Rebellion was built entirely in **May 2026** by Luca Forina as a perso
 
 No game engine. No framework. Just HTML5 Canvas, vanilla JavaScript, and a lot of prompting.
 
-The project started from a late-night chat session about retro games — two weeks later, ten levels were done and the APK was on the phone.
+The project started from a late-night chat session about retro games — one month later, ten levels were done and the APK was on the phone.
 
 ---
 
@@ -68,6 +68,7 @@ The project started from a late-night chat session about retro games — two wee
 | `← →` | Move Marco |
 | `↑ / ↓` | Enter diagonal staircases |
 | `Z` or `Space` | Action (spray, collect, interact) |
+| `C` | Credits |
 | `P` | Pause |
 | `Esc` | Back to main menu |
 
@@ -112,7 +113,7 @@ Download the latest APK from [Releases](https://github.com/lucazade/breaktime-re
 | Language | Vanilla JavaScript (no framework, no bundler) |
 | Font | Press Start 2P (self-hosted) |
 | Colours | Custom flat palette — `const PAL`, ~200 named entries |
-| Audio | MP3/WAV via custom `GameAudio` manager |
+| Audio | MP3/WAV/OGG via custom `GameAudio` manager |
 | PWA | `manifest.json` + service worker |
 | Android | [Capacitor](https://capacitorjs.com/) |
 
