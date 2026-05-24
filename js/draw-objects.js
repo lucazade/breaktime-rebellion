@@ -187,7 +187,7 @@ function drawGymBall() {
     if (pdx < 14 && pdy < 14) {
       ctx.strokeStyle = PAL.objectActiveBorder; ctx.lineWidth = 1;
       ctx.setLineDash([2, 2]);
-      const _dg = CONFIG.vis.dashed.gymBall; ctx.strokeRect(bx+_dg.x, by+_dg.y, _dg.w, _dg.h);
+      const _dg = CONFIG.scene.dashed.gymBall; ctx.strokeRect(bx+_dg.x, by+_dg.y, _dg.w, _dg.h);
       ctx.setLineDash([]);
     }
   }
@@ -241,7 +241,7 @@ function drawBookcase() {
     if (pdx < 20 && pdy < 36) {
       ctx.strokeStyle = PAL.objectActiveBorder; ctx.lineWidth = 1;
       ctx.setLineDash([2, 2]);
-      const _db = CONFIG.vis.dashed.bookcase; ctx.strokeRect(bx+_db.x, by+_db.y, _db.w, _db.h);
+      const _db = CONFIG.scene.dashed.bookcase; ctx.strokeRect(bx+_db.x, by+_db.y, _db.w, _db.h);
       ctx.setLineDash([]);
     }
   }
@@ -277,7 +277,7 @@ function drawRegister() {
     if (pdx < 16 && pdy < 20) {
       ctx.strokeStyle = PAL.gold; ctx.lineWidth = 1;
       ctx.setLineDash([2, 2]);
-      const _dr = CONFIG.vis.dashed.register; ctx.strokeRect(bx+_dr.x, by+_dr.y, _dr.w, _dr.h);
+      const _dr = CONFIG.scene.dashed.register; ctx.strokeRect(bx+_dr.x, by+_dr.y, _dr.w, _dr.h);
       ctx.setLineDash([]);
     }
   }
@@ -292,7 +292,7 @@ function drawExitDoor() {
     const blink = Math.floor(frame / 10) % 2 === 0;
     ctx.strokeStyle = blink ? PAL.gold : PAL.sprinklerActiveBorder; ctx.lineWidth = 1;
     ctx.setLineDash([3, 2]);
-    const _de = CONFIG.vis.dashed.exitDoor; ctx.strokeRect(bx+_de.x, by+_de.y, _de.w, _de.h);
+    const _de = CONFIG.scene.dashed.exitDoor; ctx.strokeRect(bx+_de.x, by+_de.y, _de.w, _de.h);
     ctx.setLineDash([]);
   }
 }
@@ -348,7 +348,7 @@ function drawSprinklers() {
         if (pdx < 16 && pdy < 50) {
           ctx.strokeStyle = PAL.objectActiveBorder; ctx.lineWidth = 1;
           ctx.setLineDash([2, 2]);
-          const _ds = CONFIG.vis.dashed.sprinklers; ctx.strokeRect(bx+_ds.x, by+_ds.y, _ds.w, _ds.h);
+          const _ds = CONFIG.scene.dashed.sprinklers; ctx.strokeRect(bx+_ds.x, by+_ds.y, _ds.w, _ds.h);
           ctx.setLineDash([]);
         }
       }
@@ -418,7 +418,7 @@ function drawBins() {
       if (pdx < 16 && pdy < 20) {
         ctx.strokeStyle = PAL.objectActiveBorder; ctx.lineWidth = 1;
         ctx.setLineDash([2, 2]);
-        const _dbn = CONFIG.vis.dashed.bins; ctx.strokeRect(bx+_dbn.x, by+_dbn.y, _dbn.w, _dbn.h);
+        const _dbn = CONFIG.scene.dashed.bins; ctx.strokeRect(bx+_dbn.x, by+_dbn.y, _dbn.w, _dbn.h);
         ctx.setLineDash([]);
       }
     }
@@ -488,7 +488,7 @@ function drawSink() {
     if (pdx < 14 && pdy < 20) {
       ctx.strokeStyle = PAL.objectActiveBorder; ctx.lineWidth = 1;
       ctx.setLineDash([2, 2]);
-      const _dsk = CONFIG.vis.dashed.sink; ctx.strokeRect(bx+_dsk.x, by+_dsk.y, _dsk.w, _dsk.h);
+      const _dsk = CONFIG.scene.dashed.sink; ctx.strokeRect(bx+_dsk.x, by+_dsk.y, _dsk.w, _dsk.h);
       ctx.setLineDash([]);
     }
   }
@@ -551,7 +551,7 @@ function drawMachines() {
       if (pdx < 14 && pdy < 20) {
         ctx.strokeStyle = PAL.objectActiveBorder; ctx.lineWidth = 1;
         ctx.setLineDash([2, 2]);
-        const _dm = CONFIG.vis.dashed.machines; ctx.strokeRect(mx+_dm.x, my+_dm.y, _dm.w, _dm.h);
+        const _dm = CONFIG.scene.dashed.machines; ctx.strokeRect(mx+_dm.x, my+_dm.y, _dm.w, _dm.h);
         ctx.setLineDash([]);
       }
     }
