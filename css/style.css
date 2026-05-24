@@ -165,38 +165,8 @@ canvas {
 /* Legend hidden everywhere; shown only on desktop via .visible class */
 #legend { display: none; }
 
-/* ─── DESKTOP: decorations above/below the screen, keyboard legend ─── */
+/* ─── DESKTOP: keyboard legend ─── */
 @media (hover: hover) and (pointer: fine) {
-
-  /* Top bezel: game title above the screen */
-  #game-area::before {
-    content: '⊙  BREAKTIME REBELLION  ⊙';
-    position: absolute;
-    bottom: calc(100% + 22px);
-    left: 50%;
-    transform: translateX(-50%);
-    white-space: nowrap;
-    font-family: var(--btr-font-family, 'Press Start 2P'), monospace;
-    font-size: clamp(12px, 1.1vw, 17px);
-    color: rgba(255,215,0,0.92);
-    letter-spacing: 5px;
-    text-shadow: 0 0 12px rgba(255,200,0,0.60), 0 0 28px rgba(255,140,0,0.32);
-    pointer-events: none;
-  }
-
-  /* Bottom bezel: neon gradient line */
-  #game-area::after {
-    content: '';
-    position: absolute;
-    top: calc(100% + 14px);
-    left: 50%;
-    transform: translateX(-50%);
-    width: 55%;
-    height: 2px;
-    background: linear-gradient(90deg,
-      transparent, rgba(0,210,255,0.65), rgba(160,0,255,0.45), rgba(0,210,255,0.65), transparent);
-    pointer-events: none;
-  }
 
   /* Keyboard legend — fixed footer on title screen */
   #legend {
@@ -318,9 +288,7 @@ canvas {
 }
 
 
-/* ─── TITLE MODE — no bezel, no panels ─── */
+/* ─── TITLE MODE — no panels, no canvas border ─── */
 body.title-mode #panel-left,
 body.title-mode #panel-right { display: none !important; }
 body.title-mode canvas { box-shadow: none !important; background: none !important; }
-body.title-mode #game-area::before,
-body.title-mode #game-area::after { display: none !important; }
