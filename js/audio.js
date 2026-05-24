@@ -65,7 +65,7 @@ const GameAudio = (function() {
       // Fade out before pausing to prevent hardware speaker pop
       [introMusic, bgMusic, bossMusic].forEach(function(t) {
         if (!t || t.paused) return;
-        _fadeAudio(t, 0, 250, function() {
+        _fadeAudio(t, 0, 100, function() {
           if (mode !== 'full') t.pause();
           else t.volume = CONFIG.audio.musicVolume; // restore if user switched back
         });
@@ -138,16 +138,24 @@ const GameAudio = (function() {
   }
 
   function stopMusic() {
-    if (bgMusic)   { bgMusic.pause();   bgMusic.currentTime = 0; }
-    if (bossMusic) { bossMusic.pause(); bossMusic.currentTime = 0; }
+    [bgMusic, bossMusic].forEach(function(t) {
+      if (!t) return;
+      if (t.paused) { t.currentTime = 0; return; }
+      _fadeAudio(t, 0, 100, function() { t.pause(); t.currentTime = 0; });
+    });
   }
 
   function pauseMusic() {
-    var t = _gameTrack(); if (t) t.pause();
+    var t = _gameTrack();
+    if (!t || t.paused) return;
+    _fadeAudio(t, 0, 100, function() { t.pause(); });
   }
 
   function resumeMusic() {
-    var t = _gameTrack(); if (t && mode === 'full') t.play().catch(function() {});
+    var t = _gameTrack();
+    if (!t || mode !== 'full') return;
+    t.volume = CONFIG.audio.musicVolume; // restore if paused during a fade
+    t.play().catch(function() {});
   }
 
   // Web Audio API for zero-latency sfx; fallback to cloneNode if unavailable
