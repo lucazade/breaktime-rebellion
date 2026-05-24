@@ -328,6 +328,7 @@ Durante il respawn non puoi neache muoverti, è un comportamento corretto essere
 
 DA VERIFICARE:
 - [?] #179 ref.171 in L9 se ti becca bidello al piano intermedio, respawni e ti uccide il bidello vicino a dove respawni (al piano terra).. "In updatePlayer() quando stunT sta per scadere, controlliamo se c'è un NPC entro raggio pericoloso" è valido in questo caso?
+- [?] #176 bump altoparlante ancora presente
 
 PER LUCA:
 - [ ] #159 SFX sostituire suono acqua bagno
@@ -348,4 +349,3 @@ PER LUCA:
 
 PER CLAUDE:
 - [ ] #183 Notion: Aggiornare files in Struttura del progetto
-- [ ] #176 bump altoparlante ancora presente
