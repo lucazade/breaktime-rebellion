@@ -10,6 +10,7 @@ CONFIG.vis = {
     W: 320, H: 200,              // dimensioni canvas logiche (px)
     GY: 185, MY: 127, TY: 70,    // Y pavimento Ground / Middle / Top floor
     BW: 22, BH: 14,              // board (lavagna) width × height
+    PW: 8,  PH: 16,              // player sprite width × height
     walkOffset: 6,               // px sopra la superficie dove cammina il personaggio
     wallLeft: 10, wallRight: 10, // #78 — margini muro sx/dx (pixel logici)
   },
@@ -20,11 +21,11 @@ CONFIG.vis = {
 const W = CONFIG.vis.layout.W, H = CONFIG.vis.layout.H;
 const GY = CONFIG.vis.layout.GY, MY = CONFIG.vis.layout.MY, TY = CONFIG.vis.layout.TY;
 const BW = CONFIG.vis.layout.BW, BH = CONFIG.vis.layout.BH;
+const PW = CONFIG.vis.layout.PW, PH = CONFIG.vis.layout.PH;
 const walkOffset = CONFIG.vis.layout.walkOffset;
 const wallLeft = CONFIG.vis.layout.wallLeft, wallRight = CONFIG.vis.layout.wallRight;
 
 // Shared scene layout — fixed in bg.png, same every level.
-// playerStart is defined in draw-chars.js (needs PH, which is defined there).
 CONFIG.vis.shared = {
 
   // fdTop: px above the walking surface where the sprite starts to appear
@@ -50,6 +51,8 @@ CONFIG.vis.shared = {
 
   bell: { x: 7, y: GY - 49 },
 
+  playerStart: { x: 18, y: GY - PH - walkOffset },
+
 };
 
 // Alias for backwards compatibility with levels.js
@@ -66,6 +69,13 @@ CONFIG.vis.dashed = {
   machines:   { x:-2, y:-2,  w:14, h:22 },
   register:   { x:-2, y:-4,  w:14, h:18 },
   exitDoor:   { x:-2, y:-14, w:14, h:30 },
+};
+
+// Character sprite config — outline settings
+CONFIG.vis.char = {
+  outline:      true,
+  outlineSize:  1.0,
+  outlineColor: PAL.charOutline,
 };
 
 // CSS custom properties — font-family is set by vis-ui.js

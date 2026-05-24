@@ -1,22 +1,8 @@
 // ═══════════════════════════════════════════════════════════
-//  GFX CHARS — player/char config + sprite draw functions
-//  Depends on: gfx-palette, gfx-building. FF defined in config.js.
+//  DRAW CHARS — character sprite draw functions
+//  Layout + config (PW, PH, playerStart, char outline) → vis-layout.js
+//  Colors → palette.js
 // ═══════════════════════════════════════════════════════════
-
-// Player dimensions — defined here so PH is available for playerStart
-const PW = 8, PH = 16;
-
-// Player start position — added to shared (defined in gfx-building.js) now that PH is available
-CONFIG.vis.shared.playerStart = { x: 18, y: GY - PH - walkOffset };
-
-// Character sprite config — outline settings
-Object.assign(CONFIG.vis, {
-  char: {
-    outline:      true,
-    outlineSize:  1.0,
-    outlineColor: PAL.charOutline,
-  },
-});
 
 // ── Character colour sets — one per character type, fully explicit ────────────
 // drawChar reads only from the colours object — no character-specific logic inside.
