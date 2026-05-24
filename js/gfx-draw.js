@@ -104,7 +104,7 @@ function drawTitleScreen() {
     if (!_titleStarting) {
       var _ga = 0.3 + 0.3 * Math.sin(frame * Math.PI / 60);
       ctx.save();
-      ctx.strokeStyle = PAL.gold;
+      ctx.strokeStyle = PAL.logoGlow;
       ctx.lineWidth = 1.5;
       ctx.globalAlpha = _ga;
       ctx.beginPath(); ctx.roundRect(logoX-3, logoY-3, logoW+6, logoH+6, r+3); ctx.stroke();
@@ -141,8 +141,8 @@ function drawTitleScreen() {
 
     var atCeiling = currentLevel >= _btrMax, moreExist = _btrMax < LEVELS.length;
     if (atCeiling && moreExist) {
-      _box(ct.nextX, ctrlY, ct.nextW, PAL.titleHighlight);
-      _drawLockIcon(ct.nextX + Math.floor((ct.nextW - 6) / 2), ctrlY + Math.floor((ct.btnH - 6) / 2), PAL.titleHighlight);
+      _box(ct.nextX, ctrlY, ct.nextW, PAL.levelLocked);
+      _drawLockIcon(ct.nextX + Math.floor((ct.nextW - 6) / 2), ctrlY + Math.floor((ct.btnH - 6) / 2), PAL.levelLocked);
     } else {
       var nextColor = (atCeiling && !moreExist) ? PAL.dgray : ct.btnColor;
       _box(ct.nextX, ctrlY, ct.nextW, nextColor);
@@ -159,7 +159,7 @@ function drawTitleScreen() {
 
   // Audio toggle — fixed width based on the longest label across all modes
   var audioMode = GameAudio.getMode();
-  var audioColor = audioMode==='full' ? PAL.lgreen : audioMode==='sfx' ? PAL.titleHighlight : PAL.mgray;
+  var audioColor = audioMode==='full' ? PAL.lgreen : audioMode==='sfx' ? PAL.audioSfx : PAL.mgray;
   var audioLabel = audioMode==='full' ? STRINGS.audioFull : audioMode==='sfx' ? STRINGS.audioSfx : STRINGS.audioMute;
   var _iconW = 5, _gap = 3;
   if (!_audioLblW && document.fonts.check(ctx.font)) {

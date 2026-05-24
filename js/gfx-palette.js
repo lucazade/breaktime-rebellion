@@ -133,17 +133,23 @@ const PAL = {
 // ═══════════════════════════════════════════════════════════
 
   // ── Title screen ──────────────────────────────────────────
-  dgray:          '#444444',  // disabled level chooser button
-  lgreen:         '#9AD284',  // audio button (full mode) / credits member role text
-  lgray:          '#959595',  // keyboard legend text
-  mgray:          '#6C6C6C',  // audio muted button
-  btnLabel:       '#b0b0b0',  // enabled level chooser button label
-  titleHighlight: '#FEDC02',  // active next-level button / SFX audio mode highlight
-  logoBorder:     '#000000',  // logo image border
-  lockIconDetail: '#000000',  // keyhole detail in lock icon (locked levels)
+  logoBorder:     '#000000',  // logo - image border
+  logoGlow:       '#FFD700',  // logo - pulsing glow stroke colour
+
+  dgray:          '#444444',  // level - disabled level chooser button
+  btnLabel:       '#b0b0b0',  // level - enabled level chooser button label
+  lockIconDetail: '#000000',  // level - keyhole detail in lock icon (locked levels)
+  levelLocked:    '#FEDC02',  // level - locked next-level button / lock icon
+
   diffEasy:       '#22cc44',  // difficulty selector — easy
   diffMedium:     '#ddcc00',  // difficulty selector — medium
   diffHard:       '#dd1100',  // difficulty selector — hard
+
+  lgreen:         '#9AD284',  // audio - audio button (full mode) / credits member role text
+  audioSfx:       '#FEDC02',  // audio - SFX-only mode button highlight
+  mgray:          '#6C6C6C',  // audio - audio muted button
+
+  lgray:          '#959595',  // legend - keyboard legend text
 
   // ── Bezel (mobile side panels) ────────────────────────────
   bezelGlow:    'rgba(160,0,255,0.7)',           // panel inner glow border
