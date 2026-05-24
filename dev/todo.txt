@@ -357,4 +357,6 @@ PER LUCA:
 - [ ] #185 se ci sono bidelli non ci può essere prof. celeste
 
 PER CLAUDE:
+- [ ] #187 gfx-draw.js (845 righe) mescola HUD, banner, title, crediti, night overlay e debug — valutare split in sotto-moduli (es. gfx-draw-hud.js, gfx-draw-ui.js)
+- [ ] #188 BUG latente: in physics.js il setTimeout della lavagna (L1, riga ~455) modifica stato di gioco (score, board.done, alertTeachers) da callback asincrono — se arriva deathFreeze nei 700ms il board viene comunque marcato done. Sostituire con pendingTransition o flag frame-based.
 
