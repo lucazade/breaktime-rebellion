@@ -1,11 +1,18 @@
 // ═══════════════════════════════════════════════════════════
-//  GFX UI — HUD, dialogs, and all banner config
-//  All colours reference PAL (gfx-palette.js).
-//  Building/scene → gfx-building.js
+//  VIS UI — HUD, dialogs, banners, and character sprite config
+//  All colours reference PAL (palette.js).
+//  Scene geometry → scene.js
 //  Mobile panel buttons (home/pause/info) are styled entirely in CSS.
 // ═══════════════════════════════════════════════════════════
 
 Object.assign(CONFIG.vis, {
+
+  char: {
+    outline:      true,
+    outlineSize:  1.0,
+    outlineColor: PAL.charOutline,
+  },
+
 
   // Shared style for all dialog panels (banners, buttons)
   dialog: {

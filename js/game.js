@@ -57,109 +57,7 @@ function _applyLevelBg() {
   img.src = CONFIG.images.logo;
 })();
 
-// ── Title screen state ────────────────────────────────────────────────────────
-
-// Keyboard legend — HTML DOM element below the game area (desktop only)
-var _legendEl = document.getElementById('legend');
-(function() {
-  if (!_legendEl || !_isDesktop) return;
-  function _key(lbl) { var e=document.createElement('span'); e.className='leg-key'; e.textContent=lbl; return e; }
-  function _lbl(lbl) { var e=document.createElement('span'); e.className='leg-lbl'; e.textContent=lbl; return e; }
-  var wrap = document.createElement('div');
-  [
-    [['<','^','v','>'], STRINGS.keyMove],
-    [['Z'],             STRINGS.keyAction],
-    [['C'],             STRINGS.keyCredits],
-    [['P'],             STRINGS.keyPause],
-    [['ESC'],           STRINGS.keyHome],
-  ].forEach(function(g) {
-    var grp = document.createElement('span');
-    grp.className = 'leg-group';
-    g[0].forEach(function(k) { grp.appendChild(_key(k)); });
-    grp.appendChild(_lbl(g[1]));
-    wrap.appendChild(grp);
-  });
-  _legendEl.appendChild(wrap);
-})();
-
-function _showLegend(v) {
-  if (!_legendEl) return;
-  _legendEl.classList.toggle('visible', !!(v && _isDesktop));
-}
-
-var _titleStarting = false;
-var _btrMax = 1;
-
-function _initTitleState() {
-  // One-time migration: copy old single-key progress to easy slot
-  if (!localStorage.getItem('btr_max_level_easy') && localStorage.getItem('btr_max_level')) {
-    localStorage.setItem('btr_max_level_easy',  localStorage.getItem('btr_max_level'));
-    localStorage.setItem('btr_last_level_easy', localStorage.getItem('btr_last_level') || '1');
-    localStorage.removeItem('btr_max_level');
-    localStorage.removeItem('btr_last_level');
-  }
-  var debug = CONFIG.debug.unlockAllLevels;
-  _btrMax = debug ? LEVELS.length
-    : Math.min(LEVELS.length, Math.max(1, parseInt(localStorage.getItem('btr_max_level_' + gameDifficulty) || '1')));
-  currentLevel = Math.max(1, Math.min(_btrMax, parseInt(localStorage.getItem('btr_last_level_' + gameDifficulty) || '1')));
-  _titleStarting = false;
-  _showLegend(true);
-}
-_initTitleState();
-document.body.classList.add('title-mode'); // active on page load (state='title')
-
-window.addEventListener('_titleReset', function() {
-  _titleStarting = false; _initTitleState();
-  document.body.classList.add('title-mode');
-});
-
-function _tryStart() {
-  if (_titleStarting || state !== 'title') return;
-  if (window.innerWidth <= window.innerHeight) return; // portrait
-  _titleStarting = true;
-  _showLegend(false);
-  startGame();
-}
-
-function _titleCycleAudio() {
-  var modes = ['full', 'sfx', 'mute'];
-  var next = modes[(modes.indexOf(GameAudio.getMode()) + 1) % modes.length];
-  GameAudio.setMode(next);
-  if (next === 'full') GameAudio.playIntro();
-}
-
-function _titleCycleDifficulty() {
-  var modes = ['easy', 'medium', 'hard'];
-  gameDifficulty = modes[(modes.indexOf(gameDifficulty) + 1) % modes.length];
-  localStorage.setItem('btr_difficulty', gameDifficulty);
-  var debug = CONFIG.debug.unlockAllLevels;
-  _btrMax = debug ? LEVELS.length
-    : Math.min(LEVELS.length, Math.max(1, parseInt(localStorage.getItem('btr_max_level_' + gameDifficulty) || '1')));
-  currentLevel = Math.max(1, Math.min(_btrMax, parseInt(localStorage.getItem('btr_last_level_' + gameDifficulty) || '1')));
-}
-
-var _titleCtrlY = 0;       // updated by drawTitleScreen every frame
-var _titleLogoRect = null; // {x,y,w,h} of the logo
-var _titleAudioX = 0, _titleAudioW = 0; // audio button position (dynamic width)
-
-function _titleCanvasClick(lx, ly) {
-  if (state !== 'title') return;
-  var ct = CONFIG.vis.titleScreen.controls;
-  var tpX = 8, tpY = 6; // tap padding — larger target without changing visuals
-  var logoBottom = _titleLogoRect ? _titleLogoRect.y + _titleLogoRect.h : _titleCtrlY;
-  var padUp = Math.min(tpY, Math.max(0, _titleCtrlY - logoBottom - 1)); // don't exceed logo
-  if (ly >= _titleCtrlY - padUp && ly <= _titleCtrlY + ct.btnH + tpY) {
-    if (lx >= _titleAudioX - tpX && lx <= _titleAudioX + _titleAudioW + tpX) { _titleCycleAudio(); return; }
-    if (lx >= ct.diffX - tpX && lx <= ct.diffX + ct.diffW + tpX) { _titleCycleDifficulty(); return; }
-    if (lx >= ct.prevX - tpX && lx <= ct.prevX + ct.prevW + tpX && currentLevel > 1 && LEVELS.length > 1) { currentLevel--; return; }
-    if (lx >= ct.nextX - tpX && lx <= ct.nextX + ct.nextW + tpX && currentLevel < _btrMax && LEVELS.length > 1) { currentLevel++; return; }
-    return;
-  }
-  if (_titleLogoRect && lx >= _titleLogoRect.x && lx <= _titleLogoRect.x + _titleLogoRect.w
-                     && ly >= _titleLogoRect.y && ly <= _titleLogoRect.y + _titleLogoRect.h) {
-    _tryStart();
-  }
-}
+// ── Game loop ─────────────────────────────────────────────────────────────────
 
 var _lastLoopTime = 0;
 var _accumulator  = 0;
@@ -278,7 +176,6 @@ function loop(ts) {
     }
   }
 
-
   drawPaperBalls();
   drawParticles();
   drawFloating();
@@ -310,6 +207,8 @@ function loop(ts) {
   requestAnimationFrame(loop);
 }
 
+// ── Tap handler ───────────────────────────────────────────────────────────────
+
 function handleTap() {
   if (storyBannerT > 0 && !storyBannerFading) { storyBannerT = 20; storyBannerFading = true; return; }
   // L10: tap during Luca fumetto → win state (only after 90-frame cooldown)
@@ -338,6 +237,7 @@ function _gameoverChoice(lx, ly) {
   else if (lx >= bx + VG.noOx && lx <= bx + VG.noOx + VG.noW) { goHome(); }
 }
 
+// ── Canvas interaction ────────────────────────────────────────────────────────
 
 // Panels forward taps to game handler — but NOT when the tap is on a panel button
 ['panel-left', 'panel-right'].forEach(function(id) {
@@ -354,128 +254,6 @@ function _gameoverChoice(lx, ly) {
   }, {passive: false});
 });
 document.getElementById('btn-action').addEventListener('touchend', function() { handleTap(); }, {passive: true});
-
-// ── Pause / Home confirm — canvas-based (no HTML overlay) ────────────────────
-var _pauseActive      = false;  // pause is active (not home-confirm)
-var _homeConfirmActive = false; // home confirm dialog is open
-var _stateBeforeHome  = null;
-var _btnPause         = document.getElementById('btn-pause');
-// Inline SVG to avoid OS-coloured emoji (⏸/▶ render in colour on Android/iOS)
-var _SVG_PAUSE = '<svg viewBox="0 -1 16 16" width="16" height="16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M3 3v10h4V3zm6 0v10h4V3z"/></svg>';
-var _SVG_PLAY  = '<svg viewBox="0 0 16 16"  width="16" height="16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M4 2l10 6-10 6z"/></svg>';
-
-function setPaused(paused) {
-  _pauseActive = paused;
-  if (paused) {
-    state = 'paused';
-    GameAudio.pauseMusic();
-    _btnPause.innerHTML = _SVG_PLAY;
-  } else {
-    state = 'playing';
-    GameAudio.resumeMusic();
-    _btnPause.innerHTML = _SVG_PAUSE;
-  }
-}
-
-function triggerPause() {
-  if (_homeConfirmActive) return;
-  if (state === 'playing') setPaused(true);
-  else if (state === 'paused' && _pauseActive) setPaused(false);
-}
-
-function triggerHome() {
-  if (_pauseActive) return;
-  if (_homeConfirmActive) { cancelHome(); return; }
-  if (state !== 'playing') return;
-  _stateBeforeHome = state;
-  _homeConfirmActive = true;
-  GameAudio.pauseMusic();
-  state = 'paused';
-}
-
-function goHome() {
-  _pauseActive = false; _homeConfirmActive = false;
-  _btnPause.innerHTML = _SVG_PAUSE;
-  GameAudio.stopJingle();
-  GameAudio.fadeOutMusic(400);
-  CV.style.transition = 'opacity 0.4s linear';
-  CV.style.opacity = '0';
-  CV.style.pointerEvents = 'none';
-  CV.addEventListener('transitionend', function() {
-    lives = 3; score = 0;
-    resetLevel();
-    state = 'title';
-    window.dispatchEvent(new Event('_titleReset')); // resets _titleStarting and _btrMax
-    CV.style.opacity = '1';
-    CV.addEventListener('transitionend', function() {
-      CV.style.transition = '';
-      CV.style.pointerEvents = '';
-      GameAudio.playIntro();
-    }, {once: true});
-  }, {once: true});
-}
-
-function cancelHome() {
-  _homeConfirmActive = false;
-  if (_stateBeforeHome === 'paused') {
-    _pauseActive = true; state = 'paused';
-  } else {
-    state = 'playing';
-    GameAudio.resumeMusic();
-  }
-  _stateBeforeHome = null;
-}
-
-_btnPause.addEventListener('click', triggerPause);
-document.getElementById('btn-home').addEventListener('click', triggerHome);
-
-// ── Credits (btn-info tap) — canvas-based ────────────────────────────────────
-var _creditsActive = false;
-
-function showCredits() {
-  _creditsActive = true;
-  if (state === 'playing') GameAudio.pauseMusic();
-}
-function hideCredits() {
-  _creditsActive = false;
-  if (state === 'playing') GameAudio.resumeMusic();
-}
-
-var _btnInfo = document.getElementById('btn-info');
-if (_btnInfo) {
-  _btnInfo.addEventListener('click', showCredits);
-  _btnInfo.addEventListener('touchend', function(e) { e.preventDefault(); showCredits(); }, {passive: false});
-}
-
-// ── Canvas click detection for all canvas overlays ───────────────────────────
-
-function _creditsCanvasClick(lx, ly) {
-  var VC = CONFIG.vis.credits;
-  var n = _CREDITS_MEMBERS ? _CREDITS_MEMBERS.length : 5;
-  var panH = VC.padTop + VC.stepTitle + VC.stepTeam + n*(VC.nameH+VC.nameGap+VC.roleH+VC.roleGap) + VC.btnGapAbove + VC.btnH + VC.padBottom;
-  var p = _panPos(VC.panW, panH);
-  var btnY = p.by + panH - VC.padBottom - VC.btnH;
-  var btnX = p.bx + Math.round((VC.panW - VC.btnW) / 2);
-  if (ly >= btnY && ly <= btnY + VC.btnH && lx >= btnX && lx <= btnX + VC.btnW) hideCredits();
-}
-
-function _pauseCanvasClick(lx, ly) {
-  var VP = CONFIG.vis.pauseOverlay;
-  var pH = VP.padTop + VP.stepTitle + VP.btnH + VP.padBottom;
-  var p = _panPos(VP.panW, pH);
-  var btnY = p.by + VP.padTop + VP.stepTitle;
-  if (ly >= btnY && ly <= btnY + VP.btnH && lx >= p.bx + VP.resumeOx && lx <= p.bx + VP.resumeOx + VP.resumeW) setPaused(false);
-}
-
-function _homeConfirmCanvasClick(lx, ly) {
-  var VH = CONFIG.vis.homeConfirm;
-  var hH = VH.padTop + VH.stepTitle + VH.btnH + VH.padBottom;
-  var p = _panPos(VH.panW, hH);
-  var btnY = p.by + VH.padTop + VH.stepTitle;
-  if (ly < btnY || ly > btnY + VH.btnH) return;
-  if (lx >= p.bx + VH.siOx && lx <= p.bx + VH.siOx + VH.siW) { goHome(); }
-  else if (lx >= p.bx + VH.noOx && lx <= p.bx + VH.noOx + VH.noW) { cancelHome(); }
-}
 
 CV.addEventListener('mousemove', function(e) {
   if (state !== 'title') { CV.style.cursor = ''; return; }
@@ -497,38 +275,6 @@ CV.addEventListener('click', function(e) {
   if (state === 'paused' && _pauseActive){ _pauseCanvasClick(lx, ly); return; }
   if (state === 'gameover')              { _gameoverChoice(lx, ly); return; }
   handleTap();
-});
-
-// ── Keyboard shortcuts (desktop) — P = pause, ESC = home / close dialog ─────
-document.addEventListener('keydown', function(e) {
-  if (state === 'title') {
-    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); _tryStart(); }
-    return;
-  }
-  if (_homeConfirmActive) {
-    if (e.key === 'Enter' || e.key === 'y' || e.key === 'Y') { e.preventDefault(); goHome(); }
-    if (e.key === 'Escape' || e.key === 'n' || e.key === 'N') { e.preventDefault(); cancelHome(); }
-    return;
-  }
-  // Gameover choice: Enter/Y = play again, Escape/N = home
-  if (state === 'gameover' && !endScreenFadingOut && endScreenT >= 20) {
-    if (e.key === 'Enter' || e.key === ' ' || e.key === 'y' || e.key === 'Y') {
-      e.preventDefault(); endScreenFadingOut = true; endScreenFadeOutCb = restartGame;
-    } else if (e.key === 'Escape' || e.key === 'n' || e.key === 'N') {
-      e.preventDefault(); goHome();
-    }
-    return;
-  }
-  if (e.key === 'Enter' || e.key === ' ') {
-    if (storyBannerT > 0 || missionBannerT > 0 || state === 'win' ||
-        (deathFreeze && levelMechanics.escapeExit && exitDone && exitWinReady)) {
-      e.preventDefault(); handleTap(); return;
-    }
-  }
-  if (e.key === 'c' || e.key === 'C') { if (_creditsActive) hideCredits(); else showCredits(); return; }
-  if (_creditsActive) { if (e.key === 'Escape') hideCredits(); return; }
-  if (e.key === 'p' || e.key === 'P') triggerPause();
-  if (e.key === 'Escape') triggerHome();
 });
 
 requestAnimationFrame(loop);

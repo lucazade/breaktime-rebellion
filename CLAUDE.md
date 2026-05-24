@@ -16,11 +16,11 @@ css/
   style.css         ← tutti gli stili
 js/                 ← ordine di caricamento obbligatorio:
   config.js         ← CONFIG (images, audio, debug, display) — primo
-  gfx-palette.js    ← const PAL — unica sorgente di tutti i colori
-  gfx-building.js   ← geometria canvas (GY/MY/TY, walkOffset, SHARED_LAYOUT)
-  gfx-ui.js         ← CONFIG.vis (titleScreen, HUD, banners) — dati UI
-  gfx-chars.js      ← PW/PH, COLOURS_*, drawChar/drawJanitor/drawPreside/drawGuard/drawGinnastica
-  gfx-objects.js    ← drawDesks/Boards/Bell/Machines/... + dati SHARED_LAYOUT
+  palette.js        ← const PAL — unica sorgente di tutti i colori
+  scene.js          ← geometria canvas (GY/MY/TY, PW/PH, walkOffset) + posizioni oggetti + proximity dashed
+  vis-ui.js         ← CONFIG.vis (titleScreen, HUD, banners) — dati UI
+  draw-chars.js     ← COLOURS_*, drawChar/drawJanitor/drawPreside/drawGuard/drawGinnastica
+  draw-objects.js   ← drawDesks/Boards/Bell/Machines/... (solo rendering)
   levels.js         ← LEVELS[] con mechanics + NPC per livello
   i18n.js           ← STRINGS EN/IT
   audio.js          ← GameAudio (music + sfx manager)
@@ -28,9 +28,13 @@ js/                 ← ordine di caricamento obbligatorio:
   input.js          ← tastiera, touch buttons, joystick analogico
   physics.js        ← updatePlayer, stair/floor collision, tryAction
   entities.js       ← teachers, janitors, bell, timer, particles
-  gfx-draw.js       ← drawTitleScreen, drawHUD, drawBanners, drawNightOverlay, drawDebugOverlay
-  game.js           ← canvas setup + loop puro
-  title.js          ← title screen events, service worker
+  draw-game.js      ← drawBg, drawNightOverlay, drawSight, drawParticles, drawDebugOverlay
+  draw-title.js     ← drawTitleScreen
+  draw-hud.js       ← drawHUD
+  draw-overlays.js  ← drawEndScreen, drawBanners, drawPauseOverlay, drawCredits
+  menus.js          ← stato pause/home/credits, keyboard shortcuts
+  game.js           ← canvas setup + loop principale + click router
+  title.js          ← stato title screen, service worker
 assets/
   pics/
     bg/
@@ -53,7 +57,7 @@ dev/
 HTML5 Canvas + JS vanilla, nessun framework. Font: Press Start 2P (Google Fonts).
 Palette: logo reference (PAL), voci esplicite per ogni personaggio/oggetto.
 
-## Palette colori (gfx-palette.js)
+## Palette colori (palette.js)
 
 `const PAL` è l'unica sorgente di verità per tutti i colori. Struttura:
 
@@ -100,8 +104,8 @@ Il codice è diviso in moduli distinti che comunicano via variabili globali cond
 ## LEVELS (js/levels.js)
 
 Tutti i dati di ogni livello sono in `LEVELS[]`.
-Ogni livello è `Object.assign({}, SHARED_LAYOUT, { ... })`.
-`SHARED_LAYOUT` (in gfx-building.js/gfx-objects.js) contiene scale, lavagne, banchi, campanella e playerStart — fissi in tutti i livelli.
+Ogni livello è `Object.assign({}, CONFIG.vis.shared, { ... })`.
+`CONFIG.vis.shared` (in `scene.js`) contiene scale, lavagne, banchi, campanella e playerStart — fissi in tutti i livelli.
 
 Ogni livello contiene:
 ```js
@@ -145,7 +149,7 @@ Ogni livello contiene:
   nightMode:  true/false,              // L10
 }
 ```
-Le coordinate usano `GY`, `MY`, `TY`, `PH`, `walkOffset` (da `gfx-building.js`) per restare leggibili.
+Le coordinate usano `GY`, `MY`, `TY`, `PH`, `walkOffset` (da `scene.js`) per restare leggibili.
 
 **Scale (`stairs`):** `fdTop` = px sopra la superficie dove la testa appare; `fdBot` = px sotto dove le gambe spariscono. Valori attuali: `fdTop:4, fdBot:12` su tutte le scale.
 
@@ -173,7 +177,7 @@ CSS scala sempre DOWN (mai upscale) → nessuna distorsione su qualsiasi viewpor
 - Mostra: floor lines (TY/MY/GY), stair boxes con coordinate, hitbox tutti gli oggetti
 - Utile per allineare il background PNG con la logica
 
-**Clip sprite sulle scale:** `drawCharClipped()` in gfx-chars.js disegna Marco in due passate (sopra e sotto la banda del pavimento) quando `player.onStair` è true. La banda è `[surfaceY - fdTop, surfaceY + fdBot]`.
+**Clip sprite sulle scale:** `drawCharClipped()` in `draw-chars.js` disegna Marco in due passate (sopra e sotto la banda del pavimento) quando `player.onStair` è true. La banda è `[surfaceY - fdTop, surfaceY + fdBot]`.
 
 ## CONFIG (js/config.js)
 
@@ -185,7 +189,7 @@ CSS scala sempre DOWN (mai upscale) → nessuna distorsione su qualsiasi viewpor
 
 ## NPC sprites
 
-Ogni personaggio ha il suo draw function e `COLOURS_*` object in `gfx-chars.js`:
+Ogni personaggio ha il suo draw function e `COLOURS_*` object in `draw-chars.js`:
 
 - **Prof.Rossi** (`PAL.profRossiBody`): `drawChar` + `COLOURS_TEACHER`, patrol GY, sight 90
 - **Prof.Celeste** (`PAL.profCelesteBody`): `drawChar` + `COLOURS_TEACHER`, patrol MY, sight 80
@@ -216,7 +220,7 @@ Ogni personaggio ha il suo draw function e `COLOURS_*` object in `gfx-chars.js`:
 ```bash
 node -e "
 const fs=require('fs');
-const files=['js/config.js','js/gfx-palette.js','js/gfx-building.js','js/gfx-ui.js','js/gfx-chars.js','js/gfx-objects.js','js/levels.js','js/i18n.js','js/audio.js','js/state.js','js/input.js','js/physics.js','js/entities.js','js/gfx-draw.js','js/game.js','js/title.js'];
+const files=['js/config.js','js/palette.js','js/scene.js','js/vis-ui.js','js/draw-chars.js','js/draw-objects.js','js/levels.js','js/i18n.js','js/audio.js','js/state.js','js/input.js','js/physics.js','js/entities.js','js/draw-game.js','js/draw-title.js','js/draw-hud.js','js/draw-overlays.js','js/menus.js','js/game.js','js/title.js'];
 const src=files.map(f=>fs.readFileSync(f,'utf8')).join('\n');
 try{new Function(src);console.log('JS OK');}catch(e){console.log('ERRORE:',e.message);}
 "

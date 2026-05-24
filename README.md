@@ -120,10 +120,11 @@ Download the latest APK from [Releases](https://github.com/lucazade/breaktime-re
 The codebase is split into focused modules loaded in a strict dependency order:
 
 ```
-config.js → gfx-palette.js → gfx-building.js → gfx-ui.js
-gfx-chars.js → gfx-objects.js → levels.js → i18n.js
+config.js → palette.js → scene.js → vis-ui.js
+draw-chars.js → draw-objects.js → levels.js → i18n.js
 audio.js → state.js → input.js → physics.js
-entities.js → gfx-draw.js → game.js → title.js
+entities.js → draw-game.js → draw-title.js → draw-hud.js
+draw-overlays.js → menus.js → game.js → title.js
 ```
 
 ---
@@ -138,7 +139,7 @@ The repository is open for contributions. If you find a bug or want to suggest a
    ```bash
    node -e "
    const fs=require('fs');
-   const files=['js/config.js','js/gfx-palette.js','js/gfx-building.js','js/gfx-ui.js','js/gfx-chars.js','js/gfx-objects.js','js/levels.js','js/i18n.js','js/audio.js','js/state.js','js/input.js','js/physics.js','js/entities.js','js/gfx-draw.js','js/game.js','js/title.js'];
+   const files=['js/config.js','js/palette.js','js/scene.js','js/vis-ui.js','js/draw-chars.js','js/draw-objects.js','js/levels.js','js/i18n.js','js/audio.js','js/state.js','js/input.js','js/physics.js','js/entities.js','js/draw-game.js','js/draw-title.js','js/draw-hud.js','js/draw-overlays.js','js/menus.js','js/game.js','js/title.js'];
    const src=files.map(f=>fs.readFileSync(f,'utf8')).join('\n');
    try{new Function(src);console.log('JS OK');}catch(e){console.log('ERROR:',e.message);}
    "

@@ -48,7 +48,7 @@ const player = {
   x:0, y:0, vy:0,
   dir:1, animT:0,
   onStair:false, currentStair:null,
-  stunT:0, stunEndedT:-1, spraying:false, sprayT:0, shaking:false,
+  stunT:0, stunEndedT:-1, spraying:false, sprayT:0, boardCommitT:0, boardCommitTarget:null, shaking:false,
   speed:1.5,
 };
 
@@ -74,7 +74,7 @@ function resetLevel() {
   player.x = lv.playerStart.x; player.y = lv.playerStart.y; player.vy = 0;
   player.dir = 1; player.animT = 0;
   player.onStair = false; player.currentStair = null;
-  player.stunT = 0; player.spraying = false; player.sprayT = 0; player.shaking = false;
+  player.stunT = 0; player.spraying = false; player.sprayT = 0; player.boardCommitT = 0; player.boardCommitTarget = null; player.shaking = false;
   particles = []; floatingTexts = [];
   msgText = ''; msgT = 0; msgDuration = 0;
   actionPressed = false; allBoards = false; allBags = false; allMachines = false; allBall = false; allStudents = false; allBooks = false; allSink = false; allBins = false; allSprinklers = false; allRegister = false; exitDone = false; exitWinReady = false; nightExpandT = 0; lastTimeBonus = 0; lastLivesBonus = 0;

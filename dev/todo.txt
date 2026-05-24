@@ -333,6 +333,9 @@ Durante il respawn non puoi neache muoverti, è un comportamento corretto essere
 
 Obiettivo: come da titolo
 
+CHIUSI:
+- [X] #188 BUG latente: in physics.js il setTimeout della lavagna (L1, riga ~455) modifica stato di gioco (score, board.done, alertTeachers) da callback asincrono — se arriva deathFreeze nei 700ms il board viene comunque marcato done. Sostituire con pendingTransition o flag frame-based.
+
 DA VERIFICARE:
 - [?] #179 ref.171 in L9 se ti becca bidello al piano intermedio, respawni e ti uccide il bidello vicino a dove respawni (al piano terra).. "In updatePlayer() quando stunT sta per scadere, controlliamo se c'è un NPC entro raggio pericoloso" è valido in questo caso?
 - [?] #176 bump altoparlante ancora presente
@@ -358,5 +361,3 @@ PER LUCA:
 
 PER CLAUDE:
 - [ ] #187 gfx-draw.js (845 righe) mescola HUD, banner, title, crediti, night overlay e debug — valutare split in sotto-moduli (es. gfx-draw-hud.js, gfx-draw-ui.js)
-- [ ] #188 BUG latente: in physics.js il setTimeout della lavagna (L1, riga ~455) modifica stato di gioco (score, board.done, alertTeachers) da callback asincrono — se arriva deathFreeze nei 700ms il board viene comunque marcato done. Sostituire con pendingTransition o flag frame-based.
-

@@ -44,7 +44,36 @@ function updatePlayer() {
     }
     return;
   }
-  if (player.spraying) { player.sprayT--; if (player.sprayT <= 0) player.spraying = false; return; }
+  if (player.spraying) {
+    player.sprayT--;
+    if (player.boardCommitT > 0) {
+      player.boardCommitT--;
+      if (player.boardCommitT === 0 && player.boardCommitTarget && !deathFreeze) {
+        const capturedBoard = player.boardCommitTarget;
+        player.boardCommitTarget = null;
+        if (!capturedBoard.done) {
+          capturedBoard.done = true;
+          score += 500;
+          addFloating(capturedBoard.x + BW/2, capturedBoard.y, '+500', PAL.chalkParticle);
+          addParticles(capturedBoard.x + BW/2, capturedBoard.y + BH, PAL.chalkParticle, 14);
+          alertTeachers(capturedBoard.x + BW/2, capturedBoard.y);
+          let done = 0;
+          for (let j = 0; j < BOARDS.length; j++) if (BOARDS[j].done) done++;
+          if (done === BOARDS.length) {
+            allBoards = true;
+            setMsg(STRINGS.allBoards);
+            setTimeout(function() { GameAudio.playSfx('mechCompleted'); }, 250);
+          } else {
+            setMsg(fmt(STRINGS.boardTagged, done, BOARDS.length));
+          }
+        }
+        actionPressed = false;
+        player.spraying = false;
+      }
+    }
+    if (player.sprayT <= 0) player.spraying = false;
+    return;
+  }
 
   // Vending machine shake — hold action near machine to smash it
   player.shaking = false;
@@ -449,29 +478,10 @@ function tryAction() {
     if (nearest && nd < 36) {
       player.spraying = true;
       player.sprayT = 70;
+      player.boardCommitT = 45;
+      player.boardCommitTarget = nearest;
       player.dir = (player.x + PW/2 < nearest.x + BW/2) ? 1 : -1;
       GameAudio.playSfx('spray');
-      const capturedBoard = nearest;
-      setTimeout(function() {
-        if (!capturedBoard.done) {
-          capturedBoard.done = true;
-          score += 500;
-          addFloating(capturedBoard.x + BW/2, capturedBoard.y, '+500', PAL.chalkParticle);
-          addParticles(capturedBoard.x + BW/2, capturedBoard.y + BH, PAL.chalkParticle, 14);
-          alertTeachers(capturedBoard.x + BW/2, capturedBoard.y);
-          let done = 0;
-          for (let j = 0; j < BOARDS.length; j++) if (BOARDS[j].done) done++;
-          if (done === BOARDS.length) {
-            allBoards = true;
-            setMsg(STRINGS.allBoards);
-            setTimeout(function() { GameAudio.playSfx('mechCompleted'); }, 250);
-          } else {
-            setMsg(fmt(STRINGS.boardTagged, done, BOARDS.length));
-          }
-        }
-        actionPressed = false;
-        player.spraying = false;
-      }, 750);
     }
     // No message when action pressed far from a board — proximity hints handle it.
   } else if (levelMechanics.throwPaper && !allStudents) {

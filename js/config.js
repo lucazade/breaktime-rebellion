@@ -1,7 +1,7 @@
 // ═══════════════════════════════════════════════════════════
 //  CONFIG — assets, audio, display and debug flags.
 //  Timers, shake times and NPC lists live in js/levels.js.
-//  Building geometry, palette and scene structure are in js/gfx-building.js and js/gfx-*.js.
+//  Building geometry and scene structure are in scene.js; UI config in vis-ui.js; rendering in draw-*.js.
 // ═══════════════════════════════════════════════════════════
 const CONFIG = {
   images: {
@@ -44,6 +44,6 @@ const CONFIG = {
   },
 };
 
-// Global font shortcut — available to all gfx-* files from the very first script
+// Global font shortcut — available to all draw-* files from the very first script
 var FF = CONFIG.display.fontFamily;
 

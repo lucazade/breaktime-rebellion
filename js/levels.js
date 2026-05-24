@@ -1,5 +1,5 @@
 // Level definitions — edit here to change mechanics and NPCs per level.
-// Loaded after gfx-building.js; SHARED_LAYOUT and CONFIG.vis.layout are available.
+// Loaded after scene.js; CONFIG.vis.shared and CONFIG.vis.layout are available.
 //
 // mechanics: declares which player actions are active objectives in this level.
 //   writeBoards   — spray all boards to tag them (boards are always drawn, writable only in L1)
@@ -17,7 +17,7 @@ var LEVELS = (function() {
   return [
 
     // ── LEVEL 1 — Tag all boards, ring the bell ──────────────────────────────
-    Object.assign({}, SHARED_LAYOUT, {
+    Object.assign({}, CONFIG.vis.shared, {
       timer: 60,
 
       mechanics: {
@@ -38,7 +38,7 @@ var LEVELS = (function() {
     }),
 
     // ── LEVEL 2 — Steal all classmates' bags, ring the bell ──────────────────
-    Object.assign({}, SHARED_LAYOUT, {
+    Object.assign({}, CONFIG.vis.shared, {
       timer: 60,
 
       mechanics: {
@@ -66,7 +66,7 @@ var LEVELS = (function() {
     }),
 
     // ── LEVEL 3 — Smash all vending machines, ring the bell ─────────────────
-    Object.assign({}, SHARED_LAYOUT, {
+    Object.assign({}, CONFIG.vis.shared, {
       timer:     60,
       shakeTime: 150, // frames to hold action near a machine (≈2.5s at 60fps)
 
@@ -98,7 +98,7 @@ var LEVELS = (function() {
     }),
 
     // ── LEVEL 4 — Deflate the gym ball, ring the bell ────────────────────────
-    Object.assign({}, SHARED_LAYOUT, {
+    Object.assign({}, CONFIG.vis.shared, {
       timer:       60,
       deflateTime: 80, // frames to hold action near the ball (≈1.3s at 60fps)
 
@@ -127,7 +127,7 @@ var LEVELS = (function() {
     }),
 
     // ── LEVEL 5 — Throw paper balls at students, ring the bell ───────────────
-    Object.assign({}, SHARED_LAYOUT, {
+    Object.assign({}, CONFIG.vis.shared, {
       timer: 60,
 
       mechanics: {
@@ -158,7 +158,7 @@ var LEVELS = (function() {
     }),
 
     // ── LEVEL 6 — Drop books in the principal's office, ring the bell ────────
-    Object.assign({}, SHARED_LAYOUT, {
+    Object.assign({}, CONFIG.vis.shared, {
       timer:    75,
       dropTime: 40, // frames to hold action near the bookcase (≈0.7s at 60fps)
 
@@ -181,7 +181,7 @@ var LEVELS = (function() {
     }),
 
     // ── LEVEL 7 — Flood the bathroom, ring the bell ──────────────────────────
-    Object.assign({}, SHARED_LAYOUT, {
+    Object.assign({}, CONFIG.vis.shared, {
       timer:     75,
       floodTime: 80, // frames to hold action per pour (≈1.3s at 60fps)
 
@@ -204,7 +204,7 @@ var LEVELS = (function() {
     }),
 
     // ── LEVEL 8 — Plant firecrackers in all trash bins, ring the bell ────────
-    Object.assign({}, SHARED_LAYOUT, {
+    Object.assign({}, CONFIG.vis.shared, {
       timer: 90,
 
       mechanics: {
@@ -230,7 +230,7 @@ var LEVELS = (function() {
     }),
 
     // ── LEVEL 9 — Trigger fire sprinklers, ring the bell ─────────────────────
-    Object.assign({}, SHARED_LAYOUT, {
+    Object.assign({}, CONFIG.vis.shared, {
       timer:       90,
       lighterTime: 80, // frames to hold lighter under sprinkler (≈1.3s at 60fps)
 
@@ -261,7 +261,7 @@ var LEVELS = (function() {
     }),
 
     // ── LEVEL 10 — Steal the register and escape ─────────────────────────────
-    Object.assign({}, SHARED_LAYOUT, {
+    Object.assign({}, CONFIG.vis.shared, {
       timer:        90,
       registerTime: 80,  // frames to steal the register (≈1.3s)
       nightMode:    true,
