@@ -159,7 +159,7 @@ function drawTitleScreen() {
 
   // Audio toggle — fixed width based on the longest label across all modes
   var audioMode = GameAudio.getMode();
-  var audioColor = audioMode==='full' ? PAL.lgreen : audioMode==='sfx' ? PAL.audioSfx : PAL.mgray;
+  var audioColor = audioMode==='full' ? PAL.audioFull : audioMode==='sfx' ? PAL.audioSfx : PAL.mgray;
   var audioLabel = audioMode==='full' ? STRINGS.audioFull : audioMode==='sfx' ? STRINGS.audioSfx : STRINGS.audioMute;
   var _iconW = 5, _gap = 3;
   if (!_audioLblW && document.fonts.check(ctx.font)) {
@@ -828,7 +828,7 @@ function drawCredits() {
   var ty = by + VC.padTop;
   ctx.font = VC.fontTitle + 'px ' + FF; ctx.fillStyle = PAL.gold;
   ctx.fillText('— CREDITS —', cx, ty); ty += VC.stepTitle;
-  ctx.font = VC.fontBody + 'px ' + FF; ctx.fillStyle = PAL.lgreen;
+  ctx.font = VC.fontBody + 'px ' + FF; ctx.fillStyle = PAL.creditsRole;
   ctx.fillText('LucazadeSoft Team', cx, ty); ty += VC.stepTeam;
   for (var i = 0; i < n; i++) {
     ctx.fillStyle = PAL.creditsText; ctx.fillText(_CREDITS_MEMBERS[i].name, cx, ty); ty += VC.nameH + VC.nameGap;

@@ -529,7 +529,7 @@ function drawPaperBalls() {
   for (let i = 0; i < paperBalls.length; i++) {
     const b = paperBalls[i];
     ctx.fillStyle = PAL.paperBall; ctx.fillRect(Math.round(b.x), Math.round(b.y), 3, 3);
-    ctx.fillStyle = PAL.lgray; ctx.fillRect(Math.round(b.x)+1, Math.round(b.y)+1, 1, 1);
+    ctx.fillStyle = PAL.paperBallShadow; ctx.fillRect(Math.round(b.x)+1, Math.round(b.y)+1, 1, 1);
   }
 }
 
@@ -552,7 +552,7 @@ function drawMachines() {
     const mx = Math.round(m.x) + wobble, my = Math.round(m.y);
 
     ctx.fillStyle = PAL.machineBody;   ctx.fillRect(mx,   my,    10, 18); // body
-    ctx.fillStyle = m.broken ? PAL.dgray : PAL.lgreen;
+    ctx.fillStyle = m.broken ? PAL.dgray : PAL.machineScreen;
                               ctx.fillRect(mx+1, my+1,   8,  6); // screen
     if (!m.broken) {
       ctx.fillStyle = PAL.machineBody; ctx.fillRect(mx+4, my+2,   2,  4); // can icon on screen

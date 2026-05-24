@@ -145,11 +145,9 @@ const PAL = {
   diffMedium:     '#ddcc00',  // difficulty selector — medium
   diffHard:       '#dd1100',  // difficulty selector — hard
 
-  lgreen:         '#9AD284',  // audio - audio button (full mode) / credits member role text
+  audioFull:      '#9AD284',  // audio - audio button (full mode)
   audioSfx:       '#FEDC02',  // audio - SFX-only mode button highlight
   mgray:          '#6C6C6C',  // audio - audio muted button
-
-  lgray:          '#959595',  // legend - keyboard legend text
 
   // ── Bezel (mobile side panels) ────────────────────────────
   bezelGlow:    'rgba(160,0,255,0.7)',           // panel inner glow border
@@ -171,6 +169,7 @@ const PAL = {
   livesBonusText:     '#33B84B',  // lives bonus line in win screen
   tapContinueColor:   '#33B84B',  // "tap to continue" prompt in level-complete screen
   creditsText:        '#FFFFFF',  // credits member names and OK button
+  creditsRole:        '#9AD284',  // credits team name / member role text
 
 // ═══════════════════════════════════════════════════════════
 //  GAME OBJECTS
@@ -215,6 +214,7 @@ const PAL = {
   bagborder: '#2A1F5E',      // bag border stripe
 
   // ── Vending machines ──────────────────────────────────────
+  machineScreen:      '#9AD284',  // screen when active (intact)
   machineBody:        '#1665DC',  // machine body
   machineButtonPanel: '#6C5EB5',  // button panel background
   machineButtonA:     '#5F1D1B',  // button A (red — damages machines)
@@ -228,7 +228,8 @@ const PAL = {
   ballWood:      '#6b2200',               // ball outline and seam lines
 
   // ── Paper balls ───────────────────────────────────────────
-  paperBall: '#FFFFFF',  // paper ball thrown at students (L5)
+  paperBall:       '#FFFFFF',  // paper ball thrown at students (L5)
+  paperBallShadow: '#959595',  // shadow pixel on paper ball
 
   // ── Books / bookcase ──────────────────────────────────────
   bookcaseWood:    '#6b2200',  // bookcase spine and book covers
