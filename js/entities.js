@@ -4,8 +4,9 @@ function ringBell() {
   if (BELL.ringing || BELL.done) return;
   BELL.ringing = true;
   BELL.ringT = 120;
+  var _mult = gameDifficulty === 'hard' ? 2.0 : gameDifficulty === 'medium' ? 1.5 : 1.0;
   score += 1000;
-  lastTimeBonus = Math.floor(timerTicks / 60) * 10;
+  lastTimeBonus = Math.round(Math.floor(timerTicks / 60) * 10 * _mult);
   score += lastTimeBonus;
   addFloating(Math.max(50, Math.min(W - 50, BELL.x + 10)), BELL.y - 6, '+1000!', PAL.gold);
   addParticles(BELL.x, BELL.y, PAL.gold, 30);
@@ -152,9 +153,10 @@ function allRegisterWin() {
 function escapeWin() {
   if (exitDone) return;
   exitDone = true;
+  var _mult = gameDifficulty === 'hard' ? 2.0 : gameDifficulty === 'medium' ? 1.5 : 1.0;
   score += 5000;
-  lastTimeBonus = Math.floor(timerTicks / 60) * 10;
-  lastLivesBonus = lives * 500;
+  lastTimeBonus = Math.round(Math.floor(timerTicks / 60) * 10 * _mult);
+  lastLivesBonus = Math.round(lives * 500 * _mult);
   score += lastTimeBonus + lastLivesBonus;
   addParticles(exitDoor.x + 5, exitDoor.y, PAL.gold, 30);
   GameAudio.playSfx('door');
