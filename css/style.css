@@ -294,17 +294,17 @@ canvas {
     text-align: center; pointer-events: none; display: none;
   }
   #legend.visible { display: block; }
-  #legend > div { display: inline-flex; align-items: center; gap: 16px; }
+  #legend > div { display: inline-flex; align-items: center; gap: 25px; }
   #legend .leg-group { display: inline-flex; align-items: center; }
   #legend .leg-key {
     display: inline-block;
     border: 1px solid #959595; border-radius: 2px;
     padding: 1px 4px; margin: 0 1px;
-    font-family: var(--btr-font-family, monospace); font-size: 8px;
+    font-family: var(--btr-font-family, monospace); font-size: 10px;
     color: #959595; line-height: 1.5; vertical-align: middle;
   }
   #legend .leg-lbl {
-    font-family: var(--btr-font-family, monospace); font-size: 8px;
+    font-family: var(--btr-font-family, monospace); font-size: 10px;
     color: #959595; margin: 0 0 0 3px; vertical-align: middle;
   }
 
