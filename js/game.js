@@ -3,12 +3,12 @@
 const CV = document.getElementById('c');
 const ctx = CV.getContext('2d');
 
-// Desktop uses 4x canvas (1280×800) for high-quality font rendering without CSS scaling.
-// Mobile uses 2x canvas (640×400) — same logical coordinates (320×200) in both cases.
+// 1600×1000 canvas — logical coords 320×200 at scale 5.
+// CSS always scales DOWN to fit the viewport, so aspect ratio is naturally preserved.
 var _isDesktop = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-var _canvasScale = (_isDesktop && !CONFIG.display.simulateMobile) ? 4 : 2;
-CV.width  = 320 * _canvasScale;
-CV.height = 200 * _canvasScale;
+var _canvasScale = 5;
+CV.width  = 320 * _canvasScale; // 1600
+CV.height = 200 * _canvasScale; // 1000
 
 // Updates --game-h on :root so HUD and messages scale with the actual game-area height
 (function() {
@@ -40,11 +40,8 @@ document.addEventListener('keydown',     function() { GameAudio.primeAudio(); },
 // Pre-load day and night backgrounds; _applyLevelBg() switches based on nightMode
 var _bgDay = null, _bgNight = null;
 (function() {
-  var hd = _isDesktop && !CONFIG.display.simulateMobile;
-  var srcDay   = hd ? CONFIG.images.backgroundHd      : CONFIG.images.background;
-  var srcNight = hd ? CONFIG.images.backgroundNightHd : CONFIG.images.backgroundNight;
-  var d = new Image(); d.onload = function() { _bgDay = d; if (!nightMode) { bgImage = d; } }; d.src = srcDay;
-  var n = new Image(); n.onload = function() { _bgNight = n; if (nightMode)  { bgImage = n; } }; n.src = srcNight;
+  var d = new Image(); d.onload = function() { _bgDay = d; if (!nightMode) { bgImage = d; } }; d.src = CONFIG.images.background;
+  var n = new Image(); n.onload = function() { _bgNight = n; if (nightMode)  { bgImage = n; } }; n.src = CONFIG.images.backgroundNight;
 })();
 
 function _applyLevelBg() {
@@ -52,13 +49,12 @@ function _applyLevelBg() {
   resetBgCache();
 }
 
-// Load logo — HD version preferred (higher source resolution = better downscale quality)
+// Load logo
 (function() {
-  var src = (CONFIG.images.logoHd || CONFIG.images.logo);
-  if (!src) return;
+  if (!CONFIG.images.logo) return;
   var img = new Image();
   img.onload = function() { _logoImage = img; };
-  img.src = src;
+  img.src = CONFIG.images.logo;
 })();
 
 // ── Title screen state ────────────────────────────────────────────────────────
@@ -66,7 +62,7 @@ function _applyLevelBg() {
 // Keyboard legend — HTML DOM element below the game area (desktop only)
 var _legendEl = document.getElementById('legend');
 (function() {
-  if (!_legendEl || !_isDesktop || CONFIG.display.simulateMobile) return;
+  if (!_legendEl || !_isDesktop) return;
   function _key(lbl) { var e=document.createElement('span'); e.className='leg-key'; e.textContent=lbl; return e; }
   function _lbl(lbl) { var e=document.createElement('span'); e.className='leg-lbl'; e.textContent=lbl; return e; }
   var wrap = document.createElement('div');
@@ -88,7 +84,7 @@ var _legendEl = document.getElementById('legend');
 
 function _showLegend(v) {
   if (!_legendEl) return;
-  _legendEl.classList.toggle('visible', !!(v && _isDesktop && !CONFIG.display.simulateMobile));
+  _legendEl.classList.toggle('visible', !!(v && _isDesktop));
 }
 
 var _titleStarting = false;

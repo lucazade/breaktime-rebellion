@@ -34,122 +34,60 @@ body {
   font-family: var(--btr-font-family, 'Press Start 2P'), monospace;
 }
 
-#wrap { display: flex; flex-direction: column; align-items: center; }
+/* ─── WRAP — always a row; panels occupy 0px on desktop, 140px on mobile ─── */
+#wrap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100dvh;
+}
 
-#game-area {
+/* ─── PANELS — hidden by default; shown on mobile via media query ─── */
+#panel-left, #panel-right {
+  display: none;
+  flex: 0 0 140px;
+  height: 100dvh;
   position: relative;
-  /*height: min(calc(100dvh - 22px), 600px);*/
-  aspect-ratio: 16/10;
-  width: auto;
-  max-width: 100vw;
+  overflow: hidden;
+  background: transparent; /* body gradient shows through — seamless */
 }
 
-/* ─── ARCADE CABINET PANELS — mobile landscape only ─── */
-#panel-left, #panel-right { display: none; }
-
-@media (orientation: landscape) and (pointer: coarse) {
-  /* Row layout: [panel-left] [game] [panel-right] */
-  #wrap {
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    width: 100vw;
-    height: 100dvh;
-  }
-
-  /* Game screen: panels 140px each → canvas constrained to leave room for controls away from edge */
-  #game-area {
-    flex: 0 0 auto;
-    aspect-ratio: 16/10;
-    height: 100dvh;
-    max-height: 100dvh;
-    width: auto;
-    max-width: calc(100vw - 280px);
-  }
-
-  /* Cabinet side panels — synthwave / retro-arcade */
-  #panel-left, #panel-right {
-    display: flex;
-    flex: 0 0 140px;
-    height: 100dvh;
-    position: relative;
-    overflow: hidden;
-    border-top: 2px solid #2a0055;
-    border-bottom: 2px solid #2a0055;
-    background: transparent; /* body gradient shows through — seamless */
-  }
-
-  /* Purple neon strip facing the game screen */
-  #panel-left  { border-right: 3px solid var(--btr-panel-inner-border, rgba(160,0,255,0.7)); }
-  #panel-right { border-left:  3px solid var(--btr-panel-inner-border, rgba(160,0,255,0.7)); }
-
-  /* Scanline overlay */
-  #panel-left::before, #panel-right::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: repeating-linear-gradient(
-      0deg, rgba(0,0,0,0) 0px, rgba(0,0,0,0) 2px,
-      rgba(0,0,0,0.28) 2px, rgba(0,0,0,0.28) 3px
-    );
-    pointer-events: none;
-  }
-
-
-  /* Controls: absolute inside panel, anchored to bottom */
-  #panel-left #ctrl-joy {
-    position: absolute;
-    bottom: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1;
-  }
-
-  #panel-right #ctrl-action {
-    position: absolute;
-    bottom: 48px; /* center = 48+47 = 95px, same as joy center 40+45 = 85px ≈ symmetric */
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1;
-  }
-
-  /* Arcade joystick — solid metallic with purple neon glow */
-  #joy-base {
-    background: radial-gradient(circle at 35% 35%, #222, #060606);
-    border: 4px solid #323232;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.95), 0 0 12px rgba(160,0,255,0.35), inset 0 0 12px rgba(0,0,0,0.85);
-  }
-
-  #joy-knob {
-    background: radial-gradient(circle at 35% 28%, #404040, #161616);
-    border: 3px solid #505050;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.9), 0 0 6px rgba(0,200,255,0.22);
-  }
-
-  /* Arcade button — larger, solid red dome with glow */
-  #btn-action {
-    width: 94px; height: 94px;
-    background: radial-gradient(circle at 37% 32%, #ff5228, #9a0f00);
-    border: 5px solid #5c0000;
-    box-shadow:
-      0 8px 28px rgba(0,0,0,0.95),
-      0 0 24px rgba(255,50,0,0.42),
-      inset 0 4px 10px rgba(255,140,90,0.35),
-      inset 0 -4px 8px rgba(0,0,0,0.55);
-  }
-
-  #btn-action:active, #btn-action.pressed {
-    background: radial-gradient(circle at 37% 32%, #cc3010, #700800);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.95), 0 0 12px rgba(255,50,0,0.15), inset 0 6px 14px rgba(0,0,0,0.65);
-    transform: translateY(3px) scale(0.97);
-  }
+/* ─── GAME AREA — fills space between panels, capped at 1600px ─── */
+/* On desktop: panels are 0px → game-area = min(100vw, 1600px), centered.
+   On mobile:  panels are 140px each → game-area = 100vw - 280px.
+   In both cases the canvas inside scales down to maintain 16:10. */
+#game-area {
+  flex: 1;
+  max-width: 1600px;
+  height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative; /* anchors ::before/::after decorations */
 }
 
+/* ─── CANVAS — unified: aspect ratio always 16:10, scales DOWN from 1600×1000 ─── */
+/* aspect-ratio ensures both max constraints (width from game-area, height from dvh)
+   apply proportionally — no oval distortion at any viewport shape. */
 canvas {
-  display: block; width: 100%; height: 100%;
-  image-rendering: pixelated; /* mobile: nearest-neighbor for crisp pixel art */
+  display: block;
+  /* width/height: auto → intrinsic 1600×1000; never upscales beyond native resolution.
+     max-width/max-height constrain proportionally (aspect-ratio handles both at once). */
+  aspect-ratio: 16 / 10;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  image-rendering: auto; /* always downscaling — smooth is correct */
   background: transparent;
   -webkit-tap-highlight-color: transparent;
+  box-shadow:
+    0 0 0  2px #04000e,
+    0 0 0  5px rgba(140,0,220,0.88),
+    0 0 0  9px #04000e,
+    0 0 50px rgba(80,0,160,0.28);
 }
 
 
@@ -224,62 +162,16 @@ canvas {
 }
 
 
-/* Desktop / mouse — panels hidden; full synthwave background + 150% zoom + screen bezel */
+/* Legend hidden everywhere; shown only on desktop via .visible class */
+#legend { display: none; }
+
+/* ─── DESKTOP: keyboard legend ─── */
 @media (hover: hover) and (pointer: fine) {
-  #panel-left, #panel-right { display: none; }
-
-  /* Desktop uses 4x canvas (1280×800). desktopZoom controls CSS display height.
-     At zoom 2.0: height = 800px CSS = canvas native height → no CSS upscaling → clean fonts at any size. */
-  #game-area {
-    position: relative; /* anchors ::before/::after absolutely — keeps canvas flex-centered */
-    height: min(calc(400px * var(--btr-zoom, 2.0)), 80dvh, calc(78vw / 1.6));
-    width: auto;
-    aspect-ratio: 16/10;
-    margin: 0 40px;
-    box-shadow:
-      0 0 0  2px #04000e,
-      0 0 0  5px rgba(140,0,220,0.88),   /* violet screen bezel */
-      0 0 0  9px #04000e,
-      0 0 50px rgba(80,0,160,0.28);      /* ambient glow */
-  }
-
-  /* Top bezel: game title above the screen */
-  #game-area::before {
-    content: '⊙  BREAKTIME REBELLION  ⊙';
-    position: absolute;
-    bottom: calc(100% + 22px);
-    left: 50%;
-    transform: translateX(-50%);
-    white-space: nowrap;
-    font-family: var(--btr-font-family, 'Press Start 2P'), monospace;
-    font-size: clamp(12px, 1.1vw, 17px);
-    color: rgba(255,215,0,0.92);
-    letter-spacing: 5px;
-    text-shadow: 0 0 12px rgba(255,200,0,0.60), 0 0 28px rgba(255,140,0,0.32);
-    pointer-events: none;
-  }
-
-  /* Bottom bezel: neon gradient line */
-  #game-area::after {
-    content: '';
-    position: absolute;
-    top: calc(100% + 14px);
-    left: 50%;
-    transform: translateX(-50%);
-    width: 55%;
-    height: 2px;
-    background: linear-gradient(90deg,
-      transparent, rgba(0,210,255,0.65), rgba(160,0,255,0.45), rgba(0,210,255,0.65), transparent);
-    pointer-events: none;
-  }
-
-  /* 4x canvas on desktop: no CSS upscaling needed — smooth rendering for font clarity */
-  canvas { image-rendering: auto; }
 
   /* Keyboard legend — fixed footer on title screen */
   #legend {
     position: fixed; bottom: 8px; left: 0; right: 0;
-    text-align: center; pointer-events: none; display: none;
+    text-align: center; pointer-events: none;
   }
   #legend.visible { display: block; }
   #legend > div { display: inline-flex; align-items: center; gap: 25px; }
@@ -298,45 +190,18 @@ canvas {
 
 }
 
-/* ─── SIMULATE MOBILE — debug flag CONFIG.debug.simulateMobile ─── */
-body.simulate-mobile #wrap { flex-direction: row !important; align-items: center !important; justify-content: center !important; width: 100vw !important; height: 100dvh !important; }
-body.simulate-mobile #game-area { flex: 0 0 auto !important; height: 100dvh !important; max-height: 100dvh !important; max-width: calc(100vw - 280px) !important; width: auto !important; margin: 0 !important; box-shadow: none !important; }
-body.simulate-mobile #game-area::before,
-body.simulate-mobile #game-area::after { display: none !important; }
-body.simulate-mobile #panel-left,
-body.simulate-mobile #panel-right { display: flex !important; flex: 0 0 140px !important; height: 100dvh; position: relative; overflow: hidden; border-top: 2px solid #2a0055; border-bottom: 2px solid #2a0055; background: transparent; } /* body gradient shows through */
-body.simulate-mobile #panel-left  { border-right: 3px solid var(--btr-panel-inner-border, rgba(160,0,255,.7)) !important; }
-body.simulate-mobile #panel-right { border-left:  3px solid var(--btr-panel-inner-border, rgba(160,0,255,.7)) !important; }
-body.simulate-mobile #panel-left  #ctrl-joy    { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); z-index: 1; }
-body.simulate-mobile #panel-right #ctrl-action { position: absolute; bottom: 48px; left: 50%; transform: translateX(-50%); z-index: 1; }
-body.simulate-mobile #btn-info  { display: flex !important; }
-body.simulate-mobile .panel-btn { display: flex !important; }
 
-
-/* ─── TITLE MODE — hides bezel and side panels ─── */
-body.title-mode #panel-left,
-body.title-mode #panel-right { display: none !important; }
-body.title-mode #game-area {
-  box-shadow: none !important;
-  background: none !important;
-}
-body.title-mode canvas { background: none !important; }
-/*body.title-mode canvas { background: red; }  DEBUG: shows canvas area in title mode */
-body.title-mode #game-area::before,
-body.title-mode #game-area::after { display: none !important; }
-
-
-/* ─── PANEL BUTTONS (home / pause) ─── */
+/* ─── PANEL BUTTONS (home / pause / info) ─── */
 .panel-btn {
-  display: none; /* shown only in mobile landscape via media query */
+  display: none; /* shown via mobile media query */
   position: absolute;
   top: 48px;
   left: 50%;
   transform: translateX(-50%);
   width: 68px; height: 38px;
   border-radius: 8px;
-  background: var(--btr-btn-bg, #0a0018);
-  border: 2px solid rgba(160,0,255,0.85); /* base colour — overridden by per-button CSS vars */
+  background: #0a0018;
+  border: 2px solid rgba(160,0,255,0.85);
   color: #fff;
   font-size: 16px;
   cursor: pointer;
@@ -345,31 +210,85 @@ body.title-mode #game-area::after { display: none !important; }
   align-items: center;
   justify-content: center;
   z-index: 60; /* above #ctrl-action (z:20) */
-  box-shadow: var(--btr-btn-glow, none), inset 0 1px 0 rgba(255,255,255,0.08);
+  box-shadow: 0 0 8px rgba(160,0,255,0.35), inset 0 1px 0 rgba(255,255,255,0.08);
   -webkit-appearance: none; appearance: none;
 }
 
 .panel-btn:active { background: rgba(160,0,255,0.28); border-color: rgba(160,0,255,1); }
 
-/* button backgrounds and borders configurable via CONFIG.vis.bezel in layout.js */
-#btn-home  { background: var(--btr-btn-home-bg,  #0a0018); border-color: var(--btr-btn-home-border,  rgba(160,0,255,0.85)); }
-#btn-pause { background: var(--btr-btn-pause-bg, #0a0018); border-color: var(--btr-btn-pause-border, rgba(160,0,255,0.85)); }
-#btn-info  { background: var(--btr-btn-info-bg,  rgba(0,0,0,0.45)); border-color: var(--btr-btn-info-border,  rgba(160,0,255,0.85)); }
-#btn-home:active,  #btn-home.pressed  { background: var(--btr-btn-home-bg-pressed,  rgba(160,0,255,0.28)); }
-#btn-pause:active, #btn-pause.pressed { background: var(--btr-btn-pause-bg-pressed, rgba(160,0,255,0.28)); }
-#btn-info:active,  #btn-info.pressed  { background: var(--btr-btn-info-bg-pressed,  rgba(160,0,255,0.28)); }
+#btn-home  { background: #0a0018; border-color: rgba(160,0,255,0.85); }
+#btn-pause { background: #0a0018; border-color: rgba(160,0,255,0.85); }
+#btn-info  { background: rgba(0,0,0,0.45); border-color: rgba(160,0,255,0.85); }
+#btn-home:active,  #btn-home.pressed  { background: rgba(160,0,255,0.28); }
+#btn-pause:active, #btn-pause.pressed { background: rgba(160,0,255,0.28); }
+#btn-info:active,  #btn-info.pressed  { background: rgba(160,0,255,0.28); }
 
 .panel-btn-info {
   top: 115px;
   width: 35px; height: 35px;
   border-radius: 50%;
-  /*border: 1px solid rgba(255,255,255,0.3);*/
   color: rgba(255,255,255,0.85);
-  /*font-style: italic;*/
   font-size: 18px;
   box-shadow: none;
 }
 
+
+/* ─── MOBILE PANELS: visible in real mobile landscape ─── */
 @media (orientation: landscape) and (pointer: coarse) {
+  #panel-left, #panel-right { display: flex; }
+
+  /* Controls anchored to bottom of each panel */
+  #panel-left #ctrl-joy {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+  }
+
+  #panel-right #ctrl-action {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+  }
+
+  /* Joystick and button: larger dome style for touch */
+  #joy-base {
+    background: radial-gradient(circle at 35% 35%, #222, #060606);
+    border: 4px solid #323232;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.95), 0 0 12px rgba(160,0,255,0.35), inset 0 0 12px rgba(0,0,0,0.85);
+  }
+
+  #joy-knob {
+    background: radial-gradient(circle at 35% 28%, #404040, #161616);
+    border: 3px solid #505050;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.9), 0 0 6px rgba(0,200,255,0.22);
+  }
+
+  #btn-action {
+    width: 90px; height: 90px;
+    background: radial-gradient(circle at 37% 32%, #ff5228, #9a0f00);
+    border: 5px solid #5c0000;
+    box-shadow:
+      0 8px 28px rgba(0,0,0,0.95),
+      0 0 24px rgba(255,50,0,0.42),
+      inset 0 4px 10px rgba(255,140,90,0.35),
+      inset 0 -4px 8px rgba(0,0,0,0.55);
+  }
+
+  #btn-action:active, #btn-action.pressed {
+    background: radial-gradient(circle at 37% 32%, #cc3010, #700800);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.95), 0 0 12px rgba(255,50,0,0.15), inset 0 6px 14px rgba(0,0,0,0.65);
+    transform: translateY(3px) scale(0.97);
+  }
+
   .panel-btn { display: flex; }
 }
+
+
+/* ─── TITLE MODE — no panels, no canvas border ─── */
+body.title-mode #panel-left,
+body.title-mode #panel-right { display: none !important; }
+body.title-mode canvas { box-shadow: none !important; background: none !important; }

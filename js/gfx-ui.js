@@ -1,25 +1,11 @@
 // ═══════════════════════════════════════════════════════════
-//  GFX UI — font, bezel, HUD, dialogs, and all banner config
+//  GFX UI — HUD, dialogs, and all banner config
 //  All colours reference PAL (gfx-palette.js).
 //  Building/scene → gfx-building.js
+//  Mobile panel buttons (home/pause/info) are styled entirely in CSS.
 // ═══════════════════════════════════════════════════════════
 
 Object.assign(CONFIG.vis, {
-
-  // ── Bezel — mobile side panels ────────────────────
-  bezel: {
-    panelInnerBorder:  PAL.bezelGlow,     // inner glow border of the side panel
-    btnHomeBorder:     PAL.bezelBorder,   // Home button border
-    btnPauseBorder:    PAL.bezelBorder,   // Pause button border
-    btnInfoBorder:     PAL.bezelBorder,   // Info button border
-    btnHomeBg:         PAL.bezelBtnBg,    // Home button background
-    btnPauseBg:        PAL.bezelBtnBg,    // Pause button background
-    btnInfoBg:         PAL.bezelInfoBg,   // Info button background (distinct color)
-    btnHomeBgPressed:  PAL.bezelPressed,  // Home button pressed background
-    btnPauseBgPressed: PAL.bezelPressed,  // Pause button pressed background
-    btnInfoBgPressed:  PAL.bezelPressed,  // Info button pressed background
-    btnGlow:           PAL.bezelShadow,   // drop shadow/glow around bezel buttons
-  },
 
   // Shared style for all dialog panels (banners, buttons)
   dialog: {
@@ -223,17 +209,5 @@ Object.assign(CONFIG.vis, {
 
 });
 
-// CSS custom properties — font and bezel
-var _B = CONFIG.vis.bezel;
-document.documentElement.style.setProperty('--btr-font-family',          CONFIG.display.fontFamily);
-document.documentElement.style.setProperty('--btr-panel-inner-border',   _B.panelInnerBorder);
-document.documentElement.style.setProperty('--btr-btn-home-border',      _B.btnHomeBorder);
-document.documentElement.style.setProperty('--btr-btn-pause-border',     _B.btnPauseBorder);
-document.documentElement.style.setProperty('--btr-btn-info-border',      _B.btnInfoBorder);
-document.documentElement.style.setProperty('--btr-btn-home-bg',          _B.btnHomeBg);
-document.documentElement.style.setProperty('--btr-btn-pause-bg',         _B.btnPauseBg);
-document.documentElement.style.setProperty('--btr-btn-info-bg',          _B.btnInfoBg);
-document.documentElement.style.setProperty('--btr-btn-home-bg-pressed',  _B.btnHomeBgPressed);
-document.documentElement.style.setProperty('--btr-btn-pause-bg-pressed', _B.btnPauseBgPressed);
-document.documentElement.style.setProperty('--btr-btn-info-bg-pressed',  _B.btnInfoBgPressed);
-document.documentElement.style.setProperty('--btr-btn-glow',             _B.btnGlow);
+// CSS custom property — font family only (panel buttons are fully CSS-managed)
+document.documentElement.style.setProperty('--btr-font-family', CONFIG.display.fontFamily);

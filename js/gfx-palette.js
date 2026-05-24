@@ -148,14 +148,6 @@ const PAL = {
   audioSfx:       '#0076fd',  // audio - SFX-only mode button highlight
   audioMute:      '#444444',  // audio - audio muted button
 
-  // ── Bezel (mobile side panels) ────────────────────────────
-  bezelGlow:    'rgba(160,0,255,0.7)',           // panel inner glow border
-  bezelBorder:  'rgba(160,0,255,0.85)',          // action button borders
-  bezelBtnBg:   'rgba(10,0,24,1)',               // button background (home / pause)
-  bezelInfoBg:  'rgba(0,0,0,0.45)',              // info button background
-  bezelPressed: 'rgba(160,0,255,0.28)',          // button pressed state overlay
-  bezelShadow:  '0 0 8px rgba(160,0,255,0.35)',  // CSS box-shadow on panels
-
   // ── In-game banners (story, mission, win, gameover, pause) ─
   panelBg:            'rgba(0,0,40,0.90)', // dialog panel background
   panelBorder:        '#FFD700',           // dialog panel border / HUD icon gold accent
@@ -168,7 +160,9 @@ const PAL = {
   livesBonusText:     '#33B84B',  // lives bonus line in win screen
   tapContinueColor:   '#33B84B',  // "tap to continue" prompt in level-complete screen
   creditsText:        '#FFFFFF',  // credits member names and OK button
-  creditsRole:        '#9AD284',  // credits team name / member role text
+  creditsRole:        '#9AD284',  // credits team name ("LucazadeSoft Team")
+  creditsMemberRole:  '#00d2ff',  // credits individual role labels (Orchestrator, Lead Developer…)
+  timeBonusText:      '#00d2ff',  // time bonus label on win / gameover screens
 
 // ═══════════════════════════════════════════════════════════
 //  GAME OBJECTS

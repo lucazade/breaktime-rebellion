@@ -43,5 +43,4 @@ CONFIG.vis.shared = {
 // Alias for backwards compatibility with levels.js
 var SHARED_LAYOUT = CONFIG.vis.shared;
 
-// CSS custom properties — zoom (display config) and font-family are set elsewhere
-document.documentElement.style.setProperty('--btr-zoom', CONFIG.display.desktopZoom);
+// CSS custom properties — font-family is set by gfx-ui.js

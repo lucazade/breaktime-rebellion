@@ -5,12 +5,9 @@
 // ═══════════════════════════════════════════════════════════
 const CONFIG = {
   images: {
-    background:        'assets/pics/bg/bg-640-day.png',    // L1-L9 mobile (2x canvas)
-    backgroundHd:      'assets/pics/bg/bg-1600-day.png',   // L1-L9 desktop (4x canvas)
-    backgroundNight:   'assets/pics/bg/bg-640-night.png',  // L10 mobile
-    backgroundNightHd: 'assets/pics/bg/bg-1600-night.png', // L10 desktop
-    logo:              'assets/pics/logo/logo-640.png',    // 640×350 — mobile (2x canvas)
-    logoHd:            'assets/pics/logo/logo-1600.png',   // 1697×927 — desktop (4x canvas)
+    background:      'assets/pics/bg/bg-1600-day.png',   // L1-L9 (1600×1000)
+    backgroundNight: 'assets/pics/bg/bg-1600-night.png', // L10 night (1600×1000)
+    logo:            'assets/pics/logo/logo-1600.png',   // title screen logo
   },
   audio: {
     musicVolume: 0.5,
@@ -39,9 +36,7 @@ const CONFIG = {
     },
   },
   display: {
-    desktopZoom:    2.0,                 // desktop CSS zoom — 2.0 → canvas renders at 4× native (800px display height)
-    fontFamily:     '"Press Start 2P"',  // canvas font — used everywhere via FF shortcut + --btr-font-family CSS var
-    simulateMobile: false,               // force mobile layout on desktop (for testing)
+    fontFamily: '"Press Start 2P"',  // canvas font — used everywhere via FF shortcut + --btr-font-family CSS var
   },
   debug: {
     unlockAllLevels: false,
@@ -52,4 +47,3 @@ const CONFIG = {
 // Global font shortcut — available to all gfx-* files from the very first script
 var FF = CONFIG.display.fontFamily;
 
-if (CONFIG.display.simulateMobile) document.body.classList.add('simulate-mobile');
