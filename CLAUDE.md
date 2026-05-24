@@ -19,8 +19,8 @@ js/                 ← ordine di caricamento obbligatorio:
   palette.js        ← const PAL — unica sorgente di tutti i colori
   scene.js          ← geometria canvas (GY/MY/TY, PW/PH, walkOffset) + posizioni oggetti + proximity dashed
   vis-ui.js         ← CONFIG.vis (titleScreen, HUD, banners) — dati UI
-  draw-chars.js     ← PW/PH, COLOURS_*, drawChar/drawJanitor/drawPreside/drawGuard/drawGinnastica
-  draw-objects.js   ← drawDesks/Boards/Bell/Machines/... + dati SHARED_LAYOUT
+  draw-chars.js     ← COLOURS_*, drawChar/drawJanitor/drawPreside/drawGuard/drawGinnastica
+  draw-objects.js   ← drawDesks/Boards/Bell/Machines/... (solo rendering)
   levels.js         ← LEVELS[] con mechanics + NPC per livello
   i18n.js           ← STRINGS EN/IT
   audio.js          ← GameAudio (music + sfx manager)
@@ -104,8 +104,8 @@ Il codice è diviso in moduli distinti che comunicano via variabili globali cond
 ## LEVELS (js/levels.js)
 
 Tutti i dati di ogni livello sono in `LEVELS[]`.
-Ogni livello è `Object.assign({}, SHARED_LAYOUT, { ... })`.
-`SHARED_LAYOUT` (in gfx-building.js/gfx-objects.js) contiene scale, lavagne, banchi, campanella e playerStart — fissi in tutti i livelli.
+Ogni livello è `Object.assign({}, CONFIG.vis.shared, { ... })`.
+`CONFIG.vis.shared` (in `scene.js`) contiene scale, lavagne, banchi, campanella e playerStart — fissi in tutti i livelli.
 
 Ogni livello contiene:
 ```js
@@ -149,7 +149,7 @@ Ogni livello contiene:
   nightMode:  true/false,              // L10
 }
 ```
-Le coordinate usano `GY`, `MY`, `TY`, `PH`, `walkOffset` (da `gfx-building.js`) per restare leggibili.
+Le coordinate usano `GY`, `MY`, `TY`, `PH`, `walkOffset` (da `scene.js`) per restare leggibili.
 
 **Scale (`stairs`):** `fdTop` = px sopra la superficie dove la testa appare; `fdBot` = px sotto dove le gambe spariscono. Valori attuali: `fdTop:4, fdBot:12` su tutte le scale.
 
@@ -177,7 +177,7 @@ CSS scala sempre DOWN (mai upscale) → nessuna distorsione su qualsiasi viewpor
 - Mostra: floor lines (TY/MY/GY), stair boxes con coordinate, hitbox tutti gli oggetti
 - Utile per allineare il background PNG con la logica
 
-**Clip sprite sulle scale:** `drawCharClipped()` in gfx-chars.js disegna Marco in due passate (sopra e sotto la banda del pavimento) quando `player.onStair` è true. La banda è `[surfaceY - fdTop, surfaceY + fdBot]`.
+**Clip sprite sulle scale:** `drawCharClipped()` in `draw-chars.js` disegna Marco in due passate (sopra e sotto la banda del pavimento) quando `player.onStair` è true. La banda è `[surfaceY - fdTop, surfaceY + fdBot]`.
 
 ## CONFIG (js/config.js)
 
@@ -189,7 +189,7 @@ CSS scala sempre DOWN (mai upscale) → nessuna distorsione su qualsiasi viewpor
 
 ## NPC sprites
 
-Ogni personaggio ha il suo draw function e `COLOURS_*` object in `gfx-chars.js`:
+Ogni personaggio ha il suo draw function e `COLOURS_*` object in `draw-chars.js`:
 
 - **Prof.Rossi** (`PAL.profRossiBody`): `drawChar` + `COLOURS_TEACHER`, patrol GY, sight 90
 - **Prof.Celeste** (`PAL.profCelesteBody`): `drawChar` + `COLOURS_TEACHER`, patrol MY, sight 80
