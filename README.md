@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/pics/logo/logo-640.png" alt="Breaktime Rebellion" width="480">
+  <img src="assets/pics/logo/logo-1600.png" alt="Breaktime Rebellion" width="480">
 </p>
 
 <p align="center">
@@ -109,7 +109,7 @@ Download the latest APK from [Releases](https://github.com/lucazade/breaktime-re
 
 | Component | Technology |
 |---|---|
-| Rendering | HTML5 Canvas — logical 320×200, 2× on mobile / 4× on desktop |
+| Rendering | HTML5 Canvas — 1600×1000 (scale 5×), logical coordinates 320×200 |
 | Language | Vanilla JavaScript (no framework, no bundler) |
 | Font | Press Start 2P (self-hosted) |
 | Colours | Custom flat palette — `const PAL`, ~200 named entries |

@@ -59,7 +59,7 @@ Palette: logo reference (PAL), voci esplicite per ogni personaggio/oggetto.
 
 - **CHARACTERS** — una sezione per personaggio con voci esplicite (skin, hair, trousers, shoes…)
 - **HUD** — strip, timer, dot indicators meccaniche
-- **UI / DIALOGS** — title screen, dialog panels, bezel mobile, banners
+- **UI / DIALOGS** — title screen, dialog panels, banners
 - **GAME OBJECTS** — per ogni oggetto (bell, board, ball, desks, machines, register, sink, bins, sprinklers…)
 - **DEBUG** — overlay debug
 
