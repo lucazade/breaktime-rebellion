@@ -127,9 +127,8 @@ const GameAudio = (function() {
     if (!track) return;
     track.currentTime = 0;
     track.playbackRate = 1.0;
-    track.volume = 0;
+    track.volume = CONFIG.audio.musicVolume;
     track.play().catch(function() {});
-    _fadeAudio(track, CONFIG.audio.musicVolume, 300);
   }
 
   function stopMusic() {
