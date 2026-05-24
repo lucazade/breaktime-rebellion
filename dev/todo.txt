@@ -318,6 +318,14 @@ CHIUSI:
 - [X] #173 aggiornare screenshot in readme
 - [X] #171 quando muori, respawni e appena finisce immortalità se c'e' un bidello rimuori subito. Soluzioni?
 Durante il respawn non puoi neache muoverti, è un comportamento corretto essere bloccati? Ricordiamoci che nel momento che ti beccano cambiano anche direzione.
+- [X] #176 Quando musica è attiva e si clicca su logo e si apre il gioco si sente un bump dall' altoparlante del telefono
+- [X] #177 Quando parte il gioco se si tappa sul canvas fa un highlight del canvas non necessario. Il canvas del gioco non è cliccabile
+- [X] #178 su mobile joypad e pulsanti sono un pò scomodi perchè vicino ai bordi del telefono, farli più grandi ridurebbe il canvas.. ma se il trigger dei controlli è anche nella prossimità? alternative?
+- [X] #174 il gioco attualmente è a un buon grado di difficoltà ma non impossibile. Facciamo un easy medium e hard (teniamo l'attuale come easy)? Decidiamo dove mostrare in title il selettore difficoltà e cosa cambiare tra un livello di difficoltà e l'altro
+- [X] #175 Velocità musica aumenta se tempo diminuisce
+
+DA VERIFICARE:
+- [?] #179 ref.171 in L9 se ti becca bidello al piano intermedio, respawni e ti uccide il bidello vicino a dove respawni (al piano terra).. "In updatePlayer() quando stunT sta per scadere, controlliamo se c'è un NPC entro raggio pericoloso" è valido in questo caso?
 
 PER LUCA:
 - [ ] #159 SFX sostituire suono acqua bagno
@@ -335,11 +343,4 @@ PER LUCA:
 - [ ] #178 Icona BR
 
 PER CLAUDE:
-- [ ] #178 su mobile joypad e pulsanti sono un pò scomodi perchè vicino ai bordi del telefono, farli più grandi ridurebbe il canvas.. ma se il trigger dei controlli è anche nella prossimità? alternative?
-- [ ] #174 il gioco attualmente è a un buon grado di difficoltà ma non impossibile. Facciamo un easy medium e hard (teniamo l'attuale come easy)? Decidiamo dove mostrare in title il selettore difficoltà e cosa cambiare tra un livello di difficoltà e l'altro
-- [ ] #175 Velocità musica aumenta se tempo diminuisce
-- [ ] #176 Quando musica è attiva e si clicca su logo e si apre il gioco si sente un bump dall' altoparlante del telefono
-- [ ] #177 Quando parte il gioco se si tappa sul canvas fa un highlight del canvas non necessario. Il canvas del gioco non è cliccabile
-
-DA VERIFICARE:
-- [ ] #179 ref.171 in L9 se ti becca bidello al piano intermedio, respawni e ti uccide il bidello vicino a dove respawni (al piano terra).. "In updatePlayer() quando stunT sta per scadere, controlliamo se c'è un NPC entro raggio pericoloso" è valido in questo caso?
+- [ ] #176 bump altoparlante ancora presente
