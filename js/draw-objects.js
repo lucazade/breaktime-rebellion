@@ -1,6 +1,6 @@
 // ═══════════════════════════════════════════════════════════
 //  DRAW OBJECTS — sprite draw functions for scene objects
-//  Layout data (positions, dashed) → vis-layout.js
+//  Layout data (positions, dashed) → scene.js
 //  Colors → palette.js
 // ═══════════════════════════════════════════════════════════
 

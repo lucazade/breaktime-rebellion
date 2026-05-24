@@ -1,6 +1,6 @@
 // ═══════════════════════════════════════════════════════════
 //  DRAW CHARS — character sprite draw functions
-//  Layout + config (PW, PH, playerStart, char outline) → vis-layout.js
+//  Layout + config (PW, PH, playerStart, char outline) → scene.js / vis-ui.js
 //  Colors → palette.js
 // ═══════════════════════════════════════════════════════════
 

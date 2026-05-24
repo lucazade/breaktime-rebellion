@@ -28,30 +28,6 @@ function _panPos(panW, panH) {
   return { bx: Math.round((W - panW) / 2), by: Math.round((H - panH) / 2) };
 }
 
-function drawOverlayPanel(bx, by, bw, bh, bgColor, borderColor, lines) {
-  _dialogPanel(bx, by, bw, bh, bgColor);
-  ctx.save();
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'top';
-  let totalHeight = 0;
-  for (let i = 0; i < lines.length; i++) {
-    if (lines[i].visible === false) continue;
-    totalHeight += lines[i].height || 10;
-    if (i < lines.length - 1) totalHeight += lines[i].spacing != null ? lines[i].spacing : 4;
-  }
-  let y = by + Math.round((bh - totalHeight) / 2);
-  const x = bx + bw / 2;
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-    if (line.visible === false) continue;
-    ctx.font = line.font;
-    ctx.fillStyle = line.color;
-    ctx.fillText(line.text, x, y);
-    y += (line.height || 10) + (line.spacing != null ? line.spacing : 4);
-  }
-  ctx.restore();
-}
-
 function drawEndScreen() {
   if (state !== 'win' && state !== 'gameover') return;
   const fadeAlpha = Math.min(1, endScreenT / 20);
