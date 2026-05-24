@@ -218,6 +218,48 @@ canvas {
 }
 
 
+/* ─── PANEL BUTTONS (home / pause / info) ─── */
+.panel-btn {
+  display: none; /* shown via media query or show-side-panels */
+  position: absolute;
+  top: 48px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 68px; height: 38px;
+  border-radius: 8px;
+  background: var(--btr-btn-bg, #0a0018);
+  border: 2px solid rgba(160,0,255,0.85);
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  align-items: center;
+  justify-content: center;
+  z-index: 60; /* above #ctrl-action (z:20) */
+  box-shadow: var(--btr-btn-glow, none), inset 0 1px 0 rgba(255,255,255,0.08);
+  -webkit-appearance: none; appearance: none;
+}
+
+.panel-btn:active { background: rgba(160,0,255,0.28); border-color: rgba(160,0,255,1); }
+
+#btn-home  { background: var(--btr-btn-home-bg,  #0a0018); border-color: var(--btr-btn-home-border,  rgba(160,0,255,0.85)); }
+#btn-pause { background: var(--btr-btn-pause-bg, #0a0018); border-color: var(--btr-btn-pause-border, rgba(160,0,255,0.85)); }
+#btn-info  { background: var(--btr-btn-info-bg,  rgba(0,0,0,0.45)); border-color: var(--btr-btn-info-border,  rgba(160,0,255,0.85)); }
+#btn-home:active,  #btn-home.pressed  { background: var(--btr-btn-home-bg-pressed,  rgba(160,0,255,0.28)); }
+#btn-pause:active, #btn-pause.pressed { background: var(--btr-btn-pause-bg-pressed, rgba(160,0,255,0.28)); }
+#btn-info:active,  #btn-info.pressed  { background: var(--btr-btn-info-bg-pressed,  rgba(160,0,255,0.28)); }
+
+.panel-btn-info {
+  top: 115px;
+  width: 35px; height: 35px;
+  border-radius: 50%;
+  color: rgba(255,255,255,0.85);
+  font-size: 18px;
+  box-shadow: none;
+}
+
+
 /* ─── MOBILE PANELS: visible in real mobile landscape ─── */
 @media (orientation: landscape) and (pointer: coarse) {
   #panel-left, #panel-right { display: flex; }
@@ -295,45 +337,3 @@ body.title-mode #panel-right { display: none !important; }
 body.title-mode canvas { box-shadow: none !important; background: none !important; }
 body.title-mode #game-area::before,
 body.title-mode #game-area::after { display: none !important; }
-
-
-/* ─── PANEL BUTTONS (home / pause / info) ─── */
-.panel-btn {
-  display: none; /* shown via media query or show-side-panels */
-  position: absolute;
-  top: 48px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 68px; height: 38px;
-  border-radius: 8px;
-  background: var(--btr-btn-bg, #0a0018);
-  border: 2px solid rgba(160,0,255,0.85);
-  color: #fff;
-  font-size: 16px;
-  cursor: pointer;
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-  align-items: center;
-  justify-content: center;
-  z-index: 60; /* above #ctrl-action (z:20) */
-  box-shadow: var(--btr-btn-glow, none), inset 0 1px 0 rgba(255,255,255,0.08);
-  -webkit-appearance: none; appearance: none;
-}
-
-.panel-btn:active { background: rgba(160,0,255,0.28); border-color: rgba(160,0,255,1); }
-
-#btn-home  { background: var(--btr-btn-home-bg,  #0a0018); border-color: var(--btr-btn-home-border,  rgba(160,0,255,0.85)); }
-#btn-pause { background: var(--btr-btn-pause-bg, #0a0018); border-color: var(--btr-btn-pause-border, rgba(160,0,255,0.85)); }
-#btn-info  { background: var(--btr-btn-info-bg,  rgba(0,0,0,0.45)); border-color: var(--btr-btn-info-border,  rgba(160,0,255,0.85)); }
-#btn-home:active,  #btn-home.pressed  { background: var(--btr-btn-home-bg-pressed,  rgba(160,0,255,0.28)); }
-#btn-pause:active, #btn-pause.pressed { background: var(--btr-btn-pause-bg-pressed, rgba(160,0,255,0.28)); }
-#btn-info:active,  #btn-info.pressed  { background: var(--btr-btn-info-bg-pressed,  rgba(160,0,255,0.28)); }
-
-.panel-btn-info {
-  top: 115px;
-  width: 35px; height: 35px;
-  border-radius: 50%;
-  color: rgba(255,255,255,0.85);
-  font-size: 18px;
-  box-shadow: none;
-}
