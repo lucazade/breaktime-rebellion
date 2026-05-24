@@ -136,7 +136,7 @@ const PAL = {
   logoBorder:     '#000000',  // logo - image border
   logoGlow:       '#FFD700',  // logo - pulsing glow stroke colour
 
-  dgray:          '#444444',  // level - disabled level chooser button
+  btnDisabled:    '#444444',  // level - disabled level chooser button
   btnLabel:       '#FEDC02',  // level - enabled level chooser button label
   levelLocked:    '#444444',  // level - locked next-level button / lock icon
 
@@ -146,7 +146,7 @@ const PAL = {
 
   audioFull:      '#16c0fc',  // audio - audio button (full mode)
   audioSfx:       '#0076fd',  // audio - SFX-only mode button highlight
-  mgray:          '#444444',  // audio - audio muted button
+  audioMute:      '#444444',  // audio - audio muted button
 
   // ── Bezel (mobile side panels) ────────────────────────────
   bezelGlow:    'rgba(160,0,255,0.7)',           // panel inner glow border
@@ -213,8 +213,10 @@ const PAL = {
   bagborder: '#2A1F5E',      // bag border stripe
 
   // ── Vending machines ──────────────────────────────────────
-  machineScreen:      '#9AD284',  // screen when active (intact)
-  machineBody:        '#1665DC',  // machine body
+  machineScreen:       '#9AD284',  // screen when active (intact)
+  machineScreenBroken: '#444444',  // screen when broken
+  machineDivider:      '#444444',  // horizontal divider between screen and button panel
+  machineBody:         '#1665DC',  // machine body
   machineButtonPanel: '#6C5EB5',  // button panel background
   machineButtonA:     '#5F1D1B',  // button A (red — damages machines)
   machineButtonB:     '#FEDC02',  // button B (yellow)
@@ -261,6 +263,7 @@ const PAL = {
   binDark:        '#0d4d0d',               // rim / border
   binRecycle:     'rgba(255,255,255,0.75)', // recycle symbol overlay
   charred:        '#2a1a00',               // charred debris after explosion (dark brown)
+  charredGray:    '#444444',               // charred debris grey accent pieces
   binCharredDark: '#333333',               // charred debris dark layer
 
   // ── Fire / explosion ──────────────────────────────────────

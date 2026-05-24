@@ -404,8 +404,8 @@ function drawBins() {
     if (b.exploded) {
       // Charred debris
       ctx.fillStyle = PAL.charred; ctx.fillRect(bx-2, by-5, 13, 5);
-      ctx.fillStyle = PAL.dgray;    ctx.fillRect(bx-4, by-7,  3, 2);
-      ctx.fillStyle = PAL.dgray;    ctx.fillRect(bx+11,by-8,  3, 2);
+      ctx.fillStyle = PAL.charredGray;    ctx.fillRect(bx-4, by-7,  3, 2);
+      ctx.fillStyle = PAL.charredGray;    ctx.fillRect(bx+11,by-8,  3, 2);
       ctx.fillStyle = PAL.binCharredDark;    ctx.fillRect(bx+2, by-9,  2, 3);
       continue;
     }
@@ -552,12 +552,12 @@ function drawMachines() {
     const mx = Math.round(m.x) + wobble, my = Math.round(m.y);
 
     ctx.fillStyle = PAL.machineBody;   ctx.fillRect(mx,   my,    10, 18); // body
-    ctx.fillStyle = m.broken ? PAL.dgray : PAL.machineScreen;
+    ctx.fillStyle = m.broken ? PAL.machineScreenBroken : PAL.machineScreen;
                               ctx.fillRect(mx+1, my+1,   8,  6); // screen
     if (!m.broken) {
       ctx.fillStyle = PAL.machineBody; ctx.fillRect(mx+4, my+2,   2,  4); // can icon on screen
     }
-    ctx.fillStyle = PAL.mgray;  ctx.fillRect(mx,   my+7,  10,  1); // divider
+    ctx.fillStyle = PAL.machineDivider;  ctx.fillRect(mx,   my+7,  10,  1); // divider
     ctx.fillStyle = PAL.machineButtonPanel;  ctx.fillRect(mx+1, my+8,   8,  6); // button panel bg
     ctx.fillStyle = PAL.machineButtonA; ctx.fillRect(mx+2, my+9,   2,  2); // button A
     ctx.fillStyle = PAL.machineButtonB; ctx.fillRect(mx+5, my+9,   2,  2); // button B
