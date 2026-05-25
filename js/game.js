@@ -34,9 +34,13 @@ CV.height = 200 * _canvasScale; // 1000
   new ResizeObserver(_updateRoundness).observe(CV);
   window.addEventListener('resize', _updateRoundness);
   _updateRoundness();
+
 })();
 
-// #103 — hides cursor after 2s of inactivity
+// Top bezel click → home dialog
+document.getElementById('top-bezel').addEventListener('click', triggerHome);
+
+// #103 — hides cursor after 2s of inactivity; shows pointer over top bezel
 (function() {
   var _mt, _ga = document.getElementById('game-area');
   document.addEventListener('mousemove', function() {
