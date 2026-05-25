@@ -247,11 +247,22 @@ function drawHUD() {
     var _oi = _hudObjInfo();
     var _txt = _oi.done + '/' + _oi.total;
     if (_txt !== _hudTxtCache.txt) { _hudTxtCache.txt = _txt; _hudTxtCache.w = ctx.measureText(_txt).width; }
-    var _grpW = _iconSz + VH.dotGap + _hudTxtCache.w;
+    var _lvlTxt = fmt(STRINGS.hudLevel, currentLevel);
+    var _lvlW = ctx.measureText(_lvlTxt).width;
+    var _sepW = 1;  // separator line width
+    var _sepGap = 4; // gap on each side of separator
+    var _grpW = _lvlW + _sepGap + _sepW + _sepGap + _iconSz + VH.dotGap + _hudTxtCache.w;
     var _sx = Math.round(VH.centerX - _grpW / 2);
-    _drawHudIcon(_oi.mechanic, _sx, _iconY, _oi.color, _ds);
+    ctx.textAlign = 'left'; ctx.fillStyle = PAL.hudText;
+    ctx.fillText(_lvlTxt, _sx, _textY);
+    var _sepX = _sx + _lvlW + _sepGap;
+    ctx.fillStyle = PAL.hudText; ctx.globalAlpha = _hudAlpha * 0.4;
+    ctx.fillRect(_sepX, 1, _sepW, VH.rowH - 2);
+    ctx.globalAlpha = _hudAlpha;
+    var _iconX = _sepX + _sepW + _sepGap;
+    _drawHudIcon(_oi.mechanic, _iconX, _iconY, _oi.color, _ds);
     ctx.textAlign = 'left'; ctx.fillStyle = PAL.hudCounter;
-    ctx.fillText(_txt, _sx + _iconSz + VH.dotGap, _textY);
+    ctx.fillText(_txt, _iconX + _iconSz + VH.dotGap, _textY);
   }
   // Timer bar
   ctx.globalAlpha = VH.timerAlpha !== undefined ? VH.timerAlpha : 1;

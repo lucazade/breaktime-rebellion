@@ -19,6 +19,7 @@
     keyHome:              'Home',
     keyCredits:           'Credits',
     levelLabel:           'Lvl',
+    hudLevel:             'Lvl {0}',
 
     audioFull: 'music', audioSfx: 'sfx', audioMute: 'mute',
     difficulty_easy: 'EASY', difficulty_medium: 'MED', difficulty_hard: 'HARD',
@@ -119,6 +120,7 @@
     keyHome:              'Home',
     keyCredits:           'Crediti',
     levelLabel:           'Lvl',
+    hudLevel:             'Lvl {0}',
 
     audioFull: 'musica', audioSfx: 'sfx', audioMute: 'muto',
     difficulty_easy: 'EASY', difficulty_medium: 'MED', difficulty_hard: 'HARD',
