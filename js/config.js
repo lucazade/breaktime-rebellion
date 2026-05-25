@@ -26,7 +26,7 @@ const CONFIG = {
       deflate:   'assets/audio/sfx/deflate.ogg',
       hit:       'assets/audio/sfx/hit.ogg',
       book:      'assets/audio/sfx/book.ogg',
-      sink:      'assets/audio/sfx/sink.wav',
+      sink:      'assets/audio/sfx/sink.ogg',
       fuse:      'assets/audio/sfx/fuse.mp3',
       explosion: 'assets/audio/sfx/explosion.ogg',
       sprinkler: 'assets/audio/sfx/spray.ogg',
