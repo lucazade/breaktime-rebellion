@@ -113,7 +113,7 @@ Download the latest APK from [Releases](https://github.com/lucazade/breaktime-re
 | Language | Vanilla JavaScript (no framework, no bundler) |
 | Font | Press Start 2P (self-hosted) |
 | Colours | Custom flat palette — `const PAL`, ~200 named entries |
-| Audio | MP3/WAV/OGG via custom `GameAudio` manager |
+| Audio | MP3/OGG via custom `GameAudio` manager |
 | PWA | `manifest.json` + service worker |
 | Android | [Capacitor](https://capacitorjs.com/) |
 
