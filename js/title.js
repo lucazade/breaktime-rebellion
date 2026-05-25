@@ -1,7 +1,7 @@
 // Title screen — state, UI interactions, service worker
 
 var _titleStarting = false;
-var _btrMax = 1;
+// _btrMax declared in state.js to ensure it exists before the first rAF fires
 
 var _titleCtrlY    = 0;       // updated by drawTitleScreen every frame
 var _titleLogoRect = null;    // {x,y,w,h} of the logo

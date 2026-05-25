@@ -90,6 +90,7 @@ function drawTitleScreen() {
   }
 
   ctx.save();
+  try {
   ctx.textAlign = 'center'; ctx.textBaseline = 'top';
 
   // Controls row
@@ -152,5 +153,7 @@ function drawTitleScreen() {
   ctx.fillText(audioLabel, _blockX + _iconW + _gap, ctrlTextY);
   ctx.textAlign = 'center';
 
-  ctx.restore();
+  } finally {
+    ctx.restore();
+  }
 }

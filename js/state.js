@@ -41,6 +41,9 @@ let storyBannerFading = false;
 let storyFadeInT = 0;
 let bannerDimT = 0;
 let currentLevel = 1;
+// Declared here (before game.js registers rAF) so drawTitleScreen() can never see
+// it as undefined, even in WebView/browser contexts where rAF fires before title.js.
+var _btrMax = 1;
 let bgImage = null;
 let levelMechanics;
 
