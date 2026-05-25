@@ -177,12 +177,12 @@ canvas.rounded { border-radius: 16px; }
   #top-bezel {
     display: block;
     position: absolute;
-    top: calc(var(--canvas-top, 50%) - 8px);
+    top: calc(var(--canvas-top, 50%) - 26px);
     left: 50%;
     transform: translateX(-50%) translateY(-100%);
     white-space: nowrap;
     font-family: var(--btr-font-family, 'Press Start 2P'), monospace;
-    font-size: clamp(12px, 1.1vw, 17px);
+    font-size: clamp(20px, 1.9vw, 30px);
     color: rgba(255,215,0,0.92);
     letter-spacing: 5px;
     text-shadow: 0 0 12px rgba(255,200,0,0.60), 0 0 28px rgba(255,140,0,0.32);
