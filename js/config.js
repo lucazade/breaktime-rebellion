@@ -32,7 +32,7 @@ const CONFIG = {
       sprinkler: 'assets/audio/sfx/spray.ogg',
       register:  'assets/audio/sfx/took.mp3',
       door:      'assets/audio/sfx/door.ogg',
-      mechCompleted: 'assets/audio/sfx/completed.ogg',
+      mechCompleted: null,
     },
   },
   display: {

@@ -176,6 +176,7 @@ const GameAudio = (function() {
 
   Object.keys(CONFIG.audio.sfx).forEach(function(name) {
     var url = CONFIG.audio.sfx[name];
+    if (!url) return;
     fetch(url).then(function(r) { return r.arrayBuffer(); }).then(function(buf) {
       _sfxRaw[name] = buf;
       if (_audioCtx && !_sfxBuffers[name]) {
