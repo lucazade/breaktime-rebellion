@@ -83,12 +83,15 @@ canvas {
   image-rendering: auto; /* always downscaling — smooth is correct */
   background: transparent;
   -webkit-tap-highlight-color: transparent;
+  border-radius: 0;
+  transition: border-radius 0.2s ease;
   box-shadow:
     0 0 0  2px #04000e,
     0 0 0  5px rgba(140,0,220,0.88),
     0 0 0  9px #04000e,
     0 0 50px rgba(80,0,160,0.28);
 }
+canvas.rounded { border-radius: 16px; }
 
 
 /* ─── JOYSTICK OVERLAY ─── */

@@ -20,6 +20,15 @@ CV.height = 200 * _canvasScale; // 1000
   window.addEventListener('resize', _updateGameH);
 })();
 
+// Adds .rounded to canvas only when it has vertical air (doesn't touch top/bottom edges)
+(function() {
+  function _updateRoundness() {
+    CV.classList.toggle('rounded', CV.getBoundingClientRect().top > 2);
+  }
+  new ResizeObserver(_updateRoundness).observe(CV);
+  _updateRoundness();
+})();
+
 // #103 — hides cursor after 2s of inactivity
 (function() {
   var _mt, _ga = document.getElementById('game-area');
