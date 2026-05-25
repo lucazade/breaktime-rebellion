@@ -1,0 +1,3 @@
+ profNeriBody:     '#2f2e2d',  // jacket  oppure #262626
+
+   teacherTie:        '#FEDC02',  // tie, shared by all teacher types

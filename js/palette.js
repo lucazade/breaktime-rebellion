@@ -35,10 +35,10 @@ const PAL = {
   profRossiBody:    '#D21C01',  // jacket
 
   // ── Prof.Celeste ──────────────────────────────────────────
-  profCelesteBody:  '#1665DC',  // jacket
+  profCelesteBody:  '#0062da',  // jacket
 
   // ── Prof.Neri ─────────────────────────────────────────────
-  profNeriBody:     '#2f2e2d',  // jacket
+  profNeriBody:     '#262626',  // jacket
 
   // ── Janitor ───────────────────────────────────────────────
   janitorSkin:       '#faa462',  // face, hands
