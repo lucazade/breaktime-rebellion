@@ -505,7 +505,7 @@ function drawBags() {
     const b = bags[i];
     if (b.collected) continue;
     ctx.fillStyle = PAL.bagborder; ctx.fillRect(b.x, b.y, 14, 10);
-    ctx.fillStyle = PAL.dotBags;   ctx.fillRect(b.x+1, b.y+1, 12, 8);
+    ctx.fillStyle = PAL.bagBody;   ctx.fillRect(b.x+1, b.y+1, 12, 8);
     ctx.fillStyle = PAL.bagborder; ctx.fillRect(b.x+4, b.y-3, 6, 3);
     ctx.fillRect(b.x+6, b.y+3, 2, 4);
 
