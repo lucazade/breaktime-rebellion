@@ -346,6 +346,8 @@ Da quello che ho notato avviene su qualunque schermata e soprattuto quando si fa
 E' come se prendesse il contesto della web-ui attraverso il tap e questo fa glitchare la riproduzione della musica.
 Cerchiamo prima di analizzare la nostra implementazione, di confrontarla con quella dell'api ufficiale per quanto riguarda inizializzazione e gestione dell'audio, di cercare online problematiche simili riscontrate da altri e di confrontarci prima di agire.
 - [X] #176 bump altoparlante ancora presente (vedi #189)
+- [X] #191 ottimizzazione peso assets (intro 320→96kbps, boss.wav→mp3, 5× wav sfx→ogg, -5MB totale)
+- [X] #192 rimuovere HTMLMediaElement fallback per SFX in audio.js — ogni SFX carica 2× (media + fetch); WebAudio è affidabile su Capacitor, il fallback è ridondante e raddoppia le richieste di rete
 
 DA VERIFICARE:
 - [?] #179 ref.171 in L9 se ti becca bidello al piano intermedio, respawni e ti uccide il bidello vicino a dove respawni (al piano terra).. "In updatePlayer() quando stunT sta per scadere, controlliamo se c'è un NPC entro raggio pericoloso" è valido in questo caso?
@@ -370,5 +372,4 @@ PER LUCA:
 - [ ] #185 se ci sono bidelli non ci può essere prof. celeste
 
 PER CLAUDE:
-- [X] #191 ottimizzazione peso assets (intro 320→96kbps, boss.wav→mp3, 5× wav sfx→ogg, -5MB totale)
-- [X] #192 rimuovere HTMLMediaElement fallback per SFX in audio.js — ogni SFX carica 2× (media + fetch); WebAudio è affidabile su Capacitor, il fallback è ridondante e raddoppia le richieste di rete
+
