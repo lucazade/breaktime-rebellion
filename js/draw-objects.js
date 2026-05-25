@@ -526,9 +526,9 @@ function drawMachines() {
     }
     ctx.fillStyle = PAL.machineDivider;  ctx.fillRect(mx,   my+7,  10,  1); // divider
     ctx.fillStyle = PAL.machineButtonPanel;  ctx.fillRect(mx+1, my+8,   8,  6); // button panel bg
-    ctx.fillStyle = PAL.machineButtonA; ctx.fillRect(mx+2, my+9,   2,  2); // button A
-    ctx.fillStyle = PAL.machineButtonB; ctx.fillRect(mx+5, my+9,   2,  2); // button B
-    ctx.fillStyle = PAL.machineButtonC; ctx.fillRect(mx+2, my+12,  2,  2); // button C
+    ctx.fillStyle = PAL.machineButtonA; ctx.fillRect(mx+2, my+8,   2,  2); // button A
+    ctx.fillStyle = PAL.machineButtonB; ctx.fillRect(mx+5, my+8,   2,  2); // button B
+    ctx.fillStyle = PAL.machineButtonC; ctx.fillRect(mx+2, my+11,  2,  2); // button C
     ctx.fillStyle = PAL.machineInk;  ctx.fillRect(mx+3, my+15,  4,  1); // coin slot
     if (m.broken) {
       ctx.fillStyle = PAL.machineInk; ctx.fillRect(mx+2, my+14, 5, 3);  // open hatch

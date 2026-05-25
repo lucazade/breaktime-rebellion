@@ -206,15 +206,15 @@ const PAL = {
   bagborder: '#2A1F5E',      // bag border stripe
 
   // ── Vending machines ──────────────────────────────────────
-  machineScreen:       '#9AD284',  // screen when active (intact)
+  machineScreen:       '#00d2ff',  // screen when active (intact)
   machineScreenBroken: '#444444',  // screen when broken
-  machineDivider:      '#444444',  // horizontal divider between screen and button panel
-  machineBody:         '#1665DC',  // machine body
-  machineButtonPanel: '#6C5EB5',   // button panel background
-  machineButtonA:     '#5F1D1B',   // button A (red — damages machines)
+  machineDivider:      '#222222',  // horizontal divider between screen and button panel
+  machineBody:         '#222222',  // machine body
+  machineButtonPanel: '#222222',   // button panel background
+  machineButtonA:     '#D21C01',   // button A (red — damages machines)
   machineButtonB:     '#FEDC02',   // button B (yellow)
-  machineButtonC:     '#9AD284',   // button C (green)
-  machineInk:         '#000000',   // coin slot / open hatch when broken
+  machineButtonC:     '#46bb18',   // button C (green)
+  machineInk:         '#757575',   // coin slot / open hatch when broken
 
   // ── Ball ──────────────────────────────────────────────────
   ballBody:      '#CC6600',               // basketball body
