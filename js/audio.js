@@ -118,10 +118,16 @@ const GameAudio = (function() {
     });
   }
 
-  // Initialize WebAudio context immediately (call during a user-gesture to avoid hardware pop).
+  // Called on first user gesture. Resumes the AudioContext (already created at module init)
+  // and plays a warmup buffer so the hardware pipeline is active before any real sound.
   function primeAudio() {
     _initWebAudio();
-    if (_audioCtx && _audioCtx.state === 'suspended') _audioCtx.resume().catch(function() {});
+    if (!_audioCtx) return;
+    if (_audioCtx.state === 'suspended') {
+      _audioCtx.resume().then(_warmupAudio).catch(function() {});
+    } else {
+      _warmupAudio();
+    }
   }
 
   function playMusic() {
@@ -184,6 +190,22 @@ const GameAudio = (function() {
     });
   }
 
+  // Plays a 1-sample near-silent buffer to activate the Android hardware audio pipeline
+  // before any real audio starts. Prevents the amplifier activation pop on first playback.
+  // Must only be called when _audioCtx.state === 'running'.
+  function _warmupAudio() {
+    if (!_audioCtx || _audioCtx.state !== 'running') return;
+    try {
+      var buf = _audioCtx.createBuffer(1, 1, _audioCtx.sampleRate);
+      var src = _audioCtx.createBufferSource();
+      src.buffer = buf;
+      var g = _audioCtx.createGain();
+      g.gain.value = 0.001;
+      src.connect(g); g.connect(_audioCtx.destination);
+      src.start(0);
+    } catch(e) {}
+  }
+
   function playSfx(name) {
     if (mode === 'mute') return;
     if (_audioCtx && _sfxBuffers[name]) {
@@ -238,6 +260,14 @@ const GameAudio = (function() {
     var t = _gameTrack();
     if (t) t.playbackRate = rate;
   }
+
+  // Create AudioContext at module load — before any HTMLMediaElement starts playing.
+  // In Capacitor WebView (autoplay allowed) this runs immediately in 'running' state,
+  // so the WebAudio pipeline is established before intro music starts, preventing the
+  // hardware mixer reconfiguration pop on first tap. In browser it starts 'suspended'
+  // and gets resumed + warmed up on the first user gesture via primeAudio().
+  _initWebAudio();
+  if (_audioCtx && _audioCtx.state === 'running') _warmupAudio();
 
   return { primeAudio: primeAudio, playIntro: playIntro, stopIntro: stopIntro, fadeOutIntro: fadeOutIntro, fadeOutMusic: fadeOutMusic, playMusic: playMusic, stopMusic: stopMusic, pauseMusic: pauseMusic, resumeMusic: resumeMusic, playSfx: playSfx, playSfxThen: playSfxThen, playJingle: playJingle, stopJingle: stopJingle, setMode: setMode, getMode: getMode, setMusicRate: setMusicRate };
 })();
