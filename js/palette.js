@@ -213,7 +213,7 @@ const PAL = {
   machineButtonPanel: '#222222',   // button panel background
   machineButtonA:     '#D21C01',   // button A (red — damages machines)
   machineButtonB:     '#FEDC02',   // button B (yellow)
-  machineButtonC:     '#46bb18',   // button C (green)
+  machineButtonC:     '#0ab60a',   // button C (green)
   machineInk:         '#757575',   // coin slot / open hatch when broken
 
   // ── Ball ──────────────────────────────────────────────────
