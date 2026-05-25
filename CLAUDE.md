@@ -180,8 +180,10 @@ Usate per ancorare `#top-bezel` e `#bottom-bezel` alla posizione reale del canva
 
 ## Canvas e background
 
-**Risoluzione 5×:** canvas element `1600×1000`, `ctx.scale(5,5)` → coordinate logiche `320×200`. `ctx.imageSmoothingEnabled = false`.
+**Risoluzione 5×:** canvas element `1600×1000`, coordinate logiche `320×200`. `ctx.imageSmoothingEnabled = false`.
 CSS scala sempre DOWN (mai upscale) → nessuna distorsione su qualsiasi viewport.
+- Il transform viene riapplicato con `ctx.setTransform(_canvasScale,0,0,_canvasScale,0,0)` all'**inizio di ogni frame** nel loop (non solo all'init). Android WebView può resettare il canvas context state durante la rotazione del device; `setTransform` è assoluto (non cumulativo come `ctx.scale`) quindi è sicuro chiamarlo ogni frame.
+- `#wrap` **non** usa `display:none` in portrait: il canvas rimane sempre nella GPU compositing pipeline. L'overlay `#portrait-msg` (position:fixed, z-index:200) copre tutto visivamente. Usare `display:none` su `#wrap` invalida la GPU texture cache e causa la title screen corrotta dopo rotazione su Android WebView.
 
 **Background bitmap** (`assets/pics/bg/bg-1600-day.png`, 1600×1000px):
 - `drawBg()` lo disegna a 1:1 (bypass `ctx.scale` con `setTransform`) scalato a CV.width×CV.height via `createImageBitmap`
@@ -221,6 +223,8 @@ Ogni personaggio ha il suo draw function e `COLOURS_*` object in `draw-chars.js`
 - Musica di gioco: `bgMusic` (L1-L9), `bossMusic` (L10) — selezionata da `_gameTrack()`
 - Intro music: fade out con `fadeOutIntro()` all'avvio partita — NON TOCCARE la logica audio/transizioni
 - Jingle win/gameover: tracciati in `jingle` per poterli stoppare al restart
+- **AudioContext** creato all'inizializzazione del modulo `audio.js` (fine IIFE, prima del `return`) — **non** al primo tap. In Capacitor WebView l'autoplay è permesso: se l'AudioContext venisse creato dopo che l'intro music è già in riproduzione (HTMLMediaElement), il mixer Android riconfigura il suo hardware → pop sull'altoparlante. `_warmupAudio()` suona un buffer silenzioso (1 sample, gain 0.001) subito dopo la creazione/resume del context per attivare la pipeline hardware prima dell'audio reale.
+- `_btrMax` — dichiarato in `state.js` (non in `title.js`). Alcuni Android WebView sparano rAF prima che l'ultimo script (`title.js`) abbia finito di eseguire; `drawTitleScreen()` usava `_btrMax` a riga 116 e crashava con ReferenceError, lasciando visibile solo `"< Lvl 1"`. Spostare la dichiarazione in `state.js` (che carica prima di `game.js`) garantisce che il valore esista sempre quando il loop disegna.
 
 ## Convenzioni commit
 
