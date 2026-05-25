@@ -365,13 +365,13 @@ Cerchiamo prima di analizzare la nostra implementazione, di confrontarla con que
 - [X] #168 L6 bidelli ai piani superiori
 - [X] #169 L8 ricolorare secchi e prof piano intermedio
 - [X] #170 L10 ricolorare maglia guardiano blu scuro
+- [X] #161 HUD ricolora meccaniche
 
 DA VERIFICARE:
 - [?] #179 ref.171 in L9 se ti becca bidello al piano intermedio, respawni e ti uccide il bidello vicino a dove respawni (al piano terra).. "In updatePlayer() quando stunT sta per scadere, controlliamo se c'è un NPC entro raggio pericoloso" è valido in questo caso?
 
 PER LUCA:
 - [ ] #186 Icona BR
-- [ ] #161 HUD ricolora meccaniche
-- [ ] #195 Livello nel HUD
 
 PER CLAUDE:
+- [ ] #195 Mostrare Livello nel HUD prima dell'icona delle maccaniche. Mostriamo "Livello 1" (i18n) e poi un separatore prima dell'icona delle meccaniche 
