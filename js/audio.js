@@ -83,9 +83,10 @@ const GameAudio = (function() {
   function playIntro() {
     if (!introMusic || mode !== 'full') return;
     introMusic.currentTime = 0;
-    introMusic.volume = CONFIG.audio.musicVolume;
+    introMusic.volume = 0; // start silent so hardware amp activates inaudibly, then fade in
     _introPlayPromise = introMusic.play() || null;
     if (_introPlayPromise) _introPlayPromise.catch(function() {});
+    _fadeAudio(introMusic, CONFIG.audio.musicVolume, 200);
   }
 
   function stopIntro() {
