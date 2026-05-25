@@ -160,7 +160,13 @@ canvas.rounded { border-radius: 16px; }
 }
 
 @media (orientation: portrait) {
-  #wrap { display: none; }
+  /* #wrap stays visible — keeping the canvas in the GPU compositing pipeline.
+     display:none invalidates the GPU texture cache; on soft rotation (no Activity
+     recreation) Android WebView shows the stale cached texture before the next rAF
+     frame redraws, causing the corrupted title screen. The portrait-msg overlay
+     (z-index:200, position:fixed) covers #wrap entirely, so the user sees only the
+     rotate message. pointer-events:none ensures no stray touches reach #wrap. */
+  #wrap { pointer-events: none; }
   #portrait-msg { display: flex; }
 }
 
