@@ -79,7 +79,7 @@ const PAL = {
   // ── Guards ────────────────────────────────────────────────
   guardSkin:         '#faa462',  // face, hands
   guardSkinShadow:   '#ff7949',  // neck, collar shadow
-  guardUniform:      '#1665DC',  // jacket / body
+  guardUniform:      '#0644a0',  // jacket / body
   guardTrousers:     '#2f2e2d',  // trousers
   guardCap:          '#2f2e2d',  // cap (same colour as trousers)
   guardBadge:        '#FEDC02',  // chest badge

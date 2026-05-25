@@ -6,3 +6,5 @@ teacherTie:        '#FEDC02',  // tie, shared by all teacher types
   bagborder: '#2A1F5E',      // bag border stripe
 
   bagBody:   '#4d33ac',      // bag body
+
+    guardUniform:      '#1665DC',  // jacket / body
