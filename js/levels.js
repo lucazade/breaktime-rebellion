@@ -49,7 +49,7 @@ var LEVELS = (function() {
 
       bags: [
         {x:120, y:GY-18}, {x:182, y:GY-18},
-        {x:178, y:MY-18},
+        {x:158, y:MY-18},
         {x:120,  y:TY-18}, {x:182,  y:TY-18},
       ],
 

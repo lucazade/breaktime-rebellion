@@ -202,7 +202,7 @@ const PAL = {
   sprayCanBody: '#1665DC',   // spray can body
 
   // ── Bags ──────────────────────────────────────────────────
-  bagBody:   '#4A3D8F',      // bag body
+  bagBody:   '#4c359e',      // bag body
   bagborder: '#2A1F5E',      // bag border stripe
 
   // ── Vending machines ──────────────────────────────────────

@@ -1,3 +1,8 @@
  profNeriBody:     '#2f2e2d',  // jacket  oppure #262626
 
-   teacherTie:        '#FEDC02',  // tie, shared by all teacher types
+teacherTie:        '#FEDC02',  // tie, shared by all teacher types
+
+  bagBody:   '#4A3D8F',      // bag body
+  bagborder: '#2A1F5E',      // bag border stripe
+
+  bagBody:   '#4d33ac',      // bag body
