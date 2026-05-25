@@ -117,16 +117,19 @@ const PAL = {
   hudIconHighlight: '#FFFFFF',           // light detail lines in mechanic icons (chalk, page lines)
 
   // ── Mechanic dot indicators ───────────────────────────────
-  dotBoards:     '#588D43',  // L1 boards mechanic
-  dotBags:       '#4A3D8F',  // L2 bags mechanic
-  dotMachines:   '#B8C76F',  // L3 vending machines mechanic
-  dotBall:       '#CC6600',  // L4 gym ball mechanic
-  dotStudents:   '#FFFFFF',  // L5 students mechanic
-  dotBooks:      '#6B2200',  // L6 bookcase mechanic
-  dotSink:       '#70A4B2',  // L7 sink mechanic
-  dotBins:       '#B8C76F',  // L8 bins mechanic
-  dotSprinklers: '#70A4B2',  // L9 sprinklers mechanic
-  dotRegister:   '#FFD700',  // L10 register mechanic
+  dotBoards:          '#44ee66',  // L1 boards — body
+  dotBoardsHighlight: '#44ee66',  // L1 boards — chalk lines
+  dotBags:            '#44ee66',  // L2 bags — body
+  dotBagsStripe:      '#44ee66',  // L2 bags — band stripe
+  dotMachines:        '#44ee66',  // L3 machines — body
+  dotBall:            '#44ee66',  // L4 ball — body
+  dotStudents:        '#44ee66',  // L5 students — body
+  dotBooks:           '#44ee66',  // L6 books — body
+  dotSink:            '#44ee66',  // L7 sink — body
+  dotBins:            '#44ee66',  // L8 bins — body
+  dotSprinklers:      '#44ee66',  // L9 sprinklers — body
+  dotRegister:        '#44ee66',  // L10 register — body
+  dotRegisterAccent:  '#44ee66',  // L10 register — golden corner
 
 // ═══════════════════════════════════════════════════════════
 //  UI / DIALOGS

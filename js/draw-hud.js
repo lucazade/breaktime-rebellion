@@ -46,23 +46,26 @@ function _drawHudIcon(type, x, y, color, s) {
       case 'boards':
         ctx.fillRect(0,0,7,1); ctx.fillRect(0,5,7,1);
         ctx.fillRect(0,1,1,4); ctx.fillRect(6,1,1,4);
-        ctx.fillStyle=PAL.hudIconHighlight; ctx.fillRect(1,2,5,1); ctx.fillRect(1,4,5,1);
+        ctx.fillStyle=PAL.dotBoardsHighlight; ctx.fillRect(1,2,5,1); ctx.fillRect(1,4,5,1);
         break;
       case 'bags':
         ctx.fillRect(2,0,3,1);
         ctx.fillRect(0,1,7,1); ctx.fillRect(0,5,7,1);
         ctx.fillRect(0,2,1,3); ctx.fillRect(6,2,1,3);
-        ctx.fillStyle=PAL.bagborder; ctx.fillRect(2,3,3,1);
+        ctx.fillStyle=PAL.dotBagsStripe; ctx.fillRect(2,3,3,1);
         break;
       case 'machines':
-        ctx.fillRect(0,0,6,6);
-        ctx.fillStyle=PAL.hudIconDetail;    ctx.fillRect(1,1,4,2);
-        ctx.fillStyle=PAL.panelBorder; ctx.fillRect(2,4,2,1);
+        ctx.fillRect(0,0,6,1);
+        ctx.fillRect(0,1,1,2); ctx.fillRect(5,1,1,2);
+        ctx.fillRect(0,3,6,1);
+        ctx.fillRect(0,4,2,1); ctx.fillRect(4,4,2,1);
+        ctx.fillRect(0,5,6,1);
         break;
       case 'ball':
-        ctx.fillRect(1,0,5,1); ctx.fillRect(1,5,5,1);
-        ctx.fillRect(0,1,7,4);
-        ctx.fillStyle=PAL.hudIconDetail; ctx.fillRect(3,0,1,6); ctx.fillRect(0,3,7,1);
+        ctx.fillRect(1,0,2,1); ctx.fillRect(4,0,2,1);
+        ctx.fillRect(0,1,3,2); ctx.fillRect(4,1,3,2);
+        ctx.fillRect(0,4,3,1); ctx.fillRect(4,4,3,1);
+        ctx.fillRect(1,5,2,1); ctx.fillRect(4,5,2,1);
         break;
       case 'students':
         ctx.fillRect(2,0,3,2);
@@ -70,9 +73,8 @@ function _drawHudIcon(type, x, y, color, s) {
         ctx.fillRect(1,4,2,2); ctx.fillRect(4,4,2,2);
         break;
       case 'books':
-        ctx.fillRect(0,0,7,6);
-        ctx.fillStyle=PAL.hudIconDetail; ctx.fillRect(1,0,1,6);
-        ctx.fillStyle=PAL.hudIconHighlight; ctx.fillRect(2,2,4,1); ctx.fillRect(2,4,4,1);
+        ctx.fillRect(0,0,1,6);
+        ctx.fillRect(2,0,5,2); ctx.fillRect(2,3,5,1); ctx.fillRect(2,5,5,1);
         break;
       case 'sink':
         ctx.fillRect(1,0,1,2); ctx.fillRect(5,0,1,2);
@@ -80,9 +82,10 @@ function _drawHudIcon(type, x, y, color, s) {
         ctx.fillRect(0,3,1,2); ctx.fillRect(6,3,1,2);
         break;
       case 'bins':
-        ctx.fillStyle=PAL.panelBorder; ctx.fillRect(3,0,1,1);
-        ctx.fillStyle=color;     ctx.fillRect(1,1,5,1); ctx.fillRect(0,2,7,4);
-        ctx.fillStyle=PAL.hudIconDetail;    ctx.fillRect(2,3,1,2); ctx.fillRect(4,3,1,2);
+        ctx.fillRect(1,1,5,1);
+        ctx.fillRect(0,2,7,1);
+        ctx.fillRect(0,3,2,2); ctx.fillRect(3,3,1,2); ctx.fillRect(5,3,2,2);
+        ctx.fillRect(0,5,7,1);
         break;
       case 'sprinklers':
         ctx.fillRect(3,0,1,1);
@@ -90,9 +93,13 @@ function _drawHudIcon(type, x, y, color, s) {
         ctx.fillRect(0,4,7,1); ctx.fillRect(1,5,5,1);
         break;
       case 'register':
-        ctx.fillRect(0,0,7,6);
-        ctx.fillStyle=PAL.hudIconDetail;    ctx.fillRect(1,1,5,1); ctx.fillRect(1,3,5,1); ctx.fillRect(1,5,3,1);
-        ctx.fillStyle=PAL.panelBorder; ctx.fillRect(5,5,2,1);
+        ctx.fillRect(0,0,7,1);
+        ctx.fillRect(0,1,1,1); ctx.fillRect(6,1,1,1);
+        ctx.fillRect(0,2,7,1);
+        ctx.fillRect(0,3,1,1); ctx.fillRect(6,3,1,1);
+        ctx.fillRect(0,4,7,1);
+        ctx.fillRect(0,5,5,1);
+        ctx.fillStyle=PAL.dotRegisterAccent; ctx.fillRect(5,5,2,1);
         break;
       default:
         ctx.fillRect(0,0,7,6);
@@ -109,23 +116,27 @@ function _drawHudIcon(type, x, y, color, s) {
     case 'boards':   // board: 7×7 outline + 2 chalk lines
       ctx.fillRect(0,1, 7,1); ctx.fillRect(0,6, 7,1);
       ctx.fillRect(0,1, 1,5); ctx.fillRect(6,1, 1,5);
-      ctx.fillStyle = PAL.hudIconHighlight; ctx.fillRect(1,2, 5,1); ctx.fillRect(1,4, 5,1);
+      ctx.fillStyle = PAL.dotBoardsHighlight; ctx.fillRect(1,2, 5,1); ctx.fillRect(1,4, 5,1);
       break;
     case 'bags':     // bag: body + handle
       ctx.fillRect(2,0, 3,1);
       ctx.fillRect(0,1, 7,1); ctx.fillRect(0,6, 7,1);
       ctx.fillRect(0,2, 1,4); ctx.fillRect(6,2, 1,4);
-      ctx.fillStyle = PAL.bagborder; ctx.fillRect(2,3, 3,1);
+      ctx.fillStyle = PAL.dotBagsStripe; ctx.fillRect(2,3, 3,1);
       break;
     case 'machines': // vending machine: rectangle with screen and button
-      ctx.fillRect(0,0, 6,7);
-      ctx.fillStyle = PAL.hudIconDetail;    ctx.fillRect(1,1, 4,2);
-      ctx.fillStyle = PAL.panelBorder; ctx.fillRect(2,5, 2,1);
+      ctx.fillRect(0,0, 6,1);
+      ctx.fillRect(0,1, 1,2); ctx.fillRect(5,1, 1,2);
+      ctx.fillRect(0,3, 6,2);
+      ctx.fillRect(0,5, 2,1); ctx.fillRect(4,5, 2,1);
+      ctx.fillRect(0,6, 6,1);
       break;
     case 'ball':     // ball: circle with seams
-      ctx.fillRect(1,0, 5,1); ctx.fillRect(1,6, 5,1);
-      ctx.fillRect(0,1, 7,5);
-      ctx.fillStyle = PAL.hudIconDetail; ctx.fillRect(3,1, 1,5); ctx.fillRect(1,3, 5,1);
+      ctx.fillRect(1,0, 5,1);
+      ctx.fillRect(0,1, 3,2); ctx.fillRect(4,1, 3,2);
+      ctx.fillRect(0,3, 1,1); ctx.fillRect(6,3, 1,1);
+      ctx.fillRect(0,4, 3,2); ctx.fillRect(4,4, 3,2);
+      ctx.fillRect(1,6, 5,1);
       break;
     case 'students': // student: head + body + legs
       ctx.fillRect(2,0, 3,3);
@@ -133,20 +144,19 @@ function _drawHudIcon(type, x, y, color, s) {
       ctx.fillRect(1,5, 2,2); ctx.fillRect(4,5, 2,2);
       break;
     case 'books':    // book: rectangle with spine and lines
-      ctx.fillRect(0,0, 7,7);
-      ctx.fillStyle = PAL.hudIconDetail; ctx.fillRect(1,0, 1,7);
-      ctx.fillStyle = PAL.hudIconHighlight; ctx.fillRect(2,2, 4,1); ctx.fillRect(2,4, 4,1);
+      ctx.fillRect(0,0, 1,7);
+      ctx.fillRect(2,0, 5,2); ctx.fillRect(2,3, 5,1); ctx.fillRect(2,5, 5,2);
       break;
     case 'sink':     // sink: drops + basin
       ctx.fillRect(1,0, 1,2); ctx.fillRect(5,0, 1,2);
       ctx.fillRect(0,3, 7,1); ctx.fillRect(0,6, 7,1);
       ctx.fillRect(0,4, 1,2); ctx.fillRect(6,4, 1,2);
       break;
-    case 'bins':     // bin: lid + body + fuse
+    case 'bins':     // bin: lid + body
       ctx.fillRect(1,1, 5,1);
-      ctx.fillRect(0,2, 7,5);
-      ctx.fillStyle = PAL.panelBorder; ctx.fillRect(3,0, 1,2);
-      ctx.fillStyle = PAL.hudIconDetail;    ctx.fillRect(2,4, 1,2); ctx.fillRect(4,4, 1,2);
+      ctx.fillRect(0,2, 7,2);
+      ctx.fillRect(0,4, 2,2); ctx.fillRect(3,4, 1,2); ctx.fillRect(5,4, 2,2);
+      ctx.fillRect(0,6, 7,1);
       break;
     case 'sprinklers': // sprinkler: flame silhouette
       ctx.fillRect(3,0, 1,1);
@@ -154,9 +164,14 @@ function _drawHudIcon(type, x, y, color, s) {
       ctx.fillRect(0,4, 7,1); ctx.fillRect(1,5, 5,1); ctx.fillRect(2,6, 3,1);
       break;
     case 'register': // register: book with golden corner
-      ctx.fillRect(0,0, 7,7);
-      ctx.fillStyle = PAL.hudIconDetail;    ctx.fillRect(1,1, 5,1); ctx.fillRect(1,3, 5,1); ctx.fillRect(1,5, 3,1);
-      ctx.fillStyle = PAL.panelBorder; ctx.fillRect(5,5, 2,2);
+      ctx.fillRect(0,0, 7,1);
+      ctx.fillRect(0,1, 1,1); ctx.fillRect(6,1, 1,1);
+      ctx.fillRect(0,2, 7,1);
+      ctx.fillRect(0,3, 1,1); ctx.fillRect(6,3, 1,1);
+      ctx.fillRect(0,4, 7,1);
+      ctx.fillRect(0,5, 5,1);
+      ctx.fillStyle = PAL.dotRegisterAccent; ctx.fillRect(5,5, 2,2);
+      ctx.fillStyle = color; ctx.fillRect(0,6, 5,1);
       break;
     default:
       ctx.fillRect(0,0, 7,7);
