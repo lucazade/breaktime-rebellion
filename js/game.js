@@ -20,12 +20,19 @@ CV.height = 200 * _canvasScale; // 1000
   window.addEventListener('resize', _updateGameH);
 })();
 
-// Adds .rounded to canvas only when it has vertical air (doesn't touch top/bottom edges)
+// Adds .rounded + sets --canvas-top/--canvas-h when canvas has vertical air
 (function() {
+  var _ga = document.getElementById('game-area');
+  var _root = document.documentElement;
   function _updateRoundness() {
-    CV.classList.toggle('rounded', CV.getBoundingClientRect().top > 2);
+    var rect = CV.getBoundingClientRect();
+    var top  = rect.top - _ga.getBoundingClientRect().top;
+    _root.style.setProperty('--canvas-top', top + 'px');
+    _root.style.setProperty('--canvas-h',   rect.height + 'px');
+    CV.classList.toggle('rounded', rect.top > 2);
   }
   new ResizeObserver(_updateRoundness).observe(CV);
+  window.addEventListener('resize', _updateRoundness);
   _updateRoundness();
 })();
 

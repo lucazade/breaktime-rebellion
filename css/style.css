@@ -171,6 +171,36 @@ canvas.rounded { border-radius: 16px; }
 /* ─── DESKTOP: keyboard legend ─── */
 @media (hover: hover) and (pointer: fine) {
 
+  /* Top bezel: game title above the screen */
+  #game-area::before {
+    content: '⊙  BREAKTIME REBELLION  ⊙';
+    position: absolute;
+    top: calc(var(--canvas-top, 50%) - 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(-100%);
+    white-space: nowrap;
+    font-family: var(--btr-font-family, 'Press Start 2P'), monospace;
+    font-size: clamp(12px, 1.1vw, 17px);
+    color: rgba(255,215,0,0.92);
+    letter-spacing: 5px;
+    text-shadow: 0 0 12px rgba(255,200,0,0.60), 0 0 28px rgba(255,140,0,0.32);
+    pointer-events: none;
+  }
+
+  /* Bottom bezel: neon gradient line */
+  #game-area::after {
+    content: '';
+    position: absolute;
+    top: calc(var(--canvas-top, 50%) + var(--canvas-h, 50%) + 14px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 55%;
+    height: 2px;
+    background: linear-gradient(90deg,
+      transparent, rgba(0,210,255,0.65), rgba(160,0,255,0.45), rgba(0,210,255,0.65), transparent);
+    pointer-events: none;
+  }
+
   /* Keyboard legend — fixed footer on title screen */
   #legend {
     position: fixed; bottom: 8px; left: 0; right: 0;
@@ -295,3 +325,5 @@ canvas.rounded { border-radius: 16px; }
 body.title-mode #panel-left,
 body.title-mode #panel-right { display: none !important; }
 body.title-mode canvas { box-shadow: none !important; background: none !important; }
+body.title-mode #game-area::before,
+body.title-mode #game-area::after { display: none; }
