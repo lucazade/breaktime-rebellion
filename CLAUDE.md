@@ -246,3 +246,9 @@ try{new Function(src);console.log('JS OK');}catch(e){console.log('ERRORE:',e.mes
 ```
 
 **Non fare mai deploy se il test restituisce `ERRORE`.**
+
+## Build APK — note importanti
+
+- Lo script `apk` in `package.json` usa `./gradlew clean assembleDebug` (non solo `assembleDebug`).
+- **Motivo:** la cache incrementale di Gradle può skippare `mergeDebugAssets` dopo un `cap sync`, producendo un APK byte-per-byte identico al precedente anche se i file in `www/` sono cambiati. Scoperto con v1.0.14 (25M identico a v1.0.13) dopo l'ottimizzazione audio #191; v1.0.15 clean build → 18M.
+- Il `clean` aggiunge ~5-10s ma garantisce che gli asset aggiornati siano inclusi.
