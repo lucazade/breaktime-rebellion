@@ -49,7 +49,7 @@ document.getElementById('top-bezel').addEventListener('click', triggerHome);
     _mt = setTimeout(function() { _ga.style.cursor = 'none'; CV.style.cursor = ''; }, 2000);
   });
 })();
-ctx.scale(_canvasScale, _canvasScale); // logical 320×200 in both modes
+ctx.setTransform(_canvasScale, 0, 0, _canvasScale, 0, 0); // logical 320×200 in both modes
 ctx.imageSmoothingEnabled = false;
 
 // Prime WebAudio on the very first user gesture so the AudioContext is already
@@ -132,6 +132,12 @@ function loop(ts) {
     }
     _accumulator -= _STEP;
   }
+
+  // Re-apply transform every frame: Android WebView can reset the canvas context state
+  // (lose ctx.scale) when the rendering surface is recreated on device rotation.
+  // setTransform is absolute (unlike scale which compounds) so it is safe every frame.
+  ctx.setTransform(_canvasScale, 0, 0, _canvasScale, 0, 0);
+  ctx.imageSmoothingEnabled = false;
 
   // Title screen: draw dedicated canvas and skip game rendering
   if (state === 'title') {
