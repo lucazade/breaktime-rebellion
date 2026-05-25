@@ -10,7 +10,7 @@ const PAL = {
 
   // ── Marco ─────────────────────────────────────────────────
   marcoSkin:        '#faa462',  // face, hands
-  marcoSkinShadow:  '#fd6935',  // neck, collar shadow
+  marcoSkinShadow:  '#ff7949',  // neck, collar shadow
   marcoHair:        '#581e00',  // hair
   marcoShirt:       '#6121ac',  // shirt / jacket body colour
   marcoShirtStripe: '#FFFFFF',  // centre vertical stripe on shirt
@@ -21,7 +21,7 @@ const PAL = {
 
   // ── Teachers ─────────────────────────────────────────────
   teacherSkin:       '#faa462',  // face, hands
-  teacherSkinShadow: '#fd6935',  // neck, collar shadow
+  teacherSkinShadow: '#ff7949',  // neck, collar shadow
   teacherHair:       '#72706e',  // hair, shared by all teacher types
   teacherTrousers:   '#706f6e',  // trousers, shared by all teacher types
   teacherShoes:      '#862c00',  // shoes, shared by all teacher types
@@ -42,7 +42,7 @@ const PAL = {
 
   // ── Janitor ───────────────────────────────────────────────
   janitorSkin:       '#faa462',  // face, hands
-  janitorSkinShadow: '#fd6935',  // neck, collar shadow
+  janitorSkinShadow: '#ff7949',  // neck, collar shadow
   janitorHair:       '#581e00',  // hair
   janitorSalopette:  '#1665DC',  // overalls and cap
   janitorShirt:      '#FFFFFF',  // undershirt (bodyCol)
@@ -53,7 +53,7 @@ const PAL = {
 
   // ── Prof.Ginnastica ───────────────────────────────────────
   profGinnasticaSkin:       '#faa462',  // face, hands
-  profGinnasticaSkinShadow: '#fd6935',  // neck, collar shadow
+  profGinnasticaSkinShadow: '#ff7949',  // neck, collar shadow
   profGinnasticaBody:       '#33B84B',  // shirt / jacket body colour
   profGinnasticaStripe:     '#FFFFFF',  // vertical shirt stripes
   profGinnasticaTrousers:   '#706f6e',  // trousers
@@ -62,14 +62,14 @@ const PAL = {
 
   // ── Seated students ───────────────────────────────────────
   studentSkin:       '#faa462',  // face, arms
-  studentSkinShadow: '#fd6935',  // neck shadow
+  studentSkinShadow: '#ff7949',  // neck shadow
   studentHair:       '#581e00',  // hair
   studentShirt:      '#FFFFFF',  // shirt
   exclamation:       '#FF2222',  // student exclamation mark when disturbed
 
   // ── Preside ───────────────────────────────────────────────
   presideSkin:       '#faa462',  // face, hands
-  presideSkinShadow: '#fd6935',  // neck, collar shadow
+  presideSkinShadow: '#ff7949',  // neck, collar shadow
   presideHair:       '#FFFFFF',  // hair (white)
   presideBody:       '#2f2e2d',  // suit jacket
   presideTrousers:   '#706f6e',  // trousers
@@ -78,7 +78,7 @@ const PAL = {
 
   // ── Guards ────────────────────────────────────────────────
   guardSkin:         '#faa462',  // face, hands
-  guardSkinShadow:   '#fd6935',  // neck, collar shadow
+  guardSkinShadow:   '#ff7949',  // neck, collar shadow
   guardUniform:      '#1665DC',  // jacket / body
   guardTrousers:     '#2f2e2d',  // trousers
   guardCap:          '#2f2e2d',  // cap (same colour as trousers)
@@ -87,7 +87,7 @@ const PAL = {
 
   // ── Luca ──────────────────────────────────────────────────
   lucaSkin:          '#faa462',  // face, hands
-  lucaSkinShadow:    '#fd6935',  // neck, collar shadow
+  lucaSkinShadow:    '#ff7949',  // neck, collar shadow
   lucaHair:          '#581e00',  // hair
   lucaBody:          '#FFFFFF',  // shirt (bodyCol)
   lucaTie:           '#000000',  // tie
@@ -188,11 +188,9 @@ const PAL = {
   bellClapper:   '#332200',  // clapper
 
   // ── Desks ─────────────────────────────────────────────────
-  brown:         '#433900',  // chair wood
-  desk:          '#2C1800',  // desk top dark layer
-  desklt:        '#4E2A00',  // desk top light layer
-  deskHighlight: '#FFFFFF',  // desk surface white highlight stripe
-  chairSeat:     '#5F1D1B',  // chair seat (dark red-brown)
+  brown:         '#3e1500',  // chair wood
+  desk:          '#3e1500',  // desk top dark layer
+  desklt:        '#581e00',  // desk top light layer
 
   // ── Chalkboard ────────────────────────────────────────────
   boardDark:     '#075b07',  // board background (dark green)

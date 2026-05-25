@@ -19,8 +19,6 @@ function drawDesks() {
       _octx.fillStyle = PAL.brown;
       _octx.fillRect(_d.x+1,  _d.y+6, 2, 5);
       _octx.fillRect(_d.x+17, _d.y+6, 2, 5);
-      _octx.fillStyle = PAL.chairSeat; _octx.fillRect(_d.x+5, _d.y-2, 8, 3);
-      _octx.fillStyle = PAL.deskHighlight; _octx.fillRect(_d.x+6, _d.y-2, 6, 2);
     }
     _desksCache = _oc;
   }
