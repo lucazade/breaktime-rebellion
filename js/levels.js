@@ -220,8 +220,8 @@ var LEVELS = (function() {
 
       bags: [],
       bins: [
-        {x:117,  y:GY-19}, // entrance — leftmost room, ground floor
-        {x:278, y:MY-19}, // gym — rightmost room, middle floor
+        {x:118, y:GY-17}, // entrance — leftmost room, ground floor
+        {x:278, y:MY-17}, // gym — rightmost room, middle floor
         {x:235, y:TY-13}, // terrace — rightmost room, top floor
       ],
 

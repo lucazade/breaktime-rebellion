@@ -389,11 +389,11 @@ function drawBins() {
     ctx.fillRect(bx+9, by-14, 1,  14); // right
     ctx.fillRect(bx,   by-1,  10,  1); // bottom
 
-    // Triangle (vertex up) as recycle symbol
+    // Triangle (vertex down) as recycle symbol
     ctx.fillStyle = PAL.binRecycle;
-    ctx.fillRect(bx+4, by-9, 2, 1); // top vertex
+    ctx.fillRect(bx+2, by-9, 6, 1); // base
     ctx.fillRect(bx+3, by-8, 4, 1); // middle
-    ctx.fillRect(bx+2, by-7, 6, 1); // base
+    ctx.fillRect(bx+4, by-7, 2, 1); // bottom vertex
 
     // Fuse animation (speeds up as timer runs out)
     if (b.lit) {

@@ -251,7 +251,7 @@ const PAL = {
 
   // ── Bins ──────────────────────────────────────────────────
   binBody:        '#228B22',               // body
-  binLid:         '#1a7a1a',               // lid (slightly darker)
+  binLid:         '#116111',               // lid (slightly darker)
   binShadow:      '#1a6e1a',               // left-side shadow
   binDark:        '#0d4d0d',               // rim / border
   binRecycle:     'rgba(255,255,255,0.75)', // recycle symbol overlay
