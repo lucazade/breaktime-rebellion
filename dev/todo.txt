@@ -348,6 +348,7 @@ Cerchiamo prima di analizzare la nostra implementazione, di confrontarla con que
 - [X] #176 bump altoparlante ancora presente (vedi #189)
 - [X] #191 ottimizzazione peso assets (intro 320→96kbps, boss.wav→mp3, 5× wav sfx→ogg, -5MB totale)
 - [X] #192 rimuovere HTMLMediaElement fallback per SFX in audio.js — ogni SFX carica 2× (media + fetch); WebAudio è affidabile su Capacitor, il fallback è ridondante e raddoppia le richieste di rete
+- [X] #193 non si sentono gli effetti sonori (solo la musica). probabilmente dovuto a #191 o #192
 
 DA VERIFICARE:
 - [?] #179 ref.171 in L9 se ti becca bidello al piano intermedio, respawni e ti uccide il bidello vicino a dove respawni (al piano terra).. "In updatePlayer() quando stunT sta per scadere, controlliamo se c'è un NPC entro raggio pericoloso" è valido in questo caso?
@@ -355,8 +356,8 @@ DA VERIFICARE:
 PER LUCA:
 
 - [ ] #186 Icona BR
-- [ ] #159 SFX sostituire suono acqua bagno
-- [ ] #160 SFX sostituire suono mech-completed
+- [ ] #159 SFX sostituire suono acqua bagno - convert from wav to ogg
+- [ ] #160 SFX sostituire suono mech-completed - V
 - [ ] #161 HUD ricolora meccaniche
 - [ ] #179 TITLE Colori audio in titlescreen
 - [ ] #163 L1 ricolora prof rossi, verdi, celeste
@@ -372,4 +373,5 @@ PER LUCA:
 - [ ] #185 se ci sono bidelli non ci può essere prof. celeste
 
 PER CLAUDE:
-
+- [ ] #194 spostare progressbar: L4 a sinistra del pallone, L10 più in alto (circa sopra la testa di Marco)
+- [ ] #195 rendere suono mechcompleted opzionale in config

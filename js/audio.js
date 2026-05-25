@@ -210,6 +210,15 @@ const GameAudio = (function() {
     } catch(e) {}
   }
 
+  function _sfxFallback(name, cb) {
+    var url = CONFIG.audio.sfx[name];
+    if (!url) { if (cb) cb(); return; }
+    var a = new Audio(url);
+    a.volume = CONFIG.audio.sfxVolume;
+    if (cb) a.addEventListener('ended', cb);
+    a.play().catch(function() { if (cb) cb(); });
+  }
+
   function playSfx(name) {
     if (mode === 'mute') return;
     if (_audioCtx && _sfxBuffers[name]) {
@@ -220,7 +229,9 @@ const GameAudio = (function() {
       gain.gain.value = CONFIG.audio.sfxVolume;
       src.connect(gain); gain.connect(_audioCtx.destination);
       src.start(0);
+      return;
     }
+    _sfxFallback(name, null);
   }
 
   // Like playSfx but calls cb when the sound finishes playing.
@@ -238,7 +249,7 @@ const GameAudio = (function() {
       src.start(0);
       return;
     }
-    if (cb) cb();
+    _sfxFallback(name, cb);
   }
 
   function playJingle(name) {
