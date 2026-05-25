@@ -224,6 +224,8 @@ Ogni personaggio ha il suo draw function e `COLOURS_*` object in `draw-chars.js`
 - Intro music: fade out con `fadeOutIntro()` all'avvio partita — NON TOCCARE la logica audio/transizioni
 - Jingle win/gameover: tracciati in `jingle` per poterli stoppare al restart
 - **AudioContext** creato all'inizializzazione del modulo `audio.js` (fine IIFE, prima del `return`) — **non** al primo tap. In Capacitor WebView l'autoplay è permesso: se l'AudioContext venisse creato dopo che l'intro music è già in riproduzione (HTMLMediaElement), il mixer Android riconfigura il suo hardware → pop sull'altoparlante. `_warmupAudio()` suona un buffer silenzioso (1 sample, gain 0.001) subito dopo la creazione/resume del context per attivare la pipeline hardware prima dell'audio reale.
+- **SFX — doppio percorso:** `playSfx`/`playSfxThen` usano WebAudio (`fetch` + `decodeAudioData`) come percorso primario (zero latency). Se i buffer non sono pronti (es. `file://` dove `fetch` fallisce silenziosamente), cade in un fallback on-demand `new Audio(url)` senza pre-caricamento. Su Capacitor WebView il percorso WebAudio è sempre attivo.
+- **SFX opzionali:** `sfx` map in `config.js` supporta `null` per disabilitare un suono. Il fetch loop salta le voci null; `playSfx`/`playSfxThen` non fanno nulla (o chiamano subito il callback in mode mute).
 - `_btrMax` — dichiarato in `state.js` (non in `title.js`). Alcuni Android WebView sparano rAF prima che l'ultimo script (`title.js`) abbia finito di eseguire; `drawTitleScreen()` usava `_btrMax` a riga 116 e crashava con ReferenceError, lasciando visibile solo `"< Lvl 1"`. Spostare la dichiarazione in `state.js` (che carica prima di `game.js`) garantisce che il valore esista sempre quando il loop disegna.
 
 ## Convenzioni commit
@@ -250,5 +252,5 @@ try{new Function(src);console.log('JS OK');}catch(e){console.log('ERRORE:',e.mes
 ## Build APK — note importanti
 
 - Lo script `apk` in `package.json` usa `./gradlew clean assembleDebug` (non solo `assembleDebug`).
-- **Motivo:** la cache incrementale di Gradle può skippare `mergeDebugAssets` dopo un `cap sync`, producendo un APK byte-per-byte identico al precedente anche se i file in `www/` sono cambiati. Scoperto con v1.0.14 (25M identico a v1.0.13) dopo l'ottimizzazione audio #191; v1.0.15 clean build → 18M.
+- **Motivo:** la cache incrementale di Gradle può skippare `mergeDebugAssets` dopo un `cap sync`, producendo un APK byte-per-byte identico al precedente anche se i file in `www/` sono cambiati. Scoperto con v1.0.14 (25M identico a v1.0.13) dopo l'ottimizzazione audio #191; v1.0.15/v1.0.16 clean build → 18M.
 - Il `clean` aggiunge ~5-10s ma garantisce che gli asset aggiornati siano inclusi.
