@@ -159,9 +159,9 @@ function drawGymBall() {
   }
   if (gymBall.shakeT > 0) {
     const pct = gymBall.shakeT / deflateTime;
-    ctx.fillStyle = PAL.barBg; ctx.fillRect(bx-2, by-9, 14, 5);
-    ctx.fillStyle = PAL.barDark; ctx.fillRect(bx-1, by-8, 12, 3);
-    ctx.fillStyle = PAL.barFill; ctx.fillRect(bx-1, by-8, Math.round(12 * pct), 3);
+    ctx.fillStyle = PAL.barBg; ctx.fillRect(bx-18, by+2, 14, 5);
+    ctx.fillStyle = PAL.barDark; ctx.fillRect(bx-17, by+3, 12, 3);
+    ctx.fillStyle = PAL.barFill; ctx.fillRect(bx-17, by+3, Math.round(12 * pct), 3);
   }
   // Basketball — proper pixel circle body + matching circular outline
   ctx.fillStyle = PAL.ballWood;
@@ -265,9 +265,9 @@ function drawRegister() {
   // Progress bar while stealing
   if (register.stealT > 0) {
     const pct = register.stealT / registerTime;
-    ctx.fillStyle = PAL.barBg; ctx.fillRect(bx-2, by-12, 14, 5);
-    ctx.fillStyle = PAL.barDark; ctx.fillRect(bx-1, by-11, 12, 3);
-    ctx.fillStyle = PAL.barFill; ctx.fillRect(bx-1, by-11, Math.round(12 * pct), 3);
+    ctx.fillStyle = PAL.barBg; ctx.fillRect(bx-2, by-26, 14, 5);
+    ctx.fillStyle = PAL.barDark; ctx.fillRect(bx-1, by-25, 12, 3);
+    ctx.fillStyle = PAL.barFill; ctx.fillRect(bx-1, by-25, Math.round(12 * pct), 3);
   }
 
   // Proximity border

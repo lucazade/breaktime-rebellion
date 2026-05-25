@@ -373,4 +373,4 @@ PER LUCA:
 - [ ] #185 se ci sono bidelli non ci può essere prof. celeste
 
 PER CLAUDE:
-- [ ] #194 spostare progressbar: L4 a sinistra del pallone, L10 più in alto (circa sopra la testa di Marco)
+- [x] #194 spostare progressbar: L4 a sinistra del pallone, L10 più in alto (circa sopra la testa di Marco)
