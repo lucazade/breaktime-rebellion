@@ -337,10 +337,18 @@ CHIUSI:
 - [X] #188 BUG latente: in physics.js il setTimeout della lavagna (L1, riga ~455) modifica stato di gioco (score, board.done, alertTeachers) da callback asincrono — se arriva deathFreeze nei 700ms il board viene comunque marcato done. Sostituire con pendingTransition o flag frame-based.
 - [X] #187 gfx-draw.js (845 righe) mescola HUD, banner, title, crediti, night overlay e debug — valutare split in sotto-moduli (es. gfx-draw-hud.js, gfx-draw-ui.js)
 - [X] #184 Aggiornare screenshots readme
+- [X] #190 ANDROID: Dopo il lavoro fatto su #178 (dove avevamo riscritto buona parte del codebase per la gestione delle schermate e dei canvas con un unica immagine HD a 1600 invece di due distinte) si è introdotto un bug non sempre riproducibile ma grave:
+Quando lanci l'app android in verticale e appare giustamente la schermata portrait (ruota il dispositivo) se ruoti lo schermo per vedere la titlescreen, quest'ultima appare corrotta e non con tutti gli elementi (vedi screenshot). Ti allego la schermata della titlescreen corrotta.
+Ovviamente vorrei tenere la nuova gestione ad immagine HD e css riscritti ma dobbiamo capire perchè sulla rotazione non riesce sempre a disegnare bene la titlescreen con tutti i suoi elementi.
+- [X] #189 ANDROID: Purtoppo c'e' ancora il problema del POP audio che è pericoloso per l'altoparlante del telefono.
+Si sente un pop forte come quando spegni un amplificatore audio con attaccato un subwoofer e la cassa fa un bang (non so se hai presente).
+Da quello che ho notato avviene su qualunque schermata e soprattuto quando si fa il primo tap della sessione sullo schermo.
+E' come se prendesse il contesto della web-ui attraverso il tap e questo fa glitchare la riproduzione della musica.
+Cerchiamo prima di analizzare la nostra implementazione, di confrontarla con quella dell'api ufficiale per quanto riguarda inizializzazione e gestione dell'audio, di cercare online problematiche simili riscontrate da altri e di confrontarci prima di agire.
+- [X] #176 bump altoparlante ancora presente (vedi #189)
 
 DA VERIFICARE:
 - [?] #179 ref.171 in L9 se ti becca bidello al piano intermedio, respawni e ti uccide il bidello vicino a dove respawni (al piano terra).. "In updatePlayer() quando stunT sta per scadere, controlliamo se c'è un NPC entro raggio pericoloso" è valido in questo caso?
-- [?] #176 bump altoparlante ancora presente
 
 PER LUCA:
 
@@ -362,16 +370,4 @@ PER LUCA:
 - [ ] #185 se ci sono bidelli non ci può essere prof. celeste
 
 PER CLAUDE:
-- [ ] #189 ANDROID: Purtoppo c'e' ancora il problema del POP audio che è pericoloso per l'altoparlante del telefono.
-Si sente un pop forte come quando spegni un amplificatore audio con attaccato un subwoofer e la cassa fa un bang (non so se hai presente).
-Da quello che ho notato avviene su qualunque schermata e soprattuto quando si fa il primo tap della sessione sullo schermo.
-E' come se prendesse il contesto della web-ui attraverso il tap e questo fa glitchare la riproduzione della musica.
-Cerchiamo prima di analizzare la nostra implementazione, di confrontarla con quella dell'api ufficiale per quanto riguarda inizializzazione e gestione dell'audio,
-di cercare online problematiche simili riscontrate da altri e di confrontarci prima di agire.
 
-- [ ] #190 ANDROID: Dopo il lavoro fatto su #178 (dove avevamo riscritto buona parte del codebase per la gestione delle schermate e dei canvas
-con un unica immagine HD a 1600 invece di due distinte) si è introdotto un bug non sempre riproducibile ma grave:
-Quando lanci l'app android in verticale e appare giustamente la schermata portrait (ruota il dispositivo) se ruoti lo schermo per vedere la titlescreen,
-quest'ultima appare corrotta e non con tutti gli elementi (vedi screenshot). Ti allego la schermata della titlescreen corrotta.
-Ovviamente vorrei tenere la nuova gestione ad immagine HD e css riscritti ma dobbiamo capire perchè sulla rotazione non riesce sempre a disegnare bene la titlescreen
-con tutti i suoi elementi.
