@@ -69,6 +69,8 @@ Palette: logo reference (PAL), voci esplicite per ogni personaggio/oggetto.
 
 Ogni `drawXxx` function usa esclusivamente `PAL.nomeEsplicito` — nessun colore hardcoded.
 
+**Mechanic dot indicators:** le icone HUD sono monocromatiche (`#44ee66`). I dettagli "trasparenti" (cuciture pallone, dorso libro, ecc.) sono ottenuti **non disegnando quei pixel** — la forma viene ridisegnata in più `fillRect` che saltano le posizioni dei dettagli, così mostrano il colore HUD sottostante. Non usare `clearRect` (cancella anche il layer HUD già disegnato). Voci secondarie che rimangono: `dotBoardsHighlight`, `dotBagsStripe`, `dotBooksLines` (ora anch'esse trasparenti), `dotRegisterAccent`.
+
 ## Controlli
 
 - **Desktop**: frecce direzionali + Z/Spazio
@@ -162,6 +164,13 @@ Le coordinate usano `GY`, `MY`, `TY`, `PH`, `walkOffset` (da `scene.js`) per res
 - Missioni per livello: chiavi `mission1`, `mission2`, ... (una per livello)
 - Separatore `|` nelle stringhe dei fumetti per forzare a capo
 - Override lingua: `?lang=en` o `?lang=it` nell'URL
+- `hudLevel` — label livello nell'HUD: `'Lvl {0}'` (uguale in EN e IT)
+
+## HUD (draw-hud.js)
+
+Il gruppo meccanica è **centrato** in `VH.centerX`. Layout da sinistra: `Lvl X` + separatore verticale (1px, 40% alpha) + icona meccanica + contatore `done/total`. La larghezza totale del gruppo viene calcolata sommando tutte le parti prima di posizionare l'inizio (`_sx`).
+
+Le icone meccanica (`_drawHudIcon`) hanno 3 rami per scala `s`: tiny (`s<0.5`), small (`s<1`), full (`s≥1`). I dettagli trasparenti sono ottenuti disegnando la forma in parti (non usando `clearRect`).
 
 ## Desktop UI — bezels e canvas styling (game.js + style.css)
 
