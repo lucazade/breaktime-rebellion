@@ -172,6 +172,7 @@ const GameAudio = (function() {
   var _sfxCache   = {};  // name → Audio element (fallback)
   var _sfxRaw     = {};  // name → ArrayBuffer (prefetched)
   var _audioCtx   = null;
+  var _warmedUp   = false;
   var _sfxBuffers = {};  // name → AudioBuffer (decoded, ready to play)
 
   Object.keys(CONFIG.audio.sfx).forEach(function(name) {
@@ -198,7 +199,8 @@ const GameAudio = (function() {
   // before any real audio starts. Prevents the amplifier activation pop on first playback.
   // Must only be called when _audioCtx.state === 'running'.
   function _warmupAudio() {
-    if (!_audioCtx || _audioCtx.state !== 'running') return;
+    if (!_audioCtx || _audioCtx.state !== 'running' || _warmedUp) return;
+    _warmedUp = true;
     try {
       var buf = _audioCtx.createBuffer(1, 1, _audioCtx.sampleRate);
       var src = _audioCtx.createBufferSource();
