@@ -361,16 +361,17 @@ Cerchiamo prima di analizzare la nostra implementazione, di confrontarla con que
 - [X] #164 L2 ricolora bags
 - [X] #165 L3 ricolora distributore
 - [X] #166 L4 ricolora prof Ginnastica: verde più scuro
+- [X] #167 L5 velocità professori e patrol ristretto
+- [X] #168 L6 bidelli ai piani superiori
 
 DA VERIFICARE:
 - [?] #179 ref.171 in L9 se ti becca bidello al piano intermedio, respawni e ti uccide il bidello vicino a dove respawni (al piano terra).. "In updatePlayer() quando stunT sta per scadere, controlliamo se c'è un NPC entro raggio pericoloso" è valido in questo caso?
 
 PER LUCA:
 - [ ] #186 Icona BR
-- [ ] #167 L5 velocità professori e patrol ristretto
-- [ ] #168 L6 bidelli ai piani superiori
 - [ ] #169 L8 ricolorare secchi e prof piano intermedio
 - [ ] #170 L10 ricolorare maglia guardiano blu scuro
 - [ ] #161 HUD ricolora meccaniche
+- [ ] #195 Livello nel HUD
 
 PER CLAUDE:

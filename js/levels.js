@@ -142,16 +142,16 @@ var LEVELS = (function() {
       students: [
         {x:159, y:GY-19}, {x:183, y:GY-19},
         {x:159, y:MY-19}, {x:183, y:MY-19},
-        {x:162, y:TY-17}, {x:186, y:TY-17},
+        {x:159, y:TY-17}, {x:183, y:TY-17},
       ],
 
       // Teachers near the blackboard (x≈130) simulating active lesson.
       // Limited patrol range so they look like they're teaching, not wandering.
       // No janitors — hallways are empty during class.
       teachers: [
-        {x:138, y:GY-PH-walkOffset, dir:-1, minX:115, maxX:205, speed:0.40, color:PAL.profRossiBody,  name:'Prof.Rossi',   sight:90},
-        {x:138, y:MY-PH-walkOffset, dir:-1, minX:115, maxX:205, speed:0.40, color:PAL.profCelesteBody, name:'Prof.Celeste', sight:80},
-        {x:100, y:TY-PH-walkOffset, dir:-1, minX:50,  maxX:195, speed:0.40, color:PAL.profNeriBody, name:'Prof.Neri',    sight:100},
+        {x:138, y:GY-PH-walkOffset, dir:-1, minX:115, maxX:205, speed:0.50, color:PAL.profRossiBody,  name:'Prof.Rossi',   sight:90},
+        {x:138, y:MY-PH-walkOffset, dir:-1, minX:115, maxX:205, speed:0.50, color:PAL.profCelesteBody, name:'Prof.Celeste', sight:80},
+        {x:100, y:TY-PH-walkOffset, dir:-1, minX:50,  maxX:195, speed:0.60, color:PAL.profNeriBody, name:'Prof.Neri',    sight:100},
       ],
 
       janitors: [],
@@ -174,10 +174,13 @@ var LEVELS = (function() {
 
       // Preside patrols right half — principal's office area.
       teachers: [
-        {x:260, y:GY-PH-walkOffset, dir:-1, minX:100, maxX:305, speed:1.0, color:PAL.presideBody, name:'Preside', sight:150},
+        {x:260, y:GY-PH-walkOffset, dir:-1, minX:100, maxX:305, speed:0.7, color:PAL.presideBody, name:'Preside', sight:150},
       ],
 
-      janitors: [],
+      janitors: [
+        {x:160, y:MY-PH-walkOffset, dir:1,  minX:90,  maxX:230, speed:0.65, name:'Bidello'},
+        {x:230, y:TY-PH-walkOffset, dir:-1,  minX:10,  maxX:275, speed:0.65, name:'Bidello'},
+      ],
     }),
 
     // ── LEVEL 7 — Flood the bathroom, ring the bell ──────────────────────────
@@ -195,7 +198,9 @@ var LEVELS = (function() {
       // Sink in the leftmost room on the middle floor (bathroom)
       sink: {x:32, y:MY-20},
 
-      teachers: [],
+      teachers: [
+        {x:100, y:TY-PH-walkOffset, dir:-1, minX:50,  maxX:195, speed:0.60, color:PAL.profNeriBody, name:'Prof.Neri',    sight:100},
+      ],
 
       janitors: [
         {x:185, y:MY-PH-walkOffset, dir:-1, minX:10, maxX:220, speed:0.65, name:'Bidello'},

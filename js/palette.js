@@ -64,7 +64,7 @@ const PAL = {
   studentSkin:       '#faa462',  // face, arms
   studentSkinShadow: '#ff7949',  // neck shadow
   studentHair:       '#581e00',  // hair
-  studentShirt:      '#FFFFFF',  // shirt
+  studentShirt:      '#808080',  // shirt
   exclamation:       '#FF2222',  // student exclamation mark when disturbed
 
   // ── Preside ───────────────────────────────────────────────
