@@ -163,6 +163,21 @@ Le coordinate usano `GY`, `MY`, `TY`, `PH`, `walkOffset` (da `scene.js`) per res
 - Separatore `|` nelle stringhe dei fumetti per forzare a capo
 - Override lingua: `?lang=en` o `?lang=it` nell'URL
 
+## Desktop UI — bezels e canvas styling (game.js + style.css)
+
+**Canvas roundness:** classe `.rounded` aggiunta via `ResizeObserver` + `window resize`. Attiva quando `canvas.getBoundingClientRect().top > 2` (c'è aria verticale). CSS: `canvas { border-radius: 0; transition: border-radius 0.2s ease; }` / `canvas.rounded { border-radius: 16px; }`.
+
+**CSS variables dinamiche** (impostate da `_updateRoundness()` in `game.js`):
+- `--canvas-top` — top del canvas relativo a `#game-area` (px)
+- `--canvas-h` — altezza renderizzata del canvas (px)
+Usate per ancorare `#top-bezel` e `#bottom-bezel` alla posizione reale del canvas.
+
+**Bezels desktop** (solo `@media (hover: hover) and (pointer: fine)`, nascosti su mobile):
+- `#top-bezel` — titolo "BREAKTIME REBELLION" sopra il canvas; `position: absolute`, `top: calc(var(--canvas-top) - 26px)`, `transform: translateY(-100%)`. Click → `triggerHome()`. Nascosto con `body.title-mode`.
+- `#bottom-bezel` — linea neon sotto il canvas; `position: absolute`, `top: calc(var(--canvas-top) + var(--canvas-h) + 14px)`. Nascosto con `body.title-mode`.
+- Entrambi `display: none` di default; la media query li attiva con `display: block`.
+- Non usare `::before`/`::after` per elementi interattivi — usare elementi reali.
+
 ## Canvas e background
 
 **Risoluzione 5×:** canvas element `1600×1000`, `ctx.scale(5,5)` → coordinate logiche `320×200`. `ctx.imageSmoothingEnabled = false`.
