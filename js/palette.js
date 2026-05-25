@@ -46,7 +46,7 @@ const PAL = {
   janitorHair:       '#581e00',  // hair
   janitorSalopette:  '#1665DC',  // overalls and cap
   janitorShirt:      '#FFFFFF',  // undershirt (bodyCol)
-  janitorShoes:      '#FFFFFF',  // shoes
+  janitorShoes:      '#013e9a',  // shoes
   janitorMopHandle:  '#862c00',  // broom handle
   janitorMopHead:    '#959595',  // bristles
   janitorMopTip:     '#FFFFFF',  // white bristle tip row
@@ -54,11 +54,11 @@ const PAL = {
   // ── Prof.Ginnastica ───────────────────────────────────────
   profGinnasticaSkin:       '#faa462',  // face, hands
   profGinnasticaSkinShadow: '#ff7949',  // neck, collar shadow
-  profGinnasticaBody:       '#33B84B',  // shirt / jacket body colour
+  profGinnasticaBody:       '#07a123',  // shirt / jacket body colour
   profGinnasticaStripe:     '#FFFFFF',  // vertical shirt stripes
-  profGinnasticaTrousers:   '#706f6e',  // trousers
-  profGinnasticaShoes:      '#862c00',  // shoes
-  profGinnasticaCap:        '#33B84B',  // cap (same colour as shirt)
+  profGinnasticaTrousers:   '#036214',  // trousers
+  profGinnasticaShoes:      '#ffffff',  // shoes
+  profGinnasticaCap:        '#07a123',  // cap (same colour as shirt)
 
   // ── Seated students ───────────────────────────────────────
   studentSkin:       '#faa462',  // face, arms
