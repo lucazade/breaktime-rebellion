@@ -168,8 +168,7 @@ const GameAudio = (function() {
     t.play().catch(function() {});
   }
 
-  // Web Audio API for zero-latency sfx; fallback to cloneNode if unavailable
-  var _sfxCache   = {};  // name → Audio element (fallback)
+  // Web Audio API for zero-latency sfx
   var _sfxRaw     = {};  // name → ArrayBuffer (prefetched)
   var _audioCtx   = null;
   var _warmedUp   = false;
@@ -183,7 +182,6 @@ const GameAudio = (function() {
         _audioCtx.decodeAudioData(buf.slice(0), function(decoded) { _sfxBuffers[name] = decoded; }, function() {});
       }
     }).catch(function() {});
-    var a = new Audio(url); a.preload = 'auto'; _sfxCache[name] = a;
   });
 
   function _initWebAudio() {
@@ -222,11 +220,7 @@ const GameAudio = (function() {
       gain.gain.value = CONFIG.audio.sfxVolume;
       src.connect(gain); gain.connect(_audioCtx.destination);
       src.start(0);
-      return;
     }
-    var cached = _sfxCache[name];
-    if (!cached) return;
-    var s = cached.cloneNode(); s.volume = CONFIG.audio.sfxVolume; s.play().catch(function() {});
   }
 
   // Like playSfx but calls cb when the sound finishes playing.
@@ -244,12 +238,7 @@ const GameAudio = (function() {
       src.start(0);
       return;
     }
-    var cached = _sfxCache[name];
-    if (!cached) { if (cb) cb(); return; }
-    var s = cached.cloneNode();
-    s.volume = CONFIG.audio.sfxVolume;
-    if (cb) s.addEventListener('ended', cb);
-    s.play().catch(function() {});
+    if (cb) cb();
   }
 
   function playJingle(name) {

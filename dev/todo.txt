@@ -370,4 +370,5 @@ PER LUCA:
 - [ ] #185 se ci sono bidelli non ci può essere prof. celeste
 
 PER CLAUDE:
-
+- [X] #191 ottimizzazione peso assets (intro 320→96kbps, boss.wav→mp3, 5× wav sfx→ogg, -5MB totale)
+- [X] #192 rimuovere HTMLMediaElement fallback per SFX in audio.js — ogni SFX carica 2× (media + fetch); WebAudio è affidabile su Capacitor, il fallback è ridondante e raddoppia le richieste di rete
