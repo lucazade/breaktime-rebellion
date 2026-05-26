@@ -281,9 +281,9 @@ function drawHighScores() {
     ctx.fillStyle = PAL.bannerText; ctx.fillText(STRINGS.highScoresEmpty, cxHS, ty);
   } else {
     // rank right-aligned + score left-aligned (close pair); level and diff center-aligned
-    var cRank  = panX + 50;
-    var cScore = panX + 52;
-    var cLevel = panX + 110;
+    var cRank  = panX + 32;
+    var cScore = panX + 34;
+    var cLevel = panX + 104;
     var cDiff  = panX + 170;
     for (var i = 0; i < hs.length; i++) {
       var h = hs[i];
