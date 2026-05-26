@@ -377,3 +377,4 @@ PER LUCA:
 
 PER CLAUDE:
 - [ ] #198 diminuire messaggi nei banner
+- [ ] #199 rendere glow campanella più visibile quando meccanica completa
