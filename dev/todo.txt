@@ -378,4 +378,4 @@ PER LUCA:
 PER CLAUDE:
 - [ ] #198 troppi messaggi da leggere nel banner fine livello. Forse rendere riepilogo punteggio opzionale (config) oppure una sola linea condensata punteggio totale + bonus (con punteggio che si aggiorna con il bonus??)
 - [ ] #199 rendere glow campanella più visibile quando meccanica completa
- [ ] #200 HighScores banner
+- [ ] #200 HighScores banner
