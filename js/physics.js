@@ -176,7 +176,7 @@ function updatePlayer() {
         register.stolen = true;
         register.stealT = 0;
         score += 500;
-        addFloating(register.x, register.y - 10, '+500', PAL.gold);
+        addFloating(register.x, register.y - 10, '+500', PAL.celebrationColor);
         GameAudio.playSfxThen('register', function() { setTimeout(function() { GameAudio.playSfx('mechCompleted'); }, 250); });
         alertTeachers(register.x + 5, register.y);
         allRegisterWin();
@@ -314,8 +314,8 @@ function updatePlayer() {
     if (bdx < 14 && bdy < 14) {
       bag.collected = true;
       score += 200;
-      addFloating(bag.x, bag.y, '+200', PAL.gold);
-      addParticles(bag.x, bag.y, PAL.gold, 10);
+      addFloating(bag.x, bag.y, '+200', PAL.celebrationColor);
+      addParticles(bag.x, bag.y, PAL.celebrationColor, 10);
       alertTeachers(bag.x, bag.y);
       let remaining = 0;
       for (let bj = 0; bj < bags.length; bj++) if (!bags[bj].collected) remaining++;

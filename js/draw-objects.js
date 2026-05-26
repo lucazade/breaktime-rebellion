@@ -273,7 +273,7 @@ function drawRegister() {
     const pdx = Math.abs(player.x + PW/2 - register.x - 5);
     const pdy = Math.abs(player.y + PH  - register.y - 8);
     if (pdx < 16 && pdy < 20) {
-      ctx.strokeStyle = PAL.gold; ctx.lineWidth = 1;
+      ctx.strokeStyle = PAL.proximityBorder; ctx.lineWidth = 1;
       ctx.setLineDash([2, 2]);
       const _dr = CONFIG.scene.dashed.register; ctx.strokeRect(bx+_dr.x, by+_dr.y, _dr.w, _dr.h);
       ctx.setLineDash([]);
@@ -288,7 +288,7 @@ function drawExitDoor() {
   const pdy = Math.abs(player.y + PH  - exitDoor.y - 10);
   if (pdx < 22 && pdy < 30) {
     const blink = Math.floor(frame / 10) % 2 === 0;
-    ctx.strokeStyle = blink ? PAL.gold : PAL.sprinklerActiveBorder; ctx.lineWidth = 1;
+    ctx.strokeStyle = blink ? PAL.proximityBorder : PAL.sprinklerActiveBorder; ctx.lineWidth = 1;
     ctx.setLineDash([3, 2]);
     const _de = CONFIG.scene.dashed.exitDoor; ctx.strokeRect(bx+_de.x, by+_de.y, _de.w, _de.h);
     ctx.setLineDash([]);

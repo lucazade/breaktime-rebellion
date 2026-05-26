@@ -23,9 +23,6 @@
 
     audioFull: 'music', audioSfx: 'sfx', audioMute: 'mute',
     difficulty_easy: 'EASY', difficulty_medium: 'MED', difficulty_hard: 'HARD',
-    reloadLose:           '[ TAP TO TRY AGAIN ]',
-    reloadNext:           '[ TAP FOR NEXT LEVEL ]',
-    reloadWin:            '[ TAP TO PLAY AGAIN ]',
     tapForTitle:          '[ TAP TO GO HOME ]',
     tapContinue:          '[ TAP TO CONTINUE ]',
 
@@ -125,9 +122,6 @@
 
     audioFull: 'musica', audioSfx: 'sfx', audioMute: 'muto',
     difficulty_easy: 'EASY', difficulty_medium: 'MED', difficulty_hard: 'HARD',
-    reloadLose:           '[ TOCCA PER RIPROVARE ]',
-    reloadNext:           '[ TOCCA PER IL LIVELLO SUCCESSIVO ]',
-    reloadWin:            '[ TOCCA PER GIOCARE ANCORA ]',
     tapForTitle:          '[ TOCCA PER TORNARE ALLA HOME ]',
     tapContinue:          '[ TOCCA PER CONTINUARE ]',
 

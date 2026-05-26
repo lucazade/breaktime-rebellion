@@ -8,8 +8,8 @@ function ringBell() {
   score += 1000;
   lastTimeBonus = Math.round(Math.floor(timerTicks / 60) * 10 * _mult);
   score += lastTimeBonus;
-  addFloating(Math.max(50, Math.min(W - 50, BELL.x + 10)), BELL.y - 6, '+1000!', PAL.gold);
-  addParticles(BELL.x, BELL.y, PAL.gold, 30);
+  addFloating(Math.max(50, Math.min(W - 50, BELL.x + 10)), BELL.y - 6, '+1000!', PAL.celebrationColor);
+  addParticles(BELL.x, BELL.y, PAL.celebrationColor, 30);
   msgT = 0;
   GameAudio.playSfx('bell');
   deathFreeze = true; // freeze NPCs immediately so they can't catch Marco after ringing
@@ -154,7 +154,7 @@ function escapeWin() {
   lastTimeBonus = Math.round(Math.floor(timerTicks / 60) * 10 * _mult);
   lastLivesBonus = Math.round(lives * 500 * _mult);
   score += lastTimeBonus + lastLivesBonus;
-  addParticles(exitDoor.x + 5, exitDoor.y, PAL.gold, 30);
+  addParticles(exitDoor.x + 5, exitDoor.y, PAL.celebrationColor, 30);
   GameAudio.playSfx('door');
   deathFreeze = true;
   exitWinReady = false;
@@ -247,7 +247,7 @@ function updateBins() {
     addParticles(b.x + 5, b.y - 7, '#FF6600', 18);
     addParticles(b.x + 5, b.y - 7, PAL.scoreParticle, 12);
     addParticles(b.x + 5, b.y - 7, PAL.explosionParticle,    8);
-    addFloating(b.x - 8, b.y - 26, 'BOOM!', PAL.gold);
+    addFloating(b.x - 8, b.y - 26, 'BOOM!', PAL.celebrationColor);
     // Determine if this is the last bin so we can decide which sfx call to use below
     var _binsAllDone = 0;
     for (var _bk = 0; _bk < bins.length; _bk++) if (bins[_bk].exploded) _binsAllDone++;

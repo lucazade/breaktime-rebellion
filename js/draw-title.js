@@ -111,7 +111,7 @@ function drawTitleScreen() {
     _box(ct.prevX, ctrlY, ct.prevW, prevColor);
     ctx.fillStyle = prevColor; ctx.fillText('<', ct.prevX + ct.prevW/2, ctrlTextY);
 
-    ctx.fillStyle = PAL.gold;
+    ctx.fillStyle = PAL.titleLevelColor;
     ctx.fillText(STRINGS.levelLabel + ' ' + currentLevel, ct.labelX, ctrlTextY);
 
     var atCeiling = currentLevel >= _btrMax, moreExist = _btrMax < LEVELS.length;

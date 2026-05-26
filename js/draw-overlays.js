@@ -36,9 +36,6 @@ function drawEndScreen() {
   const bx = Math.round(W / 2 - CONFIG.ui.gameover.panW / 2);
   const isWin = state === 'win';
   const scoreText = STRINGS.scoreLabel + String(score).padStart(5, '0');
-  const actionText = isWin
-    ? (currentLevel < LEVELS.length ? STRINGS.reloadNext : STRINGS.reloadWin)
-    : STRINGS.reloadLose;
   const actionVisible = Math.floor(frame / 20) % 2 === 0;
 
   if (!isWin) {
@@ -53,7 +50,7 @@ function drawEndScreen() {
     ctx.fillStyle = PAL.profRossiBody; ctx.fillText(STRINGS.gameoverTitle, cx, ty); ty += VG.stepTitle;
     ctx.font = VG.fontBody + 'px ' + FF;
     ctx.fillStyle = PAL.bannerText;   ctx.fillText(scoreText,              cx, ty); ty += VG.stepScore;
-    ctx.fillStyle = PAL.gold;    ctx.fillText(STRINGS.gameoverConfirm,                 cx, ty); ty += VG.stepConfirm;
+    ctx.fillStyle = PAL.bannerTitleColor;    ctx.fillText(STRINGS.gameoverConfirm,                 cx, ty); ty += VG.stepConfirm;
     ctx.font = VG.fontBtn + 'px ' + FF;
     const siX = gX + VG.siOx, noX = gX + VG.noOx;
     _dialogBtn(siX, ty, VG.siW, VG.btnH, CONFIG.ui.dialog.btnColorYes);
@@ -81,10 +78,10 @@ function drawEndScreen() {
     const cxW = wX + VW.panW / 2;
     let tyW = wY + VW.padTop;
     ctx.font = VW.fontTitle + 'px ' + FF;
-    ctx.fillStyle = PAL.gold;   ctx.fillText(STRINGS.winTitle, cxW, tyW); tyW += VW.stepTitle;
+    ctx.fillStyle = PAL.bannerTitleColor;   ctx.fillText(STRINGS.winTitle, cxW, tyW); tyW += VW.stepTitle;
     ctx.font = VW.fontBody + 'px ' + FF;
     ctx.fillStyle = _wScoreColor; ctx.fillText(_wScoreLabel + String(_wDispScore).padStart(5, '0'), cxW, tyW); tyW += VW.stepScore;
-    ctx.fillStyle = actionVisible ? PAL.gold : PAL.transparent; ctx.fillText(STRINGS.tapContinue, cxW, tyW);
+    ctx.fillStyle = actionVisible ? PAL.tapPromptColor : PAL.transparent; ctx.fillText(STRINGS.tapContinue, cxW, tyW);
   } else {
     const VL = CONFIG.ui.levelComplete;
     const _lBaseScore = score - lastTimeBonus;
@@ -101,11 +98,11 @@ function drawEndScreen() {
     const cxL = lX + VL.panW / 2;
     let tyL = lY + VL.padTop;
     ctx.font = VL.fontTitle + 'px ' + FF;
-    ctx.fillStyle = PAL.gold;  ctx.fillText(STRINGS.levelComplete, cxL, tyL); tyL += VL.stepTitle;
+    ctx.fillStyle = PAL.bannerTitleColor;  ctx.fillText(STRINGS.levelComplete, cxL, tyL); tyL += VL.stepTitle;
     ctx.font = VL.fontBody + 'px ' + FF;
     ctx.fillStyle = _lTicking ? PAL.timeBonusText : PAL.bannerText;
     ctx.fillText(_lScoreLabel + String(_lDispScore).padStart(5, '0'), cxL, tyL); tyL += VL.stepScore;
-    ctx.fillStyle = actionVisible ? PAL.tapContinueColor : PAL.transparent; ctx.fillText(STRINGS.tapContinue, cxL, tyL);
+    ctx.fillStyle = actionVisible ? PAL.tapPromptColor : PAL.transparent; ctx.fillText(STRINGS.tapContinue, cxL, tyL);
   }
   ctx.restore();
 }
@@ -141,7 +138,7 @@ function drawStoryBanner() {
   ctx.font = VS.fontTitle + 'px ' + FF;
   const cxSt = bx + bw / 2;
   let tySt = by + VS.padTop;
-  ctx.fillStyle = PAL.gold;  ctx.fillText(STRINGS.storyTitle, cxSt, tySt); tySt += VS.titleH + VS.titleSpacing;
+  ctx.fillStyle = PAL.bannerTitleColor;  ctx.fillText(STRINGS.storyTitle, cxSt, tySt); tySt += VS.titleH + VS.titleSpacing;
   ctx.font = VS.fontBody + 'px ' + FF;
   ctx.fillStyle = PAL.bannerText;
   for (let i = 0; i < storyBannerLines.length; i++) {
@@ -149,7 +146,7 @@ function drawStoryBanner() {
     tySt += VS.lineH + (i < storyBannerLines.length - 1 ? VS.lineSpacing : VS.spacerH);
   }
   const blink = Math.floor(frame / 25) % 2 === 0;
-  ctx.fillStyle = blink ? PAL.gold : PAL.transparent; ctx.fillText(STRINGS.tapContinue, cxSt, tySt);
+  ctx.fillStyle = blink ? PAL.tapPromptColor : PAL.transparent; ctx.fillText(STRINGS.tapContinue, cxSt, tySt);
   ctx.restore();
 }
 
@@ -181,7 +178,7 @@ function drawMissionBanner() {
   ctx.font = VM.fontTitle + 'px ' + FF;
   const cxM = bx + bw / 2;
   let tyM = by + VM.padTop;
-  ctx.fillStyle = PAL.gold;  ctx.fillText(fmt(STRINGS.missionLabel, currentLevel), cxM, tyM); tyM += VM.titleH + VM.titleSpacing;
+  ctx.fillStyle = PAL.bannerTitleColor;  ctx.fillText(fmt(STRINGS.missionLabel, currentLevel), cxM, tyM); tyM += VM.titleH + VM.titleSpacing;
   ctx.font = VM.fontBody + 'px ' + FF;
   ctx.fillStyle = PAL.bannerText;
   for (let i = 0; i < missionBannerLines.length; i++) {
@@ -202,7 +199,7 @@ function drawPauseOverlay() {
   ctx.font = VP.fontTitle + 'px ' + FF;
   const cx = bx + VP.panW / 2;
   let ty = by + VP.padTop;
-  ctx.fillStyle = PAL.gold; ctx.fillText(STRINGS.pauseTitle, cx, ty); ty += VP.stepTitle;
+  ctx.fillStyle = PAL.bannerTitleColor; ctx.fillText(STRINGS.pauseTitle, cx, ty); ty += VP.stepTitle;
   ctx.font = VP.fontBtn + 'px ' + FF;
   const rx = bx + VP.resumeOx;
   _dialogBtn(rx, ty, VP.resumeW, VP.btnH, CONFIG.ui.dialog.btnColorYes);
@@ -221,7 +218,7 @@ function drawHomeConfirm() {
   ctx.font = VH.fontTitle + 'px ' + FF;
   const cx = bx + VH.panW / 2;
   let ty = by + VH.padTop;
-  ctx.fillStyle = PAL.gold; ctx.fillText(STRINGS.homeConfirm, cx, ty); ty += VH.stepTitle;
+  ctx.fillStyle = PAL.bannerTitleColor; ctx.fillText(STRINGS.homeConfirm, cx, ty); ty += VH.stepTitle;
   ctx.font = VH.fontBtn + 'px ' + FF;
   const siX = bx + VH.siOx, noX = bx + VH.noOx;
   _dialogBtn(siX, ty, VH.siW, VH.btnH, CONFIG.ui.dialog.btnColorYes);
@@ -244,7 +241,7 @@ function drawCredits() {
   ctx.textAlign = 'center'; ctx.textBaseline = 'top';
   var cx = bx + VC.panW / 2;
   var ty = by + VC.padTop;
-  ctx.font = VC.fontTitle + 'px ' + FF; ctx.fillStyle = PAL.gold;
+  ctx.font = VC.fontTitle + 'px ' + FF; ctx.fillStyle = PAL.bannerTitleColor;
   ctx.fillText('— CREDITS —', cx, ty); ty += VC.stepTitle;
   ctx.font = VC.fontBody + 'px ' + FF; ctx.fillStyle = PAL.creditsRole;
   ctx.fillText('LucazadeSoft Team', cx, ty); ty += VC.stepTeam;
@@ -274,7 +271,7 @@ function drawHighScores() {
   ctx.textAlign = 'center'; ctx.textBaseline = 'top';
   var ty = panY + VHS.padTop;
   ctx.font = VHS.fontTitle + 'px ' + FF;
-  ctx.fillStyle = PAL.gold;
+  ctx.fillStyle = PAL.bannerTitleColor;
   ctx.fillText(STRINGS.highScoresTitle, cxHS, ty); ty += VHS.stepTitle;
   ctx.font = VHS.fontBody + 'px ' + FF;
   if (hs.length === 0) {
@@ -288,7 +285,7 @@ function drawHighScores() {
       var row = String(i + 1).padStart(2, ' ') + '. ' + String(h.score).padStart(5, '0')
               + SEP + 'L' + String(h.level).padStart(2, ' ')
               + SEP + _diff;
-      ctx.fillStyle = i === 0 ? PAL.gold : PAL.bannerText;
+      ctx.fillStyle = i === 0 ? PAL.topScoreColor : PAL.bannerText;
       ctx.fillText(row, cxHS, ty);
       ty += VHS.rowH;
     }
@@ -297,7 +294,7 @@ function drawHighScores() {
   var blink = Math.floor(frame / 20) % 2 === 0;
   ctx.textAlign = 'center';
   ctx.font = VHS.fontTap + 'px ' + FF;
-  ctx.fillStyle = blink ? PAL.tapContinueColor : PAL.transparent;
+  ctx.fillStyle = blink ? PAL.tapPromptColor : PAL.transparent;
   ctx.fillText(STRINGS.tapForTitle, cxHS, ty);
   ctx.restore();
 }

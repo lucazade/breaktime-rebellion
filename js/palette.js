@@ -151,17 +151,22 @@ const PAL = {
   // ── In-game banners (story, mission, win, gameover, pause) ─
   panelBg:            'rgba(0,0,40,0.90)', // dialog panel background
   panelBorder:        '#FFD700',           // dialog panel border / HUD icon gold accent
-  gold:               '#FFD700',  // banner title / overlay accent colour
+  bannerTitleColor:   '#FFD700',  // overlay/dialog title text (story, mission, win, pause, gameover…)
+  topScoreColor:      '#FFD700',  // #1 entry in high scores list
+  titleLevelColor:    '#FFD700',  // current level number label in title screen
+  lucaBubbleBg:       '#FFD700',  // Luca speech bubble background fill
+  proximityBorder:    '#FFD700',  // dashed border when player is near an interactive object
+  celebrationColor:   '#FFD700',  // floating score texts and particles on success events
   bannerText:         '#FFFFFF',  // story / mission / gameover / win / level-complete body text
   btnYes:             'rgba(0,90,0,0.92)', // yes / OK / resume button background
   btnNo:              'rgba(90,0,0,0.92)', // no / cancel button background
   btnText:            '#FFFFFF',  // dialog button labels (yes / no / resume / OK)
-  livesBonusText:     '#33B84B',  // lives bonus line in win screen
-  tapContinueColor:   '#33B84B',  // "tap to continue" prompt in level-complete screen
-  creditsText:        '#FFFFFF',  // credits member names and OK button
-  creditsRole:        '#9AD284',  // credits team name ("LucazadeSoft Team")
-  creditsMemberRole:  '#00d2ff',  // credits individual role labels (Orchestrator, Lead Developer…)
   timeBonusText:      '#00d2ff',  // time bonus label on win / gameover screens
+  livesBonusText:     '#33B84B',  // lives bonus line in win screen
+  tapPromptColor:     '#33B84B',  // all "tap to ..." prompts across banners
+  creditsText:        '#FFFFFF',  // credits member names and OK button
+  creditsRole:        '#33B84B',  // credits team name ("LucazadeSoft Team")
+  creditsMemberRole:  '#00d2ff',  // credits individual role labels (Orchestrator, Lead Developer…)
 
 // ═══════════════════════════════════════════════════════════
 //  GAME OBJECTS

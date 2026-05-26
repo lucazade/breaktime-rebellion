@@ -389,10 +389,10 @@ function drawLucaEnd() {
   const lineCount = Math.min(lines.length, 4);
   const bh = VF.headerH + lineCount * VF.lineH + VF.gapTap + VF.tapH + VF.padBottom;
   const bx = lx + VF.offsetX, by2 = ly - VF.tailOffY - bh;
-  ctx.fillStyle = PAL.gold; ctx.fillRect(bx, by2, VF.bw, bh);
+  ctx.fillStyle = PAL.lucaBubbleBg; ctx.fillRect(bx, by2, VF.bw, bh);
   ctx.strokeStyle = PAL.bubbleBorder; ctx.lineWidth = 1;
   ctx.strokeRect(bx, by2, VF.bw, bh);
-  ctx.fillStyle = PAL.gold; ctx.fillRect(bx, by2 + bh, VF.tailW, VF.tailH);
+  ctx.fillStyle = PAL.lucaBubbleBg; ctx.fillRect(bx, by2 + bh, VF.tailW, VF.tailH);
   ctx.strokeStyle = PAL.bubbleBorder; ctx.strokeRect(bx, by2 + bh, VF.tailW, VF.tailH);
   ctx.fillStyle = PAL.profRossiBody; ctx.textAlign = 'left'; ctx.textBaseline = 'top';
   ctx.fillText('Luca:', bx + 4, by2 + 4);
