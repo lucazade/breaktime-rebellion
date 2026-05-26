@@ -284,9 +284,10 @@ function drawHighScores() {
     ctx.textAlign = 'center';
     for (var i = 0; i < hs.length; i++) {
       var h = hs[i];
+      var _diff = (STRINGS['difficulty_' + h.difficulty] || h.difficulty).padEnd(4, ' ');
       var row = String(i + 1).padStart(2, ' ') + '. ' + String(h.score).padStart(5, '0')
-              + SEP + 'L' + h.level
-              + SEP + (STRINGS['difficulty_' + h.difficulty] || h.difficulty);
+              + SEP + 'L' + String(h.level).padStart(2, ' ')
+              + SEP + _diff;
       ctx.fillStyle = i === 0 ? PAL.gold : PAL.bannerText;
       ctx.fillText(row, cxHS, ty);
       ty += VHS.rowH;
