@@ -38,11 +38,8 @@
     scoreLabel:           'TOTAL SCORE: ',
     highScoresTitle:      '— HIGH SCORES —',
     highScoresEmpty:      'NO SCORES YET',
-    highScoresRank:       '#',
-    bestLabel:            'BEST',
     timeBonusLabel:       '+ TIME BONUS: ',
     livesBonusLabel:      '+ LIVES BONUS: ',
-    levelReached:         'LEVEL {0} REACHED',
 
     hey:                  'HEY!!',
     timesUp:              "TIME'S UP!",
@@ -143,11 +140,8 @@
     scoreLabel:           'PUNTEGGIO TOTALE: ',
     highScoresTitle:      '— MIGLIORI PUNTEGGI —',
     highScoresEmpty:      'NESSUN PUNTEGGIO',
-    highScoresRank:       '#',
-    bestLabel:            'MIGLIOR',
     timeBonusLabel:       '+ BONUS TEMPO: ',
     livesBonusLabel:      '+ BONUS VITE: ',
-    levelReached:         'LIVELLO {0} RAGGIUNTO',
 
     hey:                  'EHI!!',
     timesUp:              'TEMPO SCADUTO!',

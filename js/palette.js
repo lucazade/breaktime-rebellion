@@ -113,9 +113,6 @@ const PAL = {
   timerGreen:       '#44ee66',           // timer bar >= 60%
   timerYellow:      '#FEDC02',           // timer bar 30–60%
   timerRed:         '#ff2244',           // timer bar < 30%
-  hudIconDetail:    '#000000',           // dark detail lines in mechanic icons
-  hudIconHighlight: '#FFFFFF',           // light detail lines in mechanic icons (chalk, page lines)
-
   // ── Mechanic dot indicators ───────────────────────────────
   dotBoards:          '#44ee66',  // L1 boards — body
   dotBoardsHighlight: '#44ee66',  // L1 boards — chalk lines
@@ -154,12 +151,11 @@ const PAL = {
   // ── In-game banners (story, mission, win, gameover, pause) ─
   panelBg:            'rgba(0,0,40,0.90)', // dialog panel background
   panelBorder:        '#FFD700',           // dialog panel border / HUD icon gold accent
+  gold:               '#FFD700',  // banner title / overlay accent colour
+  bannerText:         '#FFFFFF',  // story / mission / gameover / win / level-complete body text
   btnYes:             'rgba(0,90,0,0.92)', // yes / OK / resume button background
   btnNo:              'rgba(90,0,0,0.92)', // no / cancel button background
   btnText:            '#FFFFFF',  // dialog button labels (yes / no / resume / OK)
-  gold:               '#FFD700',  // banner title / overlay accent colour
-  bannerText:         '#FFFFFF',  // story / mission / gameover / win / level-complete body text
-  bestScoreHighlight: '#FEDC02',  // best score / level text in win screen
   livesBonusText:     '#33B84B',  // lives bonus line in win screen
   tapContinueColor:   '#33B84B',  // "tap to continue" prompt in level-complete screen
   creditsText:        '#FFFFFF',  // credits member names and OK button
@@ -245,7 +241,6 @@ const PAL = {
   sinkBasinMid:     '#b0b0b0',               // basin mid layer
   sinkBasinInner:   '#d8d8d8',               // basin inner (lightest)
   sinkDrain:        '#888888',               // drain at basin bottom
-  sinkActiveBorder: '#70A4B2',               // dashed border when sink is interactive
   waterPuddleDark:  'rgba(30,90,200,0.22)',  // flood puddle dark layer
   waterPuddleMain:  'rgba(30,90,200,0.28)',  // flood puddle main layer
   waterHighlight:   'rgba(100,170,255,0.55)', // flood puddle surface highlight

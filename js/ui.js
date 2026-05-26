@@ -146,7 +146,6 @@ CONFIG.ui = {
     stepTitle:  22,  // Y offset to title
     stepScore:  12,  // Y offset to final score
     stepBonus:  12,  // Y offset to bonus row
-    stepBest:   18,  // Y offset to personal best row
     tapH:        8,  // "tap to continue" row height
     padBottom:  12,  // bottom padding
   },
