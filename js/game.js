@@ -236,6 +236,7 @@ function loop(ts) {
   drawPauseOverlay();
   drawHomeConfirm();
   drawCredits();
+  drawHighScores();
   drawDebugOverlay();
   requestAnimationFrame(loop);
 }
@@ -244,8 +245,10 @@ function loop(ts) {
 
 function handleTap() {
   if (storyBannerT > 0 && !storyBannerFading) { storyBannerT = 20; storyBannerFading = true; return; }
+  if (state === 'highscores') { goHome(); return; }
   // L10: tap during Luca fumetto → win state (only after 90-frame cooldown)
   if (deathFreeze && levelMechanics.escapeExit && exitDone && exitWinReady) {
+    _addHighScore(score, currentLevel, gameDifficulty);
     pendingTransition = null; deathFreeze = false; state = 'win'; endScreenT = 0; _endBonusT = 0;
     GameAudio.stopMusic(); GameAudio.playJingle('win');
     return;
@@ -253,7 +256,7 @@ function handleTap() {
   if (missionBannerT > 0) { missionBannerT = Math.min(missionBannerT, 40); return; }
   if (state === 'win' && !endScreenFadingOut) {
     if (currentLevel < LEVELS.length) { endScreenFadingOut = true; endScreenFadeOutCb = nextLevel; }
-    else { goHome(); }
+    else { state = 'highscores'; }
     return;
   }
 }
@@ -267,7 +270,7 @@ function _gameoverChoice(lx, ly) {
   var btnY = _gp.by + VG.padTop + VG.stepTitle + VG.stepLevel + VG.stepScore + VG.stepConfirm;
   if (ly < btnY || ly > btnY + VG.btnH) return;
   if (lx >= bx + VG.siOx && lx <= bx + VG.siOx + VG.siW) { endScreenFadingOut = true; endScreenFadeOutCb = restartGame; }
-  else if (lx >= bx + VG.noOx && lx <= bx + VG.noOx + VG.noW) { goHome(); }
+  else if (lx >= bx + VG.noOx && lx <= bx + VG.noOx + VG.noW) { state = 'highscores'; }
 }
 
 // ── Canvas interaction ────────────────────────────────────────────────────────

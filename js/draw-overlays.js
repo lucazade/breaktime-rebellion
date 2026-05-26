@@ -62,8 +62,6 @@ function drawEndScreen() {
     _dialogBtn(noX, ty, VG.noW, VG.btnH, CONFIG.ui.dialog.btnColorNo);
     ctx.fillStyle = PAL.btnText; ctx.fillText(STRINGS.btnNo, noX + VG.noW/2, ty + Math.floor((VG.btnH - VG.fontBtn) / 2));
   } else if (currentLevel === LEVELS.length) {
-    const bestScore = parseInt(localStorage.getItem('btr_best_score') || '0');
-    const bestLevel = parseInt(localStorage.getItem('btr_best_level') || '1');
     const VW = CONFIG.ui.gameWin;
     const _wBaseScore = score - lastTimeBonus - lastLivesBonus;
     const _wDELAY = 90, _wTICK = 90, _wGAP = 30;
@@ -73,12 +71,11 @@ function drawEndScreen() {
     const _wLivesPart = lastLivesBonus > 0 ? Math.round(lastLivesBonus * Math.min(1, _wT2 / _wTICK)) : 0;
     const _wDispScore = _wBaseScore + _wTimePart + _wLivesPart;
     const _wTickingTime  = lastTimeBonus  > 0 && _wT1 > 0 && _wT1 < _wTICK;
-    const _wTickingLives = lastLivesBonus > 0 && _wT2 > 0 && _wT2 < _wTICK;
     const _wTickerDone = _endBonusT >= _wDELAY + _wTICK + (lastLivesBonus > 0 ? _wGAP + _wTICK : 0);
     const _wAfterTime = lastLivesBonus > 0 && _wT1 >= _wTICK;
     const _wScoreLabel = _wTickerDone ? STRINGS.scoreLabel : (_wTickingTime ? STRINGS.timeBonusLabel : (_wAfterTime ? STRINGS.livesBonusLabel : STRINGS.scoreBaseLabel));
     const _wScoreColor = _wTickerDone ? PAL.bannerText : (_wTickingTime ? PAL.timeBonusText : (_wAfterTime ? PAL.livesBonusText : PAL.bannerText));
-    const _wH = VW.padTop + VW.stepTitle + VW.stepScore + VW.stepBest + VW.tapH + VW.padBottom;
+    const _wH = VW.padTop + VW.stepTitle + VW.stepScore + VW.tapH + VW.padBottom;
     const {bx:wX, by:wY} = _panPos(VW.panW, _wH);
     _dialogPanel(wX, wY, VW.panW, _wH, VW.panBg);
     ctx.textAlign = 'center'; ctx.textBaseline = 'top';
@@ -88,9 +85,7 @@ function drawEndScreen() {
     ctx.fillStyle = PAL.gold;   ctx.fillText(STRINGS.winTitle, cxW, tyW); tyW += VW.stepTitle;
     ctx.font = VW.fontBody + 'px ' + FF;
     ctx.fillStyle = _wScoreColor; ctx.fillText(_wScoreLabel + String(_wDispScore).padStart(5, '0'), cxW, tyW); tyW += VW.stepScore;
-    if (_wTickerDone) { ctx.fillStyle = PAL.bestScoreHighlight; ctx.fillText(STRINGS.bestLabel + ' LVL ' + bestLevel + ' — ' + String(bestScore).padStart(5,'0'), cxW, tyW); }
-    tyW += VW.stepBest;
-    ctx.fillStyle = actionVisible ? PAL.gold : PAL.transparent; ctx.fillText(STRINGS.tapForTitle, cxW, tyW);
+    ctx.fillStyle = actionVisible ? PAL.gold : PAL.transparent; ctx.fillText(STRINGS.tapContinue, cxW, tyW);
   } else {
     const VL = CONFIG.ui.levelComplete;
     const _lBaseScore = score - lastTimeBonus;
@@ -263,5 +258,51 @@ function drawCredits() {
   ctx.font = VC.fontBtn + 'px ' + FF;
   _dialogBtn(btnX, ty, VC.btnW, VC.btnH, CONFIG.ui.dialog.btnColorYes);
   ctx.fillStyle = PAL.creditsText; ctx.fillText('OK', bx + VC.panW/2, ty + Math.floor((VC.btnH - VC.fontBtn) / 2));
+  ctx.restore();
+}
+
+function drawHighScores() {
+  if (state !== 'highscores') return;
+  var hs = _getHighScores();
+  var panW = 210;
+  var fontTitle = 6, fontBody = 4, rowH = 9;
+  var numRows = hs.length > 0 ? hs.length : 1;
+  var panH = 8 + fontTitle + 8 + numRows * rowH + 8 + fontBody + 8;
+  var panX = Math.round((W - panW) / 2);
+  var panY = Math.round((H - panH) / 2);
+  var cxHS = panX + Math.round(panW / 2);
+  ctx.save();
+  ctx.fillStyle = 'rgba(0,0,0,0.80)';
+  ctx.fillRect(0, 0, W, H);
+  _dialogPanel(panX, panY, panW, panH, CONFIG.ui.dialog.panBg);
+  ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+  var ty = panY + 8;
+  ctx.font = fontTitle + 'px ' + FF;
+  ctx.fillStyle = PAL.gold;
+  ctx.fillText(STRINGS.highScoresTitle, cxHS, ty); ty += fontTitle + 8;
+  ctx.font = fontBody + 'px ' + FF;
+  if (hs.length === 0) {
+    ctx.fillStyle = PAL.bannerText; ctx.fillText(STRINGS.highScoresEmpty, cxHS, ty);
+  } else {
+    var c1 = panX + 8;
+    var c2 = panX + 30;
+    var c3 = panX + 118;
+    var c4 = panX + 152;
+    for (var i = 0; i < hs.length; i++) {
+      var h = hs[i];
+      ctx.fillStyle = i === 0 ? PAL.gold : PAL.bannerText;
+      ctx.textAlign = 'left';
+      ctx.fillText((i + 1) + '.', c1, ty);
+      ctx.fillText(String(h.score).padStart(5, '0'), c2, ty);
+      ctx.fillText('L' + h.level, c3, ty);
+      ctx.fillText(STRINGS['difficulty_' + h.difficulty] || h.difficulty, c4, ty);
+      ty += rowH;
+    }
+  }
+  ty += 4;
+  var blink = Math.floor(frame / 20) % 2 === 0;
+  ctx.textAlign = 'center';
+  ctx.fillStyle = blink ? PAL.tapContinueColor : PAL.transparent;
+  ctx.fillText(STRINGS.tapForTitle, cxHS, ty);
   ctx.restore();
 }

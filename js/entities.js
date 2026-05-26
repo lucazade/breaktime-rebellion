@@ -84,11 +84,7 @@ function playerDied() {
     // Game over: freeze everything, fade out music, then show banner + gameover jingle
     deathFreeze = true;
     GameAudio.fadeOutMusic(900);
-    // Save high scores
-    var bs = parseInt(localStorage.getItem('btr_best_score') || '0');
-    var bl = parseInt(localStorage.getItem('btr_best_level') || '0');
-    if (score > bs) localStorage.setItem('btr_best_score', score);
-    if (currentLevel > bl) localStorage.setItem('btr_best_level', currentLevel);
+    _addHighScore(score, currentLevel, gameDifficulty);
     pendingTransition = { t: 22, fn: function() {
       msgT = 0; state = 'gameover'; endScreenT = 0; GameAudio.playJingle('gameover');
     }};

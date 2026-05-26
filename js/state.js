@@ -36,6 +36,17 @@ let pendingTransition = null;
 let deathFreeze = false;
 let endScreenT = 0;
 let _endBonusT = 0;
+
+function _getHighScores() {
+  try { return JSON.parse(localStorage.getItem('btr_highscores') || '[]'); } catch(e) { return []; }
+}
+function _addHighScore(sc, lv, diff) {
+  var hs = _getHighScores();
+  hs.push({ score: sc, level: lv, difficulty: diff });
+  hs.sort(function(a, b) { return b.score - a.score; });
+  if (hs.length > 10) hs.length = 10;
+  try { localStorage.setItem('btr_highscores', JSON.stringify(hs)); } catch(e) {}
+}
 let endScreenFadingOut = false;
 let endScreenFadeOutCb = null;
 let storyBannerFading = false;
