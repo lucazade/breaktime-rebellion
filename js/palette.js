@@ -192,6 +192,7 @@ const PAL = {
   bellBody:      '#FFCC00',  // main body
   bellHighlight: '#FFE966',  // top highlight
   bellClapper:   '#332200',  // clapper
+  bellGlow:      '#FFD700',  // pulsing glow when mechanic complete
 
   // ── Desks ─────────────────────────────────────────────────
   chairWood:     '#3e1500',  // desk chair legs

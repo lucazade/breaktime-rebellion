@@ -120,18 +120,13 @@ function drawBell() {
 
   // Pulsing glow when the objective is complete — blit pre-rendered circle, vary only globalAlpha
   if ((allBoards || allBags || allMachines || allBall || allStudents || allBooks || allSink || allBins || allSprinklers) && !BELL.done) {
-    if (!_bellGlowCache) {
-      var _gc = document.createElement('canvas'); _gc.width = 16 * _canvasScale; _gc.height = 16 * _canvasScale;
-      var _gctx = _gc.getContext('2d');
-      _gctx.scale(_canvasScale, _canvasScale);
-      _gctx.fillStyle = PAL.panelBorder;
-      _gctx.beginPath(); _gctx.arc(8, 8, 7, 0, Math.PI*2); _gctx.fill();
-      _bellGlowCache = _gc;
-    }
-    ctx.globalAlpha = 0.12 + 0.08 * Math.sin(frame * 0.15);
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
-    ctx.drawImage(_bellGlowCache, Math.round((bx - 5) * _canvasScale), Math.round((by - 5) * _canvasScale));
-    ctx.setTransform(_canvasScale, 0, 0, _canvasScale, 0, 0);
+    var _bcx = bx + 3, _bcy = by + 3;
+    var _pulse = (1 + Math.sin(frame * 0.20)) / 2;
+    ctx.fillStyle = PAL.bellGlow;
+    ctx.globalAlpha = 0.08 + 0.10 * _pulse;
+    ctx.beginPath(); ctx.arc(_bcx, _bcy, 10, 0, Math.PI * 2); ctx.fill();
+    ctx.globalAlpha = 0.20 + 0.25 * _pulse;
+    ctx.beginPath(); ctx.arc(_bcx, _bcy, 6,  0, Math.PI * 2); ctx.fill();
     ctx.globalAlpha = 1;
   }
 
