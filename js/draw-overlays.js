@@ -65,7 +65,18 @@ function drawEndScreen() {
     const bestScore = parseInt(localStorage.getItem('btr_best_score') || '0');
     const bestLevel = parseInt(localStorage.getItem('btr_best_level') || '1');
     const VW = CONFIG.ui.gameWin;
-    const _wH = VW.padTop + VW.stepTitle + VW.stepScore + (lastTimeBonus > 0 ? VW.stepBonus : 0) + (lastLivesBonus > 0 ? VW.stepBonus : 0) + VW.stepBest + VW.tapH + VW.padBottom;
+    const _wBaseScore = score - lastTimeBonus - lastLivesBonus;
+    const _wDELAY = 40, _wTICK = 60, _wGAP = 20;
+    const _wT1 = Math.max(0, _endBonusT - _wDELAY);
+    const _wTimePart = lastTimeBonus > 0 ? Math.round(lastTimeBonus * Math.min(1, _wT1 / _wTICK)) : 0;
+    const _wT2 = Math.max(0, _endBonusT - _wDELAY - _wTICK - _wGAP);
+    const _wLivesPart = lastLivesBonus > 0 ? Math.round(lastLivesBonus * Math.min(1, _wT2 / _wTICK)) : 0;
+    const _wDispScore = _wBaseScore + _wTimePart + _wLivesPart;
+    const _wTickingTime  = lastTimeBonus  > 0 && _wT1 > 0 && _wT1 < _wTICK;
+    const _wTickingLives = lastLivesBonus > 0 && _wT2 > 0 && _wT2 < _wTICK;
+    const _wScoreColor = _wTickingLives ? PAL.livesBonusText : (_wTickingTime ? PAL.timeBonusText : PAL.bannerText);
+    const _wTickerDone = _endBonusT >= _wDELAY + _wTICK + (lastLivesBonus > 0 ? _wGAP + _wTICK : 0);
+    const _wH = VW.padTop + VW.stepTitle + VW.stepScore + VW.stepBest + VW.tapH + VW.padBottom;
     const {bx:wX, by:wY} = _panPos(VW.panW, _wH);
     _dialogPanel(wX, wY, VW.panW, _wH, VW.panBg);
     ctx.textAlign = 'center'; ctx.textBaseline = 'top';
@@ -74,14 +85,18 @@ function drawEndScreen() {
     ctx.font = VW.fontTitle + 'px ' + FF;
     ctx.fillStyle = PAL.gold;   ctx.fillText(STRINGS.winTitle, cxW, tyW); tyW += VW.stepTitle;
     ctx.font = VW.fontBody + 'px ' + FF;
-    if (lastTimeBonus > 0)  { ctx.fillStyle = PAL.timeBonusText;  ctx.fillText(STRINGS.timeBonusLabel  + lastTimeBonus,  cxW, tyW); tyW += VW.stepBonus; }
-    if (lastLivesBonus > 0) { ctx.fillStyle = PAL.livesBonusText; ctx.fillText(STRINGS.livesBonusLabel + lastLivesBonus, cxW, tyW); tyW += VW.stepBonus; }
-    ctx.fillStyle = PAL.bannerText;  ctx.fillText(scoreText, cxW, tyW); tyW += VW.stepScore;
-    ctx.fillStyle = PAL.bestScoreHighlight; ctx.fillText(STRINGS.bestLabel + ' LVL ' + bestLevel + ' — ' + String(bestScore).padStart(5,'0'), cxW, tyW); tyW += VW.stepBest;
+    ctx.fillStyle = _wScoreColor; ctx.fillText(STRINGS.scoreLabel + String(_wDispScore).padStart(5, '0'), cxW, tyW); tyW += VW.stepScore;
+    if (_wTickerDone) { ctx.fillStyle = PAL.bestScoreHighlight; ctx.fillText(STRINGS.bestLabel + ' LVL ' + bestLevel + ' — ' + String(bestScore).padStart(5,'0'), cxW, tyW); }
+    tyW += VW.stepBest;
     ctx.fillStyle = actionVisible ? PAL.gold : PAL.transparent; ctx.fillText(STRINGS.tapForTitle, cxW, tyW);
   } else {
     const VL = CONFIG.ui.levelComplete;
-    const _lH = VL.padTop + VL.stepTitle + VL.stepScore + (lastTimeBonus > 0 ? VL.stepBonus : 0) + VL.tapH + VL.padBottom;
+    const _lBaseScore = score - lastTimeBonus;
+    const _lDELAY = 40, _lTICK = 60;
+    const _lT1 = Math.max(0, _endBonusT - _lDELAY);
+    const _lDispScore = _lBaseScore + (lastTimeBonus > 0 ? Math.round(lastTimeBonus * Math.min(1, _lT1 / _lTICK)) : 0);
+    const _lTicking = lastTimeBonus > 0 && _lT1 > 0 && _lT1 < _lTICK;
+    const _lH = VL.padTop + VL.stepTitle + VL.stepScore + VL.tapH + VL.padBottom;
     const {bx:lX, by:lY} = _panPos(VL.panW, _lH);
     _dialogPanel(lX, lY, VL.panW, _lH, VL.panBg);
     ctx.textAlign = 'center'; ctx.textBaseline = 'top';
@@ -90,8 +105,8 @@ function drawEndScreen() {
     ctx.font = VL.fontTitle + 'px ' + FF;
     ctx.fillStyle = PAL.gold;  ctx.fillText(STRINGS.levelComplete, cxL, tyL); tyL += VL.stepTitle;
     ctx.font = VL.fontBody + 'px ' + FF;
-    if (lastTimeBonus > 0) { ctx.fillStyle = PAL.timeBonusText; ctx.fillText(STRINGS.timeBonusLabel + lastTimeBonus, cxL, tyL); tyL += VL.stepBonus; }
-    ctx.fillStyle = PAL.bannerText; ctx.fillText(scoreText, cxL, tyL); tyL += VL.stepScore;
+    ctx.fillStyle = _lTicking ? PAL.timeBonusText : PAL.bannerText;
+    ctx.fillText(STRINGS.scoreLabel + String(_lDispScore).padStart(5, '0'), cxL, tyL); tyL += VL.stepScore;
     ctx.fillStyle = actionVisible ? PAL.tapContinueColor : PAL.transparent; ctx.fillText(STRINGS.tapContinue, cxL, tyL);
   }
   ctx.restore();

@@ -13,7 +13,7 @@ function ringBell() {
   msgT = 0;
   GameAudio.playSfx('bell');
   deathFreeze = true; // freeze NPCs immediately so they can't catch Marco after ringing
-  pendingTransition = { t: 70, fn: function() { deathFreeze = false; BELL.done = true; state = 'win'; endScreenT = 0; GameAudio.stopMusic(); GameAudio.playJingle('win'); } };
+  pendingTransition = { t: 70, fn: function() { deathFreeze = false; BELL.done = true; state = 'win'; endScreenT = 0; _endBonusT = 0; GameAudio.stopMusic(); GameAudio.playJingle('win'); } };
 }
 
 function alertTeachers(bx, by) {

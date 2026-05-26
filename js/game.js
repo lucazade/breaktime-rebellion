@@ -223,6 +223,7 @@ function loop(ts) {
   if ((state === 'win' || state === 'gameover') && !endScreenFadingOut) {
     endScreenT = Math.min(endScreenT + 1, 20);
   }
+  if (state === 'win' && endScreenT >= 20 && !endScreenFadingOut) _endBonusT++;
   drawEndScreen();
   drawStoryBanner();
   drawMissionBanner();
@@ -239,7 +240,7 @@ function handleTap() {
   if (storyBannerT > 0 && !storyBannerFading) { storyBannerT = 20; storyBannerFading = true; return; }
   // L10: tap during Luca fumetto → win state (only after 90-frame cooldown)
   if (deathFreeze && levelMechanics.escapeExit && exitDone && exitWinReady) {
-    pendingTransition = null; deathFreeze = false; state = 'win'; endScreenT = 0;
+    pendingTransition = null; deathFreeze = false; state = 'win'; endScreenT = 0; _endBonusT = 0;
     GameAudio.stopMusic(); GameAudio.playJingle('win');
     return;
   }

@@ -35,6 +35,7 @@ let storyShown = false; // session-level — not reset by resetLevel
 let pendingTransition = null;
 let deathFreeze = false;
 let endScreenT = 0;
+let _endBonusT = 0;
 let endScreenFadingOut = false;
 let endScreenFadeOutCb = null;
 let storyBannerFading = false;
