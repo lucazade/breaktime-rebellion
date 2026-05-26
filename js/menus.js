@@ -82,17 +82,17 @@ function hideCredits() {
 
 function _pauseCanvasClick(lx, ly) {
   var VP = CONFIG.ui.pauseOverlay;
-  var pH = VP.padTop + VP.stepTitle + VP.btnH + VP.padBottom;
+  var pH = VP.padTop + VP.titleH + VP.titleSpacing + VP.btnH + VP.padBottom;
   var p = _panPos(VP.panW, pH);
-  var btnY = p.by + VP.padTop + VP.stepTitle;
+  var btnY = p.by + VP.padTop + VP.titleH + VP.titleSpacing;
   if (ly >= btnY && ly <= btnY + VP.btnH && lx >= p.bx + VP.resumeOx && lx <= p.bx + VP.resumeOx + VP.resumeW) setPaused(false);
 }
 
 function _homeConfirmCanvasClick(lx, ly) {
   var VH = CONFIG.ui.homeConfirm;
-  var hH = VH.padTop + VH.stepTitle + VH.btnH + VH.padBottom;
+  var hH = VH.padTop + VH.titleH + VH.titleSpacing + VH.btnH + VH.padBottom;
   var p = _panPos(VH.panW, hH);
-  var btnY = p.by + VH.padTop + VH.stepTitle;
+  var btnY = p.by + VH.padTop + VH.titleH + VH.titleSpacing;
   if (ly < btnY || ly > btnY + VH.btnH) return;
   if (lx >= p.bx + VH.siOx && lx <= p.bx + VH.siOx + VH.siW) { goHome(); }
   else if (lx >= p.bx + VH.noOx && lx <= p.bx + VH.noOx + VH.noW) { cancelHome(); }
@@ -101,7 +101,7 @@ function _homeConfirmCanvasClick(lx, ly) {
 function _creditsCanvasClick(lx, ly) {
   var VC = CONFIG.ui.credits;
   var n = _CREDITS_MEMBERS ? _CREDITS_MEMBERS.length : 5;
-  var panH = VC.padTop + VC.stepTitle + VC.stepTeam + n*(VC.nameH+VC.nameGap+VC.roleH+VC.roleGap) + VC.btnGapAbove + VC.btnH + VC.padBottom;
+  var panH = VC.padTop + VC.titleH + VC.titleSpacing + VC.teamH + VC.teamSpacing + n*(VC.nameH+VC.nameGap+VC.roleH+VC.roleGap) + VC.tapSpacing + VC.btnH + VC.padBottom;
   var p = _panPos(VC.panW, panH);
   var btnY = p.by + panH - VC.padBottom - VC.btnH;
   var btnX = p.bx + Math.round((VC.panW - VC.btnW) / 2);
