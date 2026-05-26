@@ -376,6 +376,8 @@ DA VERIFICARE:
 
 PER LUCA:
 - [ ] #186 Icona BR
+- [ ] #201 sistemare spaziature banners ui.js
+- [ ] #202 sistamare palette banners
 
 PER CLAUDE:
 - [ ] #199 rendere glow campanella più visibile quando meccanica completa
