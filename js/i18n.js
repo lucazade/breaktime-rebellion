@@ -34,6 +34,7 @@
     gameoverTitle:        '— EXPELLED! —',
     winTitle:             '— SCHOOL LEGEND! —',
 
+    scoreBaseLabel:       'SCORE: ',
     scoreLabel:           'TOTAL SCORE: ',
     bestLabel:            'BEST',
     timeBonusLabel:       '+ TIME BONUS: ',
@@ -135,6 +136,7 @@
     gameoverTitle:        '— ESPULSO! —',
     winTitle:             '— LEGGENDA DELLA SCUOLA! —',
     
+    scoreBaseLabel:       'PUNTEGGIO: ',
     scoreLabel:           'PUNTEGGIO TOTALE: ',
     bestLabel:            'MIGLIOR',
     timeBonusLabel:       '+ BONUS TEMPO: ',

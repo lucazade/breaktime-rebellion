@@ -74,8 +74,9 @@ function drawEndScreen() {
     const _wDispScore = _wBaseScore + _wTimePart + _wLivesPart;
     const _wTickingTime  = lastTimeBonus  > 0 && _wT1 > 0 && _wT1 < _wTICK;
     const _wTickingLives = lastLivesBonus > 0 && _wT2 > 0 && _wT2 < _wTICK;
-    const _wScoreColor = _wTickingLives ? PAL.livesBonusText : (_wTickingTime ? PAL.timeBonusText : PAL.bannerText);
     const _wTickerDone = _endBonusT >= _wDELAY + _wTICK + (lastLivesBonus > 0 ? _wGAP + _wTICK : 0);
+    const _wScoreLabel = _wTickingLives ? STRINGS.livesBonusLabel : (_wTickingTime ? STRINGS.timeBonusLabel : (_wTickerDone ? STRINGS.scoreLabel : STRINGS.scoreBaseLabel));
+    const _wScoreColor = _wTickingLives ? PAL.livesBonusText : (_wTickingTime ? PAL.timeBonusText : PAL.bannerText);
     const _wH = VW.padTop + VW.stepTitle + VW.stepScore + VW.stepBest + VW.tapH + VW.padBottom;
     const {bx:wX, by:wY} = _panPos(VW.panW, _wH);
     _dialogPanel(wX, wY, VW.panW, _wH, VW.panBg);
@@ -85,7 +86,7 @@ function drawEndScreen() {
     ctx.font = VW.fontTitle + 'px ' + FF;
     ctx.fillStyle = PAL.gold;   ctx.fillText(STRINGS.winTitle, cxW, tyW); tyW += VW.stepTitle;
     ctx.font = VW.fontBody + 'px ' + FF;
-    ctx.fillStyle = _wScoreColor; ctx.fillText(STRINGS.scoreLabel + String(_wDispScore).padStart(5, '0'), cxW, tyW); tyW += VW.stepScore;
+    ctx.fillStyle = _wScoreColor; ctx.fillText(_wScoreLabel + String(_wDispScore).padStart(5, '0'), cxW, tyW); tyW += VW.stepScore;
     if (_wTickerDone) { ctx.fillStyle = PAL.bestScoreHighlight; ctx.fillText(STRINGS.bestLabel + ' LVL ' + bestLevel + ' — ' + String(bestScore).padStart(5,'0'), cxW, tyW); }
     tyW += VW.stepBest;
     ctx.fillStyle = actionVisible ? PAL.gold : PAL.transparent; ctx.fillText(STRINGS.tapForTitle, cxW, tyW);
@@ -96,6 +97,8 @@ function drawEndScreen() {
     const _lT1 = Math.max(0, _endBonusT - _lDELAY);
     const _lDispScore = _lBaseScore + (lastTimeBonus > 0 ? Math.round(lastTimeBonus * Math.min(1, _lT1 / _lTICK)) : 0);
     const _lTicking = lastTimeBonus > 0 && _lT1 > 0 && _lT1 < _lTICK;
+    const _lTickerDone = _endBonusT >= _lDELAY + _lTICK;
+    const _lScoreLabel = _lTicking ? STRINGS.timeBonusLabel : (_lTickerDone ? STRINGS.scoreLabel : STRINGS.scoreBaseLabel);
     const _lH = VL.padTop + VL.stepTitle + VL.stepScore + VL.tapH + VL.padBottom;
     const {bx:lX, by:lY} = _panPos(VL.panW, _lH);
     _dialogPanel(lX, lY, VL.panW, _lH, VL.panBg);
@@ -106,7 +109,7 @@ function drawEndScreen() {
     ctx.fillStyle = PAL.gold;  ctx.fillText(STRINGS.levelComplete, cxL, tyL); tyL += VL.stepTitle;
     ctx.font = VL.fontBody + 'px ' + FF;
     ctx.fillStyle = _lTicking ? PAL.timeBonusText : PAL.bannerText;
-    ctx.fillText(STRINGS.scoreLabel + String(_lDispScore).padStart(5, '0'), cxL, tyL); tyL += VL.stepScore;
+    ctx.fillText(_lScoreLabel + String(_lDispScore).padStart(5, '0'), cxL, tyL); tyL += VL.stepScore;
     ctx.fillStyle = actionVisible ? PAL.tapContinueColor : PAL.transparent; ctx.fillText(STRINGS.tapContinue, cxL, tyL);
   }
   ctx.restore();
