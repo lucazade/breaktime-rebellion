@@ -66,7 +66,7 @@ function drawEndScreen() {
     const bestLevel = parseInt(localStorage.getItem('btr_best_level') || '1');
     const VW = CONFIG.ui.gameWin;
     const _wBaseScore = score - lastTimeBonus - lastLivesBonus;
-    const _wDELAY = 60, _wTICK = 90, _wGAP = 30;
+    const _wDELAY = 90, _wTICK = 90, _wGAP = 30;
     const _wT1 = Math.max(0, _endBonusT - _wDELAY);
     const _wTimePart = lastTimeBonus > 0 ? Math.round(lastTimeBonus * Math.min(1, _wT1 / _wTICK)) : 0;
     const _wT2 = Math.max(0, _endBonusT - _wDELAY - _wTICK - _wGAP);
@@ -93,7 +93,7 @@ function drawEndScreen() {
   } else {
     const VL = CONFIG.ui.levelComplete;
     const _lBaseScore = score - lastTimeBonus;
-    const _lDELAY = 60, _lTICK = 90;
+    const _lDELAY = 90, _lTICK = 90;
     const _lT1 = Math.max(0, _endBonusT - _lDELAY);
     const _lDispScore = _lBaseScore + (lastTimeBonus > 0 ? Math.round(lastTimeBonus * Math.min(1, _lT1 / _lTICK)) : 0);
     const _lTicking = lastTimeBonus > 0 && _lT1 > 0 && _lT1 < _lTICK;
