@@ -118,7 +118,6 @@ CONFIG.ui = {
     padTop:     14,  // top padding
     stepTitle:  18,  // Y offset from padTop to title
     stepScore:  15,  // Y offset from title to score row
-    stepBonus:  12,  // Y offset from score to bonus row
     tapH:        8,  // "tap to continue" row height
     padBottom:  11,  // bottom padding
   },
@@ -145,7 +144,6 @@ CONFIG.ui = {
     padTop:     14,  // top padding
     stepTitle:  22,  // Y offset to title
     stepScore:  12,  // Y offset to final score
-    stepBonus:  12,  // Y offset to bonus row
     tapH:        8,  // "tap to continue" row height
     padBottom:  12,  // bottom padding
   },
