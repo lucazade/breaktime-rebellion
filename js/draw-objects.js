@@ -16,7 +16,7 @@ function drawDesks() {
       _octx.fillStyle = PAL.desk; _octx.fillRect(_d.x-1, _d.y-1, 22, 8);
       _octx.fillStyle = PAL.desklt;  _octx.fillRect(_d.x,   _d.y,   20, 6);
       _octx.fillStyle = PAL.desk;    _octx.fillRect(_d.x,   _d.y+5, 20, 2);
-      _octx.fillStyle = PAL.brown;
+      _octx.fillStyle = PAL.chairWood;
       _octx.fillRect(_d.x+1,  _d.y+6, 2, 5);
       _octx.fillRect(_d.x+17, _d.y+6, 2, 5);
     }
@@ -51,7 +51,7 @@ function drawBoards() {
     _octx.font = '4px ' + FF;
     for (var _j = 0; _j < BOARDS.length; _j++) {
       var _b = BOARDS[_j];
-      _octx.fillStyle = PAL.brown;   _octx.fillRect(_b.x-1, _b.y-1, BW+2, BH+2);
+      _octx.fillStyle = PAL.boardFrame;   _octx.fillRect(_b.x-1, _b.y-1, BW+2, BH+2);
       _octx.fillStyle = PAL.boardDark; _octx.fillRect(_b.x, _b.y, BW, BH);
       if (!_b.done) {
         _octx.fillStyle = PAL.boardChalk;

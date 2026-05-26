@@ -47,7 +47,7 @@ function drawEndScreen() {
     const cx = gX + VG.panW / 2;
     let ty = gY + VG.padTop;
     ctx.font = VG.fontTitle + 'px ' + FF;
-    ctx.fillStyle = PAL.profRossiBody; ctx.fillText(STRINGS.gameoverTitle, cx, ty); ty += VG.stepTitle;
+    ctx.fillStyle = PAL.gameoverTitleColor; ctx.fillText(STRINGS.gameoverTitle, cx, ty); ty += VG.stepTitle;
     ctx.font = VG.fontBody + 'px ' + FF;
     ctx.fillStyle = PAL.bannerText;   ctx.fillText(scoreText,              cx, ty); ty += VG.stepScore;
     ctx.fillStyle = PAL.bannerTitleColor;    ctx.fillText(STRINGS.gameoverConfirm,                 cx, ty); ty += VG.stepConfirm;

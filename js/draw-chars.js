@@ -394,7 +394,7 @@ function drawLucaEnd() {
   ctx.strokeRect(bx, by2, VF.bw, bh);
   ctx.fillStyle = PAL.lucaBubbleBg; ctx.fillRect(bx, by2 + bh, VF.tailW, VF.tailH);
   ctx.strokeStyle = PAL.bubbleBorder; ctx.strokeRect(bx, by2 + bh, VF.tailW, VF.tailH);
-  ctx.fillStyle = PAL.profRossiBody; ctx.textAlign = 'left'; ctx.textBaseline = 'top';
+  ctx.fillStyle = PAL.fumettoNameColor; ctx.textAlign = 'left'; ctx.textBaseline = 'top';
   ctx.fillText('Luca:', bx + 4, by2 + 4);
   ctx.fillStyle = PAL.speechText;
   for (let i = 0; i < lineCount; i++) {

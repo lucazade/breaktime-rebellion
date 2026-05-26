@@ -151,7 +151,9 @@ const PAL = {
   // ── In-game banners (story, mission, win, gameover, pause) ─
   panelBg:            'rgba(0,0,40,0.90)', // dialog panel background
   panelBorder:        '#FFD700',           // dialog panel border / HUD icon gold accent
-  bannerTitleColor:   '#FFD700',  // overlay/dialog title text (story, mission, win, pause, gameover…)
+  bannerTitleColor:   '#FFD700',  // overlay/dialog title text (story, mission, win, pause…)
+  gameoverTitleColor: '#D21C01',  // "ESPULSO!" title in gameover banner
+  fumettoNameColor:   '#D21C01',  // "Luca:" speaker label in speech bubble
   topScoreColor:      '#FFD700',  // #1 entry in high scores list
   titleLevelColor:    '#FFD700',  // current level number label in title screen
   lucaBubbleBg:       '#FFD700',  // Luca speech bubble background fill
@@ -192,7 +194,8 @@ const PAL = {
   bellClapper:   '#332200',  // clapper
 
   // ── Desks ─────────────────────────────────────────────────
-  brown:         '#3e1500',  // chair wood
+  chairWood:     '#3e1500',  // desk chair legs
+  boardFrame:    '#3e1500',  // blackboard outer frame
   desk:          '#3e1500',  // desk top dark layer
   desklt:        '#581e00',  // desk top light layer
 
