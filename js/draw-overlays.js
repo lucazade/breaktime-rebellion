@@ -284,7 +284,7 @@ function drawHighScores() {
     ctx.textAlign = 'center';
     for (var i = 0; i < hs.length; i++) {
       var h = hs[i];
-      var row = (i + 1) + '. ' + String(h.score).padStart(5, '0')
+      var row = String(i + 1).padStart(2, ' ') + '. ' + String(h.score).padStart(5, '0')
               + SEP + 'L' + h.level
               + SEP + (STRINGS['difficulty_' + h.difficulty] || h.difficulty);
       ctx.fillStyle = i === 0 ? PAL.gold : PAL.bannerText;
