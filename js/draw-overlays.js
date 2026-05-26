@@ -43,17 +43,16 @@ function drawEndScreen() {
 
   if (!isWin) {
     const VG = CONFIG.ui.gameover;
-    const _gH = VG.padTop + VG.stepTitle + VG.stepLevel + VG.stepScore + VG.stepConfirm + VG.btnH + VG.padBottom;
+    const _gH = VG.padTop + VG.stepTitle + VG.stepScore + VG.stepConfirm + VG.btnH + VG.padBottom;
     const {bx:gX, by:gY} = _panPos(VG.panW, _gH);
     _dialogPanel(gX, gY, VG.panW, _gH, VG.panBg);
     ctx.textAlign = 'center'; ctx.textBaseline = 'top';
     const cx = gX + VG.panW / 2;
     let ty = gY + VG.padTop;
     ctx.font = VG.fontTitle + 'px ' + FF;
-    ctx.fillStyle = PAL.profRossiBody; ctx.fillText(STRINGS.gameoverTitle,                  cx, ty); ty += VG.stepTitle;
+    ctx.fillStyle = PAL.profRossiBody; ctx.fillText(STRINGS.gameoverTitle, cx, ty); ty += VG.stepTitle;
     ctx.font = VG.fontBody + 'px ' + FF;
-    ctx.fillStyle = PAL.bannerText;   ctx.fillText(fmt(STRINGS.levelReached, currentLevel), cx, ty); ty += VG.stepLevel;
-    ctx.fillStyle = PAL.bannerText;   ctx.fillText(scoreText,                               cx, ty); ty += VG.stepScore;
+    ctx.fillStyle = PAL.bannerText;   ctx.fillText(scoreText,              cx, ty); ty += VG.stepScore;
     ctx.fillStyle = PAL.gold;    ctx.fillText(STRINGS.gameoverConfirm,                 cx, ty); ty += VG.stepConfirm;
     ctx.font = VG.fontBtn + 'px ' + FF;
     const siX = gX + VG.siOx, noX = gX + VG.noOx;
@@ -263,24 +262,21 @@ function drawCredits() {
 
 function drawHighScores() {
   if (state !== 'highscores') return;
+  var VHS = CONFIG.ui.highScores;
   var hs = _getHighScores();
-  var panW = 210;
-  var fontTitle = 6, fontBody = 4, rowH = 9;
   var numRows = hs.length > 0 ? hs.length : 1;
-  var panH = 8 + fontTitle + 8 + numRows * rowH + 8 + fontBody + 8;
-  var panX = Math.round((W - panW) / 2);
+  var panH = VHS.padTop + VHS.stepTitle + numRows * VHS.rowH + VHS.tapGap + VHS.tapH + VHS.padBottom;
+  var panX = Math.round((W - VHS.panW) / 2);
   var panY = Math.round((H - panH) / 2);
-  var cxHS = panX + Math.round(panW / 2);
+  var cxHS = panX + Math.round(VHS.panW / 2);
   ctx.save();
-  ctx.fillStyle = 'rgba(0,0,0,0.80)';
-  ctx.fillRect(0, 0, W, H);
-  _dialogPanel(panX, panY, panW, panH, CONFIG.ui.dialog.panBg);
+  _dialogPanel(panX, panY, VHS.panW, panH, CONFIG.ui.dialog.panBg);
   ctx.textAlign = 'center'; ctx.textBaseline = 'top';
-  var ty = panY + 8;
-  ctx.font = fontTitle + 'px ' + FF;
+  var ty = panY + VHS.padTop;
+  ctx.font = VHS.fontTitle + 'px ' + FF;
   ctx.fillStyle = PAL.gold;
-  ctx.fillText(STRINGS.highScoresTitle, cxHS, ty); ty += fontTitle + 8;
-  ctx.font = fontBody + 'px ' + FF;
+  ctx.fillText(STRINGS.highScoresTitle, cxHS, ty); ty += VHS.stepTitle;
+  ctx.font = VHS.fontBody + 'px ' + FF;
   if (hs.length === 0) {
     ctx.fillStyle = PAL.bannerText; ctx.fillText(STRINGS.highScoresEmpty, cxHS, ty);
   } else {
@@ -296,12 +292,13 @@ function drawHighScores() {
       ctx.fillText(String(h.score).padStart(5, '0'), c2, ty);
       ctx.fillText('L' + h.level, c3, ty);
       ctx.fillText(STRINGS['difficulty_' + h.difficulty] || h.difficulty, c4, ty);
-      ty += rowH;
+      ty += VHS.rowH;
     }
   }
-  ty += 4;
+  ty += VHS.tapGap;
   var blink = Math.floor(frame / 20) % 2 === 0;
   ctx.textAlign = 'center';
+  ctx.font = VHS.fontTap + 'px ' + FF;
   ctx.fillStyle = blink ? PAL.tapContinueColor : PAL.transparent;
   ctx.fillText(STRINGS.tapForTitle, cxHS, ty);
   ctx.restore();

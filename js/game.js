@@ -265,9 +265,9 @@ function handleTap() {
 function _gameoverChoice(lx, ly) {
   if (state !== 'gameover' || endScreenFadingOut || endScreenT < 20) return;
   var VG = CONFIG.ui.gameover;
-  var _gH = VG.padTop + VG.stepTitle + VG.stepLevel + VG.stepScore + VG.stepConfirm + VG.btnH + VG.padBottom;
+  var _gH = VG.padTop + VG.stepTitle + VG.stepScore + VG.stepConfirm + VG.btnH + VG.padBottom;
   var _gp = _panPos(VG.panW, _gH); var bx = _gp.bx;
-  var btnY = _gp.by + VG.padTop + VG.stepTitle + VG.stepLevel + VG.stepScore + VG.stepConfirm;
+  var btnY = _gp.by + VG.padTop + VG.stepTitle + VG.stepScore + VG.stepConfirm;
   if (ly < btnY || ly > btnY + VG.btnH) return;
   if (lx >= bx + VG.siOx && lx <= bx + VG.siOx + VG.siW) { endScreenFadingOut = true; endScreenFadeOutCb = restartGame; }
   else if (lx >= bx + VG.noOx && lx <= bx + VG.noOx + VG.noW) { state = 'highscores'; }

@@ -123,7 +123,21 @@ CONFIG.ui = {
     padBottom:  11,  // bottom padding
   },
 
-  // Game win banner (L10) — panH computed: padTop+stepTitle+stepScore+stepBest+tapH+padBottom
+  // High scores banner — panH computed: padTop+stepTitle+rows*rowH+tapGap+tapH+padBottom
+  highScores: {
+    panW:      210,  // panel width
+    fontTitle:   6,  // title font size
+    fontBody:    4,  // score row font size
+    fontTap:     6,  // "tap to go home" font size
+    padTop:      8,  // top padding
+    stepTitle:  14,  // title row height (incl. gap below)
+    rowH:        9,  // height per score row
+    tapGap:      8,  // gap above tap label
+    tapH:        8,  // tap label row height
+    padBottom:   8,  // bottom padding
+  },
+
+  // Game win banner (L10) — panH computed: padTop+stepTitle+stepScore+tapH+padBottom
   gameWin: {
     panW:      260,  // panel width
     fontTitle:   8,  // title font size
@@ -137,7 +151,7 @@ CONFIG.ui = {
     padBottom:  12,  // bottom padding
   },
 
-  // Game over banner — panH computed: padTop+stepTitle+stepLevel+stepScore+stepConfirm+btnH+padBottom
+  // Game over banner — panH computed: padTop+stepTitle+stepScore+stepConfirm+btnH+padBottom
   gameover: {
     panW:        260,  // panel width
     fontTitle:     8,  // title font size
@@ -145,7 +159,6 @@ CONFIG.ui = {
     fontBtn:       6,  // Yes/No button font size
     padTop:       12,  // top padding
     stepTitle:    18,  // Y offset to "GAME OVER" title
-    stepLevel:    12,  // Y offset to level reached row
     stepScore:    20,  // Y offset to final score
     stepConfirm:  16,  // Y offset to "try again?" prompt
     btnH:         14,  // Yes/No button area height
