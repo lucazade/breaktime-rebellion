@@ -33,6 +33,7 @@ const CONFIG = {
       register:  'assets/audio/sfx/took.mp3',
       door:      'assets/audio/sfx/door.ogg',
       mechCompleted: null,
+      scoreTick:     'assets/audio/sfx/hit.ogg',
     },
   },
   display: {
