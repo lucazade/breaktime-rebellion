@@ -130,12 +130,16 @@ document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape' || e.key === 'n' || e.key === 'N') { e.preventDefault(); cancelHome(); }
     return;
   }
-  // Gameover choice: Enter/Y = play again, Escape/N = home
+  if (state === 'highscores') {
+    if (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape') { e.preventDefault(); goHome(); }
+    return;
+  }
+  // Gameover choice: Enter/Y = play again, Escape/N → high scores
   if (state === 'gameover' && !endScreenFadingOut && endScreenT >= 20) {
     if (e.key === 'Enter' || e.key === ' ' || e.key === 'y' || e.key === 'Y') {
       e.preventDefault(); endScreenFadingOut = true; endScreenFadeOutCb = restartGame;
     } else if (e.key === 'Escape' || e.key === 'n' || e.key === 'N') {
-      e.preventDefault(); goHome();
+      e.preventDefault(); state = 'highscores';
     }
     return;
   }

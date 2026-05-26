@@ -280,18 +280,18 @@ function drawHighScores() {
   if (hs.length === 0) {
     ctx.fillStyle = PAL.bannerText; ctx.fillText(STRINGS.highScoresEmpty, cxHS, ty);
   } else {
-    var c1 = panX + 8;
-    var c2 = panX + 30;
-    var c3 = panX + 118;
-    var c4 = panX + 152;
+    // rank right-aligned; score/level/diff center-aligned in 3 equal columns
+    var cRank  = panX + 26;
+    var cScore = panX + 55;
+    var cLevel = panX + 113;
+    var cDiff  = panX + 172;
     for (var i = 0; i < hs.length; i++) {
       var h = hs[i];
       ctx.fillStyle = i === 0 ? PAL.gold : PAL.bannerText;
-      ctx.textAlign = 'left';
-      ctx.fillText((i + 1) + '.', c1, ty);
-      ctx.fillText(String(h.score).padStart(5, '0'), c2, ty);
-      ctx.fillText('L' + h.level, c3, ty);
-      ctx.fillText(STRINGS['difficulty_' + h.difficulty] || h.difficulty, c4, ty);
+      ctx.textAlign = 'right';  ctx.fillText((i + 1) + '.', cRank, ty);
+      ctx.textAlign = 'center'; ctx.fillText(String(h.score).padStart(5, '0'), cScore, ty);
+      ctx.textAlign = 'center'; ctx.fillText('L' + h.level, cLevel, ty);
+      ctx.textAlign = 'center'; ctx.fillText(STRINGS['difficulty_' + h.difficulty] || h.difficulty, cDiff, ty);
       ty += VHS.rowH;
     }
   }
