@@ -369,6 +369,7 @@ Cerchiamo prima di analizzare la nostra implementazione, di confrontarla con que
 - [X] #196 Mostrare Livello nel HUD prima dell'icona/contatore delle maccaniche. Mostriamo "Livello 1" (i18n) e poi un separatore prima dell'icona delle meccaniche 
 - [X] #197 altezza barra timer e colori
 - [X] #198 troppi messaggi da leggere nel banner fine livello. Forse rendere riepilogo punteggio opzionale (config) oppure una sola linea condensata punteggio totale + bonus (con punteggio che si aggiorna con il bonus??)
+- [X] #199 rendere glow campanella più visibile quando meccanica completa
 - [X] #200 HighScores banner
 
 DA VERIFICARE:
@@ -380,4 +381,3 @@ PER LUCA:
 - [ ] #202 sistamare palette banners
 
 PER CLAUDE:
-- [ ] #199 rendere glow campanella più visibile quando meccanica completa
