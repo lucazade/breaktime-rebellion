@@ -211,7 +211,7 @@ function loop(ts) {
 
   // Centralised dark overlay — covers all banner panels
   var _shouldDim = state !== 'title' && (storyBannerT > 0 || storyBannerFading || missionBannerT > 0
-                || state === 'win' || state === 'gameover' || state === 'paused'
+                || state === 'win' || state === 'gameover' || state === 'paused' || state === 'highscores'
                 || _creditsActive
                 || (deathFreeze && !BELL.ringing && !exitDone));
   bannerDimT = _shouldDim ? Math.min(bannerDimT + 1, 20) : Math.max(bannerDimT - 1, 0);

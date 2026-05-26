@@ -369,8 +369,8 @@ function drawLucaEnd() {
   const ly = Math.round(GY - PH - walkOffset);
   drawChar(lx, ly, 1, 0, PAL.lucaBody, COLOURS_LUCA, false, false, 0);
 
-  // Speech bubble — hidden once win banner appears
-  if (state === 'win') return;
+  // Speech bubble — hidden once win banner or high scores appear
+  if (state === 'win' || state === 'highscores') return;
   const VF = CONFIG.ui.lucaFumetto;
   ctx.font = VF.fontBody + 'px ' + FF;
   const raw = STRINGS.lucaAppears.replace(/^[^"]*"?/, '').replace(/".*$/, '');
