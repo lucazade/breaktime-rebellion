@@ -50,6 +50,7 @@ dev/
   todo.txt                ← piano di implementazione a fasi
   check-dead.js           ← analisi statica dead code (PAL, STRINGS, sfx, CONFIG.ui, HTML IDs, assets, funzioni)
   release-checklist.md    ← checklist release con ownership 🤖/👤
+  merge-checklist.md      ← checklist pre/post-merge con ownership 🤖/👤
   refactor-gfx-palette/
     new-colors.txt        ← colori scelti per personaggio (riferimento)
 ```
@@ -286,6 +287,8 @@ try{new Function(src);console.log('JS OK');}catch(e){console.log('ERRORE:',e.mes
 **`npm run apk`** — prepend `npm run check &&` quindi fallisce subito se c'è dead code.
 
 **`dev/release-checklist.md`** — checklist completa per ogni release con ownership 🤖 (automatico) / 👤 (manuale). Basta dire "facciamo la release" per avviare il flusso 🤖.
+
+**`dev/merge-checklist.md`** — checklist pre/post-merge per proteggere main. Basta dire "facciamo il merge" per avviare il flusso 🤖.
 
 **Flusso release 🤖:**
 1. `npm run check` — nessun dead code
