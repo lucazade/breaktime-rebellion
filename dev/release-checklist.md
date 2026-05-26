@@ -20,6 +20,7 @@
 
 ## 5. Documentazione
 - [ ] **CLAUDE.md** — aggiornare se cambiano architettura, convenzioni o file structure
+- [ ] **CLAUDE.md compattazione** — ogni 3-4 release, chiedere a Claude di rimuovere sezioni obsolete o non più rilevanti
 - [ ] **Memoria** — salvare se emerso qualcosa di non-ovvio nella sessione (bug latenti, decisioni di design, preferenze workflow)
 - [ ] **Notion** — aggiornare stato progetto / ticket chiusi
 
