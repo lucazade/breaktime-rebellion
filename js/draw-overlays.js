@@ -75,8 +75,9 @@ function drawEndScreen() {
     const _wTickingTime  = lastTimeBonus  > 0 && _wT1 > 0 && _wT1 < _wTICK;
     const _wTickingLives = lastLivesBonus > 0 && _wT2 > 0 && _wT2 < _wTICK;
     const _wTickerDone = _endBonusT >= _wDELAY + _wTICK + (lastLivesBonus > 0 ? _wGAP + _wTICK : 0);
-    const _wScoreLabel = _wTickingLives ? STRINGS.livesBonusLabel : (_wTickingTime ? STRINGS.timeBonusLabel : (_wTickerDone ? STRINGS.scoreLabel : STRINGS.scoreBaseLabel));
-    const _wScoreColor = _wTickingLives ? PAL.livesBonusText : (_wTickingTime ? PAL.timeBonusText : PAL.bannerText);
+    const _wAfterTime = lastLivesBonus > 0 && _wT1 >= _wTICK;
+    const _wScoreLabel = _wTickerDone ? STRINGS.scoreLabel : (_wTickingTime ? STRINGS.timeBonusLabel : (_wAfterTime ? STRINGS.livesBonusLabel : STRINGS.scoreBaseLabel));
+    const _wScoreColor = _wTickerDone ? PAL.bannerText : (_wTickingTime ? PAL.timeBonusText : (_wAfterTime ? PAL.livesBonusText : PAL.bannerText));
     const _wH = VW.padTop + VW.stepTitle + VW.stepScore + VW.stepBest + VW.tapH + VW.padBottom;
     const {bx:wX, by:wY} = _panPos(VW.panW, _wH);
     _dialogPanel(wX, wY, VW.panW, _wH, VW.panBg);
