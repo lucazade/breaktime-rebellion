@@ -21,8 +21,14 @@
     levelLabel:           'Lvl',
     hudLevel:             'Lvl {0}',
 
-    audioFull: 'music', audioSfx: 'sfx', audioMute: 'mute',
-    difficulty_easy: 'EASY', difficulty_medium: 'MED', difficulty_hard: 'HARD',
+    audioFull:            'music',
+    audioSfx:             'sfx',
+    audioMute:            'mute',
+
+    difficulty_easy:      'EASY',
+    difficulty_medium:    'MED',
+    difficulty_hard:      'HARD',
+
     tapForTitle:          '[ TAP TO GO HOME ]',
     tapContinue:          '[ TAP TO CONTINUE ]',
 
@@ -30,10 +36,10 @@
     levelComplete:        '— LEVEL COMPLETE! —',
     gameoverTitle:        '— EXPELLED! —',
     winTitle:             '— SCHOOL LEGEND! —',
+    highScoresTitle:      '— HIGH SCORES —',
 
     scoreBaseLabel:       'SCORE: ',
     scoreLabel:           'TOTAL SCORE: ',
-    highScoresTitle:      '— HIGH SCORES —',
     highScoresEmpty:      'NO SCORES YET',
     timeBonusLabel:       '+ TIME BONUS: ',
     livesBonusLabel:      '+ LIVES BONUS: ',
@@ -120,8 +126,14 @@
     levelLabel:           'Lvl',
     hudLevel:             'Lvl {0}',
 
-    audioFull: 'musica', audioSfx: 'sfx', audioMute: 'muto',
-    difficulty_easy: 'EASY', difficulty_medium: 'MED', difficulty_hard: 'HARD',
+    audioFull:            'musica',
+    audioSfx:             'sfx',
+    audioMute:            'muto',
+
+    difficulty_easy:      'EASY',
+    difficulty_medium:    'MED',
+    difficulty_hard:      'HARD',
+
     tapForTitle:          '[ TOCCA PER TORNARE ALLA HOME ]',
     tapContinue:          '[ TOCCA PER CONTINUARE ]',
 
@@ -129,10 +141,10 @@
     levelComplete:        '— LIVELLO COMPLETATO! —',
     gameoverTitle:        '— ESPULSO! —',
     winTitle:             '— LEGGENDA DELLA SCUOLA! —',
+    highScoresTitle:      '— MIGLIORI PUNTEGGI —',
     
     scoreBaseLabel:       'PUNTEGGIO: ',
     scoreLabel:           'PUNTEGGIO TOTALE: ',
-    highScoresTitle:      '— MIGLIORI PUNTEGGI —',
     highScoresEmpty:      'NESSUN PUNTEGGIO',
     timeBonusLabel:       '+ BONUS TEMPO: ',
     livesBonusLabel:      '+ BONUS VITE: ',
