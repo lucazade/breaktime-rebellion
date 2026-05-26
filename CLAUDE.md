@@ -174,6 +174,19 @@ Il gruppo meccanica è **centrato** in `VH.centerX`. Layout da sinistra: `Lvl X`
 
 Le icone meccanica (`_drawHudIcon`) hanno 3 rami per scala `s`: tiny (`s<0.5`), small (`s<1`), full (`s≥1`). I dettagli trasparenti sono ottenuti disegnando la forma in parti (non usando `clearRect`).
 
+## CONFIG.ui — naming convention pannelli (ui.js)
+
+Ogni sezione pannello/banner usa chiavi con suffisso uniforme:
+- `padTop`, `padBottom` — margine interno del pannello (bordo → contenuto)
+- `xxxH` — altezza della riga di testo (font size + 2px breathing room)
+- `xxxSpacing` — gap tra quella riga e l'elemento successivo
+- `tapSpacing` — gap tra l'ultimo contenuto e la riga "tap to continue" / pulsante
+- `tapH` — altezza della riga "tap to continue"
+- `fontTap` — font size della riga "tap to continue" (esplicito in ogni sezione con tap row)
+- `btnH` — altezza area pulsante interattivo (resume, yes/no, close)
+
+La formula `panH` nei commenti di ogni sezione rispecchia fedelmente questi nomi.
+
 ## Desktop UI — bezels e canvas styling (game.js + style.css)
 
 **Canvas roundness:** classe `.rounded` aggiunta via `ResizeObserver` + `window resize`. Attiva quando `canvas.getBoundingClientRect().top > 2` (c'è aria verticale). CSS: `canvas { border-radius: 0; transition: border-radius 0.2s ease; }` / `canvas.rounded { border-radius: 16px; }`.
