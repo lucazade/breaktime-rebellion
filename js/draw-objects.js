@@ -118,25 +118,16 @@ function drawBell() {
   // Clapper (2px × 1 row)
   ctx.fillStyle = drk; ctx.fillRect(X+2, by+6, 2, 1);
 
-  // Pulsing glow when the objective is complete — blit pre-rendered circle, vary only globalAlpha
+  // Pulsing glow when the objective is complete — outer halo brighter than inner core
   if ((allBoards || allBags || allMachines || allBall || allStudents || allBooks || allSink || allBins || allSprinklers) && !BELL.done) {
     var _bcx = bx + 3, _bcy = by + 3;
-    var _pulse = (1 + Math.sin(frame * 0.20)) / 2;
+    var _pulse = (1 + Math.sin(frame * 0.14)) / 2;
     ctx.fillStyle = PAL.bellGlow;
-    ctx.globalAlpha = 0.08 + 0.10 * _pulse;
+    ctx.globalAlpha = 0.13 + 0.14 * _pulse;
     ctx.beginPath(); ctx.arc(_bcx, _bcy, 10, 0, Math.PI * 2); ctx.fill();
-    ctx.globalAlpha = 0.20 + 0.25 * _pulse;
+    ctx.globalAlpha = 0.08 + 0.10 * _pulse;
     ctx.beginPath(); ctx.arc(_bcx, _bcy, 6,  0, Math.PI * 2); ctx.fill();
     ctx.globalAlpha = 1;
-  }
-
-  // Sound waves when ringing
-  if (BELL.ringing) {
-    for (let i = 1; i <= 3; i++) {
-      ctx.strokeStyle = 'rgba(255,215,0,' + (0.6 - i*0.15) + ')';
-      ctx.lineWidth = 1;
-      ctx.beginPath(); ctx.arc(bx+3, by+3, 4+i*3, 0, Math.PI*2); ctx.stroke();
-    }
   }
 }
 
