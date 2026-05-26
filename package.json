@@ -3,10 +3,11 @@
   "version": "1.0.20",
   "private": true,
   "scripts": {
+    "check": "node dev/check-dead.js",
     "build": "rm -rf www && mkdir -p www && cp index.html manifest.json sw.js robots.txt www/ && cp -r css js assets www/",
     "sync":  "npm run build && npx cap sync android",
     "icons": "for e in mipmap-mdpi:48 mipmap-hdpi:72 mipmap-xhdpi:96 mipmap-xxhdpi:144 mipmap-xxxhdpi:192; do d=${e%%:*}; s=${e##*:}; magick assets/icons/icon-512.png -resize ${s}x${s} android/app/src/main/res/$d/ic_launcher.png; magick assets/icons/icon-512.png -resize ${s}x${s} android/app/src/main/res/$d/ic_launcher_round.png; magick assets/icons/icon-512.png -resize ${s}x${s} android/app/src/main/res/$d/ic_launcher_foreground.png; done",
-    "apk":   "npm run sync && npm run icons && cd android && JAVA_HOME=/opt/android-studio/jbr ANDROID_HOME=$HOME/Android/Sdk ./gradlew clean assembleDebug && cd .. && mkdir -p apks && cp android/app/build/outputs/apk/debug/app-debug.apk \"apks/breaktime-rebellion-v$(node -p 'require(\"./package.json\").version').apk\" && rclone copy \"apks/breaktime-rebellion-v$(node -p 'require(\"./package.json\").version').apk\" \"luca.forina:Breaktime-Rebellion/\" && echo \"APK caricato su Drive: apks/breaktime-rebellion-v$(node -p 'require(\"./package.json\").version').apk\""
+    "apk":   "npm run check && npm run sync && npm run icons && cd android && JAVA_HOME=/opt/android-studio/jbr ANDROID_HOME=$HOME/Android/Sdk ./gradlew clean assembleDebug && cd .. && mkdir -p apks && cp android/app/build/outputs/apk/debug/app-debug.apk \"apks/breaktime-rebellion-v$(node -p 'require(\"./package.json\").version').apk\" && rclone copy \"apks/breaktime-rebellion-v$(node -p 'require(\"./package.json\").version').apk\" \"luca.forina:Breaktime-Rebellion/\" && echo \"APK caricato su Drive: apks/breaktime-rebellion-v$(node -p 'require(\"./package.json\").version').apk\""
   },
   "dependencies": {
     "@capacitor/android": "^8.3.4",

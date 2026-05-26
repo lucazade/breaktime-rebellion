@@ -184,4 +184,5 @@ if (unused.length === 0) {
   console.log(unused.length + ' possibili problemi  |  ' + checked + ' voci verificate');
   console.log('Nota: funzioni con 1 occorrenza potrebbero essere callback;\n' +
               '      CONFIG.ui check può avere falsi positivi su nomi brevi/generici.\n');
+  process.exit(1);
 }
