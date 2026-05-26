@@ -80,20 +80,21 @@ CONFIG.ui = {
     },
   },
 
-  // Story banner (L1) — panH computed: padTop+titleH+titleSpacing+lineBlock+spacerH+tapH+padBottom
+  // Story banner (L1) — panH computed: padTop+titleH+titleSpacing+lineBlock+tapSpacing+tapH+padBottom
   storyBanner: {
-    panW:        280,  // panel width
-    wrapWidth:   220,  // max text width (word wrap)
-    fontTitle:     8,  // title font size
-    fontBody:      6,  // body font size
-    padTop:       14,  // top padding
-    titleH:       10,  // title row height
-    titleSpacing: 10,  // gap below title
-    lineH:         9,  // height per text line
-    lineSpacing:   4,  // gap between lines
-    spacerH:      10,  // spacer between body text and "tap to continue"
-    tapH:          8,  // "tap to continue" row height
-    padBottom:    14,  // bottom padding
+    panW:         280,  // panel width
+    wrapWidth:    220,  // max text width (word wrap)
+    fontTitle:      8,  // title font size
+    fontBody:       6,  // body font size
+    fontTap:        6,  // "tap to continue" font size
+    padTop:        14,  // top padding
+    titleH:        10,  // title row height
+    titleSpacing:  10,  // gap below title
+    lineH:          9,  // height per text line
+    lineSpacing:    4,  // gap between lines
+    tapSpacing:    10,  // gap between body text and "tap to continue"
+    tapH:           8,  // "tap to continue" row height
+    padBottom:     14,  // bottom padding
   },
 
   // Mission banner — panH computed: padTop+titleH+titleSpacing+lineBlock+padBottom
@@ -110,118 +111,133 @@ CONFIG.ui = {
     padBottom:    14,  // bottom padding
   },
 
-  // Level complete banner — panH computed: padTop+stepTitle+stepScore+tapH+padBottom
+  // Level complete banner — panH computed: padTop+titleH+titleSpacing+scoreH+scoreSpacing+tapH+padBottom
   levelComplete: {
-    panW:      260,  // panel width
-    fontTitle:   8,  // title font size
-    fontBody:    6,  // score/bonus font size
-    padTop:     14,  // top padding
-    stepTitle:  18,  // Y offset from padTop to title
-    stepScore:  15,  // Y offset from title to score row
-    tapH:        8,  // "tap to continue" row height
-    padBottom:  11,  // bottom padding
+    panW:          260,  // panel width
+    fontTitle:       8,  // title font size
+    fontBody:        6,  // score/bonus font size
+    fontTap:         6,  // "tap to continue" font size
+    padTop:         14,  // top padding
+    titleH:         10,  // title row height
+    titleSpacing:    8,  // gap below title
+    scoreH:          8,  // score row height
+    scoreSpacing:    7,  // gap below score row
+    tapH:            8,  // "tap to continue" row height
+    padBottom:      11,  // bottom padding
   },
 
-  // High scores banner — panH computed: padTop+stepTitle+rows*rowH+tapGap+tapH+padBottom
+  // High scores banner — panH computed: padTop+titleH+titleSpacing+rows*rowH+tapSpacing+tapH+padBottom
   highScores: {
-    panW:      210,  // panel width
-    fontTitle:   6,  // title font size
-    fontBody:    4,  // score row font size
-    fontTap:     6,  // "tap to go home" font size
-    padTop:      8,  // top padding
-    stepTitle:  14,  // title row height (incl. gap below)
-    rowH:        9,  // height per score row
-    tapGap:      8,  // gap above tap label
-    tapH:        8,  // tap label row height
-    padBottom:   8,  // bottom padding
+    panW:          210,  // panel width
+    fontTitle:       6,  // title font size
+    fontBody:        4,  // score row font size
+    fontTap:         6,  // "tap to go home" font size
+    padTop:          8,  // top padding
+    titleH:          8,  // title row height
+    titleSpacing:    6,  // gap below title
+    rowH:            9,  // height per score row
+    tapSpacing:      8,  // gap above tap label
+    tapH:            8,  // tap label row height
+    padBottom:       8,  // bottom padding
   },
 
-  // Game win banner (L10) — panH computed: padTop+stepTitle+stepScore+tapH+padBottom
+  // Game win banner (L10) — panH computed: padTop+titleH+titleSpacing+scoreH+scoreSpacing+tapH+padBottom
   gameWin: {
-    panW:      260,  // panel width
-    fontTitle:   8,  // title font size
-    fontBody:    6,  // text font size
-    padTop:     14,  // top padding
-    stepTitle:  22,  // Y offset to title
-    stepScore:  12,  // Y offset to final score
-    tapH:        8,  // "tap to continue" row height
-    padBottom:  12,  // bottom padding
+    panW:          260,  // panel width
+    fontTitle:       8,  // title font size
+    fontBody:        6,  // text font size
+    fontTap:         6,  // "tap to continue" font size
+    padTop:         14,  // top padding
+    titleH:         10,  // title row height
+    titleSpacing:   12,  // gap below title
+    scoreH:          8,  // score row height
+    scoreSpacing:    4,  // gap below score row
+    tapH:            8,  // "tap to continue" row height
+    padBottom:      12,  // bottom padding
   },
 
-  // Game over banner — panH computed: padTop+stepTitle+stepScore+stepConfirm+btnH+padBottom
+  // Game over banner — panH computed: padTop+titleH+titleSpacing+scoreH+scoreSpacing+confirmH+confirmSpacing+btnH+padBottom
   gameover: {
-    panW:        260,  // panel width
-    fontTitle:     8,  // title font size
-    fontBody:      6,  // text font size
-    fontBtn:       6,  // Yes/No button font size
-    padTop:       12,  // top padding
-    stepTitle:    18,  // Y offset to "GAME OVER" title
-    stepScore:    20,  // Y offset to final score
-    stepConfirm:  16,  // Y offset to "try again?" prompt
-    btnH:         14,  // Yes/No button area height
-    padBottom:    12,  // bottom padding
+    panW:           260,  // panel width
+    fontTitle:        8,  // title font size
+    fontBody:         6,  // text font size
+    fontBtn:          6,  // Yes/No button font size
+    padTop:          12,  // top padding
+    titleH:          10,  // title row height
+    titleSpacing:     8,  // gap below title
+    scoreH:           8,  // score row height
+    scoreSpacing:    12,  // gap below score row
+    confirmH:         8,  // "try again?" row height
+    confirmSpacing:   8,  // gap below confirm row
+    btnH:            14,  // Yes/No button area height
+    padBottom:       12,  // bottom padding
     siOx:  30, siW:  70,  // Yes button X offset and width
     noOx: 160, noW:  70,  // No button X offset and width
   },
 
-  // Luca speech bubble (L10 level end) — bh computed: headerH + lineCount*lineH + gapTap + tapH + padBottom
+  // Luca speech bubble (L10 level end) — bh computed: headerH + lineCount*lineH + tapSpacing + tapH + padBottom
   lucaFumetto: {
-    bw:        190,  // bubble width
-    fontTitle:   8,  // bubble header font size
-    fontBody:    6,  // bubble body font size
-    offsetX:    10,  // X offset relative to Luca's position
-    tailOffY:   14,  // Y offset of the bubble tail
-    headerH:    14,  // header area height
-    lineH:      10,  // height per text line
-    gapTap:      4,  // gap between text and "tap" row
-    tapH:        8,  // "tap to continue" row height
-    padBottom:   6,  // bottom padding
+    bw:           190,  // bubble width
+    fontTitle:      8,  // bubble header font size
+    fontBody:       6,  // bubble body font size
+    fontTap:        6,  // "tap to continue" font size
+    offsetX:       10,  // X offset relative to Luca's position
+    tailOffY:      14,  // Y offset of the bubble tail
+    headerH:       14,  // header area height
+    lineH:         10,  // height per text line
+    tapSpacing:     4,  // gap between text and "tap" row
+    tapH:           8,  // "tap to continue" row height
+    padBottom:      6,  // bottom padding
     tailW: 3, tailH: 5,  // bubble tail dimensions
   },
 
-  // Pause overlay — panH computed: padTop+stepTitle+btnH+padBottom
+  // Pause overlay — panH computed: padTop+titleH+titleSpacing+btnH+padBottom
   pauseOverlay: {
-    panW:      200,  // panel width
-    fontTitle:   8,  // title font size
-    fontBtn:     6,  // resume button font size
-    padTop:     14,  // top padding
-    stepTitle:  22,  // Y offset to title
-    btnH:       14,  // resume button area height
-    padBottom:  14,  // bottom padding
-    resumeOx:   65,  // Resume button X offset
-    resumeW:    70,  // Resume button width
+    panW:          200,  // panel width
+    fontTitle:       8,  // title font size
+    fontBtn:         6,  // resume button font size
+    padTop:         14,  // top padding
+    titleH:         10,  // title row height
+    titleSpacing:   12,  // gap below title
+    btnH:           14,  // resume button area height
+    padBottom:      14,  // bottom padding
+    resumeOx:       65,  // Resume button X offset
+    resumeW:        70,  // Resume button width
   },
 
-  // Home confirm overlay — panH computed: padTop+stepTitle+btnH+padBottom
+  // Home confirm overlay — panH computed: padTop+titleH+titleSpacing+btnH+padBottom
   homeConfirm: {
-    panW:      200,  // panel width
-    fontTitle:   8,  // title font size
-    fontBtn:     6,  // button font size
-    padTop:     14,  // top padding
-    stepTitle:  20,  // Y offset to "Go to menu?" title
-    btnH:       14,  // button area height
-    padBottom:  14,  // bottom padding
+    panW:          200,  // panel width
+    fontTitle:       8,  // title font size
+    fontBtn:         6,  // button font size
+    padTop:         14,  // top padding
+    titleH:         10,  // title row height
+    titleSpacing:   10,  // gap below title
+    btnH:           14,  // button area height
+    padBottom:      14,  // bottom padding
     siOx:  20, siW:  70,  // Yes button X offset and width
     noOx: 110, noW:  70,  // No button X offset and width
   },
 
-  // Credits — panH computed: padTop+stepTitle+stepTeam+5*(nameH+nameGap+roleH+roleGap)+btnGapAbove+btnH+padBottom
+  // Credits — panH computed: padTop+titleH+titleSpacing+teamH+teamSpacing+5*(nameH+nameGap+roleH+roleGap)+tapSpacing+btnH+padBottom
   credits: {
-    panW:        240,  // panel width
-    fontTitle:     8,  // "CREDITS" title font size
-    fontBody:      6,  // name font size
-    fontBtn:       6,  // close button font size
-    padTop:        8,  // top padding
-    stepTitle:    14,  // Y offset to title
-    stepTeam:     12,  // gap from title to first team entry
-    nameH:         4,  // name row height
-    nameGap:       2,  // gap between name and role
-    roleH:         4,  // role row height
-    roleGap:       6,  // gap between role and next name
-    btnGapAbove:   2,  // gap above close button
-    btnH:         12,  // close button height
-    btnW:         60,  // close button width
-    padBottom:    10,  // bottom padding
+    panW:          240,  // panel width
+    fontTitle:       8,  // "CREDITS" title font size
+    fontBody:        6,  // name font size
+    fontBtn:         6,  // close button font size
+    padTop:          8,  // top padding
+    titleH:         10,  // title row height
+    titleSpacing:    4,  // gap below title
+    teamH:           8,  // team subtitle row height
+    teamSpacing:     4,  // gap below team subtitle
+    nameH:           4,  // name row height
+    nameGap:         2,  // gap between name and role
+    roleH:           4,  // role row height
+    roleGap:         6,  // gap between role and next name
+    tapSpacing:      2,  // gap above close button
+    btnH:           12,  // close button height
+    btnW:           60,  // close button width
+    padBottom:      10,  // bottom padding
   },
 
 };

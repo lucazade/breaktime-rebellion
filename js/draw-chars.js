@@ -387,7 +387,7 @@ function drawLucaEnd() {
     if (cur) lines.push(cur);
   }
   const lineCount = Math.min(lines.length, 4);
-  const bh = VF.headerH + lineCount * VF.lineH + VF.gapTap + VF.tapH + VF.padBottom;
+  const bh = VF.headerH + lineCount * VF.lineH + VF.tapSpacing + VF.tapH + VF.padBottom;
   const bx = lx + VF.offsetX, by2 = ly - VF.tailOffY - bh;
   ctx.fillStyle = PAL.lucaBubbleBg; ctx.fillRect(bx, by2, VF.bw, bh);
   ctx.strokeStyle = PAL.bubbleBorder; ctx.lineWidth = 1;
@@ -400,8 +400,9 @@ function drawLucaEnd() {
   for (let i = 0; i < lineCount; i++) {
     ctx.fillText(lines[i], bx + 4, by2 + VF.headerH + i * VF.lineH);
   }
-  const tapY = by2 + VF.headerH + lineCount * VF.lineH + VF.gapTap;
+  const tapY = by2 + VF.headerH + lineCount * VF.lineH + VF.tapSpacing;
   const blink = Math.floor(frame / 25) % 2 === 0;
+  ctx.font = VF.fontTap + 'px ' + FF;
   ctx.fillStyle = blink ? PAL.speechText : PAL.transparent;
   ctx.textAlign = 'center';
   ctx.fillText(STRINGS.tapContinue, bx + VF.bw / 2, tapY);
