@@ -376,5 +376,5 @@ PER LUCA:
 - [ ] #186 Icona BR
 
 PER CLAUDE:
-- [ ] #198 diminuire messaggi nei banner
+- [ ] #198 diminuire messaggi nei banner (forse rendere messaggi sui punteggi opzionali o una sola linea: totale + bonus)
 - [ ] #199 rendere glow campanella più visibile quando meccanica completa
