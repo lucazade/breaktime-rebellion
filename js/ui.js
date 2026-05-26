@@ -61,8 +61,8 @@ CONFIG.ui = {
     msgFadeFrames: 20,         // fade-out frames for proximity hint message
     centerX:       160,        // canvas center X for centered HUD text
     scoreX:        316,        // score right edge X (right-aligned)
-    timerH:        1,          // timer bar height below HUD strip (px)
-    timerAlpha:    0.80,       // timer bar opacity
+    timerH:        2,          // timer bar height below HUD strip (px)
+    timerAlpha:    0.90,       // timer bar opacity
     fontSize:      6,          // HUD text font size
     dotGap:        5,          // gap between mechanic indicator dots
     bgColor:       PAL.hudBg,  // HUD strip background color

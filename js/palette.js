@@ -110,9 +110,9 @@ const PAL = {
   hudText:          '#FFFFFF',           // score and proximity message text
   hearts:           '#ff2244',           // lives hearts
   hudCounter:       '#44ee66',           // object counter text
-  timerGreen:       '#22cc44',           // timer bar >= 60%
-  timerYellow:      '#ddcc00',           // timer bar 30–60%
-  timerRed:         '#dd1100',           // timer bar < 30%
+  timerGreen:       '#44ee66',           // timer bar >= 60%
+  timerYellow:      '#FEDC02',           // timer bar 30–60%
+  timerRed:         '#ff2244',           // timer bar < 30%
   hudIconDetail:    '#000000',           // dark detail lines in mechanic icons
   hudIconHighlight: '#FFFFFF',           // light detail lines in mechanic icons (chalk, page lines)
 
