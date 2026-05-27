@@ -377,13 +377,14 @@
 
   // ── Mode defaults ────────────────────────────────────────────────────────
   var MODE_DEFAULTS = {
-    title: { mobile: false, panels: false, legend: true,  bezels: false, ctrls: true,  labels: true,  images: true,  grid: false },
-    game:  { mobile: false, panels: false, legend: false, bezels: true,  ctrls: false, labels: false, images: true,  grid: false },
+    // 'mobile' non è qui: il suo stato persiste tra i switch di mode
+    title: { panels: false, legend: true,  bezels: false, ctrls: true,  labels: true,  images: true,  grid: false },
+    game:  { panels: false, legend: false, bezels: true,  ctrls: false, labels: false, images: true,  grid: false },
   };
 
   function applyModeDefaults(mode) {
     var d = MODE_DEFAULTS[mode] || MODE_DEFAULTS.game;
-    document.getElementById('chk-mobile').checked = d.mobile;
+    // chk-mobile non viene toccato: persiste tra title e game
     document.getElementById('chk-panels').checked = d.panels;
     document.getElementById('chk-legend').checked = d.legend;
     document.getElementById('chk-bezels').checked = d.bezels;
