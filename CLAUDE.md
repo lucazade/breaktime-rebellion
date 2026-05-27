@@ -60,8 +60,12 @@ dev/
   scripts/
     check-dead.js         ← analisi statica dead code (PAL, STRINGS, sfx, CONFIG.ui, HTML IDs, assets, funzioni)
   debug/
+    index.html            ← indice di tutti i tool di debug
     debug-banners.html    ← pagina standalone per ispezionare tutti i banner/dialog con overlay debug (bande rosse/verdi/blu con label chiavi CONFIG.ui)
-    debug-layout.html     ← simulatore viewport: mostra canvas/bezels/legend a qualsiasi risoluzione, calcola overlap e constraint (width vs height)
+    debug-layout.html     ← simulatore viewport: mostra canvas/bezels/legend a qualsiasi risoluzione, calcola overlap e constraint (width vs height). Carica js/config.js + ui.js come script tag per costanti live; fetch style.css + game.js per costanti CSS/BEZEL
+    layout-overlay.js     ← overlay live su ?layout=1: legge DOM getBoundingClientRect, mostra confini canvas/bezels/legend/pannelli, gap e overlap in tempo reale. Tasto L per toggle
+    scene-overlay.js      ← overlay live su ?scene=1 (legacy ?debug=1): sovrascrive drawDebugOverlay() noop di draw-game.js; disegna floor lines, stair boxes, hitbox NPC e oggetti via CONFIG.scene.dashed; info panel con stato gioco. Tasto L per toggle
+    perf-overlay.js       ← overlay live su ?perf=1: wrappa RAF per misurare intervallo (FPS reale) e durata callback (draw cost ms); sparkline 120 frame; contatori live particles/floatingTexts. Tasto P per toggle
 ```
 
 ## Stack
