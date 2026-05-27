@@ -10,62 +10,42 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      background: #070710;
-      color: #ccc;
-      font-family: monospace;
-      font-size: 12px;
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-      overflow: hidden;
+      background: #070710; color: #ccc; font-family: monospace; font-size: 12px;
+      display: flex; flex-direction: column; height: 100vh; overflow: hidden;
     }
 
     /* ── Toolbar ─────────────────────────────────────────────────────── */
     #toolbar {
-      flex: 0 0 auto;
-      padding: 7px 14px;
-      background: #10101e;
+      flex: 0 0 auto; padding: 7px 14px; background: #10101e;
       border-bottom: 1px solid #222235;
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      flex-wrap: wrap;
+      display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
     }
     #toolbar h1 { font-size: 10px; color: #555; white-space: nowrap; letter-spacing: 1px; }
     .tb-sep { color: #2a2a3e; font-size: 14px; }
     .tb-lbl { color: #555; font-size: 10px; white-space: nowrap; }
 
-    .preset, .mode-btn, .bg-btn {
-      background: #18182a;
-      color: #999;
-      border: 1px solid #2a2a3e;
-      padding: 3px 8px;
-      cursor: pointer;
-      font-family: monospace;
-      font-size: 11px;
-      border-radius: 3px;
-      white-space: nowrap;
-      transition: background 0.1s;
+    .mode-btn, .bg-btn {
+      background: #18182a; color: #999; border: 1px solid #2a2a3e;
+      padding: 3px 8px; cursor: pointer; font-family: monospace; font-size: 11px;
+      border-radius: 3px; white-space: nowrap; transition: background 0.1s;
     }
-    .preset:hover, .mode-btn:hover, .bg-btn:hover { background: #22223a; color: #ccc; }
-    .preset.active, .mode-btn.active, .bg-btn.active {
-      border-color: #4477ff; color: #7799ff; background: #16163a;
+    .mode-btn:hover, .bg-btn:hover { background: #22223a; color: #ccc; }
+    .mode-btn.active, .bg-btn.active { border-color: #4477ff; color: #7799ff; background: #16163a; }
+
+    /* Viewport dropdown */
+    #sel-viewport {
+      background: #18182a; color: #ccc; border: 1px solid #2a2a3e;
+      padding: 3px 6px; font-family: monospace; font-size: 11px;
+      border-radius: 3px; cursor: pointer; min-width: 160px;
+      appearance: none; -webkit-appearance: none;
     }
-    .preset.warn { border-color: #ff5533 !important; color: #ff8866 !important; }
-    #btn-screen { border-color: #336633; color: #55cc66; }
-    #btn-screen:hover { background: #0a1a0a; color: #77ee77; border-color: #55cc66; }
-    #btn-screen.active { border-color: #55cc66; color: #99ff99; background: #0a200a; }
+    #sel-viewport option { background: #18182a; color: #ccc; }
+    #sel-viewport option:first-child { color: #55cc66; }
 
     label { font-size: 11px; color: #888; white-space: nowrap; display: flex; align-items: center; gap: 5px; }
     input[type=number] {
-      width: 52px;
-      background: #14141e;
-      border: 1px solid #2a2a3e;
-      color: #ccc;
-      padding: 2px 5px;
-      font-family: monospace;
-      font-size: 11px;
-      border-radius: 3px;
+      width: 52px; background: #14141e; border: 1px solid #2a2a3e;
+      color: #ccc; padding: 2px 5px; font-family: monospace; font-size: 11px; border-radius: 3px;
     }
     input[type=checkbox] { accent-color: #55cc66; cursor: pointer; }
     input[type=range]    { width: 70px; accent-color: #4477ff; }
@@ -75,25 +55,16 @@
 
     /* ── Workspace ───────────────────────────────────────────────────── */
     #workspace {
-      flex: 1;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #050509;
-      position: relative;
+      flex: 1; overflow: hidden; display: flex; align-items: center; justify-content: center;
+      background: #050509; position: relative;
     }
     #size-label {
-      position: absolute;
-      bottom: 8px; left: 50%;
-      transform: translateX(-50%);
-      font-size: 10px; color: #333;
-      white-space: nowrap;
+      position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);
+      font-size: 10px; color: #333; white-space: nowrap;
     }
     #preview-wrapper { position: relative; }
     #preview {
-      position: relative;
-      overflow: hidden;
+      position: relative; overflow: hidden;
       background:
         radial-gradient(ellipse at 50% 110%, rgba(255,0,180,0.22) 0%, transparent 48%),
         radial-gradient(ellipse at 50% -8%,  rgba(0,180,255,0.10) 0%, transparent 42%),
@@ -104,82 +75,50 @@
     .layer { position: absolute; pointer-events: none; }
 
     /* ── Layer visual styles ─────────────────────────────────────────── */
-
     .l-game-area { outline: 1px dashed rgba(0,210,255,0.18); }
-
-    .l-canvas {
-      background: #1a1a2e;
-      outline: 1.5px solid rgba(255,210,0,0.75);
-      overflow: hidden;
-    }
+    .l-canvas { background: #1a1a2e; outline: 1.5px solid rgba(255,210,0,0.75); overflow: hidden; }
 
     /* Side panels */
     .l-panel { background: rgba(10,0,25,0.72); outline: 1px solid rgba(160,0,255,0.40); }
     .l-joy {
       position: absolute; border-radius: 50%;
       background: radial-gradient(circle at 35% 35%, #282828, #070707);
-      border: 2px solid rgba(0,200,255,0.35);
-      box-shadow: 0 0 8px rgba(0,200,255,0.15);
+      border: 2px solid rgba(0,200,255,0.35); box-shadow: 0 0 8px rgba(0,200,255,0.15);
     }
     .l-action-btn {
       position: absolute; border-radius: 50%;
       background: radial-gradient(circle at 38% 33%, rgba(255,82,40,0.55), rgba(154,15,0,0.55));
       border: 2px solid rgba(255,50,0,0.45);
     }
-    .l-panel-btn {
-      position: absolute; border-radius: 8px;
-      background: rgba(10,0,24,0.55);
-      border: 1px solid rgba(160,0,255,0.45);
-    }
+    .l-panel-btn { position: absolute; border-radius: 8px; background: rgba(10,0,24,0.55); border: 1px solid rgba(160,0,255,0.45); }
 
-    /* Top bezel */
+    /* Bezels */
     .l-top-bezel {
-      background: rgba(255,200,0,0.10);
-      border-bottom: 1px solid rgba(255,200,0,0.55);
-      display: flex; align-items: center; justify-content: center;
-      overflow: visible;
+      background: rgba(255,200,0,0.10); border-bottom: 1px solid rgba(255,200,0,0.55);
+      display: flex; align-items: center; justify-content: center; overflow: visible;
     }
-    /* Actual "BREAKTIME REBELLION" text — sized via JS inline style */
     .bezel-title {
-      font-family: 'Press Start 2P', monospace;
-      color: rgba(255,215,0,0.92);
-      letter-spacing: 3px;
-      text-shadow: 0 0 10px rgba(255,200,0,0.55), 0 0 22px rgba(255,140,0,0.28);
-      white-space: nowrap;
-      line-height: 1;
+      font-family: 'Press Start 2P', monospace; color: rgba(255,215,0,0.92);
+      letter-spacing: 3px; text-shadow: 0 0 10px rgba(255,200,0,0.55), 0 0 22px rgba(255,140,0,0.28);
+      white-space: nowrap; line-height: 1;
     }
-
-    /* Bottom bezel — actual neon gradient, 55% of game-area */
     .l-bot-bezel {
-      background: linear-gradient(90deg,
-        transparent,
-        rgba(0,210,255,0.65),
-        rgba(160,0,255,0.45),
-        rgba(0,210,255,0.65),
-        transparent);
+      background: linear-gradient(90deg, transparent, rgba(0,210,255,0.65), rgba(160,0,255,0.45), rgba(0,210,255,0.65), transparent);
     }
 
-    /* Legend layer */
+    /* Legend */
     .l-legend {
-      background: rgba(255,80,60,0.18);
-      border-top: 1px solid rgba(255,80,60,0.6);
+      background: rgba(255,80,60,0.18); border-top: 1px solid rgba(255,80,60,0.6);
       display: flex; align-items: center; justify-content: center;
     }
-    .l-legend.overlap {
-      background: rgba(255,50,30,0.38);
-      border-top-color: rgba(255,80,60,1);
-    }
+    .l-legend.overlap { background: rgba(255,50,30,0.38); border-top-color: rgba(255,80,60,1); }
     .l-overlap-zone { background: rgba(255,30,0,0.35); outline: 1px solid rgba(255,80,50,0.9); }
 
-    /* Legend content — mirrors the real #legend HTML from title.js */
-    .sim-legend-wrap {
-      display: inline-flex; align-items: center; gap: 25px;
-      pointer-events: none;
-    }
-    .sim-leg-group { display: inline-flex; align-items: center; }
+    /* Legend content */
+    .sim-legend-wrap { display: inline-flex; align-items: center; gap: 25px; pointer-events: none; }
+    .sim-leg-group   { display: inline-flex; align-items: center; }
     .sim-leg-key {
-      display: inline-block;
-      border: 1px solid #959595; border-radius: 2px;
+      display: inline-block; border: 1px solid #959595; border-radius: 2px;
       padding: 1px 4px; margin: 0 1px;
       font-family: 'Press Start 2P', monospace; font-size: 11px;
       color: #959595; line-height: 1.5; vertical-align: middle;
@@ -195,64 +134,46 @@
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       pointer-events: none;
     }
-    .canvas-placeholder .cp-title {
-      color: rgba(255,200,0,0.18); font-family: monospace; font-size: 10px; text-align: center;
-    }
+    .canvas-placeholder .cp-title { color: rgba(255,200,0,0.18); font-family: monospace; font-size: 10px; text-align: center; }
 
-    /* Canvas: real logo (title mode) — position/size set via JS to mirror draw-title.js geometry */
-    .canvas-logo {
-      position: absolute;
-      object-fit: fill; image-rendering: pixelated;
-      pointer-events: none; opacity: 0.92;
-    }
+    /* Canvas: real logo — position/size set via JS to mirror draw-title.js geometry */
+    .canvas-logo { position: absolute; object-fit: fill; image-rendering: pixelated; pointer-events: none; opacity: 0.92; }
 
-    /* Canvas ctrl bar (title screen) — content rendered via JS, sized proportionally */
+    /* Canvas ctrl bar */
     .canvas-ctrl-bar {
-      position: absolute; bottom: 0; left: 0; right: 0;
-      background: rgba(255,200,0,0.04);
-      border-top: 1px dashed rgba(255,200,0,0.2);
-      display: flex; align-items: center;
-      justify-content: space-between;
+      position: absolute; left: 0; right: 0;
+      background: rgba(255,200,0,0.04); border-top: 1px dashed rgba(255,200,0,0.2);
+      display: flex; align-items: center; justify-content: space-between;
     }
-    .ctrl-grp { display: inline-flex; align-items: center; }
+    .ctrl-grp  { display: inline-flex; align-items: center; }
     .ctrl-box {
       display: inline-flex; align-items: center; justify-content: center;
-      border: 1px solid rgba(255,180,0,0.5);
-      color: rgba(255,180,0,0.75);
-      font-family: 'Press Start 2P', monospace;
-      white-space: nowrap; line-height: 1;
+      border: 1px solid rgba(255,180,0,0.5); color: rgba(255,180,0,0.75);
+      font-family: 'Press Start 2P', monospace; white-space: nowrap; line-height: 1;
     }
-    .ctrl-txt {
-      font-family: 'Press Start 2P', monospace;
-      color: rgba(255,200,80,0.85);
-      white-space: nowrap;
-    }
+    .ctrl-txt  { font-family: 'Press Start 2P', monospace; color: rgba(255,200,80,0.85); white-space: nowrap; }
     .ctrl-diff { color: rgba(120,220,120,0.85) !important; border-color: rgba(120,220,120,0.45) !important; }
-    .ctrl-audio { color: rgba(100,180,255,0.85) !important; border-color: rgba(100,180,255,0.45) !important; }
+    .ctrl-audio{ color: rgba(100,180,255,0.85) !important; border-color: rgba(100,180,255,0.45) !important; }
 
     /* Grid lines */
     .l-hline { height: 1px; left: 0; right: 0; background: rgba(255,255,255,0.10); }
-    .l-vline { width: 1px; top: 0; bottom: 0; background: rgba(255,255,255,0.10); }
+    .l-vline { width: 1px;  top: 0; bottom: 0; background: rgba(255,255,255,0.10); }
 
     /* Floating labels */
     .fl-label {
       position: absolute; pointer-events: none;
-      font-size: 9px; font-family: monospace;
-      padding: 0 3px; border-radius: 1px;
+      font-size: 9px; font-family: monospace; padding: 0 3px; border-radius: 1px;
       white-space: nowrap; line-height: 1.6;
     }
 
     /* ── Info panel ──────────────────────────────────────────────────── */
     #info {
-      flex: 0 0 232px;
-      background: #0e0e1e; border-left: 1px solid #1e1e30;
-      overflow-y: auto; padding: 10px 12px;
-      display: flex; flex-direction: column; gap: 12px;
+      flex: 0 0 232px; background: #0e0e1e; border-left: 1px solid #1e1e30;
+      overflow-y: auto; padding: 10px 12px; display: flex; flex-direction: column; gap: 12px;
     }
     #info h2 {
-      font-size: 9px; color: #444; text-transform: uppercase;
-      letter-spacing: 1.5px; border-bottom: 1px solid #1e1e30;
-      padding-bottom: 4px; margin-bottom: 4px;
+      font-size: 9px; color: #444; text-transform: uppercase; letter-spacing: 1.5px;
+      border-bottom: 1px solid #1e1e30; padding-bottom: 4px; margin-bottom: 4px;
     }
     .metric { display: flex; justify-content: space-between; align-items: baseline; margin-top: 3px; gap: 4px; }
     .metric-k { color: #666; font-size: 11px; }
@@ -278,41 +199,37 @@
   <span class="tb-sep">|</span>
 
   <span class="tb-lbl">VIEWPORT:</span>
-  <button class="preset" id="btn-screen" title="Usa le dimensioni CSS del tuo schermo (già corrette per DPI)">schermo</button>
-  <button class="preset" data-w="2560" data-h="1440">2560×1440</button>
-  <button class="preset" data-w="1920" data-h="1080">1920×1080</button>
-  <button class="preset" data-w="1440" data-h="900">1440×900</button>
-  <button class="preset" data-w="1366" data-h="768">1366×768</button>
-  <button class="preset" data-w="1280" data-h="800">1280×800</button>
-  <button class="preset" data-w="1024" data-h="600">1024×600</button>
-  <button class="preset" data-w="800"  data-h="600">800×600</button>
-  <span class="tb-sep">|</span>
+  <select id="sel-viewport" title="Risoluzione CSS viewport (schermo = tuo monitor, già corretta per DPI)"></select>
   <label>W <input type="number" id="inp-w" value="1920" min="400" max="3840" step="2"></label>
   <label>H <input type="number" id="inp-h" value="1080" min="300" max="2160" step="2"></label>
 
   <span class="tb-sep">|</span>
   <span class="tb-lbl">SCHERMATA:</span>
-  <button class="mode-btn" data-mode="title">title</button>
-  <button class="mode-btn active" data-mode="game">game</button>
+  <button class="mode-btn active" data-mode="title">title</button>
+  <button class="mode-btn"        data-mode="game">game</button>
 
   <span class="tb-sep">|</span>
   <span class="tb-lbl">BG:</span>
   <button class="bg-btn active" data-bg="day">day</button>
-  <button class="bg-btn" data-bg="night">night</button>
+  <button class="bg-btn"        data-bg="night">night</button>
 
+  <span class="tb-sep">|</span>
+  <label title="Simula mobile: in title nasconde legend; in game mostra side panels e nasconde bezels">
+    <input type="checkbox" id="chk-mobile"> 📱 mobile
+  </label>
   <span class="tb-sep">|</span>
   <label title="Pannelli laterali mobile: joystick + btn azione (140px ciascuno)">
     <input type="checkbox" id="chk-panels"> side panels
   </label>
-  <label title="Altezza stimata del div #legend (solo desktop)">
+  <label title="Div #legend (solo desktop, pointer:fine)">
     <input type="checkbox" id="chk-legend" checked> legend
   </label>
-  <label><input type="checkbox" id="chk-bezels" checked> bezels</label>
+  <label><input type="checkbox" id="chk-bezels"> bezels</label>
   <label title="Ctrl bar in basso al canvas (solo title screen)">
-    <input type="checkbox" id="chk-ctrls"> ctrl bar
+    <input type="checkbox" id="chk-ctrls" checked> ctrl bar
   </label>
   <label><input type="checkbox" id="chk-labels" checked> labels</label>
-  <label><input type="checkbox" id="chk-images"> immagini</label>
+  <label><input type="checkbox" id="chk-images" checked> immagini</label>
   <label><input type="checkbox" id="chk-grid"> griglia</label>
 
   <span class="tb-sep">|</span>
@@ -324,7 +241,6 @@
 
 <!-- ── Main ───────────────────────────────────────────────────────────── -->
 <div id="main">
-
   <div id="workspace">
     <div id="preview-wrapper">
       <div id="preview"></div>
@@ -334,14 +250,12 @@
 
   <!-- ── Info panel ────────────────────────────────────────────────────── -->
   <div id="info">
-
     <div>
       <h2>Schermata</h2>
       <div class="metric"><span class="metric-k">mode</span>   <span class="metric-v info2" id="i-mode">—</span></div>
       <div class="metric"><span class="metric-k">bg</span>     <span class="metric-v" id="i-bg">—</span></div>
       <div class="metric"><span class="metric-k">panels</span> <span class="metric-v" id="i-panels">—</span></div>
     </div>
-
     <div>
       <h2>Viewport</h2>
       <div class="metric"><span class="metric-k">width</span>     <span class="metric-v" id="i-vw">—</span></div>
@@ -350,13 +264,11 @@
       <div class="metric"><span class="metric-k">constraint</span><span class="metric-v info2" id="i-vc">—</span></div>
       <div class="metric"><span class="metric-k">screen DPR</span><span class="metric-v" id="i-dpr">—</span></div>
     </div>
-
     <div>
       <h2>Game Area</h2>
       <div class="metric"><span class="metric-k">width</span>    <span class="metric-v" id="i-gaw">—</span></div>
       <div class="metric"><span class="metric-k">offset X</span> <span class="metric-v" id="i-gax">—</span></div>
     </div>
-
     <div>
       <h2>Canvas</h2>
       <div class="metric"><span class="metric-k">rendered W</span>    <span class="metric-v" id="i-cw">—</span></div>
@@ -364,30 +276,25 @@
       <div class="metric"><span class="metric-k">top from vp</span>   <span class="metric-v" id="i-ct">—</span></div>
       <div class="metric"><span class="metric-k">bottom from vp</span><span class="metric-v" id="i-cb">—</span></div>
     </div>
-
     <div>
       <h2>Bezels (desktop)</h2>
       <div class="metric"><span class="metric-k">top-bezel top</span><span class="metric-v" id="i-tbt">—</span></div>
       <div class="metric"><span class="metric-k">top-bezel bot</span><span class="metric-v" id="i-tbb">—</span></div>
       <div class="metric"><span class="metric-k">bot-bezel top</span><span class="metric-v" id="i-bbt">—</span></div>
     </div>
-
     <div>
       <h2>Legend (desktop)</h2>
       <div class="metric"><span class="metric-k">height (stimata)</span><span class="metric-v" id="i-lh">—</span></div>
       <div class="metric"><span class="metric-k">top</span>            <span class="metric-v" id="i-lt">—</span></div>
       <div class="metric"><span class="metric-k">gap da canvas</span>  <span class="metric-v" id="i-gap">—</span></div>
     </div>
-
     <div id="overlap-status"></div>
-
     <div>
       <h2>Canvas ctrl bar</h2>
-      <div class="metric"><span class="metric-k">Y bottom canvas</span> <span class="metric-v" id="i-cby">—</span></div>
-      <div class="metric"><span class="metric-k">ctrl bar H (est.)</span><span class="metric-v" id="i-cbh">—</span></div>
-      <div class="metric"><span class="metric-k">gap legend↔ctrl</span> <span class="metric-v" id="i-clg">—</span></div>
+      <div class="metric"><span class="metric-k">top in canvas</span>  <span class="metric-v" id="i-cby">—</span></div>
+      <div class="metric"><span class="metric-k">ctrl bar H</span>     <span class="metric-v" id="i-cbh">—</span></div>
+      <div class="metric"><span class="metric-k">gap legend↔ctrl</span><span class="metric-v" id="i-clg">—</span></div>
     </div>
-
     <div class="color-key">
       <h2>Colori</h2>
       <div class="ck-row"><div class="ck-dot" style="background:rgba(255,210,0,0.5);outline:1px solid rgba(255,210,0,0.8)"></div>canvas</div>
@@ -397,7 +304,6 @@
       <div class="ck-row"><div class="ck-dot" style="background:rgba(255,80,60,0.28)"></div>legend</div>
       <div class="ck-row"><div class="ck-dot" style="background:rgba(255,30,0,0.45)"></div>overlap zone</div>
     </div>
-
   </div><!-- #info -->
 </div><!-- #main -->
 
@@ -405,67 +311,90 @@
   // ── Layout constants (from style.css + game.js) ──────────────────────────
   var CANVAS_RATIO       = 16 / 10;
   var CANVAS_MAX_W       = 1600;
-  var PANEL_W            = 140;     // #panel-left / #panel-right
-  var LEGEND_BOTTOM      = 8;       // #legend: position:fixed; bottom:8px
-  var BEZEL_TOP_GAP      = 26;      // top: calc(--canvas-top - 26px)
-  var BEZEL_BOT_GAP      = 14;      // top: calc(--canvas-top + --canvas-h + 14px)
-  var BEZEL_BOT_H        = 2;       // height: 2px neon line
-  var CTRL_BAR_H_LOGICAL = 14;      // gapY(12) + controls bottom margin — logical canvas px
-  var JOY_SIZE           = 90;      // #ctrl-joy on mobile
-  var BTN_SIZE           = 90;      // #btn-action on mobile
-  var PANEL_BTN_W        = 68;      // .panel-btn width
-  var PANEL_BTN_H        = 38;      // .panel-btn height
-  var PANEL_BTN_TOP      = 48;      // .panel-btn top offset in panel
-  var CTRL_BOTTOM        = 40;      // bottom distance of joy/btn inside panel
+  var PANEL_W            = 140;
+  var LEGEND_BOTTOM      = 8;
+  var BEZEL_TOP_GAP      = 26;
+  var BEZEL_BOT_GAP      = 14;
+  var BEZEL_BOT_H        = 2;
+  var JOY_SIZE           = 90;
+  var BTN_SIZE           = 90;
+  var PANEL_BTN_W        = 68;
+  var PANEL_BTN_H        = 38;
+  var PANEL_BTN_TOP      = 48;
+  var CTRL_BOTTOM        = 40;
 
-  // top-bezel text: font-size: clamp(20px, 1.9vw, 30px)
-  // Approximated height = font-size * 1.2 line-height
-  function bezelFontPx(vw) { return Math.min(Math.max(20, 1.9 * vw / 100), 30); }
-  function bezelHeightPx(vw) { return Math.ceil(bezelFontPx(vw) * 1.25); }
+  // top-bezel font: clamp(20px, 1.9vw, 30px)
+  function bezelFontPx(vw)  { return Math.min(Math.max(20, 1.9 * vw / 100), 30); }
+  function bezelHeightPx(vw){ return Math.ceil(bezelFontPx(vw) * 1.25); }
 
-  // Canvas controls bar: logical coord scale = cH/200 (canvas is 200 logical px tall)
-  // ui.js CONFIG.ui.titleScreen.controls
-  var CTRL_FONT    = 8;    // controls.fontSize (logical px)
-  var CTRL_BTN_H   = 11;   // controls.btnH
-  var CTRL_GAP_Y   = 12;   // controls.gapY (space above ctrl bar)
-  var CTRL_PREV_X  = 10;   // controls.prevX
-  var CTRL_PREV_W  = 14;
-  var CTRL_NEXT_X  = 76;
-  var CTRL_NEXT_W  = 14;
-  var CTRL_DIFF_X  = 134;  // controls.diffX (left edge of diff btn, canvas center=160)
-  var CTRL_DIFF_W  = 52;
-  var CTRL_AUDIO_RX = 310; // controls.audioRightX
-  var CTRL_PAD_X   = 6;    // controls.audioPadX
+  // Canvas controls (CONFIG.ui.titleScreen.controls)
+  var CTRL_FONT    = 8;
+  var CTRL_BTN_H   = 11;
+  var CTRL_GAP_Y   = 12;
+  var CTRL_PREV_X  = 10;
 
-  // Logo geometry — mirrors draw-title.js exactly
-  // CONFIG.ui.titleScreen.logo.w = 300 logical px; canvas = 320×200
-  var LOGO_LOG_W   = 300;  // logical width (config)
-  var LOGO_LOG_X   = Math.round((320 - LOGO_LOG_W) / 2);  // = 10
-  // Natural dimensions from logo-1600.png (1697×927) — used as fallback if image not yet loaded
-  var LOGO_NAT_W   = 1697;
-  var LOGO_NAT_H   = 927;
+  // Logo geometry (CONFIG.ui.titleScreen.logo + draw-title.js)
+  var LOGO_LOG_W  = 300;
+  var LOGO_LOG_X  = Math.round((320 - LOGO_LOG_W) / 2);  // = 10
+  var LOGO_NAT_W  = 1697;   // logo-1600.png natural dimensions (fallback)
+  var LOGO_NAT_H  = 927;
 
-  // Compute logo logical height from natural dimensions
   function logoLogH(natW, natH) {
     return Math.round((natH || LOGO_NAT_H) / (natW || LOGO_NAT_W) * LOGO_LOG_W);
   }
-  // Compute logoY: center the (logo + gap + btn) block vertically in 200px
   function logoLogY(lh) {
     var totalH = lh + CTRL_GAP_Y + CTRL_BTN_H;
     return Math.max(0, Math.round((200 - totalH) / 2));
   }
 
-  // Preload logo image for accurate natural dimensions
+  // Preload logo for accurate natural dimensions
   var _logoImg = new Image();
   _logoImg.onload = function() { update(); };
   _logoImg.src = '../../assets/pics/logo/logo-1600.png';
 
+  // ── Viewport presets (first = schermo) ──────────────────────────────────
+  var _presets = (function() {
+    var sw = window.screen.width, sh = window.screen.height;
+    var list = [
+      { w: sw, h: sh, label: sw + '×' + sh + ' (schermo)' },
+      { w: 2560, h: 1440 }, { w: 1920, h: 1080 }, { w: 1440, h: 900  },
+      { w: 1366, h: 768  }, { w: 1280, h: 800  }, { w: 1024, h: 600  },
+      { w: 800,  h: 600  },
+    ];
+    var seen = {};
+    return list.filter(function(p) {
+      var k = p.w + 'x' + p.h;
+      if (seen[k]) return false;
+      seen[k] = true;
+      if (!p.label) p.label = p.w + '×' + p.h;
+      return true;
+    });
+  })();
+
+  // ── Mode defaults ────────────────────────────────────────────────────────
+  var MODE_DEFAULTS = {
+    title: { mobile: false, panels: false, legend: true,  bezels: false, ctrls: true,  labels: true,  images: true,  grid: false },
+    game:  { mobile: false, panels: false, legend: false, bezels: true,  ctrls: false, labels: false, images: true,  grid: false },
+  };
+
+  function applyModeDefaults(mode) {
+    var d = MODE_DEFAULTS[mode] || MODE_DEFAULTS.game;
+    document.getElementById('chk-mobile').checked = d.mobile;
+    document.getElementById('chk-panels').checked = d.panels;
+    document.getElementById('chk-legend').checked = d.legend;
+    document.getElementById('chk-bezels').checked = d.bezels;
+    document.getElementById('chk-ctrls').checked  = d.ctrls;
+    document.getElementById('chk-labels').checked = d.labels;
+    document.getElementById('chk-images').checked = d.images;
+    document.getElementById('chk-grid').checked   = d.grid;
+  }
+
   // ── State ────────────────────────────────────────────────────────────────
-  var vpW        = 1920;
-  var vpH        = 1080;
+  var vpW        = window.screen.width;
+  var vpH        = window.screen.height;
   var legH       = 20;
-  var screenMode = 'game';  // 'title' | 'game'
-  var bgMode     = 'day';   // 'day'   | 'night'
+  var screenMode = 'title';
+  var bgMode     = 'day';
 
   // ── DOM ──────────────────────────────────────────────────────────────────
   var elPreview   = document.getElementById('preview');
@@ -494,27 +423,26 @@
     var cLeft = gaX + (gaW - cW) / 2;
     var cTop  = (gaH - cH) / 2;
     var cBot  = cTop + cH;
+    var s     = cH / 200;
 
     var tbH   = bezelHeightPx(vw);
     var tbBot = cTop - BEZEL_TOP_GAP;
     var tbTop = tbBot - tbH;
-
     var bbTop = cBot + BEZEL_BOT_GAP;
+
     var lTop  = vh - LEGEND_BOTTOM - legH;
     var gap   = lTop - cBot;
 
-    var s              = cH / 200;       // logical-to-rendered scale
-    // Accurate ctrl bar position (mirrors draw-title.js: ctrlY = logoY + logoH + gapY)
-    var _lLogH         = logoLogH(LOGO_NAT_W, LOGO_NAT_H);
-    var _lLogY         = logoLogY(_lLogH);
-    var _ctrlLogY      = _lLogY + _lLogH + CTRL_GAP_Y;
-    var ctrlBarRenderH = CTRL_BTN_H * s;
-    var ctrlBarTop     = cTop + _ctrlLogY * s;
+    // Accurate ctrl bar position (mirrors draw-title.js)
+    var _lh        = logoLogH(LOGO_NAT_W, LOGO_NAT_H);
+    var _ly        = logoLogY(_lh);
+    var ctrlBarTop = cTop + (_ly + _lh + CTRL_GAP_Y) * s;
+    var ctrlBarH   = CTRL_BTN_H * s;
 
     return {
-      gaX, gaW, gaH, cW, cH, cLeft, cTop, cBot, constraint,
+      gaX, gaW, gaH, cW, cH, cLeft, cTop, cBot, constraint, s,
       tbTop, tbBot, tbH, bbTop, gap, lTop,
-      ctrlBarH: ctrlBarRenderH, ctrlBarTop, s,
+      ctrlBarTop, ctrlBarH,
       withPanels, panelsW
     };
   }
@@ -536,28 +464,24 @@
     return d;
   }
 
-  // Legend key group: keys[] + label string
   function legGroup(keys, lbl) {
     var grp = document.createElement('span');
     grp.className = 'sim-leg-group';
     keys.forEach(function(k) {
-      var el = document.createElement('span');
-      el.className = 'sim-leg-key'; el.textContent = k; grp.appendChild(el);
+      var el = document.createElement('span'); el.className = 'sim-leg-key'; el.textContent = k; grp.appendChild(el);
     });
-    var lblEl = document.createElement('span');
-    lblEl.className = 'sim-leg-lbl'; lblEl.textContent = lbl; grp.appendChild(lblEl);
+    var lblEl = document.createElement('span'); lblEl.className = 'sim-leg-lbl'; lblEl.textContent = lbl; grp.appendChild(lblEl);
     return grp;
   }
 
-  // Ctrl bar box button (sized proportionally to logical scale s)
   function ctrlBox(text, s, extraClass) {
     var el = document.createElement('span');
     el.className = 'ctrl-box' + (extraClass ? ' ' + extraClass : '');
     el.textContent = text;
-    el.style.fontSize      = Math.round(CTRL_FONT * s) + 'px';
-    el.style.height        = Math.round(CTRL_BTN_H * s) + 'px';
-    el.style.padding       = '0 ' + Math.round(3 * s) + 'px';
-    el.style.borderRadius  = Math.round(2 * s) + 'px';
+    el.style.fontSize     = Math.round(CTRL_FONT * s) + 'px';
+    el.style.height       = Math.round(CTRL_BTN_H * s) + 'px';
+    el.style.padding      = '0 ' + Math.round(3 * s) + 'px';
+    el.style.borderRadius = Math.round(2 * s) + 'px';
     return el;
   }
 
@@ -578,14 +502,19 @@
     document.getElementById('size-label').textContent =
       vpW + ' × ' + vpH + 'px  ·  scale ' + scale.toFixed(2) + '×';
 
-    // Read flags
     elPreview.innerHTML = '';
+    var mobileMode = document.getElementById('chk-mobile').checked;
     var showBezels = document.getElementById('chk-bezels').checked;
     var showLegend = document.getElementById('chk-legend').checked;
     var showGrid   = document.getElementById('chk-grid').checked;
     var showCtrls  = document.getElementById('chk-ctrls').checked;
     var showLabels = document.getElementById('chk-labels').checked;
     var showImages = document.getElementById('chk-images').checked;
+    // mobile overrides
+    if (mobileMode) {
+      if (screenMode === 'title') showLegend = false;
+      if (screenMode === 'game')  { showBezels = false; withPanels = true; }
+    }
 
     // ── Grid ──────────────────────────────────────────────────────────────
     if (showGrid) {
@@ -602,45 +531,47 @@
       var joyY = vpH - CTRL_BOTTOM - JOY_SIZE;
       var btnY = vpH - CTRL_BOTTOM - BTN_SIZE;
 
-      // Left panel
       var lpEl = layer('l-panel', { left:'0', top:'0', width:PANEL_W+'px', height:vpH+'px' });
-      if (showLabels) lpEl.appendChild(flLabel('panel-left 140px', { top:'8px', left:'4px' }, 'rgba(160,0,255,0.7)'));
-      var joyEl = document.createElement('div');
-      joyEl.className = 'l-joy';
+      if (showLabels) lpEl.appendChild(flLabel('#panel-left  140px', { top:'4px', left:'4px' }, 'rgba(160,0,255,0.7)'));
+      var joyEl = document.createElement('div'); joyEl.className = 'l-joy';
       Object.assign(joyEl.style, { left:(PANEL_W/2-JOY_SIZE/2)+'px', top:joyY+'px', width:JOY_SIZE+'px', height:JOY_SIZE+'px' });
+      if (showLabels) joyEl.appendChild(flLabel('#ctrl-joy  90×90', { bottom:'-14px', left:'50%', transform:'translateX(-50%)' }, 'rgba(0,200,255,0.55)'));
       lpEl.appendChild(joyEl);
       var pbL = document.createElement('div'); pbL.className = 'l-panel-btn';
       Object.assign(pbL.style, { left:(PANEL_W/2-PANEL_BTN_W/2)+'px', top:PANEL_BTN_TOP+'px', width:PANEL_BTN_W+'px', height:PANEL_BTN_H+'px' });
+      if (showLabels) pbL.appendChild(flLabel('.panel-btn  68×38', { bottom:'-13px', left:'50%', transform:'translateX(-50%)' }, 'rgba(160,0,255,0.55)'));
       lpEl.appendChild(pbL);
       elPreview.appendChild(lpEl);
 
-      // Right panel
       var rpEl = layer('l-panel', { right:'0', top:'0', width:PANEL_W+'px', height:vpH+'px' });
-      if (showLabels) rpEl.appendChild(flLabel('panel-right 140px', { top:'8px', left:'4px' }, 'rgba(160,0,255,0.7)'));
-      var btnEl = document.createElement('div');
-      btnEl.className = 'l-action-btn';
+      if (showLabels) rpEl.appendChild(flLabel('#panel-right  140px', { top:'4px', left:'4px' }, 'rgba(160,0,255,0.7)'));
+      var btnEl = document.createElement('div'); btnEl.className = 'l-action-btn';
       Object.assign(btnEl.style, { left:(PANEL_W/2-BTN_SIZE/2)+'px', top:btnY+'px', width:BTN_SIZE+'px', height:BTN_SIZE+'px' });
+      if (showLabels) btnEl.appendChild(flLabel('#btn-action  90×90', { bottom:'-14px', left:'50%', transform:'translateX(-50%)' }, 'rgba(255,50,0,0.55)'));
       rpEl.appendChild(btnEl);
       var pbR = document.createElement('div'); pbR.className = 'l-panel-btn';
       Object.assign(pbR.style, { left:(PANEL_W/2-PANEL_BTN_W/2)+'px', top:PANEL_BTN_TOP+'px', width:PANEL_BTN_W+'px', height:PANEL_BTN_H+'px' });
+      if (showLabels) pbR.appendChild(flLabel('.panel-btn  68×38', { bottom:'-13px', left:'50%', transform:'translateX(-50%)' }, 'rgba(160,0,255,0.55)'));
       rpEl.appendChild(pbR);
       elPreview.appendChild(rpEl);
     }
 
-    // ── Game area boundary ────────────────────────────────────────────────
-    elPreview.appendChild(layer('l-game-area', { left:g.gaX+'px', top:'0', width:g.gaW+'px', height:vpH+'px' }));
+    // ── Game area ─────────────────────────────────────────────────────────
+    var gaEl = layer('l-game-area', { left:g.gaX+'px', top:'0', width:g.gaW+'px', height:vpH+'px' });
+    if (showLabels) gaEl.appendChild(flLabel('#game-area  ' + Math.round(g.gaW) + '×' + vpH, { top:'4px', left:'4px' }, 'rgba(0,210,255,0.4)'));
+    elPreview.appendChild(gaEl);
 
     // ── Top bezel (desktop only) ──────────────────────────────────────────
     if (showBezels && !withPanels && g.tbTop > -g.tbH) {
       var tbEl = layer('l-top-bezel', {
         left: g.gaX+'px', top: g.tbTop+'px', width: g.gaW+'px', height: g.tbH+'px'
       });
-      var bt = document.createElement('span');
-      bt.className = 'bezel-title';
+      var bt = document.createElement('span'); bt.className = 'bezel-title';
       bt.textContent = 'BREAKTIME REBELLION';
       bt.style.fontSize = Math.round(bezelFontPx(vpW)) + 'px';
       bt.style.letterSpacing = Math.round(bezelFontPx(vpW) * 0.16) + 'px';
       tbEl.appendChild(bt);
+      if (showLabels) tbEl.appendChild(flLabel('#top-bezel', { bottom:'-13px', left:'4px' }, 'rgba(255,200,0,0.5)'));
       elPreview.appendChild(tbEl);
     }
 
@@ -648,32 +579,28 @@
     var cEl = layer('l-canvas', {
       left: g.cLeft+'px', top: g.cTop+'px', width: g.cW+'px', height: g.cH+'px'
     });
+    cEl.style.borderRadius = g.cTop > 2 ? '16px' : '0';
 
-    // Compute logo geometry (mirrors draw-title.js exactly)
+    if (showLabels) cEl.appendChild(flLabel('canvas  ' + Math.round(g.cW) + '×' + Math.round(g.cH), { top:'4px', left:'4px' }, 'rgba(255,210,0,0.55)'));
+
+    // Logo / bg image
     var natW = (_logoImg && _logoImg.complete && _logoImg.naturalWidth > 0) ? _logoImg.naturalWidth  : LOGO_NAT_W;
     var natH = (_logoImg && _logoImg.complete && _logoImg.naturalWidth > 0) ? _logoImg.naturalHeight : LOGO_NAT_H;
     var lLogH = logoLogH(natW, natH);
     var lLogY = logoLogY(lLogH);
-    var lLogX = LOGO_LOG_X;
-    var s = g.s;
-    // Rendered coords inside canvas element
-    var lRW = Math.round(LOGO_LOG_W * s);
-    var lRH = Math.round(lLogH * s);
-    var lRX = Math.round(lLogX * s);
-    var lRY = Math.round(lLogY * s);
-    var ctrlLogY = lLogY + lLogH + CTRL_GAP_Y;   // mirrors: ctrlY = logoY + logoH + ct.gapY
+    var s     = g.s;
+    var lRW   = Math.round(LOGO_LOG_W * s);
+    var lRH   = Math.round(lLogH * s);
+    var lRX   = Math.round(LOGO_LOG_X * s);
+    var lRY   = Math.round(lLogY * s);
+    var ctrlLogY = lLogY + lLogH + CTRL_GAP_Y;
     var ctrlRY   = Math.round(ctrlLogY * s);
     var ctrlRH   = Math.round(CTRL_BTN_H * s);
 
-    // Canvas border-radius: canvas.rounded activates when cTop > 2 (style.css)
-    cEl.style.borderRadius = g.cTop > 2 ? '16px' : '0';
-
     if (showImages) {
       if (screenMode === 'title') {
-        // Transparent canvas (real game uses clearRect; page bg shows through)
         cEl.style.background = 'transparent';
-        cEl.style.outline = '1px dashed rgba(255,210,0,0.25)'; // faint guide only
-
+        cEl.style.outline    = '1px dashed rgba(255,210,0,0.25)';
         var logoEl = document.createElement('img');
         logoEl.src = '../../assets/pics/logo/logo-1600.png';
         logoEl.className = 'canvas-logo';
@@ -681,18 +608,19 @@
         logoEl.style.top    = lRY + 'px';
         logoEl.style.width  = lRW + 'px';
         logoEl.style.height = lRH + 'px';
-        // Logo border (draw-title.js draws roundRect stroke around logo)
         logoEl.style.borderRadius = Math.round(5 * s) + 'px';
         logoEl.style.outline = '1px solid rgba(200,160,0,0.55)';
         cEl.appendChild(logoEl);
+        if (showLabels) cEl.appendChild(flLabel('logo  ' + lRW + '×' + lRH, {
+          left: lRX + 'px', top: (lRY + lRH + 2) + 'px'
+        }, 'rgba(255,200,80,0.55)'));
       } else {
         cEl.style.background = 'url(' + (bgMode === 'night'
           ? '../../assets/pics/bg/bg-1600-night.png'
           : '../../assets/pics/bg/bg-1600-day.png') + ') center/100% 100% no-repeat';
       }
     } else {
-      var cp = document.createElement('div');
-      cp.className = 'canvas-placeholder';
+      var cp = document.createElement('div'); cp.className = 'canvas-placeholder';
       var modeStr = screenMode === 'title' ? 'TITLE' : 'GAME (' + bgMode + ')';
       cp.innerHTML = '<div class="cp-title" style="font-size:' + Math.max(8, g.cH*0.018) + 'px">' +
         modeStr + ' · CANVAS 16:10<br>' +
@@ -701,64 +629,58 @@
       cEl.appendChild(cp);
     }
 
-    // Canvas ctrl bar — title only; positioned at exact ctrlY (mirrors draw-title.js)
+    // Ctrl bar (title only) at exact ctrlY
     if (showCtrls && screenMode === 'title' && ctrlRH > 1) {
-      var cbEl = document.createElement('div');
-      cbEl.className = 'canvas-ctrl-bar';
+      var cbEl = document.createElement('div'); cbEl.className = 'canvas-ctrl-bar';
       cbEl.style.top     = ctrlRY + 'px';
-      cbEl.style.bottom  = 'auto';
       cbEl.style.height  = ctrlRH + 'px';
       cbEl.style.padding = '0 ' + Math.round(CTRL_PREV_X * s) + 'px';
       cbEl.style.gap     = Math.round(6 * s) + 'px';
-
-      var lgrp = document.createElement('div'); lgrp.className = 'ctrl-grp';
-      lgrp.style.gap = Math.round(3 * s) + 'px';
+      var lgrp = document.createElement('div'); lgrp.className = 'ctrl-grp'; lgrp.style.gap = Math.round(3*s) + 'px';
       lgrp.appendChild(ctrlBox('<', s));
       var lbl = document.createElement('span'); lbl.className = 'ctrl-txt';
       lbl.textContent = 'Lvl 1'; lbl.style.fontSize = Math.round(CTRL_FONT * s) + 'px';
-      lgrp.appendChild(lbl);
-      lgrp.appendChild(ctrlBox('>', s));
+      lgrp.appendChild(lbl); lgrp.appendChild(ctrlBox('>', s));
       cbEl.appendChild(lgrp);
       cbEl.appendChild(ctrlBox('EASY', s, 'ctrl-diff'));
       cbEl.appendChild(ctrlBox('♪', s, 'ctrl-audio'));
       cEl.appendChild(cbEl);
+      if (showLabels) cEl.appendChild(flLabel('ctrl bar  y:' + ctrlRY + 'px', {
+        left: Math.round(CTRL_PREV_X * s) + 'px', top: (ctrlRY + ctrlRH + 2) + 'px'
+      }, 'rgba(255,180,0,0.5)'));
     }
 
     elPreview.appendChild(cEl);
 
-    // ── Bottom bezel — real neon gradient, 55% of game-area width ─────────
+    // ── Bottom bezel — neon gradient, 55% of game-area ────────────────────
     if (showBezels && !withPanels) {
-      var bbW    = g.gaW * 0.55;
+      var bbW  = g.gaW * 0.55;
       var bbLeft = g.gaX + (g.gaW - bbW) / 2;
       elPreview.appendChild(layer('l-bot-bezel', {
         left: bbLeft+'px', top: g.bbTop+'px', width: bbW+'px', height: BEZEL_BOT_H+'px'
       }));
-      if (showLabels) elPreview.appendChild(flLabel('bottom-bezel +14px (55% gaW)', {
-        left: (bbLeft + 4)+'px', top: (g.bbTop + 3)+'px'
+      if (showLabels) elPreview.appendChild(flLabel('#bottom-bezel  55%gaW  +14px', {
+        left: (bbLeft + 4)+'px', top: (g.bbTop + 4)+'px'
       }, 'rgba(0,210,255,0.55)'));
     }
 
-    // ── Legend — real keyboard groups (title.js) ──────────────────────────
+    // ── Legend — real keyboard groups ─────────────────────────────────────
     var overlap = !withPanels && g.gap < 0;
     if (showLegend && !withPanels) {
       var legEl = layer('l-legend' + (overlap ? ' overlap' : ''), {
         left:'0', right:'0', top:g.lTop+'px', height:legH+'px'
       });
-
-      // Build real legend content (mirrors title.js _legendEl setup)
-      var wrap = document.createElement('div');
-      wrap.className = 'sim-legend-wrap';
+      var wrap = document.createElement('div'); wrap.className = 'sim-legend-wrap';
       [
         [['<','^','v','>'], 'Muovi'],
-        [['Z'],             'Azione'],
-        [['C'],             'Crediti'],
-        [['P'],             'Pausa'],
-        [['ESC'],           'Home'],
+        [['Z'],  'Azione'],
+        [['C'],  'Crediti'],
+        [['P'],  'Pausa'],
+        [['ESC'],'Home'],
       ].forEach(function(g) { wrap.appendChild(legGroup(g[0], g[1])); });
       legEl.appendChild(wrap);
-
-      if (showLabels) legEl.appendChild(flLabel('#legend bottom:8px', {
-        top: '-14px', left: '4px'
+      if (showLabels) legEl.appendChild(flLabel('#legend  bottom:8px  h:' + legH + 'px', {
+        top:'50%', right:'4px', transform:'translateY(-50%)'
       }, overlap ? 'rgba(255,130,100,0.9)' : 'rgba(255,100,80,0.7)'));
       elPreview.appendChild(legEl);
 
@@ -783,73 +705,79 @@
     setM('i-mode',   screenMode);
     setM('i-bg',     screenMode === 'title' ? 'logo' : bgMode);
     setM('i-panels', withPanels ? '2 × 140px' : 'off', withPanels ? 'info2' : 'muted');
-
     setM('i-vw', vpW+'px'); setM('i-vh', vpH+'px');
     setM('i-vr', (vpW/vpH).toFixed(3)+' ('+(vpW/vpH > CANVAS_RATIO ? '>' : '<')+' 1.6)');
     setM('i-vc', g.constraint+'-constrained', g.constraint==='height' ? 'warn' : 'ok');
     var dpr = window.devicePixelRatio || 1;
     setM('i-dpr', dpr.toFixed(2)+'×  (phys: '+(Math.round(vpW*dpr))+'×'+(Math.round(vpH*dpr))+')', dpr > 1 ? 'info2' : '');
-
-    setM('i-gaw', Math.round(g.gaW)+'px');
-    setM('i-gax', Math.round(g.gaX)+'px');
-    setM('i-cw',  Math.round(g.cW)+'px');
-    setM('i-ch',  Math.round(g.cH)+'px');
-    setM('i-ct',  Math.round(g.cTop)+'px');
-    setM('i-cb',  Math.round(vpH-g.cBot)+'px');
-
+    setM('i-gaw', Math.round(g.gaW)+'px'); setM('i-gax', Math.round(g.gaX)+'px');
+    setM('i-cw',  Math.round(g.cW)+'px'); setM('i-ch',  Math.round(g.cH)+'px');
+    setM('i-ct',  Math.round(g.cTop)+'px'); setM('i-cb', Math.round(vpH-g.cBot)+'px');
     setM('i-tbt', na || Math.round(g.tbTop)+'px', na ? 'muted' : '');
     setM('i-tbb', na || Math.round(g.tbBot)+'px', na ? 'muted' : '');
     setM('i-bbt', na || Math.round(g.bbTop)+'px', na ? 'muted' : '');
-    setM('i-lh',  na || legH+'px',                na ? 'muted' : '');
-    setM('i-lt',  na || Math.round(g.lTop)+'px',  na ? 'muted' : '');
-    setM('i-gap', na || Math.round(g.gap)+'px',   na ? 'muted' : (g.gap < 0 ? 'warn' : 'ok'));
-
-    setM('i-cby', Math.round(g.cBot)+'px');
+    setM('i-lh',  na || legH+'px', na ? 'muted' : '');
+    setM('i-lt',  na || Math.round(g.lTop)+'px', na ? 'muted' : '');
+    setM('i-gap', na || Math.round(g.gap)+'px',  na ? 'muted' : (g.gap < 0 ? 'warn' : 'ok'));
+    setM('i-cby', Math.round(g.ctrlBarTop - g.cTop)+'px');
     setM('i-cbh', g.ctrlBarH.toFixed(1)+'px');
-    var lcg = g.lTop - g.cBot;
+    var lcg = g.lTop - g.ctrlBarTop - g.ctrlBarH;
     setM('i-clg', na || Math.round(lcg)+'px', na ? 'muted' : (lcg < 0 ? 'warn' : 'ok'));
 
-    // Overlap status
     var osEl = document.getElementById('overlap-status');
     if (withPanels) {
       osEl.innerHTML = '<div class="status-box ok">✓ Mobile — no legend<br><span style="font-size:10px;opacity:.8">canvas riempie la game-area</span></div>';
     } else if (overlap) {
-      osEl.innerHTML = '<div class="status-box overlap">⚠ Overlap di <b>'+Math.round(-g.gap)+'px</b><br>legend sovrasta il canvas.<br>' +
-        '<span style="font-size:10px;opacity:.8">canvas bottom: '+Math.round(g.cBot)+'px<br>legend top: '+Math.round(g.lTop)+'px</span></div>';
+      osEl.innerHTML = '<div class="status-box overlap">⚠ Overlap di <b>'+Math.round(-g.gap)+'px</b><br>legend sovrasta il canvas.<br><span style="font-size:10px;opacity:.8">canvas bottom: '+Math.round(g.cBot)+'px<br>legend top: '+Math.round(g.lTop)+'px</span></div>';
     } else {
       osEl.innerHTML = '<div class="status-box ok">✓ Nessun overlap<br><span style="font-size:10px;opacity:.8">gap: '+Math.round(g.gap)+'px liberi</span></div>';
     }
 
-    // Preset warn states
-    document.querySelectorAll('.preset[data-w]').forEach(function(btn) {
-      var bw = parseInt(btn.dataset.w), bh = parseInt(btn.dataset.h);
-      var bg = computeLayout(bw, bh, withPanels);
-      btn.classList.toggle('warn',   !withPanels && bg.gap < 0);
-      btn.classList.toggle('active', bw === vpW && bh === vpH);
+    // Sync select
+    _syncSelect();
+  }
+
+  // ── Select population & sync ─────────────────────────────────────────────
+  function _populateSelect() {
+    var sel = document.getElementById('sel-viewport');
+    sel.innerHTML = '';
+    _presets.forEach(function(p, i) {
+      var opt = document.createElement('option'); opt.value = i; opt.textContent = p.label; sel.appendChild(opt);
     });
-    // "schermo" button: active when viewport matches screen size
-    var sc = document.getElementById('btn-screen');
-    sc.classList.toggle('active', vpW === window.screen.width && vpH === window.screen.height);
+    // Custom option (hidden by default; shown when no preset matches)
+    var custom = document.createElement('option'); custom.value = 'custom'; custom.textContent = 'Custom…'; sel.appendChild(custom);
+    _syncSelect();
+  }
+
+  function _syncSelect() {
+    var sel = document.getElementById('sel-viewport');
+    var found = -1;
+    _presets.forEach(function(p, i) { if (p.w === vpW && p.h === vpH) found = i; });
+    sel.value = found >= 0 ? found : 'custom';
   }
 
   // ── Controls ─────────────────────────────────────────────────────────────
-  function setSize(w, h) { vpW = w; vpH = h; elInpW.value = w; elInpH.value = h; update(); }
+  function setSize(w, h) {
+    vpW = w; vpH = h;
+    elInpW.value = w; elInpH.value = h;
+    update();
+  }
 
-  // "schermo" button: legge le dimensioni CSS dello schermo (già corrette per DPI)
-  document.getElementById('btn-screen').addEventListener('click', function() {
-    setSize(window.screen.width, window.screen.height);
+  document.getElementById('sel-viewport').addEventListener('change', function() {
+    var p = _presets[parseInt(this.value)];
+    if (p) setSize(p.w, p.h);
   });
 
-  document.querySelectorAll('.preset[data-w]').forEach(function(btn) {
-    btn.addEventListener('click', function() { setSize(parseInt(this.dataset.w), parseInt(this.dataset.h)); });
-  });
   document.querySelectorAll('.mode-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
       screenMode = this.dataset.mode;
       document.querySelectorAll('.mode-btn').forEach(function(b) { b.classList.remove('active'); });
-      this.classList.add('active'); update();
+      this.classList.add('active');
+      applyModeDefaults(screenMode);
+      update();
     });
   });
+
   document.querySelectorAll('.bg-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
       bgMode = this.dataset.bg;
@@ -857,17 +785,25 @@
       this.classList.add('active'); update();
     });
   });
-  elInpW.addEventListener('input', function() { var v=parseInt(this.value); if(v>=400&&v<=2560){vpW=v;update();} });
-  elInpH.addEventListener('input', function() { var v=parseInt(this.value); if(v>=300&&v<=1440){vpH=v;update();} });
-  elSldLH.addEventListener('input', function() { legH=parseInt(this.value); elLHVal.textContent=legH; update(); });
-  ['chk-panels','chk-legend','chk-bezels','chk-ctrls','chk-labels','chk-images','chk-grid']
+
+  elInpW.addEventListener('input', function() {
+    var v = parseInt(this.value); if (v >= 400 && v <= 3840) { vpW = v; update(); }
+  });
+  elInpH.addEventListener('input', function() {
+    var v = parseInt(this.value); if (v >= 300 && v <= 2160) { vpH = v; update(); }
+  });
+
+  elSldLH.addEventListener('input', function() { legH = parseInt(this.value); elLHVal.textContent = legH; update(); });
+  ['chk-mobile','chk-panels','chk-legend','chk-bezels','chk-ctrls','chk-labels','chk-images','chk-grid']
     .forEach(function(id) { document.getElementById(id).onchange = update; });
 
   var _rt;
   window.addEventListener('resize', function() { clearTimeout(_rt); _rt = setTimeout(update, 60); });
 
   // ── Init ─────────────────────────────────────────────────────────────────
-  setSize(1920, 1080);
+  _populateSelect();
+  applyModeDefaults('title');  // apply title defaults (mode is already 'title')
+  setSize(window.screen.width, window.screen.height);
 </script>
 
 </body>
