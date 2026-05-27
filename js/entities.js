@@ -269,22 +269,23 @@ function updateBins() {
       }
     }
 
-    // Blast Marco if too close
-    if (!deathFreeze && player.stunT === 0 && Math.abs(player.y - b.y) < 20 && Math.abs(player.x + PW/2 - b.x - 5) < 24) {
-      lives--;
-      score = Math.max(0, score - 300);
-      if (lives > 0) setMsg(STRINGS.binBlastHit);
-      else msgT = 0;
-      playerDied();
-      return; // skip win check this frame
-    }
-
+    // Win check first — must run even if Marco is caught in the blast
     score += 300;
     addFloating(b.x + 5, b.y - 18, '+300', PAL.scoreParticle);
     if (_isLastBin) {
       binExplodeWin();
     } else {
       setMsg(fmt(STRINGS.binExploded, _binsAllDone, bins.length));
+    }
+
+    // Blast Marco if too close (after win check — avoids skipping binExplodeWin on last bin)
+    if (!deathFreeze && player.stunT === 0 && Math.abs(player.y - b.y) < 20 && Math.abs(player.x + PW/2 - b.x - 5) < 24) {
+      lives--;
+      score = Math.max(0, score - 300);
+      if (lives > 0) setMsg(STRINGS.binBlastHit);
+      else msgT = 0;
+      playerDied();
+      return;
     }
   }
 }
