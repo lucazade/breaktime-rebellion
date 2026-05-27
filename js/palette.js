@@ -303,7 +303,6 @@ const PAL = {
   debugFloorYellow:  'rgba(255,255,0,0.7)',  // floor line colour
   debugPlayerPink:   'rgba(255,80,255,0.9)', // player hitbox
   debugCyan:         '#00E8FF',              // floor line labels (TY/MY/GY)
-  debugGreen:        '#00FF50',              // board hitbox label
   debugBlue:         '#8888FF',              // bag hitbox label
   debugOrange:       '#FF9900',              // stair coordinate label
   debugOrangeR:      '#FF4400',              // stair endpoint dot
