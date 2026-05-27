@@ -521,10 +521,10 @@
     var showCtrls  = document.getElementById('chk-ctrls').checked;
     var showLabels = document.getElementById('chk-labels').checked;
     var showImages = document.getElementById('chk-images').checked;
-    // mobile overrides
+    // mobile overrides — legend mai presente su mobile (CSS: hover+pointer:fine only)
     if (mobileMode) {
-      if (screenMode === 'title') showLegend = false;
-      if (screenMode === 'game')  { showBezels = false; withPanels = true; }
+      showLegend = false;
+      if (screenMode === 'game') { showBezels = false; withPanels = true; }
     }
 
     // ── Grid ──────────────────────────────────────────────────────────────
