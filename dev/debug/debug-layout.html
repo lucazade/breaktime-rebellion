@@ -214,10 +214,6 @@
   <button class="bg-btn"        data-bg="night">night</button>
 
   <span class="tb-sep">|</span>
-  <label title="Simula mobile: in title nasconde legend; in game mostra side panels e nasconde bezels">
-    <input type="checkbox" id="chk-mobile"> 📱 mobile
-  </label>
-  <span class="tb-sep">|</span>
   <label title="Pannelli laterali mobile: joystick + btn azione (140px ciascuno)">
     <input type="checkbox" id="chk-panels"> side panels
   </label>
@@ -358,19 +354,24 @@
   var _presets = (function() {
     var sw = window.screen.width, sh = window.screen.height;
     var list = [
-      { w: sw, h: sh, label: sw + '×' + sh + ' (schermo)' },
-      { w: 2560, h: 1440 }, { w: 1920, h: 1080 }, { w: 1440, h: 900  },
-      { w: 1366, h: 768  }, { w: 1280, h: 800  }, { w: 1024, h: 600  },
-      { w: 800,  h: 600  },
+      { w: sw,  h: sh,  mobile: false, label: sw + '×' + sh + ' (schermo)' },
+      // Desktop
+      { w: 2560, h: 1440, mobile: false },
+      { w: 1920, h: 1080, mobile: false },
+      { w: 1440, h: 900,  mobile: false },
+      { w: 1366, h: 768,  mobile: false },
+      { w: 1280, h: 800,  mobile: false },
+      { w: 1024, h: 600,  mobile: false },
+      { w: 800,  h: 600,  mobile: false },
       // Mobile (landscape CSS px — physical ÷ DPR)
-      { w: 914, h: 411, label: 'Pixel 8 — 914×411 CSS (2400×1080 @ DPR 2.625)' },
+      { w: 914,  h: 411,  mobile: true,  label: 'Pixel 8 — 914×411 CSS (mobile)' },
     ];
     var seen = {};
     return list.filter(function(p) {
       var k = p.w + 'x' + p.h;
       if (seen[k]) return false;
       seen[k] = true;
-      if (!p.label) p.label = p.w + '×' + p.h;
+      if (!p.label) p.label = p.w + '×' + p.h + (p.mobile ? ' (mobile)' : ' (desktop)');
       return true;
     });
   })();
@@ -384,7 +385,7 @@
 
   function applyModeDefaults(mode) {
     var d = MODE_DEFAULTS[mode] || MODE_DEFAULTS.game;
-    // chk-mobile non viene toccato: persiste tra title e game
+    // mobileMode (globale) non viene toccato: è del preset, non del mode
     document.getElementById('chk-panels').checked = d.panels;
     document.getElementById('chk-legend').checked = d.legend;
     document.getElementById('chk-bezels').checked = d.bezels;
@@ -397,6 +398,7 @@
   // ── State ────────────────────────────────────────────────────────────────
   var vpW        = window.screen.width;
   var vpH        = window.screen.height;
+  var mobileMode = false;   // impostato dal preset selezionato
   var legH       = 20;
   var screenMode = 'title';
   var bgMode     = 'day';
@@ -500,8 +502,7 @@
   // ── Main render ──────────────────────────────────────────────────────────
   function update() {
     // mobile override calcolato prima di computeLayout (influenza la geometria dei pannelli)
-    var mobileMode = document.getElementById('chk-mobile').checked;
-    // mobile+game forza always il checkbox sidepanels (allinea UI e stato)
+    // mobileMode è globale, impostato dalla selezione del preset
     if (mobileMode && screenMode === 'game') document.getElementById('chk-panels').checked = true;
     var withPanels = document.getElementById('chk-panels').checked;
     var g = computeLayout(vpW, vpH, withPanels);
@@ -796,7 +797,7 @@
 
   document.getElementById('sel-viewport').addEventListener('change', function() {
     var p = _presets[parseInt(this.value)];
-    if (p) setSize(p.w, p.h);
+    if (p) { mobileMode = !!p.mobile; setSize(p.w, p.h); }
   });
 
   document.querySelectorAll('.mode-btn').forEach(function(btn) {
@@ -825,7 +826,7 @@
   });
 
   elSldLH.addEventListener('input', function() { legH = parseInt(this.value); elLHVal.textContent = legH; update(); });
-  ['chk-mobile','chk-panels','chk-legend','chk-bezels','chk-ctrls','chk-labels','chk-images','chk-grid']
+  ['chk-panels','chk-legend','chk-bezels','chk-ctrls','chk-labels','chk-images','chk-grid']
     .forEach(function(id) { document.getElementById(id).onchange = update; });
 
   var _rt;
