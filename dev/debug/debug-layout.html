@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Layout Debug — Breaktime Rebellion</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -68,7 +70,7 @@
     /* ── Main split ──────────────────────────────────────────────────── */
     #main { flex: 1; display: flex; overflow: hidden; }
 
-    /* ── Workspace (preview area) ────────────────────────────────────── */
+    /* ── Workspace ───────────────────────────────────────────────────── */
     #workspace {
       flex: 1;
       overflow: hidden;
@@ -80,16 +82,12 @@
     }
     #size-label {
       position: absolute;
-      bottom: 8px;
-      left: 50%;
+      bottom: 8px; left: 50%;
       transform: translateX(-50%);
-      font-size: 10px;
-      color: #333;
+      font-size: 10px; color: #333;
       white-space: nowrap;
     }
-
     #preview-wrapper { position: relative; }
-
     #preview {
       position: relative;
       overflow: hidden;
@@ -100,55 +98,65 @@
       outline: 1px solid #2a2a3e;
       box-shadow: 0 0 0 1px #111, 0 0 60px rgba(0,0,80,0.6);
     }
+    .layer { position: absolute; pointer-events: none; }
 
-    .layer {
-      position: absolute;
-      pointer-events: none;
-    }
-
-    /* ── Layer styles ───────────────────────────────────────────────── */
+    /* ── Layer visual styles ─────────────────────────────────────────── */
 
     .l-game-area { outline: 1px dashed rgba(0,210,255,0.18); }
 
     .l-canvas {
       background: #1a1a2e;
       outline: 1.5px solid rgba(255,210,0,0.75);
+      overflow: hidden;
     }
 
     /* Side panels */
-    .l-panel {
-      background: rgba(10,0,25,0.72);
-      outline: 1px solid rgba(160,0,255,0.40);
-    }
+    .l-panel { background: rgba(10,0,25,0.72); outline: 1px solid rgba(160,0,255,0.40); }
     .l-joy {
-      position: absolute;
-      border-radius: 50%;
+      position: absolute; border-radius: 50%;
       background: radial-gradient(circle at 35% 35%, #282828, #070707);
       border: 2px solid rgba(0,200,255,0.35);
       box-shadow: 0 0 8px rgba(0,200,255,0.15);
     }
     .l-action-btn {
-      position: absolute;
-      border-radius: 50%;
+      position: absolute; border-radius: 50%;
       background: radial-gradient(circle at 38% 33%, rgba(255,82,40,0.55), rgba(154,15,0,0.55));
       border: 2px solid rgba(255,50,0,0.45);
     }
     .l-panel-btn {
-      position: absolute;
-      border-radius: 8px;
+      position: absolute; border-radius: 8px;
       background: rgba(10,0,24,0.55);
       border: 1px solid rgba(160,0,255,0.45);
     }
 
-    /* Bezels */
+    /* Top bezel */
     .l-top-bezel {
-      background: rgba(255,200,0,0.12);
+      background: rgba(255,200,0,0.10);
       border-bottom: 1px solid rgba(255,200,0,0.55);
       display: flex; align-items: center; justify-content: center;
+      overflow: visible;
     }
-    .l-bot-bezel { background: rgba(0,210,255,0.55); }
+    /* Actual "BREAKTIME REBELLION" text — sized via JS inline style */
+    .bezel-title {
+      font-family: 'Press Start 2P', monospace;
+      color: rgba(255,215,0,0.92);
+      letter-spacing: 3px;
+      text-shadow: 0 0 10px rgba(255,200,0,0.55), 0 0 22px rgba(255,140,0,0.28);
+      white-space: nowrap;
+      line-height: 1;
+    }
 
-    /* Legend */
+    /* Bottom bezel — actual neon gradient, 55% of game-area */
+    .l-bot-bezel {
+      background: linear-gradient(90deg,
+        transparent,
+        rgba(0,210,255,0.65),
+        rgba(160,0,255,0.45),
+        rgba(0,210,255,0.65),
+        transparent);
+    }
+
+    /* Legend layer */
     .l-legend {
       background: rgba(255,80,60,0.18);
       border-top: 1px solid rgba(255,80,60,0.6);
@@ -158,10 +166,66 @@
       background: rgba(255,50,30,0.38);
       border-top-color: rgba(255,80,60,1);
     }
-    .l-overlap-zone {
-      background: rgba(255,30,0,0.35);
-      outline: 1px solid rgba(255,80,50,0.9);
+    .l-overlap-zone { background: rgba(255,30,0,0.35); outline: 1px solid rgba(255,80,50,0.9); }
+
+    /* Legend content — mirrors the real #legend HTML from title.js */
+    .sim-legend-wrap {
+      display: inline-flex; align-items: center; gap: 25px;
+      pointer-events: none;
     }
+    .sim-leg-group { display: inline-flex; align-items: center; }
+    .sim-leg-key {
+      display: inline-block;
+      border: 1px solid #959595; border-radius: 2px;
+      padding: 1px 4px; margin: 0 1px;
+      font-family: 'Press Start 2P', monospace; font-size: 11px;
+      color: #959595; line-height: 1.5; vertical-align: middle;
+    }
+    .sim-leg-lbl {
+      font-family: 'Press Start 2P', monospace; font-size: 11px;
+      color: #959595; margin: 0 0 0 3px; vertical-align: middle;
+    }
+
+    /* Canvas placeholder */
+    .canvas-placeholder {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      pointer-events: none;
+    }
+    .canvas-placeholder .cp-title {
+      color: rgba(255,200,0,0.18); font-family: monospace; font-size: 10px; text-align: center;
+    }
+
+    /* Canvas: real logo (title mode) */
+    .canvas-logo {
+      position: absolute; top: 8%; left: 50%; transform: translateX(-50%);
+      width: 82%; object-fit: contain; image-rendering: pixelated;
+      pointer-events: none; opacity: 0.92;
+    }
+
+    /* Canvas ctrl bar (title screen) — content rendered via JS, sized proportionally */
+    .canvas-ctrl-bar {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: rgba(255,200,0,0.04);
+      border-top: 1px dashed rgba(255,200,0,0.2);
+      display: flex; align-items: center;
+      justify-content: space-between;
+    }
+    .ctrl-grp { display: inline-flex; align-items: center; }
+    .ctrl-box {
+      display: inline-flex; align-items: center; justify-content: center;
+      border: 1px solid rgba(255,180,0,0.5);
+      color: rgba(255,180,0,0.75);
+      font-family: 'Press Start 2P', monospace;
+      white-space: nowrap; line-height: 1;
+    }
+    .ctrl-txt {
+      font-family: 'Press Start 2P', monospace;
+      color: rgba(255,200,80,0.85);
+      white-space: nowrap;
+    }
+    .ctrl-diff { color: rgba(120,220,120,0.85) !important; border-color: rgba(120,220,120,0.45) !important; }
+    .ctrl-audio { color: rgba(100,180,255,0.85) !important; border-color: rgba(100,180,255,0.45) !important; }
 
     /* Grid lines */
     .l-hline { height: 1px; left: 0; right: 0; background: rgba(255,255,255,0.10); }
@@ -169,104 +233,37 @@
 
     /* Floating labels */
     .fl-label {
-      position: absolute;
-      pointer-events: none;
-      font-size: 9px;
-      font-family: monospace;
-      padding: 0px 3px;
-      border-radius: 1px;
-      white-space: nowrap;
-      line-height: 1.6;
-    }
-
-    /* Canvas: placeholder text */
-    .canvas-placeholder {
-      position: absolute; inset: 0;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      pointer-events: none;
-    }
-    .canvas-placeholder .cp-title {
-      color: rgba(255,200,0,0.18);
-      font-family: monospace;
-      font-size: 10px;
-      text-align: center;
-    }
-
-    /* Canvas: real logo (title mode) */
-    .canvas-logo {
-      position: absolute;
-      top: 8%;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 82%;
-      object-fit: contain;
-      image-rendering: pixelated;
-      pointer-events: none;
-      opacity: 0.92;
-    }
-
-    /* Canvas: ctrl bar (title mode) */
-    .canvas-controls-bar {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      background: rgba(255,200,0,0.04);
-      border-top: 1px dashed rgba(255,200,0,0.2);
-      display: flex; align-items: center; justify-content: center;
-    }
-    .canvas-controls-bar span {
-      font-size: 8px;
-      color: rgba(255,200,0,0.3);
-      white-space: nowrap;
+      position: absolute; pointer-events: none;
+      font-size: 9px; font-family: monospace;
+      padding: 0 3px; border-radius: 1px;
+      white-space: nowrap; line-height: 1.6;
     }
 
     /* ── Info panel ──────────────────────────────────────────────────── */
     #info {
       flex: 0 0 232px;
-      background: #0e0e1e;
-      border-left: 1px solid #1e1e30;
-      overflow-y: auto;
-      padding: 10px 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
+      background: #0e0e1e; border-left: 1px solid #1e1e30;
+      overflow-y: auto; padding: 10px 12px;
+      display: flex; flex-direction: column; gap: 12px;
     }
     #info h2 {
-      font-size: 9px;
-      color: #444;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      border-bottom: 1px solid #1e1e30;
-      padding-bottom: 4px;
-      margin-bottom: 4px;
+      font-size: 9px; color: #444; text-transform: uppercase;
+      letter-spacing: 1.5px; border-bottom: 1px solid #1e1e30;
+      padding-bottom: 4px; margin-bottom: 4px;
     }
-    .metric {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-top: 3px;
-      gap: 4px;
-    }
+    .metric { display: flex; justify-content: space-between; align-items: baseline; margin-top: 3px; gap: 4px; }
     .metric-k { color: #666; font-size: 11px; }
     .metric-v { color: #bbb; font-weight: bold; font-size: 11px; white-space: nowrap; }
     .metric-v.warn  { color: #ff6644; }
     .metric-v.ok    { color: #55cc66; }
     .metric-v.info2 { color: #5599ff; }
     .metric-v.muted { color: #444; }
-
-    .status-box {
-      border-radius: 3px;
-      padding: 7px 9px;
-      font-size: 11px;
-      line-height: 1.6;
-    }
+    .status-box { border-radius: 3px; padding: 7px 9px; font-size: 11px; line-height: 1.6; }
     .status-box.overlap { background: rgba(255,50,30,0.15); border: 1px solid rgba(255,50,30,0.4); color: #ff9977; }
     .status-box.ok      { background: rgba(50,200,50,0.10); border: 1px solid rgba(50,200,50,0.25); color: #88cc88; }
-
     .color-key { display: flex; flex-direction: column; gap: 4px; }
     .ck-row { display: flex; align-items: center; gap: 7px; font-size: 10px; color: #777; }
     .ck-dot { width: 18px; height: 9px; border-radius: 1px; flex-shrink: 0; }
-
     #legend-h-val { display: inline-block; width: 24px; text-align: right; color: #aaa; }
   </style>
 </head>
@@ -325,9 +322,7 @@
 
   <div id="workspace">
     <div id="preview-wrapper">
-      <div id="preview">
-        <!-- All layers injected by JS into #preview -->
-      </div>
+      <div id="preview"></div>
     </div>
     <div id="size-label"></div>
   </div>
@@ -337,9 +332,9 @@
 
     <div>
       <h2>Schermata</h2>
-      <div class="metric"><span class="metric-k">mode</span>     <span class="metric-v info2" id="i-mode">—</span></div>
-      <div class="metric"><span class="metric-k">bg</span>       <span class="metric-v" id="i-bg">—</span></div>
-      <div class="metric"><span class="metric-k">panels</span>   <span class="metric-v" id="i-panels">—</span></div>
+      <div class="metric"><span class="metric-k">mode</span>   <span class="metric-v info2" id="i-mode">—</span></div>
+      <div class="metric"><span class="metric-k">bg</span>     <span class="metric-v" id="i-bg">—</span></div>
+      <div class="metric"><span class="metric-k">panels</span> <span class="metric-v" id="i-panels">—</span></div>
     </div>
 
     <div>
@@ -352,7 +347,7 @@
 
     <div>
       <h2>Game Area</h2>
-      <div class="metric"><span class="metric-k">width</span>     <span class="metric-v" id="i-gaw">—</span></div>
+      <div class="metric"><span class="metric-k">width</span>    <span class="metric-v" id="i-gaw">—</span></div>
       <div class="metric"><span class="metric-k">offset X</span> <span class="metric-v" id="i-gax">—</span></div>
     </div>
 
@@ -381,10 +376,10 @@
     <div id="overlap-status"></div>
 
     <div>
-      <h2>Canvas controls bar</h2>
-      <div class="metric"><span class="metric-k">Y bottom canvas</span><span class="metric-v" id="i-cby">—</span></div>
+      <h2>Canvas ctrl bar</h2>
+      <div class="metric"><span class="metric-k">Y bottom canvas</span> <span class="metric-v" id="i-cby">—</span></div>
       <div class="metric"><span class="metric-k">ctrl bar H (est.)</span><span class="metric-v" id="i-cbh">—</span></div>
-      <div class="metric"><span class="metric-k">gap legend↔ctrl</span><span class="metric-v" id="i-clg">—</span></div>
+      <div class="metric"><span class="metric-k">gap legend↔ctrl</span> <span class="metric-v" id="i-clg">—</span></div>
     </div>
 
     <div class="color-key">
@@ -392,39 +387,56 @@
       <div class="ck-row"><div class="ck-dot" style="background:rgba(255,210,0,0.5);outline:1px solid rgba(255,210,0,0.8)"></div>canvas</div>
       <div class="ck-row"><div class="ck-dot" style="background:rgba(160,0,255,0.35);outline:1px solid rgba(160,0,255,0.55)"></div>side panels</div>
       <div class="ck-row"><div class="ck-dot" style="background:rgba(255,200,0,0.18)"></div>top-bezel</div>
-      <div class="ck-row"><div class="ck-dot" style="background:rgba(0,210,255,0.55)"></div>bottom-bezel</div>
+      <div class="ck-row"><div class="ck-dot" style="background:linear-gradient(90deg,transparent,rgba(0,210,255,0.65),rgba(160,0,255,0.45),rgba(0,210,255,0.65),transparent)"></div>bottom-bezel</div>
       <div class="ck-row"><div class="ck-dot" style="background:rgba(255,80,60,0.28)"></div>legend</div>
       <div class="ck-row"><div class="ck-dot" style="background:rgba(255,30,0,0.45)"></div>overlap zone</div>
-      <div class="ck-row"><div class="ck-dot" style="background:rgba(255,200,0,0.07);outline:1px dashed rgba(255,200,0,0.3)"></div>ctrl bar (canvas)</div>
     </div>
 
   </div><!-- #info -->
 </div><!-- #main -->
 
 <script>
-  // ── Layout constants ─────────────────────────────────────────────────────
+  // ── Layout constants (from style.css + game.js) ──────────────────────────
   var CANVAS_RATIO       = 16 / 10;
   var CANVAS_MAX_W       = 1600;
-  var PANEL_W            = 140;    // #panel-left / #panel-right (from style.css)
-  var LEGEND_BOTTOM      = 8;
-  var BEZEL_TOP_GAP      = 26;
-  var BEZEL_TOP_H        = 28;
-  var BEZEL_BOT_GAP      = 14;
-  var BEZEL_BOT_H        = 2;
-  var CTRL_BAR_H_LOGICAL = 14;     // logical canvas px (canvas is 320×200)
-  var JOY_SIZE           = 90;     // #ctrl-joy width/height on mobile (style.css)
-  var BTN_SIZE           = 90;     // #btn-action width/height on mobile (style.css)
-  var PANEL_BTN_W        = 68;     // .panel-btn width
-  var PANEL_BTN_H        = 38;     // .panel-btn height
-  var PANEL_BTN_TOP      = 48;     // .panel-btn top offset
-  var CTRL_BOTTOM        = 40;     // bottom distance of joy/btn inside panel
+  var PANEL_W            = 140;     // #panel-left / #panel-right
+  var LEGEND_BOTTOM      = 8;       // #legend: position:fixed; bottom:8px
+  var BEZEL_TOP_GAP      = 26;      // top: calc(--canvas-top - 26px)
+  var BEZEL_BOT_GAP      = 14;      // top: calc(--canvas-top + --canvas-h + 14px)
+  var BEZEL_BOT_H        = 2;       // height: 2px neon line
+  var CTRL_BAR_H_LOGICAL = 14;      // gapY(12) + controls bottom margin — logical canvas px
+  var JOY_SIZE           = 90;      // #ctrl-joy on mobile
+  var BTN_SIZE           = 90;      // #btn-action on mobile
+  var PANEL_BTN_W        = 68;      // .panel-btn width
+  var PANEL_BTN_H        = 38;      // .panel-btn height
+  var PANEL_BTN_TOP      = 48;      // .panel-btn top offset in panel
+  var CTRL_BOTTOM        = 40;      // bottom distance of joy/btn inside panel
+
+  // top-bezel text: font-size: clamp(20px, 1.9vw, 30px)
+  // Approximated height = font-size * 1.2 line-height
+  function bezelFontPx(vw) { return Math.min(Math.max(20, 1.9 * vw / 100), 30); }
+  function bezelHeightPx(vw) { return Math.ceil(bezelFontPx(vw) * 1.25); }
+
+  // Canvas controls bar: logical coord scale = cH/200 (canvas is 200 logical px tall)
+  // ui.js CONFIG.ui.titleScreen.controls
+  var CTRL_FONT    = 8;    // controls.fontSize (logical px)
+  var CTRL_BTN_H   = 11;   // controls.btnH
+  var CTRL_GAP_Y   = 12;   // controls.gapY (space above ctrl bar)
+  var CTRL_PREV_X  = 10;   // controls.prevX
+  var CTRL_PREV_W  = 14;
+  var CTRL_NEXT_X  = 76;
+  var CTRL_NEXT_W  = 14;
+  var CTRL_DIFF_X  = 134;  // controls.diffX (left edge of diff btn, canvas center=160)
+  var CTRL_DIFF_W  = 52;
+  var CTRL_AUDIO_RX = 310; // controls.audioRightX
+  var CTRL_PAD_X   = 6;    // controls.audioPadX
 
   // ── State ────────────────────────────────────────────────────────────────
   var vpW        = 1920;
   var vpH        = 1080;
   var legH       = 20;
-  var screenMode = 'game';   // 'title' | 'game'
-  var bgMode     = 'day';    // 'day'   | 'night'
+  var screenMode = 'game';  // 'title' | 'game'
+  var bgMode     = 'day';   // 'day'   | 'night'
 
   // ── DOM ──────────────────────────────────────────────────────────────────
   var elPreview   = document.getElementById('preview');
@@ -435,16 +447,14 @@
   var elSldLH     = document.getElementById('sld-lh');
   var elLHVal     = document.getElementById('legend-h-val');
 
-  // ── Compute layout geometry ──────────────────────────────────────────────
-  // withPanels: simulates mobile (panel-left + panel-right = 140px each)
+  // ── Geometry ─────────────────────────────────────────────────────────────
   function computeLayout(vw, vh, withPanels) {
     var panelsW = withPanels ? 2 * PANEL_W : 0;
     var gaX     = withPanels ? PANEL_W : Math.max(0, (vw - CANVAS_MAX_W) / 2);
     var gaW     = Math.max(1, Math.min(vw - panelsW, CANVAS_MAX_W));
     var gaH     = vh;
 
-    // CSS aspect-ratio + max constraints
-    var hByWidth  = gaW / CANVAS_RATIO;
+    var hByWidth = gaW / CANVAS_RATIO;
     var cW, cH, constraint;
     if (hByWidth <= gaH) {
       cW = gaW; cH = hByWidth; constraint = 'width';
@@ -456,30 +466,27 @@
     var cTop  = (gaH - cH) / 2;
     var cBot  = cTop + cH;
 
-    // Top bezel (desktop only)
+    var tbH   = bezelHeightPx(vw);
     var tbBot = cTop - BEZEL_TOP_GAP;
-    var tbTop = tbBot - BEZEL_TOP_H;
+    var tbTop = tbBot - tbH;
 
-    // Bottom bezel (desktop only)
     var bbTop = cBot + BEZEL_BOT_GAP;
+    var lTop  = vh - LEGEND_BOTTOM - legH;
+    var gap   = lTop - cBot;
 
-    // Legend (desktop only: position:fixed bottom:8px)
-    var lTop = vh - LEGEND_BOTTOM - legH;
-    var gap  = lTop - cBot;   // positive = clear, negative = overlap
-
-    // Canvas controls bar (title screen only)
-    var ctrlBarRenderH = CTRL_BAR_H_LOGICAL * (cH / 1000);
+    var s              = cH / 200;       // logical-to-rendered scale
+    var ctrlBarRenderH = CTRL_BAR_H_LOGICAL * s;
     var ctrlBarTop     = cBot - ctrlBarRenderH;
 
     return {
       gaX, gaW, gaH, cW, cH, cLeft, cTop, cBot, constraint,
-      tbTop, tbBot, bbTop, gap, lTop,
-      ctrlBarH: ctrlBarRenderH, ctrlBarTop,
+      tbTop, tbBot, tbH, bbTop, gap, lTop,
+      ctrlBarH: ctrlBarRenderH, ctrlBarTop, s,
       withPanels, panelsW
     };
   }
 
-  // ── Layer builders ───────────────────────────────────────────────────────
+  // ── Element builders ─────────────────────────────────────────────────────
   function layer(cls, style) {
     var d = document.createElement('div');
     d.className = 'layer ' + cls;
@@ -496,6 +503,31 @@
     return d;
   }
 
+  // Legend key group: keys[] + label string
+  function legGroup(keys, lbl) {
+    var grp = document.createElement('span');
+    grp.className = 'sim-leg-group';
+    keys.forEach(function(k) {
+      var el = document.createElement('span');
+      el.className = 'sim-leg-key'; el.textContent = k; grp.appendChild(el);
+    });
+    var lblEl = document.createElement('span');
+    lblEl.className = 'sim-leg-lbl'; lblEl.textContent = lbl; grp.appendChild(lblEl);
+    return grp;
+  }
+
+  // Ctrl bar box button (sized proportionally to logical scale s)
+  function ctrlBox(text, s, extraClass) {
+    var el = document.createElement('span');
+    el.className = 'ctrl-box' + (extraClass ? ' ' + extraClass : '');
+    el.textContent = text;
+    el.style.fontSize      = Math.round(CTRL_FONT * s) + 'px';
+    el.style.height        = Math.round(CTRL_BTN_H * s) + 'px';
+    el.style.padding       = '0 ' + Math.round(3 * s) + 'px';
+    el.style.borderRadius  = Math.round(2 * s) + 'px';
+    return el;
+  }
+
   // ── Main render ──────────────────────────────────────────────────────────
   function update() {
     var withPanels = document.getElementById('chk-panels').checked;
@@ -503,10 +535,7 @@
 
     // Scale preview to fit workspace
     var ws    = elWorkspace.getBoundingClientRect();
-    var padX  = 60, padY = 48;
-    var scale = Math.min((ws.width - padX) / vpW, (ws.height - padY) / vpH, 1);
-    scale = Math.max(scale, 0.1);
-
+    var scale = Math.max(0.1, Math.min((ws.width - 60) / vpW, (ws.height - 48) / vpH, 1));
     elPreview.style.width  = vpW + 'px';
     elPreview.style.height = vpH + 'px';
     elWrapper.style.width  = vpW + 'px';
@@ -525,7 +554,7 @@
     var showLabels = document.getElementById('chk-labels').checked;
     var showImages = document.getElementById('chk-images').checked;
 
-    // ── Grid ───────────────────────────────────────────────────────────────
+    // ── Grid ──────────────────────────────────────────────────────────────
     if (showGrid) {
       elPreview.appendChild(layer('l-hline', { top: (vpH/2)+'px' }));
       elPreview.appendChild(layer('l-vline', { left: (vpW/2)+'px' }));
@@ -535,74 +564,56 @@
       }
     }
 
-    // ── Side panels (mobile) ───────────────────────────────────────────────
+    // ── Side panels (mobile) ──────────────────────────────────────────────
     if (withPanels) {
+      var joyY = vpH - CTRL_BOTTOM - JOY_SIZE;
+      var btnY = vpH - CTRL_BOTTOM - BTN_SIZE;
+
       // Left panel
       var lpEl = layer('l-panel', { left:'0', top:'0', width:PANEL_W+'px', height:vpH+'px' });
-      if (showLabels) lpEl.appendChild(flLabel('panel-left (140px)', { top:'8px', left:'4px' }, 'rgba(160,0,255,0.7)'));
-
+      if (showLabels) lpEl.appendChild(flLabel('panel-left 140px', { top:'8px', left:'4px' }, 'rgba(160,0,255,0.7)'));
       var joyEl = document.createElement('div');
       joyEl.className = 'l-joy';
-      joyEl.style.left   = (PANEL_W / 2 - JOY_SIZE / 2) + 'px';
-      joyEl.style.top    = (vpH - CTRL_BOTTOM - JOY_SIZE) + 'px';
-      joyEl.style.width  = JOY_SIZE + 'px';
-      joyEl.style.height = JOY_SIZE + 'px';
+      Object.assign(joyEl.style, { left:(PANEL_W/2-JOY_SIZE/2)+'px', top:joyY+'px', width:JOY_SIZE+'px', height:JOY_SIZE+'px' });
       lpEl.appendChild(joyEl);
-
-      var pbL = document.createElement('div');
-      pbL.className = 'l-panel-btn';
-      pbL.style.left   = (PANEL_W / 2 - PANEL_BTN_W / 2) + 'px';
-      pbL.style.top    = PANEL_BTN_TOP + 'px';
-      pbL.style.width  = PANEL_BTN_W + 'px';
-      pbL.style.height = PANEL_BTN_H + 'px';
+      var pbL = document.createElement('div'); pbL.className = 'l-panel-btn';
+      Object.assign(pbL.style, { left:(PANEL_W/2-PANEL_BTN_W/2)+'px', top:PANEL_BTN_TOP+'px', width:PANEL_BTN_W+'px', height:PANEL_BTN_H+'px' });
       lpEl.appendChild(pbL);
-
       elPreview.appendChild(lpEl);
 
       // Right panel
       var rpEl = layer('l-panel', { right:'0', top:'0', width:PANEL_W+'px', height:vpH+'px' });
-      if (showLabels) rpEl.appendChild(flLabel('panel-right (140px)', { top:'8px', left:'4px' }, 'rgba(160,0,255,0.7)'));
-
+      if (showLabels) rpEl.appendChild(flLabel('panel-right 140px', { top:'8px', left:'4px' }, 'rgba(160,0,255,0.7)'));
       var btnEl = document.createElement('div');
       btnEl.className = 'l-action-btn';
-      btnEl.style.left   = (PANEL_W / 2 - BTN_SIZE / 2) + 'px';
-      btnEl.style.top    = (vpH - CTRL_BOTTOM - BTN_SIZE) + 'px';
-      btnEl.style.width  = BTN_SIZE + 'px';
-      btnEl.style.height = BTN_SIZE + 'px';
+      Object.assign(btnEl.style, { left:(PANEL_W/2-BTN_SIZE/2)+'px', top:btnY+'px', width:BTN_SIZE+'px', height:BTN_SIZE+'px' });
       rpEl.appendChild(btnEl);
-
-      var pbR = document.createElement('div');
-      pbR.className = 'l-panel-btn';
-      pbR.style.left   = (PANEL_W / 2 - PANEL_BTN_W / 2) + 'px';
-      pbR.style.top    = PANEL_BTN_TOP + 'px';
-      pbR.style.width  = PANEL_BTN_W + 'px';
-      pbR.style.height = PANEL_BTN_H + 'px';
+      var pbR = document.createElement('div'); pbR.className = 'l-panel-btn';
+      Object.assign(pbR.style, { left:(PANEL_W/2-PANEL_BTN_W/2)+'px', top:PANEL_BTN_TOP+'px', width:PANEL_BTN_W+'px', height:PANEL_BTN_H+'px' });
       rpEl.appendChild(pbR);
-
       elPreview.appendChild(rpEl);
     }
 
-    // ── Game area boundary ─────────────────────────────────────────────────
-    elPreview.appendChild(layer('l-game-area', {
-      left: g.gaX+'px', top:'0', width:g.gaW+'px', height:vpH+'px'
-    }));
+    // ── Game area boundary ────────────────────────────────────────────────
+    elPreview.appendChild(layer('l-game-area', { left:g.gaX+'px', top:'0', width:g.gaW+'px', height:vpH+'px' }));
 
-    // ── Top bezel (desktop only) ───────────────────────────────────────────
-    if (showBezels && !withPanels && g.tbTop > -BEZEL_TOP_H) {
+    // ── Top bezel (desktop only) ──────────────────────────────────────────
+    if (showBezels && !withPanels && g.tbTop > -g.tbH) {
       var tbEl = layer('l-top-bezel', {
-        left: g.gaX+'px', top: g.tbTop+'px',
-        width: g.gaW+'px', height: BEZEL_TOP_H+'px'
+        left: g.gaX+'px', top: g.tbTop+'px', width: g.gaW+'px', height: g.tbH+'px'
       });
-      if (showLabels) tbEl.appendChild(flLabel('top-bezel', {
-        top:'50%', left:'4px', transform:'translateY(-50%)'
-      }, 'rgba(255,200,0,0.6)'));
+      var bt = document.createElement('span');
+      bt.className = 'bezel-title';
+      bt.textContent = 'BREAKTIME REBELLION';
+      bt.style.fontSize = Math.round(bezelFontPx(vpW)) + 'px';
+      bt.style.letterSpacing = Math.round(bezelFontPx(vpW) * 0.16) + 'px';
+      tbEl.appendChild(bt);
       elPreview.appendChild(tbEl);
     }
 
-    // ── Canvas ─────────────────────────────────────────────────────────────
+    // ── Canvas ────────────────────────────────────────────────────────────
     var cEl = layer('l-canvas', {
-      left: g.cLeft+'px', top: g.cTop+'px',
-      width: g.cW+'px', height: g.cH+'px'
+      left: g.cLeft+'px', top: g.cTop+'px', width: g.cW+'px', height: g.cH+'px'
     });
 
     if (showImages) {
@@ -622,52 +633,84 @@
       var cp = document.createElement('div');
       cp.className = 'canvas-placeholder';
       var modeStr = screenMode === 'title' ? 'TITLE' : 'GAME (' + bgMode + ')';
-      cp.innerHTML =
-        '<div class="cp-title" style="font-size:' + Math.max(8, g.cH*0.018) + 'px">' +
+      cp.innerHTML = '<div class="cp-title" style="font-size:' + Math.max(8, g.cH*0.018) + 'px">' +
         modeStr + ' · CANVAS 16:10<br>' +
         '<span style="opacity:.5;font-size:' + Math.max(7, g.cH*0.012) + 'px">' +
         Math.round(g.cW) + ' × ' + Math.round(g.cH) + 'px</span></div>';
       cEl.appendChild(cp);
     }
 
-    // Ctrl bar (title only)
-    if (showCtrls && screenMode === 'title' && g.ctrlBarH > 0.5) {
+    // Canvas ctrl bar — title screen only (draw-title.js)
+    // Positions mirror CONFIG.ui.titleScreen.controls (logical → rendered via scale s)
+    if (showCtrls && screenMode === 'title' && g.ctrlBarH > 1) {
+      var s = g.s;
       var cbEl = document.createElement('div');
-      cbEl.className = 'canvas-controls-bar';
-      cbEl.style.height = Math.max(1, g.ctrlBarH) + 'px';
-      cbEl.innerHTML = '<span style="font-size:' + Math.max(6, g.ctrlBarH * 0.5) + 'px">← ctrl bar (titolo) →</span>';
+      cbEl.className = 'canvas-ctrl-bar';
+      cbEl.style.height  = Math.max(1, g.ctrlBarH) + 'px';
+      cbEl.style.padding = '0 ' + Math.round(CTRL_PREV_X * s) + 'px';
+      cbEl.style.gap     = Math.round(6 * s) + 'px';
+
+      // Level chooser [< Lvl 1 >]
+      var lgrp = document.createElement('div'); lgrp.className = 'ctrl-grp';
+      lgrp.style.gap = Math.round(3 * s) + 'px';
+      lgrp.appendChild(ctrlBox('<', s));
+      var lbl = document.createElement('span'); lbl.className = 'ctrl-txt';
+      lbl.textContent = 'Lvl 1'; lbl.style.fontSize = Math.round(CTRL_FONT * s) + 'px';
+      lgrp.appendChild(lbl);
+      lgrp.appendChild(ctrlBox('>', s));
+      cbEl.appendChild(lgrp);
+
+      // Difficulty toggle [EASY]
+      cbEl.appendChild(ctrlBox('EASY', s, 'ctrl-diff'));
+
+      // Audio button [♪]
+      cbEl.appendChild(ctrlBox('♪', s, 'ctrl-audio'));
+
       cEl.appendChild(cbEl);
     }
 
     elPreview.appendChild(cEl);
 
-    // ── Bottom bezel (desktop only) ────────────────────────────────────────
+    // ── Bottom bezel — real neon gradient, 55% of game-area width ─────────
     if (showBezels && !withPanels) {
+      var bbW    = g.gaW * 0.55;
+      var bbLeft = g.gaX + (g.gaW - bbW) / 2;
       elPreview.appendChild(layer('l-bot-bezel', {
-        left: g.gaX+'px', top: g.bbTop+'px',
-        width: g.gaW+'px', height: BEZEL_BOT_H+'px'
+        left: bbLeft+'px', top: g.bbTop+'px', width: bbW+'px', height: BEZEL_BOT_H+'px'
       }));
-      if (showLabels) elPreview.appendChild(flLabel('bottom-bezel (+14px)', {
-        left: (g.gaX + 4)+'px', top: (g.bbTop + 2)+'px'
+      if (showLabels) elPreview.appendChild(flLabel('bottom-bezel +14px (55% gaW)', {
+        left: (bbLeft + 4)+'px', top: (g.bbTop + 3)+'px'
       }, 'rgba(0,210,255,0.55)'));
     }
 
-    // ── Legend + overlap (desktop only) ───────────────────────────────────
+    // ── Legend — real keyboard groups (title.js) ──────────────────────────
     var overlap = !withPanels && g.gap < 0;
     if (showLegend && !withPanels) {
       var legEl = layer('l-legend' + (overlap ? ' overlap' : ''), {
         left:'0', right:'0', top:g.lTop+'px', height:legH+'px'
       });
-      if (showLabels) legEl.appendChild(flLabel('#legend (fixed bottom:8px)', {
-        top:'50%', left:'4px', transform:'translateY(-50%)'
+
+      // Build real legend content (mirrors title.js _legendEl setup)
+      var wrap = document.createElement('div');
+      wrap.className = 'sim-legend-wrap';
+      [
+        [['<','^','v','>'], 'Muovi'],
+        [['Z'],             'Azione'],
+        [['C'],             'Crediti'],
+        [['P'],             'Pausa'],
+        [['ESC'],           'Home'],
+      ].forEach(function(g) { wrap.appendChild(legGroup(g[0], g[1])); });
+      legEl.appendChild(wrap);
+
+      if (showLabels) legEl.appendChild(flLabel('#legend bottom:8px', {
+        top: '-14px', left: '4px'
       }, overlap ? 'rgba(255,130,100,0.9)' : 'rgba(255,100,80,0.7)'));
       elPreview.appendChild(legEl);
 
       if (overlap) {
         var olH = -g.gap;
         elPreview.appendChild(layer('l-overlap-zone', {
-          left: g.cLeft+'px', top: g.lTop+'px',
-          width: g.cW+'px', height: olH+'px'
+          left: g.cLeft+'px', top: g.lTop+'px', width: g.cW+'px', height: olH+'px'
         }));
         if (showLabels) elPreview.appendChild(flLabel('⚠ overlap ' + Math.round(olH) + 'px', {
           left: (g.cLeft + 4)+'px', top: (g.lTop + olH/2 - 5)+'px'
@@ -675,58 +718,49 @@
       }
     }
 
-    // ── Info panel ─────────────────────────────────────────────────────────
+    // ── Info panel ────────────────────────────────────────────────────────
     function setM(id, val, cls) {
-      var el = document.getElementById(id);
-      if (!el) return;
-      el.textContent = val;
-      el.className = 'metric-v' + (cls ? ' ' + cls : '');
+      var el = document.getElementById(id); if (!el) return;
+      el.textContent = val; el.className = 'metric-v' + (cls ? ' '+cls : '');
     }
+    var na = withPanels ? 'n/a' : null;
 
     setM('i-mode',   screenMode);
     setM('i-bg',     screenMode === 'title' ? 'logo' : bgMode);
     setM('i-panels', withPanels ? '2 × 140px' : 'off', withPanels ? 'info2' : 'muted');
 
-    setM('i-vw', vpW + 'px');
-    setM('i-vh', vpH + 'px');
-    setM('i-vr', (vpW/vpH).toFixed(3) + ' (' + (vpW/vpH > CANVAS_RATIO ? '>' : '<') + ' 1.6)');
-    setM('i-vc', g.constraint + '-constrained', g.constraint === 'height' ? 'warn' : 'ok');
+    setM('i-vw', vpW+'px'); setM('i-vh', vpH+'px');
+    setM('i-vr', (vpW/vpH).toFixed(3)+' ('+(vpW/vpH > CANVAS_RATIO ? '>' : '<')+' 1.6)');
+    setM('i-vc', g.constraint+'-constrained', g.constraint==='height' ? 'warn' : 'ok');
 
-    setM('i-gaw', Math.round(g.gaW) + 'px');
-    setM('i-gax', Math.round(g.gaX) + 'px');
+    setM('i-gaw', Math.round(g.gaW)+'px');
+    setM('i-gax', Math.round(g.gaX)+'px');
+    setM('i-cw',  Math.round(g.cW)+'px');
+    setM('i-ch',  Math.round(g.cH)+'px');
+    setM('i-ct',  Math.round(g.cTop)+'px');
+    setM('i-cb',  Math.round(vpH-g.cBot)+'px');
 
-    setM('i-cw', Math.round(g.cW) + 'px');
-    setM('i-ch', Math.round(g.cH) + 'px');
-    setM('i-ct', Math.round(g.cTop) + 'px');
-    setM('i-cb', Math.round(vpH - g.cBot) + 'px');
+    setM('i-tbt', na || Math.round(g.tbTop)+'px', na ? 'muted' : '');
+    setM('i-tbb', na || Math.round(g.tbBot)+'px', na ? 'muted' : '');
+    setM('i-bbt', na || Math.round(g.bbTop)+'px', na ? 'muted' : '');
+    setM('i-lh',  na || legH+'px',                na ? 'muted' : '');
+    setM('i-lt',  na || Math.round(g.lTop)+'px',  na ? 'muted' : '');
+    setM('i-gap', na || Math.round(g.gap)+'px',   na ? 'muted' : (g.gap < 0 ? 'warn' : 'ok'));
 
-    var na = withPanels ? 'n/a' : null;
-    setM('i-tbt', na || (Math.round(g.tbTop) + 'px'), na ? 'muted' : '');
-    setM('i-tbb', na || (Math.round(g.tbBot) + 'px'), na ? 'muted' : '');
-    setM('i-bbt', na || (Math.round(g.bbTop) + 'px'), na ? 'muted' : '');
-    setM('i-lh',  na || (legH + 'px'),                na ? 'muted' : '');
-    setM('i-lt',  na || (Math.round(g.lTop) + 'px'),  na ? 'muted' : '');
-    setM('i-gap', na || (Math.round(g.gap) + 'px'),   na ? 'muted' : (g.gap < 0 ? 'warn' : 'ok'));
-
-    setM('i-cby', Math.round(g.cBot) + 'px');
-    setM('i-cbh', g.ctrlBarH.toFixed(1) + 'px');
-    var legCtrlGap = g.lTop - g.cBot;
-    setM('i-clg', na || (Math.round(legCtrlGap) + 'px'), na ? 'muted' : (legCtrlGap < 0 ? 'warn' : 'ok'));
+    setM('i-cby', Math.round(g.cBot)+'px');
+    setM('i-cbh', g.ctrlBarH.toFixed(1)+'px');
+    var lcg = g.lTop - g.cBot;
+    setM('i-clg', na || Math.round(lcg)+'px', na ? 'muted' : (lcg < 0 ? 'warn' : 'ok'));
 
     // Overlap status
     var osEl = document.getElementById('overlap-status');
     if (withPanels) {
-      osEl.innerHTML = '<div class="status-box ok">✓ Mobile — no legend<br>' +
-        '<span style="font-size:10px;opacity:.8">canvas riempie la game-area</span></div>';
+      osEl.innerHTML = '<div class="status-box ok">✓ Mobile — no legend<br><span style="font-size:10px;opacity:.8">canvas riempie la game-area</span></div>';
     } else if (overlap) {
-      var olPx = Math.round(-g.gap);
-      osEl.innerHTML = '<div class="status-box overlap">⚠ Overlap di <b>' + olPx + 'px</b><br>' +
-        'legend sovrasta il canvas.<br>' +
-        '<span style="font-size:10px;opacity:.8">canvas bottom: ' + Math.round(g.cBot) + 'px<br>' +
-        'legend top: ' + Math.round(g.lTop) + 'px</span></div>';
+      osEl.innerHTML = '<div class="status-box overlap">⚠ Overlap di <b>'+Math.round(-g.gap)+'px</b><br>legend sovrasta il canvas.<br>' +
+        '<span style="font-size:10px;opacity:.8">canvas bottom: '+Math.round(g.cBot)+'px<br>legend top: '+Math.round(g.lTop)+'px</span></div>';
     } else {
-      osEl.innerHTML = '<div class="status-box ok">✓ Nessun overlap<br>' +
-        '<span style="font-size:10px;opacity:.8">gap: ' + Math.round(g.gap) + 'px liberi</span></div>';
+      osEl.innerHTML = '<div class="status-box ok">✓ Nessun overlap<br><span style="font-size:10px;opacity:.8">gap: '+Math.round(g.gap)+'px liberi</span></div>';
     }
 
     // Preset warn states
@@ -738,62 +772,36 @@
     });
   }
 
-  // ── Controls ──────────────────────────────────────────────────────────────
-  function setSize(w, h) {
-    vpW = w; vpH = h;
-    elInpW.value = w; elInpH.value = h;
-    update();
-  }
+  // ── Controls ─────────────────────────────────────────────────────────────
+  function setSize(w, h) { vpW = w; vpH = h; elInpW.value = w; elInpH.value = h; update(); }
 
   document.querySelectorAll('.preset').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      setSize(parseInt(this.dataset.w), parseInt(this.dataset.h));
-    });
+    btn.addEventListener('click', function() { setSize(parseInt(this.dataset.w), parseInt(this.dataset.h)); });
   });
-
   document.querySelectorAll('.mode-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
       screenMode = this.dataset.mode;
       document.querySelectorAll('.mode-btn').forEach(function(b) { b.classList.remove('active'); });
-      this.classList.add('active');
-      update();
+      this.classList.add('active'); update();
     });
   });
-
   document.querySelectorAll('.bg-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
       bgMode = this.dataset.bg;
       document.querySelectorAll('.bg-btn').forEach(function(b) { b.classList.remove('active'); });
-      this.classList.add('active');
-      update();
+      this.classList.add('active'); update();
     });
   });
-
-  elInpW.addEventListener('input', function() {
-    var v = parseInt(this.value);
-    if (v >= 400 && v <= 2560) { vpW = v; update(); }
-  });
-  elInpH.addEventListener('input', function() {
-    var v = parseInt(this.value);
-    if (v >= 300 && v <= 1440) { vpH = v; update(); }
-  });
-
-  elSldLH.addEventListener('input', function() {
-    legH = parseInt(this.value);
-    elLHVal.textContent = legH;
-    update();
-  });
-
+  elInpW.addEventListener('input', function() { var v=parseInt(this.value); if(v>=400&&v<=2560){vpW=v;update();} });
+  elInpH.addEventListener('input', function() { var v=parseInt(this.value); if(v>=300&&v<=1440){vpH=v;update();} });
+  elSldLH.addEventListener('input', function() { legH=parseInt(this.value); elLHVal.textContent=legH; update(); });
   ['chk-panels','chk-legend','chk-bezels','chk-ctrls','chk-labels','chk-images','chk-grid']
     .forEach(function(id) { document.getElementById(id).onchange = update; });
 
-  var _resizeTimer;
-  window.addEventListener('resize', function() {
-    clearTimeout(_resizeTimer);
-    _resizeTimer = setTimeout(update, 60);
-  });
+  var _rt;
+  window.addEventListener('resize', function() { clearTimeout(_rt); _rt = setTimeout(update, 60); });
 
-  // ── Init ──────────────────────────────────────────────────────────────────
+  // ── Init ─────────────────────────────────────────────────────────────────
   setSize(1920, 1080);
 </script>
 
