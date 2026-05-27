@@ -44,7 +44,7 @@
 
     label { font-size: 11px; color: #888; white-space: nowrap; display: flex; align-items: center; gap: 5px; }
     input[type=number] {
-      width: 52px; background: #14141e; border: 1px solid #2a2a3e;
+      width: 65px; background: #14141e; border: 1px solid #2a2a3e;
       color: #ccc; padding: 2px 5px; font-family: monospace; font-size: 11px; border-radius: 3px;
     }
     input[type=checkbox] { accent-color: #55cc66; cursor: pointer; }
@@ -170,7 +170,18 @@
     #info {
       flex: 0 0 232px; background: #0e0e1e; border-left: 1px solid #1e1e30;
       overflow-y: auto; padding: 10px 12px; display: flex; flex-direction: column; gap: 12px;
+      transition: flex-basis 0.15s ease;
     }
+    #info.collapsed { flex: 0 0 0; padding: 0; overflow: hidden; border-left: none; }
+    #btn-info-toggle {
+      position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+      width: 16px; height: 40px; background: #10101e; border: 1px solid #1e1e30;
+      border-right: none; border-radius: 4px 0 0 4px;
+      color: #555; font-size: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: color 0.1s;
+    }
+    #btn-info-toggle:hover { color: #aaa; background: #18182a; }
+    #workspace { position: relative; }
     #info h2 {
       font-size: 9px; color: #444; text-transform: uppercase; letter-spacing: 1.5px;
       border-bottom: 1px solid #1e1e30; padding-bottom: 4px; margin-bottom: 4px;
@@ -235,6 +246,7 @@
       <div id="preview"></div>
     </div>
     <div id="size-label"></div>
+    <button id="btn-info-toggle" title="Mostra/nascondi pannello info">›</button>
   </div>
 
   <!-- ── Info panel ────────────────────────────────────────────────────── -->
@@ -806,6 +818,12 @@
 
   ['chk-panels','chk-legend','chk-bezels','chk-ctrls','chk-labels','chk-images']
     .forEach(function(id) { document.getElementById(id).onchange = update; });
+
+  document.getElementById('btn-info-toggle').addEventListener('click', function() {
+    var info = document.getElementById('info');
+    var collapsed = info.classList.toggle('collapsed');
+    this.textContent = collapsed ? '‹' : '›';
+  });
 
   var _rt;
   window.addEventListener('resize', function() { clearTimeout(_rt); _rt = setTimeout(update, 60); });
