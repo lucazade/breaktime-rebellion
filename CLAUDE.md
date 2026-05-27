@@ -61,6 +61,7 @@ dev/
     check-dead.js         ← analisi statica dead code (PAL, STRINGS, sfx, CONFIG.ui, HTML IDs, assets, funzioni)
   debug/
     debug-banners.html    ← pagina standalone per ispezionare tutti i banner/dialog con overlay debug (bande rosse/verdi/blu con label chiavi CONFIG.ui)
+    debug-layout.html     ← simulatore viewport: mostra canvas/bezels/legend a qualsiasi risoluzione, calcola overlap e constraint (width vs height)
 ```
 
 ## Stack

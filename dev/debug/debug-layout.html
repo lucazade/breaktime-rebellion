@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Layout Debug — Breaktime Rebellion</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #070710;
+      color: #ccc;
+      font-family: monospace;
+      font-size: 12px;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ── Toolbar ─────────────────────────────────────────────────────── */
+    #toolbar {
+      flex: 0 0 auto;
+      padding: 7px 14px;
+      background: #10101e;
+      border-bottom: 1px solid #222235;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    #toolbar h1 { font-size: 10px; color: #555; white-space: nowrap; letter-spacing: 1px; }
+    .tb-sep { color: #2a2a3e; font-size: 14px; }
+
+    .preset {
+      background: #18182a;
+      color: #999;
+      border: 1px solid #2a2a3e;
+      padding: 3px 8px;
+      cursor: pointer;
+      font-family: monospace;
+      font-size: 11px;
+      border-radius: 3px;
+      white-space: nowrap;
+      transition: background 0.1s;
+    }
+    .preset:hover           { background: #22223a; color: #ccc; }
+    .preset.active          { border-color: #4477ff; color: #7799ff; background: #16163a; }
+    .preset.warn            { border-color: #ff5533 !important; color: #ff8866 !important; }
+
+    label { font-size: 11px; color: #888; white-space: nowrap; display: flex; align-items: center; gap: 5px; }
+    input[type=number] {
+      width: 52px;
+      background: #14141e;
+      border: 1px solid #2a2a3e;
+      color: #ccc;
+      padding: 2px 5px;
+      font-family: monospace;
+      font-size: 11px;
+      border-radius: 3px;
+    }
+    input[type=checkbox] { accent-color: #55cc66; cursor: pointer; }
+    input[type=range]    { width: 70px; accent-color: #4477ff; }
+
+    /* ── Main split ──────────────────────────────────────────────────── */
+    #main { flex: 1; display: flex; overflow: hidden; }
+
+    /* ── Workspace (preview area) ────────────────────────────────────── */
+    #workspace {
+      flex: 1;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #050509;
+      position: relative;
+    }
+    /* Screen-size label below preview */
+    #size-label {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 10px;
+      color: #333;
+      white-space: nowrap;
+    }
+
+    /* The preview-wrapper is transform:scale()'d by JS to fit the workspace */
+    #preview-wrapper { position: relative; }
+
+    /* The preview: represents the exact browser viewport */
+    #preview {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse at 50% 110%, rgba(255,0,180,0.22) 0%, transparent 48%),
+        radial-gradient(ellipse at 50% -8%,  rgba(0,180,255,0.10) 0%, transparent 42%),
+        linear-gradient(160deg, #060010 0%, #0e0026 45%, #100030 60%, #060010 100%);
+      outline: 1px solid #2a2a3e;
+      box-shadow: 0 0 0 1px #111, 0 0 60px rgba(0,0,80,0.6);
+    }
+
+    /* All overlay layers use position:absolute within the preview */
+    .layer {
+      position: absolute;
+      pointer-events: none;
+    }
+
+    /* ── Specific layer styles ───────────────────────────────────────── */
+
+    /* Game area boundary */
+    .l-game-area {
+      outline: 1px dashed rgba(0,210,255,0.18);
+    }
+
+    /* Canvas (filled purple, outlined yellow) */
+    .l-canvas {
+      background: #1a1a2e;
+      outline: 1.5px solid rgba(255,210,0,0.75);
+    }
+
+    /* Top bezel zone */
+    .l-top-bezel {
+      background: rgba(255,200,0,0.12);
+      border-bottom: 1px solid rgba(255,200,0,0.55);
+      display: flex; align-items: center; justify-content: center;
+    }
+    /* Bottom bezel line */
+    .l-bot-bezel {
+      background: rgba(0,210,255,0.55);
+    }
+    /* Legend zone */
+    .l-legend {
+      background: rgba(255,80,60,0.18);
+      border-top: 1px solid rgba(255,80,60,0.6);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .l-legend.overlap {
+      background: rgba(255,50,30,0.38);
+      border-top-color: rgba(255,80,60,1);
+    }
+
+    /* Overlap danger highlight */
+    .l-overlap-zone {
+      background: rgba(255,30,0,0.35);
+      outline: 1px solid rgba(255,80,50,0.9);
+    }
+
+    /* Measurement ruler lines */
+    .l-hline {
+      height: 1px;
+      left: 0; right: 0;
+      background: rgba(255,255,255,0.10);
+    }
+    .l-vline {
+      width: 1px;
+      top: 0; bottom: 0;
+      background: rgba(255,255,255,0.10);
+    }
+
+    /* Canvas crosshair (center) */
+    .l-center-h { height: 1px; background: rgba(255,255,255,0.06); }
+    .l-center-v { width:  1px; background: rgba(255,255,255,0.06); }
+
+    /* Floating labels inside preview */
+    .fl-label {
+      position: absolute;
+      pointer-events: none;
+      font-size: 9px;
+      font-family: monospace;
+      padding: 0px 3px;
+      border-radius: 1px;
+      white-space: nowrap;
+      line-height: 1.6;
+    }
+
+    /* Canvas inner: title screen placeholder content */
+    .canvas-placeholder {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      pointer-events: none;
+    }
+    .canvas-placeholder .cp-title {
+      color: rgba(255,200,0,0.18);
+      font-family: monospace;
+      font-size: 10px;
+      text-align: center;
+    }
+    /* Canvas controls bar (drawn at bottom of canvas by draw-title.js) */
+    .canvas-controls-bar {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: rgba(255,200,0,0.04);
+      border-top: 1px dashed rgba(255,200,0,0.2);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .canvas-controls-bar span {
+      font-size: 8px;
+      color: rgba(255,200,0,0.3);
+      white-space: nowrap;
+    }
+
+    /* ── Info panel ──────────────────────────────────────────────────── */
+    #info {
+      flex: 0 0 232px;
+      background: #0e0e1e;
+      border-left: 1px solid #1e1e30;
+      overflow-y: auto;
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    #info h2 {
+      font-size: 9px;
+      color: #444;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      border-bottom: 1px solid #1e1e30;
+      padding-bottom: 4px;
+      margin-bottom: 4px;
+    }
+    .metric {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-top: 3px;
+      gap: 4px;
+    }
+    .metric-k { color: #666; font-size: 11px; }
+    .metric-v { color: #bbb; font-weight: bold; font-size: 11px; white-space: nowrap; }
+    .metric-v.warn { color: #ff6644; }
+    .metric-v.ok   { color: #55cc66; }
+    .metric-v.info2 { color: #5599ff; }
+
+    .status-box {
+      border-radius: 3px;
+      padding: 7px 9px;
+      font-size: 11px;
+      line-height: 1.6;
+    }
+    .status-box.overlap { background: rgba(255,50,30,0.15); border: 1px solid rgba(255,50,30,0.4); color: #ff9977; }
+    .status-box.ok      { background: rgba(50,200,50,0.10); border: 1px solid rgba(50,200,50,0.25); color: #88cc88; }
+
+    .color-key { display: flex; flex-direction: column; gap: 4px; }
+    .ck-row { display: flex; align-items: center; gap: 7px; font-size: 10px; color: #777; }
+    .ck-dot { width: 18px; height: 9px; border-radius: 1px; flex-shrink: 0; }
+
+    /* Legend height control */
+    #legend-h-val { display: inline-block; width: 24px; text-align: right; color: #aaa; }
+  </style>
+</head>
+<body>
+
+<!-- ── Toolbar ─────────────────────────────────────────────────────────── -->
+<div id="toolbar">
+  <h1>LAYOUT DEBUG</h1>
+  <span class="tb-sep">|</span>
+  <span style="color:#555;font-size:10px">VIEWPORT:</span>
+  <button class="preset" data-w="1920" data-h="1080">1920×1080</button>
+  <button class="preset" data-w="1440" data-h="900">1440×900</button>
+  <button class="preset" data-w="1366" data-h="768">1366×768</button>
+  <button class="preset" data-w="1280" data-h="800">1280×800</button>
+  <button class="preset" data-w="1024" data-h="600">1024×600</button>
+  <button class="preset" data-w="800" data-h="600">800×600</button>
+  <span class="tb-sep">|</span>
+  <label>W <input type="number" id="inp-w" value="1366" min="400" max="2560" step="2"></label>
+  <label>H <input type="number" id="inp-h" value="768"  min="300" max="1440" step="2"></label>
+  <span class="tb-sep">|</span>
+  <label title="Altezza stimata del div #legend"><input type="checkbox" id="chk-legend" checked> legend</label>
+  <label><input type="checkbox" id="chk-bezels" checked> bezels</label>
+  <label><input type="checkbox" id="chk-grid"> griglia</label>
+  <label><input type="checkbox" id="chk-ctrls" checked> ctrl bar</label>
+  <span class="tb-sep">|</span>
+  <label>legend H
+    <input type="range" id="sld-lh" min="10" max="40" value="20">
+    <span id="legend-h-val">20</span>px
+  </label>
+</div>
+
+<!-- ── Main ───────────────────────────────────────────────────────────── -->
+<div id="main">
+
+  <div id="workspace">
+    <div id="preview-wrapper">
+      <div id="preview">
+        <!-- All layers injected by JS into #preview -->
+      </div>
+    </div>
+    <div id="size-label"></div>
+  </div>
+
+  <!-- ── Info panel ────────────────────────────────────────────────────── -->
+  <div id="info">
+
+    <div>
+      <h2>Viewport</h2>
+      <div class="metric"><span class="metric-k">width</span>    <span class="metric-v" id="i-vw">—</span></div>
+      <div class="metric"><span class="metric-k">height</span>   <span class="metric-v" id="i-vh">—</span></div>
+      <div class="metric"><span class="metric-k">ratio</span>    <span class="metric-v" id="i-vr">—</span></div>
+      <div class="metric"><span class="metric-k">constraint</span><span class="metric-v info2" id="i-vc">—</span></div>
+    </div>
+
+    <div>
+      <h2>Canvas</h2>
+      <div class="metric"><span class="metric-k">rendered W</span>    <span class="metric-v" id="i-cw">—</span></div>
+      <div class="metric"><span class="metric-k">rendered H</span>    <span class="metric-v" id="i-ch">—</span></div>
+      <div class="metric"><span class="metric-k">top from vp</span>   <span class="metric-v" id="i-ct">—</span></div>
+      <div class="metric"><span class="metric-k">bottom from vp</span><span class="metric-v" id="i-cb">—</span></div>
+    </div>
+
+    <div>
+      <h2>Bezels (desktop)</h2>
+      <div class="metric"><span class="metric-k">top-bezel top</span><span class="metric-v" id="i-tbt">—</span></div>
+      <div class="metric"><span class="metric-k">top-bezel bot</span><span class="metric-v" id="i-tbb">—</span></div>
+      <div class="metric"><span class="metric-k">bot-bezel top</span><span class="metric-v" id="i-bbt">—</span></div>
+    </div>
+
+    <div>
+      <h2>Legend (#legend)</h2>
+      <div class="metric"><span class="metric-k">height (stimata)</span><span class="metric-v" id="i-lh">—</span></div>
+      <div class="metric"><span class="metric-k">top</span>            <span class="metric-v" id="i-lt">—</span></div>
+      <div class="metric"><span class="metric-k">gap da canvas</span>  <span class="metric-v" id="i-gap">—</span></div>
+    </div>
+
+    <div id="overlap-status"></div>
+
+    <div>
+      <h2>Canvas controls bar</h2>
+      <div class="metric"><span class="metric-k">Y bottom canvas</span><span class="metric-v" id="i-cby">—</span></div>
+      <div class="metric"><span class="metric-k">ctrl bar H (est.)</span><span class="metric-v" id="i-cbh">—</span></div>
+      <div class="metric"><span class="metric-k">gap legend↔ctrl</span><span class="metric-v" id="i-clg">—</span></div>
+    </div>
+
+    <div class="color-key">
+      <h2>Colori</h2>
+      <div class="ck-row"><div class="ck-dot" style="background:rgba(255,210,0,0.5);outline:1px solid rgba(255,210,0,0.8)"></div>canvas</div>
+      <div class="ck-row"><div class="ck-dot" style="background:rgba(255,200,0,0.18)"></div>top-bezel</div>
+      <div class="ck-row"><div class="ck-dot" style="background:rgba(0,210,255,0.55)"></div>bottom-bezel</div>
+      <div class="ck-row"><div class="ck-dot" style="background:rgba(255,80,60,0.28)"></div>legend</div>
+      <div class="ck-row"><div class="ck-dot" style="background:rgba(255,30,0,0.45)"></div>overlap zone</div>
+      <div class="ck-row"><div class="ck-dot" style="background:rgba(255,200,0,0.07);outline:1px dashed rgba(255,200,0,0.3)"></div>ctrl bar (canvas)</div>
+    </div>
+
+  </div><!-- #info -->
+</div><!-- #main -->
+
+<script>
+  // ── Layout constants (from style.css + game.js _updateRoundness) ──────
+  var CANVAS_RATIO    = 16 / 10;      // aspect-ratio: 16 / 10
+  var CANVAS_MAX_W    = 1600;         // max-width: 1600px on game-area
+  var LEGEND_BOTTOM   = 8;            // position: fixed; bottom: 8px
+  var BEZEL_TOP_GAP   = 26;           // top: calc(--canvas-top - 26px) → height of space above bezel
+  var BEZEL_TOP_H     = 28;           // approximate rendered height of "BREAKTIME REBELLION" text
+  var BEZEL_BOT_GAP   = 14;           // top: calc(--canvas-top + --canvas-h + 14px)
+  var BEZEL_BOT_H     = 2;            // height: 2px neon line
+
+  // Canvas controls bar: drawn by draw-title.js at the bottom of the canvas.
+  // From CONFIG.ui.titleScreen.controls: btnH:11, with the row placed below logo.
+  // Approximate: controls row occupies ~btnH + some padding ≈ 14px at the bottom.
+  var CTRL_BAR_H_LOGICAL = 14;        // logical canvas px (the canvas is 320×200)
+
+  // ── State ─────────────────────────────────────────────────────────────
+  var vpW = 1366, vpH = 768, legH = 20;
+
+  // ── DOM ───────────────────────────────────────────────────────────────
+  var elPreview   = document.getElementById('preview');
+  var elWrapper   = document.getElementById('preview-wrapper');
+  var elWorkspace = document.getElementById('workspace');
+  var elInpW      = document.getElementById('inp-w');
+  var elInpH      = document.getElementById('inp-h');
+  var elSldLH     = document.getElementById('sld-lh');
+  var elLHVal     = document.getElementById('legend-h-val');
+
+  // ── Compute canvas geometry ───────────────────────────────────────────
+  // game-area: flex:1, max-width:1600px, height:100dvh (desktop, no panels)
+  // canvas: aspect-ratio 16:10, max-width:100%, max-height:100%
+  function computeLayout(vw, vh) {
+    var gaX = Math.max(0, (vw - CANVAS_MAX_W) / 2);
+    var gaW = Math.min(vw, CANVAS_MAX_W);
+    var gaH = vh;
+
+    // CSS aspect-ratio + max-width/max-height resolution
+    var wByWidth  = gaW;
+    var hByWidth  = gaW / CANVAS_RATIO;
+    var cW, cH, constraint;
+    if (hByWidth <= gaH) {
+      // width-constrained (viewport wider relative to aspect ratio, or tall enough)
+      cW = wByWidth; cH = hByWidth; constraint = 'width';
+    } else {
+      // height-constrained (viewport taller relative to aspect ratio)
+      cH = gaH; cW = gaH * CANVAS_RATIO; constraint = 'height';
+    }
+
+    var cLeft = gaX + (gaW - cW) / 2;
+    var cTop  = (gaH - cH) / 2;
+
+    // Top bezel (--canvas-top = cTop; from calc: top - 26px, height ≈ 28px text)
+    var tbBot = cTop - BEZEL_TOP_GAP;       // bottom edge of top bezel area
+    var tbTop = tbBot - BEZEL_TOP_H;        // top edge
+
+    // Bottom bezel
+    var bbTop = cTop + cH + BEZEL_BOT_GAP;
+
+    // Legend
+    var lTop = vh - LEGEND_BOTTOM - legH;
+
+    // Canvas-bottom
+    var cBot = cTop + cH;
+
+    // Gap between canvas bottom and legend top (positive = clear, negative = overlap)
+    var gap = lTop - cBot;
+
+    // Canvas controls bar Y in viewport coords
+    // The controls bar is drawn at the bottom of the canvas (logical coords).
+    // Scale: cH logical pixels = cH rendered pixels... but wait, the canvas is
+    // 1600×1000 natively and scaled down to cW×cH. So a logical-px value maps:
+    // rendered_px = logical_px × (cH / 1000)    [since canvas height = 1000 logical]
+    // The ctrl bar is ~14px logical from the bottom → 14 × (cH/1000) rendered px
+    var ctrlBarRenderH = CTRL_BAR_H_LOGICAL * (cH / 1000) * 5;  // ×5 for 5× render scale
+    // Actually simpler: the canvas element rendered height = cH, canvas internal = 1000px.
+    // scale = cH / 1000. Ctrl bar H in rendered px:
+    ctrlBarRenderH = CTRL_BAR_H_LOGICAL * (cH / 1000);
+    var ctrlBarTop = cBot - ctrlBarRenderH;
+
+    // Gap between legend top and ctrl bar bottom
+    var legCtrlGap = lTop - cBot;   // same as gap since ctrl bar is inside canvas
+
+    return { gaX, gaW, gaH, cW, cH, cLeft, cTop, cBot, constraint,
+             tbTop, tbBot, bbTop, gap, lTop, ctrlBarH: ctrlBarRenderH, ctrlBarTop };
+  }
+
+  // ── Build all layers inside #preview ─────────────────────────────────
+  function layer(cls, style, text) {
+    var d = document.createElement('div');
+    d.className = 'layer ' + cls;
+    Object.assign(d.style, style);
+    if (text) d.textContent = text;
+    return d;
+  }
+
+  function flLabel(text, style, color) {
+    var d = document.createElement('div');
+    d.className = 'fl-label';
+    d.textContent = text;
+    d.style.color = color || 'rgba(255,255,255,0.5)';
+    Object.assign(d.style, style);
+    return d;
+  }
+
+  function update() {
+    var g = computeLayout(vpW, vpH);
+
+    // ── Scale preview to fit workspace ──────────────────────────────────
+    var ws      = elWorkspace.getBoundingClientRect();
+    var padX    = 60, padY = 48;
+    var scale   = Math.min((ws.width - padX) / vpW, (ws.height - padY) / vpH, 1);
+    scale = Math.max(scale, 0.1);
+
+    elPreview.style.width  = vpW + 'px';
+    elPreview.style.height = vpH + 'px';
+    elWrapper.style.width  = vpW + 'px';
+    elWrapper.style.height = vpH + 'px';
+    elWrapper.style.transform = 'scale(' + scale + ')';
+    elWrapper.style.transformOrigin = 'center center';
+
+    document.getElementById('size-label').textContent =
+      vpW + ' × ' + vpH + 'px  ·  scale ' + scale.toFixed(2) + '×';
+
+    // ── Rebuild layers ──────────────────────────────────────────────────
+    elPreview.innerHTML = '';
+    var showBezels = document.getElementById('chk-bezels').checked;
+    var showLegend = document.getElementById('chk-legend').checked;
+    var showGrid   = document.getElementById('chk-grid').checked;
+    var showCtrls  = document.getElementById('chk-ctrls').checked;
+
+    // Grid: horizontal center, vertical center
+    if (showGrid) {
+      elPreview.appendChild(layer('l-hline', { top: (vpH/2)+'px', left:0, right:0 }));
+      elPreview.appendChild(layer('l-vline', { left: (vpW/2)+'px', top:0, bottom:0 }));
+      if (g.gaX > 0) {
+        elPreview.appendChild(layer('l-vline', { left: g.gaX+'px' }));
+        elPreview.appendChild(layer('l-vline', { left: (g.gaX + g.gaW)+'px' }));
+      }
+    }
+
+    // Game area boundary (dashed)
+    elPreview.appendChild(layer('l-game-area', {
+      left: g.gaX+'px', top: '0', width: g.gaW+'px', height: vpH+'px'
+    }));
+
+    // Top bezel
+    if (showBezels && g.tbTop > -BEZEL_TOP_H) {
+      var tbEl = layer('l-top-bezel', {
+        left: g.gaX+'px', top: g.tbTop+'px', width: g.gaW+'px',
+        height: BEZEL_TOP_H+'px'
+      });
+      tbEl.appendChild(flLabel('top-bezel', { top:'50%', left:'4px', transform:'translateY(-50%)' }, 'rgba(255,200,0,0.6)'));
+      elPreview.appendChild(tbEl);
+    }
+
+    // Canvas
+    var cEl = layer('l-canvas', {
+      left:   g.cLeft+'px',
+      top:    g.cTop+'px',
+      width:  g.cW+'px',
+      height: g.cH+'px',
+    });
+
+    // Canvas content placeholder
+    var cp = document.createElement('div');
+    cp.className = 'canvas-placeholder';
+    cp.innerHTML = '<div class="cp-title" style="font-size:' + Math.max(8, g.cH*0.018) + 'px">' +
+                   'CANVAS 16:10<br>' +
+                   '<span style="opacity:.5;font-size:' + Math.max(7, g.cH*0.012) + 'px">' +
+                   Math.round(g.cW) + ' × ' + Math.round(g.cH) + 'px</span></div>';
+    cEl.appendChild(cp);
+
+    // Canvas controls bar (drawn by draw-title.js)
+    if (showCtrls && g.ctrlBarH > 0.5) {
+      var cbEl = document.createElement('div');
+      cbEl.className = 'canvas-controls-bar';
+      cbEl.style.height = Math.max(1, g.ctrlBarH) + 'px';
+      cbEl.innerHTML = '<span style="font-size:' + Math.max(6, g.ctrlBarH * 0.5) + 'px">← ctrl bar (titolo) →</span>';
+      cEl.appendChild(cbEl);
+    }
+    elPreview.appendChild(cEl);
+
+    // Bottom bezel
+    if (showBezels) {
+      elPreview.appendChild(layer('l-bot-bezel', {
+        left: g.gaX+'px', top: g.bbTop+'px',
+        width: g.gaW+'px', height: BEZEL_BOT_H+'px'
+      }));
+      elPreview.appendChild(flLabel('bottom-bezel (+14px)', {
+        left: (g.gaX + 4)+'px', top: (g.bbTop + 2)+'px'
+      }, 'rgba(0,210,255,0.55)'));
+    }
+
+    // Legend + overlap zone
+    var overlap = g.gap < 0;
+    if (showLegend) {
+      var legEl = layer('l-legend' + (overlap ? ' overlap' : ''), {
+        left: 0, right: 0,
+        top:    g.lTop+'px',
+        height: legH+'px'
+      });
+      legEl.appendChild(flLabel('#legend (fixed bottom:8px)', {
+        top:'50%', left:'4px', transform:'translateY(-50%)'
+      }, overlap ? 'rgba(255,130,100,0.9)' : 'rgba(255,100,80,0.7)'));
+      elPreview.appendChild(legEl);
+
+      // Overlap zone highlight
+      if (overlap) {
+        var olH = -g.gap; // overlap px
+        elPreview.appendChild(layer('l-overlap-zone', {
+          left: g.cLeft+'px',
+          top:  g.lTop+'px',
+          width: g.cW+'px',
+          height: olH+'px'
+        }));
+        elPreview.appendChild(flLabel('⚠ overlap ' + Math.round(olH) + 'px', {
+          left: (g.cLeft + 4)+'px',
+          top:  (g.lTop + olH/2 - 5)+'px'
+        }, 'rgba(255,120,80,1)'));
+      }
+    }
+
+    // ── Info panel ──────────────────────────────────────────────────────
+    function setM(id, val, cls) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      el.textContent = val;
+      el.className = 'metric-v' + (cls ? ' ' + cls : '');
+    }
+
+    setM('i-vw', vpW + 'px');
+    setM('i-vh', vpH + 'px');
+    setM('i-vr', (vpW/vpH).toFixed(3) + ' (' + (vpW/vpH > CANVAS_RATIO ? '>' : '<') + ' 1.6)');
+    setM('i-vc', g.constraint + '-constrained', g.constraint === 'height' ? 'warn' : 'ok');
+    setM('i-cw', Math.round(g.cW) + 'px');
+    setM('i-ch', Math.round(g.cH) + 'px');
+    setM('i-ct', Math.round(g.cTop) + 'px');
+    setM('i-cb', Math.round(vpH - g.cBot) + 'px');
+    setM('i-tbt', Math.round(g.tbTop) + 'px');
+    setM('i-tbb', Math.round(g.tbBot) + 'px');
+    setM('i-bbt', Math.round(g.bbTop) + 'px');
+    setM('i-lh',  legH + 'px');
+    setM('i-lt',  Math.round(g.lTop) + 'px');
+    setM('i-gap', Math.round(g.gap) + 'px', g.gap < 0 ? 'warn' : 'ok');
+    setM('i-cby', Math.round(g.cBot) + 'px');
+    setM('i-cbh', g.ctrlBarH.toFixed(1) + 'px');
+    var legCtrlGap = g.lTop - g.cBot;
+    setM('i-clg', Math.round(legCtrlGap) + 'px', legCtrlGap < 0 ? 'warn' : 'ok');
+
+    // Overlap status
+    var osEl = document.getElementById('overlap-status');
+    if (overlap) {
+      var olPx = Math.round(-g.gap);
+      osEl.innerHTML = '<div class="status-box overlap">⚠ Overlap di <b>' + olPx + 'px</b><br>' +
+        'legend sovrasta il canvas.<br>' +
+        '<span style="font-size:10px;opacity:.8">canvas bottom: ' + Math.round(g.cBot) + 'px<br>' +
+        'legend top: ' + Math.round(g.lTop) + 'px</span></div>';
+    } else {
+      osEl.innerHTML = '<div class="status-box ok">✓ Nessun overlap<br>' +
+        '<span style="font-size:10px;opacity:.8">gap: ' + Math.round(g.gap) + 'px liberi</span></div>';
+    }
+
+    // Update preset button "warn" state
+    document.querySelectorAll('.preset').forEach(function(btn) {
+      var bw = parseInt(btn.dataset.w), bh = parseInt(btn.dataset.h);
+      var bg = computeLayout(bw, bh);
+      btn.classList.toggle('warn',   bg.gap < 0);
+      btn.classList.toggle('active', bw === vpW && bh === vpH);
+    });
+  }
+
+  // ── Controls ──────────────────────────────────────────────────────────
+  function setSize(w, h) {
+    vpW = w; vpH = h;
+    elInpW.value = w; elInpH.value = h;
+    update();
+  }
+
+  document.querySelectorAll('.preset').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      setSize(parseInt(this.dataset.w), parseInt(this.dataset.h));
+    });
+  });
+
+  elInpW.addEventListener('input', function() {
+    var v = parseInt(this.value);
+    if (v >= 400 && v <= 2560) { vpW = v; update(); }
+  });
+  elInpH.addEventListener('input', function() {
+    var v = parseInt(this.value);
+    if (v >= 300 && v <= 1440) { vpH = v; update(); }
+  });
+
+  elSldLH.addEventListener('input', function() {
+    legH = parseInt(this.value);
+    elLHVal.textContent = legH;
+    update();
+  });
+
+  document.getElementById('chk-legend').onchange = update;
+  document.getElementById('chk-bezels').onchange = update;
+  document.getElementById('chk-grid').onchange   = update;
+  document.getElementById('chk-ctrls').onchange  = update;
+
+  var _resizeTimer;
+  window.addEventListener('resize', function() {
+    clearTimeout(_resizeTimer);
+    _resizeTimer = setTimeout(update, 60);
+  });
+
+  // ── Init ──────────────────────────────────────────────────────────────
+  setSize(1366, 768);
+</script>
+
+</body>
+</html>
