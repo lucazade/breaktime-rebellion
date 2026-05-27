@@ -498,7 +498,9 @@
 
   // ── Main render ──────────────────────────────────────────────────────────
   function update() {
-    var withPanels = document.getElementById('chk-panels').checked;
+    // mobile override calcolato prima di computeLayout (influenza la geometria dei pannelli)
+    var mobileMode = document.getElementById('chk-mobile').checked;
+    var withPanels = document.getElementById('chk-panels').checked || (mobileMode && screenMode === 'game');
     var g = computeLayout(vpW, vpH, withPanels);
 
     // Scale preview to fit workspace
@@ -514,7 +516,6 @@
       vpW + ' × ' + vpH + 'px  ·  scale ' + scale.toFixed(2) + '×';
 
     elPreview.innerHTML = '';
-    var mobileMode = document.getElementById('chk-mobile').checked;
     var showBezels = document.getElementById('chk-bezels').checked;
     var showLegend = document.getElementById('chk-legend').checked;
     var showGrid   = document.getElementById('chk-grid').checked;
@@ -524,7 +525,7 @@
     // mobile overrides — legend mai presente su mobile (CSS: hover+pointer:fine only)
     if (mobileMode) {
       showLegend = false;
-      if (screenMode === 'game') { showBezels = false; withPanels = true; }
+      if (screenMode === 'game') showBezels = false;  // withPanels già gestito sopra
     }
 
     // ── Grid ──────────────────────────────────────────────────────────────
