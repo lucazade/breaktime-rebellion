@@ -209,9 +209,12 @@ canvas.rounded { border-radius: 16px; }
     pointer-events: none;
   }
 
-  /* Keyboard legend — fixed footer on title screen */
+  /* Keyboard legend — anchored 8px below canvas bottom.
+     When height-constrained (canvas fills viewport), top > 100vh → off-screen, no overlap. */
   #legend {
-    position: fixed; bottom: 8px; left: 0; right: 0;
+    position: fixed;
+    top: calc(var(--canvas-top, 0px) + var(--canvas-h, 100vh) + 8px);
+    left: 0; right: 0;
     text-align: center; pointer-events: none;
   }
   #legend.visible { display: block; }
