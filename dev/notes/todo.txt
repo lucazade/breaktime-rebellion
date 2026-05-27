@@ -383,3 +383,5 @@ PER LUCA:
 PER CLAUDE:
 - [ ] #203 Pagina debug banners
 - [ ] #204 Pagina debug layout
+- [ ] #205 strippiamo il codice di ?debug=1 e lo mettiamo in un file separato come facciamo per layout-overlay? lo chiamiamo forse scene-overlay.js? facciamo un semplice pagina html con il link a tutti i tool di debug? uniformiamo overlay banners e scene-overlay a layout-overlay
+- [ ] #206 manca un tool di profilazioni/benchmarking alla nostra cassetta degli attrezzi? mi sembra ad esempio che l'effetto "esplosione" durante il floating point sia un pò pesante.. magari ci aiuta ad indagare questi casi. (al momento ovviamente l'effetto non lo tocchiamo)
