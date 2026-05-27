@@ -199,10 +199,10 @@
       color: rgba(255,200,0,0.18); font-family: monospace; font-size: 10px; text-align: center;
     }
 
-    /* Canvas: real logo (title mode) */
+    /* Canvas: real logo (title mode) — position/size set via JS to mirror draw-title.js geometry */
     .canvas-logo {
-      position: absolute; top: 8%; left: 50%; transform: translateX(-50%);
-      width: 82%; object-fit: contain; image-rendering: pixelated;
+      position: absolute;
+      object-fit: fill; image-rendering: pixelated;
       pointer-events: none; opacity: 0.92;
     }
 
@@ -437,6 +437,29 @@
   var CTRL_AUDIO_RX = 310; // controls.audioRightX
   var CTRL_PAD_X   = 6;    // controls.audioPadX
 
+  // Logo geometry — mirrors draw-title.js exactly
+  // CONFIG.ui.titleScreen.logo.w = 300 logical px; canvas = 320×200
+  var LOGO_LOG_W   = 300;  // logical width (config)
+  var LOGO_LOG_X   = Math.round((320 - LOGO_LOG_W) / 2);  // = 10
+  // Natural dimensions from logo-1600.png (1697×927) — used as fallback if image not yet loaded
+  var LOGO_NAT_W   = 1697;
+  var LOGO_NAT_H   = 927;
+
+  // Compute logo logical height from natural dimensions
+  function logoLogH(natW, natH) {
+    return Math.round((natH || LOGO_NAT_H) / (natW || LOGO_NAT_W) * LOGO_LOG_W);
+  }
+  // Compute logoY: center the (logo + gap + btn) block vertically in 200px
+  function logoLogY(lh) {
+    var totalH = lh + CTRL_GAP_Y + CTRL_BTN_H;
+    return Math.max(0, Math.round((200 - totalH) / 2));
+  }
+
+  // Preload logo image for accurate natural dimensions
+  var _logoImg = new Image();
+  _logoImg.onload = function() { update(); };
+  _logoImg.src = '../../assets/pics/logo/logo-1600.png';
+
   // ── State ────────────────────────────────────────────────────────────────
   var vpW        = 1920;
   var vpH        = 1080;
@@ -481,8 +504,12 @@
     var gap   = lTop - cBot;
 
     var s              = cH / 200;       // logical-to-rendered scale
-    var ctrlBarRenderH = CTRL_BAR_H_LOGICAL * s;
-    var ctrlBarTop     = cBot - ctrlBarRenderH;
+    // Accurate ctrl bar position (mirrors draw-title.js: ctrlY = logoY + logoH + gapY)
+    var _lLogH         = logoLogH(LOGO_NAT_W, LOGO_NAT_H);
+    var _lLogY         = logoLogY(_lLogH);
+    var _ctrlLogY      = _lLogY + _lLogH + CTRL_GAP_Y;
+    var ctrlBarRenderH = CTRL_BTN_H * s;
+    var ctrlBarTop     = cTop + _ctrlLogY * s;
 
     return {
       gaX, gaW, gaH, cW, cH, cLeft, cTop, cBot, constraint,
@@ -622,18 +649,46 @@
       left: g.cLeft+'px', top: g.cTop+'px', width: g.cW+'px', height: g.cH+'px'
     });
 
+    // Compute logo geometry (mirrors draw-title.js exactly)
+    var natW = (_logoImg && _logoImg.complete && _logoImg.naturalWidth > 0) ? _logoImg.naturalWidth  : LOGO_NAT_W;
+    var natH = (_logoImg && _logoImg.complete && _logoImg.naturalWidth > 0) ? _logoImg.naturalHeight : LOGO_NAT_H;
+    var lLogH = logoLogH(natW, natH);
+    var lLogY = logoLogY(lLogH);
+    var lLogX = LOGO_LOG_X;
+    var s = g.s;
+    // Rendered coords inside canvas element
+    var lRW = Math.round(LOGO_LOG_W * s);
+    var lRH = Math.round(lLogH * s);
+    var lRX = Math.round(lLogX * s);
+    var lRY = Math.round(lLogY * s);
+    var ctrlLogY = lLogY + lLogH + CTRL_GAP_Y;   // mirrors: ctrlY = logoY + logoH + ct.gapY
+    var ctrlRY   = Math.round(ctrlLogY * s);
+    var ctrlRH   = Math.round(CTRL_BTN_H * s);
+
+    // Canvas border-radius: canvas.rounded activates when cTop > 2 (style.css)
+    cEl.style.borderRadius = g.cTop > 2 ? '16px' : '0';
+
     if (showImages) {
       if (screenMode === 'title') {
-        cEl.style.background = '#08001a';
+        // Transparent canvas (real game uses clearRect; page bg shows through)
+        cEl.style.background = 'transparent';
+        cEl.style.outline = '1px dashed rgba(255,210,0,0.25)'; // faint guide only
+
         var logoEl = document.createElement('img');
         logoEl.src = '../../assets/pics/logo/logo-1600.png';
         logoEl.className = 'canvas-logo';
+        logoEl.style.left   = lRX + 'px';
+        logoEl.style.top    = lRY + 'px';
+        logoEl.style.width  = lRW + 'px';
+        logoEl.style.height = lRH + 'px';
+        // Logo border (draw-title.js draws roundRect stroke around logo)
+        logoEl.style.borderRadius = Math.round(5 * s) + 'px';
+        logoEl.style.outline = '1px solid rgba(200,160,0,0.55)';
         cEl.appendChild(logoEl);
       } else {
-        var bgSrc = bgMode === 'night'
+        cEl.style.background = 'url(' + (bgMode === 'night'
           ? '../../assets/pics/bg/bg-1600-night.png'
-          : '../../assets/pics/bg/bg-1600-day.png';
-        cEl.style.background = 'url(' + bgSrc + ') center/100% 100% no-repeat';
+          : '../../assets/pics/bg/bg-1600-day.png') + ') center/100% 100% no-repeat';
       }
     } else {
       var cp = document.createElement('div');
@@ -646,17 +701,16 @@
       cEl.appendChild(cp);
     }
 
-    // Canvas ctrl bar — title screen only (draw-title.js)
-    // Positions mirror CONFIG.ui.titleScreen.controls (logical → rendered via scale s)
-    if (showCtrls && screenMode === 'title' && g.ctrlBarH > 1) {
-      var s = g.s;
+    // Canvas ctrl bar — title only; positioned at exact ctrlY (mirrors draw-title.js)
+    if (showCtrls && screenMode === 'title' && ctrlRH > 1) {
       var cbEl = document.createElement('div');
       cbEl.className = 'canvas-ctrl-bar';
-      cbEl.style.height  = Math.max(1, g.ctrlBarH) + 'px';
+      cbEl.style.top     = ctrlRY + 'px';
+      cbEl.style.bottom  = 'auto';
+      cbEl.style.height  = ctrlRH + 'px';
       cbEl.style.padding = '0 ' + Math.round(CTRL_PREV_X * s) + 'px';
       cbEl.style.gap     = Math.round(6 * s) + 'px';
 
-      // Level chooser [< Lvl 1 >]
       var lgrp = document.createElement('div'); lgrp.className = 'ctrl-grp';
       lgrp.style.gap = Math.round(3 * s) + 'px';
       lgrp.appendChild(ctrlBox('<', s));
@@ -665,13 +719,8 @@
       lgrp.appendChild(lbl);
       lgrp.appendChild(ctrlBox('>', s));
       cbEl.appendChild(lgrp);
-
-      // Difficulty toggle [EASY]
       cbEl.appendChild(ctrlBox('EASY', s, 'ctrl-diff'));
-
-      // Audio button [♪]
       cbEl.appendChild(ctrlBox('♪', s, 'ctrl-audio'));
-
       cEl.appendChild(cbEl);
     }
 
