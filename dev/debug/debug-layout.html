@@ -500,7 +500,9 @@
   function update() {
     // mobile override calcolato prima di computeLayout (influenza la geometria dei pannelli)
     var mobileMode = document.getElementById('chk-mobile').checked;
-    var withPanels = document.getElementById('chk-panels').checked || (mobileMode && screenMode === 'game');
+    // mobile+game forza always il checkbox sidepanels (allinea UI e stato)
+    if (mobileMode && screenMode === 'game') document.getElementById('chk-panels').checked = true;
+    var withPanels = document.getElementById('chk-panels').checked;
     var g = computeLayout(vpW, vpH, withPanels);
 
     // Scale preview to fit workspace
