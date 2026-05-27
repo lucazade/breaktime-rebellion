@@ -105,7 +105,7 @@ CONFIG.ui = {
     fontBody:      6,  // mission text font size
     padTop:       14,  // top padding
     titleH:       10,  // title row height
-    titleSpacing:  8,  // gap below title
+    titleSpacing: 10,  // gap below title
     lineH:         9,  // height per text line
     lineSpacing:   4,  // gap between lines
     padBottom:    14,  // bottom padding
@@ -119,11 +119,11 @@ CONFIG.ui = {
     fontTap:         6,  // "tap to continue" font size
     padTop:         14,  // top padding
     titleH:         10,  // title row height
-    titleSpacing:    8,  // gap below title
+    titleSpacing:   10,  // gap below title
     scoreH:          8,  // score row height
     scoreSpacing:    7,  // gap below score row
     tapH:            8,  // "tap to continue" row height
-    padBottom:      11,  // bottom padding
+    padBottom:      14,  // bottom padding
   },
 
   // High scores banner — panH computed: padTop+titleH+titleSpacing+rows*rowH+tapSpacing+tapH+padBottom
@@ -162,15 +162,15 @@ CONFIG.ui = {
     fontTitle:        8,  // title font size
     fontBody:         6,  // text font size
     fontBtn:          6,  // Yes/No button font size
-    padTop:          12,  // top padding
+    padTop:          14,  // top padding
     titleH:          10,  // title row height
-    titleSpacing:     8,  // gap below title
+    titleSpacing:    10,  // gap below title
     scoreH:           8,  // score row height
     scoreSpacing:    12,  // gap below score row
     confirmH:         8,  // "try again?" row height
     confirmSpacing:   8,  // gap below confirm row
     btnH:            14,  // Yes/No button area height
-    padBottom:       12,  // bottom padding
+    padBottom:       14,  // bottom padding
     siOx:  30, siW:  70,  // Yes button X offset and width
     noOx: 160, noW:  70,  // No button X offset and width
   },
