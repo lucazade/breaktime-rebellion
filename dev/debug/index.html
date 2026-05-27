@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Debug Tools — Breaktime Rebellion</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: linear-gradient(160deg, #060010 0%, #0e0026 45%, #100030 60%, #060010 100%);
+      min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 40px 24px;
+      font-family: monospace;
+      color: #ccc;
+    }
+
+    h1 {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(9px, 1.4vw, 14px);
+      color: rgba(255,215,0,0.85);
+      letter-spacing: 4px;
+      text-shadow: 0 0 16px rgba(255,200,0,0.4);
+      margin-bottom: 8px;
+      text-align: center;
+    }
+
+    .subtitle {
+      font-size: 11px; color: #444; letter-spacing: 1px; margin-bottom: 40px;
+      text-align: center;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      width: 100%; max-width: 900px;
+    }
+
+    .card {
+      background: rgba(10,0,22,0.85);
+      border: 1px solid rgba(160,0,255,0.35);
+      border-radius: 6px;
+      padding: 20px 20px 16px;
+      display: flex; flex-direction: column; gap: 10px;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      text-decoration: none; color: inherit;
+    }
+    .card:hover {
+      border-color: rgba(160,0,255,0.8);
+      box-shadow: 0 0 18px rgba(160,0,255,0.2);
+    }
+
+    .card-icon { font-size: 22px; line-height: 1; }
+
+    .card-title {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 8px; color: #ddd; letter-spacing: 1px; line-height: 1.6;
+    }
+
+    .card-desc { font-size: 10px; color: #666; line-height: 1.7; flex: 1; }
+
+    .card-tag {
+      font-size: 9px; color: rgba(160,0,255,0.7);
+      border: 1px solid rgba(160,0,255,0.3); border-radius: 3px;
+      padding: 2px 7px; align-self: flex-start;
+    }
+    .card-tag.live { color: rgba(0,210,255,0.75); border-color: rgba(0,210,255,0.3); }
+
+    .card-open {
+      margin-top: 4px; font-size: 10px; color: rgba(160,0,255,0.6);
+      align-self: flex-end;
+    }
+    .card:hover .card-open { color: rgba(160,0,255,1); }
+  </style>
+</head>
+<body>
+
+  <h1>BTR DEBUG TOOLS</h1>
+  <p class="subtitle">breaktime-rebellion · dev/debug</p>
+
+  <div class="grid">
+
+    <a class="card" href="debug-layout.html">
+      <div class="card-icon">🖥️</div>
+      <div class="card-title">Layout Simulator</div>
+      <div class="card-desc">
+        Simula canvas / legend / bezels a qualsiasi risoluzione senza avviare il gioco.
+        Preset desktop e mobile, metriche live, rilevamento overlap.
+      </div>
+      <span class="card-tag">standalone</span>
+      <span class="card-open">Apri →</span>
+    </a>
+
+    <a class="card" href="debug-banners.html">
+      <div class="card-icon">🪟</div>
+      <div class="card-title">Banner Inspector</div>
+      <div class="card-desc">
+        Ispeziona tutti i banner e dialog con overlay bande rosse/verdi/blu.
+        Legge direttamente <code>ui.js</code> — sempre in sync con il codice.
+      </div>
+      <span class="card-tag">standalone</span>
+      <span class="card-open">Apri →</span>
+    </a>
+
+    <a class="card" href="../../index.html?layout=1">
+      <div class="card-icon">📐</div>
+      <div class="card-title">Layout Overlay</div>
+      <div class="card-desc">
+        Overlay HTML live sul gioco reale. Mostra confini di canvas, legend, bezels
+        e pannelli con metriche aggiornate in tempo reale.
+        Tasto <kbd>L</kbd> per toggle.
+      </div>
+      <span class="card-tag live">live · ?layout=1</span>
+      <span class="card-open">Apri →</span>
+    </a>
+
+    <a class="card" href="../../index.html?scene=1">
+      <div class="card-icon">🔍</div>
+      <div class="card-title">Scene Overlay</div>
+      <div class="card-desc">
+        Overlay canvas sul gioco reale. Mostra floor lines, stair boxes con coordinate,
+        hitbox NPC e oggetti. Tasto <kbd>L</kbd> per toggle.
+      </div>
+      <span class="card-tag live">live · ?scene=1</span>
+      <span class="card-open">Apri →</span>
+    </a>
+
+  </div>
+
+</body>
+</html>

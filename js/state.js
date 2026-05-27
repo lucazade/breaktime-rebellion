@@ -1,8 +1,6 @@
 // Shared state — variables and functions used across all modules
 
 
-const DEBUG = new URLSearchParams(location.search).get('debug') === '1';
-
 // String formatter: fmt('Hello {0}, score {1}!', name, score)
 function fmt(s) {
   const a = arguments;

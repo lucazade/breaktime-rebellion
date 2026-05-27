@@ -1,0 +1,5 @@
+1. strippiamo il codice di ?debug=1 e lo mettiamo in un file separato come facciamo per layout-overlay? lo chiamiamo forse scene-overlay.js?
+
+2. facciamo un semplice pagina html con il link a tutti i tool di debug?
+
+3. uniformiamo overlay banners e scene-overlay a layout-overlay

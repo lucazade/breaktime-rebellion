@@ -26,6 +26,9 @@ const JS_FILES = [
   'js/entities.js', 'js/draw-game.js', 'js/draw-title.js', 'js/draw-hud.js',
   'js/draw-overlays.js', 'js/menus.js', 'js/game.js', 'js/title.js',
   'sw.js',
+  // Debug overlays — caricati dal gioco ma fuori da js/
+  'dev/debug/layout-overlay.js',
+  'dev/debug/scene-overlay.js',
 ];
 
 const sources    = JS_FILES.map(f => ({ file: f, src: fs.readFileSync(f, 'utf8') }));
