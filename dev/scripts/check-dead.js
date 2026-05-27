@@ -29,6 +29,7 @@ const JS_FILES = [
   // Debug overlays — caricati dal gioco ma fuori da js/
   'dev/debug/layout-overlay.js',
   'dev/debug/scene-overlay.js',
+  'dev/debug/perf-overlay.js',
 ];
 
 const sources    = JS_FILES.map(f => ({ file: f, src: fs.readFileSync(f, 'utf8') }));
