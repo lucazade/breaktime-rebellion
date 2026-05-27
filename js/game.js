@@ -21,15 +21,21 @@ CV.height = 200 * _canvasScale; // 1000
 })();
 
 // Adds .rounded + sets --canvas-top/--canvas-h when canvas has vertical air
+// Also hides #top-bezel when there is not enough room above the canvas
 (function() {
-  var _ga = document.getElementById('game-area');
-  var _root = document.documentElement;
+  var _ga        = document.getElementById('game-area');
+  var _root      = document.documentElement;
+  var _topBezel  = document.getElementById('top-bezel');
+  // Minimum canvas-top for top-bezel to be fully visible:
+  // BEZEL_TOP_GAP(26) + max bezel font height ~30px = 56px
+  var BEZEL_MIN_TOP = 56;
   function _updateRoundness() {
     var rect = CV.getBoundingClientRect();
     var top  = rect.top - _ga.getBoundingClientRect().top;
     _root.style.setProperty('--canvas-top', top + 'px');
     _root.style.setProperty('--canvas-h',   rect.height + 'px');
     CV.classList.toggle('rounded', rect.top > 2);
+    if (_topBezel) _topBezel.classList.toggle('bezel-hidden', rect.top < BEZEL_MIN_TOP);
   }
   new ResizeObserver(_updateRoundness).observe(CV);
   window.addEventListener('resize', _updateRoundness);

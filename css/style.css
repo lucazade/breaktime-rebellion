@@ -179,7 +179,9 @@ canvas.rounded { border-radius: 16px; }
 
 @media (hover: hover) and (pointer: fine) {
 
-  /* Top bezel: game title above the canvas */
+  /* Top bezel: game title above the canvas.
+     .bezel-hidden toggled by _updateRoundness() when canvas-top < 56px (not enough room). */
+  #top-bezel.bezel-hidden { display: none; }
   #top-bezel {
     display: block;
     position: absolute;
