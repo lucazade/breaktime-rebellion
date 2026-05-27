@@ -284,9 +284,11 @@
     </div>
     <div>
       <h2>Legend (desktop)</h2>
-      <div class="metric"><span class="metric-k">height (stimata)</span><span class="metric-v" id="i-lh">—</span></div>
-      <div class="metric"><span class="metric-k">top</span>            <span class="metric-v" id="i-lt">—</span></div>
-      <div class="metric"><span class="metric-k">gap da canvas</span>  <span class="metric-v" id="i-gap">—</span></div>
+      <div class="metric"><span class="metric-k">height (slider)</span><span class="metric-v" id="i-lh">—</span></div>
+      <div class="metric"><span class="metric-k">clamp value</span>   <span class="metric-v" id="i-clamv">—</span></div>
+      <div class="metric"><span class="metric-k">bottom result</span> <span class="metric-v" id="i-clamb">—</span></div>
+      <div class="metric"><span class="metric-k">top</span>           <span class="metric-v" id="i-lt">—</span></div>
+      <div class="metric"><span class="metric-k">gap da canvas</span> <span class="metric-v" id="i-gap">—</span></div>
     </div>
     <div id="overlap-status"></div>
     <div>
@@ -430,8 +432,14 @@
     var tbTop = tbBot - tbH;
     var bbTop = cBot + BEZEL_BOT_GAP;
 
-    var lTop  = vh - LEGEND_BOTTOM - legH;
-    var gap   = lTop - cBot;
+    // Legend position — mirrors CSS clamp() in style.css:
+    //   bottom: clamp(-100px, 100dvh - canvas-top - canvas-h - 8px - 24px, 8px)
+    var LEGEND_CSS_BUDGET = 24;   // budget hardcoded in CSS clamp (gap 8 + legend ~16)
+    var clampValue = vh - cBot - LEGEND_BOTTOM - LEGEND_CSS_BUDGET;
+    var clampedBot = Math.min(Math.max(-100, clampValue), LEGEND_BOTTOM);
+    var legendOff  = clampedBot < 0;          // true → legend below viewport
+    var lTop       = vh - legH - clampedBot;  // actual rendered top edge
+    var gap        = lTop - cBot;             // px between canvas bottom and legend top
 
     // Accurate ctrl bar position (mirrors draw-title.js)
     var _lh        = logoLogH(LOGO_NAT_W, LOGO_NAT_H);
@@ -441,7 +449,8 @@
 
     return {
       gaX, gaW, gaH, cW, cH, cLeft, cTop, cBot, constraint, s,
-      tbTop, tbBot, tbH, bbTop, gap, lTop,
+      tbTop, tbBot, tbH, bbTop,
+      clampValue, clampedBot, legendOff, lTop, gap,
       ctrlBarTop, ctrlBarH,
       withPanels, panelsW
     };
@@ -664,34 +673,46 @@
       }, 'rgba(0,210,255,0.55)'));
     }
 
-    // ── Legend — real keyboard groups ─────────────────────────────────────
-    var overlap = !withPanels && g.gap < 0;
+    // ── Legend — real keyboard groups, position mirrors CSS clamp() ──────────
+    var overlap = !withPanels && !g.legendOff && g.gap < 0;
     if (showLegend && !withPanels) {
-      var legEl = layer('l-legend' + (overlap ? ' overlap' : ''), {
-        left:'0', right:'0', top:g.lTop+'px', height:legH+'px'
-      });
-      var wrap = document.createElement('div'); wrap.className = 'sim-legend-wrap';
-      [
-        [['<','^','v','>'], 'Muovi'],
-        [['Z'],  'Azione'],
-        [['C'],  'Crediti'],
-        [['P'],  'Pausa'],
-        [['ESC'],'Home'],
-      ].forEach(function(g) { wrap.appendChild(legGroup(g[0], g[1])); });
-      legEl.appendChild(wrap);
-      if (showLabels) legEl.appendChild(flLabel('#legend  bottom:8px  h:' + legH + 'px', {
-        top:'50%', right:'4px', transform:'translateY(-50%)'
-      }, overlap ? 'rgba(255,130,100,0.9)' : 'rgba(255,100,80,0.7)'));
-      elPreview.appendChild(legEl);
+      if (!g.legendOff) {
+        // Legend is on-screen: render at computed lTop
+        var legEl = layer('l-legend' + (overlap ? ' overlap' : ''), {
+          left:'0', right:'0', top:g.lTop+'px', height:legH+'px'
+        });
+        var wrap = document.createElement('div'); wrap.className = 'sim-legend-wrap';
+        [
+          [['<','^','v','>'], 'Muovi'],
+          [['Z'],  'Azione'],
+          [['C'],  'Crediti'],
+          [['P'],  'Pausa'],
+          [['ESC'],'Home'],
+        ].forEach(function(gg) { wrap.appendChild(legGroup(gg[0], gg[1])); });
+        legEl.appendChild(wrap);
+        if (showLabels) legEl.appendChild(flLabel(
+          '#legend  bottom:' + Math.round(g.clampedBot) + 'px  h:' + legH + 'px',
+          { top:'50%', right:'4px', transform:'translateY(-50%)' },
+          overlap ? 'rgba(255,130,100,0.9)' : 'rgba(255,100,80,0.7)'
+        ));
+        elPreview.appendChild(legEl);
 
-      if (overlap) {
-        var olH = -g.gap;
-        elPreview.appendChild(layer('l-overlap-zone', {
-          left: g.cLeft+'px', top: g.lTop+'px', width: g.cW+'px', height: olH+'px'
-        }));
-        if (showLabels) elPreview.appendChild(flLabel('⚠ overlap ' + Math.round(olH) + 'px', {
-          left: (g.cLeft + 4)+'px', top: (g.lTop + olH/2 - 5)+'px'
-        }, 'rgba(255,120,80,1)'));
+        if (overlap) {
+          var olH = -g.gap;
+          elPreview.appendChild(layer('l-overlap-zone', {
+            left: g.cLeft+'px', top: g.lTop+'px', width: g.cW+'px', height: olH+'px'
+          }));
+          if (showLabels) elPreview.appendChild(flLabel('⚠ overlap ' + Math.round(olH) + 'px', {
+            left: (g.cLeft + 4)+'px', top: (g.lTop + olH/2 - 5)+'px'
+          }, 'rgba(255,120,80,1)'));
+        }
+      } else {
+        // Legend is off-screen: show indicator at bottom of preview
+        if (showLabels) elPreview.appendChild(flLabel(
+          '↓ #legend off-screen  bottom:' + Math.round(g.clampedBot) + 'px  (clamp value:' + Math.round(g.clampValue) + 'px)',
+          { bottom:'4px', left:'50%', transform:'translateX(-50%)' },
+          'rgba(100,200,100,0.65)'
+        ));
       }
     }
 
@@ -716,9 +737,11 @@
     setM('i-tbt', na || Math.round(g.tbTop)+'px', na ? 'muted' : '');
     setM('i-tbb', na || Math.round(g.tbBot)+'px', na ? 'muted' : '');
     setM('i-bbt', na || Math.round(g.bbTop)+'px', na ? 'muted' : '');
-    setM('i-lh',  na || legH+'px', na ? 'muted' : '');
-    setM('i-lt',  na || Math.round(g.lTop)+'px', na ? 'muted' : '');
-    setM('i-gap', na || Math.round(g.gap)+'px',  na ? 'muted' : (g.gap < 0 ? 'warn' : 'ok'));
+    setM('i-lh',    na || legH+'px', na ? 'muted' : '');
+    setM('i-clamv', na || Math.round(g.clampValue)+'px', na ? 'muted' : (g.clampValue > 0 ? 'ok' : 'warn'));
+    setM('i-clamb', na || Math.round(g.clampedBot)+'px', na ? 'muted' : (g.clampedBot >= 0 ? 'ok' : 'warn'));
+    setM('i-lt',    na || (g.legendOff ? 'off-screen' : Math.round(g.lTop)+'px'), na ? 'muted' : (g.legendOff ? 'warn' : ''));
+    setM('i-gap',   na || (g.legendOff ? '—' : Math.round(g.gap)+'px'), na ? 'muted' : (g.legendOff ? 'muted' : (g.gap < 0 ? 'warn' : 'ok')));
     setM('i-cby', Math.round(g.ctrlBarTop - g.cTop)+'px');
     setM('i-cbh', g.ctrlBarH.toFixed(1)+'px');
     var lcg = g.lTop - g.ctrlBarTop - g.ctrlBarH;
@@ -727,6 +750,8 @@
     var osEl = document.getElementById('overlap-status');
     if (withPanels) {
       osEl.innerHTML = '<div class="status-box ok">✓ Mobile — no legend<br><span style="font-size:10px;opacity:.8">canvas riempie la game-area</span></div>';
+    } else if (g.legendOff) {
+      osEl.innerHTML = '<div class="status-box ok">✓ Legend off-screen<br><span style="font-size:10px;opacity:.8">bottom: '+Math.round(g.clampedBot)+'px — clamp value: '+Math.round(g.clampValue)+'px</span></div>';
     } else if (overlap) {
       osEl.innerHTML = '<div class="status-box overlap">⚠ Overlap di <b>'+Math.round(-g.gap)+'px</b><br>legend sovrasta il canvas.<br><span style="font-size:10px;opacity:.8">canvas bottom: '+Math.round(g.cBot)+'px<br>legend top: '+Math.round(g.lTop)+'px</span></div>';
     } else {
