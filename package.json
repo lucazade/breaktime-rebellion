@@ -3,7 +3,7 @@
   "version": "1.0.23",
   "private": true,
   "scripts": {
-    "check": "node dev/check-dead.js",
+    "check": "node dev/scripts/check-dead.js",
     "build": "rm -rf www && mkdir -p www && cp index.html manifest.json sw.js robots.txt www/ && cp -r css js assets www/",
     "sync": "npm run build && npx cap sync android",
     "icons": "for e in mipmap-mdpi:48 mipmap-hdpi:72 mipmap-xhdpi:96 mipmap-xxhdpi:144 mipmap-xxxhdpi:192; do d=${e%%:*}; s=${e##*:}; magick assets/icons/icon-512.png -resize ${s}x${s} android/app/src/main/res/$d/ic_launcher.png; magick assets/icons/icon-512.png -resize ${s}x${s} android/app/src/main/res/$d/ic_launcher_round.png; magick assets/icons/icon-512.png -resize ${s}x${s} android/app/src/main/res/$d/ic_launcher_foreground.png; done",
