@@ -225,18 +225,18 @@
   <button class="bg-btn"        data-bg="night">night</button>
 
   <span class="tb-sep">|</span>
-  <label title="Pannelli laterali mobile: joystick + btn azione (140px ciascuno)">
-    <input type="checkbox" id="chk-panels"> side panels
-  </label>
-  <label title="Div #legend (solo desktop, pointer:fine)">
-    <input type="checkbox" id="chk-legend" checked> legend
-  </label>
-  <label><input type="checkbox" id="chk-bezels"> bezels</label>
-  <label title="Ctrl bar in basso al canvas (solo title screen)">
-    <input type="checkbox" id="chk-ctrls" checked> ctrl bar
-  </label>
   <label><input type="checkbox" id="chk-labels" checked> labels</label>
   <label><input type="checkbox" id="chk-images" checked> immagini</label>
+  <label id="lbl-ctrls" title="Ctrl bar in basso al canvas (solo title screen)">
+    <input type="checkbox" id="chk-ctrls" checked> ctrl bar
+  </label>
+  <label id="lbl-legend" title="Div #legend (solo desktop, pointer:fine)">
+    <input type="checkbox" id="chk-legend" checked> legend
+  </label>
+  <label id="lbl-panels" title="Pannelli laterali mobile: joystick + btn azione (140px ciascuno)">
+    <input type="checkbox" id="chk-panels"> side panels
+  </label>
+  <label id="lbl-bezels"><input type="checkbox" id="chk-bezels"> bezels</label>
 </div>
 
 <!-- ── Main ───────────────────────────────────────────────────────────── -->
@@ -246,11 +246,11 @@
       <div id="preview"></div>
     </div>
     <div id="size-label"></div>
-    <button id="btn-info-toggle" title="Mostra/nascondi pannello info">›</button>
+    <button id="btn-info-toggle" title="Mostra/nascondi pannello info">‹</button>
   </div>
 
   <!-- ── Info panel ────────────────────────────────────────────────────── -->
-  <div id="info">
+  <div id="info" class="collapsed">
     <div>
       <h2>Schermata</h2>
       <div class="metric"><span class="metric-k">mode</span>   <span class="metric-v info2" id="i-mode">—</span></div>
@@ -382,21 +382,43 @@
   })();
 
   // ── Mode defaults ────────────────────────────────────────────────────────
+  // ctrl bar e legend: solo in title | bezels: solo in game (desktop)
+  // side panels: solo in game (mobile)
   var MODE_DEFAULTS = {
-    // 'mobile' non è qui: il suo stato persiste tra i switch di mode
-    title: { panels: false, legend: true,  bezels: false, ctrls: true,  labels: true,  images: true },
-    game:  { panels: false, legend: false, bezels: true,  ctrls: false, labels: true,  images: true },
+    desktop: {
+      title: { panels: false, legend: true,  bezels: false, ctrls: true,  labels: true,  images: true },
+      game:  { panels: false, legend: false, bezels: true,  ctrls: false, labels: true,  images: true },
+    },
+    mobile: {
+      title: { panels: false, legend: false, bezels: false, ctrls: true,  labels: true,  images: true },
+      game:  { panels: true,  legend: false, bezels: false, ctrls: false, labels: true,  images: true },
+    },
   };
 
+  // Mostra/nasconde i label della toolbar in base a schermata + tipo risoluzione
+  function _syncCheckboxVisibility() {
+    var isMob   = mobileMode;
+    var isTitle = screenMode === 'title';
+    // ctrl bar: solo title (desktop e mobile)
+    document.getElementById('lbl-ctrls').style.display  = isTitle          ? '' : 'none';
+    // legend: solo desktop + title
+    document.getElementById('lbl-legend').style.display = (!isMob && isTitle)  ? '' : 'none';
+    // bezels: solo desktop + game
+    document.getElementById('lbl-bezels').style.display = (!isMob && !isTitle) ? '' : 'none';
+    // side panels: solo mobile + game
+    document.getElementById('lbl-panels').style.display = (isMob && !isTitle)  ? '' : 'none';
+  }
+
   function applyModeDefaults(mode) {
-    var d = MODE_DEFAULTS[mode] || MODE_DEFAULTS.game;
-    // mobileMode (globale) non viene toccato: è del preset, non del mode
+    var family = mobileMode ? 'mobile' : 'desktop';
+    var d = MODE_DEFAULTS[family][mode] || MODE_DEFAULTS[family].game;
     document.getElementById('chk-panels').checked = d.panels;
     document.getElementById('chk-legend').checked = d.legend;
     document.getElementById('chk-bezels').checked = d.bezels;
     document.getElementById('chk-ctrls').checked  = d.ctrls;
     document.getElementById('chk-labels').checked = d.labels;
     document.getElementById('chk-images').checked = d.images;
+    _syncCheckboxVisibility();
   }
 
   // ── State ────────────────────────────────────────────────────────────────
@@ -505,7 +527,6 @@
   function update() {
     // mobile override calcolato prima di computeLayout (influenza la geometria dei pannelli)
     // mobileMode è globale, impostato dalla selezione del preset
-    if (mobileMode && screenMode === 'game') document.getElementById('chk-panels').checked = true;
     var withPanels = document.getElementById('chk-panels').checked;
     var g = computeLayout(vpW, vpH, withPanels);
 
@@ -527,11 +548,6 @@
     var showCtrls  = document.getElementById('chk-ctrls').checked;
     var showLabels = document.getElementById('chk-labels').checked;
     var showImages = document.getElementById('chk-images').checked;
-    // mobile overrides — legend mai presente su mobile (CSS: hover+pointer:fine only)
-    if (mobileMode) {
-      showLegend = false;
-      if (screenMode === 'game') showBezels = false;  // withPanels già gestito sopra
-    }
 
     // ── Side panels (mobile) ──────────────────────────────────────────────
     if (withPanels) {
@@ -788,7 +804,7 @@
 
   document.getElementById('sel-viewport').addEventListener('change', function() {
     var p = _presets[parseInt(this.value)];
-    if (p) { mobileMode = !!p.mobile; setSize(p.w, p.h); }
+    if (p) { mobileMode = !!p.mobile; applyModeDefaults(screenMode); setSize(p.w, p.h); }
   });
 
   document.querySelectorAll('.mode-btn').forEach(function(btn) {
@@ -830,7 +846,7 @@
 
   // ── Init ─────────────────────────────────────────────────────────────────
   _populateSelect();
-  applyModeDefaults('title');  // apply title defaults (mode is already 'title')
+  applyModeDefaults('title');  // imposta checkbox + visibilità (mode è già 'title')
   setSize(window.screen.width, window.screen.height);
 </script>
 
