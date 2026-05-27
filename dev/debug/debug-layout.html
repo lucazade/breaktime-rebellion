@@ -31,8 +31,9 @@
     }
     #toolbar h1 { font-size: 10px; color: #555; white-space: nowrap; letter-spacing: 1px; }
     .tb-sep { color: #2a2a3e; font-size: 14px; }
+    .tb-lbl { color: #555; font-size: 10px; white-space: nowrap; }
 
-    .preset {
+    .preset, .mode-btn, .bg-btn {
       background: #18182a;
       color: #999;
       border: 1px solid #2a2a3e;
@@ -44,9 +45,11 @@
       white-space: nowrap;
       transition: background 0.1s;
     }
-    .preset:hover           { background: #22223a; color: #ccc; }
-    .preset.active          { border-color: #4477ff; color: #7799ff; background: #16163a; }
-    .preset.warn            { border-color: #ff5533 !important; color: #ff8866 !important; }
+    .preset:hover, .mode-btn:hover, .bg-btn:hover { background: #22223a; color: #ccc; }
+    .preset.active, .mode-btn.active, .bg-btn.active {
+      border-color: #4477ff; color: #7799ff; background: #16163a;
+    }
+    .preset.warn { border-color: #ff5533 !important; color: #ff8866 !important; }
 
     label { font-size: 11px; color: #888; white-space: nowrap; display: flex; align-items: center; gap: 5px; }
     input[type=number] {
@@ -75,7 +78,6 @@
       background: #050509;
       position: relative;
     }
-    /* Screen-size label below preview */
     #size-label {
       position: absolute;
       bottom: 8px;
@@ -86,10 +88,8 @@
       white-space: nowrap;
     }
 
-    /* The preview-wrapper is transform:scale()'d by JS to fit the workspace */
     #preview-wrapper { position: relative; }
 
-    /* The preview: represents the exact browser viewport */
     #preview {
       position: relative;
       overflow: hidden;
@@ -101,36 +101,54 @@
       box-shadow: 0 0 0 1px #111, 0 0 60px rgba(0,0,80,0.6);
     }
 
-    /* All overlay layers use position:absolute within the preview */
     .layer {
       position: absolute;
       pointer-events: none;
     }
 
-    /* ── Specific layer styles ───────────────────────────────────────── */
+    /* ── Layer styles ───────────────────────────────────────────────── */
 
-    /* Game area boundary */
-    .l-game-area {
-      outline: 1px dashed rgba(0,210,255,0.18);
-    }
+    .l-game-area { outline: 1px dashed rgba(0,210,255,0.18); }
 
-    /* Canvas (filled purple, outlined yellow) */
     .l-canvas {
       background: #1a1a2e;
       outline: 1.5px solid rgba(255,210,0,0.75);
     }
 
-    /* Top bezel zone */
+    /* Side panels */
+    .l-panel {
+      background: rgba(10,0,25,0.72);
+      outline: 1px solid rgba(160,0,255,0.40);
+    }
+    .l-joy {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #282828, #070707);
+      border: 2px solid rgba(0,200,255,0.35);
+      box-shadow: 0 0 8px rgba(0,200,255,0.15);
+    }
+    .l-action-btn {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle at 38% 33%, rgba(255,82,40,0.55), rgba(154,15,0,0.55));
+      border: 2px solid rgba(255,50,0,0.45);
+    }
+    .l-panel-btn {
+      position: absolute;
+      border-radius: 8px;
+      background: rgba(10,0,24,0.55);
+      border: 1px solid rgba(160,0,255,0.45);
+    }
+
+    /* Bezels */
     .l-top-bezel {
       background: rgba(255,200,0,0.12);
       border-bottom: 1px solid rgba(255,200,0,0.55);
       display: flex; align-items: center; justify-content: center;
     }
-    /* Bottom bezel line */
-    .l-bot-bezel {
-      background: rgba(0,210,255,0.55);
-    }
-    /* Legend zone */
+    .l-bot-bezel { background: rgba(0,210,255,0.55); }
+
+    /* Legend */
     .l-legend {
       background: rgba(255,80,60,0.18);
       border-top: 1px solid rgba(255,80,60,0.6);
@@ -140,30 +158,16 @@
       background: rgba(255,50,30,0.38);
       border-top-color: rgba(255,80,60,1);
     }
-
-    /* Overlap danger highlight */
     .l-overlap-zone {
       background: rgba(255,30,0,0.35);
       outline: 1px solid rgba(255,80,50,0.9);
     }
 
-    /* Measurement ruler lines */
-    .l-hline {
-      height: 1px;
-      left: 0; right: 0;
-      background: rgba(255,255,255,0.10);
-    }
-    .l-vline {
-      width: 1px;
-      top: 0; bottom: 0;
-      background: rgba(255,255,255,0.10);
-    }
+    /* Grid lines */
+    .l-hline { height: 1px; left: 0; right: 0; background: rgba(255,255,255,0.10); }
+    .l-vline { width: 1px; top: 0; bottom: 0; background: rgba(255,255,255,0.10); }
 
-    /* Canvas crosshair (center) */
-    .l-center-h { height: 1px; background: rgba(255,255,255,0.06); }
-    .l-center-v { width:  1px; background: rgba(255,255,255,0.06); }
-
-    /* Floating labels inside preview */
+    /* Floating labels */
     .fl-label {
       position: absolute;
       pointer-events: none;
@@ -175,7 +179,7 @@
       line-height: 1.6;
     }
 
-    /* Canvas inner: title screen placeholder content */
+    /* Canvas: placeholder text */
     .canvas-placeholder {
       position: absolute; inset: 0;
       display: flex; flex-direction: column;
@@ -188,7 +192,21 @@
       font-size: 10px;
       text-align: center;
     }
-    /* Canvas controls bar (drawn at bottom of canvas by draw-title.js) */
+
+    /* Canvas: real logo (title mode) */
+    .canvas-logo {
+      position: absolute;
+      top: 8%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 82%;
+      object-fit: contain;
+      image-rendering: pixelated;
+      pointer-events: none;
+      opacity: 0.92;
+    }
+
+    /* Canvas: ctrl bar (title mode) */
     .canvas-controls-bar {
       position: absolute;
       bottom: 0; left: 0; right: 0;
@@ -231,9 +249,10 @@
     }
     .metric-k { color: #666; font-size: 11px; }
     .metric-v { color: #bbb; font-weight: bold; font-size: 11px; white-space: nowrap; }
-    .metric-v.warn { color: #ff6644; }
-    .metric-v.ok   { color: #55cc66; }
+    .metric-v.warn  { color: #ff6644; }
+    .metric-v.ok    { color: #55cc66; }
     .metric-v.info2 { color: #5599ff; }
+    .metric-v.muted { color: #444; }
 
     .status-box {
       border-radius: 3px;
@@ -248,7 +267,6 @@
     .ck-row { display: flex; align-items: center; gap: 7px; font-size: 10px; color: #777; }
     .ck-dot { width: 18px; height: 9px; border-radius: 1px; flex-shrink: 0; }
 
-    /* Legend height control */
     #legend-h-val { display: inline-block; width: 24px; text-align: right; color: #aaa; }
   </style>
 </head>
@@ -258,21 +276,43 @@
 <div id="toolbar">
   <h1>LAYOUT DEBUG</h1>
   <span class="tb-sep">|</span>
-  <span style="color:#555;font-size:10px">VIEWPORT:</span>
+
+  <span class="tb-lbl">VIEWPORT:</span>
   <button class="preset" data-w="1920" data-h="1080">1920×1080</button>
   <button class="preset" data-w="1440" data-h="900">1440×900</button>
   <button class="preset" data-w="1366" data-h="768">1366×768</button>
   <button class="preset" data-w="1280" data-h="800">1280×800</button>
   <button class="preset" data-w="1024" data-h="600">1024×600</button>
-  <button class="preset" data-w="800" data-h="600">800×600</button>
+  <button class="preset" data-w="800"  data-h="600">800×600</button>
   <span class="tb-sep">|</span>
-  <label>W <input type="number" id="inp-w" value="1366" min="400" max="2560" step="2"></label>
-  <label>H <input type="number" id="inp-h" value="768"  min="300" max="1440" step="2"></label>
+  <label>W <input type="number" id="inp-w" value="1920" min="400" max="2560" step="2"></label>
+  <label>H <input type="number" id="inp-h" value="1080" min="300" max="1440" step="2"></label>
+
   <span class="tb-sep">|</span>
-  <label title="Altezza stimata del div #legend"><input type="checkbox" id="chk-legend" checked> legend</label>
+  <span class="tb-lbl">SCHERMATA:</span>
+  <button class="mode-btn" data-mode="title">title</button>
+  <button class="mode-btn active" data-mode="game">game</button>
+
+  <span class="tb-sep">|</span>
+  <span class="tb-lbl">BG:</span>
+  <button class="bg-btn active" data-bg="day">day</button>
+  <button class="bg-btn" data-bg="night">night</button>
+
+  <span class="tb-sep">|</span>
+  <label title="Pannelli laterali mobile: joystick + btn azione (140px ciascuno)">
+    <input type="checkbox" id="chk-panels"> side panels
+  </label>
+  <label title="Altezza stimata del div #legend (solo desktop)">
+    <input type="checkbox" id="chk-legend" checked> legend
+  </label>
   <label><input type="checkbox" id="chk-bezels" checked> bezels</label>
+  <label title="Ctrl bar in basso al canvas (solo title screen)">
+    <input type="checkbox" id="chk-ctrls"> ctrl bar
+  </label>
+  <label><input type="checkbox" id="chk-labels" checked> labels</label>
+  <label><input type="checkbox" id="chk-images"> immagini</label>
   <label><input type="checkbox" id="chk-grid"> griglia</label>
-  <label><input type="checkbox" id="chk-ctrls" checked> ctrl bar</label>
+
   <span class="tb-sep">|</span>
   <label>legend H
     <input type="range" id="sld-lh" min="10" max="40" value="20">
@@ -296,11 +336,24 @@
   <div id="info">
 
     <div>
+      <h2>Schermata</h2>
+      <div class="metric"><span class="metric-k">mode</span>     <span class="metric-v info2" id="i-mode">—</span></div>
+      <div class="metric"><span class="metric-k">bg</span>       <span class="metric-v" id="i-bg">—</span></div>
+      <div class="metric"><span class="metric-k">panels</span>   <span class="metric-v" id="i-panels">—</span></div>
+    </div>
+
+    <div>
       <h2>Viewport</h2>
-      <div class="metric"><span class="metric-k">width</span>    <span class="metric-v" id="i-vw">—</span></div>
-      <div class="metric"><span class="metric-k">height</span>   <span class="metric-v" id="i-vh">—</span></div>
-      <div class="metric"><span class="metric-k">ratio</span>    <span class="metric-v" id="i-vr">—</span></div>
+      <div class="metric"><span class="metric-k">width</span>     <span class="metric-v" id="i-vw">—</span></div>
+      <div class="metric"><span class="metric-k">height</span>    <span class="metric-v" id="i-vh">—</span></div>
+      <div class="metric"><span class="metric-k">ratio</span>     <span class="metric-v" id="i-vr">—</span></div>
       <div class="metric"><span class="metric-k">constraint</span><span class="metric-v info2" id="i-vc">—</span></div>
+    </div>
+
+    <div>
+      <h2>Game Area</h2>
+      <div class="metric"><span class="metric-k">width</span>     <span class="metric-v" id="i-gaw">—</span></div>
+      <div class="metric"><span class="metric-k">offset X</span> <span class="metric-v" id="i-gax">—</span></div>
     </div>
 
     <div>
@@ -319,7 +372,7 @@
     </div>
 
     <div>
-      <h2>Legend (#legend)</h2>
+      <h2>Legend (desktop)</h2>
       <div class="metric"><span class="metric-k">height (stimata)</span><span class="metric-v" id="i-lh">—</span></div>
       <div class="metric"><span class="metric-k">top</span>            <span class="metric-v" id="i-lt">—</span></div>
       <div class="metric"><span class="metric-k">gap da canvas</span>  <span class="metric-v" id="i-gap">—</span></div>
@@ -337,6 +390,7 @@
     <div class="color-key">
       <h2>Colori</h2>
       <div class="ck-row"><div class="ck-dot" style="background:rgba(255,210,0,0.5);outline:1px solid rgba(255,210,0,0.8)"></div>canvas</div>
+      <div class="ck-row"><div class="ck-dot" style="background:rgba(160,0,255,0.35);outline:1px solid rgba(160,0,255,0.55)"></div>side panels</div>
       <div class="ck-row"><div class="ck-dot" style="background:rgba(255,200,0,0.18)"></div>top-bezel</div>
       <div class="ck-row"><div class="ck-dot" style="background:rgba(0,210,255,0.55)"></div>bottom-bezel</div>
       <div class="ck-row"><div class="ck-dot" style="background:rgba(255,80,60,0.28)"></div>legend</div>
@@ -348,24 +402,31 @@
 </div><!-- #main -->
 
 <script>
-  // ── Layout constants (from style.css + game.js _updateRoundness) ──────
-  var CANVAS_RATIO    = 16 / 10;      // aspect-ratio: 16 / 10
-  var CANVAS_MAX_W    = 1600;         // max-width: 1600px on game-area
-  var LEGEND_BOTTOM   = 8;            // position: fixed; bottom: 8px
-  var BEZEL_TOP_GAP   = 26;           // top: calc(--canvas-top - 26px) → height of space above bezel
-  var BEZEL_TOP_H     = 28;           // approximate rendered height of "BREAKTIME REBELLION" text
-  var BEZEL_BOT_GAP   = 14;           // top: calc(--canvas-top + --canvas-h + 14px)
-  var BEZEL_BOT_H     = 2;            // height: 2px neon line
+  // ── Layout constants ─────────────────────────────────────────────────────
+  var CANVAS_RATIO       = 16 / 10;
+  var CANVAS_MAX_W       = 1600;
+  var PANEL_W            = 140;    // #panel-left / #panel-right (from style.css)
+  var LEGEND_BOTTOM      = 8;
+  var BEZEL_TOP_GAP      = 26;
+  var BEZEL_TOP_H        = 28;
+  var BEZEL_BOT_GAP      = 14;
+  var BEZEL_BOT_H        = 2;
+  var CTRL_BAR_H_LOGICAL = 14;     // logical canvas px (canvas is 320×200)
+  var JOY_SIZE           = 90;     // #ctrl-joy width/height on mobile (style.css)
+  var BTN_SIZE           = 90;     // #btn-action width/height on mobile (style.css)
+  var PANEL_BTN_W        = 68;     // .panel-btn width
+  var PANEL_BTN_H        = 38;     // .panel-btn height
+  var PANEL_BTN_TOP      = 48;     // .panel-btn top offset
+  var CTRL_BOTTOM        = 40;     // bottom distance of joy/btn inside panel
 
-  // Canvas controls bar: drawn by draw-title.js at the bottom of the canvas.
-  // From CONFIG.ui.titleScreen.controls: btnH:11, with the row placed below logo.
-  // Approximate: controls row occupies ~btnH + some padding ≈ 14px at the bottom.
-  var CTRL_BAR_H_LOGICAL = 14;        // logical canvas px (the canvas is 320×200)
+  // ── State ────────────────────────────────────────────────────────────────
+  var vpW        = 1920;
+  var vpH        = 1080;
+  var legH       = 20;
+  var screenMode = 'game';   // 'title' | 'game'
+  var bgMode     = 'day';    // 'day'   | 'night'
 
-  // ── State ─────────────────────────────────────────────────────────────
-  var vpW = 1366, vpH = 768, legH = 20;
-
-  // ── DOM ───────────────────────────────────────────────────────────────
+  // ── DOM ──────────────────────────────────────────────────────────────────
   var elPreview   = document.getElementById('preview');
   var elWrapper   = document.getElementById('preview-wrapper');
   var elWorkspace = document.getElementById('workspace');
@@ -374,70 +435,55 @@
   var elSldLH     = document.getElementById('sld-lh');
   var elLHVal     = document.getElementById('legend-h-val');
 
-  // ── Compute canvas geometry ───────────────────────────────────────────
-  // game-area: flex:1, max-width:1600px, height:100dvh (desktop, no panels)
-  // canvas: aspect-ratio 16:10, max-width:100%, max-height:100%
-  function computeLayout(vw, vh) {
-    var gaX = Math.max(0, (vw - CANVAS_MAX_W) / 2);
-    var gaW = Math.min(vw, CANVAS_MAX_W);
-    var gaH = vh;
+  // ── Compute layout geometry ──────────────────────────────────────────────
+  // withPanels: simulates mobile (panel-left + panel-right = 140px each)
+  function computeLayout(vw, vh, withPanels) {
+    var panelsW = withPanels ? 2 * PANEL_W : 0;
+    var gaX     = withPanels ? PANEL_W : Math.max(0, (vw - CANVAS_MAX_W) / 2);
+    var gaW     = Math.max(1, Math.min(vw - panelsW, CANVAS_MAX_W));
+    var gaH     = vh;
 
-    // CSS aspect-ratio + max-width/max-height resolution
-    var wByWidth  = gaW;
+    // CSS aspect-ratio + max constraints
     var hByWidth  = gaW / CANVAS_RATIO;
     var cW, cH, constraint;
     if (hByWidth <= gaH) {
-      // width-constrained (viewport wider relative to aspect ratio, or tall enough)
-      cW = wByWidth; cH = hByWidth; constraint = 'width';
+      cW = gaW; cH = hByWidth; constraint = 'width';
     } else {
-      // height-constrained (viewport taller relative to aspect ratio)
       cH = gaH; cW = gaH * CANVAS_RATIO; constraint = 'height';
     }
 
     var cLeft = gaX + (gaW - cW) / 2;
     var cTop  = (gaH - cH) / 2;
+    var cBot  = cTop + cH;
 
-    // Top bezel (--canvas-top = cTop; from calc: top - 26px, height ≈ 28px text)
-    var tbBot = cTop - BEZEL_TOP_GAP;       // bottom edge of top bezel area
-    var tbTop = tbBot - BEZEL_TOP_H;        // top edge
+    // Top bezel (desktop only)
+    var tbBot = cTop - BEZEL_TOP_GAP;
+    var tbTop = tbBot - BEZEL_TOP_H;
 
-    // Bottom bezel
-    var bbTop = cTop + cH + BEZEL_BOT_GAP;
+    // Bottom bezel (desktop only)
+    var bbTop = cBot + BEZEL_BOT_GAP;
 
-    // Legend
+    // Legend (desktop only: position:fixed bottom:8px)
     var lTop = vh - LEGEND_BOTTOM - legH;
+    var gap  = lTop - cBot;   // positive = clear, negative = overlap
 
-    // Canvas-bottom
-    var cBot = cTop + cH;
+    // Canvas controls bar (title screen only)
+    var ctrlBarRenderH = CTRL_BAR_H_LOGICAL * (cH / 1000);
+    var ctrlBarTop     = cBot - ctrlBarRenderH;
 
-    // Gap between canvas bottom and legend top (positive = clear, negative = overlap)
-    var gap = lTop - cBot;
-
-    // Canvas controls bar Y in viewport coords
-    // The controls bar is drawn at the bottom of the canvas (logical coords).
-    // Scale: cH logical pixels = cH rendered pixels... but wait, the canvas is
-    // 1600×1000 natively and scaled down to cW×cH. So a logical-px value maps:
-    // rendered_px = logical_px × (cH / 1000)    [since canvas height = 1000 logical]
-    // The ctrl bar is ~14px logical from the bottom → 14 × (cH/1000) rendered px
-    var ctrlBarRenderH = CTRL_BAR_H_LOGICAL * (cH / 1000) * 5;  // ×5 for 5× render scale
-    // Actually simpler: the canvas element rendered height = cH, canvas internal = 1000px.
-    // scale = cH / 1000. Ctrl bar H in rendered px:
-    ctrlBarRenderH = CTRL_BAR_H_LOGICAL * (cH / 1000);
-    var ctrlBarTop = cBot - ctrlBarRenderH;
-
-    // Gap between legend top and ctrl bar bottom
-    var legCtrlGap = lTop - cBot;   // same as gap since ctrl bar is inside canvas
-
-    return { gaX, gaW, gaH, cW, cH, cLeft, cTop, cBot, constraint,
-             tbTop, tbBot, bbTop, gap, lTop, ctrlBarH: ctrlBarRenderH, ctrlBarTop };
+    return {
+      gaX, gaW, gaH, cW, cH, cLeft, cTop, cBot, constraint,
+      tbTop, tbBot, bbTop, gap, lTop,
+      ctrlBarH: ctrlBarRenderH, ctrlBarTop,
+      withPanels, panelsW
+    };
   }
 
-  // ── Build all layers inside #preview ─────────────────────────────────
-  function layer(cls, style, text) {
+  // ── Layer builders ───────────────────────────────────────────────────────
+  function layer(cls, style) {
     var d = document.createElement('div');
     d.className = 'layer ' + cls;
     Object.assign(d.style, style);
-    if (text) d.textContent = text;
     return d;
   }
 
@@ -450,13 +496,15 @@
     return d;
   }
 
+  // ── Main render ──────────────────────────────────────────────────────────
   function update() {
-    var g = computeLayout(vpW, vpH);
+    var withPanels = document.getElementById('chk-panels').checked;
+    var g = computeLayout(vpW, vpH, withPanels);
 
-    // ── Scale preview to fit workspace ──────────────────────────────────
-    var ws      = elWorkspace.getBoundingClientRect();
-    var padX    = 60, padY = 48;
-    var scale   = Math.min((ws.width - padX) / vpW, (ws.height - padY) / vpH, 1);
+    // Scale preview to fit workspace
+    var ws    = elWorkspace.getBoundingClientRect();
+    var padX  = 60, padY = 48;
+    var scale = Math.min((ws.width - padX) / vpW, (ws.height - padY) / vpH, 1);
     scale = Math.max(scale, 0.1);
 
     elPreview.style.width  = vpW + 'px';
@@ -465,110 +513,169 @@
     elWrapper.style.height = vpH + 'px';
     elWrapper.style.transform = 'scale(' + scale + ')';
     elWrapper.style.transformOrigin = 'center center';
-
     document.getElementById('size-label').textContent =
       vpW + ' × ' + vpH + 'px  ·  scale ' + scale.toFixed(2) + '×';
 
-    // ── Rebuild layers ──────────────────────────────────────────────────
+    // Read flags
     elPreview.innerHTML = '';
     var showBezels = document.getElementById('chk-bezels').checked;
     var showLegend = document.getElementById('chk-legend').checked;
     var showGrid   = document.getElementById('chk-grid').checked;
     var showCtrls  = document.getElementById('chk-ctrls').checked;
+    var showLabels = document.getElementById('chk-labels').checked;
+    var showImages = document.getElementById('chk-images').checked;
 
-    // Grid: horizontal center, vertical center
+    // ── Grid ───────────────────────────────────────────────────────────────
     if (showGrid) {
-      elPreview.appendChild(layer('l-hline', { top: (vpH/2)+'px', left:0, right:0 }));
-      elPreview.appendChild(layer('l-vline', { left: (vpW/2)+'px', top:0, bottom:0 }));
-      if (g.gaX > 0) {
+      elPreview.appendChild(layer('l-hline', { top: (vpH/2)+'px' }));
+      elPreview.appendChild(layer('l-vline', { left: (vpW/2)+'px' }));
+      if (!withPanels && g.gaX > 0) {
         elPreview.appendChild(layer('l-vline', { left: g.gaX+'px' }));
         elPreview.appendChild(layer('l-vline', { left: (g.gaX + g.gaW)+'px' }));
       }
     }
 
-    // Game area boundary (dashed)
+    // ── Side panels (mobile) ───────────────────────────────────────────────
+    if (withPanels) {
+      // Left panel
+      var lpEl = layer('l-panel', { left:'0', top:'0', width:PANEL_W+'px', height:vpH+'px' });
+      if (showLabels) lpEl.appendChild(flLabel('panel-left (140px)', { top:'8px', left:'4px' }, 'rgba(160,0,255,0.7)'));
+
+      var joyEl = document.createElement('div');
+      joyEl.className = 'l-joy';
+      joyEl.style.left   = (PANEL_W / 2 - JOY_SIZE / 2) + 'px';
+      joyEl.style.top    = (vpH - CTRL_BOTTOM - JOY_SIZE) + 'px';
+      joyEl.style.width  = JOY_SIZE + 'px';
+      joyEl.style.height = JOY_SIZE + 'px';
+      lpEl.appendChild(joyEl);
+
+      var pbL = document.createElement('div');
+      pbL.className = 'l-panel-btn';
+      pbL.style.left   = (PANEL_W / 2 - PANEL_BTN_W / 2) + 'px';
+      pbL.style.top    = PANEL_BTN_TOP + 'px';
+      pbL.style.width  = PANEL_BTN_W + 'px';
+      pbL.style.height = PANEL_BTN_H + 'px';
+      lpEl.appendChild(pbL);
+
+      elPreview.appendChild(lpEl);
+
+      // Right panel
+      var rpEl = layer('l-panel', { right:'0', top:'0', width:PANEL_W+'px', height:vpH+'px' });
+      if (showLabels) rpEl.appendChild(flLabel('panel-right (140px)', { top:'8px', left:'4px' }, 'rgba(160,0,255,0.7)'));
+
+      var btnEl = document.createElement('div');
+      btnEl.className = 'l-action-btn';
+      btnEl.style.left   = (PANEL_W / 2 - BTN_SIZE / 2) + 'px';
+      btnEl.style.top    = (vpH - CTRL_BOTTOM - BTN_SIZE) + 'px';
+      btnEl.style.width  = BTN_SIZE + 'px';
+      btnEl.style.height = BTN_SIZE + 'px';
+      rpEl.appendChild(btnEl);
+
+      var pbR = document.createElement('div');
+      pbR.className = 'l-panel-btn';
+      pbR.style.left   = (PANEL_W / 2 - PANEL_BTN_W / 2) + 'px';
+      pbR.style.top    = PANEL_BTN_TOP + 'px';
+      pbR.style.width  = PANEL_BTN_W + 'px';
+      pbR.style.height = PANEL_BTN_H + 'px';
+      rpEl.appendChild(pbR);
+
+      elPreview.appendChild(rpEl);
+    }
+
+    // ── Game area boundary ─────────────────────────────────────────────────
     elPreview.appendChild(layer('l-game-area', {
-      left: g.gaX+'px', top: '0', width: g.gaW+'px', height: vpH+'px'
+      left: g.gaX+'px', top:'0', width:g.gaW+'px', height:vpH+'px'
     }));
 
-    // Top bezel
-    if (showBezels && g.tbTop > -BEZEL_TOP_H) {
+    // ── Top bezel (desktop only) ───────────────────────────────────────────
+    if (showBezels && !withPanels && g.tbTop > -BEZEL_TOP_H) {
       var tbEl = layer('l-top-bezel', {
-        left: g.gaX+'px', top: g.tbTop+'px', width: g.gaW+'px',
-        height: BEZEL_TOP_H+'px'
+        left: g.gaX+'px', top: g.tbTop+'px',
+        width: g.gaW+'px', height: BEZEL_TOP_H+'px'
       });
-      tbEl.appendChild(flLabel('top-bezel', { top:'50%', left:'4px', transform:'translateY(-50%)' }, 'rgba(255,200,0,0.6)'));
+      if (showLabels) tbEl.appendChild(flLabel('top-bezel', {
+        top:'50%', left:'4px', transform:'translateY(-50%)'
+      }, 'rgba(255,200,0,0.6)'));
       elPreview.appendChild(tbEl);
     }
 
-    // Canvas
+    // ── Canvas ─────────────────────────────────────────────────────────────
     var cEl = layer('l-canvas', {
-      left:   g.cLeft+'px',
-      top:    g.cTop+'px',
-      width:  g.cW+'px',
-      height: g.cH+'px',
+      left: g.cLeft+'px', top: g.cTop+'px',
+      width: g.cW+'px', height: g.cH+'px'
     });
 
-    // Canvas content placeholder
-    var cp = document.createElement('div');
-    cp.className = 'canvas-placeholder';
-    cp.innerHTML = '<div class="cp-title" style="font-size:' + Math.max(8, g.cH*0.018) + 'px">' +
-                   'CANVAS 16:10<br>' +
-                   '<span style="opacity:.5;font-size:' + Math.max(7, g.cH*0.012) + 'px">' +
-                   Math.round(g.cW) + ' × ' + Math.round(g.cH) + 'px</span></div>';
-    cEl.appendChild(cp);
+    if (showImages) {
+      if (screenMode === 'title') {
+        cEl.style.background = '#08001a';
+        var logoEl = document.createElement('img');
+        logoEl.src = '../../assets/pics/logo/logo-1600.png';
+        logoEl.className = 'canvas-logo';
+        cEl.appendChild(logoEl);
+      } else {
+        var bgSrc = bgMode === 'night'
+          ? '../../assets/pics/bg/bg-1600-night.png'
+          : '../../assets/pics/bg/bg-1600-day.png';
+        cEl.style.background = 'url(' + bgSrc + ') center/100% 100% no-repeat';
+      }
+    } else {
+      var cp = document.createElement('div');
+      cp.className = 'canvas-placeholder';
+      var modeStr = screenMode === 'title' ? 'TITLE' : 'GAME (' + bgMode + ')';
+      cp.innerHTML =
+        '<div class="cp-title" style="font-size:' + Math.max(8, g.cH*0.018) + 'px">' +
+        modeStr + ' · CANVAS 16:10<br>' +
+        '<span style="opacity:.5;font-size:' + Math.max(7, g.cH*0.012) + 'px">' +
+        Math.round(g.cW) + ' × ' + Math.round(g.cH) + 'px</span></div>';
+      cEl.appendChild(cp);
+    }
 
-    // Canvas controls bar (drawn by draw-title.js)
-    if (showCtrls && g.ctrlBarH > 0.5) {
+    // Ctrl bar (title only)
+    if (showCtrls && screenMode === 'title' && g.ctrlBarH > 0.5) {
       var cbEl = document.createElement('div');
       cbEl.className = 'canvas-controls-bar';
       cbEl.style.height = Math.max(1, g.ctrlBarH) + 'px';
       cbEl.innerHTML = '<span style="font-size:' + Math.max(6, g.ctrlBarH * 0.5) + 'px">← ctrl bar (titolo) →</span>';
       cEl.appendChild(cbEl);
     }
+
     elPreview.appendChild(cEl);
 
-    // Bottom bezel
-    if (showBezels) {
+    // ── Bottom bezel (desktop only) ────────────────────────────────────────
+    if (showBezels && !withPanels) {
       elPreview.appendChild(layer('l-bot-bezel', {
         left: g.gaX+'px', top: g.bbTop+'px',
         width: g.gaW+'px', height: BEZEL_BOT_H+'px'
       }));
-      elPreview.appendChild(flLabel('bottom-bezel (+14px)', {
+      if (showLabels) elPreview.appendChild(flLabel('bottom-bezel (+14px)', {
         left: (g.gaX + 4)+'px', top: (g.bbTop + 2)+'px'
       }, 'rgba(0,210,255,0.55)'));
     }
 
-    // Legend + overlap zone
-    var overlap = g.gap < 0;
-    if (showLegend) {
+    // ── Legend + overlap (desktop only) ───────────────────────────────────
+    var overlap = !withPanels && g.gap < 0;
+    if (showLegend && !withPanels) {
       var legEl = layer('l-legend' + (overlap ? ' overlap' : ''), {
-        left: 0, right: 0,
-        top:    g.lTop+'px',
-        height: legH+'px'
+        left:'0', right:'0', top:g.lTop+'px', height:legH+'px'
       });
-      legEl.appendChild(flLabel('#legend (fixed bottom:8px)', {
+      if (showLabels) legEl.appendChild(flLabel('#legend (fixed bottom:8px)', {
         top:'50%', left:'4px', transform:'translateY(-50%)'
       }, overlap ? 'rgba(255,130,100,0.9)' : 'rgba(255,100,80,0.7)'));
       elPreview.appendChild(legEl);
 
-      // Overlap zone highlight
       if (overlap) {
-        var olH = -g.gap; // overlap px
+        var olH = -g.gap;
         elPreview.appendChild(layer('l-overlap-zone', {
-          left: g.cLeft+'px',
-          top:  g.lTop+'px',
-          width: g.cW+'px',
-          height: olH+'px'
+          left: g.cLeft+'px', top: g.lTop+'px',
+          width: g.cW+'px', height: olH+'px'
         }));
-        elPreview.appendChild(flLabel('⚠ overlap ' + Math.round(olH) + 'px', {
-          left: (g.cLeft + 4)+'px',
-          top:  (g.lTop + olH/2 - 5)+'px'
+        if (showLabels) elPreview.appendChild(flLabel('⚠ overlap ' + Math.round(olH) + 'px', {
+          left: (g.cLeft + 4)+'px', top: (g.lTop + olH/2 - 5)+'px'
         }, 'rgba(255,120,80,1)'));
       }
     }
 
-    // ── Info panel ──────────────────────────────────────────────────────
+    // ── Info panel ─────────────────────────────────────────────────────────
     function setM(id, val, cls) {
       var el = document.getElementById(id);
       if (!el) return;
@@ -576,28 +683,42 @@
       el.className = 'metric-v' + (cls ? ' ' + cls : '');
     }
 
+    setM('i-mode',   screenMode);
+    setM('i-bg',     screenMode === 'title' ? 'logo' : bgMode);
+    setM('i-panels', withPanels ? '2 × 140px' : 'off', withPanels ? 'info2' : 'muted');
+
     setM('i-vw', vpW + 'px');
     setM('i-vh', vpH + 'px');
     setM('i-vr', (vpW/vpH).toFixed(3) + ' (' + (vpW/vpH > CANVAS_RATIO ? '>' : '<') + ' 1.6)');
     setM('i-vc', g.constraint + '-constrained', g.constraint === 'height' ? 'warn' : 'ok');
+
+    setM('i-gaw', Math.round(g.gaW) + 'px');
+    setM('i-gax', Math.round(g.gaX) + 'px');
+
     setM('i-cw', Math.round(g.cW) + 'px');
     setM('i-ch', Math.round(g.cH) + 'px');
     setM('i-ct', Math.round(g.cTop) + 'px');
     setM('i-cb', Math.round(vpH - g.cBot) + 'px');
-    setM('i-tbt', Math.round(g.tbTop) + 'px');
-    setM('i-tbb', Math.round(g.tbBot) + 'px');
-    setM('i-bbt', Math.round(g.bbTop) + 'px');
-    setM('i-lh',  legH + 'px');
-    setM('i-lt',  Math.round(g.lTop) + 'px');
-    setM('i-gap', Math.round(g.gap) + 'px', g.gap < 0 ? 'warn' : 'ok');
+
+    var na = withPanels ? 'n/a' : null;
+    setM('i-tbt', na || (Math.round(g.tbTop) + 'px'), na ? 'muted' : '');
+    setM('i-tbb', na || (Math.round(g.tbBot) + 'px'), na ? 'muted' : '');
+    setM('i-bbt', na || (Math.round(g.bbTop) + 'px'), na ? 'muted' : '');
+    setM('i-lh',  na || (legH + 'px'),                na ? 'muted' : '');
+    setM('i-lt',  na || (Math.round(g.lTop) + 'px'),  na ? 'muted' : '');
+    setM('i-gap', na || (Math.round(g.gap) + 'px'),   na ? 'muted' : (g.gap < 0 ? 'warn' : 'ok'));
+
     setM('i-cby', Math.round(g.cBot) + 'px');
     setM('i-cbh', g.ctrlBarH.toFixed(1) + 'px');
     var legCtrlGap = g.lTop - g.cBot;
-    setM('i-clg', Math.round(legCtrlGap) + 'px', legCtrlGap < 0 ? 'warn' : 'ok');
+    setM('i-clg', na || (Math.round(legCtrlGap) + 'px'), na ? 'muted' : (legCtrlGap < 0 ? 'warn' : 'ok'));
 
     // Overlap status
     var osEl = document.getElementById('overlap-status');
-    if (overlap) {
+    if (withPanels) {
+      osEl.innerHTML = '<div class="status-box ok">✓ Mobile — no legend<br>' +
+        '<span style="font-size:10px;opacity:.8">canvas riempie la game-area</span></div>';
+    } else if (overlap) {
       var olPx = Math.round(-g.gap);
       osEl.innerHTML = '<div class="status-box overlap">⚠ Overlap di <b>' + olPx + 'px</b><br>' +
         'legend sovrasta il canvas.<br>' +
@@ -608,16 +729,16 @@
         '<span style="font-size:10px;opacity:.8">gap: ' + Math.round(g.gap) + 'px liberi</span></div>';
     }
 
-    // Update preset button "warn" state
+    // Preset warn states
     document.querySelectorAll('.preset').forEach(function(btn) {
       var bw = parseInt(btn.dataset.w), bh = parseInt(btn.dataset.h);
-      var bg = computeLayout(bw, bh);
-      btn.classList.toggle('warn',   bg.gap < 0);
+      var bg = computeLayout(bw, bh, withPanels);
+      btn.classList.toggle('warn',   !withPanels && bg.gap < 0);
       btn.classList.toggle('active', bw === vpW && bh === vpH);
     });
   }
 
-  // ── Controls ──────────────────────────────────────────────────────────
+  // ── Controls ──────────────────────────────────────────────────────────────
   function setSize(w, h) {
     vpW = w; vpH = h;
     elInpW.value = w; elInpH.value = h;
@@ -627,6 +748,24 @@
   document.querySelectorAll('.preset').forEach(function(btn) {
     btn.addEventListener('click', function() {
       setSize(parseInt(this.dataset.w), parseInt(this.dataset.h));
+    });
+  });
+
+  document.querySelectorAll('.mode-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      screenMode = this.dataset.mode;
+      document.querySelectorAll('.mode-btn').forEach(function(b) { b.classList.remove('active'); });
+      this.classList.add('active');
+      update();
+    });
+  });
+
+  document.querySelectorAll('.bg-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      bgMode = this.dataset.bg;
+      document.querySelectorAll('.bg-btn').forEach(function(b) { b.classList.remove('active'); });
+      this.classList.add('active');
+      update();
     });
   });
 
@@ -645,10 +784,8 @@
     update();
   });
 
-  document.getElementById('chk-legend').onchange = update;
-  document.getElementById('chk-bezels').onchange = update;
-  document.getElementById('chk-grid').onchange   = update;
-  document.getElementById('chk-ctrls').onchange  = update;
+  ['chk-panels','chk-legend','chk-bezels','chk-ctrls','chk-labels','chk-images','chk-grid']
+    .forEach(function(id) { document.getElementById(id).onchange = update; });
 
   var _resizeTimer;
   window.addEventListener('resize', function() {
@@ -656,8 +793,8 @@
     _resizeTimer = setTimeout(update, 60);
   });
 
-  // ── Init ──────────────────────────────────────────────────────────────
-  setSize(1366, 768);
+  // ── Init ──────────────────────────────────────────────────────────────────
+  setSize(1920, 1080);
 </script>
 
 </body>
