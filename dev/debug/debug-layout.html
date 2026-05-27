@@ -52,6 +52,9 @@
       border-color: #4477ff; color: #7799ff; background: #16163a;
     }
     .preset.warn { border-color: #ff5533 !important; color: #ff8866 !important; }
+    #btn-screen { border-color: #336633; color: #55cc66; }
+    #btn-screen:hover { background: #0a1a0a; color: #77ee77; border-color: #55cc66; }
+    #btn-screen.active { border-color: #55cc66; color: #99ff99; background: #0a200a; }
 
     label { font-size: 11px; color: #888; white-space: nowrap; display: flex; align-items: center; gap: 5px; }
     input[type=number] {
@@ -275,6 +278,8 @@
   <span class="tb-sep">|</span>
 
   <span class="tb-lbl">VIEWPORT:</span>
+  <button class="preset" id="btn-screen" title="Usa le dimensioni CSS del tuo schermo (già corrette per DPI)">schermo</button>
+  <button class="preset" data-w="2560" data-h="1440">2560×1440</button>
   <button class="preset" data-w="1920" data-h="1080">1920×1080</button>
   <button class="preset" data-w="1440" data-h="900">1440×900</button>
   <button class="preset" data-w="1366" data-h="768">1366×768</button>
@@ -282,8 +287,8 @@
   <button class="preset" data-w="1024" data-h="600">1024×600</button>
   <button class="preset" data-w="800"  data-h="600">800×600</button>
   <span class="tb-sep">|</span>
-  <label>W <input type="number" id="inp-w" value="1920" min="400" max="2560" step="2"></label>
-  <label>H <input type="number" id="inp-h" value="1080" min="300" max="1440" step="2"></label>
+  <label>W <input type="number" id="inp-w" value="1920" min="400" max="3840" step="2"></label>
+  <label>H <input type="number" id="inp-h" value="1080" min="300" max="2160" step="2"></label>
 
   <span class="tb-sep">|</span>
   <span class="tb-lbl">SCHERMATA:</span>
@@ -343,6 +348,7 @@
       <div class="metric"><span class="metric-k">height</span>    <span class="metric-v" id="i-vh">—</span></div>
       <div class="metric"><span class="metric-k">ratio</span>     <span class="metric-v" id="i-vr">—</span></div>
       <div class="metric"><span class="metric-k">constraint</span><span class="metric-v info2" id="i-vc">—</span></div>
+      <div class="metric"><span class="metric-k">screen DPR</span><span class="metric-v" id="i-dpr">—</span></div>
     </div>
 
     <div>
@@ -732,6 +738,8 @@
     setM('i-vw', vpW+'px'); setM('i-vh', vpH+'px');
     setM('i-vr', (vpW/vpH).toFixed(3)+' ('+(vpW/vpH > CANVAS_RATIO ? '>' : '<')+' 1.6)');
     setM('i-vc', g.constraint+'-constrained', g.constraint==='height' ? 'warn' : 'ok');
+    var dpr = window.devicePixelRatio || 1;
+    setM('i-dpr', dpr.toFixed(2)+'×  (phys: '+(Math.round(vpW*dpr))+'×'+(Math.round(vpH*dpr))+')', dpr > 1 ? 'info2' : '');
 
     setM('i-gaw', Math.round(g.gaW)+'px');
     setM('i-gax', Math.round(g.gaX)+'px');
@@ -764,18 +772,26 @@
     }
 
     // Preset warn states
-    document.querySelectorAll('.preset').forEach(function(btn) {
+    document.querySelectorAll('.preset[data-w]').forEach(function(btn) {
       var bw = parseInt(btn.dataset.w), bh = parseInt(btn.dataset.h);
       var bg = computeLayout(bw, bh, withPanels);
       btn.classList.toggle('warn',   !withPanels && bg.gap < 0);
       btn.classList.toggle('active', bw === vpW && bh === vpH);
     });
+    // "schermo" button: active when viewport matches screen size
+    var sc = document.getElementById('btn-screen');
+    sc.classList.toggle('active', vpW === window.screen.width && vpH === window.screen.height);
   }
 
   // ── Controls ─────────────────────────────────────────────────────────────
   function setSize(w, h) { vpW = w; vpH = h; elInpW.value = w; elInpH.value = h; update(); }
 
-  document.querySelectorAll('.preset').forEach(function(btn) {
+  // "schermo" button: legge le dimensioni CSS dello schermo (già corrette per DPI)
+  document.getElementById('btn-screen').addEventListener('click', function() {
+    setSize(window.screen.width, window.screen.height);
+  });
+
+  document.querySelectorAll('.preset[data-w]').forEach(function(btn) {
     btn.addEventListener('click', function() { setSize(parseInt(this.dataset.w), parseInt(this.dataset.h)); });
   });
   document.querySelectorAll('.mode-btn').forEach(function(btn) {
