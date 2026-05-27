@@ -226,13 +226,6 @@
   </label>
   <label><input type="checkbox" id="chk-labels" checked> labels</label>
   <label><input type="checkbox" id="chk-images" checked> immagini</label>
-  <label><input type="checkbox" id="chk-grid"> griglia</label>
-
-  <span class="tb-sep">|</span>
-  <label>legend H
-    <input type="range" id="sld-lh" min="10" max="40" value="20">
-    <span id="legend-h-val">20</span>px
-  </label>
 </div>
 
 <!-- ── Main ───────────────────────────────────────────────────────────── -->
@@ -379,8 +372,8 @@
   // ── Mode defaults ────────────────────────────────────────────────────────
   var MODE_DEFAULTS = {
     // 'mobile' non è qui: il suo stato persiste tra i switch di mode
-    title: { panels: false, legend: true,  bezels: false, ctrls: true,  labels: true,  images: true,  grid: false },
-    game:  { panels: false, legend: false, bezels: true,  ctrls: false, labels: false, images: true,  grid: false },
+    title: { panels: false, legend: true,  bezels: false, ctrls: true,  labels: true,  images: true },
+    game:  { panels: false, legend: false, bezels: true,  ctrls: false, labels: true,  images: true },
   };
 
   function applyModeDefaults(mode) {
@@ -392,7 +385,6 @@
     document.getElementById('chk-ctrls').checked  = d.ctrls;
     document.getElementById('chk-labels').checked = d.labels;
     document.getElementById('chk-images').checked = d.images;
-    document.getElementById('chk-grid').checked   = d.grid;
   }
 
   // ── State ────────────────────────────────────────────────────────────────
@@ -409,8 +401,6 @@
   var elWorkspace = document.getElementById('workspace');
   var elInpW      = document.getElementById('inp-w');
   var elInpH      = document.getElementById('inp-h');
-  var elSldLH     = document.getElementById('sld-lh');
-  var elLHVal     = document.getElementById('legend-h-val');
 
   // ── Geometry ─────────────────────────────────────────────────────────────
   function computeLayout(vw, vh, withPanels) {
@@ -522,7 +512,6 @@
     elPreview.innerHTML = '';
     var showBezels = document.getElementById('chk-bezels').checked;
     var showLegend = document.getElementById('chk-legend').checked;
-    var showGrid   = document.getElementById('chk-grid').checked;
     var showCtrls  = document.getElementById('chk-ctrls').checked;
     var showLabels = document.getElementById('chk-labels').checked;
     var showImages = document.getElementById('chk-images').checked;
@@ -530,16 +519,6 @@
     if (mobileMode) {
       showLegend = false;
       if (screenMode === 'game') showBezels = false;  // withPanels già gestito sopra
-    }
-
-    // ── Grid ──────────────────────────────────────────────────────────────
-    if (showGrid) {
-      elPreview.appendChild(layer('l-hline', { top: (vpH/2)+'px' }));
-      elPreview.appendChild(layer('l-vline', { left: (vpW/2)+'px' }));
-      if (!withPanels && g.gaX > 0) {
-        elPreview.appendChild(layer('l-vline', { left: g.gaX+'px' }));
-        elPreview.appendChild(layer('l-vline', { left: (g.gaX + g.gaW)+'px' }));
-      }
     }
 
     // ── Side panels (mobile) ──────────────────────────────────────────────
@@ -825,8 +804,7 @@
     var v = parseInt(this.value); if (v >= 300 && v <= 2160) { vpH = v; update(); }
   });
 
-  elSldLH.addEventListener('input', function() { legH = parseInt(this.value); elLHVal.textContent = legH; update(); });
-  ['chk-panels','chk-legend','chk-bezels','chk-ctrls','chk-labels','chk-images','chk-grid']
+  ['chk-panels','chk-legend','chk-bezels','chk-ctrls','chk-labels','chk-images']
     .forEach(function(id) { document.getElementById(id).onchange = update; });
 
   var _rt;
