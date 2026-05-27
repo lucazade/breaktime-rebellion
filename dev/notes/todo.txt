@@ -381,4 +381,5 @@ PER LUCA:
 - [ ] #202 sistamare palette banners
 
 PER CLAUDE:
-- [ ] #203 Modalita debug banners
+- [ ] #203 Pagina debug banners
+- [ ] #204 Pagina debug layout
