@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Banner Debug — Breaktime Rebellion</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #0d0d1a;
+      color: #ccc;
+      font-family: monospace;
+      font-size: 13px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px 16px;
+      gap: 14px;
+    }
+    h1 {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 10px;
+      color: #666;
+      letter-spacing: 1px;
+    }
+    #controls {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    button {
+      background: #1e1e2e;
+      color: #ccc;
+      border: 1px solid #444;
+      padding: 7px 18px;
+      cursor: pointer;
+      font-family: monospace;
+      font-size: 13px;
+      border-radius: 4px;
+      transition: background 0.1s;
+    }
+    button:hover { background: #2a2a3e; }
+    #banner-info { text-align: center; min-width: 220px; }
+    #banner-name { font-size: 14px; font-weight: bold; color: #fff; }
+    #banner-index { font-size: 11px; color: #555; margin-top: 4px; }
+    #toggles { display: flex; gap: 16px; align-items: center; }
+    label { display: flex; align-items: center; gap: 6px; cursor: pointer; user-select: none; }
+    input[type=checkbox] { cursor: pointer; accent-color: #55cc66; width: 14px; height: 14px; }
+    canvas {
+      display: block;
+      border: 1px solid #2a2a3e;
+      image-rendering: pixelated;
+      max-width: 100%;
+      height: auto;
+    }
+    #legend {
+      display: flex;
+      gap: 20px;
+      font-size: 11px;
+      color: #777;
+    }
+    .leg { display: flex; align-items: center; gap: 7px; }
+    .leg-dot { width: 16px; height: 9px; border-radius: 2px; opacity: 0.85; }
+    #info { font-size: 11px; color: #444; text-align: center; }
+    kbd {
+      background: #1a1a1a;
+      border: 1px solid #444;
+      padding: 1px 6px;
+      border-radius: 3px;
+      font-size: 11px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── 1. Game file imports — NO state.js / game.js / audio.js ───────
+       Loaded in this order so each file finds its dependencies already set.
+       FF is defined at the bottom of config.js (var FF = CONFIG.display.fontFamily)
+  ──────────────────────────────────────────────────────────────────────── -->
+  <script src="../../js/config.js"></script>   <!-- CONFIG, FF -->
+  <script src="../../js/palette.js"></script>  <!-- PAL       -->
+  <script src="../../js/ui.js"></script>        <!-- CONFIG.ui -->
+  <script src="../../js/i18n.js"></script>      <!-- STRINGS   -->
+
+  <!-- ── 2. Minimal global stubs (mirrors what state.js normally provides) -->
+  <script>
+    // Canvas logical size — must match game constants
+    var W = 320, H = 200;
+    // FF is already set by config.js
+
+    // Animation frame — set high so blink animations render in their "on" state
+    var frame = 999;
+
+    // ctx is assigned after the canvas element is parsed
+    var ctx;
+
+    // Game state vars referenced inside draw-overlays.js function bodies
+    var state, score, currentLevel, LEVELS;
+    var lastTimeBonus = 0, lastLivesBonus = 0;
+    var endScreenT = 999, _endBonusT = 600;
+    var storyBannerT = 0, storyBannerLines = null, storyBannerFading = false, storyFadeInT = 0;
+    var missionBannerT = 0, missionBannerLines = null;
+    var _pauseActive = false, _homeConfirmActive = false, _creditsActive = false;
+
+    // String formatter (normally in state.js)
+    function fmt(s) {
+      var a = arguments;
+      return s.replace(/{(\d+)}/g, function(_, i) { return a[+i + 1]; });
+    }
+
+    // Fake high scores for the High Scores banner
+    function _getHighScores() {
+      return [
+        { score: 98765, level: 10, difficulty: 'hard' },
+        { score: 54321, level:  7, difficulty: 'med'  },
+        { score: 12300, level:  3, difficulty: 'easy' },
+      ];
+    }
+  </script>
+
+  <!-- ── 3. Page markup ──────────────────────────────────────────────── -->
+  <h1>BANNER DEBUG — BREAKTIME REBELLION</h1>
+
+  <div id="controls">
+    <button id="btn-prev">◀ PREV</button>
+    <div id="banner-info">
+      <div id="banner-name">—</div>
+      <div id="banner-index">— / —</div>
+    </div>
+    <button id="btn-next">NEXT ▶</button>
+    <div id="toggles">
+      <label><input type="checkbox" id="chk-debug" checked> debug overlay</label>
+      <label><input type="checkbox" id="chk-bg"> sfondo gioco</label>
+    </div>
+  </div>
+
+  <canvas id="c"></canvas>
+
+  <div id="legend">
+    <span class="leg"><span class="leg-dot" style="background:#ff5555"></span>testo</span>
+    <span class="leg"><span class="leg-dot" style="background:#55cc66"></span>spacing / padding</span>
+    <span class="leg"><span class="leg-dot" style="background:#5599ff"></span>bottone</span>
+  </div>
+  <div id="info">
+    <kbd>←</kbd> <kbd>→</kbd> naviga &nbsp;·&nbsp; <kbd>D</kbd> toggle overlay
+  </div>
+
+  <!-- ── 4. Real draw functions from the game ────────────────────────── -->
+  <script src="../../js/draw-overlays.js"></script>
+
+  <!-- ── 5. Debug app ────────────────────────────────────────────────── -->
+  <script>
+    // ── Canvas setup ─────────────────────────────────────────────────────
+    var SCALE = 4;   // 320×200 → 1280×800
+    var canvas = document.getElementById('c');
+    canvas.width  = W * SCALE;
+    canvas.height = H * SCALE;
+    ctx = canvas.getContext('2d');
+    ctx.imageSmoothingEnabled = false;
+
+    // Optional: game background image
+    var _bgImg = new Image();
+    _bgImg.src = '../../assets/pics/bg/bg-1600-day.png';
+    _bgImg.onload = function() { render(); };
+
+    function _drawBg() {
+      if (document.getElementById('chk-bg').checked && _bgImg.complete && _bgImg.naturalWidth) {
+        ctx.drawImage(_bgImg, 0, 0, W, H);
+      } else {
+        ctx.fillStyle = '#1a1a2e';
+        ctx.fillRect(0, 0, W, H);
+      }
+    }
+
+    // ── Debug overlay helpers ─────────────────────────────────────────────
+
+    // Build a flat list of { key, type, y, h } from ordered segment definitions.
+    // Each input def: { key: string, type: 'text'|'spacing'|'btn', h: number }
+    function buildSegs(defs) {
+      var y = 0, segs = [];
+      defs.forEach(function(d) {
+        segs.push({ key: d.key, type: d.type, y: y, h: d.h });
+        y += d.h;
+      });
+      return segs;
+    }
+
+    // Draw coloured semi-transparent bands + labels over each segment.
+    // bx/by = panel top-left in logical canvas coords, bw = panel width.
+    function drawDebugBands(segs, bx, by, bw) {
+      if (!document.getElementById('chk-debug').checked) return;
+
+      // ── Coloured bands ──
+      ctx.save();
+      ctx.globalAlpha = 0.40;
+      segs.forEach(function(s) {
+        if (s.h <= 0) return;
+        ctx.fillStyle = s.type === 'text'    ? '#ff5555'
+                      : s.type === 'btn'     ? '#5599ff'
+                      :                        '#55cc66'; // spacing / padding
+        ctx.fillRect(bx, by + s.y, bw, s.h);
+      });
+      ctx.restore();
+
+      // ── Text labels ──
+      ctx.save();
+      ctx.font = '4px monospace';   // plain monospace for legibility at tiny sizes
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'middle';
+      segs.forEach(function(s) {
+        if (s.h < 3) return;
+        var label = s.key + ' (' + s.h + 'px)';
+        var ty    = by + s.y + s.h / 2;
+        var tx    = bx + 2;
+        // black outline for contrast against any background colour
+        ctx.lineJoin = 'round';
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = 'rgba(0,0,0,0.85)';
+        ctx.strokeText(label, tx, ty);
+        ctx.fillStyle = '#ffffff';
+        ctx.fillText(label, tx, ty);
+      });
+      ctx.restore();
+    }
+
+    // ── Banner definitions ────────────────────────────────────────────────
+    // Each entry: { name, setup(), draw(), overlay() }
+    //   setup()   — sets the global state vars the draw function guards check
+    //   draw()    — the real game draw function (no modification needed)
+    //   overlay() — draws debug bands on top
+
+    var BANNERS = [
+
+      // ── 1. Story Banner (L1) ───────────────────────────────────────────
+      {
+        name: 'Story Banner (L1)',
+        setup: function() {
+          state = 'playing';
+          storyBannerT = 999; storyBannerFading = false; storyFadeInT = 999;
+          storyBannerLines = null;   // force drawStoryBanner to recompute lines
+        },
+        draw: drawStoryBanner,
+        overlay: function() {
+          var V = CONFIG.ui.storyBanner;
+          // drawStoryBanner populates storyBannerLines on its first call;
+          // fall back to a dummy count if it didn't (shouldn't happen).
+          var lines = storyBannerLines || ['Line 1', 'Line 2', 'Line 3'];
+          var n = lines.length;
+          var lineBlock = n * V.lineH + Math.max(0, n - 1) * V.lineSpacing;
+          var bh = V.padTop + V.titleH + V.titleSpacing + lineBlock + V.tapSpacing + V.tapH + V.padBottom;
+          var bx = Math.round((W - V.panW) / 2), by = Math.round((H - bh) / 2);
+          drawDebugBands(buildSegs([
+            { key: 'padTop',             type: 'spacing', h: V.padTop       },
+            { key: 'titleH',             type: 'text',    h: V.titleH       },
+            { key: 'titleSpacing',       type: 'spacing', h: V.titleSpacing },
+            { key: 'lineBlock ×' + n,    type: 'text',    h: lineBlock      },
+            { key: 'tapSpacing',         type: 'spacing', h: V.tapSpacing   },
+            { key: 'tapH',              type: 'text',    h: V.tapH         },
+            { key: 'padBottom',          type: 'spacing', h: V.padBottom    },
+          ]), bx, by, V.panW);
+        }
+      },
+
+      // ── 2. Mission Banner ──────────────────────────────────────────────
+      {
+        name: 'Mission Banner',
+        setup: function() {
+          state = 'playing'; currentLevel = 1;
+          missionBannerT = 999; missionBannerLines = null;
+        },
+        draw: drawMissionBanner,
+        overlay: function() {
+          var V = CONFIG.ui.missionBanner;
+          var lines = missionBannerLines || ['Spruzza le lavagne', 'prima della campanella!'];
+          var n = lines.length;
+          var lineBlock = n * V.lineH + Math.max(0, n - 1) * V.lineSpacing;
+          var bh = V.padTop + V.titleH + V.titleSpacing + lineBlock + V.padBottom;
+          var bx = Math.round((W - V.panW) / 2), by = Math.round((H - bh) / 2);
+          drawDebugBands(buildSegs([
+            { key: 'padTop',           type: 'spacing', h: V.padTop       },
+            { key: 'titleH',           type: 'text',    h: V.titleH       },
+            { key: 'titleSpacing',     type: 'spacing', h: V.titleSpacing },
+            { key: 'lineBlock ×' + n,  type: 'text',    h: lineBlock      },
+            { key: 'padBottom',        type: 'spacing', h: V.padBottom    },
+          ]), bx, by, V.panW);
+        }
+      },
+
+      // ── 3. Level Complete (mid-game) ───────────────────────────────────
+      {
+        name: 'Level Complete',
+        setup: function() {
+          state = 'win'; currentLevel = 5; endScreenT = 999; _endBonusT = 600;
+          score = 12345; lastTimeBonus = 500; lastLivesBonus = 0;
+          LEVELS = new Array(10).fill({});
+        },
+        draw: drawEndScreen,
+        overlay: function() {
+          var V = CONFIG.ui.levelComplete;
+          var bh = V.padTop + V.titleH + V.titleSpacing + V.scoreH + V.scoreSpacing + V.tapH + V.padBottom;
+          var bx = Math.round((W - V.panW) / 2), by = Math.round((H - bh) / 2);
+          drawDebugBands(buildSegs([
+            { key: 'padTop',       type: 'spacing', h: V.padTop       },
+            { key: 'titleH',       type: 'text',    h: V.titleH       },
+            { key: 'titleSpacing', type: 'spacing', h: V.titleSpacing },
+            { key: 'scoreH',       type: 'text',    h: V.scoreH       },
+            { key: 'scoreSpacing', type: 'spacing', h: V.scoreSpacing },
+            { key: 'tapH',         type: 'text',    h: V.tapH         },
+            { key: 'padBottom',    type: 'spacing', h: V.padBottom    },
+          ]), bx, by, V.panW);
+        }
+      },
+
+      // ── 4. Game Win (L10) ─────────────────────────────────────────────
+      {
+        name: 'Game Win (L10)',
+        setup: function() {
+          state = 'win'; currentLevel = 10; endScreenT = 999; _endBonusT = 600;
+          score = 98765; lastTimeBonus = 800; lastLivesBonus = 600;
+          LEVELS = new Array(10).fill({});
+        },
+        draw: drawEndScreen,
+        overlay: function() {
+          var V = CONFIG.ui.gameWin;
+          var bh = V.padTop + V.titleH + V.titleSpacing + V.scoreH + V.scoreSpacing + V.tapH + V.padBottom;
+          var bx = Math.round((W - V.panW) / 2), by = Math.round((H - bh) / 2);
+          drawDebugBands(buildSegs([
+            { key: 'padTop',       type: 'spacing', h: V.padTop       },
+            { key: 'titleH',       type: 'text',    h: V.titleH       },
+            { key: 'titleSpacing', type: 'spacing', h: V.titleSpacing },
+            { key: 'scoreH',       type: 'text',    h: V.scoreH       },
+            { key: 'scoreSpacing', type: 'spacing', h: V.scoreSpacing },
+            { key: 'tapH',         type: 'text',    h: V.tapH         },
+            { key: 'padBottom',    type: 'spacing', h: V.padBottom    },
+          ]), bx, by, V.panW);
+        }
+      },
+
+      // ── 5. Game Over ──────────────────────────────────────────────────
+      {
+        name: 'Game Over',
+        setup: function() {
+          state = 'gameover'; endScreenT = 999;
+          score = 4567; lastTimeBonus = 0; lastLivesBonus = 0;
+        },
+        draw: drawEndScreen,
+        overlay: function() {
+          var V = CONFIG.ui.gameover;
+          var bh = V.padTop + V.titleH + V.titleSpacing + V.scoreH + V.scoreSpacing + V.confirmH + V.confirmSpacing + V.btnH + V.padBottom;
+          var bx = Math.round((W - V.panW) / 2), by = Math.round((H - bh) / 2);
+          drawDebugBands(buildSegs([
+            { key: 'padTop',         type: 'spacing', h: V.padTop         },
+            { key: 'titleH',         type: 'text',    h: V.titleH         },
+            { key: 'titleSpacing',   type: 'spacing', h: V.titleSpacing   },
+            { key: 'scoreH',         type: 'text',    h: V.scoreH         },
+            { key: 'scoreSpacing',   type: 'spacing', h: V.scoreSpacing   },
+            { key: 'confirmH',       type: 'text',    h: V.confirmH       },
+            { key: 'confirmSpacing', type: 'spacing', h: V.confirmSpacing },
+            { key: 'btnH',           type: 'btn',     h: V.btnH           },
+            { key: 'padBottom',      type: 'spacing', h: V.padBottom      },
+          ]), bx, by, V.panW);
+        }
+      },
+
+      // ── 6. Pause Overlay ──────────────────────────────────────────────
+      {
+        name: 'Pause Overlay',
+        setup: function() { state = 'paused'; _pauseActive = true; _homeConfirmActive = false; },
+        draw: drawPauseOverlay,
+        overlay: function() {
+          var V = CONFIG.ui.pauseOverlay;
+          var bh = V.padTop + V.titleH + V.titleSpacing + V.btnH + V.padBottom;
+          var bx = Math.round((W - V.panW) / 2), by = Math.round((H - bh) / 2);
+          drawDebugBands(buildSegs([
+            { key: 'padTop',       type: 'spacing', h: V.padTop       },
+            { key: 'titleH',       type: 'text',    h: V.titleH       },
+            { key: 'titleSpacing', type: 'spacing', h: V.titleSpacing },
+            { key: 'btnH',         type: 'btn',     h: V.btnH         },
+            { key: 'padBottom',    type: 'spacing', h: V.padBottom    },
+          ]), bx, by, V.panW);
+        }
+      },
+
+      // ── 7. Home Confirm ───────────────────────────────────────────────
+      {
+        name: 'Home Confirm',
+        setup: function() { _homeConfirmActive = true; _pauseActive = false; state = 'paused'; },
+        draw: drawHomeConfirm,
+        overlay: function() {
+          var V = CONFIG.ui.homeConfirm;
+          var bh = V.padTop + V.titleH + V.titleSpacing + V.btnH + V.padBottom;
+          var bx = Math.round((W - V.panW) / 2), by = Math.round((H - bh) / 2);
+          drawDebugBands(buildSegs([
+            { key: 'padTop',       type: 'spacing', h: V.padTop       },
+            { key: 'titleH',       type: 'text',    h: V.titleH       },
+            { key: 'titleSpacing', type: 'spacing', h: V.titleSpacing },
+            { key: 'btnH',         type: 'btn',     h: V.btnH         },
+            { key: 'padBottom',    type: 'spacing', h: V.padBottom    },
+          ]), bx, by, V.panW);
+        }
+      },
+
+      // ── 8. High Scores ────────────────────────────────────────────────
+      {
+        name: 'High Scores',
+        setup: function() { state = 'highscores'; },
+        draw: drawHighScores,
+        overlay: function() {
+          var V = CONFIG.ui.highScores;
+          var hs = _getHighScores();
+          var numRows = Math.max(hs.length, 1);
+          var bh = V.padTop + V.titleH + V.titleSpacing + numRows * V.rowH + V.tapSpacing + V.tapH + V.padBottom;
+          var bx = Math.round((W - V.panW) / 2), by = Math.round((H - bh) / 2);
+          drawDebugBands(buildSegs([
+            { key: 'padTop',             type: 'spacing', h: V.padTop         },
+            { key: 'titleH',             type: 'text',    h: V.titleH         },
+            { key: 'titleSpacing',       type: 'spacing', h: V.titleSpacing   },
+            { key: 'rows ×' + numRows,   type: 'text',    h: numRows * V.rowH },
+            { key: 'tapSpacing',         type: 'spacing', h: V.tapSpacing     },
+            { key: 'tapH',              type: 'text',    h: V.tapH           },
+            { key: 'padBottom',          type: 'spacing', h: V.padBottom      },
+          ]), bx, by, V.panW);
+        }
+      },
+
+      // ── 9. Credits ────────────────────────────────────────────────────
+      {
+        name: 'Credits',
+        setup: function() { _creditsActive = true; },
+        draw: drawCredits,
+        overlay: function() {
+          var V = CONFIG.ui.credits;
+          // _CREDITS_MEMBERS is a var-level global defined in draw-overlays.js
+          var n = (typeof _CREDITS_MEMBERS !== 'undefined') ? _CREDITS_MEMBERS.length : 5;
+          var memberBlock = n * (V.nameH + V.nameGap + V.roleH + V.roleGap);
+          var bh = V.padTop + V.titleH + V.titleSpacing + V.teamH + V.teamSpacing
+                 + memberBlock + V.tapSpacing + V.btnH + V.padBottom;
+          var bx = Math.round((W - V.panW) / 2), by = Math.round((H - bh) / 2);
+          drawDebugBands(buildSegs([
+            { key: 'padTop',           type: 'spacing', h: V.padTop       },
+            { key: 'titleH',           type: 'text',    h: V.titleH       },
+            { key: 'titleSpacing',     type: 'spacing', h: V.titleSpacing },
+            { key: 'teamH',            type: 'text',    h: V.teamH        },
+            { key: 'teamSpacing',      type: 'spacing', h: V.teamSpacing  },
+            { key: 'members ×' + n,   type: 'text',    h: memberBlock    },
+            { key: 'tapSpacing',       type: 'spacing', h: V.tapSpacing   },
+            { key: 'btnH',             type: 'btn',     h: V.btnH         },
+            { key: 'padBottom',        type: 'spacing', h: V.padBottom    },
+          ]), bx, by, V.panW);
+        }
+      },
+
+    ];
+
+    // ── Navigation ────────────────────────────────────────────────────────
+    var _cur = 0;
+
+    function render() {
+      ctx.setTransform(SCALE, 0, 0, SCALE, 0, 0);
+      _drawBg();
+      var def = BANNERS[_cur];
+      def.setup();
+      def.draw();
+      def.overlay();
+      document.getElementById('banner-name').textContent  = def.name;
+      document.getElementById('banner-index').textContent = (_cur + 1) + ' / ' + BANNERS.length;
+    }
+
+    function goTo(i) {
+      _cur = ((i % BANNERS.length) + BANNERS.length) % BANNERS.length;
+      // reset multi-line caches so banners recompute fresh
+      storyBannerLines   = null;
+      missionBannerLines = null;
+      // reset overlay flags so banners that guard on these don't bleed across
+      _pauseActive = _homeConfirmActive = _creditsActive = false;
+      render();
+    }
+
+    document.getElementById('btn-prev').onclick = function() { goTo(_cur - 1); };
+    document.getElementById('btn-next').onclick = function() { goTo(_cur + 1); };
+    document.getElementById('chk-debug').onchange = render;
+    document.getElementById('chk-bg').onchange    = render;
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'ArrowLeft')        { goTo(_cur - 1); e.preventDefault(); }
+      else if (e.key === 'ArrowRight')  { goTo(_cur + 1); e.preventDefault(); }
+      else if (e.key === 'd' || e.key === 'D') {
+        var chk = document.getElementById('chk-debug');
+        chk.checked = !chk.checked;
+        render();
+      }
+    });
+
+    // Wait for Google Font to load before first render so text measurement is accurate
+    document.fonts.ready.then(function() { goTo(0); });
+  </script>
+
+</body>
+</html>

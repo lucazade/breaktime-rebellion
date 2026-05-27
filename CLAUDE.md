@@ -59,6 +59,8 @@ dev/
     palette-from-logo.png ← palette estratta dal logo (riferimento)
   scripts/
     check-dead.js         ← analisi statica dead code (PAL, STRINGS, sfx, CONFIG.ui, HTML IDs, assets, funzioni)
+  debug/
+    debug-banners.html    ← pagina standalone per ispezionare tutti i banner/dialog con overlay debug (bande rosse/verdi/blu con label chiavi CONFIG.ui)
 ```
 
 ## Stack
