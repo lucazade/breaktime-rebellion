@@ -3,3 +3,5 @@
 2. facciamo un semplice pagina html con il link a tutti i tool di debug?
 
 3. uniformiamo overlay banners e scene-overlay a layout-overlay
+
+4. manca un tool di profilazioni/benchmarking alla nostra cassetta degli attrezzi? mi sembra ad esempio che l'effetto "esplosione" durante il floating point sia un pò pesante.. magari ci aiuta ad indagare questi casi. (al momento ovviamente l'effetto non lo tocchiamo)
