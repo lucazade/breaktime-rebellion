@@ -201,6 +201,11 @@
     .ck-dot { width: 18px; height: 9px; border-radius: 1px; flex-shrink: 0; }
     #legend-h-val { display: inline-block; width: 24px; text-align: right; color: #aaa; }
   </style>
+  <!-- Game files — fornisce CONFIG.ui, W/H, e PAL (per ui.js); nessun side-effect DOM/audio -->
+  <script src="../../js/config.js"></script>
+  <script src="../../js/palette.js"></script>
+  <script src="../../js/scene.js"></script>
+  <script src="../../js/ui.js"></script>
 </head>
 <body>
 
@@ -311,43 +316,107 @@
 </div><!-- #main -->
 
 <script>
-  // ── Layout constants (from style.css + game.js) ──────────────────────────
-  var CANVAS_RATIO       = 16 / 10;
-  var CANVAS_MAX_W       = 1600;
-  var PANEL_W            = 140;
-  var LEGEND_BOTTOM      = 8;
-  var BEZEL_TOP_GAP      = 26;
-  var BEZEL_BOT_GAP      = 14;
-  var BEZEL_BOT_H        = 2;
-  var JOY_SIZE           = 90;
-  var BTN_SIZE           = 90;
-  var PANEL_BTN_W        = 68;
-  var PANEL_BTN_H        = 38;
-  var PANEL_BTN_TOP      = 48;
-  var CTRL_BOTTOM        = 40;
+  // ── Costanti da file di gioco (script tag → sempre in sync) ──────────────
+  // W, H da scene.js | CONFIG.ui.* da ui.js
+  var CANVAS_RATIO  = W / H;                                    // 1.6
+  var CANVAS_MAX_W  = W * 5;                                    // 1600 (scale=5)
+  var CTRL_FONT     = CONFIG.ui.titleScreen.controls.fontSize;  // 8
+  var CTRL_BTN_H    = CONFIG.ui.titleScreen.controls.btnH;      // 11
+  var CTRL_GAP_Y    = CONFIG.ui.titleScreen.controls.gapY;      // 12
+  var CTRL_PREV_X   = CONFIG.ui.titleScreen.controls.prevX;     // 10
+  var LOGO_LOG_W    = CONFIG.ui.titleScreen.logo.w;             // 300
+  var LOGO_LOG_X    = Math.round((W - LOGO_LOG_W) / 2);        // 10
 
-  // top-bezel font: clamp(20px, 1.9vw, 30px)
-  function bezelFontPx(vw)  { return Math.min(Math.max(20, 1.9 * vw / 100), 30); }
-  function bezelHeightPx(vw){ return Math.ceil(bezelFontPx(vw) * 1.25); }
-
-  // Canvas controls (CONFIG.ui.titleScreen.controls)
-  var CTRL_FONT    = 8;
-  var CTRL_BTN_H   = 11;
-  var CTRL_GAP_Y   = 12;
-  var CTRL_PREV_X  = 10;
-
-  // Logo geometry (CONFIG.ui.titleScreen.logo + draw-title.js)
-  var LOGO_LOG_W  = 300;
-  var LOGO_LOG_X  = Math.round((320 - LOGO_LOG_W) / 2);  // = 10
-  var LOGO_NAT_W  = 1697;   // logo-1600.png natural dimensions (fallback)
+  // Logo natural dimensions — fallback; overridden by _logoImg.onload
+  var LOGO_NAT_W  = 1697;
   var LOGO_NAT_H  = 927;
+
+  // ── Costanti CSS — fetched da style.css al caricamento ───────────────────
+  // Default = valori correnti; _parseCssConstants() li sovrascrive prima dell'init.
+  var PANEL_W           = 140;
+  var LEGEND_BOTTOM     = 8;
+  var LEGEND_CSS_BUDGET = 24;
+  var BEZEL_TOP_GAP     = 26;
+  var BEZEL_BOT_GAP     = 14;
+  var BEZEL_BOT_H       = 2;
+  var JOY_SIZE          = 90;
+  var BTN_SIZE          = 90;
+  var PANEL_BTN_W       = 68;
+  var PANEL_BTN_H       = 38;
+  var PANEL_BTN_TOP     = 48;
+  var CTRL_BOTTOM       = 40;
+  var BEZEL_MIN_TOP     = 56;  // da game.js
+
+  // Bezel font clamp: clamp(_bfMin px, _bfVw vw, _bfMax px)
+  var _bfMin = 20, _bfVw = 1.9, _bfMax = 30;
+  function bezelFontPx(vw)  { return Math.min(Math.max(_bfMin, _bfVw * vw / 100), _bfMax); }
+  function bezelHeightPx(vw){ return Math.ceil(bezelFontPx(vw) * 1.25); }
 
   function logoLogH(natW, natH) {
     return Math.round((natH || LOGO_NAT_H) / (natW || LOGO_NAT_W) * LOGO_LOG_W);
   }
   function logoLogY(lh) {
     var totalH = lh + CTRL_GAP_Y + CTRL_BTN_H;
-    return Math.max(0, Math.round((200 - totalH) / 2));
+    return Math.max(0, Math.round((H - totalH) / 2));
+  }
+
+  // ── Parser style.css ─────────────────────────────────────────────────────
+  function _parseCssConstants(css) {
+    function px(re) { var m = css.match(re); return m ? parseFloat(m[1]) : null; }
+    var v, m;
+
+    // #panel-left, #panel-right { flex: 0 0 140px }
+    v = px(/#panel-left[^{]*\{[^}]*flex:\s*0\s+0\s+([\d.]+)px/);
+    if (v) PANEL_W = v;
+
+    // legend clamp calc: "- Xpx - Ypx)"  →  X=LEGEND_BOTTOM, Y=LEGEND_CSS_BUDGET
+    m = css.match(/-\s*(\d+)px\s*-\s*(\d+)px\s*\)/);
+    if (m) { LEGEND_BOTTOM = parseFloat(m[1]); LEGEND_CSS_BUDGET = parseFloat(m[2]); }
+    // Verifica LEGEND_BOTTOM dal last arg del clamp: "Xpx);"
+    m = css.match(/bottom:\s*clamp\([\s\S]+?(\d+)px\s*\);/);
+    if (m) LEGEND_BOTTOM = parseFloat(m[1]);
+
+    // #top-bezel top: calc(var(--canvas-top, 50%) - 26px)
+    m = css.match(/#top-bezel\b[^{]*\{[^}]*top:\s*calc\([^)]*\)\s*-\s*([\d.]+)px\)/);
+    if (m) BEZEL_TOP_GAP = parseFloat(m[1]);
+
+    // #bottom-bezel top: calc(... + 14px)
+    m = css.match(/#bottom-bezel\b[^{]*\{[^}]*top:\s*calc\([\s\S]+?\+\s*([\d.]+)px\s*\)/);
+    if (m) BEZEL_BOT_GAP = parseFloat(m[1]);
+
+    // #bottom-bezel height: 2px
+    v = px(/#bottom-bezel\b[^{]*\{[^}]*height:\s*([\d.]+)px/);
+    if (v) BEZEL_BOT_H = v;
+
+    // #top-bezel font-size: clamp(20px, 1.9vw, 30px)
+    m = css.match(/#top-bezel\b[^{]*\{[^}]*font-size:\s*clamp\(([\d.]+)px,\s*([\d.]+)vw,\s*([\d.]+)px\)/);
+    if (m) { _bfMin = parseFloat(m[1]); _bfVw = parseFloat(m[2]); _bfMax = parseFloat(m[3]); }
+
+    // #ctrl-joy { width: 90px }
+    v = px(/#ctrl-joy\b[^{]*\{[^}]*width:\s*([\d.]+)px/);
+    if (v) JOY_SIZE = v;
+
+    // #btn-action: prende l'ultima definizione (media query mobile = valore reale usato)
+    var allBtnW = css.match(/#btn-action\b[^{]*\{[^}]*width:\s*([\d.]+)px/g);
+    if (allBtnW && allBtnW.length) {
+      m = allBtnW[allBtnW.length - 1].match(/([\d.]+)px/);
+      if (m) BTN_SIZE = parseFloat(m[1]);
+    }
+
+    // .panel-btn { width: 68px; height: 38px; top: 48px }
+    v = px(/\.panel-btn[^{]*\{[^}]*width:\s*([\d.]+)px/);   if (v) PANEL_BTN_W   = v;
+    v = px(/\.panel-btn[^{]*\{[^}]*height:\s*([\d.]+)px/);  if (v) PANEL_BTN_H   = v;
+    v = px(/\.panel-btn[^{]*\{[^}]*top:\s*([\d.]+)px/);     if (v) PANEL_BTN_TOP = v;
+
+    // #panel-left #ctrl-joy { bottom: 40px }
+    v = px(/#panel-left\s+#ctrl-joy[^{]*\{[^}]*bottom:\s*([\d.]+)px/);
+    if (v) CTRL_BOTTOM = v;
+  }
+
+  // ── Parser game.js ────────────────────────────────────────────────────────
+  function _parseGameConstants(src) {
+    var m = src.match(/var BEZEL_MIN_TOP\s*=\s*(\d+)/);
+    if (m) BEZEL_MIN_TOP = parseFloat(m[1]);
   }
 
   // Preload logo for accurate natural dimensions
@@ -844,10 +913,23 @@
   var _rt;
   window.addEventListener('resize', function() { clearTimeout(_rt); _rt = setTimeout(update, 60); });
 
-  // ── Init ─────────────────────────────────────────────────────────────────
-  _populateSelect();
-  applyModeDefaults('title');  // imposta checkbox + visibilità (mode è già 'title')
-  setSize(window.screen.width, window.screen.height);
+  // ── Init — async: fetch CSS + game.js prima di disegnare ─────────────────
+  function _initTool() {
+    _populateSelect();
+    applyModeDefaults('title');
+    setSize(window.screen.width, window.screen.height);
+  }
+
+  Promise.all([
+    fetch('../../css/style.css')
+      .then(function(r) { return r.text(); })
+      .then(_parseCssConstants)
+      .catch(function() { /* fallback su file:// — usa defaults */ }),
+    fetch('../../js/game.js')
+      .then(function(r) { return r.text(); })
+      .then(_parseGameConstants)
+      .catch(function() {}),
+  ]).then(_initTool);
 </script>
 
 </body>
