@@ -1,6 +1,6 @@
 {
   "name": "breaktime-rebellion",
-  "version": "1.0.24",
+  "version": "1.0.25",
   "private": true,
   "scripts": {
     "check": "node dev/scripts/check-dead.js",
