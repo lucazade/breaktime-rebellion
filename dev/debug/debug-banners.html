@@ -296,7 +296,7 @@
       {
         name: 'Level Complete',
         setup: function() {
-          state = 'win'; currentLevel = 5; endScreenT = 999; _endBonusT = 600;
+          state = 'win'; currentLevel = 5; endScreenT = 999; _endBonusT = 0;
           score = 12345; lastTimeBonus = 500; lastLivesBonus = 0;
           LEVELS = new Array(10).fill({});
         },
@@ -321,7 +321,7 @@
       {
         name: 'Game Win (L10)',
         setup: function() {
-          state = 'win'; currentLevel = 10; endScreenT = 999; _endBonusT = 600;
+          state = 'win'; currentLevel = 10; endScreenT = 999; _endBonusT = 0;
           score = 98765; lastTimeBonus = 800; lastLivesBonus = 600;
           LEVELS = new Array(10).fill({});
         },
@@ -465,7 +465,7 @@
       ctx.setTransform(SCALE, 0, 0, SCALE, 0, 0);
       _drawBg();
       var def = BANNERS[_cur];
-      def.setup();
+      // setup() is NOT called here — only in goTo() so animations aren't reset each frame
       def.draw();
       def.overlay();
     }
@@ -477,15 +477,17 @@
       missionBannerLines = null;
       // reset overlay flags so banners that guard on these don't bleed across
       _pauseActive = _homeConfirmActive = _creditsActive = false;
-      // update labels immediately (loop updates canvas)
-      var def = BANNERS[_cur];
-      document.getElementById('banner-name').textContent  = def.name;
+      // run setup once to initialise state for this banner
+      BANNERS[_cur].setup();
+      // update labels immediately
+      document.getElementById('banner-name').textContent  = BANNERS[_cur].name;
       document.getElementById('banner-index').textContent = (_cur + 1) + ' / ' + BANNERS.length;
     }
 
-    // rAF loop — increments frame so blink animations (tap to continue, etc.) work naturally
+    // rAF loop — increments frame (blink) and _endBonusT (score counter) each tick
     function _loop() {
       frame++;
+      _endBonusT++;
       render();
       requestAnimationFrame(_loop);
     }
