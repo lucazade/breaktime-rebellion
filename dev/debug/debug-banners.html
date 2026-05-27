@@ -94,8 +94,8 @@
     var W = 320, H = 200;
     // FF is already set by config.js
 
-    // Animation frame — set high so blink animations render in their "on" state
-    var frame = 999;
+    // Animation frame — incremented by the rAF loop so blink animations work naturally
+    var frame = 0;
 
     // ctx is assigned after the canvas element is parsed
     var ctx;
@@ -468,8 +468,6 @@
       def.setup();
       def.draw();
       def.overlay();
-      document.getElementById('banner-name').textContent  = def.name;
-      document.getElementById('banner-index').textContent = (_cur + 1) + ' / ' + BANNERS.length;
     }
 
     function goTo(i) {
@@ -479,13 +477,21 @@
       missionBannerLines = null;
       // reset overlay flags so banners that guard on these don't bleed across
       _pauseActive = _homeConfirmActive = _creditsActive = false;
+      // update labels immediately (loop updates canvas)
+      var def = BANNERS[_cur];
+      document.getElementById('banner-name').textContent  = def.name;
+      document.getElementById('banner-index').textContent = (_cur + 1) + ' / ' + BANNERS.length;
+    }
+
+    // rAF loop — increments frame so blink animations (tap to continue, etc.) work naturally
+    function _loop() {
+      frame++;
       render();
+      requestAnimationFrame(_loop);
     }
 
     document.getElementById('btn-prev').onclick = function() { goTo(_cur - 1); };
     document.getElementById('btn-next').onclick = function() { goTo(_cur + 1); };
-    document.getElementById('chk-debug').onchange = render;
-    document.getElementById('chk-bg').onchange    = render;
 
     document.addEventListener('keydown', function(e) {
       if (e.key === 'ArrowLeft')        { goTo(_cur - 1); e.preventDefault(); }
@@ -493,12 +499,11 @@
       else if (e.key === 'd' || e.key === 'D') {
         var chk = document.getElementById('chk-debug');
         chk.checked = !chk.checked;
-        render();
       }
     });
 
-    // Wait for Google Font to load before first render so text measurement is accurate
-    document.fonts.ready.then(function() { goTo(0); });
+    // Wait for Google Font to load before starting the loop so text measurement is accurate
+    document.fonts.ready.then(function() { goTo(0); requestAnimationFrame(_loop); });
   </script>
 
 </body>
