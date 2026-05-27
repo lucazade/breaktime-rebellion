@@ -209,11 +209,16 @@ canvas.rounded { border-radius: 16px; }
     pointer-events: none;
   }
 
-  /* Keyboard legend — anchored 8px below canvas bottom.
-     When height-constrained (canvas fills viewport), top > 100vh → off-screen, no overlap. */
+  /* Keyboard legend — bottom: 8px when there's room; slides off-screen otherwise.
+     clamp(MIN, VALUE, MAX):
+       VALUE = space below canvas minus the 8px gap + ~24px legend height budget
+       > 0 → clamped to MAX (8px) → legend at its normal bottom position
+       ≤ 0 → negative bottom → legend below viewport, invisible, no overlap */
   #legend {
     position: fixed;
-    top: calc(var(--canvas-top, 0px) + var(--canvas-h, 100vh) + 8px);
+    bottom: clamp(-100px,
+      calc(100dvh - var(--canvas-top, 0px) - var(--canvas-h, 100dvh) - 8px - 24px),
+      8px);
     left: 0; right: 0;
     text-align: center; pointer-events: none;
   }
