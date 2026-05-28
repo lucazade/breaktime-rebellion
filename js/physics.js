@@ -273,7 +273,9 @@ function updatePlayer() {
       actionPressed = false;
     }
     if (!K.action || player.throwChargeT >= throwChargeTime) {
-      var _decay = Math.round(10 + 60 * player.throwChargeT / throwChargeTime);
+      var _pct = player.throwChargeT / throwChargeTime;
+      var _decay = Math.round(5 + 65 * _pct);         // tap≈8, full≈70
+      var _vy   = -1.5 * _pct;                        // tap=flat, full=slight upward arc
       player.throwCharging = false;
       player.throwChargeT = 0;
       throwCooldown = 30;
@@ -282,6 +284,7 @@ function updatePlayer() {
         y: player.y - 4,
         dir: player.dir,
         decay: _decay,
+        vy: _vy,
       });
     }
   }

@@ -321,7 +321,6 @@ var BONUS_LEVEL = (function() {
     students: [],  // no seated students — wanderers take their place
 
     teachers: [
-      {x:160, y:GY-PH-walkOffset, dir:-1, minX:20, maxX:290, speed:0.55, color:PAL.profRossiBody,   name:'Prof.Rossi',   sight:0},
       {x:160, y:MY-PH-walkOffset, dir: 1, minX:20, maxX:290, speed:0.50, color:PAL.profCelesteBody, name:'Prof.Celeste', sight:0},
       {x:140, y:TY-PH-walkOffset, dir:-1, minX:20, maxX:275, speed:0.60, color:PAL.profNeriBody,    name:'Prof.Neri',    sight:0},
     ],
@@ -329,16 +328,16 @@ var BONUS_LEVEL = (function() {
     janitors: [],
 
     wanderers: [
-      // GY floor (3)
-      {x:220, y:GY-PH-walkOffset, dir: 1, minX:140, maxX:290, shirtColor:PAL.wandererShirt1},
-      {x: 60, y:GY-PH-walkOffset, dir:-1, minX: 20, maxX:130, shirtColor:PAL.wandererShirt2},
-      {x:170, y:GY-PH-walkOffset, dir: 1, minX:130, maxX:230, shirtColor:PAL.wandererShirt3},
-      // MY floor (2)
-      {x:200, y:MY-PH-walkOffset, dir:-1, minX:120, maxX:285, shirtColor:PAL.wandererShirt4},
-      {x: 60, y:MY-PH-walkOffset, dir: 1, minX: 20, maxX:120, shirtColor:PAL.wandererShirt5},
-      // TY floor (2)
-      {x:180, y:TY-PH-walkOffset, dir:-1, minX:100, maxX:265, shirtColor:PAL.wandererShirt6},
-      {x: 50, y:TY-PH-walkOffset, dir: 1, minX: 20, maxX:100, shirtColor:PAL.wandererShirt7},
+      // MY floor (3) — GY libero per test lanci
+      {x:200, y:MY-PH-walkOffset, dir:-1, minX:120, maxX:285, shirtColor:PAL.wandererShirt1},
+      {x: 60, y:MY-PH-walkOffset, dir: 1, minX: 20, maxX:120, shirtColor:PAL.wandererShirt2},
+      {x:150, y:MY-PH-walkOffset, dir: 1, minX: 80, maxX:230, shirtColor:PAL.wandererShirt3},
+      // TY floor (3)
+      {x:180, y:TY-PH-walkOffset, dir:-1, minX:100, maxX:265, shirtColor:PAL.wandererShirt4},
+      {x: 50, y:TY-PH-walkOffset, dir: 1, minX: 20, maxX:100, shirtColor:PAL.wandererShirt5},
+      {x:230, y:TY-PH-walkOffset, dir:-1, minX:150, maxX:275, shirtColor:PAL.wandererShirt6},
+      // One on MY for variety
+      {x:100, y:MY-PH-walkOffset, dir:-1, minX: 40, maxX:180, shirtColor:PAL.wandererShirt7},
     ],
 
   });
