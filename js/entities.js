@@ -381,6 +381,9 @@ function updateBonusPaperProjectiles() {
         t.knockedT = 300;
         paperProjectiles.splice(i, 1);
         hit = true;
+        bonusBonusScore += 500;
+        bonusCarambole++;
+        addFloating(Math.round(t.x + PW/2), Math.round(t.y - 10), '+500', PAL.scoreParticle);
         addParticles(t.x + PW/2, t.y, PAL.scoreParticle, 6);
         GameAudio.playSfx('hit');
         break;
@@ -404,7 +407,7 @@ function updateBonusPaperProjectiles() {
 function _tripWanderer(w) {
   if (w.state !== 'walking' || w.recoverT > 0) return;
   w.state = 'tripped';
-  w.knockedT = 200;
+  w.knockedT = 300;
   bonusBonusScore += 500;
   bonusCarambole++;
   addFloating(Math.round(w.x), Math.round(w.y - 14), STRINGS.bonusHit, PAL.bonusBannerTitle);
