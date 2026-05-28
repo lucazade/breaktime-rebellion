@@ -40,7 +40,6 @@ HUD livello bonus:
 
 MUSICA:
 - Traccia separata assets/audio/music/bonus.mp3
-- Placeholder: usa gameover.mp3 temporaneamente finché non abbiamo la traccia definitiva
 
 BANNER apertura:
 - Stile storyBanner esistente
@@ -100,3 +99,27 @@ SUGGERIMENTO: per una v1 del bonus level, la caduta dalle scale
 (+1 vita) e il moltiplicatore x2 sono i due sub-system più costosi.
 Si potrebbe shippare una prima versione senza di essi e aggiungere
 in seguito senza refactoring.
+
+----
+
+NOTE DI LUCA:
+
+Sono d'accordo con la tua analisi implementativa:
+"Approccio consigliato:
+  - var bonusActive = false  (in state.js)
+  - BONUS_LEVEL = oggetto standalone (non in LEVELS[])
+  - In nextLevel() dopo L5: if (!bonusActive) → bonusActive=true,
+    carica bonus anziché L6
+  - Dopo timer bonus: bonusActive=false, currentLevel=6, start normale
+  - LEVELS.length rimane 10, win condition invariata."
+
+Riguardo al tuo suggerimento:
+"SUGGERIMENTO: per una v1 del bonus level, la caduta dalle scale
+(+1 vita) e il moltiplicatore x2 sono i due sub-system più costosi.
+Si potrebbe shippare una prima versione senza di essi e aggiungere
+in seguito senza refactoring."
+
+Credo che senza la caduta dalle scale (+1 vita) e il moltiplicatore x2 il livello bonus
+perda molto della sua essenza. Cercherei di implementarli sin da subito
+
+NOTA: ho già inserito la traccia definitiva bonus.mp3 (non usare quindi un placeholder tipo gameover.mp3)
