@@ -257,8 +257,7 @@ CONFIG.ui = {
     caramboleH:         8,  // carambole count row height
     caramboleSpacing:  10,  // gap below carambole row
     rewardsH:           8,  // rewards row height (lives + pts)
-    rewardsSpacing:    10,  // gap below rewards row (only if rewards row is visible)
-    tapSpacing:        10,  // gap above tap (when no rewards row)
+    tapSpacing:        10,  // gap above tap row
     tapH:               8,  // "tap to continue" row height
     padBottom:         12,  // bottom padding
   },

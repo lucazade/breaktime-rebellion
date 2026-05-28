@@ -326,7 +326,7 @@ function drawBonusResult() {
   var hasRewards = bonusBonusLives > 0 || bonusBonusScore > 0;
   var _panH = VR.padTop + VR.titleH + VR.titleSpacing
             + VR.caramboleH + VR.caramboleSpacing
-            + (hasRewards ? VR.rewardsH + VR.rewardsSpacing : 0)
+            + (hasRewards ? VR.rewardsH : 0)
             + VR.tapSpacing + VR.tapH + VR.padBottom;
   var _bp = _panPos(VR.panW, _panH); var bx = _bp.bx, by = _bp.by;
   ctx.save();
@@ -355,7 +355,7 @@ function drawBonusResult() {
     } else {
       ctx.fillStyle = PAL.bonusResultScore; ctx.fillText(fmt(STRINGS.bonusScoreLabel, bonusBonusScore), cx, ty);
     }
-    ty += VR.rewardsH + VR.rewardsSpacing;
+    ty += VR.rewardsH;
   }
   ty += VR.tapSpacing;
   var blink = Math.floor(frame / 20) % 2 === 0;
