@@ -265,23 +265,9 @@ function updatePlayer() {
       }
     }
   }
-  // Bonus throw charge — hold action to fill bar; fires when full, resets on release.
-  // throwCooldown reused as post-throw lockout (~1s), decremented by updatePaperBalls().
-  if (bonusActive && player.throwAnim === 0 && throwCooldown === 0 && !player.onStair) {
-    if (K.action) {
-      actionPressed = false;
-      player.throwChargeT++;
-      if (player.throwChargeT >= throwChargeTime) {
-        player.throwAnim = 18;
-        player.throwChargeT = 0;
-        throwCooldown = 60;  // ~1s before next throw can start
-      }
-    } else {
-      player.throwChargeT = 0;
-    }
-  } else if (bonusActive && throwCooldown > 0) {
-    player.throwChargeT = 0;  // can't charge during cooldown
-  }
+  // Bonus: charge bar disabled — throw fires instantly via tryAction() + cooldown.
+  // Keep throwChargeT at 0 so drawThrowChargeBar() stays hidden.
+  if (bonusActive) player.throwChargeT = 0;
 
   if (player.shaking) return;
 
@@ -515,7 +501,11 @@ function tryAction() {
     }
     // No message when action pressed far from a board — proximity hints handle it.
   } else if (levelMechanics.isBonusLevel) {
-    // Throw is hold-based (handled in updatePlayer via K.action) — consume action press
+    // Instant throw on action press (no charge bar) + cooldown between throws
+    if (player.throwAnim === 0 && throwCooldown === 0) {
+      player.throwAnim = 18;
+      throwCooldown = 60;
+    }
   } else if (levelMechanics.throwPaper && !allStudents) {
     if (throwCooldown <= 0) {
       paperBalls.push({
