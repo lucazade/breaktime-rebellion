@@ -70,7 +70,7 @@ const player = {
   dir:1, animT:0,
   onStair:false, currentStair:null,
   stunT:0, stunEndedT:-1, spraying:false, sprayT:0, boardCommitT:0, boardCommitTarget:null, shaking:false,
-  speed:1.5,
+  speed:1,
   throwChargeT:0,   // bonus: frames held so far while charging the throw
   throwCharging:false, // bonus: true while action is held and charge is building
 };
