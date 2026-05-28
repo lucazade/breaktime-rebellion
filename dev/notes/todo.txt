@@ -380,6 +380,7 @@ Cerchiamo prima di analizzare la nostra implementazione, di confrontarla con que
 - [X] #209 Nel banner credits: aggiungere font size per roles, manca lo spacing sopra il bottone OK
 - [X] #201 sistemare spaziature banners ui.js
 - [X] #208 nel banner game win se il livello attuale è easy o med possiamo mostrare invece di taptohome la domanda vuoi riprovare con un livello di difficoltà più alta? yes -> riparte il gioco con difficoltà aumentata, no -> porta alla home. Se il gioco è stato appena concluso al livello hard rimane la scritta taptohome
+- [X] #210 Livello Bonus
 
 DA VERIFICARE:
 - [?] #179 ref.171 in L9 se ti becca bidello al piano intermedio, respawni e ti uccide il bidello vicino a dove respawni (al piano terra).. "In updatePlayer() quando stunT sta per scadere, controlliamo se c'è un NPC entro raggio pericoloso" è valido in questo caso?
@@ -388,4 +389,3 @@ PER LUCA:
 - [ ] #186 Icona BR
 
 PER CLAUDE:
-- [ ] #210 Livello Bonus
