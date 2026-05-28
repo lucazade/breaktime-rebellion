@@ -102,6 +102,7 @@
 
     // Game state vars referenced inside draw-overlays.js function bodies
     var state, score, currentLevel, LEVELS;
+    var gameDifficulty = 'easy';
     var lastTimeBonus = 0, lastLivesBonus = 0;
     var endScreenT = 999, _endBonusT = 600;
     var storyBannerT = 0, storyBannerLines = null, storyBannerFading = false, storyFadeInT = 0;
@@ -317,13 +318,42 @@
         }
       },
 
-      // ── 4. Game Win (L10) ─────────────────────────────────────────────
+      // ── 4a. Game Win (L10) easy/med — upgrade prompt ──────────────────
       {
-        name: 'Game Win (L10)',
+        name: 'Game Win (L10) easy/med',
         setup: function() {
           state = 'win'; currentLevel = 10; endScreenT = 999; _endBonusT = 0;
           score = 98765; lastTimeBonus = 800; lastLivesBonus = 600;
           LEVELS = new Array(10).fill({});
+          gameDifficulty = 'easy';
+        },
+        draw: drawEndScreen,
+        overlay: function() {
+          var V = CONFIG.ui.gameWin;
+          var bh = V.padTop + V.titleH + V.titleSpacing + V.scoreH + V.scoreSpacing + V.confirmH + V.confirmSpacing + V.btnH + V.padBottom;
+          var bx = Math.round((W - V.panW) / 2), by = Math.round((H - bh) / 2);
+          drawDebugBands(buildSegs([
+            { key: 'padTop',           type: 'spacing', h: V.padTop           },
+            { key: 'titleH',           type: 'text',    h: V.titleH           },
+            { key: 'titleSpacing',     type: 'spacing', h: V.titleSpacing     },
+            { key: 'scoreH',           type: 'text',    h: V.scoreH           },
+            { key: 'scoreSpacing',     type: 'spacing', h: V.scoreSpacing     },
+            { key: 'confirmH',         type: 'text',    h: V.confirmH         },
+            { key: 'confirmSpacing',   type: 'spacing', h: V.confirmSpacing   },
+            { key: 'btnH',             type: 'btn',     h: V.btnH             },
+            { key: 'padBottom',        type: 'spacing', h: V.padBottom        },
+          ]), bx, by, V.panW);
+        }
+      },
+
+      // ── 4b. Game Win (L10) hard — tap to continue ─────────────────────
+      {
+        name: 'Game Win (L10) hard',
+        setup: function() {
+          state = 'win'; currentLevel = 10; endScreenT = 999; _endBonusT = 0;
+          score = 98765; lastTimeBonus = 800; lastLivesBonus = 600;
+          LEVELS = new Array(10).fill({});
+          gameDifficulty = 'hard';
         },
         draw: drawEndScreen,
         overlay: function() {
