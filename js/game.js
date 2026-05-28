@@ -262,9 +262,30 @@ function handleTap() {
   if (missionBannerT > 0) { missionBannerT = Math.min(missionBannerT, 40); return; }
   if (state === 'win' && !endScreenFadingOut) {
     if (currentLevel < LEVELS.length) { endScreenFadingOut = true; endScreenFadeOutCb = nextLevel; }
-    else { state = 'highscores'; }
+    else if (gameDifficulty === 'hard') { state = 'highscores'; }
     return;
   }
+}
+
+// #208: game win upgrade choice — detect SÌ/NO button tap (easy/medium difficulty only)
+function _winUpgradeDifficulty() {
+  var modes = ['easy', 'medium', 'hard'];
+  var next = modes[modes.indexOf(gameDifficulty) + 1];
+  if (next) { gameDifficulty = next; localStorage.setItem('btr_difficulty', next); }
+  currentLevel = 1;
+  restartGame();
+}
+
+function _gameWinChoice(lx, ly) {
+  if (state !== 'win' || endScreenFadingOut || endScreenT < 20 || currentLevel < LEVELS.length) return;
+  if (gameDifficulty === 'hard') { state = 'highscores'; return; }
+  var VW = CONFIG.ui.gameWin;
+  var _wH = VW.padTop + VW.titleH + VW.titleSpacing + VW.scoreH + VW.scoreSpacing + VW.confirmH + VW.confirmSpacing + VW.btnH + VW.padBottom;
+  var _wp = _panPos(VW.panW, _wH); var bx = _wp.bx;
+  var btnY = _wp.by + VW.padTop + VW.titleH + VW.titleSpacing + VW.scoreH + VW.scoreSpacing + VW.confirmH + VW.confirmSpacing;
+  if (ly < btnY || ly > btnY + VW.btnH) return;
+  if (lx >= bx + VW.siOx && lx <= bx + VW.siOx + VW.siW) { endScreenFadingOut = true; endScreenFadeOutCb = _winUpgradeDifficulty; }
+  else if (lx >= bx + VW.noOx && lx <= bx + VW.noOx + VW.noW) { state = 'highscores'; }
 }
 
 // #111: gameover choice — detect SI/NO button tap (logical canvas coords 320×200)
@@ -315,6 +336,7 @@ CV.addEventListener('click', function(e) {
   if (_creditsActive)                    { _creditsCanvasClick(lx, ly); return; }
   if (_homeConfirmActive)                { _homeConfirmCanvasClick(lx, ly); return; }
   if (state === 'paused' && _pauseActive){ _pauseCanvasClick(lx, ly); return; }
+  if (state === 'win' && currentLevel === LEVELS.length) { _gameWinChoice(lx, ly); return; }
   if (state === 'gameover')              { _gameoverChoice(lx, ly); return; }
   handleTap();
 });

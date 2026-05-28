@@ -59,6 +59,7 @@ function drawEndScreen() {
     ctx.fillStyle = PAL.btnText; ctx.fillText(STRINGS.btnNo, noX + VG.noW/2, ty + Math.floor((VG.btnH - VG.fontBtn) / 2));
   } else if (currentLevel === LEVELS.length) {
     const VW = CONFIG.ui.gameWin;
+    const _wCanUpgrade = gameDifficulty !== 'hard';
     const _wBaseScore = score - lastTimeBonus - lastLivesBonus;
     const _wDELAY = 90, _wTICK = 90, _wGAP = 30;
     const _wT1 = Math.max(0, _endBonusT - _wDELAY);
@@ -71,7 +72,9 @@ function drawEndScreen() {
     const _wAfterTime = lastLivesBonus > 0 && _wT1 >= _wTICK;
     const _wScoreLabel = _wTickerDone ? STRINGS.scoreLabel : (_wTickingTime ? STRINGS.timeBonusLabel : (_wAfterTime ? STRINGS.livesBonusLabel : STRINGS.scoreBaseLabel));
     const _wScoreColor = _wTickerDone ? PAL.bannerText : (_wTickingTime ? PAL.timeBonusText : (_wAfterTime ? PAL.livesBonusText : PAL.bannerText));
-    const _wH = VW.padTop + VW.titleH + VW.titleSpacing + VW.scoreH + VW.scoreSpacing + VW.tapH + VW.padBottom;
+    const _wH = _wCanUpgrade
+      ? VW.padTop + VW.titleH + VW.titleSpacing + VW.scoreH + VW.scoreSpacing + VW.confirmH + VW.confirmSpacing + VW.btnH + VW.padBottom
+      : VW.padTop + VW.titleH + VW.titleSpacing + VW.scoreH + VW.scoreSpacing + VW.tapH + VW.padBottom;
     const {bx:wX, by:wY} = _panPos(VW.panW, _wH);
     _dialogPanel(wX, wY, VW.panW, _wH, VW.panBg);
     ctx.textAlign = 'center'; ctx.textBaseline = 'top';
@@ -81,8 +84,18 @@ function drawEndScreen() {
     ctx.fillStyle = PAL.bannerTitleColor;   ctx.fillText(STRINGS.winTitle, cxW, tyW); tyW += VW.titleH + VW.titleSpacing;
     ctx.font = VW.fontBody + 'px ' + FF;
     ctx.fillStyle = _wScoreColor; ctx.fillText(_wScoreLabel + String(_wDispScore).padStart(5, '0'), cxW, tyW); tyW += VW.scoreH + VW.scoreSpacing;
-    ctx.font = VW.fontTap + 'px ' + FF;
-    ctx.fillStyle = actionVisible ? PAL.tapPromptColor : PAL.transparent; ctx.fillText(STRINGS.tapContinue, cxW, tyW);
+    if (_wCanUpgrade) {
+      ctx.fillStyle = PAL.bannerText; ctx.fillText(STRINGS.winUpgradeConfirm, cxW, tyW); tyW += VW.confirmH + VW.confirmSpacing;
+      var _wSiX = wX + VW.siOx, _wNoX = wX + VW.noOx;
+      _dialogBtn(_wSiX, tyW, VW.siW, VW.btnH, CONFIG.ui.dialog.btnColorYes);
+      _dialogBtn(_wNoX, tyW, VW.noW, VW.btnH, CONFIG.ui.dialog.btnColorNo);
+      ctx.font = VW.fontBtn + 'px ' + FF;
+      ctx.fillStyle = PAL.btnText; ctx.fillText(STRINGS.btnYes, _wSiX + VW.siW/2, tyW + Math.floor((VW.btnH - VW.fontBtn) / 2));
+      ctx.fillStyle = PAL.btnText; ctx.fillText(STRINGS.btnNo,  _wNoX + VW.noW/2, tyW + Math.floor((VW.btnH - VW.fontBtn) / 2));
+    } else {
+      ctx.font = VW.fontTap + 'px ' + FF;
+      ctx.fillStyle = actionVisible ? PAL.tapPromptColor : PAL.transparent; ctx.fillText(STRINGS.tapContinue, cxW, tyW);
+    }
   } else {
     const VL = CONFIG.ui.levelComplete;
     const _lBaseScore = score - lastTimeBonus;

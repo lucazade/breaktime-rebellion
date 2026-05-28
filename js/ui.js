@@ -141,19 +141,27 @@ CONFIG.ui = {
     padBottom:       12, // bottom padding
   },
 
-  // Game win banner (L10) — panH computed: padTop+titleH+titleSpacing+scoreH+scoreSpacing+tapH+padBottom
+  // Game win banner (L10)
+  // hard:     panH = padTop+titleH+titleSpacing+scoreH+scoreSpacing+tapH+padBottom
+  // easy/med: panH = padTop+titleH+titleSpacing+scoreH+scoreSpacing+confirmH+confirmSpacing+btnH+padBottom
   gameWin: {
-    panW:          260,  // panel width
-    fontTitle:       8,  // title font size
-    fontBody:        6,  // text font size
-    fontTap:         6,  // "tap to continue" font size
-    padTop:         14,  // top padding
-    titleH:         10,  // title row height
-    titleSpacing:   10,  // gap below title
-    scoreH:          8,  // score row height
-    scoreSpacing:   10,  // gap below score row
-    tapH:            8,  // "tap to continue" row height
-    padBottom:      12,  // bottom padding
+    panW:            260,  // panel width
+    fontTitle:         8,  // title font size
+    fontBody:          6,  // text font size
+    fontTap:           6,  // "tap to continue" font size (hard only)
+    fontBtn:           6,  // Yes/No button font size
+    padTop:           14,  // top padding
+    titleH:           10,  // title row height
+    titleSpacing:     10,  // gap below title
+    scoreH:            8,  // score row height
+    scoreSpacing:     10,  // gap below score row
+    tapH:              8,  // "tap to continue" row height (hard only)
+    confirmH:          8,  // upgrade confirm text row height (easy/med)
+    confirmSpacing:   10,  // gap below confirm row (easy/med)
+    btnH:             14,  // Yes/No button height (easy/med)
+    siOx:  35, siW:  70,  // Yes button X offset and width
+    noOx: 155, noW:  70,  // No button X offset and width
+    padBottom:        12,  // bottom padding
   },
 
   // Game over banner — panH computed: padTop+titleH+titleSpacing+scoreH+scoreSpacing+confirmH+confirmSpacing+btnH+padBottom

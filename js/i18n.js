@@ -31,6 +31,7 @@
 
     tapForTitle:          '[ TAP TO GO HOME ]',
     tapContinue:          '[ TAP TO CONTINUE ]',
+    winUpgradeConfirm:    'READY FOR A HARDER CHALLENGE?',
 
     missionLabel:         '— LEVEL {0} —',
     levelComplete:        '— LEVEL COMPLETE! —',
@@ -136,6 +137,7 @@
 
     tapForTitle:          '[ TOCCA PER TORNARE ALLA HOME ]',
     tapContinue:          '[ TOCCA PER CONTINUARE ]',
+    winUpgradeConfirm:    'PRONTO PER UNA SFIDA PIÙ DURA?',
 
     missionLabel:         '— LIVELLO {0} —',
     levelComplete:        '— LIVELLO COMPLETATO! —',
