@@ -273,7 +273,7 @@ function updatePlayer() {
       actionPressed = false;
     }
     if (!K.action || player.throwChargeT >= throwChargeTime) {
-      var _decay = Math.round(20 + 50 * player.throwChargeT / throwChargeTime);
+      var _decay = Math.round(10 + 60 * player.throwChargeT / throwChargeTime);
       player.throwCharging = false;
       player.throwChargeT = 0;
       throwCooldown = 30;
