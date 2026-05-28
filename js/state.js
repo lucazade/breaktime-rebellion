@@ -145,7 +145,7 @@ function resetLevel() {
   bonusWanderers = (lv.wanderers || []).map(function(w, i) {
     return {x:w.x, y:w.y, dir:w.dir||1, minX:w.minX||20, maxX:w.maxX||290,
             wanderTimer: 90 + Math.round(Math.random() * 90),
-            state:'walking', knockedT:0, rollDir:0, rollT:0,
+            state:'walking', knockedT:0, rollDir:0, rollT:0, recoverT:0,
             chainHit:false, shirtColor:w.shirtColor||PAL.wandererShirt1,
             animT: i * 0.7};
   });

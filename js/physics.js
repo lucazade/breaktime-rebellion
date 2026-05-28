@@ -35,9 +35,9 @@ function updatePlayer() {
     if (player.throwAnim === 0) {
       paperProjectiles.push({
         x:   player.dir > 0 ? player.x + PW + 1 : player.x - 4,
-        y:   player.y + 2,
+        y:   player.y - 4,  // chest height
         dir: player.dir,
-        decay: 24,
+        decay: 60,           // 120px range at 2px/frame
       });
     }
   }

@@ -400,46 +400,22 @@ function updateBonusPaperProjectiles() {
   }
 }
 
-function _nearStair(wx, wy) {
-  for (let si = 0; si < stairs.length; si++) {
-    const s = stairs[si];
-    const sx1 = Math.min(s.x1, s.x2), sx2 = Math.max(s.x1, s.x2);
-    const sy1 = Math.min(s.y1, s.y2), sy2 = Math.max(s.y1, s.y2);
-    if (Math.abs(wx - sx1) < 30 && Math.abs(wy + PH - sy1) < 20) return s;
-    if (Math.abs(wx - sx2) < 30 && Math.abs(wy + PH - sy2) < 20) return s;
-  }
-  return null;
-}
-
 function _tripWanderer(w) {
-  if (w.state !== 'walking') return;
+  if (w.state !== 'walking' || w.recoverT > 0) return;
   // Chain multiplier: reset timer; if chain was already active, award x2
   var mult = bonusChainMult;
   bonusChainResetT = 90;
   bonusChainMult = 2;
-  var nearStair = _nearStair(w.x, w.y);
-  if (nearStair) {
-    // Rolling — descend to lower floor, +1 life
-    w.state = 'rolling';
-    w.rollT = 90;
-    w.rollDir = (nearStair.y2 > nearStair.y1) ? 1 : -1; // direction of descent
-    w._rollStair = nearStair;
-    bonusBonusLives++;
-    addFloating(Math.round(w.x), Math.round(w.y - 12), '+1 VITA!', PAL.bonusResultLives);
-    GameAudio.playSfx('hit');
-  } else {
-    // Tripped on same floor — score + floating text
-    w.state = 'tripped';
-    w.knockedT = 60;
-    var pts = 500 * mult;
-    bonusBonusScore += pts;
-    bonusCarambole++;
-    w.chainHit = mult > 1;
-    addFloating(Math.round(w.x), Math.round(w.y - 14), 'CARAMBOLA!', PAL.bonusBannerTitle);
-    addFloating(Math.round(w.x), Math.round(w.y - 22), '+' + pts, PAL.scoreParticle);
-    addParticles(Math.round(w.x + PW/2), Math.round(w.y), PAL.scoreParticle, 10);
-    GameAudio.playSfx('hit');
-  }
+  w.state = 'tripped';
+  w.knockedT = 60;
+  var pts = 500 * mult;
+  bonusBonusScore += pts;
+  bonusCarambole++;
+  w.chainHit = mult > 1;
+  addFloating(Math.round(w.x), Math.round(w.y - 14), 'CARAMBOLA!', PAL.bonusBannerTitle);
+  addFloating(Math.round(w.x), Math.round(w.y - 22), '+' + pts, PAL.scoreParticle);
+  addParticles(Math.round(w.x + PW/2), Math.round(w.y), PAL.scoreParticle, 10);
+  GameAudio.playSfx('hit');
 }
 
 function updateWanderers() {
@@ -451,38 +427,16 @@ function updateWanderers() {
   }
   for (let i = 0; i < bonusWanderers.length; i++) {
     const w = bonusWanderers[i];
-    if (w.state === 'rolling') {
-      w.rollT--;
-      // Move along the stair visually
-      if (w._rollStair) {
-        const s = w._rollStair;
-        const spd = 1.0;
-        w.x += (s.x2 > s.x1 ? 1 : -1) * spd;
-        const t2 = Math.max(0, Math.min(1, (w.x + PW/2 - s.x1) / (s.x2 - s.x1)));
-        w.y = s.y1 + (s.y2 - s.y1) * t2 - PH;
-      }
-      w.animT += 0.3;
-      if (w.rollT <= 0) {
-        w.state = 'walking';
-        w.knockedT = 0;
-        w._rollStair = null;
-        // Clamp to nearest floor
-        const _gy = GY - PH - walkOffset, _my = MY - PH - walkOffset, _ty = TY - PH - walkOffset;
-        const _dist = [Math.abs(w.y - _gy), Math.abs(w.y - _my), Math.abs(w.y - _ty)];
-        const _minD = Math.min(_dist[0], _dist[1], _dist[2]);
-        if (_minD === _dist[0]) w.y = _gy;
-        else if (_minD === _dist[1]) w.y = _my;
-        else w.y = _ty;
-        w.wanderTimer = 60 + Math.round(Math.random() * 60);
-      }
-    } else if (w.state === 'tripped') {
+    if (w.state === 'tripped') {
       if (w.knockedT > 0) w.knockedT--;
       if (w.knockedT <= 0) {
         w.state = 'walking';
+        w.recoverT = 90;  // immunity: cannot be re-tripped for 1.5s
         w.wanderTimer = 60 + Math.round(Math.random() * 60);
       }
     } else {
       // walking
+      if (w.recoverT > 0) w.recoverT--;
       w.x += w.dir * 0.5;
       w.animT += 0.1;
       w.wanderTimer--;
