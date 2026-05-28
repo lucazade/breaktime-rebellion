@@ -21,13 +21,24 @@ const GameAudio = (function() {
     return a;
   })() : null;
 
-  // Returns the correct game music track for the current level
+  var bonusMusic = CONFIG.audio.bonusMusic ? (function() {
+    var a = new Audio(CONFIG.audio.bonusMusic);
+    a.preload = 'auto';
+    a.loop    = true;
+    a.volume  = CONFIG.audio.musicVolume;
+    return a;
+  })() : null;
+
+  // Returns the correct game music track for the current level/mode
   function _gameTrack() {
+    if (typeof bonusActive !== 'undefined' && bonusActive && bonusMusic) return bonusMusic;
     return (typeof currentLevel !== 'undefined' && currentLevel === LEVELS.length && bossMusic)
       ? bossMusic : bgMusic;
   }
   function _otherTrack() {
-    return _gameTrack() === bossMusic ? bgMusic : bossMusic;
+    var t = _gameTrack();
+    if (t === bonusMusic) return bgMusic;
+    return t === bossMusic ? bgMusic : bossMusic;
   }
 
   var introMusic = CONFIG.audio.introMusic ? (function() {
@@ -63,7 +74,7 @@ const GameAudio = (function() {
     localStorage.setItem('btr_audio', m);
     if (mode !== 'full') {
       // Fade out before pausing to prevent hardware speaker pop
-      [introMusic, bgMusic, bossMusic].forEach(function(t) {
+      [introMusic, bgMusic, bossMusic, bonusMusic].forEach(function(t) {
         if (!t || t.paused) return;
         _fadeAudio(t, 0, 100, function() {
           if (mode !== 'full') t.pause();
@@ -138,8 +149,12 @@ const GameAudio = (function() {
     _initWebAudio();
     stopJingle();
     if (mode !== 'full') return;
-    var track = _gameTrack(), other = _otherTrack();
-    if (other) { other.pause(); other.currentTime = 0; }
+    var track = _gameTrack();
+    // Stop all game tracks that aren't the current one (covers the 3-track set)
+    [bgMusic, bossMusic, bonusMusic].forEach(function(t) {
+      if (!t || t === track) return;
+      t.pause(); t.currentTime = 0;
+    });
     if (!track) return;
     track.currentTime = 0;
     track.playbackRate = 1.0;
@@ -148,7 +163,7 @@ const GameAudio = (function() {
   }
 
   function stopMusic() {
-    [bgMusic, bossMusic].forEach(function(t) {
+    [bgMusic, bossMusic, bonusMusic].forEach(function(t) {
       if (!t) return;
       if (t.paused) { t.currentTime = 0; return; }
       _fadeAudio(t, 0, 100, function() { t.pause(); t.currentTime = 0; });

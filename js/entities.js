@@ -31,6 +31,13 @@ function updateTeachers() {
     const t = teachers[i];
     if (t.knockedT > 0) { t.knockedT--; continue; } // lying on the floor, skip movement
     t.animT += 0.12;
+    // Bonus: patrol only — no sight cone, no chasing, no catching Luca
+    if (bonusActive) {
+      t.x += t.dir * t.speed;
+      if (t.x >= t.maxX) { t.x = t.maxX; t.dir = -1; }
+      if (t.x <= t.minX) { t.x = t.minX; t.dir =  1; }
+      continue;
+    }
     if (t.chasing) {
       t.alertT = Math.max(0, t.alertT - 1);
       if (t.reactionT > 0) {
@@ -324,6 +331,7 @@ function updateTimer() {
   if (timerTicks <= 0) {
     timerTicks = 0;
     GameAudio.setMusicRate(1.0);
+    if (bonusActive) { endBonusLevel(); return; }
     lives--;
     if (lives > 0) setMsg(STRINGS.timesUp);
     else msgT = 0;
@@ -346,4 +354,101 @@ function addFloating(x, y, text, color) {
 function tickTransition() {
   if (!pendingTransition) return;
   if (--pendingTransition.t <= 0) { pendingTransition.fn(); pendingTransition = null; }
+}
+
+// ── Bonus level logic ─────────────────────────────────────────────────────────
+
+function endBonusLevel() {
+  deathFreeze = true;
+  bonusResultActive = true;
+  GameAudio.stopMusic();
+}
+
+function updateBonusPaperProjectiles() {
+  for (let i = paperProjectiles.length - 1; i >= 0; i--) {
+    const p = paperProjectiles[i];
+    p.x += p.dir * p.spd;
+    p.vy += p.g;   // per-projectile gravity (heavy for tap, light for full charge)
+    p.y += p.vy;
+    p.decay--;
+    if (p.decay <= 0 || p.x < 0 || p.x > W || p.y > H) { paperProjectiles.splice(i, 1); continue; }
+    let hit = false;
+    // Teacher hit — knock down and immediately trip ONE nearby walking wanderer
+    for (let ti = 0; ti < teachers.length; ti++) {
+      const t = teachers[ti];
+      if (t.knockedT > 0) continue;
+      if (Math.abs(p.x - t.x - PW/2) < 10 && Math.abs(p.y - t.y - PH/2) < 14) {
+        t.knockedT = 300;
+        paperProjectiles.splice(i, 1);
+        hit = true;
+        bonusBonusScore += 200;
+        bonusCarambole++;
+        _bonusMilestone(Math.round(t.x + PW/2), Math.round(t.y - 30));
+        addFloating(Math.round(t.x + PW/2), Math.round(t.y - 18), STRINGS.bonusHit, PAL.bonusBannerTitle);
+        addFloating(Math.round(t.x + PW/2), Math.round(t.y - 10), '+200', PAL.scoreParticle);
+        addParticles(t.x + PW/2, t.y, PAL.scoreParticle, 6);
+        GameAudio.playSfx('hit');
+        break;
+      }
+    }
+    if (hit) continue;
+    // Wanderer hit directly by projectile
+    for (let wi = 0; wi < bonusWanderers.length; wi++) {
+      const w = bonusWanderers[wi];
+      if (w.state !== 'walking') continue;
+      if (Math.abs(p.x - w.x - PW/2) < 10 && Math.abs(p.y - w.y - PH/2) < 14) {
+        _tripWanderer(w);
+        paperProjectiles.splice(i, 1);
+        hit = true;
+        break;
+      }
+    }
+  }
+}
+
+function _bonusMilestone(x, y) {
+  if (bonusCarambole % bonusMilestoneEvery === 0) {
+    bonusBonusLives++;
+    addFloating(x, y, STRINGS.bonusMilestone, PAL.bonusResultLives);
+  }
+}
+
+function _tripWanderer(w) {
+  if (w.state !== 'walking' || w.recoverT > 0) return;
+  w.state = 'tripped';
+  w.knockedT = 300;
+  bonusBonusScore += 100;
+  bonusCarambole++;
+  _bonusMilestone(Math.round(w.x + PW/2), Math.round(w.y - 30));
+  addFloating(Math.round(w.x), Math.round(w.y - 14), STRINGS.bonusHit, PAL.bonusBannerTitle);
+  addFloating(Math.round(w.x), Math.round(w.y - 22), '+100', PAL.scoreParticle);
+  addParticles(Math.round(w.x + PW/2), Math.round(w.y), PAL.scoreParticle, 10);
+  GameAudio.playSfx('hit');
+}
+
+function updateWanderers() {
+  if (!bonusActive) return;
+  for (let i = 0; i < bonusWanderers.length; i++) {
+    const w = bonusWanderers[i];
+    if (w.state === 'tripped') {
+      if (w.knockedT > 0) w.knockedT--;
+      if (w.knockedT <= 0) {
+        w.state = 'walking';
+        w.recoverT = 90;  // immunity: cannot be re-tripped for 1.5s
+        w.wanderTimer = 60 + Math.round(Math.random() * 60);
+      }
+    } else {
+      // walking
+      if (w.recoverT > 0) w.recoverT--;
+      w.x += w.dir * 0.5;
+      w.animT += 0.1;
+      w.wanderTimer--;
+      if (w.wanderTimer <= 0) {
+        w.dir *= -1;
+        w.wanderTimer = 120 + Math.round(Math.random() * 60);
+      }
+      if (w.x >= w.maxX) { w.x = w.maxX; w.dir = -1; }
+      if (w.x <= w.minX) { w.x = w.minX; w.dir =  1; }
+    }
+  }
 }

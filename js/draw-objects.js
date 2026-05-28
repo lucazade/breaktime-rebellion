@@ -541,3 +541,45 @@ function drawMachines() {
     }
   }
 }
+
+// ── Bonus level draw functions ────────────────────────────────────────────────
+
+function drawPaperProjectiles() {
+  for (var i = 0; i < paperProjectiles.length; i++) {
+    var p = paperProjectiles[i];
+    var px = Math.round(p.x), py = Math.round(p.y);
+    ctx.fillStyle = PAL.paperBall;       ctx.fillRect(px, py, 3, 3);
+    ctx.fillStyle = PAL.paperBallShadow; ctx.fillRect(px+1, py+1, 1, 1);
+  }
+}
+
+function drawBonusWanderer(w) {
+  // Draw at 0.8 scale (shorter than teachers) with feet anchored to the floor.
+  var s = 0.8;
+  var fx = Math.round(w.x + PW / 2);
+  var fy = Math.round(w.y + PH);
+  ctx.save();
+  ctx.translate(fx, fy);
+  ctx.scale(s, s);
+  ctx.translate(-fx, -fy);
+  drawChar(w.x, w.y, w.dir, w.animT, w.shirtColor, COLOURS_WANDERER, false, false, w.knockedT);
+  ctx.restore();
+}
+
+function drawThrowChargeBar() {
+  if (!bonusActive || !player.throwCharging || player.throwChargeT < throwBarThreshold) return;
+  var pct = (player.throwChargeT - throwBarThreshold) / (throwChargeTime - throwBarThreshold);  // 0 when bar appears, 1 at max
+  var bx = Math.round(player.x) - 1;
+  var by = Math.round(player.y) - 15;
+  var bw = PW + 2;  // 10px
+  ctx.fillStyle = PAL.barBg;   ctx.fillRect(bx,   by,   bw, 3);
+  ctx.fillStyle = PAL.barDark; ctx.fillRect(bx+1, by+1, bw-2, 1);
+  ctx.fillStyle = PAL.bonusBannerTitle; ctx.fillRect(bx+1, by+1, Math.round((bw-2) * pct), 1);
+}
+
+function drawBonusWanderers() {
+  if (!bonusActive) return;
+  for (var i = 0; i < bonusWanderers.length; i++) {
+    drawBonusWanderer(bonusWanderers[i]);
+  }
+}

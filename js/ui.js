@@ -227,6 +227,41 @@ CONFIG.ui = {
     noOx: 110, noW:  70, // No button X offset and width
   },
 
+  // Bonus opening banner — panH: padTop+titleH+titleSpacing+lineBlock+tapSpacing+tapH+padBottom
+  bonusBanner: {
+    panW:         280,  // panel width
+    wrapWidth:    220,  // max text width (word wrap)
+    fontTitle:      8,  // title font size
+    fontBody:       6,  // body text font size
+    fontTap:        6,  // "tap to continue" font size
+    padTop:        14,  // top padding
+    titleH:        10,  // title row height
+    titleSpacing:  10,  // gap below title
+    lineH:          9,  // height per body line
+    lineSpacing:    4,  // gap between body lines
+    tapSpacing:    10,  // gap above "tap to continue"
+    tapH:           8,  // "tap to continue" row height
+    padBottom:     12,  // bottom padding
+  },
+
+  // Bonus result banner (end of bonus timer) — panH: padTop+titleH+titleSpacing+caramboleH+caramboleSpacing+rewardsH+rewardsSpacing+tapSpacing+tapH+padBottom
+  bonusResult: {
+    panW:             220,  // panel width
+    fontTitle:          8,  // "— BONUS! —" font size
+    fontBody:           6,  // "CARAMBOLE: N" font size
+    fontRewards:        6,  // "+N VITE  +NNNNN PTS" font size
+    fontTap:            6,  // "tap to continue" font size
+    padTop:            14,  // top padding
+    titleH:            10,  // title row height
+    titleSpacing:      10,  // gap below title
+    caramboleH:         8,  // carambole count row height
+    caramboleSpacing:  10,  // gap below carambole row
+    rewardsH:           8,  // rewards row height (lives + pts)
+    tapSpacing:        10,  // gap above tap row
+    tapH:               8,  // "tap to continue" row height
+    padBottom:         12,  // bottom padding
+  },
+
   // Credits — panH computed: padTop+titleH+titleSpacing+teamH+teamSpacing+5*(nameH+nameGap+roleH+roleGap)+tapSpacing+btnH+padBottom
   credits: {
     panW:          240,  // panel width

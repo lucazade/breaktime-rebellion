@@ -108,6 +108,9 @@
     var storyBannerT = 0, storyBannerLines = null, storyBannerFading = false, storyFadeInT = 0;
     var missionBannerT = 0, missionBannerLines = null;
     var _pauseActive = false, _homeConfirmActive = false, _creditsActive = false;
+    // Bonus level stubs
+    var bonusActive = false, bonusResultActive = false;
+    var bonusCarambole = 0, bonusBonusLives = 0, bonusBonusScore = 0;
 
     // String formatter (normally in state.js)
     function fmt(s) {
@@ -459,6 +462,68 @@
         }
       },
 
+      // ── 9a. Bonus Opening Banner ──────────────────────────────────────
+      {
+        name: 'Bonus Opening Banner',
+        setup: function() {
+          state = 'playing';
+          bonusActive = true;
+          storyBannerT = 999; storyBannerFading = false; storyFadeInT = 999;
+          storyBannerLines = null;
+        },
+        draw: drawStoryBanner,
+        overlay: function() {
+          var V = CONFIG.ui.bonusBanner;
+          var lines = storyBannerLines || ['Luca è in libertà!', 'Colpisci alunni E professori!', 'Tieni premuto per colpire più lontano!'];
+          var n = lines.length;
+          var lineBlock = n * V.lineH + Math.max(0, n - 1) * V.lineSpacing;
+          var bh = V.padTop + V.titleH + V.titleSpacing + lineBlock + V.tapSpacing + V.tapH + V.padBottom;
+          var bx = Math.round((W - V.panW) / 2), by = Math.round((H - bh) / 2);
+          drawDebugBands(buildSegs([
+            { key: 'padTop',          type: 'spacing', h: V.padTop       },
+            { key: 'titleH',          type: 'text',    h: V.titleH       },
+            { key: 'titleSpacing',    type: 'spacing', h: V.titleSpacing },
+            { key: 'lineBlock ×' + n, type: 'text',    h: lineBlock      },
+            { key: 'tapSpacing',      type: 'spacing', h: V.tapSpacing   },
+            { key: 'tapH',            type: 'text',    h: V.tapH         },
+            { key: 'padBottom',       type: 'spacing', h: V.padBottom    },
+          ]), bx, by, V.panW);
+        }
+      },
+
+      // ── 9b. Bonus Result Banner ───────────────────────────────────────
+      {
+        name: 'Bonus Result Banner',
+        setup: function() {
+          bonusResultActive = true; bonusActive = false;
+          bonusCarambole = 12; bonusBonusLives = 2; bonusBonusScore = 3400;
+        },
+        draw: drawBonusResult,
+        overlay: function() {
+          var V = CONFIG.ui.bonusResult;
+          var hasRewards = bonusBonusLives > 0 || bonusBonusScore > 0;
+          var bh = V.padTop + V.titleH + V.titleSpacing
+                 + V.caramboleH + V.caramboleSpacing
+                 + (hasRewards ? V.rewardsH + V.rewardsSpacing : 0)
+                 + V.tapSpacing + V.tapH + V.padBottom;
+          var bx = Math.round((W - V.panW) / 2), by = Math.round((H - bh) / 2);
+          var segs = [
+            { key: 'padTop',           type: 'spacing', h: V.padTop           },
+            { key: 'titleH',           type: 'text',    h: V.titleH           },
+            { key: 'titleSpacing',     type: 'spacing', h: V.titleSpacing     },
+            { key: 'caramboleH',       type: 'text',    h: V.caramboleH       },
+            { key: 'caramboleSpacing', type: 'spacing', h: V.caramboleSpacing },
+          ];
+          if (hasRewards) {
+            segs.push({ key: 'rewardsH', type: 'text', h: V.rewardsH });
+          }
+          segs.push({ key: 'tapSpacing', type: 'spacing', h: V.tapSpacing });
+          segs.push({ key: 'tapH',       type: 'text',    h: V.tapH       });
+          segs.push({ key: 'padBottom',  type: 'spacing', h: V.padBottom  });
+          drawDebugBands(buildSegs(segs), bx, by, V.panW);
+        }
+      },
+
       // ── 9. Credits ────────────────────────────────────────────────────
       {
         name: 'Credits',
@@ -507,6 +572,7 @@
       missionBannerLines = null;
       // reset overlay flags so banners that guard on these don't bleed across
       _pauseActive = _homeConfirmActive = _creditsActive = false;
+      bonusActive = false; bonusResultActive = false;
       // run setup once to initialise state for this banner
       BANNERS[_cur].setup();
       // update labels immediately

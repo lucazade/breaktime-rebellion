@@ -253,6 +253,39 @@ function updatePlayer() {
       }
     }
   }
+  // Bonus throw: hold to charge (range ∝ charge), release or max → fire.
+  // Bar appears after 24 frames (tap stays invisible, hold shows bar).
+  if (bonusActive && player.throwCharging) {
+    if (K.action && player.throwChargeT < throwChargeTime) {
+      player.throwChargeT++;
+      actionPressed = false;
+    }
+    if (!K.action || player.throwChargeT >= throwChargeTime) {
+      var _isTap = player.throwChargeT < throwBarThreshold;  // below bar-visible threshold → tap
+      var _decay, _spd, _vy, _g;
+      if (_isTap) {
+        _decay = 20;   _spd = 2.0;  _vy = 0;     _g = 0;        // tap: lancio orizzontale (~40px)
+      } else {
+        var _bp = (player.throwChargeT - throwBarThreshold) / (throwChargeTime - throwBarThreshold); // 0→1 as bar fills
+        _decay = Math.round(30 + 23 * _bp);   // hold min≈30(~75px), full=53(~185px)
+        _spd   = 2.5 + 1.0 * _bp;            // hold min=2.5px/f, full=3.5px/f
+        _vy    = 0.05 - 0.45 * _bp;          // hold min=+0.05, full=-0.4
+        _g     = 0.025 - 0.01 * _bp;         // hold min=0.025, full=0.015
+      }
+      player.throwCharging = false;
+      player.throwChargeT = 0;
+      paperProjectiles.push({
+        x: player.dir > 0 ? player.x + PW + 1 : player.x - 4,
+        y: player.y - 4,
+        dir: player.dir,
+        decay: _decay,
+        spd: _spd,
+        vy: _vy,
+        g:  _g,
+      });
+    }
+  }
+
   if (player.shaking) return;
 
   const stairResult = getStairAt(player.x, player.y);
@@ -484,6 +517,12 @@ function tryAction() {
       GameAudio.playSfx('spray');
     }
     // No message when action pressed far from a board — proximity hints handle it.
+  } else if (levelMechanics.isBonusLevel) {
+    // Start charge on press — fire on release (short) or at max charge (long)
+    if (paperProjectiles.length === 0 && !player.throwCharging) {
+      player.throwCharging = true;
+      player.throwChargeT = 1;
+    }
   } else if (levelMechanics.throwPaper && !allStudents) {
     if (throwCooldown <= 0) {
       paperBalls.push({
