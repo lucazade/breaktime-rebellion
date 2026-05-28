@@ -113,6 +113,7 @@ const PAL = {
   timerGreen:       '#44ee66',           // timer bar >= 60%
   timerYellow:      '#FEDC02',           // timer bar 30–60%
   timerRed:         '#ff2244',           // timer bar < 30%
+
   // ── Mechanic dot indicators ───────────────────────────────
   dotBoards:          '#44ee66',  // L1 boards — body
   dotBoardsHighlight: '#44ee66',  // L1 boards — chalk lines
@@ -139,6 +140,7 @@ const PAL = {
   btnDisabled:    '#444444',  // level - disabled level chooser button
   btnLabel:       '#FEDC02',  // level - enabled level chooser button label
   levelLocked:    '#444444',  // level - locked next-level button / lock icon
+  titleLevelColor: '#FFD700',  // current level number label in title screen
 
   diffEasy:       '#00ff00',  // difficulty selector — easy
   diffMedium:     '#FEDC02',  // difficulty selector — medium
@@ -151,21 +153,22 @@ const PAL = {
   // ── In-game banners (story, mission, win, gameover, pause) ─
   panelBg:            'rgba(0,0,40,0.90)', // dialog panel background
   panelBorder:        '#FFD700',           // dialog panel border / HUD icon gold accent
-  bannerTitleColor:   '#FFD700',  // overlay/dialog title text (story, mission, win, pause…)
-  gameoverTitleColor: '#D21C01',  // "ESPULSO!" title in gameover banner
-  fumettoNameColor:   '#D21C01',  // "Luca:" speaker label in speech bubble
-  topScoreColor:      '#FFD700',  // #1 entry in high scores list
-  titleLevelColor:    '#FFD700',  // current level number label in title screen
-  lucaBubbleBg:       '#FFD700',  // Luca speech bubble background fill
-  proximityBorder:    '#FFD700',  // dashed border when player is near an interactive object
-  celebrationColor:   '#FFD700',  // floating score texts and particles on success events
   bannerText:         '#FFFFFF',  // story / mission / gameover / win / level-complete body text
   btnYes:             'rgba(0,90,0,0.92)', // yes / OK / resume button background
   btnNo:              'rgba(90,0,0,0.92)', // no / cancel button background
+  bannerTitleColor:   '#FFD700',  // overlay/dialog title text (story, mission, win, pause…)
   btnText:            '#FFFFFF',  // dialog button labels (yes / no / resume / OK)
+  tapPromptColor:     '#33B84B',  // all "tap to ..." prompts across banners
+
   timeBonusText:      '#00d2ff',  // time bonus label on win / gameover screens
   livesBonusText:     '#33B84B',  // lives bonus line in win screen
-  tapPromptColor:     '#33B84B',  // all "tap to ..." prompts across banners
+  
+  gameoverTitleColor: '#D21C01',  // "ESPULSO!" title in gameover banner
+  topScoreColor:      '#FFD700',  // #1 entry in high scores list
+  
+  lucaBubbleBg:       '#FFD700',  // Luca speech bubble background fill
+  fumettoNameColor:   '#D21C01',  // "Luca:" speaker label in speech bubble
+  
   creditsText:        '#FFFFFF',  // credits member names and OK button
   creditsRole:        '#33B84B',  // credits team name ("LucazadeSoft Team")
   creditsMemberRole:  '#00d2ff',  // credits individual role labels (Orchestrator, Lead Developer…)
@@ -176,6 +179,8 @@ const PAL = {
 
   // ── Object interaction ────────────────────────────────────
   objectActiveBorder: '#FEDC02',  // dashed yellow border shown when object is interactive
+  proximityBorder:    '#FFD700',  // dashed border when player is near an interactive object
+  celebrationColor:   '#FFD700',  // floating score texts and particles on success events
 
   // ── Progress bars ─────────────────────────────────────────
   barBg:   '#880000',  // progress bar track background
