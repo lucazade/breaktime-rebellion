@@ -276,7 +276,7 @@ function updatePlayer() {
       var _isTap = player.throwChargeT < 24;  // below bar-visible threshold → tap
       var _decay, _spd, _vy, _g;
       if (_isTap) {
-        _decay = 15;   _spd = 2.0;  _vy = 0.02;  _g = 0.015;   // fixed short throw (~30px)
+        _decay = 20;   _spd = 2.0;  _vy = 0.02;  _g = 0.015;   // fixed short throw (~40px)
       } else {
         var _bp = (player.throwChargeT - 24) / (throwChargeTime - 24); // 0→1 as bar fills
         _decay = Math.round(30 + 23 * _bp);   // hold min≈30(~75px), full=53(~185px)
