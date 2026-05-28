@@ -43,7 +43,7 @@ const CONFIG = {
   debug: {
     unlockAllLevels: false,
     godMode:         false,
-    startAtBonus:    false, // true → avvia subito il livello bonus (skip L1-L5)
+    startAtBonus:    false,
   },
 };
 
