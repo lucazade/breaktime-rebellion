@@ -273,12 +273,17 @@ function updatePlayer() {
       actionPressed = false;
     }
     if (!K.action || player.throwChargeT >= throwChargeTime) {
-      var _pct  = player.throwChargeT / throwChargeTime;
-      var _p2   = _pct * _pct;                    // quadratic: range cresce lentamente a bassa carica
-      var _decay = Math.round(20 + 33 * _p2);   // tap(pct≈0.08)≈20(~40px), full=53(~185px)
-      var _spd  = 2.0 + 1.5 * _p2;             // tap≈2.0px/f, full=3.5px/f
-      var _vy   = 0.05 - 0.45 * _pct;            // tap=+0.03, full=-0.4
-      var _g    = 0.025 - 0.01 * _pct;          // tap=0.024, full=0.015
+      var _isTap = player.throwChargeT < 12;  // below bar-visible threshold → tap
+      var _decay, _spd, _vy, _g;
+      if (_isTap) {
+        _decay = 20;   _spd = 2.0;  _vy = 0.05;  _g = 0.025;   // fixed short throw
+      } else {
+        var _bp = (player.throwChargeT - 12) / (throwChargeTime - 12); // 0→1 as bar fills
+        _decay = Math.round(30 + 23 * _bp);   // hold min≈30(~75px), full=53(~185px)
+        _spd   = 2.5 + 1.0 * _bp;            // hold min=2.5px/f, full=3.5px/f
+        _vy    = 0.05 - 0.45 * _bp;          // hold min=+0.05, full=-0.4
+        _g     = 0.025 - 0.01 * _bp;         // hold min=0.025, full=0.015
+      }
       player.throwCharging = false;
       player.throwChargeT = 0;
       throwCooldown = 15;
