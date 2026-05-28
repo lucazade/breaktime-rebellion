@@ -548,11 +548,8 @@ function drawPaperProjectiles() {
   for (var i = 0; i < paperProjectiles.length; i++) {
     var p = paperProjectiles[i];
     var px = Math.round(p.x), py = Math.round(p.y);
-    // Small 3×3 crumpled paper projectile — slightly different look from L5 paperBall
-    ctx.fillStyle = PAL.paperBall;
-    ctx.fillRect(px, py, 3, 3);
-    ctx.fillStyle = PAL.paperBallShadow;
-    ctx.fillRect(px + (p.dir > 0 ? 0 : 2), py + 2, 1, 1);
+    ctx.fillStyle = PAL.paperBall;       ctx.fillRect(px, py, 3, 3);
+    ctx.fillStyle = PAL.paperBallShadow; ctx.fillRect(px+1, py+1, 1, 1);
   }
 }
 
