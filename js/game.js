@@ -214,6 +214,7 @@ function loop(ts) {
     }
   }
 
+  if (bonusActive) drawThrowChargeBar();
   drawPaperBalls();
   if (bonusActive) { drawBonusWanderers(); drawPaperProjectiles(); }
   drawParticles();

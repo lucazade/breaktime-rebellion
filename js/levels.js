@@ -309,10 +309,13 @@ var BONUS_LEVEL = (function() {
     playerStart: { x: 18, y: GY - PH - walkOffset },
 
     mechanics: {
-      isBonusLevel: true,
-      throwPaper:   true,
-      ringBell:     false,
+      isBonusLevel:  true,
+      throwPaper:    true,
+      ringBell:      false,
+      writeBoards:   false,  // override the default true from resetLevel
     },
+
+    throwChargeTime: 50,  // frames to hold action before throw fires (~0.8s)
 
     bags:     [],
     students: [],  // no seated students — wanderers take their place

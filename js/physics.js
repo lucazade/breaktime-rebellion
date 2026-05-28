@@ -265,6 +265,20 @@ function updatePlayer() {
       }
     }
   }
+  // Bonus throw charge — hold action to fill bar; fires when full, resets on release
+  if (bonusActive && player.throwAnim === 0 && !player.onStair) {
+    if (K.action) {
+      actionPressed = false;
+      player.throwChargeT++;
+      if (player.throwChargeT >= throwChargeTime) {
+        player.throwAnim = 18;
+        player.throwChargeT = 0;
+      }
+    } else {
+      player.throwChargeT = 0;
+    }
+  }
+
   if (player.shaking) return;
 
   const stairResult = getStairAt(player.x, player.y);
@@ -497,10 +511,7 @@ function tryAction() {
     }
     // No message when action pressed far from a board — proximity hints handle it.
   } else if (levelMechanics.isBonusLevel) {
-    // Bonus: delayed paper throw — starts throw animation; projectile spawns after 18 frames
-    if (player.throwAnim === 0) {
-      player.throwAnim = 18;
-    }
+    // Throw is hold-based (handled in updatePlayer via K.action) — consume action press
   } else if (levelMechanics.throwPaper && !allStudents) {
     if (throwCooldown <= 0) {
       paperBalls.push({

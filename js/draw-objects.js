@@ -570,6 +570,17 @@ function drawBonusWanderer(w) {
   }
 }
 
+function drawThrowChargeBar() {
+  if (!bonusActive || player.throwChargeT <= 0 || player.throwAnim > 0) return;
+  var pct = player.throwChargeT / throwChargeTime;
+  var bx = Math.round(player.x) - 1;
+  var by = Math.round(player.y) - 15;
+  var bw = PW + 2;  // 10px
+  ctx.fillStyle = PAL.barBg;   ctx.fillRect(bx,   by,   bw, 3);
+  ctx.fillStyle = PAL.barDark; ctx.fillRect(bx+1, by+1, bw-2, 1);
+  ctx.fillStyle = PAL.bonusBannerTitle; ctx.fillRect(bx+1, by+1, Math.round((bw-2) * pct), 1);
+}
+
 function drawBonusWanderers() {
   if (!bonusActive) return;
   for (var i = 0; i < bonusWanderers.length; i++) {
