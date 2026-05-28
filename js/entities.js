@@ -381,11 +381,11 @@ function updateBonusPaperProjectiles() {
         t.knockedT = 300;
         paperProjectiles.splice(i, 1);
         hit = true;
-        bonusBonusScore += 500;
+        bonusBonusScore += 200;
         bonusCarambole++;
         _bonusMilestone(Math.round(t.x + PW/2), Math.round(t.y - 30));
         addFloating(Math.round(t.x + PW/2), Math.round(t.y - 18), STRINGS.bonusHit, PAL.bonusBannerTitle);
-        addFloating(Math.round(t.x + PW/2), Math.round(t.y - 10), '+500', PAL.scoreParticle);
+        addFloating(Math.round(t.x + PW/2), Math.round(t.y - 10), '+200', PAL.scoreParticle);
         addParticles(t.x + PW/2, t.y, PAL.scoreParticle, 6);
         GameAudio.playSfx('hit');
         break;
@@ -417,11 +417,11 @@ function _tripWanderer(w) {
   if (w.state !== 'walking' || w.recoverT > 0) return;
   w.state = 'tripped';
   w.knockedT = 300;
-  bonusBonusScore += 500;
+  bonusBonusScore += 100;
   bonusCarambole++;
   _bonusMilestone(Math.round(w.x + PW/2), Math.round(w.y - 30));
   addFloating(Math.round(w.x), Math.round(w.y - 14), STRINGS.bonusHit, PAL.bonusBannerTitle);
-  addFloating(Math.round(w.x), Math.round(w.y - 22), '+500', PAL.scoreParticle);
+  addFloating(Math.round(w.x), Math.round(w.y - 22), '+100', PAL.scoreParticle);
   addParticles(Math.round(w.x + PW/2), Math.round(w.y), PAL.scoreParticle, 10);
   GameAudio.playSfx('hit');
 }
