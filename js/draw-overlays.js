@@ -125,7 +125,7 @@ function drawEndScreen() {
 function drawStoryBanner() {
   if (storyBannerT <= 0 || state !== 'playing') return;
   // Bonus level: use its own opening banner config and strings
-  if (bonusActive) { drawBonusOpeningBanner(); return; }
+  if (typeof bonusActive !== 'undefined' && bonusActive) { drawBonusOpeningBanner(); return; }
   if (!storyBannerLines) {
     ctx.font = CONFIG.ui.storyBanner.fontBody + 'px ' + FF;
     const parts = STRINGS.storyText.split('|');
