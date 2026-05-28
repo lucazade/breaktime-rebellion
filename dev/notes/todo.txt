@@ -377,14 +377,14 @@ Cerchiamo prima di analizzare la nostra implementazione, di confrontarla con que
 - [X] #206 manca un tool di profilazioni/benchmarking alla nostra cassetta degli attrezzi? mi sembra ad esempio che l'effetto "esplosione" durante il floating point sia un pò pesante.. magari ci aiuta ad indagare questi casi. (al momento ovviamente l'effetto non lo tocchiamo)
 - [X] #207 bug livello 8 se metti un petardo all'ultimo secchio e muori non viene calcolata la meccanica completa
 - [X] #202 sistamare palette banners
+- [X] #209 Nel banner credits: aggiungere font size per roles, manca lo spacing sopra il bottone OK
+- [X] #201 sistemare spaziature banners ui.js
 
 DA VERIFICARE:
 - [?] #179 ref.171 in L9 se ti becca bidello al piano intermedio, respawni e ti uccide il bidello vicino a dove respawni (al piano terra).. "In updatePlayer() quando stunT sta per scadere, controlliamo se c'è un NPC entro raggio pericoloso" è valido in questo caso?
 
 PER LUCA:
 - [ ] #186 Icona BR
-- [ ] #201 sistemare spaziature banners ui.js
 
 PER CLAUDE:
 - [ ] #208 nel banner game win se il livello attuale è easy o med possiamo mostrare invece di taptohome la domanda vuoi riprovare con un livello di difficoltà più alta? yes -> riparte il gioco con difficoltà aumentata, no -> porta alla home. Se il gioco è stato appena concluso al livello hard rimane la scritta taptohome
-- [ ] #209 Nel banner credits: aggiungere font size per roles, manca lo spacing sopra il bottone OK
