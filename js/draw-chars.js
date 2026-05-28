@@ -53,9 +53,10 @@ const COLOURS_LUCA = {
   trousers:    PAL.lucaTrousers,
   shoes:       PAL.lucaShoes,
   shoeSole:    null,
-  tie:         PAL.lucaTie,
+  tie:         null,
   stripe:      null,
   backpack:    null,
+  pocket:      PAL.lucaPocket,
   knockable:   false,
 };
 
@@ -286,6 +287,7 @@ function drawChar(x, y, dir, animT, bodyCol, colours, spraying, chasing, knocked
   ctx.fillStyle = bodyCol; ctx.fillRect(bx, by+2, PW, 8);
   if (colours.tie)    { ctx.fillStyle = colours.tie;    ctx.fillRect(bx+3, by+2, 2, 6); }
   if (colours.stripe) { ctx.fillStyle = colours.stripe; ctx.fillRect(bx+4, by+2, 1, 8); }
+  if (colours.pocket) { ctx.fillStyle = colours.pocket; ctx.fillRect(bx+1, by+4, 2, 2); }
 
   ctx.fillStyle = colours.skin;
   ctx.fillRect(dir>0 ? bx-2 : bx+PW, by+5, 2, 4);

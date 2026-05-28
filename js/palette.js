@@ -99,7 +99,7 @@ const PAL = {
   lucaSkinShadow:    '#ff7949',  // neck, collar shadow
   lucaHair:          '#581e00',  // hair
   lucaBody:          '#FFFFFF',  // shirt (bodyCol)
-  lucaTie:           '#000000',  // tie
+  lucaPocket:        '#000000',  // breast pocket
   lucaTrousers:      '#012A9F',  // trousers
   lucaShoes:         '#000000',  // shoes
   bubbleBorder:      '#aa7700',  // Luca speech bubble border (dark gold)
