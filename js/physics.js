@@ -286,7 +286,7 @@ function updatePlayer() {
       }
       player.throwCharging = false;
       player.throwChargeT = 0;
-      throwCooldown = 15;
+      throwCooldown = 8;
       paperProjectiles.push({
         x: player.dir > 0 ? player.x + PW + 1 : player.x - 4,
         y: player.y - 4,
