@@ -557,17 +557,16 @@ function drawPaperProjectiles() {
 }
 
 function drawBonusWanderer(w) {
-  // Wanderers use drawChar with student-like colours; shirtColor is the body colour.
-  // knockedT > 0 and knockable:true → drawChar renders the lying-down sprite.
+  // Draw at 0.8 scale (shorter than teachers) with feet anchored to the floor.
+  var s = 0.8;
+  var fx = Math.round(w.x + PW / 2);
+  var fy = Math.round(w.y + PH);
+  ctx.save();
+  ctx.translate(fx, fy);
+  ctx.scale(s, s);
+  ctx.translate(-fx, -fy);
   drawChar(w.x, w.y, w.dir, w.animT, w.shirtColor, COLOURS_WANDERER, false, false, w.knockedT);
-  if (w.state === 'tripped' && w.knockedT > 0) {
-    // Exclamation mark above tripped wanderer
-    ctx.fillStyle = PAL.exclamation;
-    ctx.save(); ctx.textAlign = 'center';
-    ctx.font = '6px ' + FF;
-    ctx.fillText('!', Math.round(w.x + PW/2), Math.round(w.y - 4));
-    ctx.restore();
-  }
+  ctx.restore();
 }
 
 function drawThrowChargeBar() {

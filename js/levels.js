@@ -315,7 +315,7 @@ var BONUS_LEVEL = (function() {
       writeBoards:   false,  // override the default true from resetLevel
     },
 
-    throwChargeTime: 25,  // frames to hold action before throw fires (~0.4s)
+    throwChargeTime: 12,  // frames to hold action before throw fires (~0.2s)
 
     bags:     [],
     students: [],  // no seated students — wanderers take their place
