@@ -110,7 +110,7 @@ function loop(ts) {
       if (storyBannerT > 0) {
         if (storyBannerFading) {
           storyBannerT--;
-          if (storyBannerT <= 0) { storyBannerFading = false; storyShown = true; missionBannerT = 210; }
+          if (storyBannerT <= 0) { storyBannerFading = false; storyShown = true; missionBannerT = bonusActive ? 0 : 210; }
         } else {
           storyFadeInT = Math.min(storyFadeInT + 1, 40);
         }

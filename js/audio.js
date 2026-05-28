@@ -149,8 +149,12 @@ const GameAudio = (function() {
     _initWebAudio();
     stopJingle();
     if (mode !== 'full') return;
-    var track = _gameTrack(), other = _otherTrack();
-    if (other) { other.pause(); other.currentTime = 0; }
+    var track = _gameTrack();
+    // Stop all game tracks that aren't the current one (covers the 3-track set)
+    [bgMusic, bossMusic, bonusMusic].forEach(function(t) {
+      if (!t || t === track) return;
+      t.pause(); t.currentTime = 0;
+    });
     if (!track) return;
     track.currentTime = 0;
     track.playbackRate = 1.0;
@@ -159,7 +163,7 @@ const GameAudio = (function() {
   }
 
   function stopMusic() {
-    [bgMusic, bossMusic].forEach(function(t) {
+    [bgMusic, bossMusic, bonusMusic].forEach(function(t) {
       if (!t) return;
       if (t.paused) { t.currentTime = 0; return; }
       _fadeAudio(t, 0, 100, function() { t.pause(); t.currentTime = 0; });

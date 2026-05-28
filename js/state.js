@@ -159,6 +159,7 @@ function setMsg(t, d) { msgText = t; msgT = d || 220; msgDuration = msgT; }
 
 
 function startGame() {
+  if (CONFIG.debug.startAtBonus) { bonusActive = true; currentLevel = 5; }
   localStorage.setItem('btr_last_level_' + gameDifficulty, currentLevel);
   resetLevel();
   if (typeof _applyLevelBg === 'function') _applyLevelBg();
