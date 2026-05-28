@@ -276,8 +276,8 @@ function updatePlayer() {
       var _pct  = player.throwChargeT / throwChargeTime;
       var _decay = Math.round(30 + 23 * _pct);   // tap≈31 (~62px), full=53 (~185px)
       var _spd  = 2.0 + 1.5 * _pct;            // tap=2.0px/f, full=3.5px/f (veloce)
-      var _vy   = 0.1 - 0.4 * _pct;              // tap=+0.08 (gentile), full=-0.3 (arco lieve)
-      var _g    = 0.07 - 0.02 * _pct;           // tap=0.07 (cade dolce), full=0.05 (un po' più ripido)
+      var _vy   = 0.05 - 0.35 * _pct;            // tap=+0.03, full=-0.3
+      var _g    = 0.025 - 0.01 * _pct;          // tap=0.024, full=0.015
       player.throwCharging = false;
       player.throwChargeT = 0;
       throwCooldown = 30;
