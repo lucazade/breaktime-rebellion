@@ -371,7 +371,7 @@ function updateBonusPaperProjectiles() {
     p.decay--;
     if (p.decay <= 0 || p.x < 0 || p.x > W) { paperProjectiles.splice(i, 1); continue; }
     let hit = false;
-    // Teacher hit — knocked for 3s; triggers wanderer tripping
+    // Teacher hit — knock down and immediately trip ONE nearby walking wanderer
     for (let ti = 0; ti < teachers.length; ti++) {
       const t = teachers[ti];
       if (t.knockedT > 0) continue;
@@ -381,6 +381,13 @@ function updateBonusPaperProjectiles() {
         hit = true;
         addParticles(t.x + PW/2, t.y, PAL.scoreParticle, 6);
         GameAudio.playSfx('hit');
+        for (let _wi = 0; _wi < bonusWanderers.length; _wi++) {
+          const _w = bonusWanderers[_wi];
+          if (_w.state !== 'walking' || _w.recoverT > 0) continue;
+          if (Math.abs(_w.y - t.y) < 20 && Math.abs(_w.x - t.x) < 8) {
+            _tripWanderer(_w); break;
+          }
+        }
         break;
       }
     }
@@ -456,7 +463,7 @@ function updateWanderers() {
       const w = bonusWanderers[wi];
       if (w.state !== 'walking') continue;
       if (Math.abs(w.y - t.y) < 20 && Math.abs(w.x - t.x) < 8) {
-        _tripWanderer(w);
+        _tripWanderer(w); break;  // max one trip per teacher per frame
       }
     }
   }
