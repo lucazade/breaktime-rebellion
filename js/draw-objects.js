@@ -567,8 +567,8 @@ function drawBonusWanderer(w) {
 }
 
 function drawThrowChargeBar() {
-  if (!bonusActive || !player.throwCharging || player.throwChargeT < 18) return;
-  var pct = (player.throwChargeT - 18) / (throwChargeTime - 18);  // 0 when bar appears, 1 at max
+  if (!bonusActive || !player.throwCharging || player.throwChargeT < throwBarThreshold) return;
+  var pct = (player.throwChargeT - throwBarThreshold) / (throwChargeTime - throwBarThreshold);  // 0 when bar appears, 1 at max
   var bx = Math.round(player.x) - 1;
   var by = Math.round(player.y) - 15;
   var bw = PW + 2;  // 10px

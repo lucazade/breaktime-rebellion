@@ -25,7 +25,7 @@ let machines, gymBall, paperBalls, students, throwCooldown, bookcase, sink, bins
 let nightMode, registerTime, allRegister, exitDone, exitWinReady, nightExpandT;
 var gameDifficulty = localStorage.getItem('btr_difficulty') || 'easy';
 let lastTimeBonus, lastLivesBonus;
-let shakeTime, deflateTime, dropTime, floodTime, lighterTime, throwChargeTime;
+let shakeTime, deflateTime, dropTime, floodTime, lighterTime, throwChargeTime, throwBarThreshold, bonusMilestoneEvery;
 let allSink, allBins, allSprinklers;
 let missionBannerT, missionBannerLines;
 let storyBannerT, storyBannerLines;  // like missionBannerT but shown first on L1
@@ -70,7 +70,7 @@ const player = {
   dir:1, animT:0,
   onStair:false, currentStair:null,
   stunT:0, stunEndedT:-1, spraying:false, sprayT:0, boardCommitT:0, boardCommitTarget:null, shaking:false,
-  speed:0.8,
+  speed:1.0,
   throwChargeT:0,   // bonus: frames held so far while charging the throw
   throwCharging:false, // bonus: true while action is held and charge is building
 };
@@ -119,7 +119,9 @@ function resetLevel() {
   dropTime    = lv.dropTime    || 40;
   floodTime   = lv.floodTime   || 80;
   lighterTime      = lv.lighterTime      || 80;
-  throwChargeTime  = lv.throwChargeTime  || 50;
+  throwChargeTime      = lv.throwChargeTime      || 50;
+  throwBarThreshold    = lv.throwBarThreshold    || 18;
+  bonusMilestoneEvery  = lv.bonusMilestoneEvery  || 30;
   // timer can be a per-difficulty object (bonus level) or a plain number (normal levels)
   var _rawTimer = typeof lv.timer === 'object' ? (lv.timer[gameDifficulty] || 0) : (lv.timer || 0);
   timerTicks  = maxTimerTicks  = Math.round(_rawTimer * 60 * _dT);

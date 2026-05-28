@@ -407,7 +407,7 @@ function updateBonusPaperProjectiles() {
 }
 
 function _bonusMilestone(x, y) {
-  if (bonusCarambole % 30 === 0) {
+  if (bonusCarambole % bonusMilestoneEvery === 0) {
     bonusBonusLives++;
     addFloating(x, y, STRINGS.bonusMilestone, PAL.bonusResultLives);
   }

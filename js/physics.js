@@ -261,12 +261,12 @@ function updatePlayer() {
       actionPressed = false;
     }
     if (!K.action || player.throwChargeT >= throwChargeTime) {
-      var _isTap = player.throwChargeT < 18;  // below bar-visible threshold → tap
+      var _isTap = player.throwChargeT < throwBarThreshold;  // below bar-visible threshold → tap
       var _decay, _spd, _vy, _g;
       if (_isTap) {
         _decay = 20;   _spd = 2.0;  _vy = 0;     _g = 0;        // tap: lancio orizzontale (~40px)
       } else {
-        var _bp = (player.throwChargeT - 18) / (throwChargeTime - 18); // 0→1 as bar fills
+        var _bp = (player.throwChargeT - throwBarThreshold) / (throwChargeTime - throwBarThreshold); // 0→1 as bar fills
         _decay = Math.round(30 + 23 * _bp);   // hold min≈30(~75px), full=53(~185px)
         _spd   = 2.5 + 1.0 * _bp;            // hold min=2.5px/f, full=3.5px/f
         _vy    = 0.05 - 0.45 * _bp;          // hold min=+0.05, full=-0.4
