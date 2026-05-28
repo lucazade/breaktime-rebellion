@@ -383,6 +383,7 @@ function updateBonusPaperProjectiles() {
         hit = true;
         bonusBonusScore += 500;
         bonusCarambole++;
+        addFloating(Math.round(t.x + PW/2), Math.round(t.y - 18), STRINGS.bonusHit, PAL.bonusBannerTitle);
         addFloating(Math.round(t.x + PW/2), Math.round(t.y - 10), '+500', PAL.scoreParticle);
         addParticles(t.x + PW/2, t.y, PAL.scoreParticle, 6);
         GameAudio.playSfx('hit');
