@@ -570,7 +570,7 @@ function drawBonusWanderer(w) {
 }
 
 function drawThrowChargeBar() {
-  if (!bonusActive || !player.throwCharging || player.throwChargeT < 12) return;
+  if (!bonusActive || !player.throwCharging || player.throwChargeT < 24) return;
   var pct = player.throwChargeT / throwChargeTime;
   var bx = Math.round(player.x) - 1;
   var by = Math.round(player.y) - 15;
