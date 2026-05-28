@@ -274,8 +274,8 @@ function updatePlayer() {
     }
     if (!K.action || player.throwChargeT >= throwChargeTime) {
       var _pct  = player.throwChargeT / throwChargeTime;
-      var _decay = Math.round(5 + 65 * _pct);    // tap≈8, full=70
-      var _spd  = 2.0 + 1.5 * _pct;             // tap=2.0px/f, full=3.5px/f
+      var _decay = Math.round(15 + 55 * _pct);   // tap≈18 (36px), full=70
+      var _spd  = 2.0 + 0.625 * _pct;          // tap=2.0px/f, full=2.625px/f (~184px)
       var _vy   = 0.3 - 0.8 * _pct;             // tap=+0.3 (lieve discesa), full=-0.5 (arco piatto)
       var _g    = 0.15 - 0.13 * _pct;           // tap=0.15 (cade), full=0.02 (quasi orizzontale)
       player.throwCharging = false;
