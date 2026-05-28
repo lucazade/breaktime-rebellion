@@ -62,3 +62,41 @@ VALIDAZIONE:
 - Valida JS dopo ogni file modificato
 - Testa che il gioco si avvii senza errori su L6 (il primo bonus)
 - Committa con "feat: add bonus level CARAMBOLA! after every 5 levels"
+
+─────────────────────────────────────────────
+NOTE DI ANALISI (Claude, 2026-05-28)
+─────────────────────────────────────────────
+
+ARCHITETTURA — PUNTO CRITICO:
+Non inserire il bonus dentro LEVELS[]. La condizione di game win
+è `currentLevel === LEVELS.length` e tutti gli indici sono 1-based.
+Inserire un oggetto extra romperebbe la win condition e gli high
+scores. Approccio consigliato:
+  - var bonusActive = false  (in state.js)
+  - BONUS_LEVEL = oggetto standalone (non in LEVELS[])
+  - In nextLevel() dopo L5: if (!bonusActive) → bonusActive=true,
+    carica bonus anziché L6
+  - Dopo timer bonus: bonusActive=false, currentLevel=6, start normale
+  - LEVELS.length rimane 10, win condition invariata.
+
+La proposta di claude.ai ("insert every 5 positions automatically")
+va ignorata per questo motivo.
+
+Il commit message nel doc ("after every 5 levels") è impreciso:
+il bonus è uno per playthrough, non ogni 5 livelli.
+
+MAPPA COMPLESSITÀ SUB-SYSTEM:
+  - bonusActive flag + state routing   → bassa (~20 righe)
+  - Luca sprite giocabile              → media (riusa drawChar con PAL Luca)
+  - Wandering AI studenti              → media (nuovo sistema, non esiste ora)
+  - Proiettile fisico carta            → media (paperProjectiles[], collision)
+  - Collision studente↔studente        → alta (non esiste in tutto il codebase)
+  - Rilevamento vicino-scala (30px)    → media
+  - Catena moltiplicatore x2           → alta (tracking chain state per evento)
+  - HUD bonus                          → bassa (rendering condizionale)
+  - Banner apertura + music stub       → bassa
+
+SUGGERIMENTO: per una v1 del bonus level, la caduta dalle scale
+(+1 vita) e il moltiplicatore x2 sono i due sub-system più costosi.
+Si potrebbe shippare una prima versione senza di essi e aggiungere
+in seguito senza refactoring.
