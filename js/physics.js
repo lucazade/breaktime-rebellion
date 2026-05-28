@@ -274,7 +274,6 @@ function updatePlayer() {
       }
       player.throwCharging = false;
       player.throwChargeT = 0;
-      throwCooldown = 8;
       paperProjectiles.push({
         x: player.dir > 0 ? player.x + PW + 1 : player.x - 4,
         y: player.y - 4,
@@ -520,7 +519,7 @@ function tryAction() {
     // No message when action pressed far from a board — proximity hints handle it.
   } else if (levelMechanics.isBonusLevel) {
     // Start charge on press — fire on release (short) or at max charge (long)
-    if (throwCooldown === 0 && !player.throwCharging) {
+    if (paperProjectiles.length === 0 && !player.throwCharging) {
       player.throwCharging = true;
       player.throwChargeT = 1;
     }
