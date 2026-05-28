@@ -275,7 +275,7 @@ function updatePlayer() {
     if (!K.action || player.throwChargeT >= throwChargeTime) {
       var _pct  = player.throwChargeT / throwChargeTime;
       var _p2   = _pct * _pct;                    // quadratic: range cresce lentamente a bassa carica
-      var _decay = Math.round(8 + 45 * _p2);    // tap(pct≈0.15)≈9(~18px), full=53(~185px)
+      var _decay = Math.round(20 + 33 * _p2);   // tap(pct≈0.08)≈20(~40px), full=53(~185px)
       var _spd  = 2.0 + 1.5 * _p2;             // tap≈2.0px/f, full=3.5px/f
       var _vy   = 0.05 - 0.45 * _pct;            // tap=+0.03, full=-0.4
       var _g    = 0.025 - 0.01 * _pct;          // tap=0.024, full=0.015
