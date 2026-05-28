@@ -378,7 +378,7 @@ function updateBonusPaperProjectiles() {
       const t = teachers[ti];
       if (t.knockedT > 0) continue;
       if (Math.abs(p.x - t.x - PW/2) < 10 && Math.abs(p.y - t.y - PH/2) < 14) {
-        t.knockedT = 360;
+        t.knockedT = 300;
         paperProjectiles.splice(i, 1);
         hit = true;
         addParticles(t.x + PW/2, t.y, PAL.scoreParticle, 6);
@@ -405,7 +405,7 @@ function updateBonusPaperProjectiles() {
 function _tripWanderer(w) {
   if (w.state !== 'walking' || w.recoverT > 0) return;
   w.state = 'tripped';
-  w.knockedT = 120;
+  w.knockedT = 200;
   bonusBonusScore += 500;
   bonusCarambole++;
   addFloating(Math.round(w.x), Math.round(w.y - 14), STRINGS.bonusHit, PAL.bonusBannerTitle);
