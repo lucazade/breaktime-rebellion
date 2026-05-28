@@ -276,7 +276,7 @@ function updatePlayer() {
       var _decay = Math.round(20 + 50 * player.throwChargeT / throwChargeTime);
       player.throwCharging = false;
       player.throwChargeT = 0;
-      throwCooldown = 60;
+      throwCooldown = 30;
       paperProjectiles.push({
         x: player.dir > 0 ? player.x + PW + 1 : player.x - 4,
         y: player.y - 4,
