@@ -118,6 +118,10 @@ Il codice è diviso in moduli distinti che comunicano via variabili globali cond
 - `pendingTransition` — `{ t: frames, fn: callback }` o `null`; usato al posto di `setTimeout` per transizioni di stato. Resettato da `resetLevel()`, decrementato da `tickTransition()`.
 - `storyBannerT` — countdown banner storia (solo L1 prima partita); `missionBannerT` — banner missione
 - `fmt(s, ...args)` — formatta stringhe con placeholder `{0}`, `{1}`
+- `bonusActive` — `true` durante il livello bonus CARAMBOLA! (dopo L5); `resetLevel()` usa `BONUS_LEVEL` invece di `LEVELS[currentLevel-1]`
+- `bonusResultActive` — `true` quando il banner risultato bonus è visibile
+- `bonusCarambole`, `bonusBonusScore`, `bonusBonusLives` — accumulati durante bonus, applicati a `score`/`lives` al tap del banner risultato
+- `bonusWanderers` — studenti wandering (bonus only); `paperProjectiles` — proiettili fisici bonus
 
 ## LEVELS (js/levels.js)
 
@@ -187,6 +191,32 @@ Le coordinate usano `GY`, `MY`, `TY`, `PH`, `walkOffset` (da `scene.js`) per res
 Il gruppo meccanica è **centrato** in `VH.centerX`. Layout da sinistra: `Lvl X` + separatore verticale (1px, 40% alpha) + icona meccanica + contatore `done/total`. La larghezza totale del gruppo viene calcolata sommando tutte le parti prima di posizionare l'inizio (`_sx`).
 
 Le icone meccanica (`_drawHudIcon`) hanno 3 rami per scala `s`: tiny (`s<0.5`), small (`s<1`), full (`s≥1`). I dettagli trasparenti sono ottenuti disegnando la forma in parti (non usando `clearRect`).
+
+## BONUS_LEVEL (js/levels.js)
+
+`BONUS_LEVEL` è un oggetto standalone (non in `LEVELS[]`) caricato dopo L5.
+`nextLevel()` in `state.js`: se `currentLevel === 5 && !bonusActive` → imposta `bonusActive = true` e carica `BONUS_LEVEL` invece di L6. Al tap del banner risultato: `bonusActive = false`, `currentLevel = 6`, riprende il flusso normale.
+
+Parametri configurabili in `BONUS_LEVEL`:
+```js
+timer:               { easy: 60, medium: 45, hard: 30 },  // secondi per difficoltà
+throwChargeTime:     60,   // frame per riempire la barra (carica piena)
+throwBarThreshold:   18,   // frame prima che la barra compaia (soglia tap/hold)
+bonusMilestoneEvery: 30,   // colpi necessari per guadagnare +1 vita
+```
+
+**Meccanica lancio:**
+- Tap (< `throwBarThreshold` frame): lancio orizzontale fisso (~40px), nessuna barra
+- Hold (≥ `throwBarThreshold`): barra parte da 0, range/velocità/parabola crescono fino a carica piena (~185px)
+- Un proiettile in volo alla volta — `paperProjectiles.length === 0` sblocca il prossimo lancio
+
+**NPC bonus:**
+- `teachers`: patrol-only (sight=0, non inseguono Luca); colpiti → knockedT=300f, +200 pt
+- `wanderers`: studenti camminanti; `state: 'walking'|'tripped'`; colpiti → knockedT=300f, +100 pt; `recoverT=90f` di immunità dopo il recupero
+
+**Luca sprite:** `COLOURS_LUCA` (camicia bianca, riga verticale, taschino nero). Disegnato a scala 0.8× per i wanderer (`drawBonusWanderer`). In bonus e in L10 (drawLucaEnd).
+
+**draw-overlays.js:** `drawBonusOpeningBanner()` (richiamato da `drawStoryBanner()` quando `bonusActive`) e `drawBonusResult()` (quando `bonusResultActive`). Entrambi visitabili in `debug-banners.html`.
 
 ## CONFIG.ui — naming convention pannelli (ui.js)
 
