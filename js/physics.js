@@ -265,9 +265,26 @@ function updatePlayer() {
       }
     }
   }
-  // Bonus: charge bar disabled — throw fires instantly via tryAction() + cooldown.
-  // Keep throwChargeT at 0 so drawThrowChargeBar() stays hidden.
-  if (bonusActive) player.throwChargeT = 0;
+  // Bonus throw: hold to charge (range ∝ charge), release or max → fire.
+  // Bar appears after 3 frames so quick taps don't show it.
+  if (bonusActive && player.throwCharging && player.throwAnim === 0) {
+    if (K.action && player.throwChargeT < throwChargeTime) {
+      player.throwChargeT++;
+      actionPressed = false;
+    }
+    if (!K.action || player.throwChargeT >= throwChargeTime) {
+      var _decay = Math.round(20 + 50 * player.throwChargeT / throwChargeTime);
+      player.throwCharging = false;
+      player.throwChargeT = 0;
+      throwCooldown = 60;
+      paperProjectiles.push({
+        x: player.dir > 0 ? player.x + PW + 1 : player.x - 4,
+        y: player.y - 4,
+        dir: player.dir,
+        decay: _decay,
+      });
+    }
+  }
 
   if (player.shaking) return;
 
@@ -501,10 +518,10 @@ function tryAction() {
     }
     // No message when action pressed far from a board — proximity hints handle it.
   } else if (levelMechanics.isBonusLevel) {
-    // Instant throw on action press (no charge bar) + cooldown between throws
-    if (player.throwAnim === 0 && throwCooldown === 0) {
-      player.throwAnim = 18;
-      throwCooldown = 60;
+    // Start charge on press — fire on release (short) or at max charge (long)
+    if (player.throwAnim === 0 && throwCooldown === 0 && !player.throwCharging) {
+      player.throwCharging = true;
+      player.throwChargeT = 1;
     }
   } else if (levelMechanics.throwPaper && !allStudents) {
     if (throwCooldown <= 0) {
