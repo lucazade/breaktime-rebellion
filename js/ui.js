@@ -94,7 +94,7 @@ CONFIG.ui = {
     lineSpacing:    4,  // gap between lines
     tapSpacing:    10,  // gap between body text and "tap to continue"
     tapH:           8,  // "tap to continue" row height
-    padBottom:     14,  // bottom padding
+    padBottom:     12,  // bottom padding
   },
 
   // Mission banner — panH computed: padTop+titleH+titleSpacing+lineBlock+padBottom
@@ -108,7 +108,7 @@ CONFIG.ui = {
     titleSpacing: 10,  // gap below title
     lineH:         9,  // height per text line
     lineSpacing:   4,  // gap between lines
-    padBottom:    14,  // bottom padding
+    padBottom:    12,  // bottom padding
   },
 
   // Level complete banner — panH computed: padTop+titleH+titleSpacing+scoreH+scoreSpacing+tapH+padBottom
@@ -121,24 +121,24 @@ CONFIG.ui = {
     titleH:         10,  // title row height
     titleSpacing:   10,  // gap below title
     scoreH:          8,  // score row height
-    scoreSpacing:    7,  // gap below score row
+    scoreSpacing:   10,  // gap below score row
     tapH:            8,  // "tap to continue" row height
-    padBottom:      14,  // bottom padding
+    padBottom:      12,  // bottom padding
   },
 
   // High scores banner — panH computed: padTop+titleH+titleSpacing+rows*rowH+tapSpacing+tapH+padBottom
   highScores: {
     panW:          210,  // panel width
-    fontTitle:       6,  // title font size
+    fontTitle:       8,  // title font size
     fontBody:        4,  // score row font size
     fontTap:         6,  // "tap to go home" font size
-    padTop:          8,  // top padding
-    titleH:          8,  // title row height
-    titleSpacing:    6,  // gap below title
+    padTop:          14, // top padding
+    titleH:          10, // title row height
+    titleSpacing:    10, // gap below title
     rowH:            9,  // height per score row
     tapSpacing:      8,  // gap above tap label
     tapH:            8,  // tap label row height
-    padBottom:       8,  // bottom padding
+    padBottom:       12, // bottom padding
   },
 
   // Game win banner (L10) — panH computed: padTop+titleH+titleSpacing+scoreH+scoreSpacing+tapH+padBottom
@@ -149,9 +149,9 @@ CONFIG.ui = {
     fontTap:         6,  // "tap to continue" font size
     padTop:         14,  // top padding
     titleH:         10,  // title row height
-    titleSpacing:   12,  // gap below title
+    titleSpacing:   10,  // gap below title
     scoreH:          8,  // score row height
-    scoreSpacing:    4,  // gap below score row
+    scoreSpacing:   10,  // gap below score row
     tapH:            8,  // "tap to continue" row height
     padBottom:      12,  // bottom padding
   },
@@ -166,9 +166,9 @@ CONFIG.ui = {
     titleH:          10,  // title row height
     titleSpacing:    10,  // gap below title
     scoreH:           8,  // score row height
-    scoreSpacing:    12,  // gap below score row
+    scoreSpacing:    10,  // gap below score row
     confirmH:         8,  // "try again?" row height
-    confirmSpacing:   8,  // gap below confirm row
+    confirmSpacing:  10,  // gap below confirm row
     btnH:            14,  // Yes/No button area height
     padBottom:       14,  // bottom padding
     siOx:  30, siW:  70,  // Yes button X offset and width
@@ -188,7 +188,7 @@ CONFIG.ui = {
     tapSpacing:     4,  // gap between text and "tap" row
     tapH:           8,  // "tap to continue" row height
     padBottom:      6,  // bottom padding
-    tailW: 3, tailH: 5,  // bubble tail dimensions
+    tailW: 3, tailH: 5, // bubble tail dimensions
   },
 
   // Pause overlay — panH computed: padTop+titleH+titleSpacing+btnH+padBottom
@@ -198,7 +198,7 @@ CONFIG.ui = {
     fontBtn:         6,  // resume button font size
     padTop:         14,  // top padding
     titleH:         10,  // title row height
-    titleSpacing:   12,  // gap below title
+    titleSpacing:   10,  // gap below title
     btnH:           14,  // resume button area height
     padBottom:      14,  // bottom padding
     resumeOx:       65,  // Resume button X offset
@@ -215,8 +215,8 @@ CONFIG.ui = {
     titleSpacing:   10,  // gap below title
     btnH:           14,  // button area height
     padBottom:      14,  // bottom padding
-    siOx:  20, siW:  70,  // Yes button X offset and width
-    noOx: 110, noW:  70,  // No button X offset and width
+    siOx:  20, siW:  70, // Yes button X offset and width
+    noOx: 110, noW:  70, // No button X offset and width
   },
 
   // Credits — panH computed: padTop+titleH+titleSpacing+teamH+teamSpacing+5*(nameH+nameGap+roleH+roleGap)+tapSpacing+btnH+padBottom
@@ -224,20 +224,21 @@ CONFIG.ui = {
     panW:          240,  // panel width
     fontTitle:       8,  // "CREDITS" title font size
     fontBody:        6,  // name font size
+    fontRole:        4,  // role font size
     fontBtn:         6,  // close button font size
-    padTop:          8,  // top padding
+    padTop:         14,  // top padding
     titleH:         10,  // title row height
-    titleSpacing:    4,  // gap below title
+    titleSpacing:    8,  // gap below title
     teamH:           8,  // team subtitle row height
-    teamSpacing:     4,  // gap below team subtitle
+    teamSpacing:     8,  // gap below team subtitle
     nameH:           4,  // name row height
     nameGap:         2,  // gap between name and role
     roleH:           4,  // role row height
     roleGap:         6,  // gap between role and next name
-    tapSpacing:      2,  // gap above close button
+    tapSpacing:      6,  // gap above close button
     btnH:           12,  // close button height
     btnW:           60,  // close button width
-    padBottom:      10,  // bottom padding
+    padBottom:      14,  // bottom padding
   },
 
 };

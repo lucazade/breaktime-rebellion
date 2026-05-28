@@ -35,7 +35,7 @@
     missionLabel:         '— LEVEL {0} —',
     levelComplete:        '— LEVEL COMPLETE! —',
     gameoverTitle:        '— EXPELLED! —',
-    winTitle:             '— SCHOOL LEGEND! —',
+    winTitle:             '— GAME COMPLETED! —',
     highScoresTitle:      '— HIGH SCORES —',
 
     scoreBaseLabel:       'SCORE: ',
@@ -140,7 +140,7 @@
     missionLabel:         '— LIVELLO {0} —',
     levelComplete:        '— LIVELLO COMPLETATO! —',
     gameoverTitle:        '— ESPULSO! —',
-    winTitle:             '— LEGGENDA DELLA SCUOLA! —',
+    winTitle:             '— GIOCO COMPLETATO! —',
     highScoresTitle:      '— MIGLIORI PUNTEGGI —',
     
     scoreBaseLabel:       'PUNTEGGIO: ',

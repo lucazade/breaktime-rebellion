@@ -249,7 +249,9 @@ function drawCredits() {
   ctx.font = VC.fontBody + 'px ' + FF; ctx.fillStyle = PAL.creditsRole;
   ctx.fillText('LucazadeSoft Team', cx, ty); ty += VC.teamH + VC.teamSpacing;
   for (var i = 0; i < n; i++) {
+    ctx.font = VC.fontBody + 'px ' + FF;
     ctx.fillStyle = PAL.creditsText; ctx.fillText(_CREDITS_MEMBERS[i].name, cx, ty); ty += VC.nameH + VC.nameGap;
+    ctx.font = VC.fontRole + 'px ' + FF;
     ctx.fillStyle = PAL.creditsMemberRole;  ctx.fillText(_CREDITS_MEMBERS[i].role, cx, ty); ty += VC.roleH + VC.roleGap;
   }
   ty += VC.tapSpacing;
