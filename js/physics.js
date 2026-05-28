@@ -29,18 +29,6 @@ function clampX(x) { return Math.max(wallLeft, Math.min(W - PW - wallRight, x));
 
 function updatePlayer() {
   if (state !== 'playing') return;
-  // Bonus throw animation — decrement and spawn projectile when it hits 0
-  if (player.throwAnim > 0) {
-    player.throwAnim--;
-    if (player.throwAnim === 0) {
-      paperProjectiles.push({
-        x:   player.dir > 0 ? player.x + PW + 1 : player.x - 4,
-        y:   player.y - 4,  // chest height
-        dir: player.dir,
-        decay: 60,           // 120px range at 2px/frame
-      });
-    }
-  }
   if (player.stunT > 0) {
     if (--player.stunT === 0) {
       // Extend stun if any NPC is still dangerously close to Marco's position
@@ -266,8 +254,8 @@ function updatePlayer() {
     }
   }
   // Bonus throw: hold to charge (range ∝ charge), release or max → fire.
-  // Bar appears after 3 frames so quick taps don't show it.
-  if (bonusActive && player.throwCharging && player.throwAnim === 0) {
+  // Bar appears after 24 frames (tap stays invisible, hold shows bar).
+  if (bonusActive && player.throwCharging) {
     if (K.action && player.throwChargeT < throwChargeTime) {
       player.throwChargeT++;
       actionPressed = false;
@@ -532,7 +520,7 @@ function tryAction() {
     // No message when action pressed far from a board — proximity hints handle it.
   } else if (levelMechanics.isBonusLevel) {
     // Start charge on press — fire on release (short) or at max charge (long)
-    if (player.throwAnim === 0 && throwCooldown === 0 && !player.throwCharging) {
+    if (throwCooldown === 0 && !player.throwCharging) {
       player.throwCharging = true;
       player.throwChargeT = 1;
     }

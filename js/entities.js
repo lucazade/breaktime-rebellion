@@ -398,7 +398,6 @@ function updateBonusPaperProjectiles() {
         break;
       }
     }
-    if (hit) paperProjectiles.splice(i, 1);
   }
 }
 
