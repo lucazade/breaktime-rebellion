@@ -124,6 +124,8 @@ function drawEndScreen() {
 
 function drawStoryBanner() {
   if (storyBannerT <= 0 || state !== 'playing') return;
+  // Bonus level: use its own opening banner config and strings
+  if (bonusActive) { drawBonusOpeningBanner(); return; }
   if (!storyBannerLines) {
     ctx.font = CONFIG.ui.storyBanner.fontBody + 'px ' + FF;
     const parts = STRINGS.storyText.split('|');
@@ -272,6 +274,93 @@ function drawCredits() {
   ctx.font = VC.fontBtn + 'px ' + FF;
   _dialogBtn(btnX, ty, VC.btnW, VC.btnH, CONFIG.ui.dialog.btnColorYes);
   ctx.fillStyle = PAL.creditsText; ctx.fillText('OK', bx + VC.panW/2, ty + Math.floor((VC.btnH - VC.fontBtn) / 2));
+  ctx.restore();
+}
+
+function drawBonusOpeningBanner() {
+  var storyPanelAlpha = storyBannerFading ? Math.max(0, storyBannerT / 20) : Math.min(1, storyFadeInT / 40);
+  ctx.save();
+  ctx.globalAlpha = storyPanelAlpha;
+  var VB = CONFIG.ui.bonusBanner;
+  if (!storyBannerLines) {
+    ctx.font = VB.fontBody + 'px ' + FF;
+    var parts = STRINGS.bonusStoryBody.split('|');
+    var lines = [];
+    for (var p = 0; p < parts.length; p++) {
+      var words = parts[p].trim().split(' ');
+      var line = '';
+      for (var wi = 0; wi < words.length; wi++) {
+        var test = line + (line ? ' ' : '') + words[wi];
+        if (ctx.measureText(test).width > VB.wrapWidth) { lines.push(line); line = words[wi]; }
+        else line = test;
+      }
+      if (line) lines.push(line);
+    }
+    storyBannerLines = lines;
+  }
+  var bw = VB.panW;
+  var _lineBlock = storyBannerLines.length * VB.lineH + Math.max(0, storyBannerLines.length - 1) * VB.lineSpacing;
+  var bh = VB.padTop + VB.titleH + VB.titleSpacing + _lineBlock + VB.tapSpacing + VB.tapH + VB.padBottom;
+  var _bp = _panPos(bw, bh); var bx = _bp.bx, by = _bp.by;
+  _dialogPanel(bx, by, bw, bh, CONFIG.ui.dialog.panBg);
+  ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+  var cxB = bx + bw / 2;
+  var tyB = by + VB.padTop;
+  ctx.font = VB.fontTitle + 'px ' + FF;
+  ctx.fillStyle = PAL.bonusBannerTitle; ctx.fillText(STRINGS.bonusStoryTitle, cxB, tyB); tyB += VB.titleH + VB.titleSpacing;
+  ctx.font = VB.fontBody + 'px ' + FF;
+  ctx.fillStyle = PAL.bonusBannerText;
+  for (var li = 0; li < storyBannerLines.length; li++) {
+    ctx.fillText(storyBannerLines[li], cxB, tyB);
+    tyB += VB.lineH + (li < storyBannerLines.length - 1 ? VB.lineSpacing : VB.tapSpacing);
+  }
+  var blink = Math.floor(frame / 25) % 2 === 0;
+  ctx.font = VB.fontTap + 'px ' + FF;
+  ctx.fillStyle = blink ? PAL.tapPromptColor : PAL.transparent; ctx.fillText(STRINGS.tapContinue, cxB, tyB);
+  ctx.restore();
+}
+
+function drawBonusResult() {
+  if (!bonusResultActive) return;
+  var VR = CONFIG.ui.bonusResult;
+  var hasRewards = bonusBonusLives > 0 || bonusBonusScore > 0;
+  var _panH = VR.padTop + VR.titleH + VR.titleSpacing
+            + VR.caramboleH + VR.caramboleSpacing
+            + (hasRewards ? VR.rewardsH + VR.rewardsSpacing : 0)
+            + VR.tapSpacing + VR.tapH + VR.padBottom;
+  var _bp = _panPos(VR.panW, _panH); var bx = _bp.bx, by = _bp.by;
+  ctx.save();
+  _dialogPanel(bx, by, VR.panW, _panH, CONFIG.ui.dialog.panBg);
+  ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+  var cx = bx + VR.panW / 2;
+  var ty = by + VR.padTop;
+  ctx.font = VR.fontTitle + 'px ' + FF;
+  ctx.fillStyle = PAL.bonusBannerTitle; ctx.fillText(STRINGS.bonusResultTitle, cx, ty); ty += VR.titleH + VR.titleSpacing;
+  ctx.font = VR.fontBody + 'px ' + FF;
+  ctx.fillStyle = PAL.bannerText;
+  ctx.fillText(bonusCarambole > 0 ? STRINGS.bonusCaramboleLabel + bonusCarambole : STRINGS.bonusNoBonusLabel, cx, ty);
+  ty += VR.caramboleH + VR.caramboleSpacing;
+  if (hasRewards) {
+    ctx.font = VR.fontRewards + 'px ' + FF;
+    if (bonusBonusLives > 0 && bonusBonusScore > 0) {
+      var _livesStr = fmt(STRINGS.bonusLivesLabel, bonusBonusLives) + '   ';
+      var _scoreStr = fmt(STRINGS.bonusScoreLabel, bonusBonusScore);
+      var _totalW = ctx.measureText(_livesStr + _scoreStr).width;
+      var _lx = cx - _totalW / 2;
+      ctx.fillStyle = PAL.bonusResultLives; ctx.textAlign = 'left'; ctx.fillText(_livesStr, _lx, ty);
+      ctx.fillStyle = PAL.bonusResultScore; ctx.fillText(_scoreStr, _lx + ctx.measureText(_livesStr).width, ty);
+      ctx.textAlign = 'center';
+    } else if (bonusBonusLives > 0) {
+      ctx.fillStyle = PAL.bonusResultLives; ctx.fillText(fmt(STRINGS.bonusLivesLabel, bonusBonusLives), cx, ty);
+    } else {
+      ctx.fillStyle = PAL.bonusResultScore; ctx.fillText(fmt(STRINGS.bonusScoreLabel, bonusBonusScore), cx, ty);
+    }
+    ty += VR.rewardsH + VR.rewardsSpacing;
+  }
+  ty += VR.tapSpacing;
+  var blink = Math.floor(frame / 20) % 2 === 0;
+  ctx.font = VR.fontTap + 'px ' + FF;
+  ctx.fillStyle = blink ? PAL.tapPromptColor : PAL.transparent; ctx.fillText(STRINGS.tapContinue, cx, ty);
   ctx.restore();
 }
 

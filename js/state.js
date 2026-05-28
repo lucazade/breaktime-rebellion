@@ -31,6 +31,16 @@ let missionBannerT, missionBannerLines;
 let storyBannerT, storyBannerLines;  // like missionBannerT but shown first on L1
 let storyShown = false; // session-level — not reset by resetLevel
 let pendingTransition = null;
+// Bonus level state
+var bonusActive      = false;   // true during the CARAMBOLA! bonus level
+var bonusCarambole   = 0;       // tumbles scored in current bonus
+var bonusBonusLives  = 0;       // extra lives accumulated
+var bonusBonusScore  = 0;       // extra score accumulated
+var bonusChainMult   = 1;       // chain multiplier (x2 when chain active)
+var bonusChainResetT = 0;       // countdown to reset chain multiplier
+var bonusResultActive = false;  // true when bonus-result banner is shown
+var paperProjectiles = [];      // [{x,y,dir,decay}] bonus paper projectiles
+var bonusWanderers   = [];      // wandering students (bonus only)
 let deathFreeze = false;
 let endScreenT = 0;
 let _endBonusT = 0;
@@ -63,10 +73,11 @@ const player = {
   onStair:false, currentStair:null,
   stunT:0, stunEndedT:-1, spraying:false, sprayT:0, boardCommitT:0, boardCommitTarget:null, shaking:false,
   speed:1.5,
+  throwAnim:0,  // bonus: frames remaining in throw animation before projectile spawns
 };
 
 function resetLevel() {
-  const lv = LEVELS[currentLevel - 1];
+  const lv = bonusActive ? BONUS_LEVEL : LEVELS[currentLevel - 1];
   stairs   = lv.stairs;
   DESKS    = lv.desks;
   BOARDS   = lv.boards.map(function(b)   { return {x:b.x, y:b.y, done:false}; });
@@ -87,7 +98,7 @@ function resetLevel() {
   player.x = lv.playerStart.x; player.y = lv.playerStart.y; player.vy = 0;
   player.dir = 1; player.animT = 0;
   player.onStair = false; player.currentStair = null;
-  player.stunT = 0; player.spraying = false; player.sprayT = 0; player.boardCommitT = 0; player.boardCommitTarget = null; player.shaking = false;
+  player.stunT = 0; player.spraying = false; player.sprayT = 0; player.boardCommitT = 0; player.boardCommitTarget = null; player.shaking = false; player.throwAnim = 0;
   particles = []; floatingTexts = [];
   msgText = ''; msgT = 0; msgDuration = 0;
   actionPressed = false; allBoards = false; allBags = false; allMachines = false; allBall = false; allStudents = false; allBooks = false; allSink = false; allBins = false; allSprinklers = false; allRegister = false; exitDone = false; exitWinReady = false; nightExpandT = 0; lastTimeBonus = 0; lastLivesBonus = 0;
@@ -109,15 +120,33 @@ function resetLevel() {
   dropTime    = lv.dropTime    || 40;
   floodTime   = lv.floodTime   || 80;
   lighterTime  = lv.lighterTime  || 80;
-  timerTicks  = maxTimerTicks  = Math.round((lv.timer || 0) * 60 * _dT);
+  // timer can be a per-difficulty object (bonus level) or a plain number (normal levels)
+  var _rawTimer = typeof lv.timer === 'object' ? (lv.timer[gameDifficulty] || 0) : (lv.timer || 0);
+  timerTicks  = maxTimerTicks  = Math.round(_rawTimer * 60 * _dT);
   storyBannerFading = false;
   storyFadeInT  = 0;
-  storyBannerT  = (currentLevel === 1 && !storyShown) ? 300 : 0; // 5s, L1 only
+  // Bonus: show bonus opening banner; L1: show story banner; otherwise: no story banner
+  storyBannerT  = bonusActive ? 300 : (currentLevel === 1 && !storyShown) ? 300 : 0;
   storyBannerLines = null;
-  missionBannerT     = storyBannerT > 0 ? 0 : 210; // defer until after story
+  missionBannerT     = storyBannerT > 0 ? 0 : (bonusActive ? 0 : 210);
   missionBannerLines = null;
   pendingTransition = null;
   deathFreeze = false;
+  // Bonus: reset bonus-specific state
+  bonusCarambole    = 0;
+  bonusBonusLives   = 0;
+  bonusBonusScore   = 0;
+  bonusChainMult    = 1;
+  bonusChainResetT  = 0;
+  bonusResultActive = false;
+  paperProjectiles  = [];
+  bonusWanderers = (lv.wanderers || []).map(function(w, i) {
+    return {x:w.x, y:w.y, dir:w.dir||1, minX:w.minX||20, maxX:w.maxX||290,
+            wanderTimer: 90 + Math.round(Math.random() * 90),
+            state:'walking', knockedT:0, rollDir:0, rollT:0,
+            chainHit:false, shirtColor:w.shirtColor||PAL.wandererShirt1,
+            animT: i * 0.7};
+  });
   levelMechanics = Object.assign({ writeBoards:true, ringBell:true, stealBags:false }, lv.mechanics);
   frame = 0;
 }
@@ -151,6 +180,17 @@ function startGame() {
 }
 
 function nextLevel() {
+  // After L5 (and bonus not yet played): activate bonus level
+  if (currentLevel === 5 && !bonusActive) {
+    bonusActive = true;
+    // currentLevel stays at 5 — win check (currentLevel === LEVELS.length) unchanged
+    resetLevel();
+    if (typeof _applyLevelBg === 'function') _applyLevelBg();
+    state = 'playing';
+    GameAudio.playMusic();
+    return;
+  }
+  bonusActive = false;
   currentLevel++;
   var savedMax = parseInt(localStorage.getItem('btr_max_level_' + gameDifficulty) || '1');
   if (currentLevel > savedMax) localStorage.setItem('btr_max_level_' + gameDifficulty, currentLevel);
@@ -162,6 +202,8 @@ function nextLevel() {
 
 function restartGame() {
   lives = 3; score = 0;
+  bonusActive = false;
+  bonusResultActive = false;
   resetLevel();
   if (typeof _applyLevelBg === 'function') _applyLevelBg();
   state = 'playing';

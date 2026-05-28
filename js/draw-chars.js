@@ -59,6 +59,19 @@ const COLOURS_LUCA = {
   knockable:   false,
 };
 
+const COLOURS_WANDERER = {
+  skin:       PAL.studentSkin,
+  skinShadow: PAL.studentSkinShadow,
+  hair:       PAL.studentHair,
+  trousers:   PAL.teacherTrousers,
+  shoes:      PAL.teacherShoes,
+  shoeSole:   null,
+  tie:        null,
+  stripe:     null,
+  backpack:   null,
+  knockable:  true,  // can be drawn lying-down when knockedT > 0
+};
+
 const COLOURS_GINNASTICA = {
   skin:        PAL.profGinnasticaSkin,
   skinShadow:  PAL.profGinnasticaSkinShadow,

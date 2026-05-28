@@ -29,6 +29,18 @@ function clampX(x) { return Math.max(wallLeft, Math.min(W - PW - wallRight, x));
 
 function updatePlayer() {
   if (state !== 'playing') return;
+  // Bonus throw animation — decrement and spawn projectile when it hits 0
+  if (player.throwAnim > 0) {
+    player.throwAnim--;
+    if (player.throwAnim === 0) {
+      paperProjectiles.push({
+        x:   player.dir > 0 ? player.x + PW + 1 : player.x - 4,
+        y:   player.y + 2,
+        dir: player.dir,
+        decay: 24,
+      });
+    }
+  }
   if (player.stunT > 0) {
     if (--player.stunT === 0) {
       // Extend stun if any NPC is still dangerously close to Marco's position
@@ -484,6 +496,11 @@ function tryAction() {
       GameAudio.playSfx('spray');
     }
     // No message when action pressed far from a board — proximity hints handle it.
+  } else if (levelMechanics.isBonusLevel) {
+    // Bonus: delayed paper throw — starts throw animation; projectile spawns after 18 frames
+    if (player.throwAnim === 0) {
+      player.throwAnim = 18;
+    }
   } else if (levelMechanics.throwPaper && !allStudents) {
     if (throwCooldown <= 0) {
       paperBalls.push({

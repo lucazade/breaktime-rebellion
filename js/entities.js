@@ -31,6 +31,13 @@ function updateTeachers() {
     const t = teachers[i];
     if (t.knockedT > 0) { t.knockedT--; continue; } // lying on the floor, skip movement
     t.animT += 0.12;
+    // Bonus: patrol only — no sight cone, no chasing, no catching Luca
+    if (bonusActive) {
+      t.x += t.dir * t.speed;
+      if (t.x >= t.maxX) { t.x = t.maxX; t.dir = -1; }
+      if (t.x <= t.minX) { t.x = t.minX; t.dir =  1; }
+      continue;
+    }
     if (t.chasing) {
       t.alertT = Math.max(0, t.alertT - 1);
       if (t.reactionT > 0) {
@@ -324,6 +331,7 @@ function updateTimer() {
   if (timerTicks <= 0) {
     timerTicks = 0;
     GameAudio.setMusicRate(1.0);
+    if (bonusActive) { endBonusLevel(); return; }
     lives--;
     if (lives > 0) setMsg(STRINGS.timesUp);
     else msgT = 0;
@@ -346,4 +354,156 @@ function addFloating(x, y, text, color) {
 function tickTransition() {
   if (!pendingTransition) return;
   if (--pendingTransition.t <= 0) { pendingTransition.fn(); pendingTransition = null; }
+}
+
+// ── Bonus level logic ─────────────────────────────────────────────────────────
+
+function endBonusLevel() {
+  deathFreeze = true;
+  bonusResultActive = true;
+  GameAudio.stopMusic();
+}
+
+function updateBonusPaperProjectiles() {
+  for (let i = paperProjectiles.length - 1; i >= 0; i--) {
+    const p = paperProjectiles[i];
+    p.x += p.dir * 2;
+    p.decay--;
+    if (p.decay <= 0 || p.x < 0 || p.x > W) { paperProjectiles.splice(i, 1); continue; }
+    let hit = false;
+    // Teacher hit — knocked for 3s; triggers wanderer tripping
+    for (let ti = 0; ti < teachers.length; ti++) {
+      const t = teachers[ti];
+      if (t.knockedT > 0) continue;
+      if (Math.abs(p.x - t.x - PW/2) < 10 && Math.abs(p.y - t.y - PH/2) < 14) {
+        t.knockedT = 180;
+        paperProjectiles.splice(i, 1);
+        hit = true;
+        addParticles(t.x + PW/2, t.y, PAL.scoreParticle, 6);
+        GameAudio.playSfx('hit');
+        break;
+      }
+    }
+    if (hit) continue;
+    // Wanderer hit directly by projectile
+    for (let wi = 0; wi < bonusWanderers.length; wi++) {
+      const w = bonusWanderers[wi];
+      if (w.state !== 'walking') continue;
+      if (Math.abs(p.x - w.x - PW/2) < 10 && Math.abs(p.y - w.y - PH/2) < 14) {
+        _tripWanderer(w);
+        paperProjectiles.splice(i, 1);
+        hit = true;
+        break;
+      }
+    }
+    if (hit) paperProjectiles.splice(i, 1);
+  }
+}
+
+function _nearStair(wx, wy) {
+  for (let si = 0; si < stairs.length; si++) {
+    const s = stairs[si];
+    const sx1 = Math.min(s.x1, s.x2), sx2 = Math.max(s.x1, s.x2);
+    const sy1 = Math.min(s.y1, s.y2), sy2 = Math.max(s.y1, s.y2);
+    if (Math.abs(wx - sx1) < 30 && Math.abs(wy + PH - sy1) < 20) return s;
+    if (Math.abs(wx - sx2) < 30 && Math.abs(wy + PH - sy2) < 20) return s;
+  }
+  return null;
+}
+
+function _tripWanderer(w) {
+  if (w.state !== 'walking') return;
+  // Chain multiplier: reset timer; if chain was already active, award x2
+  var mult = bonusChainMult;
+  bonusChainResetT = 90;
+  bonusChainMult = 2;
+  var nearStair = _nearStair(w.x, w.y);
+  if (nearStair) {
+    // Rolling — descend to lower floor, +1 life
+    w.state = 'rolling';
+    w.rollT = 90;
+    w.rollDir = (nearStair.y2 > nearStair.y1) ? 1 : -1; // direction of descent
+    w._rollStair = nearStair;
+    bonusBonusLives++;
+    addFloating(Math.round(w.x), Math.round(w.y - 12), '+1 VITA!', PAL.bonusResultLives);
+    GameAudio.playSfx('hit');
+  } else {
+    // Tripped on same floor — score + floating text
+    w.state = 'tripped';
+    w.knockedT = 60;
+    var pts = 500 * mult;
+    bonusBonusScore += pts;
+    bonusCarambole++;
+    w.chainHit = mult > 1;
+    addFloating(Math.round(w.x), Math.round(w.y - 14), 'CARAMBOLA!', PAL.bonusBannerTitle);
+    addFloating(Math.round(w.x), Math.round(w.y - 22), '+' + pts, PAL.scoreParticle);
+    addParticles(Math.round(w.x + PW/2), Math.round(w.y), PAL.scoreParticle, 10);
+    GameAudio.playSfx('hit');
+  }
+}
+
+function updateWanderers() {
+  if (!bonusActive) return;
+  // Decay chain multiplier
+  if (bonusChainResetT > 0) {
+    bonusChainResetT--;
+    if (bonusChainResetT === 0) bonusChainMult = 1;
+  }
+  for (let i = 0; i < bonusWanderers.length; i++) {
+    const w = bonusWanderers[i];
+    if (w.state === 'rolling') {
+      w.rollT--;
+      // Move along the stair visually
+      if (w._rollStair) {
+        const s = w._rollStair;
+        const spd = 1.0;
+        w.x += (s.x2 > s.x1 ? 1 : -1) * spd;
+        const t2 = Math.max(0, Math.min(1, (w.x + PW/2 - s.x1) / (s.x2 - s.x1)));
+        w.y = s.y1 + (s.y2 - s.y1) * t2 - PH;
+      }
+      w.animT += 0.3;
+      if (w.rollT <= 0) {
+        w.state = 'walking';
+        w.knockedT = 0;
+        w._rollStair = null;
+        // Clamp to nearest floor
+        const _gy = GY - PH - walkOffset, _my = MY - PH - walkOffset, _ty = TY - PH - walkOffset;
+        const _dist = [Math.abs(w.y - _gy), Math.abs(w.y - _my), Math.abs(w.y - _ty)];
+        const _minD = Math.min(_dist[0], _dist[1], _dist[2]);
+        if (_minD === _dist[0]) w.y = _gy;
+        else if (_minD === _dist[1]) w.y = _my;
+        else w.y = _ty;
+        w.wanderTimer = 60 + Math.round(Math.random() * 60);
+      }
+    } else if (w.state === 'tripped') {
+      if (w.knockedT > 0) w.knockedT--;
+      if (w.knockedT <= 0) {
+        w.state = 'walking';
+        w.wanderTimer = 60 + Math.round(Math.random() * 60);
+      }
+    } else {
+      // walking
+      w.x += w.dir * 0.5;
+      w.animT += 0.1;
+      w.wanderTimer--;
+      if (w.wanderTimer <= 0) {
+        w.dir *= -1;
+        w.wanderTimer = 120 + Math.round(Math.random() * 60);
+      }
+      if (w.x >= w.maxX) { w.x = w.maxX; w.dir = -1; }
+      if (w.x <= w.minX) { w.x = w.minX; w.dir =  1; }
+    }
+  }
+  // Trigger wanderers near knocked teachers
+  for (let ti = 0; ti < teachers.length; ti++) {
+    const t = teachers[ti];
+    if (t.knockedT <= 0) continue;
+    for (let wi = 0; wi < bonusWanderers.length; wi++) {
+      const w = bonusWanderers[wi];
+      if (w.state !== 'walking') continue;
+      if (Math.abs(w.y - t.y) < 20 && Math.abs(w.x - t.x) < 8) {
+        _tripWanderer(w);
+      }
+    }
+  }
 }

@@ -132,6 +132,10 @@ function loop(ts) {
         updateBins();
         updateSprinklers();
         updatePaperBalls();
+        if (bonusActive) {
+          updateBonusPaperProjectiles();
+          updateWanderers();
+        }
         updateTimer();
         tickTransition();
       }
@@ -193,22 +197,25 @@ function loop(ts) {
     }
   }
   if (!(player.stunT > 0 && Math.floor(frame/5)%2 === 1)) {
+    var _playerBodyCol  = bonusActive ? PAL.lucaBody    : PAL.marcoShirt;
+    var _playerColours  = bonusActive ? COLOURS_LUCA    : COLOURS_MARCO;
     if (player.onStair && player.currentStair) {
       const s = player.currentStair;
-      const surfaceY  = Math.min(s.y1, s.y2);          // walking surface at upper floor
-      const bandTop    = surfaceY - (s.fdTop || 0);     // where head appears above (tune fdTop per stair)
-      const bandBottom = surfaceY + s.fdBot;  // where legs disappear below (tune fdBot per stair)
+      const surfaceY  = Math.min(s.y1, s.y2);
+      const bandTop    = surfaceY - (s.fdTop || 0);
+      const bandBottom = surfaceY + s.fdBot;
       if (player.y > bandTop - PH && player.y < bandBottom + 8) {
-        drawCharClipped(player.x, player.y, player.dir, player.animT, PAL.marcoShirt, COLOURS_MARCO, player.spraying, false, 0, bandTop, bandBottom);
+        drawCharClipped(player.x, player.y, player.dir, player.animT, _playerBodyCol, _playerColours, player.spraying, false, 0, bandTop, bandBottom);
       } else {
-        drawChar(player.x, player.y, player.dir, player.animT, PAL.marcoShirt, COLOURS_MARCO, player.spraying, false);
+        drawChar(player.x, player.y, player.dir, player.animT, _playerBodyCol, _playerColours, player.spraying, false);
       }
     } else {
-      drawChar(player.x, player.y, player.dir, player.animT, PAL.marcoShirt, COLOURS_MARCO, player.spraying, false);
+      drawChar(player.x, player.y, player.dir, player.animT, _playerBodyCol, _playerColours, player.spraying, false);
     }
   }
 
   drawPaperBalls();
+  if (bonusActive) { drawBonusWanderers(); drawPaperProjectiles(); }
   drawParticles();
   drawFloating();
   drawNightOverlay();
@@ -219,6 +226,7 @@ function loop(ts) {
   var _shouldDim = state !== 'title' && (storyBannerT > 0 || storyBannerFading || missionBannerT > 0
                 || state === 'win' || state === 'gameover' || state === 'paused' || state === 'highscores'
                 || _creditsActive
+                || bonusResultActive
                 || (deathFreeze && !BELL.ringing && !exitDone));
   bannerDimT = _shouldDim ? Math.min(bannerDimT + 1, 20) : Math.max(bannerDimT - 1, 0);
   if (bannerDimT > 0) {
@@ -237,6 +245,7 @@ function loop(ts) {
     if ((_inTime || _inLives) && _bt % 6 === 0) GameAudio.playSfx('scoreTick');
   }
   drawEndScreen();
+  drawBonusResult();
   drawStoryBanner();
   drawMissionBanner();
   drawPauseOverlay();
@@ -251,6 +260,22 @@ function loop(ts) {
 
 function handleTap() {
   if (storyBannerT > 0 && !storyBannerFading) { storyBannerT = 20; storyBannerFading = true; return; }
+  // Bonus result banner — apply rewards and advance to L6
+  if (bonusResultActive) {
+    lives += bonusBonusLives;
+    score += bonusBonusScore;
+    bonusActive = false;
+    bonusResultActive = false;
+    deathFreeze = false;
+    currentLevel = 6;
+    var savedMax = parseInt(localStorage.getItem('btr_max_level_' + gameDifficulty) || '1');
+    if (currentLevel > savedMax) localStorage.setItem('btr_max_level_' + gameDifficulty, currentLevel);
+    resetLevel();
+    if (typeof _applyLevelBg === 'function') _applyLevelBg();
+    state = 'playing';
+    GameAudio.playMusic();
+    return;
+  }
   if (state === 'highscores') { goHome(); return; }
   // L10: tap during Luca fumetto → win state (only after 90-frame cooldown)
   if (deathFreeze && levelMechanics.escapeExit && exitDone && exitWinReady) {

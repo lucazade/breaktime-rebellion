@@ -114,6 +114,14 @@
     exitHint:             'Run! Get out of here!',
 
     lucaAppears:          'Luca: "Marco, you are the school legend now!"',
+
+    bonusStoryTitle:      '— BONUS! —',
+    bonusStoryBody:       "Luca is on the loose!|Chain as many tumbles as you can!",
+    bonusResultTitle:     '— BONUS! —',
+    bonusCaramboleLabel:  'TUMBLES: ',
+    bonusLivesLabel:      '+{0} LIVES',
+    bonusScoreLabel:      '+{0} PTS',
+    bonusNoBonusLabel:    'No tumbles this time!',
   };
 
   var it = {
@@ -220,6 +228,14 @@
     exitHint:             'Corri! Esci di qui!',
 
     lucaAppears:          'Luca: "Marco, ora sei tu la leggenda della Scuola!"',
+
+    bonusStoryTitle:      '— BONUS! —',
+    bonusStoryBody:       "Luca è in libertà!|Fai più carambole che puoi!",
+    bonusResultTitle:     '— BONUS! —',
+    bonusCaramboleLabel:  'CARAMBOLE: ',
+    bonusLivesLabel:      '+{0} VITE',
+    bonusScoreLabel:      '+{0} PTS',
+    bonusNoBonusLabel:    'Nessuna carambola stavolta!',
   };
 
   window.STRINGS = lang === 'it' ? it : en;

@@ -541,3 +541,38 @@ function drawMachines() {
     }
   }
 }
+
+// ── Bonus level draw functions ────────────────────────────────────────────────
+
+function drawPaperProjectiles() {
+  for (var i = 0; i < paperProjectiles.length; i++) {
+    var p = paperProjectiles[i];
+    var px = Math.round(p.x), py = Math.round(p.y);
+    // Small 3×3 crumpled paper projectile — slightly different look from L5 paperBall
+    ctx.fillStyle = PAL.paperBall;
+    ctx.fillRect(px, py, 3, 3);
+    ctx.fillStyle = PAL.paperBallShadow;
+    ctx.fillRect(px + (p.dir > 0 ? 0 : 2), py + 2, 1, 1);
+  }
+}
+
+function drawBonusWanderer(w) {
+  // Wanderers use drawChar with student-like colours; shirtColor is the body colour.
+  // knockedT > 0 and knockable:true → drawChar renders the lying-down sprite.
+  drawChar(w.x, w.y, w.dir, w.animT, w.shirtColor, COLOURS_WANDERER, false, false, w.knockedT);
+  if (w.state === 'tripped' && w.knockedT > 0) {
+    // Exclamation mark above tripped wanderer
+    ctx.fillStyle = PAL.exclamation;
+    ctx.save(); ctx.textAlign = 'center';
+    ctx.font = '6px ' + FF;
+    ctx.fillText('!', Math.round(w.x + PW/2), Math.round(w.y - 4));
+    ctx.restore();
+  }
+}
+
+function drawBonusWanderers() {
+  if (!bonusActive) return;
+  for (var i = 0; i < bonusWanderers.length; i++) {
+    drawBonusWanderer(bonusWanderers[i]);
+  }
+}

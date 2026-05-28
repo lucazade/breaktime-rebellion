@@ -297,3 +297,46 @@ var LEVELS = (function() {
 
   ];
 })();
+
+// ── BONUS LEVEL "CARAMBOLA!" ─────────────────────────────────────────────────
+// Not in LEVELS[] — loaded via bonusActive flag after L5.
+// timer: per-difficulty map; wanderers: 7 students patrolling the 3 floors.
+var BONUS_LEVEL = (function() {
+  return Object.assign({}, CONFIG.level, {
+
+    timer: { easy: 60, medium: 45, hard: 30 },
+
+    playerStart: { x: 18, y: GY - PH - walkOffset },
+
+    mechanics: {
+      isBonusLevel: true,
+      throwPaper:   true,
+      ringBell:     false,
+    },
+
+    bags:     [],
+    students: [],  // no seated students — wanderers take their place
+
+    teachers: [
+      {x:160, y:GY-PH-walkOffset, dir:-1, minX:20, maxX:290, speed:0.55, color:PAL.profRossiBody,   name:'Prof.Rossi',   sight:0},
+      {x:160, y:MY-PH-walkOffset, dir: 1, minX:20, maxX:290, speed:0.50, color:PAL.profCelesteBody, name:'Prof.Celeste', sight:0},
+      {x:140, y:TY-PH-walkOffset, dir:-1, minX:20, maxX:275, speed:0.60, color:PAL.profNeriBody,    name:'Prof.Neri',    sight:0},
+    ],
+
+    janitors: [],
+
+    wanderers: [
+      // GY floor (3)
+      {x:220, y:GY-PH-walkOffset, dir: 1, minX:140, maxX:290, shirtColor:PAL.wandererShirt1},
+      {x: 60, y:GY-PH-walkOffset, dir:-1, minX: 20, maxX:130, shirtColor:PAL.wandererShirt2},
+      {x:170, y:GY-PH-walkOffset, dir: 1, minX:130, maxX:230, shirtColor:PAL.wandererShirt3},
+      // MY floor (2)
+      {x:200, y:MY-PH-walkOffset, dir:-1, minX:120, maxX:285, shirtColor:PAL.wandererShirt4},
+      {x: 60, y:MY-PH-walkOffset, dir: 1, minX: 20, maxX:120, shirtColor:PAL.wandererShirt5},
+      // TY floor (2)
+      {x:180, y:TY-PH-walkOffset, dir:-1, minX:100, maxX:265, shirtColor:PAL.wandererShirt6},
+      {x: 50, y:TY-PH-walkOffset, dir: 1, minX: 20, maxX:100, shirtColor:PAL.wandererShirt7},
+    ],
+
+  });
+})();

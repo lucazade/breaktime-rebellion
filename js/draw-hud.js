@@ -244,25 +244,58 @@ function drawHUD() {
     for (var _i = 0; _i < Math.max(0, lives); _i++) _drawHeart(VH.heartsX + _i * _heartStep, _heartY, _hs);
     ctx.textAlign = 'right'; ctx.fillStyle = PAL.hudText;
     ctx.fillText(String(score).padStart(5,'0'), VH.scoreX, _textY);
-    var _oi = _hudObjInfo();
-    var _txt = _oi.done + '/' + _oi.total;
-    if (_txt !== _hudTxtCache.txt) { _hudTxtCache.txt = _txt; _hudTxtCache.w = ctx.measureText(_txt).width; }
-    var _lvlTxt = fmt(STRINGS.hudLevel, currentLevel);
-    var _lvlW = ctx.measureText(_lvlTxt).width;
-    var _sepW = 1;  // separator line width
-    var _sepGap = 4; // gap on each side of separator
-    var _grpW = _lvlW + _sepGap + _sepW + _sepGap + _iconSz + VH.dotGap + _hudTxtCache.w;
-    var _sx = Math.round(VH.centerX - _grpW / 2);
-    ctx.textAlign = 'left'; ctx.fillStyle = PAL.hudText;
-    ctx.fillText(_lvlTxt, _sx, _textY);
-    var _sepX = _sx + _lvlW + _sepGap;
-    ctx.fillStyle = PAL.hudText; ctx.globalAlpha = _hudAlpha * 0.4;
-    ctx.fillRect(_sepX, 1, _sepW, VH.rowH - 2);
-    ctx.globalAlpha = _hudAlpha;
-    var _iconX = _sepX + _sepW + _sepGap;
-    _drawHudIcon(_oi.mechanic, _iconX, _iconY, _oi.color, _ds);
-    ctx.textAlign = 'left'; ctx.fillStyle = PAL.hudCounter;
-    ctx.fillText(_txt, _iconX + _iconSz + VH.dotGap, _textY);
+    if (bonusActive) {
+      // Bonus HUD: "CARAMBOLE: N | +N VITE  +NNNNN PTS"
+      ctx.font = _f; ctx.textAlign = 'center';
+      // "CARAMBOLE: " in label color, count N in count color
+      var _bLabelTxt = STRINGS.bonusCaramboleLabel;
+      var _bCountTxt = String(bonusCarambole);
+      var _bLives  = bonusBonusLives  > 0 ? fmt(STRINGS.bonusLivesLabel,  bonusBonusLives)  : '';
+      var _bScore  = bonusBonusScore  > 0 ? fmt(STRINGS.bonusScoreLabel,  bonusBonusScore)  : '';
+      var _bRight  = (_bLives && _bScore) ? _bLives + '  ' + _bScore : _bLives || _bScore;
+      var _blLabelW = ctx.measureText(_bLabelTxt).width;
+      var _blCountW = ctx.measureText(_bCountTxt).width;
+      var _blW = _blLabelW + _blCountW;
+      var _brW = _bRight ? ctx.measureText('  |  ' + _bRight).width : 0;
+      var _bsx = Math.round(VH.centerX - (_blW + _brW) / 2);
+      ctx.textAlign = 'left';
+      ctx.fillStyle = PAL.bonusHudLabel; ctx.fillText(_bLabelTxt, _bsx, _textY);
+      ctx.fillStyle = PAL.bonusHudCount; ctx.fillText(_bCountTxt, _bsx + _blLabelW, _textY);
+      if (_bRight) {
+        ctx.fillStyle = PAL.hudText;
+        ctx.fillText('  |  ', _bsx + _blW, _textY);
+        var _bAfterSep = _bsx + _blW + ctx.measureText('  |  ').width;
+        ctx.fillStyle = PAL.bonusHudLives;
+        if (_bLives && _bScore) {
+          ctx.fillText(_bLives + '  ', _bAfterSep, _textY);
+          ctx.fillStyle = PAL.bonusHudScore;
+          ctx.fillText(_bScore, _bAfterSep + ctx.measureText(_bLives + '  ').width, _textY);
+        } else {
+          ctx.fillStyle = _bLives ? PAL.bonusHudLives : PAL.bonusHudScore;
+          ctx.fillText(_bRight, _bAfterSep, _textY);
+        }
+      }
+    } else {
+      var _oi = _hudObjInfo();
+      var _txt = _oi.done + '/' + _oi.total;
+      if (_txt !== _hudTxtCache.txt) { _hudTxtCache.txt = _txt; _hudTxtCache.w = ctx.measureText(_txt).width; }
+      var _lvlTxt = fmt(STRINGS.hudLevel, currentLevel);
+      var _lvlW = ctx.measureText(_lvlTxt).width;
+      var _sepW = 1;  // separator line width
+      var _sepGap = 4; // gap on each side of separator
+      var _grpW = _lvlW + _sepGap + _sepW + _sepGap + _iconSz + VH.dotGap + _hudTxtCache.w;
+      var _sx = Math.round(VH.centerX - _grpW / 2);
+      ctx.textAlign = 'left'; ctx.fillStyle = PAL.hudText;
+      ctx.fillText(_lvlTxt, _sx, _textY);
+      var _sepX = _sx + _lvlW + _sepGap;
+      ctx.fillStyle = PAL.hudText; ctx.globalAlpha = _hudAlpha * 0.4;
+      ctx.fillRect(_sepX, 1, _sepW, VH.rowH - 2);
+      ctx.globalAlpha = _hudAlpha;
+      var _iconX = _sepX + _sepW + _sepGap;
+      _drawHudIcon(_oi.mechanic, _iconX, _iconY, _oi.color, _ds);
+      ctx.textAlign = 'left'; ctx.fillStyle = PAL.hudCounter;
+      ctx.fillText(_txt, _iconX + _iconSz + VH.dotGap, _textY);
+    }
   }
   // Timer bar
   ctx.globalAlpha = VH.timerAlpha !== undefined ? VH.timerAlpha : 1;

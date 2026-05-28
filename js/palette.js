@@ -67,6 +67,15 @@ const PAL = {
   studentShirt:      '#808080',  // shirt
   exclamation:       '#FF2222',  // student exclamation mark when disturbed
 
+  // ── Wandering students (bonus level) ─────────────────────
+  wandererShirt1: '#e63946',  // red
+  wandererShirt2: '#2196F3',  // blue
+  wandererShirt3: '#4CAF50',  // green
+  wandererShirt4: '#FF9800',  // orange
+  wandererShirt5: '#9C27B0',  // purple
+  wandererShirt6: '#00BCD4',  // cyan
+  wandererShirt7: '#FFEB3B',  // yellow
+
   // ── Preside ───────────────────────────────────────────────
   presideSkin:       '#faa462',  // face, hands
   presideSkinShadow: '#ff7949',  // neck, collar shadow
@@ -113,6 +122,12 @@ const PAL = {
   timerGreen:       '#44ee66',           // timer bar >= 60%
   timerYellow:      '#FEDC02',           // timer bar 30–60%
   timerRed:         '#ff2244',           // timer bar < 30%
+
+  // ── Bonus HUD ─────────────────────────────────────────────
+  bonusHudLabel:  '#FEDC02',  // "CARAMBOLE:" label
+  bonusHudCount:  '#FFFFFF',  // carambole counter
+  bonusHudLives:  '#33B84B',  // "+N VITE"
+  bonusHudScore:  '#00d2ff',  // "+NNNNN PTS"
 
   // ── Mechanic dot indicators ───────────────────────────────
   dotBoards:          '#44ee66',  // L1 boards — body
@@ -172,6 +187,12 @@ const PAL = {
   creditsText:        '#FFFFFF',  // credits member names and OK button
   creditsRole:        '#33B84B',  // credits team name ("LucazadeSoft Team")
   creditsMemberRole:  '#00d2ff',  // credits individual role labels (Orchestrator, Lead Developer…)
+
+  // ── Bonus banners ─────────────────────────────────────────
+  bonusBannerTitle:  '#FEDC02',  // opening banner title "LIVELLO BONUS!" / "BONUS LEVEL!"
+  bonusBannerText:   '#FFFFFF',  // opening banner body text
+  bonusResultLives:  '#33B84B',  // result banner "+N VITE"
+  bonusResultScore:  '#00d2ff',  // result banner "+NNNNN PTS"
 
 // ═══════════════════════════════════════════════════════════
 //  GAME OBJECTS
