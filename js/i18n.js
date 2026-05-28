@@ -116,13 +116,14 @@
     lucaAppears:          'Luca: "Marco, you are the school legend now!"',
 
     bonusStoryTitle:      '— BONUS! —',
-    bonusStoryBody:       "Luca is on the loose!|Hit students AND teachers!",
+    bonusStoryBody:       "Luca is on the loose!|Hit students and teachers!|Hold to hit harder!",
     bonusResultTitle:     '— BONUS! —',
     bonusCaramboleLabel:  'HITS: ',
     bonusLivesLabel:      '+{0} LIVES',
     bonusScoreLabel:      '+{0} PTS',
     bonusNoBonusLabel:    'No hits this time!',
     bonusHit:             'HIT!',
+    bonusMilestone:       '+1 LIFE!',
   };
 
   var it = {
@@ -231,13 +232,14 @@
     lucaAppears:          'Luca: "Marco, ora sei tu la leggenda della Scuola!"',
 
     bonusStoryTitle:      '— BONUS! —',
-    bonusStoryBody:       "Luca è in libertà!|Colpisci alunni E professori!",
+    bonusStoryBody:       "Luca è in libertà!|Colpisci alunni e professori!|Tiene premuto per colpire più forte!",
     bonusResultTitle:     '— BONUS! —',
     bonusCaramboleLabel:  'COLPITI: ',
     bonusLivesLabel:      '+{0} VITE',
     bonusScoreLabel:      '+{0} PTS',
     bonusNoBonusLabel:    'Nessun colpo stavolta!',
     bonusHit:             'COLPITO!',
+    bonusMilestone:       '+1 VITA!',
   };
 
   window.STRINGS = lang === 'it' ? it : en;

@@ -383,6 +383,7 @@ function updateBonusPaperProjectiles() {
         hit = true;
         bonusBonusScore += 500;
         bonusCarambole++;
+        _bonusMilestone(Math.round(t.x + PW/2), Math.round(t.y - 30));
         addFloating(Math.round(t.x + PW/2), Math.round(t.y - 18), STRINGS.bonusHit, PAL.bonusBannerTitle);
         addFloating(Math.round(t.x + PW/2), Math.round(t.y - 10), '+500', PAL.scoreParticle);
         addParticles(t.x + PW/2, t.y, PAL.scoreParticle, 6);
@@ -405,12 +406,20 @@ function updateBonusPaperProjectiles() {
   }
 }
 
+function _bonusMilestone(x, y) {
+  if (bonusCarambole % 30 === 0) {
+    bonusBonusLives++;
+    addFloating(x, y, STRINGS.bonusMilestone, PAL.bonusResultLives);
+  }
+}
+
 function _tripWanderer(w) {
   if (w.state !== 'walking' || w.recoverT > 0) return;
   w.state = 'tripped';
   w.knockedT = 300;
   bonusBonusScore += 500;
   bonusCarambole++;
+  _bonusMilestone(Math.round(w.x + PW/2), Math.round(w.y - 30));
   addFloating(Math.round(w.x), Math.round(w.y - 14), STRINGS.bonusHit, PAL.bonusBannerTitle);
   addFloating(Math.round(w.x), Math.round(w.y - 22), '+500', PAL.scoreParticle);
   addParticles(Math.round(w.x + PW/2), Math.round(w.y), PAL.scoreParticle, 10);
