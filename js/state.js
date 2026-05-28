@@ -36,8 +36,6 @@ var bonusActive      = false;   // true during the CARAMBOLA! bonus level
 var bonusCarambole   = 0;       // tumbles scored in current bonus
 var bonusBonusLives  = 0;       // extra lives accumulated
 var bonusBonusScore  = 0;       // extra score accumulated
-var bonusChainMult   = 1;       // chain multiplier (x2 when chain active)
-var bonusChainResetT = 0;       // countdown to reset chain multiplier
 var bonusResultActive = false;  // true when bonus-result banner is shown
 var paperProjectiles = [];      // [{x,y,dir,decay}] bonus paper projectiles
 var bonusWanderers   = [];      // wandering students (bonus only)
@@ -138,8 +136,6 @@ function resetLevel() {
   bonusCarambole    = 0;
   bonusBonusLives   = 0;
   bonusBonusScore   = 0;
-  bonusChainMult    = 1;
-  bonusChainResetT  = 0;
   bonusResultActive = false;
   paperProjectiles  = [];
   bonusWanderers = (lv.wanderers || []).map(function(w, i) {

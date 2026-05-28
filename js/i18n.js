@@ -116,12 +116,13 @@
     lucaAppears:          'Luca: "Marco, you are the school legend now!"',
 
     bonusStoryTitle:      '— BONUS! —',
-    bonusStoryBody:       "Luca is on the loose!|Chain as many tumbles as you can!",
+    bonusStoryBody:       "Luca is on the loose!|Hit as many students as you can!",
     bonusResultTitle:     '— BONUS! —',
-    bonusCaramboleLabel:  'TUMBLES: ',
+    bonusCaramboleLabel:  'HIT: ',
     bonusLivesLabel:      '+{0} LIVES',
     bonusScoreLabel:      '+{0} PTS',
-    bonusNoBonusLabel:    'No tumbles this time!',
+    bonusNoBonusLabel:    'No hits this time!',
+    bonusHit:             'HIT!',
   };
 
   var it = {
@@ -230,12 +231,13 @@
     lucaAppears:          'Luca: "Marco, ora sei tu la leggenda della Scuola!"',
 
     bonusStoryTitle:      '— BONUS! —',
-    bonusStoryBody:       "Luca è in libertà!|Fai più carambole che puoi!",
+    bonusStoryBody:       "Luca è in libertà!|Colpisci più alunni che puoi!",
     bonusResultTitle:     '— BONUS! —',
-    bonusCaramboleLabel:  'CARAMBOLE: ',
+    bonusCaramboleLabel:  'COLPITI: ',
     bonusLivesLabel:      '+{0} VITE',
     bonusScoreLabel:      '+{0} PTS',
-    bonusNoBonusLabel:    'Nessuna carambola stavolta!',
+    bonusNoBonusLabel:    'Nessun colpo stavolta!',
+    bonusHit:             'COLPITO!',
   };
 
   window.STRINGS = lang === 'it' ? it : en;

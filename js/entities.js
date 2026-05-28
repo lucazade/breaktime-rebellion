@@ -381,13 +381,6 @@ function updateBonusPaperProjectiles() {
         hit = true;
         addParticles(t.x + PW/2, t.y, PAL.scoreParticle, 6);
         GameAudio.playSfx('hit');
-        for (let _wi = 0; _wi < bonusWanderers.length; _wi++) {
-          const _w = bonusWanderers[_wi];
-          if (_w.state !== 'walking' || _w.recoverT > 0) continue;
-          if (Math.abs(_w.y - t.y) < 20 && Math.abs(_w.x - t.x) < 8) {
-            _tripWanderer(_w); break;
-          }
-        }
         break;
       }
     }
@@ -409,29 +402,18 @@ function updateBonusPaperProjectiles() {
 
 function _tripWanderer(w) {
   if (w.state !== 'walking' || w.recoverT > 0) return;
-  // Chain multiplier: reset timer; if chain was already active, award x2
-  var mult = bonusChainMult;
-  bonusChainResetT = 90;
-  bonusChainMult = 2;
   w.state = 'tripped';
   w.knockedT = 60;
-  var pts = 500 * mult;
-  bonusBonusScore += pts;
+  bonusBonusScore += 500;
   bonusCarambole++;
-  w.chainHit = mult > 1;
-  addFloating(Math.round(w.x), Math.round(w.y - 14), 'CARAMBOLA!', PAL.bonusBannerTitle);
-  addFloating(Math.round(w.x), Math.round(w.y - 22), '+' + pts, PAL.scoreParticle);
+  addFloating(Math.round(w.x), Math.round(w.y - 14), STRINGS.bonusHit, PAL.bonusBannerTitle);
+  addFloating(Math.round(w.x), Math.round(w.y - 22), '+500', PAL.scoreParticle);
   addParticles(Math.round(w.x + PW/2), Math.round(w.y), PAL.scoreParticle, 10);
   GameAudio.playSfx('hit');
 }
 
 function updateWanderers() {
   if (!bonusActive) return;
-  // Decay chain multiplier
-  if (bonusChainResetT > 0) {
-    bonusChainResetT--;
-    if (bonusChainResetT === 0) bonusChainMult = 1;
-  }
   for (let i = 0; i < bonusWanderers.length; i++) {
     const w = bonusWanderers[i];
     if (w.state === 'tripped') {
@@ -453,18 +435,6 @@ function updateWanderers() {
       }
       if (w.x >= w.maxX) { w.x = w.maxX; w.dir = -1; }
       if (w.x <= w.minX) { w.x = w.minX; w.dir =  1; }
-    }
-  }
-  // Trigger wanderers near knocked teachers
-  for (let ti = 0; ti < teachers.length; ti++) {
-    const t = teachers[ti];
-    if (t.knockedT <= 0) continue;
-    for (let wi = 0; wi < bonusWanderers.length; wi++) {
-      const w = bonusWanderers[wi];
-      if (w.state !== 'walking') continue;
-      if (Math.abs(w.y - t.y) < 20 && Math.abs(w.x - t.x) < 8) {
-        _tripWanderer(w); break;  // max one trip per teacher per frame
-      }
     }
   }
 }
