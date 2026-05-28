@@ -54,7 +54,7 @@ const COLOURS_LUCA = {
   shoes:       PAL.lucaShoes,
   shoeSole:    null,
   tie:         null,
-  stripe:      PAL.lucaPocket,  // vertical shirt-front line
+  stripe:      PAL.lucaStripe,  // vertical shirt-front line
   backpack:    null,
   pocket:      PAL.lucaPocket,
   knockable:   false,

@@ -99,6 +99,7 @@ const PAL = {
   lucaSkinShadow:    '#ff7949',  // neck, collar shadow
   lucaHair:          '#581e00',  // hair
   lucaBody:          '#FFFFFF',  // shirt (bodyCol)
+  lucaStripe:        '#000000',  // vertical shirt-front line (shirt placket)
   lucaPocket:        '#000000',  // breast pocket
   lucaTrousers:      '#012A9F',  // trousers
   lucaShoes:         '#000000',  // shoes
