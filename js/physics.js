@@ -265,18 +265,22 @@ function updatePlayer() {
       }
     }
   }
-  // Bonus throw charge — hold action to fill bar; fires when full, resets on release
-  if (bonusActive && player.throwAnim === 0 && !player.onStair) {
+  // Bonus throw charge — hold action to fill bar; fires when full, resets on release.
+  // throwCooldown reused as post-throw lockout (~1s), decremented by updatePaperBalls().
+  if (bonusActive && player.throwAnim === 0 && throwCooldown === 0 && !player.onStair) {
     if (K.action) {
       actionPressed = false;
       player.throwChargeT++;
       if (player.throwChargeT >= throwChargeTime) {
         player.throwAnim = 18;
         player.throwChargeT = 0;
+        throwCooldown = 60;  // ~1s before next throw can start
       }
     } else {
       player.throwChargeT = 0;
     }
+  } else if (bonusActive && throwCooldown > 0) {
+    player.throwChargeT = 0;  // can't charge during cooldown
   }
 
   if (player.shaking) return;
