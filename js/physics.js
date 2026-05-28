@@ -273,10 +273,11 @@ function updatePlayer() {
       actionPressed = false;
     }
     if (!K.action || player.throwChargeT >= throwChargeTime) {
-      var _pct = player.throwChargeT / throwChargeTime;
-      var _decay = Math.round(5 + 65 * _pct);   // tap≈8 (16px), full≈70 (140px)
-      var _vy   = 1.0 - 1.5 * _pct;             // tap=+1.0 (scende subito), full=-0.5 (arco)
-      var _g    = 0.20 - 0.16 * _pct;           // tap=0.20 (pesante), full=0.04 (leggera)
+      var _pct  = player.throwChargeT / throwChargeTime;
+      var _decay = Math.round(5 + 65 * _pct);    // tap≈8, full=70
+      var _spd  = 2.0 + 1.5 * _pct;             // tap=2.0px/f, full=3.5px/f
+      var _vy   = 0.3 - 0.8 * _pct;             // tap=+0.3 (lieve discesa), full=-0.5 (arco piatto)
+      var _g    = 0.15 - 0.13 * _pct;           // tap=0.15 (cade), full=0.02 (quasi orizzontale)
       player.throwCharging = false;
       player.throwChargeT = 0;
       throwCooldown = 30;
@@ -285,6 +286,7 @@ function updatePlayer() {
         y: player.y - 4,
         dir: player.dir,
         decay: _decay,
+        spd: _spd,
         vy: _vy,
         g:  _g,
       });
