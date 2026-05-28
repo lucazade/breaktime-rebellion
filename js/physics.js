@@ -274,8 +274,9 @@ function updatePlayer() {
     }
     if (!K.action || player.throwChargeT >= throwChargeTime) {
       var _pct = player.throwChargeT / throwChargeTime;
-      var _decay = Math.round(5 + 65 * _pct);         // tap≈8, full≈70
-      var _vy   = -1.5 * _pct;                        // tap=flat, full=slight upward arc
+      var _decay = Math.round(5 + 65 * _pct);   // tap≈8 (16px), full≈70 (140px)
+      var _vy   = 1.0 - 1.5 * _pct;             // tap=+1.0 (scende subito), full=-0.5 (arco)
+      var _g    = 0.20 - 0.16 * _pct;           // tap=0.20 (pesante), full=0.04 (leggera)
       player.throwCharging = false;
       player.throwChargeT = 0;
       throwCooldown = 30;
@@ -285,6 +286,7 @@ function updatePlayer() {
         dir: player.dir,
         decay: _decay,
         vy: _vy,
+        g:  _g,
       });
     }
   }

@@ -368,7 +368,7 @@ function updateBonusPaperProjectiles() {
   for (let i = paperProjectiles.length - 1; i >= 0; i--) {
     const p = paperProjectiles[i];
     p.x += p.dir * 2;
-    p.vy = (p.vy || 0) + 0.07;  // gravity
+    p.vy += p.g;   // per-projectile gravity (heavy for tap, light for full charge)
     p.y += p.vy;
     p.decay--;
     if (p.decay <= 0 || p.x < 0 || p.x > W || p.y > H) { paperProjectiles.splice(i, 1); continue; }
