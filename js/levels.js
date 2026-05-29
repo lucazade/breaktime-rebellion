@@ -304,7 +304,7 @@ var LEVELS = (function() {
 var BONUS_LEVEL = (function() {
   return Object.assign({}, CONFIG.level, {
 
-    timer: { easy: 60, medium: 45, hard: 30 },
+    timer: 60,
 
     playerStart: { x: 18, y: GY - PH - walkOffset },
 
