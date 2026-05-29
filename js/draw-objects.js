@@ -118,15 +118,19 @@ function drawBell() {
   // Clapper (2px × 1 row)
   ctx.fillStyle = drk; ctx.fillRect(X+2, by+6, 2, 1);
 
-  // Pulsing glow when the objective is complete — outer halo brighter than inner core
+  // Expanding concentric rings when objective is complete
   if ((allBoards || allBags || allMachines || allBall || allStudents || allBooks || allSink || allBins || allSprinklers) && !BELL.done) {
     var _bcx = bx + 3, _bcy = by + 3;
-    var _pulse = (1 + Math.sin(frame * 0.14)) / 2;
-    ctx.fillStyle = PAL.bellGlow;
-    ctx.globalAlpha = 0.13 + 0.14 * _pulse;
-    ctx.beginPath(); ctx.arc(_bcx, _bcy, 10, 0, Math.PI * 2); ctx.fill();
-    ctx.globalAlpha = 0.08 + 0.10 * _pulse;
-    ctx.beginPath(); ctx.arc(_bcx, _bcy, 6,  0, Math.PI * 2); ctx.fill();
+    var _period = 65, _maxR = 14, _rings = 3;
+    ctx.strokeStyle = PAL.bellGlow;
+    ctx.lineWidth = 1;
+    for (var _ri = 0; _ri < _rings; _ri++) {
+      var _phase = ((frame + _ri * Math.round(_period / _rings)) % _period) / _period;
+      ctx.globalAlpha = (1 - _phase) * 0.55;
+      ctx.beginPath();
+      ctx.arc(_bcx, _bcy, 2 + _phase * (_maxR - 2), 0, Math.PI * 2);
+      ctx.stroke();
+    }
     ctx.globalAlpha = 1;
   }
 }

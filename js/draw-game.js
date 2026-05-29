@@ -2,7 +2,6 @@
 
 var _bgCache        = null; // offscreen canvas: bgImage pre-scaled to CV size, rebuilt on first draw
 var _desksCache     = null; // offscreen canvas: all desks pre-rendered at physical resolution
-var _bellGlowCache  = null; // offscreen canvas: bell glow circle at r=7, drawn once
 var _boardsCache    = null; // offscreen canvas: all boards (static + done state), keyed by _boardsCacheKey
 var _boardsCacheKey = null; // serialized done states e.g. "0101" — rebuild on change
 
