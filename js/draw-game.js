@@ -58,9 +58,22 @@ function drawSight() {
   for (let i = 0; i < teachers.length; i++) {
     const t = teachers[i];
     if (t.chasing || t.name === 'Guardiano') continue;
-    ctx.fillStyle = PAL.sightCone;
-    const rx = t.dir>0 ? t.x+PW : t.x-t.sight;
-    ctx.fillRect(rx, t.y-2, t.sight, PH+4);
+    const eyeY   = t.y - 5;
+    const feetY  = t.y + PH;
+    const nearH  = 4;
+    const _nearX = t.dir > 0 ? t.x + PW + 1        : t.x - 1;
+    const _farX  = t.dir > 0 ? t.x + PW + t.sight : t.x - t.sight;
+    const _grad  = ctx.createLinearGradient(_nearX, 0, _farX, 0);
+    _grad.addColorStop(0,   'rgba(255,255,255,0.12)');
+    _grad.addColorStop(1,   'rgba(255,255,255,0.06)');
+    ctx.fillStyle = _grad;
+    ctx.beginPath();
+    ctx.moveTo(_nearX, eyeY);
+    ctx.lineTo(_farX,  eyeY);
+    ctx.lineTo(_farX,  feetY);
+    ctx.lineTo(_nearX, eyeY + nearH);
+    ctx.closePath();
+    ctx.fill();
     if (CONFIG.debug.sightDebug) {
       const rearSight = Math.round(t.sight * 0.4);
       const rrx = t.dir>0 ? t.x-rearSight : t.x+PW;
