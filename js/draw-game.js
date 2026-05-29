@@ -57,10 +57,16 @@ function drawNightOverlay() {
 function drawSight() {
   for (let i = 0; i < teachers.length; i++) {
     const t = teachers[i];
-    if (t.chasing || t.name === 'Guardiano') continue; // guards have no visible sight cone
+    if (t.chasing || t.name === 'Guardiano') continue;
     ctx.fillStyle = PAL.sightCone;
     const rx = t.dir>0 ? t.x+PW : t.x-t.sight;
     ctx.fillRect(rx, t.y-2, t.sight, PH+4);
+    if (CONFIG.debug.sightDebug) {
+      const rearSight = Math.round(t.sight * 0.4);
+      const rrx = t.dir>0 ? t.x-rearSight : t.x+PW;
+      ctx.fillStyle = 'rgba(255,0,0,0.3)';
+      ctx.fillRect(rrx, t.y-2, rearSight, PH+4);
+    }
   }
 }
 

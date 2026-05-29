@@ -19,7 +19,7 @@ function ringBell() {
 function alertTeachers(bx, by) {
   for (let i = 0; i < teachers.length; i++) {
     const t = teachers[i];
-    const _effectiveSight = (bx - t.x) * t.dir >= 0 ? t.sight : t.sight * 0.2;
+    const _effectiveSight = (bx - t.x) * t.dir >= 0 ? t.sight : t.sight * 0.4;
     if (Math.abs(t.y - player.y) < 20 && Math.abs(t.x - bx) < _effectiveSight) {
       t.alertT = 120; t.chasing = true; t.chaseX = player.x; t.reactionT = 15;
     }

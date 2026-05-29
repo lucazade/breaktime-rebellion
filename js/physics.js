@@ -514,6 +514,7 @@ function tryAction() {
       player.boardCommitT = 45;
       player.boardCommitTarget = nearest;
       player.dir = (player.x + PW/2 < nearest.x + BW/2) ? 1 : -1;
+      alertTeachers(player.x + PW/2, player.y);
       GameAudio.playSfx('spray');
     }
     // No message when action pressed far from a board — proximity hints handle it.

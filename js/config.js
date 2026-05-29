@@ -44,6 +44,7 @@ const CONFIG = {
     unlockAllLevels: false,
     godMode:         false,
     startAtBonus:    false,
+    sightDebug:      false,
   },
 };
 
