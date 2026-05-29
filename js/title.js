@@ -50,7 +50,7 @@ function _initTitleState() {
   var debug = CONFIG.debug.unlockAllLevels;
   _btrMax = debug ? LEVELS.length
     : Math.min(LEVELS.length, Math.max(1, parseInt(localStorage.getItem('btr_max_level_' + gameDifficulty) || '1')));
-  currentLevel = Math.max(1, Math.min(_btrMax, parseInt(localStorage.getItem('btr_last_level_' + gameDifficulty) || '1')));
+  currentLevel = _btrMax;
   _titleStarting = false;
   _showLegend(true);
 }
@@ -78,7 +78,7 @@ function _titleCycleDifficulty() {
   var debug = CONFIG.debug.unlockAllLevels;
   _btrMax = debug ? LEVELS.length
     : Math.min(LEVELS.length, Math.max(1, parseInt(localStorage.getItem('btr_max_level_' + gameDifficulty) || '1')));
-  currentLevel = Math.max(1, Math.min(_btrMax, parseInt(localStorage.getItem('btr_last_level_' + gameDifficulty) || '1')));
+  currentLevel = _btrMax;
 }
 
 function _titleCanvasClick(lx, ly) {
