@@ -281,7 +281,7 @@ const PAL = {
   mirrorGlass:      '#7ab8d8',               // mirror glass reflection
   mirrorHighlight:  'rgba(255,255,255,0.45)', // mirror glass shine overlay
   waterDrop:        '#4488cc',               // water drop dripping from tap
-  sinkBasinOuter:   '#666666',               // basin outer shell
+  sinkBasinOuter:   '#888888',               // basin outer shell
   sinkTap:          '#777777',               // tap body
   sinkTapHandle:    '#aaaaaa',               // tap handle
   sinkBasinMid:     '#b0b0b0',               // basin mid layer
@@ -300,8 +300,6 @@ const PAL = {
   binDark:        '#0d4d0d',               // rim / border
   binRecycle:     'rgba(255,255,255,0.75)', // recycle symbol overlay
   charred:        '#2a1a00',               // charred debris after explosion (dark brown)
-  charredGray:    '#444444',               // charred debris grey accent pieces
-  binCharredDark: '#333333',               // charred debris dark layer
 
   // ── Fire / explosion ──────────────────────────────────────
   flame:        '#FF6600',  // lighter / fuse flame

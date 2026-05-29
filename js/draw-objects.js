@@ -359,11 +359,7 @@ function drawBins() {
     const bx = Math.round(b.x), by = Math.round(b.y);
 
     if (b.exploded) {
-      // Charred debris
       ctx.fillStyle = PAL.charred; ctx.fillRect(bx-2, by-5, 13, 5);
-      ctx.fillStyle = PAL.charredGray;    ctx.fillRect(bx-4, by-7,  3, 2);
-      ctx.fillStyle = PAL.charredGray;    ctx.fillRect(bx+11,by-8,  3, 2);
-      ctx.fillStyle = PAL.binCharredDark;    ctx.fillRect(bx+2, by-9,  2, 3);
       continue;
     }
 
