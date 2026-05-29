@@ -4,7 +4,7 @@
 
 ## 1. Codice 🤖
 - [ ] `npm run check` — nessun dead code
-- [ ] Flag debug disattivi (`CONFIG.debug.unlockAllLevels`, `godMode`)
+- [ ] Flag debug disattivi (`CONFIG.debug.unlockAllLevels`, `godMode`, `startAtBonus`)
 
 ## 2. Test 👤
 - [ ] Testato su desktop (livelli toccati dalla release + smoke test sugli altri)
