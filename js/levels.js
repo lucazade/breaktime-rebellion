@@ -140,9 +140,9 @@ var LEVELS = (function() {
       bags: [],
 
       students: [
-        {x:159, y:GY-19}, {x:183, y:GY-19},
-        {x:159, y:MY-19}, {x:183, y:MY-19},
-        {x:159, y:TY-17}, {x:183, y:TY-17},
+        {x:159, y:GY-19, shirtColor:PAL.wandererShirt1}, {x:183, y:GY-19, shirtColor:PAL.wandererShirt2},
+        {x:159, y:MY-19, shirtColor:PAL.wandererShirt3}, {x:183, y:MY-19, shirtColor:PAL.wandererShirt4},
+        {x:159, y:TY-17, shirtColor:PAL.wandererShirt5}, {x:183, y:TY-17, shirtColor:PAL.wandererShirt6},
       ],
 
       // Teachers near the blackboard (x≈130) simulating active lesson.

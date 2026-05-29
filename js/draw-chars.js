@@ -430,28 +430,35 @@ function drawStudents() {
     const wobble = s.shakeT > 0 ? Math.round(Math.sin(s.shakeT * 0.9) * 2) : 0;
     const bx = Math.round(s.x + 5) + wobble;
     const by = Math.round(s.y);
+    const sc = 0.8;
+    const shirtCol = s.shirtColor;
+    ctx.save();
+    ctx.translate(bx, by);
+    ctx.scale(sc, sc);
+    ctx.translate(-bx, -by);
     if (CONFIG.ui.char.outline) {
       const so = CONFIG.ui.char.outlineSize || 1;
       ctx.fillStyle = CONFIG.ui.char.outlineColor;
-      ctx.fillRect(bx-2-so, by-17-so, 5+so*2, 8+so);   // head — ends at by-10, no expansion into neck row
-      ctx.fillRect(bx-1-so, by-9-so,  3+so*2, 1+so*2); // neck — 3px outline
-      ctx.fillRect(bx-3-so, by-8-so,  7+so*2, 6+so*2); // shirt — full expansion covers shoulder corners at by-9
+      ctx.fillRect(bx-2-so, by-17-so, 5+so*2, 8+so);
+      ctx.fillRect(bx-1-so, by-9-so,  3+so*2, 1+so*2);
+      ctx.fillRect(bx-3-so, by-8-so,  7+so*2, 6+so*2);
       ctx.fillRect(bx-4-so, by-3-so,  2+so*2, 3+so*2);
       ctx.fillRect(bx+2-so, by-3-so,  2+so*2, 3+so*2);
     }
     ctx.fillStyle = PAL.studentHair;       ctx.fillRect(bx-2, by-17, 5, 2);
-    ctx.fillStyle = PAL.studentSkin;       ctx.fillRect(bx-2, by-15, 5, 6);  // face — 6 rows, ends at by-10
+    ctx.fillStyle = PAL.studentSkin;       ctx.fillRect(bx-2, by-15, 5, 6);
     ctx.fillStyle = PAL.charEye;           ctx.fillRect(bx-2, by-13, 2, 2);
-    ctx.fillStyle = PAL.studentSkinShadow; ctx.fillRect(bx-1, by-9,  3, 1);  // neck
-    ctx.fillStyle = PAL.studentShirt;      ctx.fillRect(bx-3, by-8,  7, 6);
+    ctx.fillStyle = PAL.studentSkinShadow; ctx.fillRect(bx-1, by-9,  3, 1);
+    ctx.fillStyle = shirtCol;              ctx.fillRect(bx-3, by-8,  7, 6);
     ctx.fillStyle = PAL.studentSkin;
     ctx.fillRect(bx-4, by-3, 2, 3);
     ctx.fillRect(bx+2, by-3, 2, 3);
+    ctx.restore();
     if (s.disturbed) {
       ctx.fillStyle = PAL.exclamation;
       ctx.save(); ctx.textAlign = 'center';
       ctx.font = '8px ' + FF;
-      ctx.fillText('!', bx+4, by-19);
+      ctx.fillText('!', bx+1, by-19);
       ctx.restore();
     }
   }

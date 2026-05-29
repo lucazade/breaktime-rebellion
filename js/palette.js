@@ -26,7 +26,6 @@ const PAL = {
   teacherTrousers:   '#706f6e',  // trousers, shared by all teacher types
   teacherShoes:      '#862c00',  // shoes, shared by all teacher types
   teacherTie:        '#FEDC02',  // tie, shared by all teacher types
-  sightCone:         'rgba(255,200,0,0.18)',  // NPC sight cone fill
   speechBubble:      'rgba(255,255,255,0.9)', // NPC speech bubble fill
   speechBorder:      '#bcbcbc', // NPC speech bubble border
   speechText:        '#000000', // NPC speech bubble text / tap-to-continue label
@@ -64,7 +63,6 @@ const PAL = {
   studentSkin:       '#faa462',  // face, arms
   studentSkinShadow: '#ff7949',  // neck shadow
   studentHair:       '#581e00',  // hair
-  studentShirt:      '#808080',  // shirt
   exclamation:       '#FF2222',  // student exclamation mark when disturbed
 
   // ── Wandering students (bonus level) ─────────────────────
