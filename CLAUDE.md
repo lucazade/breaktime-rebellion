@@ -119,6 +119,9 @@ Il codice è diviso in moduli distinti che comunicano via variabili globali cond
 - `storyBannerT` — countdown banner storia (solo L1 prima partita); `missionBannerT` — banner missione
 - `fmt(s, ...args)` — formatta stringhe con placeholder `{0}`, `{1}`
 - `bonusActive` — `true` durante il livello bonus CARAMBOLA! (dopo L5); `resetLevel()` usa `BONUS_LEVEL` invece di `LEVELS[currentLevel-1]`
+- `gameDifficulty` — `'easy'|'medium'|'hard'`, salvato in `btr_difficulty` localStorage
+- `unlockedDifficulty` — difficoltà massima sbloccata (`btr_unlocked_difficulty`); sblocco progressivo: easy→medium→hard al completamento L10. Funzioni: `_isDifficultyUnlocked(diff)`, `_unlockNextDifficulty()` in `state.js`. `unlockAllLevels` bypassa il lock. Il title cicla tutte e 3 le difficoltà ma mostra lucchetto e blocca l'avvio se la selezionata è locked.
+- `_dT` (in `resetLevel`) — moltiplicatore timer per difficoltà: `easy 1.0`, `medium 0.917`, `hard 0.833`. Applicato a tutti i timer livello; se `lv.timer` è un oggetto per-difficulty, `_dT` si applica ugualmente.
 - `bonusResultActive` — `true` quando il banner risultato bonus è visibile
 - `bonusCarambole`, `bonusBonusScore`, `bonusBonusLives` — accumulati durante bonus, applicati a `score`/`lives` al tap del banner risultato
 - `bonusWanderers` — studenti wandering (bonus only); `paperProjectiles` — proiettili fisici bonus
