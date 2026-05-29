@@ -60,7 +60,7 @@ function drawSight() {
     if (t.chasing || t.name === 'Guardiano') continue;
     const eyeY   = t.y - 5;
     const feetY  = t.y + PH;
-    const nearH  = 4;
+    const nearH  = 5;
     const _nearX = t.dir > 0 ? t.x + PW + 1        : t.x - 1;
     const _farX  = t.dir > 0 ? t.x + PW + t.sight : t.x - t.sight;
     const _grad  = ctx.createLinearGradient(_nearX, 0, _farX, 0);
