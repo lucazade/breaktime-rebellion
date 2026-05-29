@@ -83,7 +83,7 @@ function resetLevel() {
   bags     = lv.bags.map(function(b)     { return {x:b.x, y:b.y, collected:false}; });
   BELL     = {x:lv.bell.x, y:lv.bell.y, ringing:false, done:false, ringT:0};
   var _dSight = gameDifficulty === 'hard' ? 1.7 : gameDifficulty === 'medium' ? 1.3 : 1.0;
-  var _dT     = gameDifficulty === 'hard' ? 0.667 : gameDifficulty === 'medium' ? 0.833 : 1.0;
+  var _dT     = gameDifficulty === 'hard' ? 0.833 : gameDifficulty === 'medium' ? 0.917 : 1.0;
   teachers = lv.teachers.map(function(t) {
     return {x:t.x, y:t.y, dir:t.dir, minX:t.minX, maxX:t.maxX,
             speed:t.speed, animT:0, color:t.color, name:t.name,
