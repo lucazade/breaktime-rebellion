@@ -562,7 +562,7 @@ function drawBonusWanderer(w) {
   ctx.translate(fx, fy);
   ctx.scale(s, s);
   ctx.translate(-fx, -fy);
-  drawChar(w.x, w.y, w.dir, w.animT, w.shirtColor, COLOURS_WANDERER, false, false, w.knockedT);
+  drawChar(w.x, w.y, w.dir, w.animT, w.shirtColor, Object.assign({}, COLOURS_WANDERER, {hair: w.hairColor}), false, false, w.knockedT);
   ctx.restore();
 }
 

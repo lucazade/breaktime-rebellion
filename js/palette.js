@@ -32,12 +32,15 @@ const PAL = {
 
   // ── Prof.Rossi ────────────────────────────────────────────
   profRossiBody:    '#D21C01',  // jacket
+  profRossiHair:    '#3d1f00',  // hair (dark brown)
 
   // ── Prof.Celeste ──────────────────────────────────────────
   profCelesteBody:  '#0062da',  // jacket
+  profCelesteHair:  '#9e9e9e',  // hair (light gray)
 
   // ── Prof.Neri ─────────────────────────────────────────────
   profNeriBody:     '#262626',  // jacket
+  profNeriHair:     '#1a1a1a',  // hair (near black)
 
   // ── Janitor ───────────────────────────────────────────────
   janitorSkin:       '#faa462',  // face, hands
@@ -73,6 +76,13 @@ const PAL = {
   wandererShirt5: '#9C27B0',  // purple
   wandererShirt6: '#00BCD4',  // cyan
   wandererShirt7: '#FFEB3B',  // yellow
+  wandererHair1:  '#3d1f00',  // dark brown
+  wandererHair2:  '#1a1a1a',  // black
+  wandererHair3:  '#c8a020',  // blonde
+  wandererHair4:  '#3d1f00',  // dark brown
+  wandererHair5:  '#c8a020',  // blonde
+  wandererHair6:  '#1a1a1a',  // black
+  wandererHair7:  '#8b4513',  // chestnut
 
   // ── Preside ───────────────────────────────────────────────
   presideSkin:       '#faa462',  // face, hands

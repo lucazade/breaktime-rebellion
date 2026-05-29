@@ -140,9 +140,9 @@ var LEVELS = (function() {
       bags: [],
 
       students: [
-        {x:159, y:GY-19, shirtColor:PAL.wandererShirt1}, {x:183, y:GY-19, shirtColor:PAL.wandererShirt2},
-        {x:159, y:MY-19, shirtColor:PAL.wandererShirt3}, {x:183, y:MY-19, shirtColor:PAL.wandererShirt4},
-        {x:159, y:TY-17, shirtColor:PAL.wandererShirt5}, {x:183, y:TY-17, shirtColor:PAL.wandererShirt6},
+        {x:159, y:GY-19, shirtColor:PAL.wandererShirt1, hairColor:PAL.wandererHair1}, {x:183, y:GY-19, shirtColor:PAL.wandererShirt2, hairColor:PAL.wandererHair2},
+        {x:159, y:MY-19, shirtColor:PAL.wandererShirt3, hairColor:PAL.wandererHair3}, {x:183, y:MY-19, shirtColor:PAL.wandererShirt4, hairColor:PAL.wandererHair4},
+        {x:159, y:TY-17, shirtColor:PAL.wandererShirt5, hairColor:PAL.wandererHair5}, {x:183, y:TY-17, shirtColor:PAL.wandererShirt6, hairColor:PAL.wandererHair6},
       ],
 
       // Teachers near the blackboard (x≈130) simulating active lesson.
@@ -332,15 +332,15 @@ var BONUS_LEVEL = (function() {
 
     wanderers: [
       // GY floor (3)
-      {x:220, y:GY-PH-walkOffset, dir: 1, minX:140, maxX:290, shirtColor:PAL.wandererShirt1},
-      {x: 60, y:GY-PH-walkOffset, dir:-1, minX: 20, maxX:130, shirtColor:PAL.wandererShirt2},
-      {x:170, y:GY-PH-walkOffset, dir: 1, minX:130, maxX:230, shirtColor:PAL.wandererShirt3},
+      {x:220, y:GY-PH-walkOffset, dir: 1, minX:140, maxX:290, shirtColor:PAL.wandererShirt1, hairColor:PAL.wandererHair1},
+      {x: 60, y:GY-PH-walkOffset, dir:-1, minX: 20, maxX:130, shirtColor:PAL.wandererShirt2, hairColor:PAL.wandererHair2},
+      {x:170, y:GY-PH-walkOffset, dir: 1, minX:130, maxX:230, shirtColor:PAL.wandererShirt3, hairColor:PAL.wandererHair3},
       // MY floor (2)
-      {x:200, y:MY-PH-walkOffset, dir:-1, minX:120, maxX:285, shirtColor:PAL.wandererShirt4},
-      {x: 60, y:MY-PH-walkOffset, dir: 1, minX: 20, maxX:120, shirtColor:PAL.wandererShirt5},
+      {x:200, y:MY-PH-walkOffset, dir:-1, minX:120, maxX:285, shirtColor:PAL.wandererShirt4, hairColor:PAL.wandererHair4},
+      {x: 60, y:MY-PH-walkOffset, dir: 1, minX: 20, maxX:120, shirtColor:PAL.wandererShirt5, hairColor:PAL.wandererHair5},
       // TY floor (2)
-      {x:180, y:TY-PH-walkOffset, dir:-1, minX:100, maxX:265, shirtColor:PAL.wandererShirt6},
-      {x: 50, y:TY-PH-walkOffset, dir: 1, minX: 20, maxX:100, shirtColor:PAL.wandererShirt7},
+      {x:180, y:TY-PH-walkOffset, dir:-1, minX:100, maxX:265, shirtColor:PAL.wandererShirt6, hairColor:PAL.wandererHair6},
+      {x: 50, y:TY-PH-walkOffset, dir: 1, minX: 20, maxX:100, shirtColor:PAL.wandererShirt7, hairColor:PAL.wandererHair7},
     ],
 
   });

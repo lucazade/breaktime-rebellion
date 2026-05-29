@@ -57,7 +57,7 @@ function drawNightOverlay() {
 function drawSight() {
   for (let i = 0; i < teachers.length; i++) {
     const t = teachers[i];
-    if (t.chasing || t.name === 'Guardiano') continue;
+    if (t.chasing || t.name === 'Guardiano' || t.sight <= 0) continue;
     const eyeY   = t.y - 5;
     const feetY  = t.y + PH;
     const nearH  = 5;

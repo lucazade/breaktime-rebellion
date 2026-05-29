@@ -183,7 +183,8 @@ function loop(ts) {
       if (exitDone) continue;
       drawGuard(t.x, t.y, t.dir, t.animT, t.knockedT);
     } else {
-      drawChar(t.x, t.y, t.dir, t.animT, t.color, COLOURS_TEACHER, false, t.chasing, t.knockedT);
+      var _th = t.name==='Prof.Rossi' ? PAL.profRossiHair : t.name==='Prof.Celeste' ? PAL.profCelesteHair : t.name==='Prof.Neri' ? PAL.profNeriHair : PAL.teacherHair;
+      drawChar(t.x, t.y, t.dir, t.animT, t.color, Object.assign({}, COLOURS_TEACHER, {hair:_th}), false, t.chasing, t.knockedT);
     }
   }
   for (let i = 0; i < janitors.length; i++) {

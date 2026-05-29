@@ -449,7 +449,7 @@ function drawStudents() {
       ctx.fillRect(bx-4-so, by-3-so,  2+so*2, 3+so*2);
       ctx.fillRect(bx+2-so, by-3-so,  2+so*2, 3+so*2);
     }
-    ctx.fillStyle = PAL.studentHair;       ctx.fillRect(bx-2, by-17, 5, 2);
+    ctx.fillStyle = s.hairColor || PAL.studentHair; ctx.fillRect(bx-2, by-17, 5, 2);
     ctx.fillStyle = PAL.studentSkin;       ctx.fillRect(bx-2, by-15, 5, 6);
     ctx.fillStyle = PAL.charEye;           ctx.fillRect(bx-2, by-13, 2, 2);
     ctx.fillStyle = PAL.studentSkinShadow; ctx.fillRect(bx-1, by-9,  3, 1);
