@@ -311,7 +311,9 @@ function _winUpgradeDifficulty() {
   var next = modes[modes.indexOf(gameDifficulty) + 1];
   if (next) { gameDifficulty = next; localStorage.setItem('btr_difficulty', next); }
   currentLevel = 1;
+  var _s = score, _l = lives;
   restartGame();
+  score = _s; lives = _l;
 }
 
 function _gameWinChoice(lx, ly) {
