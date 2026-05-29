@@ -24,5 +24,5 @@
 - [ ] **Memoria** — salvare se emerso qualcosa di non-ovvio nella sessione
 - [ ] `git tag v<versione>` e push
 
-## 6. Notion 👤
-- [ ] Aggiornare stato progetto / ticket chiusi
+## 6. Notion 🤖
+- [ ] Aggiornare pagina Sviluppi (Completato + In corso)
