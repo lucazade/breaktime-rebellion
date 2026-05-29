@@ -147,7 +147,7 @@ function resetLevel() {
   storyBannerFading = false;
   storyFadeInT  = 0;
   // Bonus: show bonus opening banner; L1: show story banner; otherwise: no story banner
-  storyBannerT  = bonusActive ? 300 : (currentLevel === 1 && !storyShown) ? 300 : 0;
+  storyBannerT  = bonusActive ? 300 : (currentLevel === 1 && !storyShown && gameDifficulty === 'easy') ? 300 : 0;
   storyBannerLines = null;
   missionBannerT     = storyBannerT > 0 ? 0 : (bonusActive ? 0 : 210);
   missionBannerLines = null;
