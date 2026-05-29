@@ -281,6 +281,7 @@ function handleTap() {
   // L10: tap during Luca fumetto → win state (only after 90-frame cooldown)
   if (deathFreeze && levelMechanics.escapeExit && exitDone && exitWinReady) {
     _addHighScore(score, currentLevel, gameDifficulty);
+    _unlockNextDifficulty();
     pendingTransition = null; deathFreeze = false; state = 'win'; endScreenT = 0; _endBonusT = 0;
     GameAudio.stopMusic(); GameAudio.playJingle('win');
     return;

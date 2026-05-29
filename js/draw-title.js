@@ -128,8 +128,20 @@ function drawTitleScreen() {
   // Difficulty toggle — centered between level chooser and audio
   var diffColor = gameDifficulty === 'hard' ? PAL.diffHard : gameDifficulty === 'medium' ? PAL.diffMedium : PAL.diffEasy;
   _box(ct.diffX, ctrlY, ct.diffW, diffColor);
-  ctx.fillStyle = diffColor; ctx.textAlign = 'center';
-  ctx.fillText(STRINGS['difficulty_' + gameDifficulty] || gameDifficulty.toUpperCase(), ct.diffX + ct.diffW / 2, ctrlTextY);
+  ctx.fillStyle = diffColor;
+  var _diffLabel = STRINGS['difficulty_' + gameDifficulty] || gameDifficulty.toUpperCase();
+  if (!_isDifficultyUnlocked(gameDifficulty)) {
+    var _lockGap = 3, _lockW = 6;
+    var _lblW = Math.ceil(ctx.measureText(_diffLabel).width);
+    var _grpW = _lblW + _lockGap + _lockW;
+    var _sx = ct.diffX + Math.floor((ct.diffW - _grpW) / 2);
+    ctx.textAlign = 'left';
+    ctx.fillText(_diffLabel, _sx, ctrlTextY);
+    _drawLockIcon(_sx + _lblW + _lockGap, ctrlTextY + 1, diffColor);
+  } else {
+    ctx.textAlign = 'center';
+    ctx.fillText(_diffLabel, ct.diffX + ct.diffW / 2, ctrlTextY);
+  }
   ctx.textAlign = 'center';
 
   // Audio toggle — fixed width based on the longest label across all modes

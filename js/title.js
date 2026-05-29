@@ -58,6 +58,7 @@ function _initTitleState() {
 function _tryStart() {
   if (_titleStarting || state !== 'title') return;
   if (window.innerWidth <= window.innerHeight) return; // portrait
+  if (!_isDifficultyUnlocked(gameDifficulty)) return;
   _titleStarting = true;
   _showLegend(false);
   startGame();

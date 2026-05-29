@@ -23,7 +23,27 @@ let msgText, msgT, msgDuration;
 let actionPressed, allBoards, allBags, allMachines, allBall, allStudents, allBooks, timerTicks, maxTimerTicks;
 let machines, gymBall, paperBalls, students, throwCooldown, bookcase, sink, bins, sprinklers, register, exitDoor;
 let nightMode, registerTime, allRegister, exitDone, exitWinReady, nightExpandT;
-var gameDifficulty = localStorage.getItem('btr_difficulty') || 'easy';
+var unlockedDifficulty = localStorage.getItem('btr_unlocked_difficulty') || 'easy';
+var gameDifficulty = (function() {
+  var saved = localStorage.getItem('btr_difficulty') || 'easy';
+  var ord = ['easy', 'medium', 'hard'];
+  return ord.indexOf(saved) <= ord.indexOf(unlockedDifficulty) ? saved : 'easy';
+})();
+function _isDifficultyUnlocked(diff) {
+  if (CONFIG.debug.unlockAllLevels) return true;
+  var ord = ['easy', 'medium', 'hard'];
+  return ord.indexOf(diff) <= ord.indexOf(unlockedDifficulty);
+}
+function _unlockNextDifficulty() {
+  var ord = ['easy', 'medium', 'hard'];
+  var idx = ord.indexOf(gameDifficulty);
+  if (idx < 0 || idx >= ord.length - 1) return;
+  var next = ord[idx + 1];
+  if (ord.indexOf(next) > ord.indexOf(unlockedDifficulty)) {
+    unlockedDifficulty = next;
+    localStorage.setItem('btr_unlocked_difficulty', next);
+  }
+}
 let lastTimeBonus, lastLivesBonus;
 let shakeTime, deflateTime, dropTime, floodTime, lighterTime, throwChargeTime, throwBarThreshold, bonusMilestoneEvery;
 let allSink, allBins, allSprinklers;
