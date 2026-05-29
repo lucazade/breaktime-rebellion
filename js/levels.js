@@ -29,9 +29,9 @@ var LEVELS = (function() {
       bags: [],
 
       teachers: [
-        {x:200, y:GY-PH-walkOffset, dir:1,  minX:10, maxX:305, speed:0.55, color:PAL.profRossiBody, name:'Prof.Rossi', sight:90 },
-        {x:80,  y:MY-PH-walkOffset, dir:-1, minX:10, maxX:305, speed:0.50, color:PAL.profCelesteBody, name:'Prof.Celeste', sight:80 },
-        {x:230, y:TY-PH-walkOffset, dir:1,  minX:10, maxX:275, speed:0.60, color:PAL.profNeriBody, name:'Prof.Neri',  sight:100},
+        {x:200, y:GY-PH-walkOffset, dir:1,  minX:10, maxX:305, speed:0.70, color:PAL.profRossiBody, name:'Prof.Rossi', sight:90 },
+        {x:80,  y:MY-PH-walkOffset, dir:-1, minX:10, maxX:305, speed:0.70, color:PAL.profCelesteBody, name:'Prof.Celeste', sight:80 },
+        {x:230, y:TY-PH-walkOffset, dir:1,  minX:10, maxX:275, speed:0.70, color:PAL.profNeriBody, name:'Prof.Neri',  sight:100},
       ],
 
       janitors: [],
@@ -55,8 +55,8 @@ var LEVELS = (function() {
 
       // GY: janitor only; MY: teacher only; TY: teacher + janitor (#117)
       teachers: [
-        {x:80,  y:MY-PH-walkOffset, dir:-1, minX:10, maxX:305, speed:0.50, color:PAL.profRossiBody, name:'Prof.Rossi', sight:80 },
-        {x:230, y:TY-PH-walkOffset, dir:1,  minX:10, maxX:275, speed:0.60, color:PAL.profNeriBody, name:'Prof.Neri',  sight:100},
+        {x:80,  y:MY-PH-walkOffset, dir:-1, minX:10, maxX:305, speed:0.70, color:PAL.profRossiBody, name:'Prof.Rossi', sight:80 },
+        {x:230, y:TY-PH-walkOffset, dir:1,  minX:10, maxX:275, speed:0.70, color:PAL.profNeriBody, name:'Prof.Neri',  sight:100},
       ],
 
       janitors: [
@@ -86,9 +86,9 @@ var LEVELS = (function() {
       ],
 
       teachers: [
-        {x:200, y:GY-PH-walkOffset, dir:1,  minX:10, maxX:305, speed:0.55, color:PAL.profRossiBody,  name:'Prof.Rossi',    sight:90 },
-        {x:80,  y:MY-PH-walkOffset, dir:-1, minX:10, maxX:305, speed:0.50, color:PAL.profCelesteBody, name:'Prof.Celeste',  sight:80 },
-        {x:230, y:TY-PH-walkOffset, dir:1,  minX:10, maxX:275, speed:0.60, color:PAL.profNeriBody, name:'Prof.Neri',     sight:100},
+        {x:200, y:GY-PH-walkOffset, dir:1,  minX:10, maxX:305, speed:0.70, color:PAL.profRossiBody,  name:'Prof.Rossi',    sight:90 },
+        {x:80,  y:MY-PH-walkOffset, dir:-1, minX:10, maxX:305, speed:0.70, color:PAL.profCelesteBody, name:'Prof.Celeste',  sight:80 },
+        {x:230, y:TY-PH-walkOffset, dir:1,  minX:10, maxX:275, speed:0.70, color:PAL.profNeriBody, name:'Prof.Neri',     sight:100},
       ],
 
       janitors: [
@@ -117,8 +117,8 @@ var LEVELS = (function() {
       // always visible near the ball. Preside is reserved for L6.
       teachers: [
         {x:255, y:MY-PH-walkOffset, dir:1, minX:110, maxX:305, speed:0.80, color:PAL.profGinnasticaBody, name:'Prof.Ginnastica', sight:130},
-        {x:200, y:GY-PH-walkOffset, dir:1, minX:10,  maxX:305, speed:0.55, color:PAL.profRossiBody,  name:'Prof.Rossi', sight:90},
-        {x:230, y:TY-PH-walkOffset, dir:1, minX:10,  maxX:275, speed:0.60, color:PAL.profNeriBody, name:'Prof.Neri',  sight:100},
+        {x:200, y:GY-PH-walkOffset, dir:1, minX:10,  maxX:305, speed:0.70, color:PAL.profRossiBody,  name:'Prof.Rossi', sight:90},
+        {x:230, y:TY-PH-walkOffset, dir:1, minX:10,  maxX:275, speed:0.70, color:PAL.profNeriBody, name:'Prof.Neri',  sight:100},
       ],
 
       janitors: [
@@ -149,9 +149,9 @@ var LEVELS = (function() {
       // Limited patrol range so they look like they're teaching, not wandering.
       // No janitors — hallways are empty during class.
       teachers: [
-        {x:138, y:GY-PH-walkOffset, dir:-1, minX:115, maxX:205, speed:0.50, color:PAL.profRossiBody,  name:'Prof.Rossi',   sight:90},
-        {x:138, y:MY-PH-walkOffset, dir:-1, minX:115, maxX:205, speed:0.50, color:PAL.profCelesteBody, name:'Prof.Celeste', sight:80},
-        {x:100, y:TY-PH-walkOffset, dir:-1, minX:50,  maxX:195, speed:0.60, color:PAL.profNeriBody, name:'Prof.Neri',    sight:100},
+        {x:138, y:GY-PH-walkOffset, dir:-1, minX:115, maxX:205, speed:0.70, color:PAL.profRossiBody,  name:'Prof.Rossi',   sight:90},
+        {x:138, y:MY-PH-walkOffset, dir:-1, minX:115, maxX:205, speed:0.70, color:PAL.profCelesteBody, name:'Prof.Celeste', sight:80},
+        {x:100, y:TY-PH-walkOffset, dir:-1, minX:50,  maxX:195, speed:0.70, color:PAL.profNeriBody, name:'Prof.Neri',    sight:100},
       ],
 
       janitors: [],
@@ -199,7 +199,7 @@ var LEVELS = (function() {
       sink: {x:32, y:MY-20},
 
       teachers: [
-        {x:100, y:TY-PH-walkOffset, dir:-1, minX:50,  maxX:195, speed:0.60, color:PAL.profNeriBody, name:'Prof.Neri',    sight:100},
+        {x:100, y:TY-PH-walkOffset, dir:-1, minX:50,  maxX:195, speed:0.70, color:PAL.profNeriBody, name:'Prof.Neri',    sight:100},
       ],
 
       janitors: [
@@ -254,8 +254,8 @@ var LEVELS = (function() {
       ],
 
       teachers: [
-        {x:200, y:GY-PH-walkOffset, dir: 1, minX:10, maxX:305, speed:0.60, color:PAL.profRossiBody,  name:'Prof.Rossi',   sight:90},
-        {x:80,  y:MY-PH-walkOffset, dir:-1, minX:10, maxX:305, speed:0.60, color:PAL.profNeriBody, name:'Prof.Neri', sight:90},
+        {x:200, y:GY-PH-walkOffset, dir: 1, minX:10, maxX:305, speed:0.70, color:PAL.profRossiBody,  name:'Prof.Rossi',   sight:90},
+        {x:80,  y:MY-PH-walkOffset, dir:-1, minX:10, maxX:305, speed:0.70, color:PAL.profNeriBody, name:'Prof.Neri', sight:90},
       ],
 
       janitors: [
@@ -287,9 +287,9 @@ var LEVELS = (function() {
 
       // Three night guards — larger catch radius (within torch light)
       teachers: [
-        {x:250, y:GY-PH-walkOffset, dir: 1, minX:10, maxX:305, speed:0.60, color:'#1a1a3a', name:'Guardiano', sight:110, catchRadius:20},
-        {x:10,  y:MY-PH-walkOffset, dir: 1, minX:10, maxX:305, speed:0.60, color:'#1a1a3a', name:'Guardiano', sight:110, catchRadius:20},
-        {x:140, y:TY-PH-walkOffset, dir:-1, minX:10, maxX:275, speed:0.60, color:'#1a1a3a', name:'Guardiano', sight:100, catchRadius:20},
+        {x:250, y:GY-PH-walkOffset, dir: 1, minX:10, maxX:305, speed:0.70, color:'#1a1a3a', name:'Guardiano', sight:110, catchRadius:20},
+        {x:10,  y:MY-PH-walkOffset, dir: 1, minX:10, maxX:305, speed:0.70, color:'#1a1a3a', name:'Guardiano', sight:110, catchRadius:20},
+        {x:140, y:TY-PH-walkOffset, dir:-1, minX:10, maxX:275, speed:0.70, color:'#1a1a3a', name:'Guardiano', sight:100, catchRadius:20},
       ],
 
       janitors: [],
@@ -323,9 +323,9 @@ var BONUS_LEVEL = (function() {
     students: [],  // no seated students — wanderers take their place
 
     teachers: [
-      {x:160, y:GY-PH-walkOffset, dir:-1, minX:20, maxX:290, speed:0.55, color:PAL.profRossiBody,   name:'Prof.Rossi',   sight:0},
-      {x:160, y:MY-PH-walkOffset, dir: 1, minX:20, maxX:290, speed:0.50, color:PAL.profCelesteBody, name:'Prof.Celeste', sight:0},
-      {x:140, y:TY-PH-walkOffset, dir:-1, minX:20, maxX:275, speed:0.60, color:PAL.profNeriBody,    name:'Prof.Neri',    sight:0},
+      {x:160, y:GY-PH-walkOffset, dir:-1, minX:20, maxX:290, speed:0.70, color:PAL.profRossiBody,   name:'Prof.Rossi',   sight:0},
+      {x:160, y:MY-PH-walkOffset, dir: 1, minX:20, maxX:290, speed:0.70, color:PAL.profCelesteBody, name:'Prof.Celeste', sight:0},
+      {x:140, y:TY-PH-walkOffset, dir:-1, minX:20, maxX:275, speed:0.70, color:PAL.profNeriBody,    name:'Prof.Neri',    sight:0},
     ],
 
     janitors: [],
