@@ -287,6 +287,12 @@ Ogni personaggio ha il suo draw function e `COLOURS_*` object in `draw-chars.js`
 - **Guardiano** (`PAL.guardUniform`): `drawGuard()`, L10, `catchRadius:20`, NO cono visivo
 - **Bidello**: `drawJanitor()` (drawChar + salopette + scopa), patrol corto
 
+**Scala personaggi:** prof 1.0×, Marco/Luca 0.9×, studenti seduti L5 e wanderer bonus 0.8×. La scala è applicata via `ctx.save/scale/restore` ancorata ai piedi del personaggio in `game.js` (player) e `draw-chars.js` (Luca) / `draw-objects.js` (wanderer) / `draw-chars.js` (studenti seduti).
+
+**Colori capelli per-personaggio:** `PAL.profRossiHair`, `profCelesteHair`, `profNeriHair` in `palette.js`; selezionati via `t.name` in `game.js` con `Object.assign({}, COLOURS_TEACHER, {hair:_th})` — non richiedono modifiche a `levels.js`. Wanderer e studenti seduti usano `w.hairColor`/`s.hairColor` (campo per-oggetto clonato in `state.js`) e `wandererHair1-7` in palette.
+
+**Cono visivo:** `drawSight()` salta teacher con `sight <= 0` (evita artefatti nel livello bonus dove i prof hanno sight=0).
+
 **Catch behavior:** `caughtBy(t)` inverte `t.dir` e resetta `chasing`. I Guardiani NON cadono a terra, invertono solo direzione.
 
 ## Audio
