@@ -294,17 +294,17 @@ function drawSprinklers() {
     // Water umbrella when active (widens toward floor)
     if (sp.active) {
       const range = floorY - by - 4;
-      ctx.fillStyle = PAL.waterStream;
-      for (let wy = by + 4; wy < floorY; wy += 4) {
-        const spread = Math.floor((wy - by - 4) / range * 5); // 0→5 spread
-        const wx = Math.floor(Math.sin((wy + frame * 0.5) * 0.6) * 1);
-        ctx.fillRect(bx + 1 - spread + wx, wy, 2, 3); // left stream
-        ctx.fillRect(bx + 5 + spread + wx, wy, 2, 3); // right stream
-        if (spread >= 2) ctx.fillRect(bx + 3 + wx, wy, 2, 3); // centre
+      const cx = bx + 3;
+      for (let wy = by + 4; wy < floorY; wy += 2) {
+        const spread = (wy - by - 4) / range * 5;
+        for (let si = 0; si < 5; si++) {
+          const off = si - 2; // -2, -1, 0, +1, +2
+          const wx = Math.floor(Math.sin((wy + frame * 0.5 + si * 3) * 0.6) * 1);
+          const sx = Math.round(cx + off + off * spread / 2) + wx;
+          ctx.fillStyle = si % 2 === 0 ? PAL.waterStream : PAL.waterStreamAlt;
+          ctx.fillRect(sx, wy, 1, 1);
+        }
       }
-      // Floor splash (wider at base)
-      ctx.fillStyle = PAL.waterSplash;
-      ctx.fillRect(bx - 6, floorY - 2, 20, 3);
     }
 
     // Sprinkler fixture — disc + head only (no stem above ceiling)
@@ -343,14 +343,6 @@ function drawSprinklers() {
     }
   }
 
-  // Lighter flame above Marco when shaking near a sprinkler
-  if (player.shaking && levelMechanics.activateSprinkler) {
-    const fx = Math.round(player.x + PW/2 - 1);
-    const fy = Math.round(player.y) - 4;
-    const flicker = Math.floor(frame / 2) % 3;
-    ctx.fillStyle = PAL.flame; ctx.fillRect(fx, fy - flicker,     2, 3);
-    ctx.fillStyle = PAL.lighterSpark;  ctx.fillRect(fx, fy - flicker - 2, 2, 2);
-  }
 }
 
 function drawBins() {

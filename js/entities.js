@@ -185,9 +185,10 @@ function updateSprinklers() {
       if (jan.knockedT > 0) continue;
       const janFloor = jan.y > (MY+GY)/2 ? 'GY' : jan.y > (TY+MY)/2 ? 'MY' : 'TY';
       if (jan.knockedT > 0 || jan.soakCooldownT > 0) continue;
-      if (sp.floor === janFloor && Math.abs(jan.x + PW/2 - sp.x - 4) < 10) {
+      if (sp.floor === janFloor && Math.abs(jan.x + PW/2 - sp.x - 4) < 1) {
         jan.knockedT = 120;
-        addParticles(jan.x + 4, jan.y, PAL.cyan, 10);
+        addParticles(jan.x + 4, jan.y, PAL.wetParticle,      8, 1);
+        addParticles(jan.x + 4, jan.y, PAL.wetParticleLight, 3, 1);
       }
     }
   }
@@ -340,11 +341,11 @@ function updateTimer() {
   }
 }
 
-function addParticles(x, y, color, n) {
+function addParticles(x, y, color, n, size) {
   for (let i = 0; i < n; i++) {
     particles.push({x:x, y:y,
       vx:(Math.random()-.5)*2.5, vy:(Math.random()-.5)*2-1,
-      color:color, life:45, max:45});
+      color:color, life:45, max:45, size:size||2});
   }
 }
 

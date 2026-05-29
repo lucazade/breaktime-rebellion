@@ -88,7 +88,7 @@ function drawParticles() {
     const p = particles[i];
     ctx.globalAlpha = p.life/p.max;
     ctx.fillStyle = p.color;
-    ctx.fillRect(Math.round(p.x), Math.round(p.y), 2, 2);
+    ctx.fillRect(Math.round(p.x), Math.round(p.y), p.size, p.size);
     p.x += p.vx; p.y += p.vy; p.vy += 0.1; p.life--;
   }
   ctx.globalAlpha = 1;

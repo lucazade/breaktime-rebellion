@@ -192,10 +192,14 @@ function loop(ts) {
     const jn = janitors[i];
     drawJanitor(jn.x, jn.y, jn.dir, jn.animT);
     if (jn.knockedT > 0 && Math.floor(frame / 4) % 2 === 0) {
-      ctx.fillStyle = PAL.cyan;
-      ctx.fillRect(Math.round(jn.x - 2), Math.round(jn.y),     2, 2);
-      ctx.fillRect(Math.round(jn.x + 9), Math.round(jn.y - 3), 2, 2);
-      ctx.fillRect(Math.round(jn.x + 4), Math.round(jn.y - 9), 2, 2);
+      ctx.fillStyle = 'rgba(255,255,255,0.45)';
+      ctx.fillRect(Math.round(jn.x - 2), Math.round(jn.y),     1, 1);
+      ctx.fillRect(Math.round(jn.x + 9), Math.round(jn.y - 3), 1, 1);
+      ctx.fillRect(Math.round(jn.x + 4), Math.round(jn.y - 9), 1, 1);
+      ctx.fillStyle = PAL.wetParticle;
+      ctx.fillRect(Math.round(jn.x + 1), Math.round(jn.y - 2), 1, 1);
+      ctx.fillRect(Math.round(jn.x + 7), Math.round(jn.y - 6), 1, 1);
+      ctx.fillRect(Math.round(jn.x + 3), Math.round(jn.y -12), 1, 1);
     }
   }
   if (!(player.stunT > 0 && Math.floor(frame/5)%2 === 1)) {
