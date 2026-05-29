@@ -22,10 +22,8 @@ const PAL = {
   // ── Teachers ─────────────────────────────────────────────
   teacherSkin:       '#faa462',  // face, hands
   teacherSkinShadow: '#ff7949',  // neck, collar shadow
-  teacherHair:       '#72706e',  // hair, shared by all teacher types
   teacherTrousers:   '#706f6e',  // trousers, shared by all teacher types
   teacherShoes:      '#862c00',  // shoes, shared by all teacher types
-  teacherTie:        '#FEDC02',  // tie, shared by all teacher types
   speechBubble:      'rgba(255,255,255,0.9)', // NPC speech bubble fill
   speechBorder:      '#bcbcbc', // NPC speech bubble border
   speechText:        '#000000', // NPC speech bubble text / tap-to-continue label
@@ -33,14 +31,17 @@ const PAL = {
   // ── Prof.Rossi ────────────────────────────────────────────
   profRossiBody:    '#D21C01',  // jacket
   profRossiHair:    '#3d1f00',  // hair (dark brown)
+  profRossiTie:     '#FEDC02',  // tie (yellow)
 
   // ── Prof.Celeste ──────────────────────────────────────────
   profCelesteBody:  '#0062da',  // jacket
   profCelesteHair:  '#9e9e9e',  // hair (light gray)
+  profCelesteTie:   '#000000',  // tie (yellow)
 
   // ── Prof.Neri ─────────────────────────────────────────────
   profNeriBody:     '#262626',  // jacket
   profNeriHair:     '#1a1a1a',  // hair (near black)
+  profNeriTie:      '#ffffff',  // tie (yellow)
 
   // ── Janitor ───────────────────────────────────────────────
   janitorSkin:       '#faa462',  // face, hands
@@ -61,6 +62,7 @@ const PAL = {
   profGinnasticaTrousers:   '#036214',  // trousers
   profGinnasticaShoes:      '#ffffff',  // shoes
   profGinnasticaCap:        '#07a123',  // cap (same colour as shirt)
+  profGinnasticaHair:       '#72706e',  // hair (gray)
 
   // ── Seated students ───────────────────────────────────────
   studentSkin:       '#faa462',  // face, arms

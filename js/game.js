@@ -183,8 +183,9 @@ function loop(ts) {
       if (exitDone) continue;
       drawGuard(t.x, t.y, t.dir, t.animT, t.knockedT);
     } else {
-      var _th = t.name==='Prof.Rossi' ? PAL.profRossiHair : t.name==='Prof.Celeste' ? PAL.profCelesteHair : t.name==='Prof.Neri' ? PAL.profNeriHair : PAL.teacherHair;
-      drawChar(t.x, t.y, t.dir, t.animT, t.color, Object.assign({}, COLOURS_TEACHER, {hair:_th}), false, t.chasing, t.knockedT);
+      var _th = t.name==='Prof.Rossi' ? PAL.profRossiHair : t.name==='Prof.Celeste' ? PAL.profCelesteHair : t.name==='Prof.Neri' ? PAL.profNeriHair : PAL.profRossiHair;
+      var _tt = t.name==='Prof.Rossi' ? PAL.profRossiTie  : t.name==='Prof.Celeste' ? PAL.profCelesteTie  : t.name==='Prof.Neri' ? PAL.profNeriTie  : PAL.profRossiTie;
+      drawChar(t.x, t.y, t.dir, t.animT, t.color, Object.assign({}, COLOURS_TEACHER, {hair:_th, tie:_tt}), false, t.chasing, t.knockedT);
     }
   }
   for (let i = 0; i < janitors.length; i++) {

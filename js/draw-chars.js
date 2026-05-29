@@ -23,11 +23,11 @@ const COLOURS_MARCO = {
 const COLOURS_TEACHER = {
   skin:        PAL.teacherSkin,
   skinShadow:  PAL.teacherSkinShadow,
-  hair:        PAL.teacherHair,
+  hair:        PAL.profRossiHair,
   trousers:    PAL.teacherTrousers,
   shoes:       PAL.teacherShoes,
   shoeSole:    null,
-  tie:         PAL.teacherTie,
+  tie:         PAL.profRossiTie,
   stripe:      null,
   backpack:    null,
   knockable:   true,
@@ -76,7 +76,7 @@ const COLOURS_WANDERER = {
 const COLOURS_GINNASTICA = {
   skin:        PAL.profGinnasticaSkin,
   skinShadow:  PAL.profGinnasticaSkinShadow,
-  hair:        PAL.teacherHair,
+  hair:        PAL.profGinnasticaHair,
   trousers:    PAL.profGinnasticaTrousers,
   shoes:       PAL.profGinnasticaShoes,
   shoeSole:    null,
