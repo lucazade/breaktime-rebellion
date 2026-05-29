@@ -317,7 +317,7 @@ var BONUS_LEVEL = (function() {
 
     throwChargeTime:    60,  // frames to hold action before throw fires (~1s)
     throwBarThreshold:  18,  // frames before bar appears — also splits tap vs hold
-    bonusMilestoneEvery: 30, // hits needed per +1 life bonus
+    bonusMilestoneEvery: { easy: 35, medium: 30, hard: 25 },
 
     bags:     [],
     students: [],  // no seated students — wanderers take their place

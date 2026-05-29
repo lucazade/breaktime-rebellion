@@ -116,7 +116,7 @@
     lucaAppears:          'Luca: "Marco, you are the school legend now!"',
 
     bonusStoryTitle:      '— BONUS! —',
-    bonusStoryBody:       "Luca is on the loose!|Hit students and teachers!|Hold to hit harder!",
+    bonusStoryBody:       "Luca is on the loose!|Hit students and teachers!|Hold to hit harder!|Every {0} hits: +1 life!",
     bonusResultTitle:     '— BONUS! —',
     bonusCaramboleLabel:  'HITS: ',
     bonusLivesLabel:      '+{0} LIVES',
@@ -232,7 +232,7 @@
     lucaAppears:          'Luca: "Marco, ora sei tu la leggenda della Scuola!"',
 
     bonusStoryTitle:      '— BONUS! —',
-    bonusStoryBody:       "Luca è in libertà!|Colpisci alunni e professori!|Tiene premuto per colpire più forte!",
+    bonusStoryBody:       "Luca è in libertà!|Colpisci alunni e professori!|Tiene premuto per colpire più forte!|Ogni {0} colpi: +1 vita!",
     bonusResultTitle:     '— BONUS! —',
     bonusCaramboleLabel:  'COLPITI: ',
     bonusLivesLabel:      '+{0} VITE',

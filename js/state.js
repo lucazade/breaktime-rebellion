@@ -120,7 +120,7 @@ function resetLevel() {
   lighterTime      = lv.lighterTime      || 80;
   throwChargeTime      = lv.throwChargeTime      || 50;
   throwBarThreshold    = lv.throwBarThreshold    || 18;
-  bonusMilestoneEvery  = lv.bonusMilestoneEvery  || 30;
+  bonusMilestoneEvery  = typeof lv.bonusMilestoneEvery === 'object' ? (lv.bonusMilestoneEvery[gameDifficulty] || 30) : (lv.bonusMilestoneEvery || 30);
   // timer can be a per-difficulty object (bonus level) or a plain number (normal levels)
   var _rawTimer = typeof lv.timer === 'object' ? (lv.timer[gameDifficulty] || 0) : (lv.timer || 0);
   timerTicks  = maxTimerTicks  = Math.round(_rawTimer * 60 * _dT);

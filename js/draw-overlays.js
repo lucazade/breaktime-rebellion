@@ -284,7 +284,7 @@ function drawBonusOpeningBanner() {
   var VB = CONFIG.ui.bonusBanner;
   if (!storyBannerLines) {
     ctx.font = VB.fontBody + 'px ' + FF;
-    var parts = STRINGS.bonusStoryBody.split('|');
+    var parts = fmt(STRINGS.bonusStoryBody, bonusMilestoneEvery).split('|');
     var lines = [];
     for (var p = 0; p < parts.length; p++) {
       var words = parts[p].trim().split(' ');
