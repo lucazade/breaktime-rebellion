@@ -134,10 +134,19 @@ document.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape') { e.preventDefault(); goHome(); }
     return;
   }
-  // Gameover choice: Enter/Y = play again, Escape/N → high scores
+  // Gameover choice: Enter/Y/S = play again, Escape/N → high scores
   if (state === 'gameover' && !endScreenFadingOut && endScreenT >= 20) {
-    if (e.key === 'Enter' || e.key === ' ' || e.key === 'y' || e.key === 'Y') {
+    if (e.key === 'Enter' || e.key === ' ' || e.key === 'y' || e.key === 'Y' || e.key === 's' || e.key === 'S') {
       e.preventDefault(); endScreenFadingOut = true; endScreenFadeOutCb = restartGame;
+    } else if (e.key === 'Escape' || e.key === 'n' || e.key === 'N') {
+      e.preventDefault(); state = 'highscores';
+    }
+    return;
+  }
+  // Game win after L10: Enter/Y/S = upgrade difficulty, Escape/N → high scores
+  if (state === 'win' && currentLevel === LEVELS.length && !endScreenFadingOut && endScreenT >= 20 && gameDifficulty !== 'hard') {
+    if (e.key === 'Enter' || e.key === 'y' || e.key === 'Y' || e.key === 's' || e.key === 'S') {
+      e.preventDefault(); endScreenFadingOut = true; endScreenFadeOutCb = _winUpgradeDifficulty;
     } else if (e.key === 'Escape' || e.key === 'n' || e.key === 'N') {
       e.preventDefault(); state = 'highscores';
     }

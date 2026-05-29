@@ -42,7 +42,7 @@ function drawNightOverlay() {
   const py = Math.round(player.y + PH/2 - 2);
   const t = exitDone ? Math.min(nightExpandT / 120, 1) : 0;
   const ease = t * t * (3 - 2 * t);
-  const outerR = 45 + ease * 335;
+  const outerR = 55 + ease * 325;
   const a1 = (0.80 * (1 - ease)).toFixed(2);
   const a2 = (0.96 * (1 - ease)).toFixed(2);
   const gradient = ctx.createRadialGradient(px, py, 10, px, py, outerR);
