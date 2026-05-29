@@ -199,6 +199,10 @@ function loop(ts) {
   if (!(player.stunT > 0 && Math.floor(frame/5)%2 === 1)) {
     var _playerBodyCol  = bonusActive ? PAL.lucaBody    : PAL.marcoShirt;
     var _playerColours  = bonusActive ? COLOURS_LUCA    : COLOURS_MARCO;
+    var _ps = 0.9;
+    var _pfx = Math.round(player.x + PW/2), _pfy = Math.round(player.y + PH);
+    ctx.save();
+    ctx.translate(_pfx, _pfy); ctx.scale(_ps, _ps); ctx.translate(-_pfx, -_pfy);
     if (player.onStair && player.currentStair) {
       const s = player.currentStair;
       const surfaceY  = Math.min(s.y1, s.y2);
@@ -212,6 +216,7 @@ function loop(ts) {
     } else {
       drawChar(player.x, player.y, player.dir, player.animT, _playerBodyCol, _playerColours, player.spraying, false);
     }
+    ctx.restore();
   }
 
   if (bonusActive) drawThrowChargeBar();
