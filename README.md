@@ -70,11 +70,11 @@ The project started from a late-night chat session about retro games — one mon
 | `Z` or `Space` | Action (spray, collect, interact) |
 | `C` | Credits |
 | `P` | Pause |
-| `Esc` | Back to main menu |
+| `Esc` | Resume from pause / back to main menu |
 
-**On mobile:** drag the on-screen joystick (bottom-left) and tap the action button (bottom-right).
+**On mobile:** touch anywhere on the left panel to use the floating joystick (appears at your touch point); tap anywhere on the right panel to trigger the action button.
 
-**Staircases:** diagonal input required to enter — right staircase needs `↑ + →` to go up; left staircase needs `↑ + ←`.
+**Staircases:** press `↑` near the bottom of a staircase to go up, `↓` near the top to go down.
 
 ### The Levels
 
