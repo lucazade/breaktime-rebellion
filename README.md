@@ -190,3 +190,4 @@ MIT © 2026 Luca Forina — [LICENSE](LICENSE)
 ## Privacy Policy
 
 [Privacy Policy](https://lucazade.github.io/breaktime-rebellion/privacy.html)
+
