@@ -76,7 +76,7 @@ function drawSight() {
     ctx.closePath();
     ctx.fill();
     if (CONFIG.debug.sightDebug) {
-      const rearSight = Math.round(t.sight * 0.4);
+      const rearSight = Math.round(t.baseSight * 0.2);
       const rrx = t.dir>0 ? t.x-rearSight : t.x+PW;
       ctx.fillStyle = 'rgba(255,0,0,0.3)';
       ctx.fillRect(rrx, t.y-2, rearSight, PH+4);
