@@ -391,10 +391,10 @@ Cerchiamo prima di analizzare la nostra implementazione, di confrontarla con que
 - [X] #215 Musica diventa più veloce prima
 - [X] #216 Tempo 60-55-50
 - [X] #217 Sight alle spalle non cambia con difficoltà
+- [X] #218 migliorare feeling joypad
 
 PER LUCA:
 Cambiare musica bonus
 Cravatta prof celeste
 
 PER CLAUDE:
-- [ ] #218 migliorare feeling joypad
