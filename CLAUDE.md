@@ -90,8 +90,8 @@ Ogni `drawXxx` function usa esclusivamente `PAL.nomeEsplicito` — nessun colore
 ## Controlli
 
 - **Desktop**: frecce direzionali + Z/Spazio
-- **Mobile**: joystick analogico overlay `#ctrl-joy` (bottom-left) + bottone `#btn-action` (bottom-right)
-- **Scala**: ingresso richiede diagonale corrispondente alla direzione. Scala destra (x2>x1): K.up+K.right salire, K.down+K.left scendere. Scala sinistra (x2<x1): K.up+K.left salire, K.down+K.right scendere. Una volta sulla scala K.up/K.down hanno priorità.
+- **Mobile**: joystick **floating** — appare dove tocchi nel `#panel-left`, snap back al rilascio. Touch catturato su tutto il panel, non solo su `#ctrl-joy`. Bottone azione `#btn-action` in `#panel-right`.
+- **Scala**: ingresso con solo K.up (salire dal basso) o K.down (scendere dall'alto) — nessuna diagonale richiesta. Soglia `nearBottom = t<0.15`, `nearTop = t>0.85`. Una volta sulla scala K.up/K.down hanno priorità su K.left/K.right.
 
 ## PWA / Mobile
 
@@ -121,7 +121,7 @@ Il codice è diviso in moduli distinti che comunicano via variabili globali cond
 - `bonusActive` — `true` durante il livello bonus CARAMBOLA! (dopo L5); `resetLevel()` usa `BONUS_LEVEL` invece di `LEVELS[currentLevel-1]`
 - `gameDifficulty` — `'easy'|'medium'|'hard'`, salvato in `btr_difficulty` localStorage
 - `unlockedDifficulty` — difficoltà massima sbloccata (`btr_unlocked_difficulty`); sblocco progressivo: easy→medium→hard al completamento L10. Funzioni: `_isDifficultyUnlocked(diff)`, `_unlockNextDifficulty()` in `state.js`. `unlockAllLevels` bypassa il lock. Il title cicla tutte e 3 le difficoltà ma mostra lucchetto e blocca l'avvio se la selezionata è locked.
-- `_dT` (in `resetLevel`) — moltiplicatore timer per difficoltà: `easy 1.0`, `medium 0.917`, `hard 0.833`. Applicato a tutti i timer livello; se `lv.timer` è un oggetto per-difficulty, `_dT` si applica ugualmente.
+- `_dT` (in `resetLevel`) — moltiplicatore timer per difficoltà: `easy 1.0` (60s), `medium 0.917` (55s), `hard 0.833` (50s). Applicato a tutti i timer livello; se `lv.timer` è un oggetto per-difficulty, `_dT` si applica ugualmente.
 - `bonusResultActive` — `true` quando il banner risultato bonus è visibile; `bonusResultReady` — `true` dopo 30 frame di cooldown (previene skip su Android da touchend residuo)
 - `bonusCarambole`, `bonusBonusScore`, `bonusBonusLives` — accumulati durante bonus, applicati a `score`/`lives` al tap del banner risultato
 - `bonusWanderers` — studenti wandering (bonus only); `paperProjectiles` — proiettili fisici bonus
@@ -179,6 +179,8 @@ Le coordinate usano `GY`, `MY`, `TY`, `PH`, `walkOffset` (da `scene.js`) per res
 **Scale (`stairs`):** `fdTop` = px sopra la superficie dove la testa appare; `fdBot` = px sotto dove le gambe spariscono. Valori attuali: `fdTop:4, fdBot:12` su tutte le scale.
 
 **Teacher con `catchRadius`:** i Guardiani (L10) hanno `catchRadius:20` — catturano Marco anche in patrol, senza cono visivo. Copiato nella teacher map di `state.js`.
+
+**Sight alle spalle:** `baseSight` (valore base da `levels.js`) è salvato nella teacher map accanto a `sight` (già scalato per difficoltà). La detection posteriore usa `baseSight * 0.2` — fisso indipendente dalla difficoltà. Il debug overlay (`sightDebug`) usa anch'esso `baseSight * 0.2`.
 
 ## i18n (js/i18n.js)
 
