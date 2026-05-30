@@ -115,8 +115,8 @@ document.getElementById('btn-home').addEventListener('click', triggerHome);
 
 var _btnInfo = document.getElementById('btn-info');
 if (_btnInfo) {
-  _btnInfo.addEventListener('click', showCredits);
-  _btnInfo.addEventListener('touchend', function(e) { e.preventDefault(); showCredits(); }, {passive: false});
+  _btnInfo.addEventListener('click', function() { if (_creditsActive) hideCredits(); else showCredits(); });
+  _btnInfo.addEventListener('touchend', function(e) { e.preventDefault(); if (_creditsActive) hideCredits(); else showCredits(); }, {passive: false});
 }
 
 // ── Keyboard shortcuts (desktop) ──────────────────────────────────────────────
@@ -126,7 +126,7 @@ document.addEventListener('keydown', function(e) {
     return;
   }
   if (_homeConfirmActive) {
-    if (e.key === 'Enter' || e.key === 'y' || e.key === 'Y') { e.preventDefault(); goHome(); }
+    if (e.key === 'Enter' || e.key === 'y' || e.key === 'Y' || e.key === 's' || e.key === 'S') { e.preventDefault(); goHome(); }
     if (e.key === 'Escape' || e.key === 'n' || e.key === 'N') { e.preventDefault(); cancelHome(); }
     return;
   }
@@ -159,7 +159,9 @@ document.addEventListener('keydown', function(e) {
     }
   }
   if (e.key === 'c' || e.key === 'C') { if (_creditsActive) hideCredits(); else showCredits(); return; }
-  if (_creditsActive) { if (e.key === 'Escape') hideCredits(); return; }
+  if (_creditsActive) { if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') hideCredits(); return; }
   if (e.key === 'p' || e.key === 'P') triggerPause();
-  if (e.key === 'Escape') triggerHome();
+  if (e.key === 'Escape' || (_pauseActive && (e.key === 'Enter' || e.key === ' '))) {
+    if (_pauseActive) { e.preventDefault(); triggerPause(); } else triggerHome();
+  }
 });

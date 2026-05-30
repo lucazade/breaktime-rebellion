@@ -6,9 +6,9 @@
 - [ ] `npm run check` — nessun dead code
 - [ ] Flag debug disattivi (`CONFIG.debug.unlockAllLevels`, `godMode`, `startAtBonus`, `sightDebug`)
 
-## 2. Test 👤
-- [ ] Testato su desktop (livelli toccati dalla release + smoke test sugli altri)
-- [ ] Testato su Android (APK installato e verificato)
+## 2. Test 👤 (confermato da Luca prima di dire "facciamo release")
+- [x] Testato su desktop
+- [x] Testato su Android
 
 ## 3. Versione 🤖
 - [ ] `package.json` — versione aggiornata
@@ -25,4 +25,4 @@
 - [ ] `git tag v<versione>` e push
 
 ## 6. Notion 🤖
-- [ ] Aggiornare pagina Sviluppi (Completato + In corso)
+- [ ] Aggiornare pagina Sviluppi su Notion (Completato + In corso)

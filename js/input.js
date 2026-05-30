@@ -33,14 +33,21 @@ bindBtn('bL','left'); bindBtn('bR','right');
 bindBtn('bU','up');   bindBtn('bD','down');
 
 const bA = document.getElementById('btn-action');
-function onA(e)  { e.preventDefault(); K.action = true;  actionPressed = true; bA.classList.add('pressed'); }
-function offA(e) { e.preventDefault(); K.action = false; bA.classList.remove('pressed'); }
-bA.addEventListener('touchstart',  onA,  {passive:false});
-bA.addEventListener('touchend',    offA, {passive:false});
-bA.addEventListener('touchcancel', offA, {passive:false});
-bA.addEventListener('mousedown',   onA);
-bA.addEventListener('mouseup',     offA);
-bA.addEventListener('mouseleave',  offA);
+const panelRight = document.getElementById('panel-right');
+function onA(e)  {
+  var _t = e.touches ? e.touches[0] : e;
+  if (_t.clientY - panelRight.getBoundingClientRect().top < 300) return;
+  e.preventDefault(); K.action = true; actionPressed = true; bA.classList.add('pressed');
+}
+function offA(e) { if (!K.action) return; e.preventDefault(); K.action = false; bA.classList.remove('pressed'); }
+// Touch: entire panel-right is the action zone
+panelRight.addEventListener('touchstart',  onA,  {passive:false});
+panelRight.addEventListener('touchend',    offA, {passive:false});
+panelRight.addEventListener('touchcancel', offA, {passive:false});
+// Mouse: keep on button for desktop testing
+bA.addEventListener('mousedown',  onA);
+bA.addEventListener('mouseup',    offA);
+bA.addEventListener('mouseleave', offA);
 
 // Analog joystick — floating: appears at touch point, snaps back on release
 (function() {
@@ -54,7 +61,7 @@ bA.addEventListener('mouseleave',  offA);
 
   function _floatTo(clientX, clientY) {
     var pr = panel.getBoundingClientRect();
-    var lx = Math.max(45, Math.min(pr.width  - 45, clientX - pr.left));
+    var lx = Math.max(45, Math.min(pr.width - 53, clientX - pr.left));
     var ly = Math.max(60, Math.min(pr.height - 45, clientY - pr.top));
     zone.style.left      = lx + 'px';
     zone.style.top       = ly + 'px';
@@ -69,7 +76,8 @@ bA.addEventListener('mouseleave',  offA);
   }
 
   function joyStart(e) {
-    if (e.target && e.target.closest && e.target.closest('.panel-btn')) return;
+    var _t = e.touches ? e.touches[0] : e;
+    if (_t.clientY - panel.getBoundingClientRect().top < 300) return;
     e.preventDefault();
     active = true;
     var t = e.touches ? e.touches[0] : e;
@@ -79,6 +87,7 @@ bA.addEventListener('mouseleave',  offA);
   }
   function joyMove(e) { if (active) { e.preventDefault(); joyUpdate(e); } }
   function joyEnd(e) {
+    if (!active) return;
     e.preventDefault();
     active = false;
     knob.style.transform = '';
