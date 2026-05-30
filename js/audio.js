@@ -1,15 +1,16 @@
 // Audio manager — supports three modes: 'full' (music+sfx), 'sfx' (sfx only), 'mute'
 const GameAudio = (function() {
   var mode = localStorage.getItem('btr_audio') || 'full';
-  var jingle = null; // tracked so it can be stopped on restart (win/gameover sounds)
+  var jingle = null; // { node: BufferSourceNode, gain: GainNode } or null — tracked for stop on restart
 
   // Preload background music immediately so it is fully buffered before the user clicks start.
   // Without this, after a hard refresh the browser only has ~1s of data and pauses mid-play.
+  // Note: element.volume is intentionally omitted — volume is controlled via GainNode after
+  // createMediaElementSource() routes these elements through the AudioContext.
   var bgMusic = CONFIG.audio.music ? (function() {
     var a = new Audio(CONFIG.audio.music);
     a.preload = 'auto';
     a.loop    = true;
-    a.volume  = CONFIG.audio.musicVolume;
     return a;
   })() : null;
 
@@ -17,7 +18,6 @@ const GameAudio = (function() {
     var a = new Audio(CONFIG.audio.bossMusic);
     a.preload = 'auto';
     a.loop    = true;
-    a.volume  = CONFIG.audio.musicVolume;
     return a;
   })() : null;
 
@@ -25,7 +25,6 @@ const GameAudio = (function() {
     var a = new Audio(CONFIG.audio.bonusMusic);
     a.preload = 'auto';
     a.loop    = true;
-    a.volume  = CONFIG.audio.musicVolume;
     return a;
   })() : null;
 
@@ -45,24 +44,65 @@ const GameAudio = (function() {
     var a = new Audio(CONFIG.audio.introMusic);
     a.preload = 'auto';
     a.loop    = true;
-    a.volume  = CONFIG.audio.musicVolume;
     return a;
   })() : null;
   var _introPlayPromise = null;
 
-  // Fades audio to targetVol over durationMs; returns interval id
-  function _fadeAudio(audio, targetVol, durationMs, cb) {
+  // Web Audio API for zero-latency sfx
+  var _sfxRaw     = {};  // name → ArrayBuffer (prefetched)
+  var _audioCtx   = null;
+  var _warmedUp   = false;
+  var _sfxBuffers = {};  // name → AudioBuffer (decoded, ready to play)
+
+  // GainNodes for each music track — created by _createMusicSources() via createMediaElementSource().
+  // All music volume is controlled through these nodes so music and sfx share one hardware stream.
+  var _bgMusicGain    = null;
+  var _bossMusicGain  = null;
+  var _bonusMusicGain = null;
+  var _introMusicGain = null;
+
+  function _gainFor(track) {
+    if (track === bgMusic)    return _bgMusicGain;
+    if (track === bossMusic)  return _bossMusicGain;
+    if (track === bonusMusic) return _bonusMusicGain;
+    if (track === introMusic) return _introMusicGain;
+    return null;
+  }
+
+  // Route each music HTMLMediaElement through the AudioContext so all audio — music and sfx —
+  // shares one hardware output stream. This eliminates Android hardware mixer reconfiguration
+  // pops that occur when two separate streams (HTMLMediaElement + WebAudio) coexist.
+  // Must be called after _audioCtx is created. Safe to call multiple times (guarded by null check).
+  function _createMusicSources() {
+    if (!_audioCtx) return;
+    function _wire(el) {
+      var src = _audioCtx.createMediaElementSource(el);
+      var g   = _audioCtx.createGain();
+      g.gain.value = CONFIG.audio.musicVolume;
+      src.connect(g);
+      g.connect(_audioCtx.destination);
+      return g;
+    }
+    if (bgMusic    && !_bgMusicGain)    _bgMusicGain    = _wire(bgMusic);
+    if (bossMusic  && !_bossMusicGain)  _bossMusicGain  = _wire(bossMusic);
+    if (bonusMusic && !_bonusMusicGain) _bonusMusicGain = _wire(bonusMusic);
+    if (introMusic && !_introMusicGain) _introMusicGain = _wire(introMusic);
+  }
+
+  // Fades a GainNode to targetVol over durationMs, then calls optional cb
+  function _fadeGain(gainNode, targetVol, durationMs, cb) {
+    if (!gainNode) { if (cb) cb(); return; }
     var steps    = 20;
     var interval = Math.round(durationMs / steps);
-    var startVol = audio.volume;
+    var startVol = gainNode.gain.value;
     var delta    = (targetVol - startVol) / steps;
     var count    = 0;
     var t = setInterval(function() {
       count++;
-      audio.volume = Math.max(0, Math.min(1, startVol + delta * count));
+      gainNode.gain.value = Math.max(0, Math.min(1, startVol + delta * count));
       if (count >= steps) {
         clearInterval(t);
-        audio.volume = Math.max(0, Math.min(1, targetVol));
+        gainNode.gain.value = Math.max(0, Math.min(1, targetVol));
         if (cb) cb();
       }
     }, interval);
@@ -76,9 +116,9 @@ const GameAudio = (function() {
       // Fade out before pausing to prevent hardware speaker pop
       [introMusic, bgMusic, bossMusic, bonusMusic].forEach(function(t) {
         if (!t || t.paused) return;
-        _fadeAudio(t, 0, 100, function() {
+        _fadeGain(_gainFor(t), 0, 100, function() {
           if (mode !== 'full') t.pause();
-          else t.volume = CONFIG.audio.musicVolume; // restore if user switched back
+          else _gainFor(t).gain.value = CONFIG.audio.musicVolume; // restore if user switched back
         });
       });
     }
@@ -88,18 +128,31 @@ const GameAudio = (function() {
   function getMode() { return mode; }
 
   function stopJingle() {
-    if (jingle) { jingle.pause(); jingle.currentTime = 0; jingle = null; }
+    if (!jingle) return;
+    var node = jingle.node, g = jingle.gain;
+    jingle = null;
+    // Fade gain to zero before stopping to avoid a click at sample level
+    if (g && _audioCtx) {
+      g.gain.cancelScheduledValues(_audioCtx.currentTime);
+      g.gain.setValueAtTime(g.gain.value, _audioCtx.currentTime);
+      g.gain.linearRampToValueAtTime(0, _audioCtx.currentTime + 0.05);
+      setTimeout(function() { try { node.stop(); } catch(e) {} }, 60);
+    } else {
+      try { node.stop(); } catch(e) {}
+    }
   }
 
   function playIntro() {
     if (!introMusic || mode !== 'full') return;
     introMusic.currentTime = 0;
-    introMusic.volume = 0; // start silent so hardware amp activates inaudibly, then snap to full
+    // Start silent so hardware amp activates inaudibly, then snap to full volume.
+    // Do NOT use _fadeGain here: discrete steps cause audible distortion on the intro's first notes.
+    if (_introMusicGain) _introMusicGain.gain.value = 0;
     _introPlayPromise = introMusic.play() || null;
     if (_introPlayPromise) _introPlayPromise.catch(function() {});
     setTimeout(function() {
-      if (introMusic && !introMusic.paused && mode === 'full')
-        introMusic.volume = CONFIG.audio.musicVolume;
+      if (introMusic && !introMusic.paused && mode === 'full' && _introMusicGain)
+        _introMusicGain.gain.value = CONFIG.audio.musicVolume;
     }, 30);
   }
 
@@ -120,14 +173,14 @@ const GameAudio = (function() {
     if (!introMusic) return;
     if (_introPlayPromise) { stopIntro(); return; }   // #114: play() pending — cancel it
     if (introMusic.paused) return;
-    _fadeAudio(introMusic, 0, durationMs || 1200, stopIntro);
+    _fadeGain(_introMusicGain, 0, durationMs || 1200, stopIntro);
   }
 
   // Fade out game music over durationMs then call optional cb
   function fadeOutMusic(durationMs, cb) {
     var t = _gameTrack();
     if (!t) { if (cb) cb(); return; }
-    _fadeAudio(t, 0, durationMs || 1000, function() {
+    _fadeGain(_gainFor(t), 0, durationMs || 1000, function() {
       t.pause(); t.currentTime = 0;
       if (cb) cb();
     });
@@ -150,15 +203,20 @@ const GameAudio = (function() {
     stopJingle();
     if (mode !== 'full') return;
     var track = _gameTrack();
-    // Stop all game tracks that aren't the current one (covers the 3-track set)
+    // Fade out and stop all game tracks that aren't the current one
     [bgMusic, bossMusic, bonusMusic].forEach(function(t) {
       if (!t || t === track) return;
-      t.pause(); t.currentTime = 0;
+      if (!t.paused) {
+        _fadeGain(_gainFor(t), 0, 100, function() { t.pause(); t.currentTime = 0; });
+      } else {
+        t.currentTime = 0;
+      }
     });
     if (!track) return;
     track.currentTime = 0;
     track.playbackRate = 1.0;
-    track.volume = CONFIG.audio.musicVolume;
+    var g = _gainFor(track);
+    if (g) g.gain.value = CONFIG.audio.musicVolume;
     track.play().catch(function() {});
   }
 
@@ -166,28 +224,23 @@ const GameAudio = (function() {
     [bgMusic, bossMusic, bonusMusic].forEach(function(t) {
       if (!t) return;
       if (t.paused) { t.currentTime = 0; return; }
-      _fadeAudio(t, 0, 100, function() { t.pause(); t.currentTime = 0; });
+      _fadeGain(_gainFor(t), 0, 100, function() { t.pause(); t.currentTime = 0; });
     });
   }
 
   function pauseMusic() {
     var t = _gameTrack();
     if (!t || t.paused) return;
-    _fadeAudio(t, 0, 100, function() { t.pause(); });
+    _fadeGain(_gainFor(t), 0, 100, function() { t.pause(); });
   }
 
   function resumeMusic() {
     var t = _gameTrack();
     if (!t || mode !== 'full') return;
-    t.volume = CONFIG.audio.musicVolume; // restore if paused during a fade
+    var g = _gainFor(t);
+    if (g) g.gain.value = CONFIG.audio.musicVolume; // restore if paused during a fade
     t.play().catch(function() {});
   }
-
-  // Web Audio API for zero-latency sfx
-  var _sfxRaw     = {};  // name → ArrayBuffer (prefetched)
-  var _audioCtx   = null;
-  var _warmedUp   = false;
-  var _sfxBuffers = {};  // name → AudioBuffer (decoded, ready to play)
 
   Object.keys(CONFIG.audio.sfx).forEach(function(name) {
     var url = CONFIG.audio.sfx[name];
@@ -207,6 +260,8 @@ const GameAudio = (function() {
       if (!_sfxRaw[name] || _sfxBuffers[name]) return;
       _audioCtx.decodeAudioData(_sfxRaw[name].slice(0), function(buf) { _sfxBuffers[name] = buf; }, function() {});
     });
+    // Wire all music elements through the AudioContext so everything shares one hardware stream
+    _createMusicSources();
   }
 
   // Plays a 1-sample near-silent buffer to activate the Android hardware audio pipeline
@@ -268,14 +323,18 @@ const GameAudio = (function() {
     _sfxFallback(name, cb);
   }
 
+  // Jingles (win/gameover) use WebAudio BufferSource — same pipeline as sfx, no new HTMLMediaElement.
   function playJingle(name) {
     stopJingle();
-    if (mode !== 'full') return; // jingles are music — silent in sfx-only and mute modes
-    var src = CONFIG.audio.sfx[name];
-    if (!src) return;
-    jingle = new Audio(src);
-    jingle.volume = CONFIG.audio.sfxVolume;
-    jingle.play().catch(function() {});
+    if (mode !== 'full') return;
+    if (!_audioCtx || !_sfxBuffers[name]) return;
+    var src = _audioCtx.createBufferSource();
+    src.buffer = _sfxBuffers[name];
+    var g = _audioCtx.createGain();
+    g.gain.value = CONFIG.audio.sfxVolume;
+    src.connect(g); g.connect(_audioCtx.destination);
+    src.start(0);
+    jingle = { node: src, gain: g };
   }
 
   function setMusicRate(rate) {
