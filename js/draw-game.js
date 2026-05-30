@@ -63,13 +63,15 @@ function drawSight() {
     const _nearX = t.dir > 0 ? t.x + PW + 1        : t.x - 1;
     const _farX  = t.dir > 0 ? t.x + PW + t.sight : t.x - t.sight;
     const _grad  = ctx.createLinearGradient(_nearX, 0, _farX, 0);
-    _grad.addColorStop(0,   'rgba(255,255,255,0.12)');
-    _grad.addColorStop(1,   'rgba(255,255,255,0.06)');
+    _grad.addColorStop(0,   'rgba(255,255,255,0.15)');
+    _grad.addColorStop(1,   'rgba(255,255,255,0.1)');
     ctx.fillStyle = _grad;
+    const _midY  = (eyeY + feetY) / 2;
+    const _bulge = 5;
     ctx.beginPath();
     ctx.moveTo(_nearX, eyeY);
     ctx.lineTo(_farX,  eyeY);
-    ctx.lineTo(_farX,  feetY);
+    ctx.quadraticCurveTo(_farX + _bulge * t.dir, _midY, _farX, feetY);
     ctx.lineTo(_nearX, eyeY + nearH);
     ctx.closePath();
     ctx.fill();
