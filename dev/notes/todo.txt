@@ -384,7 +384,18 @@ Cerchiamo prima di analizzare la nostra implementazione, di confrontarla con que
 - [X] #201 sistemare spaziature banners ui.js
 - [X] #208 nel banner game win se il livello attuale è easy o med possiamo mostrare invece di taptohome la domanda vuoi riprovare con un livello di difficoltà più alta? yes -> riparte il gioco con difficoltà aumentata, no -> porta alla home. Se il gioco è stato appena concluso al livello hard rimane la scritta taptohome
 - [X] #210 Livello Bonus
+- [X] #211 C'è ancora pop audio (vedi note a riguardo). Mi è appena accaduto in L6 quando cade libro
 
 PER LUCA:
+Raggio poco visibile
+Cambiare musica bonus
+Cambiare suono soldi
+Migliorare controlli + bordo colorato
+Tutti i quadri 60 sec
+Getto sprinkle poco visibile
+
 
 PER CLAUDE:
+- [X] #212 Il punteggio viene ancora resettato quando da L10 easy passi a L1 med
+- [ ] #213 quando compare il banner bonus riepilogo il gioco prosegue al L6 senza aspettare il tap (solo su android)
+- [ ] #214 Per Livello bonus ad ogni grado di difficoltà 20 colpiti per avere una vita
