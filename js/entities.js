@@ -363,7 +363,10 @@ function tickTransition() {
 function endBonusLevel() {
   deathFreeze = true;
   bonusResultActive = true;
+  bonusResultReady  = false;
   GameAudio.stopMusic();
+  // Prevent stale touchend from immediately dismissing the banner (#213)
+  pendingTransition = { t: 30, fn: function() { bonusResultReady = true; pendingTransition = null; } };
 }
 
 function updateBonusPaperProjectiles() {

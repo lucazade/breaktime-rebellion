@@ -57,6 +57,7 @@ var bonusCarambole   = 0;       // tumbles scored in current bonus
 var bonusBonusLives  = 0;       // extra lives accumulated
 var bonusBonusScore  = 0;       // extra score accumulated
 var bonusResultActive = false;  // true when bonus-result banner is shown
+var bonusResultReady  = false;  // true after cooldown — tap not accepted before this
 var paperProjectiles = [];      // [{x,y,dir,decay}] bonus paper projectiles
 var bonusWanderers   = [];      // wandering students (bonus only)
 let deathFreeze = false;
@@ -158,6 +159,7 @@ function resetLevel() {
   bonusBonusLives   = 0;
   bonusBonusScore   = 0;
   bonusResultActive = false;
+  bonusResultReady  = false;
   paperProjectiles  = [];
   bonusWanderers = (lv.wanderers || []).map(function(w, i) {
     return {x:w.x, y:w.y, dir:w.dir||1, minX:w.minX||20, maxX:w.maxX||290,
@@ -225,6 +227,7 @@ function restartGame() {
   lives = 3; score = 0;
   bonusActive = false;
   bonusResultActive = false;
+  bonusResultReady  = false;
   resetLevel();
   if (typeof _applyLevelBg === 'function') _applyLevelBg();
   state = 'playing';
