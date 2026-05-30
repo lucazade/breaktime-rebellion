@@ -276,7 +276,6 @@ function handleTap() {
   if (storyBannerT > 0 && !storyBannerFading) { storyBannerT = 20; storyBannerFading = true; return; }
   // Bonus result banner — apply rewards and advance to L6 (only after cooldown)
   if (bonusResultActive && bonusResultReady) {
-    lives += bonusBonusLives;
     score += bonusBonusScore;
     bonusActive = false;
     bonusResultActive = false;

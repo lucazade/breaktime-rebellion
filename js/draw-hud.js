@@ -250,30 +250,20 @@ function drawHUD() {
       // "CARAMBOLE: " in label color, count N in count color
       var _bLabelTxt = STRINGS.bonusCaramboleLabel;
       var _bCountTxt = String(bonusCarambole);
-      var _bLives  = bonusBonusLives  > 0 ? fmt(STRINGS.bonusLivesLabel,  bonusBonusLives)  : '';
       var _bScore  = bonusBonusScore  > 0 ? fmt(STRINGS.bonusScoreLabel,  bonusBonusScore)  : '';
-      var _bRight  = (_bLives && _bScore) ? _bLives + '  ' + _bScore : _bLives || _bScore;
       var _blLabelW = ctx.measureText(_bLabelTxt).width;
       var _blCountW = ctx.measureText(_bCountTxt).width;
       var _blW = _blLabelW + _blCountW;
-      var _brW = _bRight ? ctx.measureText('  |  ' + _bRight).width : 0;
+      var _brW = _bScore ? ctx.measureText('  |  ' + _bScore).width : 0;
       var _bsx = Math.round(VH.centerX - (_blW + _brW) / 2);
       ctx.textAlign = 'left';
       ctx.fillStyle = PAL.bonusHudLabel; ctx.fillText(_bLabelTxt, _bsx, _textY);
       ctx.fillStyle = PAL.bonusHudCount; ctx.fillText(_bCountTxt, _bsx + _blLabelW, _textY);
-      if (_bRight) {
+      if (_bScore) {
         ctx.fillStyle = PAL.hudText;
         ctx.fillText('  |  ', _bsx + _blW, _textY);
-        var _bAfterSep = _bsx + _blW + ctx.measureText('  |  ').width;
-        ctx.fillStyle = PAL.bonusHudLives;
-        if (_bLives && _bScore) {
-          ctx.fillText(_bLives + '  ', _bAfterSep, _textY);
-          ctx.fillStyle = PAL.bonusHudScore;
-          ctx.fillText(_bScore, _bAfterSep + ctx.measureText(_bLives + '  ').width, _textY);
-        } else {
-          ctx.fillStyle = _bLives ? PAL.bonusHudLives : PAL.bonusHudScore;
-          ctx.fillText(_bRight, _bAfterSep, _textY);
-        }
+        ctx.fillStyle = PAL.bonusHudScore;
+        ctx.fillText(_bScore, _bsx + _blW + ctx.measureText('  |  ').width, _textY);
       }
     } else {
       var _oi = _hudObjInfo();

@@ -145,7 +145,6 @@ const PAL = {
   // ── Bonus HUD ─────────────────────────────────────────────
   bonusHudLabel:  '#FEDC02',  // "CARAMBOLE:" label
   bonusHudCount:  '#FFFFFF',  // carambole counter
-  bonusHudLives:  '#33B84B',  // "+N VITE"
   bonusHudScore:  '#00d2ff',  // "+NNNNN PTS"
 
   // ── Mechanic dot indicators ───────────────────────────────
