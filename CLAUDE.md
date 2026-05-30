@@ -299,10 +299,12 @@ Ogni personaggio ha il suo draw function e `COLOURS_*` object in `draw-chars.js`
 
 - Musica di gioco: `bgMusic` (L1-L9), `bossMusic` (L10) — selezionata da `_gameTrack()`
 - Intro music: fade out con `fadeOutIntro()` all'avvio partita — NON TOCCARE la logica audio/transizioni
-- Jingle win/gameover: tracciati in `jingle` per poterli stoppare al restart
+- Jingle win/gameover: tracciati in `jingle` (`{ node: BufferSourceNode, gain: GainNode }`) per poterli stoppare al restart; usano WebAudio BufferSource (non HTMLMediaElement)
+- **Pipeline audio unificata (#211):** tutte le tracce `HTMLMediaElement` (bgMusic, bossMusic, bonusMusic, introMusic) sono collegate all'`AudioContext` via `createMediaElementSource()` + `GainNode` in `_createMusicSources()`. Musica e SFX condividono un unico hardware stream → nessuna riconfigurazione del mixer Android → nessun pop. Il volume della musica va controllato via `_gainFor(track).gain.value`, **mai** tramite `element.volume` (ignorato dopo il routing). `_fadeGain(gainNode, targetVol, durationMs, cb)` rimpiazza `_fadeAudio`.
 - **AudioContext** creato all'inizializzazione del modulo `audio.js` (fine IIFE, prima del `return`) — **non** al primo tap. In Capacitor WebView l'autoplay è permesso: se l'AudioContext venisse creato dopo che l'intro music è già in riproduzione (HTMLMediaElement), il mixer Android riconfigura il suo hardware → pop sull'altoparlante. `_warmupAudio()` suona un buffer silenzioso (1 sample, gain 0.001) subito dopo la creazione/resume del context per attivare la pipeline hardware prima dell'audio reale.
 - **SFX — doppio percorso:** `playSfx`/`playSfxThen` usano WebAudio (`fetch` + `decodeAudioData`) come percorso primario (zero latency). Se i buffer non sono pronti (es. `file://` dove `fetch` fallisce silenziosamente), cade in un fallback on-demand `new Audio(url)` senza pre-caricamento. Su Capacitor WebView il percorso WebAudio è sempre attivo.
 - **SFX opzionali:** `sfx` map in `config.js` supporta `null` per disabilitare un suono. Il fetch loop salta le voci null; `playSfx`/`playSfxThen` non fanno nulla (o chiamano subito il callback in mode mute).
+- **Test locale:** aprire via `npx serve . -l 8080` (non `file://`) — `createMediaElementSource()` e `fetch()` SFX richiedono HTTP per CORS.
 - `_btrMax` — dichiarato in `state.js` (non in `title.js`). Alcuni Android WebView sparano rAF prima che l'ultimo script (`title.js`) abbia finito di eseguire; `drawTitleScreen()` usava `_btrMax` a riga 116 e crashava con ReferenceError, lasciando visibile solo `"< Lvl 1"`. Spostare la dichiarazione in `state.js` (che carica prima di `game.js`) garantisce che il valore esista sempre quando il loop disegna.
 
 ## Convenzioni commit
