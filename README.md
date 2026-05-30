@@ -11,8 +11,8 @@
 </p>
 
 <p align="center">
-  <strong>An arcade game set in an high school of the '80s/'90s.</strong><br>
-  Inspired by the classic <em>Skool Daze (1984)</em> — cause chaos, dodge teachers, don't get caught.
+  <strong>An arcade game set in a high school of the '80s/'90s.</strong><br>
+  Cause chaos, dodge teachers, don't get caught.
 </p>
 
 ---
@@ -90,6 +90,7 @@ The project started from a late-night chat session about retro games — one mon
 | L3 | Smash the vending machines |
 | L4 | Deflate the gym ball |
 | L5 | Throw paper balls at seated students |
+| B  | **CARAMBOLA!** — bonus chaos level |
 | L6 | Knock books off the shelf (the Principal is watching) |
 | L7 | Flood the bathroom |
 | L8 | Plant firecrackers in the bins |
@@ -99,6 +100,10 @@ The project started from a late-night chat session about retro games — one mon
 ---
 
 ## Play It
+
+### Android (Google Play)
+
+[Download on Google Play](#) *(coming soon)*
 
 ### Browser (PWA)
 
@@ -163,7 +168,6 @@ Commit message convention: `feat:`, `fix:`, `refactor:`, `chore:`, `docs:`
 | **AI Developer** | [Claude](https://claude.ai) by Anthropic — 100% of the code |
 | **Game Art** | [ChatGPT](https://chat.openai.com) by OpenAI + [GIMP](https://gimp.org) |
 | **UI Prototyping** | [Claude](https://claude.ai) (artifact mode) |
-| **Inspired by** | [Skool Daze](https://en.wikipedia.org/wiki/Skool_Daze) (1984, David Reidy / Microsphere) |
 
 ---
 
@@ -180,3 +184,9 @@ If you enjoyed the game, consider buying me a coffee ☕
 MIT © 2026 Luca Forina — [LICENSE](LICENSE)
 
 > Game assets (background art, logo) generated with AI tools (ChatGPT) for this project.
+
+---
+
+## Privacy Policy
+
+[Privacy Policy](https://lucazade.github.io/breaktime-rebellion/privacy.html)
