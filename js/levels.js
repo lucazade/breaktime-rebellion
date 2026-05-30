@@ -159,7 +159,7 @@ var LEVELS = (function() {
 
     // ── LEVEL 6 — Drop books in the principal's office, ring the bell ────────
     Object.assign({}, CONFIG.level, {
-      timer:    75,
+      timer:    60,
       dropTime: 40, // frames to hold action near the bookcase (≈0.7s at 60fps)
 
       mechanics: {
@@ -210,7 +210,7 @@ var LEVELS = (function() {
 
     // ── LEVEL 8 — Plant firecrackers in all trash bins, ring the bell ────────
     Object.assign({}, CONFIG.level, {
-      timer: 90,
+      timer: 60,
 
       mechanics: {
         writeBoards: false,
@@ -236,7 +236,7 @@ var LEVELS = (function() {
 
     // ── LEVEL 9 — Trigger fire sprinklers, ring the bell ─────────────────────
     Object.assign({}, CONFIG.level, {
-      timer:       90,
+      timer:       60,
       lighterTime: 80, // frames to hold lighter under sprinkler (≈1.3s at 60fps)
 
       mechanics: {
@@ -266,7 +266,7 @@ var LEVELS = (function() {
 
     // ── LEVEL 10 — Steal the register and escape ─────────────────────────────
     Object.assign({}, CONFIG.level, {
-      timer:        90,
+      timer:        60,
       registerTime: 80,  // frames to steal the register (≈1.3s)
       nightMode:    true,
 

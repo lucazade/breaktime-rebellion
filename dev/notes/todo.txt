@@ -390,11 +390,11 @@ Cerchiamo prima di analizzare la nostra implementazione, di confrontarla con que
 - [X] #214 Per Livello bonus ad ogni grado di difficoltà 20 colpiti per avere una vita
 
 PER LUCA:
-Raggio poco visibile
 Cambiare musica bonus
 Cambiare suono soldi
 Migliorare controlli + bordo colorato
-Tutti i quadri 60 sec
+Cono sight poco visibile
 Getto sprinkle poco visibile
+Tutti i quadri 60 sec
 
 PER CLAUDE:
