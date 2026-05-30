@@ -311,8 +311,8 @@ const PAL = {
   sprinklerInactive:    '#888888',               // head when inactive
   sprinklerActive:      '#5F1D1B',               // head when triggered (red)
   sprinklerActiveBorder:'#33B84B',               // dashed border blink when active
-  waterStream:          'rgba(60,140,255,0.45)',  // water stream spraying from head
-  waterStreamAlt:       'rgba(188, 223, 255, 0.3)', // alternate stream (lighter, more transparent)
+  waterStream:          'rgba(60,140,255,0.65)',  // water stream spraying from head
+  waterStreamAlt:       'rgba(188, 223, 255, 0.5)', // alternate stream (lighter, more transparent)
   wetParticle:          '#00c8ff8e',  // janitor soaked — main cyan droplet
   wetParticleLight:     '#88dfff',  // janitor soaked — lighter sky-blue droplet
 

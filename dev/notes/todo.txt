@@ -393,8 +393,5 @@ PER LUCA:
 Cambiare musica bonus
 Cambiare suono soldi
 Migliorare controlli + bordo colorato
-Cono sight poco visibile
-Getto sprinkle poco visibile
-Tutti i quadri 60 sec
 
 PER CLAUDE:
