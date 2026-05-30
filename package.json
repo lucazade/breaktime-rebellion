@@ -3,6 +3,7 @@
   "version": "1.0.32",
   "private": true,
   "scripts": {
+    "serve": "npx serve . -l 8080",
     "check": "node dev/scripts/check-dead.js",
     "build": "rm -rf www && mkdir -p www && cp index.html manifest.json sw.js robots.txt www/ && cp -r css js assets www/",
     "sync": "npm run build && npx cap sync android",
