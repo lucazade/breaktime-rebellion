@@ -294,10 +294,7 @@ function updatePlayer() {
     const s0 = stairResult.stair, t0 = stairResult.t;
     const nearBottom = t0 < 0.15;
     const nearTop    = t0 > 0.85;
-    const gr = s0.x2 > s0.x1;
-    const okUp   = gr ? (K.right && !K.left) : (K.left && !K.right);
-    const okDown = gr ? (K.left && !K.right) : (K.right && !K.left);
-    if ((nearBottom && K.up && okUp) || (nearTop && K.down && okDown)) {
+    if ((nearBottom && K.up) || (nearTop && K.down)) {
       player.onStair = true;
       player.currentStair = s0;
     }
