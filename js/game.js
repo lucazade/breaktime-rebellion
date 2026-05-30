@@ -185,7 +185,9 @@ function loop(ts) {
     } else {
       var _th = t.name==='Prof.Rossi' ? PAL.profRossiHair : t.name==='Prof.Celeste' ? PAL.profCelesteHair : t.name==='Prof.Neri' ? PAL.profNeriHair : PAL.profRossiHair;
       var _tt = t.name==='Prof.Rossi' ? PAL.profRossiTie  : t.name==='Prof.Celeste' ? PAL.profCelesteTie  : t.name==='Prof.Neri' ? PAL.profNeriTie  : PAL.profRossiTie;
-      drawChar(t.x, t.y, t.dir, t.animT, t.color, Object.assign({}, COLOURS_TEACHER, {hair:_th, tie:_tt}), false, t.chasing, t.knockedT);
+      var _tr = t.name==='Prof.Rossi' ? PAL.profRossiTrousers : t.name==='Prof.Celeste' ? PAL.profCelesteTrousers : t.name==='Prof.Neri' ? PAL.profNeriTrousers : PAL.teacherTrousers;
+      var _ts = t.name==='Prof.Rossi' ? PAL.profRossiShoes    : t.name==='Prof.Celeste' ? PAL.profCelesteShoes    : t.name==='Prof.Neri' ? PAL.profNeriShoes    : PAL.teacherShoes;
+      drawChar(t.x, t.y, t.dir, t.animT, t.color, Object.assign({}, COLOURS_TEACHER, {hair:_th, tie:_tt, trousers:_tr, shoes:_ts}), false, t.chasing, t.knockedT);
     }
   }
   for (let i = 0; i < janitors.length; i++) {

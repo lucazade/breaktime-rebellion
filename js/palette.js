@@ -29,19 +29,25 @@ const PAL = {
   speechText:        '#000000', // NPC speech bubble text / tap-to-continue label
 
   // ── Prof.Rossi ────────────────────────────────────────────
-  profRossiBody:    '#D21C01',  // jacket
-  profRossiHair:    '#3d1f00',  // hair (dark brown)
-  profRossiTie:     '#FEDC02',  // tie (yellow)
+  profRossiBody:     '#D21C01',  // jacket
+  profRossiHair:     '#3d1f00',  // hair (dark brown)
+  profRossiTie:      '#FEDC02',  // tie (yellow)
+  profRossiTrousers: '#2c2c2c',  // trousers (dark charcoal)
+  profRossiShoes:    '#862c00',  // shoes (dark burgundy)
 
   // ── Prof.Celeste ──────────────────────────────────────────
-  profCelesteBody:  '#0062da',  // jacket
-  profCelesteHair:  '#9e9e9e',  // hair (light gray)
-  profCelesteTie:   '#000000',  // tie (yellow)
+  profCelesteBody:     '#0062da',  // jacket
+  profCelesteHair:     '#9e9e9e',  // hair (light gray)
+  profCelesteTie:      '#e600ff',  // tie (purple)
+  profCelesteTrousers: '#a0a0a0',  // trousers (light gray)
+  profCelesteShoes:    '#1a1a1a',  // shoes (black)
 
   // ── Prof.Neri ─────────────────────────────────────────────
   profNeriBody:     '#262626',  // jacket
   profNeriHair:     '#1a1a1a',  // hair (near black)
-  profNeriTie:      '#ffffff',  // tie (yellow)
+  profNeriTie:      '#ffffff',  // tie (white)
+  profNeriTrousers: '#706f6e',  // trousers (near black)
+  profNeriShoes:    '#862c00',  // shoes (very dark brown)
 
   // ── Janitor ───────────────────────────────────────────────
   janitorSkin:       '#faa462',  // face, hands
@@ -85,6 +91,8 @@ const PAL = {
   wandererHair5:  '#c8a020',  // blonde
   wandererHair6:  '#1a1a1a',  // black
   wandererHair7:  '#8b4513',  // chestnut
+  wandererTrousers: '#706f6e',  // trousers (all wanderers)
+  wandererShoes:    '#862c00',  // shoes (all wanderers)
 
   // ── Preside ───────────────────────────────────────────────
   presideSkin:       '#faa462',  // face, hands
