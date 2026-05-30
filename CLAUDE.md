@@ -122,7 +122,7 @@ Il codice è diviso in moduli distinti che comunicano via variabili globali cond
 - `gameDifficulty` — `'easy'|'medium'|'hard'`, salvato in `btr_difficulty` localStorage
 - `unlockedDifficulty` — difficoltà massima sbloccata (`btr_unlocked_difficulty`); sblocco progressivo: easy→medium→hard al completamento L10. Funzioni: `_isDifficultyUnlocked(diff)`, `_unlockNextDifficulty()` in `state.js`. `unlockAllLevels` bypassa il lock. Il title cicla tutte e 3 le difficoltà ma mostra lucchetto e blocca l'avvio se la selezionata è locked.
 - `_dT` (in `resetLevel`) — moltiplicatore timer per difficoltà: `easy 1.0`, `medium 0.917`, `hard 0.833`. Applicato a tutti i timer livello; se `lv.timer` è un oggetto per-difficulty, `_dT` si applica ugualmente.
-- `bonusResultActive` — `true` quando il banner risultato bonus è visibile
+- `bonusResultActive` — `true` quando il banner risultato bonus è visibile; `bonusResultReady` — `true` dopo 30 frame di cooldown (previene skip su Android da touchend residuo)
 - `bonusCarambole`, `bonusBonusScore`, `bonusBonusLives` — accumulati durante bonus, applicati a `score`/`lives` al tap del banner risultato
 - `bonusWanderers` — studenti wandering (bonus only); `paperProjectiles` — proiettili fisici bonus
 
