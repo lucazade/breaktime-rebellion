@@ -15,7 +15,7 @@ const CONFIG = {
     music:       'assets/audio/music/music1.mp3',
     introMusic:  'assets/audio/music/intro.mp3',
     bossMusic:   'assets/audio/music/boss.mp3',
-    bonusMusic:  'assets/audio/music/bonus.mp3',
+    bonusMusic:  'assets/audio/music/bonus1.mp3',
     sfx: {
       win:       'assets/audio/music/win.mp3',
       gameover:  'assets/audio/music/gameover.mp3',
