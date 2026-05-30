@@ -394,8 +394,7 @@ Cerchiamo prima di analizzare la nostra implementazione, di confrontarla con que
 
 PER LUCA:
 Cambiare musica bonus
-Cambiare suono soldi
-Migliorare controlli
 Cravatta prof celeste
 
 PER CLAUDE:
+- [ ] #218 migliorare feeling joypad
