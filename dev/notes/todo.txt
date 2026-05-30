@@ -386,6 +386,8 @@ Cerchiamo prima di analizzare la nostra implementazione, di confrontarla con que
 - [X] #210 Livello Bonus
 - [X] #211 C'è ancora pop audio (vedi note a riguardo). Mi è appena accaduto in L6 quando cade libro
 - [X] #212 Il punteggio viene ancora resettato quando da L10 easy passi a L1 med
+- [X] #213 quando compare il banner bonus riepilogo il gioco prosegue al L6 senza aspettare il tap (solo su android)
+- [X] #214 Per Livello bonus ad ogni grado di difficoltà 20 colpiti per avere una vita
 
 PER LUCA:
 Raggio poco visibile
@@ -395,7 +397,4 @@ Migliorare controlli + bordo colorato
 Tutti i quadri 60 sec
 Getto sprinkle poco visibile
 
-
 PER CLAUDE:
-- [X] #213 quando compare il banner bonus riepilogo il gioco prosegue al L6 senza aspettare il tap (solo su android)
-- [ ] #214 Per Livello bonus ad ogni grado di difficoltà 20 colpiti per avere una vita
