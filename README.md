@@ -20,9 +20,14 @@
 ## Screenshots
 
 <p align="center">
-  <img src="assets/pics/screenshots/L1.png" width="47%" alt="Day levels">
+  <img src="assets/pics/screenshots/level1.png" width="47%" alt="Gameplay - day levels">
   &nbsp;
-  <img src="assets/pics/screenshots/L2.png" width="47%" alt="Night level (L10)">
+  <img src="assets/pics/screenshots/level3.png" width="47%" alt="Gameplay - vending machines">
+</p>
+<p align="center">
+  <img src="assets/pics/screenshots/bonus.png" width="47%" alt="Bonus level - CARAMBOLA!">
+  &nbsp;
+  <img src="assets/pics/screenshots/level10.png" width="47%" alt="Level 10 - night mode">
 </p>
 
 ---
