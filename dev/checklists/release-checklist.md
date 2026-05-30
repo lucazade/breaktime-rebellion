@@ -19,6 +19,7 @@
 - [ ] APK caricato su Drive (automatico)
 
 ## 5. Documentazione 🤖
+- [ ] **README.md** — aggiornare se cambiano controlli, feature visibili o descrizione
 - [ ] **CLAUDE.md** — aggiornare se cambiano architettura, convenzioni o file structure
 - [ ] **CLAUDE.md compattazione** — ogni 3-4 release, rimuovere sezioni obsolete
 - [ ] **Memoria** — salvare se emerso qualcosa di non-ovvio nella sessione
