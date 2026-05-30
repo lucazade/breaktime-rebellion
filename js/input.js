@@ -42,21 +42,39 @@ bA.addEventListener('mousedown',   onA);
 bA.addEventListener('mouseup',     offA);
 bA.addEventListener('mouseleave',  offA);
 
-// Analog joystick
+// Analog joystick — floating: appears at touch point, snaps back on release
 (function() {
-  const zone = document.getElementById('ctrl-joy');
-  const knob = document.getElementById('joy-knob');
+  const zone  = document.getElementById('ctrl-joy');
+  const knob  = document.getElementById('joy-knob');
+  const panel = document.getElementById('panel-left');
   if (!zone || !knob) return;
 
   var active = false, cx = 0, cy = 0;
   var RADIUS = 33, DEAD = 10;
 
+  function _floatTo(clientX, clientY) {
+    var pr = panel.getBoundingClientRect();
+    var lx = Math.max(45, Math.min(pr.width  - 45, clientX - pr.left));
+    var ly = Math.max(60, Math.min(pr.height - 45, clientY - pr.top));
+    zone.style.left      = lx + 'px';
+    zone.style.top       = ly + 'px';
+    zone.style.bottom    = 'auto';
+    zone.style.transform = 'translate(-50%, -50%)';
+  }
+  function _resetPos() {
+    zone.style.left      = '50%';
+    zone.style.top       = 'auto';
+    zone.style.bottom    = '40px';
+    zone.style.transform = 'translateX(-50%)';
+  }
+
   function joyStart(e) {
+    if (e.target && e.target.closest && e.target.closest('.panel-btn')) return;
     e.preventDefault();
     active = true;
-    var r = zone.getBoundingClientRect();
-    cx = r.left + r.width  / 2;
-    cy = r.top  + r.height / 2;
+    var t = e.touches ? e.touches[0] : e;
+    cx = t.clientX; cy = t.clientY;
+    _floatTo(cx, cy);
     joyUpdate(e);
   }
   function joyMove(e) { if (active) { e.preventDefault(); joyUpdate(e); } }
@@ -65,6 +83,7 @@ bA.addEventListener('mouseleave',  offA);
     active = false;
     knob.style.transform = '';
     K.left = K.right = K.up = K.down = false;
+    _resetPos();
   }
   function joyUpdate(e) {
     var t = e.touches ? e.touches[0] : e;
@@ -79,13 +98,15 @@ bA.addEventListener('mouseleave',  offA);
     K.down  = dy >  DEAD;
   }
 
-  zone.addEventListener('touchstart',  joyStart, {passive:false});
-  zone.addEventListener('touchmove',   joyMove,  {passive:false});
-  zone.addEventListener('touchend',    joyEnd,   {passive:false});
-  zone.addEventListener('touchcancel', joyEnd,   {passive:false});
-  zone.addEventListener('mousedown',   joyStart);
-  zone.addEventListener('mousemove',   joyMove);
-  zone.addEventListener('mouseup',     joyEnd);
-  zone.addEventListener('mouseleave',  joyEnd);
+  // Touch: entire panel is the capture zone
+  panel.addEventListener('touchstart',  joyStart, {passive:false});
+  panel.addEventListener('touchmove',   joyMove,  {passive:false});
+  panel.addEventListener('touchend',    joyEnd,   {passive:false});
+  panel.addEventListener('touchcancel', joyEnd,   {passive:false});
+  // Mouse: fixed zone for desktop testing
+  zone.addEventListener('mousedown',  joyStart);
+  zone.addEventListener('mousemove',  joyMove);
+  zone.addEventListener('mouseup',    joyEnd);
+  zone.addEventListener('mouseleave', joyEnd);
 })();
 
