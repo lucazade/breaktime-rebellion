@@ -49,6 +49,10 @@ bA.addEventListener('mousedown',  onA);
 bA.addEventListener('mouseup',    offA);
 bA.addEventListener('mouseleave', offA);
 
+// Raw joystick displacement — used by physics for stair entry dominance check.
+// Both zero when joystick inactive (keyboard input or released).
+var _joyDX = 0, _joyDY = 0;
+
 // Analog joystick — floating: appears at touch point, snaps back on release
 (function() {
   const zone  = document.getElementById('ctrl-joy');
@@ -92,12 +96,14 @@ bA.addEventListener('mouseleave', offA);
     active = false;
     knob.style.transform = '';
     K.left = K.right = K.up = K.down = false;
+    _joyDX = 0; _joyDY = 0;
     _resetPos();
   }
   function joyUpdate(e) {
     var t = e.touches ? e.touches[0] : e;
     var dx = t.clientX - cx;
     var dy = t.clientY - cy;
+    _joyDX = dx; _joyDY = dy;
     var dist = Math.sqrt(dx * dx + dy * dy);
     var c = Math.min(dist, RADIUS) / (dist || 1);
     knob.style.transform = 'translate(' + (dx * c) + 'px,' + (dy * c) + 'px)';

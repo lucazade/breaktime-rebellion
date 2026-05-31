@@ -297,7 +297,10 @@ function updatePlayer() {
     const _gr0  = s0.x2 > s0.x1;
     const _descH = _gr0 ? (K.left && !K.right) : (K.right && !K.left); // horizontal descend dir
     const _ascH  = _gr0 ? (K.right && !K.left) : (K.left && !K.right); // horizontal ascend dir
-    if ((nearBottom && K.up && !_descH) || (nearTop && K.down && !_ascH)) {
+    // On joystick, require vertical to dominate horizontal (1.5×) to prevent accidental entry while walking.
+    // When _joyDX/_joyDY are both 0 the player is on keyboard — no ratio check needed.
+    var _vertOk = (_joyDX === 0 && _joyDY === 0) || (Math.abs(_joyDY) > Math.abs(_joyDX) * 1.5);
+    if ((nearBottom && K.up && !_descH && _vertOk) || (nearTop && K.down && !_ascH && _vertOk)) {
       player.onStair = true;
       player.currentStair = s0;
     }
