@@ -90,8 +90,8 @@ Ogni `drawXxx` function usa esclusivamente `PAL.nomeEsplicito` — nessun colore
 ## Controlli
 
 - **Desktop**: frecce direzionali + Z/Spazio
-- **Mobile**: joystick **floating** — appare dove tocchi nel `#panel-left`, snap back al rilascio. Touch catturato su tutto il panel, non solo su `#ctrl-joy`. Bottone azione `#btn-action` in `#panel-right`.
-- **Scala**: ingresso con solo K.up (salire dal basso) o K.down (scendere dall'alto) — nessuna diagonale richiesta. Soglia `nearBottom = t<0.15`, `nearTop = t>0.85`. Una volta sulla scala K.up/K.down hanno priorità su K.left/K.right.
+- **Mobile**: joystick **floating** — appare dove tocchi nel `#panel-left`, snap back al rilascio. Touch catturato su tutto il panel. Multi-touch: `joyStart` usa `changedTouches[0]` (il dito appena toccato) e traccia `_touchId` in `joyMove`/`joyEnd`. Guard Y<175px protegge i pulsanti UI in cima al pannello. Bottone azione `#btn-action` in `#panel-right`.
+- **Scala**: ingresso richiede **diagonale** — K.up + direzione orizzontale corretta per salire (es. K.up+K.left per scala sinistra), K.down + direzione corretta per scendere. Soglia `nearBottom = t<0.19`, `nearTop = t>0.81`. Il tasto orizzontale nella direzione di discesa ha priorità su K.up (previene salita accidentale). `showStairZones` in `CONFIG.debug` disegna le zone di innesco (rosso/blu).
 
 ## PWA / Mobile
 
@@ -112,7 +112,7 @@ Il codice è diviso in moduli distinti che comunicano via variabili globali cond
 - `player`, `teachers`, `janitors`, `BOARDS`, `bags`, `BELL`, `DESKS`, `stairs`
 - `lives`, `score`, `state`, `frame`, `currentLevel`
 - `levelMechanics` — mechanics attive nel livello corrente (da `lv.mechanics`)
-- `nightMode` — `true` in L10, attiva `drawNightOverlay()` (gradiente radiale torcia)
+- `nightMode` — `true` in L10, attiva `drawNightOverlay()` (gradiente radiale centrato su Marco) e `drawTorch()` (flashlight pixel art nella mano di Marco)
 - `register`, `exitDoor` — oggetti L10; `exitDone`, `exitWinReady` — flag win L10
 - `deathFreeze` — congela NPC e aggiornamenti durante morte/win; solo `tickTransition()` avanza
 - `pendingTransition` — `{ t: frames, fn: callback }` o `null`; usato al posto di `setTimeout` per transizioni di stato. Resettato da `resetLevel()`, decrementato da `tickTransition()`.
@@ -275,7 +275,7 @@ CSS scala sempre DOWN (mai upscale) → nessuna distorsione su qualsiasi viewpor
 - `CONFIG.images` — `background`, `backgroundNight`, `logo` (tutti 1600px)
 - `CONFIG.audio` — `musicVolume`, `sfxVolume`, `music`, `introMusic`, `bossMusic`, `sfx` map
 - `CONFIG.display` — `fontFamily`
-- `CONFIG.debug.unlockAllLevels` — `true` sblocca tutti i livelli nel chooser
+- `CONFIG.debug` — flag di debug: `unlockAllLevels` (sblocca livelli), `godMode`, `startAtBonus`, `sightDebug` (overlay cono visivo), `showStairZones` (overlay zone ingresso scala rosso/blu)
 
 ## NPC sprites
 
