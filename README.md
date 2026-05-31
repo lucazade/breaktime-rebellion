@@ -164,7 +164,7 @@ Commit message convention: `feat:`, `fix:`, `refactor:`, `chore:`, `docs:`
 
 ## Credits
 
-| | |
+| Role | Info |
 |---|---|
 | **Design & Development** | [Luca Forina](https://github.com/lucazade) — Lucazade Soft |
 | **AI Developer** | [Claude](https://claude.ai) by Anthropic |
