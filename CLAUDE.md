@@ -348,7 +348,7 @@ try{new Function(src);console.log('JS OK');}catch(e){console.log('ERRORE:',e.mes
 
 **Flusso release 🤖:**
 1. `npm run check` — nessun dead code
-2. Verificare flag debug off (`CONFIG.debug.unlockAllLevels`, `godMode`)
+2. Verificare flag debug off (`CONFIG.debug.unlockAllLevels`, `godMode`, `showStairZones`, `sightDebug`, `startAtBonus`)
 3. Bump versione in `package.json`
 4. Commit e push
 5. `npm run apk` — build + upload Drive automatico
