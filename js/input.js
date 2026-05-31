@@ -1,5 +1,5 @@
 // Input — keyboard, touch buttons, analog joystick
-const K = {left:false, right:false, up:false, down:false, action:false};
+const K = {left:false, right:false, up:false, down:false, action:false, _joyDX:0, _joyDY:0};
 
 document.addEventListener('keydown', function(e) {
   if (e.code === 'ArrowLeft')  K.left = true;
@@ -103,6 +103,7 @@ bA.addEventListener('mouseleave', offA);
     _touchId = null;
     knob.style.transform = '';
     K.left = K.right = K.up = K.down = false;
+    K._joyDX = K._joyDY = 0;
     _resetPos();
   }
   function joyUpdate(e) {
@@ -126,6 +127,8 @@ bA.addEventListener('mouseleave', offA);
     K.right = dx >  DEAD;
     K.up    = dy < -DEAD;
     K.down  = dy >  DEAD;
+    K._joyDX = dx;
+    K._joyDY = dy;
   }
 
   // Touch: entire panel is the capture zone

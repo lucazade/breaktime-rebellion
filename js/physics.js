@@ -297,7 +297,11 @@ function updatePlayer() {
     const _gr0   = s0.x2 > s0.x1;
     const _okUp  = _gr0 ? (K.right && !K.left) : (K.left && !K.right);
     const _okDn  = _gr0 ? (K.left && !K.right) : (K.right && !K.left);
-    if ((nearBottom && K.up && _okUp) || (nearTop && K.down && _okDn)) {
+    // On joystick require dominant vertical (~20°) to avoid accidental stair entry
+    // while walking flat. On desktop K._joyDX is 0 → always allowed.
+    const _upIntent = K.up  && Math.abs(K._joyDY || 999) > Math.abs(K._joyDX || 0) * 0.364;
+    const _dnIntent = K.down && Math.abs(K._joyDY || 999) > Math.abs(K._joyDX || 0) * 0.364;
+    if ((nearBottom && _upIntent && _okUp) || (nearTop && _dnIntent && _okDn)) {
       player.onStair = true;
       player.currentStair = s0;
     }
@@ -309,7 +313,7 @@ function updatePlayer() {
     player.vy = 0;
     var sm = 0;
     const _descH = goesRight ? (K.left && !K.right) : (K.right && !K.left);
-    if      (_descH)               sm = -1;  // descending horizontal overrides K.up
+    if      (_descH)               sm = -1;
     else if (K.up   && !K.down)    sm =  1;
     else if (K.down && !K.up)      sm = -1;
     else if (K.right && !K.left)   sm = goesRight ?  1 : -1;
