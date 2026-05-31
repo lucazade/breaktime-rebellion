@@ -1,6 +1,6 @@
 {
   "name": "breaktime-rebellion",
-  "version": "1.0.48",
+  "version": "1.0.49",
   "private": true,
   "scripts": {
     "serve": "npx serve . -l 8080",
