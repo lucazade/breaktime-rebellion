@@ -109,6 +109,8 @@ The project started from a late-night chat session about retro games — one mon
 
 ### Browser (PWA)
 
+**[Play now →](https://lucazade.github.io/breaktime-rebellion/)**
+
 Open the game in Chrome on Android → tap **Add to Home Screen** → install as a fullscreen app.
 
 ### Android APK
