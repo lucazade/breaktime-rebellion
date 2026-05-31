@@ -308,10 +308,12 @@ function updatePlayer() {
     const goesRight = s.x2 > s.x1;
     player.vy = 0;
     var sm = 0;
-    if      (K.up   && !K.down)   sm =  1;
-    else if (K.down && !K.up)     sm = -1;
-    else if (K.right && !K.left)  sm = goesRight ?  1 : -1;
-    else if (K.left  && !K.right) sm = goesRight ? -1 :  1;
+    const _descH = goesRight ? (K.left && !K.right) : (K.right && !K.left);
+    if      (_descH)               sm = -1;  // descending horizontal overrides K.up
+    else if (K.up   && !K.down)    sm =  1;
+    else if (K.down && !K.up)      sm = -1;
+    else if (K.right && !K.left)   sm = goesRight ?  1 : -1;
+    else if (K.left  && !K.right)  sm = goesRight ? -1 :  1;
     if (sm !== 0) {
       player.x += sm * player.speed * 0.85 * (goesRight ? 1 : -1);
       player.dir = sm * (goesRight ? 1 : -1);
