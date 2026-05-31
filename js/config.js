@@ -45,7 +45,6 @@ const CONFIG = {
     godMode:         false,
     startAtBonus:    false,
     sightDebug:      false,
-    tuneStairRatio:  true,   // P = +0.1, C = -0.1, shows overlay with current value
   },
 };
 

@@ -294,13 +294,10 @@ function updatePlayer() {
     const s0 = stairResult.stair, t0 = stairResult.t;
     const nearBottom = t0 < 0.15;
     const nearTop    = t0 > 0.85;
-    const _gr0  = s0.x2 > s0.x1;
-    const _descH = _gr0 ? (K.left && !K.right) : (K.right && !K.left); // horizontal descend dir
-    const _ascH  = _gr0 ? (K.right && !K.left) : (K.left && !K.right); // horizontal ascend dir
-    // On joystick, require vertical to dominate horizontal (1.5×) to prevent accidental entry while walking.
-    // When _joyDX/_joyDY are both 0 the player is on keyboard — no ratio check needed.
-    var _vertOk = (_joyDX === 0 && _joyDY === 0) || (Math.abs(_joyDY) > Math.abs(_joyDX) * _stairVertRatio);
-    if ((nearBottom && K.up && !_descH && _vertOk) || (nearTop && K.down && !_ascH && _vertOk)) {
+    const _gr0   = s0.x2 > s0.x1;
+    const _okUp  = _gr0 ? (K.right && !K.left) : (K.left && !K.right);
+    const _okDn  = _gr0 ? (K.left && !K.right) : (K.right && !K.left);
+    if ((nearBottom && K.up && _okUp) || (nearTop && K.down && _okDn)) {
       player.onStair = true;
       player.currentStair = s0;
     }
@@ -310,15 +307,11 @@ function updatePlayer() {
     const s = player.currentStair;
     const goesRight = s.x2 > s.x1;
     player.vy = 0;
-    // Ascend/descend only when inputs agree: conflicting direction keys cancel out.
-    // descH = horizontal key pointing toward stair bottom; ascH = toward stair top.
     var sm = 0;
-    const _descH = goesRight ? (K.left && !K.right) : (K.right && !K.left);
-    const _ascH  = goesRight ? (K.right && !K.left) : (K.left && !K.right);
-    const _ascend  = (K.up && !K.down) || _ascH;
-    const _descend = (K.down && !K.up) || _descH;
-    if      (_ascend && !_descend)  sm =  1;
-    else if (_descend && !_ascend)  sm = -1;
+    if      (K.up   && !K.down)   sm =  1;
+    else if (K.down && !K.up)     sm = -1;
+    else if (K.right && !K.left)  sm = goesRight ?  1 : -1;
+    else if (K.left  && !K.right) sm = goesRight ? -1 :  1;
     if (sm !== 0) {
       player.x += sm * player.speed * 0.85 * (goesRight ? 1 : -1);
       player.dir = sm * (goesRight ? 1 : -1);
