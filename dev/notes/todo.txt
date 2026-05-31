@@ -1,0 +1,4 @@
+Sistemare entrata nelle scale nella direzione del personaggio
+Aggiungere in credits.txt e in readme.md le canzoni usate
+Allineare credits nel gioco
+L10 Aggiungere torcia a Marco
