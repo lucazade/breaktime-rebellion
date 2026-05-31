@@ -4,4 +4,4 @@
 - [x] #4 ogni tanto il pulsante azione non funziona quando il joypad è in uso.. non ho capito la discriminante
 - [x] #5 ogni tanto il joypad floating si posiziona sotto il pollice correttamente, ogni tanto sotto il pollice si posizione il knob esteso al massimo
 - [x] #6 ogni tanto il joypad viene evidenziato con una selezione blu trasparente
-- [ ] #7 la zona di floating del joypad e di trigger del pulsante sono troppo basse. devono prendere un po di più in altezza del sidepanel (non devono ovviamente arrivare alla zona pulsante esc/pausa/credits)
+- [x] #7 la zona di floating del joypad e di trigger del pulsante sono troppo basse. devono prendere un po di più in altezza del sidepanel (non devono ovviamente arrivare alla zona pulsante esc/pausa/credits)
