@@ -56,7 +56,7 @@ bA.addEventListener('mouseleave', offA);
   const panel = document.getElementById('panel-left');
   if (!zone || !knob) return;
 
-  var active = false, cx = 0, cy = 0;
+  var active = false, cx = 0, cy = 0, _touchId = null;
   var RADIUS = 33, DEAD = 10;
 
   function _floatTo(clientX, clientY) {
@@ -76,26 +76,47 @@ bA.addEventListener('mouseleave', offA);
   }
 
   function joyStart(e) {
-    var _t = e.touches ? e.touches[0] : e;
+    // Use changedTouches[0] — the finger that just touched — not touches[0] which may
+    // be a different finger already on screen (e.g. action button thumb).
+    var _t = e.changedTouches ? e.changedTouches[0] : e;
     if (_t.clientY - panel.getBoundingClientRect().top < 300) return;
     e.preventDefault();
     active = true;
-    var t = e.touches ? e.touches[0] : e;
-    cx = t.clientX; cy = t.clientY;
+    _touchId = _t.identifier !== undefined ? _t.identifier : null;
+    cx = _t.clientX; cy = _t.clientY;
     _floatTo(cx, cy);
     joyUpdate(e);
   }
   function joyMove(e) { if (active) { e.preventDefault(); joyUpdate(e); } }
   function joyEnd(e) {
     if (!active) return;
+    // Only end if our tracked finger lifted (ignore other fingers releasing).
+    if (_touchId !== null && e.changedTouches) {
+      var found = false;
+      for (var i = 0; i < e.changedTouches.length; i++) {
+        if (e.changedTouches[i].identifier === _touchId) { found = true; break; }
+      }
+      if (!found) return;
+    }
     e.preventDefault();
     active = false;
+    _touchId = null;
     knob.style.transform = '';
     K.left = K.right = K.up = K.down = false;
     _resetPos();
   }
   function joyUpdate(e) {
-    var t = e.touches ? e.touches[0] : e;
+    var t;
+    if (e.touches && _touchId !== null) {
+      // Find our specific finger among all active touches.
+      t = null;
+      for (var i = 0; i < e.touches.length; i++) {
+        if (e.touches[i].identifier === _touchId) { t = e.touches[i]; break; }
+      }
+      if (!t) return;
+    } else {
+      t = e.changedTouches ? e.changedTouches[0] : e;
+    }
     var dx = t.clientX - cx;
     var dy = t.clientY - cy;
     var dist = Math.sqrt(dx * dx + dy * dy);

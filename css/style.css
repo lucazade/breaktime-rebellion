@@ -101,6 +101,9 @@ canvas.rounded { border-radius: 16px; }
   z-index: 50;
   touch-action: none;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 #joy-base {

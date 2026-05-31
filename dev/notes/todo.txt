@@ -1,3 +1,6 @@
-- [x] L10 Aggiungere torcia a Marco
-- [x] Aggiungere in credits.txt e in readme.md le canzoni usate ed allineare nel popup credits
-- [x] salita e discesa nelle scale deve essere solo nella direzione delle scale (se la scala va in diagonale a sinistra Marco non può salire con il alto a destra)
+- [x] #1 L10 Aggiungere torcia a Marco
+- [x] #2 Aggiungere in credits.txt e in readme.md le canzoni usate ed allineare nel popup credits
+- [x] #3 salita e discesa nelle scale deve essere solo nella direzione delle scale (se la scala va in diagonale a sinistra Marco non può salire con il alto a destra)
+- [ ] #4 ogni tanto il pulsante azione non funziona quando il joypad è in uso.. non ho capito la discriminante
+- [x] #5 ogni tanto il joypad floating si posiziona sotto il pollice correttamente, ogni tanto sotto il pollice si posizione il knob esteso al massimo
+- [x] #6 ogni tanto il joypad viene evidenziato con una selezione blu trasparente
