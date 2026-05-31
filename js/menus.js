@@ -158,6 +158,16 @@ document.addEventListener('keydown', function(e) {
       e.preventDefault(); handleTap(); return;
     }
   }
+  if (CONFIG.debug.tuneStairRatio && state === 'playing') {
+    if (e.key === 'p' || e.key === 'P') {
+      _stairVertRatio = Math.round((_stairVertRatio + 0.1) * 10) / 10;
+      localStorage.setItem('btr_stairRatio', _stairVertRatio); return;
+    }
+    if (e.key === 'c' || e.key === 'C') {
+      _stairVertRatio = Math.max(0, Math.round((_stairVertRatio - 0.1) * 10) / 10);
+      localStorage.setItem('btr_stairRatio', _stairVertRatio); return;
+    }
+  }
   if (e.key === 'c' || e.key === 'C') { if (_creditsActive) hideCredits(); else showCredits(); return; }
   if (_creditsActive) { if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') hideCredits(); return; }
   if (e.key === 'p' || e.key === 'P') triggerPause();

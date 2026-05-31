@@ -110,3 +110,16 @@ function drawFloating() {
 
 // Noop stub — overridden by dev/debug/scene-overlay.js when ?scene=1
 function drawDebugOverlay() {}
+
+function drawStairRatioOverlay() {
+  if (!CONFIG.debug.tuneStairRatio) return;
+  ctx.save();
+  ctx.textAlign = 'right'; ctx.textBaseline = 'top';
+  ctx.font = '6px ' + FF;
+  var _label = 'SR:' + _stairVertRatio.toFixed(1) + '  P=+ C=-';
+  ctx.fillStyle = 'rgba(0,0,0,0.55)';
+  ctx.fillRect(W - ctx.measureText(_label).width - 6, 2, ctx.measureText(_label).width + 4, 10);
+  ctx.fillStyle = '#44ee66';
+  ctx.fillText(_label, W - 3, 4);
+  ctx.restore();
+}

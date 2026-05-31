@@ -24,6 +24,9 @@ let actionPressed, allBoards, allBags, allMachines, allBall, allStudents, allBoo
 let machines, gymBall, paperBalls, students, throwCooldown, bookcase, sink, bins, sprinklers, register, exitDoor;
 let nightMode, registerTime, allRegister, exitDone, exitWinReady, nightExpandT;
 var unlockedDifficulty = localStorage.getItem('btr_unlocked_difficulty') || 'easy';
+// Joystick stair-entry vertical dominance ratio. Override via localStorage for tuning:
+//   localStorage.setItem('btr_stairRatio', 0.5)  then reload
+var _stairVertRatio = parseFloat(localStorage.getItem('btr_stairRatio')) || 0.7;
 var gameDifficulty = (function() {
   var saved = localStorage.getItem('btr_difficulty') || 'easy';
   var ord = ['easy', 'medium', 'hard'];
