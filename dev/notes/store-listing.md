@@ -25,6 +25,7 @@ cerca di non farti beccare.
 🎵 Musica e SFX retrò
 🏆 3 difficoltà con sblocco progressivo
 🌍 Inglese e Italiano
+🔓 Open source: github.com/lucazade/breaktime-rebellion
 🤖 Sviluppato da un team virtuale: Claude (Anthropic) per il codice,
 ChatGPT per la grafica, OpenGameArt.org per Musica ed effetti e
 un sistemista Linux appassionato di retrogaming.
@@ -45,6 +46,7 @@ try not to get caught.
 🎵 Retro music and SFX
 🏆 3 difficulty levels with progressive unlock
 🌍 English and Italian
+🔓 Open source: github.com/lucazade/breaktime-rebellion
 🤖 Built by a virtual AI team: Claude (Anthropic) for code,
 ChatGPT for artwork, OpenGameArt.org for Music and effects and
 one Linux sysadmin who loves retrogaming.
