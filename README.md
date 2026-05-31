@@ -73,7 +73,7 @@ The project started from a late-night chat session about retro games — one mon
 | Input | Action |
 |---|---|
 | `← →` | Move Marco |
-| `↑ / ↓` | Enter diagonal staircases |
+| `↑ + ← / →` | Enter staircases (diagonal required) |
 | `Z` or `Space` | Action (spray, collect, interact) |
 | `C` | Credits |
 | `P` | Pause |
@@ -81,7 +81,7 @@ The project started from a late-night chat session about retro games — one mon
 
 **On mobile:** touch anywhere on the left panel to use the floating joystick (appears at your touch point); tap anywhere on the right panel to trigger the action button.
 
-**Staircases:** press `↑` near the bottom of a staircase to go up, `↓` near the top to go down.
+**Staircases:** press `↑` + the correct horizontal direction to climb (e.g. `↑+←` for a left-leaning staircase), `↓` + horizontal to descend. On mobile the floating joystick handles this naturally with a diagonal push.
 
 ### The Levels
 
