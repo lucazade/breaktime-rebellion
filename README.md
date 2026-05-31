@@ -15,6 +15,10 @@
   Cause chaos, dodge teachers, don't get caught.
 </p>
 
+<p align="center">
+  <a href="https://lucazade.github.io/breaktime-rebellion/"><strong>▶ Play in browser</strong></a>
+</p>
+
 ---
 
 ## Screenshots
