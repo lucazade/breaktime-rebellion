@@ -13,7 +13,8 @@ Tag chalkboards, dodge teachers, cause chaos. 10 levels of retro school mayhem!
 È l'anno scolastico più caotico della storia del liceo Manzoni.
 
 Sei Marco, e hai una missione per ogni piano, ogni corridoio, ogni ora di ricreazione.
-Imbratta le lavagne con lo spray, sgonfia il pallone in palestra, allaga il bagno, pianta petardi nei secchi della spazzatura — e cerca di non farti beccare.
+Imbratta le lavagne con lo spray, sgonfia il pallone in palestra, allaga il bagno, pianta petardi nei secchi della spazzatura e 
+cerca di non farti beccare.
 
 10 livelli. 10 missioni. Un anno scolastico leggendario.
 
@@ -25,13 +26,15 @@ Imbratta le lavagne con lo spray, sgonfia il pallone in palestra, allaga il bagn
 🏆 3 difficoltà con sblocco progressivo
 🌍 Italiano e inglese
 🤖 Sviluppato da un team virtuale: Claude (Anthropic) per il codice,
-ChatGPT per la grafica, un sistemista Linux appassionato di retrogaming.
+ChatGPT per la grafica, OpenGameArt.org per Musica ed effetti e
+un sistemista Linux appassionato di retrogaming.
 
 ## Full description — EN
 It's the most chaotic school year in the history of Liceo Manzoni.
 
 You are Marco, and you have a mission for every floor, every corridor, every break.
-Tag chalkboards with spray paint, deflate the gym ball, flood the bathroom, plant firecrackers in the bins — and try not to get caught.
+Tag chalkboards with spray paint, deflate the gym ball, flood the bathroom, plant firecrackers in the bins and 
+try not to get caught.
 
 10 levels. 10 missions. One legendary school year.
 
@@ -43,4 +46,5 @@ Tag chalkboards with spray paint, deflate the gym ball, flood the bathroom, plan
 🏆 3 difficulty levels with progressive unlock
 🌍 Italian and English
 🤖 Built by a virtual AI team: Claude (Anthropic) for code,
-ChatGPT for artwork, one Linux sysadmin who loves retrogaming.
+ChatGPT for artwork, OpenGameArt.org for Music and effects and
+one Linux sysadmin who loves retrogaming.

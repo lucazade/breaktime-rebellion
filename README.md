@@ -34,7 +34,10 @@
 
 ## About
 
-**Breaktime Rebellion** is a 2D pixel-art arcade game for Android and browser. You play as **Marco**, a student who must pull off increasingly daring acts of classroom chaos — tagging chalkboards, stealing bags, flooding the bathroom, planting firecrackers — while avoiding the roaming teachers, the janitor, and the school principal.
+**Breaktime Rebellion** is a 2D pixel-art arcade game for Android and browser. 
+You play as **Marco**, a student who must pull off increasingly daring acts of classroom chaos 
+— tagging chalkboards, stealing bags, flooding the bathroom, planting firecrackers — 
+while avoiding the roaming teachers, the janitor, and the school principal.
 
 Ten levels. Ten missions. One legendary school year.
 
@@ -50,13 +53,12 @@ Ten levels. Ten missions. One legendary school year.
 
 > *One Linux sysadmin, no budget, one month, and a virtual AI team. A game that actually ships.*
 
-Breaktime Rebellion was built entirely in **May 2026** by Luca Forina as a personal project, with an AI virtual team handling every creative and technical role:
+Breaktime Rebellion was built entirely in **May 2026** by Luca Forina as a personal project, with an AI virtual team handling creative and technical role:
 
 | Role | Tool |
 |---|---|
-| Code (100%) | **Claude** (Anthropic) via Claude Code |
-| Game art & backgrounds | **ChatGPT** (OpenAI) + **GIMP** |
-| UI prototyping | **Claude** (via artifacts) |
+| AI Developer | **Claude** (Anthropic) via Claude Code |
+| AI Graphics | **ChatGPT** (OpenAI) |
 
 No game engine. No framework. Just HTML5 Canvas, vanilla JavaScript, and a lot of prompting.
 
@@ -165,9 +167,14 @@ Commit message convention: `feat:`, `fix:`, `refactor:`, `chore:`, `docs:`
 | | |
 |---|---|
 | **Design & Development** | [Luca Forina](https://github.com/lucazade) — Lucazade Soft |
-| **AI Developer** | [Claude](https://claude.ai) by Anthropic — 100% of the code |
-| **Game Art** | [ChatGPT](https://chat.openai.com) by OpenAI + [GIMP](https://gimp.org) |
-| **UI Prototyping** | [Claude](https://claude.ai) (artifact mode) |
+| **AI Developer** | [Claude](https://claude.ai) by Anthropic |
+| **AI Graphics** | [ChatGPT](https://chat.openai.com) by OpenAI |
+| **Music and SFX** | [OpenGameArt](https://opengameart.org) |
+
+Intro: "A Journey Awaits" by Pierre Bondoerffer (@pbondoer)
+In Game: "Lunar Joyride (8-Bit)" by FoxSynergy
+Bonus: "Starlight City" by Zane Little
+Level 10: "Battle Intro" by celestialghost8
 
 ---
 
@@ -182,8 +189,6 @@ If you enjoyed the game, consider buying me a coffee ☕
 ## License
 
 MIT © 2026 Luca Forina — [LICENSE](LICENSE)
-
-> Game assets (background art, logo) generated with AI tools (ChatGPT) for this project.
 
 ---
 
