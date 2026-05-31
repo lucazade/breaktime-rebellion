@@ -91,7 +91,7 @@ Ogni `drawXxx` function usa esclusivamente `PAL.nomeEsplicito` — nessun colore
 
 - **Desktop**: frecce direzionali + Z/Spazio
 - **Mobile**: joystick **floating** — appare dove tocchi nel `#panel-left`, snap back al rilascio. Touch catturato su tutto il panel. Multi-touch: `joyStart` usa `changedTouches[0]` (il dito appena toccato) e traccia `_touchId` in `joyMove`/`joyEnd`. Guard Y<175px protegge i pulsanti UI in cima al pannello. Bottone azione `#btn-action` in `#panel-right`.
-- **Scala**: ingresso richiede **diagonale** — K.up + direzione orizzontale corretta per salire (es. K.up+K.left per scala sinistra), K.down + direzione corretta per scendere. Soglia `nearBottom = t<0.19`, `nearTop = t>0.81`. Il tasto orizzontale nella direzione di discesa ha priorità su K.up (previene salita accidentale). `showStairZones` in `CONFIG.debug` disegna le zone di innesco (rosso/blu).
+- **Scala**: ingresso richiede **diagonale** — K.up + direzione orizzontale corretta per salire (es. K.up+K.left per scala sinistra), K.down + direzione corretta per scendere. Soglia `nearBottom = t<0.19`, `nearTop = t>0.81`. Su joystick analogico l'ingresso richiede anche angolo ≥20° dalla componente verticale (`|K._joyDY| > |K._joyDX| * 0.364`) per prevenire entrate accidentali camminando flat — su desktop `K._joyDX=0` quindi la soglia non si applica. Il tasto orizzontale nella direzione di discesa ha priorità su K.up (previene salita accidentale). `showStairZones` in `CONFIG.debug` disegna le zone di innesco (rosso/blu).
 
 ## PWA / Mobile
 
