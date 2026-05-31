@@ -1,3 +1,3 @@
 - [x] L10 Aggiungere torcia a Marco
 - [x] Aggiungere in credits.txt e in readme.md le canzoni usate ed allineare nel popup credits
-- [ ] salita e discesa nelle scale deve essere solo nella direzione delle scale (se la scala va in diagonale a sinistra Marco non può salire con il alto a destra)
+- [x] salita e discesa nelle scale deve essere solo nella direzione delle scale (se la scala va in diagonale a sinistra Marco non può salire con il alto a destra)
