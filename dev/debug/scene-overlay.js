@@ -174,6 +174,32 @@
       ctx.fillStyle = PAL.debugOrangeR;
       ctx.fillRect(s.x1 - 1, s.y1 - 1, 3, 3);
       ctx.fillRect(s.x2 - 1, s.y2 - 1, 3, 3);
+
+      // Entry zones — parallelograms following the stair line ±14px (cy tolerance from getStairAt).
+      // Red = nearBottom (t<0.15, enter going up). Blue = nearTop (t>0.85, enter going down).
+      var dx = s.x2 - s.x1, dy = s.y2 - s.y1;
+      var MX = 6, MY = 14;  // same margins as getStairAt
+      var gr = s.x2 > s.x1;
+      var okUpLabel  = gr ? '↑ up+→' : '↑ up+←';
+      var okDnLabel  = gr ? '↓ dn+←' : '↓ dn+→';
+      [[0, 0.15, 'rgba(255,60,60,0.45)', okUpLabel],
+       [0.85, 1, 'rgba(60,120,255,0.45)', okDnLabel]].forEach(function (z) {
+        var t0 = z[0], t1 = z[1], col = z[2], lab = z[3];
+        var ax = s.x1 + t0 * dx, ay = s.y1 + t0 * dy;
+        var bx = s.x1 + t1 * dx, by = s.y1 + t1 * dy;
+        ctx.fillStyle = col;
+        ctx.beginPath();
+        ctx.moveTo(ax - MX, ay - MY);
+        ctx.lineTo(bx - MX, by - MY);
+        ctx.lineTo(bx + MX, by + MY);
+        ctx.lineTo(ax + MX, ay + MY);
+        ctx.closePath();
+        ctx.fill();
+        // Label at midpoint
+        var mx2 = (ax + bx) / 2, my2 = (ay + by) / 2;
+        ctx.fillStyle = PAL.debugOverlayBg; ctx.fillRect(mx2 - 1, my2 - 6, lab.length * 4 + 2, 7);
+        ctx.fillStyle = col.replace('0.45', '1'); ctx.fillText(lab, mx2, my2 - 1);
+      });
     });
 
     // ── Oggetti di livello (dashed, da CONFIG.scene.dashed) ──────────────────
