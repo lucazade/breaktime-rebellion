@@ -45,6 +45,7 @@ const CONFIG = {
     godMode:         false,
     startAtBonus:    false,
     sightDebug:      false,
+    showStairZones:  false,  // red=nearBottom (↑), blue=nearTop (↓)
   },
 };
 

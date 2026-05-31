@@ -236,6 +236,7 @@ function loop(ts) {
   drawNightOverlay();
   drawLucaEnd();
   drawHUD();
+  drawStairZones();
 
   // Centralised dark overlay — covers all banner panels
   var _shouldDim = state !== 'title' && (storyBannerT > 0 || storyBannerFading || missionBannerT > 0

@@ -110,3 +110,30 @@ function drawFloating() {
 
 // Noop stub — overridden by dev/debug/scene-overlay.js when ?scene=1
 function drawDebugOverlay() {}
+
+function drawStairZones() {
+  if (!CONFIG.debug.showStairZones) return;
+  ctx.save();
+  var MX = 6;  // same margin as getStairAt
+  stairs.forEach(function(s) {
+    var dx = s.x2 - s.x1;
+    var x15 = s.x1 + 0.19 * dx;  // t=0.19 boundary
+    var x85 = s.x1 + 0.81 * dx;  // t=0.81 boundary
+    // nearBottom (t<0.15): from the t=0.15 line outward to the stair box edge
+    // nearTop   (t>0.85): from the t=0.85 line outward to the stair box edge
+    // "outward" = away from stair center, toward the floor endpoint
+    var bMin, bMax, tMin, tMax;
+    if (dx > 0) {  // right-going stair: x1 is left (bottom), x2 is right (top)
+      bMin = s.x1 - MX;  tMax = s.x2 + MX;
+      bMax = x15;         tMin = x85;
+    } else {        // left-going stair: x1 is right (bottom), x2 is left (top)
+      bMax = s.x1 + MX;  tMin = s.x2 - MX;
+      bMin = x15;         tMax = x85;
+    }
+    ctx.fillStyle = 'rgba(255,60,60,0.6)';
+    ctx.fillRect(bMin, s.y1 - 1, bMax - bMin, 4);
+    ctx.fillStyle = 'rgba(60,120,255,0.6)';
+    ctx.fillRect(tMin, s.y2 - 1, tMax - tMin, 4);
+  });
+  ctx.restore();
+}
