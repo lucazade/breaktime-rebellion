@@ -224,6 +224,7 @@ function loop(ts) {
     } else {
       drawChar(player.x, player.y, player.dir, player.animT, _playerBodyCol, _playerColours, player.spraying, false);
     }
+    if (nightMode && !bonusActive) drawTorch(player.x, player.y, player.dir);
     ctx.restore();
   }
 

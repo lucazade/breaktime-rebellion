@@ -253,6 +253,10 @@ const PAL = {
   sprayCanDark: '#005050',   // spray can dark outline
   sprayCanBody: '#1665DC',   // spray can body
 
+  // ── Flashlight (L10 night mode) ──────────────────────
+  torchBody:  '#e7c800',  // amber tube body 
+  torchLens:  '#363636',  // dark lens housing
+
   // ── Bags ──────────────────────────────────────────────────
   bagBody:   '#4c359e',      // bag body
   bagborder: '#2A1F5E',      // bag border stripe

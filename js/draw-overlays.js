@@ -1,9 +1,9 @@
 // Canvas overlay panels — modals, banners, dialogs
 
 var _CREDITS_MEMBERS = [
-  { name: 'Luca Forina',        role: 'Orchestrator'         },
-  { name: 'Claude / Anthropic', role: 'Lead Developer'       },
-  { name: 'ChatGPT',            role: 'Graphics'             },
+  { name: 'Luca Forina',        role: 'Design & Development' },
+  { name: 'Claude / Anthropic', role: 'AI Developer'         },
+  { name: 'ChatGPT',            role: 'AI Graphics'          },
   { name: 'OpenGameArt.org',    role: 'Music & Effects'      },
   { name: 'Family',             role: 'Beta Testing & Ideas' },
 ];

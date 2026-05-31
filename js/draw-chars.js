@@ -467,3 +467,18 @@ function drawStudents() {
     }
   }
 }
+
+function drawTorch(x, y, dir) {
+  const bx = Math.round(x), by = Math.round(y);
+  const hy      = by + 7;
+  const hx      = dir > 0 ? bx + PW + 3 : bx - 5;
+  // Lens: narrow connection at body junction (2px tall) + wide flare at front (4px tall)
+  const lx      = dir > 0 ? hx + 2 : hx - 3;
+  const narrowX = dir > 0 ? lx     : lx + 2;
+  const wideX   = dir > 0 ? lx + 1 : lx;
+  ctx.fillStyle = PAL.torchBody;
+  ctx.fillRect(hx, hy - 1, 2, 2);
+  ctx.fillStyle = PAL.torchLens;
+  ctx.fillRect(narrowX, hy - 1, 1, 2);
+  ctx.fillRect(wideX,   hy - 2, 2, 4);
+}
