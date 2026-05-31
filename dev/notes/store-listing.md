@@ -24,7 +24,7 @@ cerca di non farti beccare.
 🎮 Joystick analogico floating
 🎵 Musica e SFX retrò
 🏆 3 difficoltà con sblocco progressivo
-🌍 Italiano e inglese
+🌍 Inglese e Italiano
 🤖 Sviluppato da un team virtuale: Claude (Anthropic) per il codice,
 ChatGPT per la grafica, OpenGameArt.org per Musica ed effetti e
 un sistemista Linux appassionato di retrogaming.
@@ -44,7 +44,7 @@ try not to get caught.
 🎮 Floating analog joystick
 🎵 Retro music and SFX
 🏆 3 difficulty levels with progressive unlock
-🌍 Italian and English
+🌍 English and Italian
 🤖 Built by a virtual AI team: Claude (Anthropic) for code,
 ChatGPT for artwork, OpenGameArt.org for Music and effects and
 one Linux sysadmin who loves retrogaming.
