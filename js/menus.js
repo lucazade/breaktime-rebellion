@@ -110,13 +110,26 @@ function _creditsCanvasClick(lx, ly) {
 
 // ── Event listeners ───────────────────────────────────────────────────────────
 
-_btnPause.addEventListener('click', triggerPause);
+_btnPause.addEventListener('click', function() {
+  if (CONFIG.debug.tuneStairRatio && state === 'playing') {
+    _stairVertRatio = Math.round((_stairVertRatio + 0.1) * 10) / 10;
+    localStorage.setItem('btr_stairRatio', _stairVertRatio); return;
+  }
+  triggerPause();
+});
 document.getElementById('btn-home').addEventListener('click', triggerHome);
 
 var _btnInfo = document.getElementById('btn-info');
 if (_btnInfo) {
-  _btnInfo.addEventListener('click', function() { if (_creditsActive) hideCredits(); else showCredits(); });
-  _btnInfo.addEventListener('touchend', function(e) { e.preventDefault(); if (_creditsActive) hideCredits(); else showCredits(); }, {passive: false});
+  function _infoClick() {
+    if (CONFIG.debug.tuneStairRatio && state === 'playing') {
+      _stairVertRatio = Math.max(0, Math.round((_stairVertRatio - 0.1) * 10) / 10);
+      localStorage.setItem('btr_stairRatio', _stairVertRatio); return;
+    }
+    if (_creditsActive) hideCredits(); else showCredits();
+  }
+  _btnInfo.addEventListener('click', _infoClick);
+  _btnInfo.addEventListener('touchend', function(e) { e.preventDefault(); _infoClick(); }, {passive: false});
 }
 
 // ── Keyboard shortcuts (desktop) ──────────────────────────────────────────────
