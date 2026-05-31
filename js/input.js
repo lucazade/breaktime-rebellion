@@ -35,8 +35,8 @@ bindBtn('bU','up');   bindBtn('bD','down');
 const bA = document.getElementById('btn-action');
 const panelRight = document.getElementById('panel-right');
 function onA(e)  {
-  var _t = e.touches ? e.touches[0] : e;
-  if (_t.clientY - panelRight.getBoundingClientRect().top < 300) return;
+  var _t = e.changedTouches ? e.changedTouches[0] : e;
+  if (_t.clientY - panelRight.getBoundingClientRect().top < 175) return;
   e.preventDefault(); K.action = true; actionPressed = true; bA.classList.add('pressed');
 }
 function offA(e) { if (!K.action) return; e.preventDefault(); K.action = false; bA.classList.remove('pressed'); }
@@ -79,7 +79,7 @@ bA.addEventListener('mouseleave', offA);
     // Use changedTouches[0] — the finger that just touched — not touches[0] which may
     // be a different finger already on screen (e.g. action button thumb).
     var _t = e.changedTouches ? e.changedTouches[0] : e;
-    if (_t.clientY - panel.getBoundingClientRect().top < 300) return;
+    if (_t.clientY - panel.getBoundingClientRect().top < 175) return;
     e.preventDefault();
     active = true;
     _touchId = _t.identifier !== undefined ? _t.identifier : null;
