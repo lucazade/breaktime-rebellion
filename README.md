@@ -188,7 +188,7 @@ Level 10: "Battle Intro" by celestialghost8
 
 If you enjoyed the game, consider buying me a coffee ☕
 
-[![Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/lucaforina)
+[![Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/lucazade)
 
 ---
 
