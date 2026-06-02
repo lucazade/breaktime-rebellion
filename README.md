@@ -196,6 +196,8 @@ If you enjoyed the game, consider buying me a coffee ☕
 
 [![Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/lucazade)
 
+[![PayPal](https://img.shields.io/badge/PayPal-Donate-00457C?style=flat&logo=paypal&logoColor=white)](https://paypal.me/lucaforina)
+
 ---
 
 ## License
