@@ -16,6 +16,8 @@
 </p>
 
 <p align="center">
+  <a href="https://lucazade80.itch.io/breaktime-rebellion"><strong>▶ Play on itch.io</strong></a>
+  &nbsp;·&nbsp;
   <a href="https://lucazade.github.io/breaktime-rebellion/"><strong>▶ Play in browser</strong></a>
 </p>
 
@@ -110,6 +112,10 @@ The project started from a late-night chat session about retro games — one mon
 ### Android (Google Play)
 
 [Download on Google Play](#) *(coming soon)*
+
+### itch.io
+
+**[Play on itch.io →](https://lucazade80.itch.io/breaktime-rebellion)**
 
 ### Browser (PWA)
 
