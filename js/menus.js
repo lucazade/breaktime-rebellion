@@ -4,7 +4,6 @@ var _pauseActive       = false;  // pause is active (not home-confirm)
 var _homeConfirmActive = false;  // home confirm dialog is open
 var _stateBeforeHome   = null;
 var _creditsActive     = false;
-var _howtoActive       = false;  // first-launch "how to play" overlay (title only)
 var _btnPause          = document.getElementById('btn-pause');
 // Inline SVG to avoid OS-coloured emoji (⏸/▶ render in colour on Android/iOS)
 var _SVG_PAUSE = '<svg viewBox="0 -1 16 16" width="16" height="16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M3 3v10h4V3zm6 0v10h4V3z"/></svg>';
@@ -83,7 +82,10 @@ function hideCredits() {
 
 function dismissHowTo() {
   _howtoActive = false;
+  _howtoPending = false;
   try { localStorage.setItem('btr_seen_howto', '1'); } catch (e) {}
+  // Start the mission banner now that the onboarding is dismissed.
+  if (state === 'playing' && missionBannerT === 0 && !bonusActive) missionBannerT = 210;
 }
 
 // Opens the Play Store listing. On Android (Capacitor WebView) the https link
@@ -138,10 +140,6 @@ if (_btnInfo) {
 // ── Keyboard shortcuts (desktop) ──────────────────────────────────────────────
 document.addEventListener('keydown', function(e) {
   if (state === 'title') {
-    if (_howtoActive) {
-      if (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape') { e.preventDefault(); dismissHowTo(); }
-      return;
-    }
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); _tryStart(); }
     return;
   }
@@ -173,7 +171,7 @@ document.addEventListener('keydown', function(e) {
     return;
   }
   if (e.key === 'Enter' || e.key === ' ') {
-    if (storyBannerT > 0 || missionBannerT > 0 || state === 'win' || bonusResultActive ||
+    if (storyBannerT > 0 || _howtoActive || missionBannerT > 0 || state === 'win' || bonusResultActive ||
         (deathFreeze && levelMechanics.escapeExit && exitDone && exitWinReady)) {
       e.preventDefault(); handleTap(); return;
     }

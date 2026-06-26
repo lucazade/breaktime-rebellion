@@ -60,8 +60,7 @@
     howtoMove:            'MOVE: joystick or arrows',
     howtoStairs:          'STAIRS: push up/down diagonal',
     howtoAction:          'ACTION: tap right side / Z',
-    howtoGoal:            'GOAL: do your mission',
-    howtoTap:             '[ TAP TO START ]',
+    howtoGoal:            'GOAL: complete your mission',
 
     storyTitle:           '— 1987 —',
     storyText:            "Luca challenges Marco to a series of school rebellions to become a school legend. Marco, of course, doesn't back down!",
@@ -183,8 +182,7 @@
     howtoMove:            'MUOVI: joystick o frecce',
     howtoStairs:          'SCALE: su/giu in diagonale',
     howtoAction:          'AZIONE: tocca a destra / Z',
-    howtoGoal:            'OBIETTIVO: fai la missione',
-    howtoTap:             '[ TOCCA PER GIOCARE ]',
+    howtoGoal:            'OBIETTIVO: completa la missione',
 
     storyTitle:           '— 1987 —',
     storyText:            "Luca sfida Marco a fare una serie di azioni di ribellione scolastica per diventare la leggenda della scuola.|Marco ovviamente non si tira indietro!",

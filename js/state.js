@@ -50,6 +50,8 @@ let allSink, allBins, allSprinklers;
 let missionBannerT, missionBannerLines;
 let storyBannerT, storyBannerLines;  // like missionBannerT but shown first on L1
 let storyShown = false; // session-level — not reset by resetLevel
+var _howtoActive = false;   // "how to play" onboarding overlay (between story and mission, L1 first launch)
+var _howtoPending = false;  // should show howto before the mission banner this level
 let pendingTransition = null;
 // Bonus level state
 var bonusActive      = false;   // true during the CARAMBOLA! bonus level
@@ -150,7 +152,10 @@ function resetLevel() {
   // Bonus: show bonus opening banner; L1: show story banner; otherwise: no story banner
   storyBannerT  = bonusActive ? 300 : (currentLevel === 1 && !storyShown && gameDifficulty === 'easy') ? 300 : 0;
   storyBannerLines = null;
-  missionBannerT     = storyBannerT > 0 ? 0 : (bonusActive ? 0 : 210);
+  // Onboarding "how to play": once, on the first L1 launch — after the story banner, before the mission banner
+  _howtoPending = (currentLevel === 1 && !bonusActive && !localStorage.getItem('btr_seen_howto'));
+  _howtoActive  = (storyBannerT === 0 && _howtoPending);  // no story → show howto immediately
+  missionBannerT     = (storyBannerT > 0 || _howtoPending) ? 0 : (bonusActive ? 0 : 210);
   missionBannerLines = null;
   pendingTransition = null;
   deathFreeze = false;

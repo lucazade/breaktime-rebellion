@@ -53,8 +53,6 @@ function _initTitleState() {
   currentLevel = _btrMax;
   _titleStarting = false;
   _showLegend(true);
-  // Show the onboarding overlay once, on the very first launch.
-  if (!localStorage.getItem('btr_seen_howto')) _howtoActive = true;
 }
 
 function _tryStart() {
@@ -85,7 +83,6 @@ function _titleCycleDifficulty() {
 
 function _titleCanvasClick(lx, ly) {
   if (state !== 'title') return;
-  if (_howtoActive) { dismissHowTo(); return; }
   var ct = CONFIG.ui.titleScreen.controls;
   var tpX = 8, tpY = 6; // tap padding — larger target without changing visuals
   var logoBottom = _titleLogoRect ? _titleLogoRect.y + _titleLogoRect.h : _titleCtrlY;

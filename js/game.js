@@ -110,10 +110,16 @@ function loop(ts) {
       if (storyBannerT > 0) {
         if (storyBannerFading) {
           storyBannerT--;
-          if (storyBannerT <= 0) { storyBannerFading = false; storyShown = true; missionBannerT = bonusActive ? 0 : 210; }
+          if (storyBannerT <= 0) {
+            storyBannerFading = false; storyShown = true;
+            if (_howtoPending) _howtoActive = true;            // show onboarding next
+            else missionBannerT = bonusActive ? 0 : 210;
+          }
         } else {
           storyFadeInT = Math.min(storyFadeInT + 1, 40);
         }
+      } else if (_howtoActive) {
+        // onboarding overlay — frozen until dismissed by tap/key
       } else if (missionBannerT > 0) {
         missionBannerT--;
       } else if (deathFreeze) {
@@ -152,7 +158,6 @@ function loop(ts) {
   // Title screen: draw dedicated canvas and skip game rendering
   if (state === 'title') {
     drawTitleScreen();
-    drawHowTo();
     drawDebugOverlay();
     requestAnimationFrame(loop);
     return;
@@ -241,6 +246,7 @@ function loop(ts) {
 
   // Centralised dark overlay — covers all banner panels
   var _shouldDim = state !== 'title' && (storyBannerT > 0 || storyBannerFading || missionBannerT > 0
+                || _howtoActive
                 || state === 'win' || state === 'gameover' || state === 'paused' || state === 'highscores'
                 || _creditsActive
                 || bonusResultActive
@@ -264,6 +270,7 @@ function loop(ts) {
   drawEndScreen();
   drawBonusResult();
   drawStoryBanner();
+  drawHowTo();
   drawMissionBanner();
   drawPauseOverlay();
   drawHomeConfirm();
@@ -277,6 +284,7 @@ function loop(ts) {
 
 function handleTap() {
   if (storyBannerT > 0 && !storyBannerFading) { storyBannerT = 20; storyBannerFading = true; return; }
+  if (_howtoActive) { dismissHowTo(); return; }
   // Bonus result banner — apply rewards and advance to L6 (only after cooldown)
   if (bonusResultActive && bonusResultReady) {
     score += bonusBonusScore;

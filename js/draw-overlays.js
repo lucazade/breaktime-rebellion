@@ -283,12 +283,11 @@ function drawCredits() {
   ctx.restore();
 }
 
-// First-launch onboarding overlay — drawn over the title screen only.
+// First-launch onboarding overlay — shown after the story banner, before the mission banner.
+// Backdrop dimming is handled by the centralised dim in the game loop.
 function drawHowTo() {
   if (!_howtoActive) return;
   ctx.save();
-  ctx.fillStyle = 'rgba(0,0,0,0.6)';
-  ctx.fillRect(0, 0, W, H);
   var VH = CONFIG.ui.howto;
   var lines = [STRINGS.howtoMove, STRINGS.howtoStairs, STRINGS.howtoAction, STRINGS.howtoGoal];
   var panH = VH.padTop + VH.titleH + VH.titleSpacing
@@ -308,7 +307,7 @@ function drawHowTo() {
   ty += VH.tapSpacing;
   ctx.font = VH.fontTap + 'px ' + FF;
   ctx.fillStyle = (Math.floor(frame / 20) % 2 === 0) ? PAL.tapPromptColor : PAL.transparent;
-  ctx.fillText(STRINGS.howtoTap, cx, ty);
+  ctx.fillText(STRINGS.tapContinue, cx, ty);
   ctx.restore();
 }
 
