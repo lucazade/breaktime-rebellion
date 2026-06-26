@@ -84,10 +84,16 @@ function updateTeachers() {
   }
 }
 
+// Short haptic buzz on supported mobile devices; no-op elsewhere.
+function _haptic(pattern) {
+  if (navigator.vibrate) { try { navigator.vibrate(pattern); } catch (e) {} }
+}
+
 function playerDied() {
   player.spraying = false; player.shaking = false; player.vy = 0;
   addParticles(player.x + PW/2, player.y, PAL.deathParticle, 20);
   GameAudio.playSfx('caught');
+  _haptic(lives <= 0 ? [120, 60, 120, 60, 220] : 180);
   if (lives <= 0) {
     // Game over: freeze everything, fade out music, then show banner + gameover jingle
     deathFreeze = true;
