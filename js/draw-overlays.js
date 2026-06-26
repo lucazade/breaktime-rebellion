@@ -253,7 +253,7 @@ function drawCredits() {
   var n = _CREDITS_MEMBERS.length;
   var panH = VC.padTop + VC.titleH + VC.titleSpacing + VC.teamH + VC.teamSpacing
            + n * (VC.nameH + VC.nameGap + VC.roleH + VC.roleGap)
-           + VC.tapSpacing + VC.btnH + VC.padBottom;
+           + VC.tapSpacing + VC.btnH + VC.rateSpacing + VC.btnH + VC.padBottom;
   var _cp = _panPos(VC.panW, panH); var bx = _cp.bx, by = _cp.by;
   _dialogPanel(bx, by, VC.panW, panH, VC.panBg);
   ctx.textAlign = 'center'; ctx.textBaseline = 'top';
@@ -270,10 +270,45 @@ function drawCredits() {
     ctx.fillStyle = PAL.creditsMemberRole;  ctx.fillText(_CREDITS_MEMBERS[i].role, cx, ty); ty += VC.roleH + VC.roleGap;
   }
   ty += VC.tapSpacing;
-  var btnX = bx + Math.round((VC.panW - VC.btnW) / 2);
   ctx.font = VC.fontBtn + 'px ' + FF;
-  _dialogBtn(btnX, ty, VC.btnW, VC.btnH, CONFIG.ui.dialog.btnColorYes);
+  // Rate button — opens the Play Store listing
+  var rateX = bx + Math.round((VC.panW - VC.rateW) / 2);
+  _dialogBtn(rateX, ty, VC.rateW, VC.btnH, CONFIG.ui.dialog.btnColorYes);
+  ctx.fillStyle = PAL.creditsText; ctx.fillText(STRINGS.creditsRate, bx + VC.panW/2, ty + Math.floor((VC.btnH - VC.fontBtn) / 2));
+  ty += VC.btnH + VC.rateSpacing;
+  // Close button
+  var btnX = bx + Math.round((VC.panW - VC.btnW) / 2);
+  _dialogBtn(btnX, ty, VC.btnW, VC.btnH, CONFIG.ui.dialog.btnColorNo);
   ctx.fillStyle = PAL.creditsText; ctx.fillText('OK', bx + VC.panW/2, ty + Math.floor((VC.btnH - VC.fontBtn) / 2));
+  ctx.restore();
+}
+
+// First-launch onboarding overlay — drawn over the title screen only.
+function drawHowTo() {
+  if (!_howtoActive) return;
+  ctx.save();
+  ctx.fillStyle = 'rgba(0,0,0,0.6)';
+  ctx.fillRect(0, 0, W, H);
+  var VH = CONFIG.ui.howto;
+  var lines = [STRINGS.howtoMove, STRINGS.howtoStairs, STRINGS.howtoAction, STRINGS.howtoGoal];
+  var panH = VH.padTop + VH.titleH + VH.titleSpacing
+           + lines.length * VH.lineH + (lines.length - 1) * VH.lineGap
+           + VH.tapSpacing + VH.tapH + VH.padBottom;
+  var _hp = _panPos(VH.panW, panH); var bx = _hp.bx, by = _hp.by;
+  _dialogPanel(bx, by, VH.panW, panH);
+  ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+  var cx = bx + VH.panW / 2;
+  var ty = by + VH.padTop;
+  ctx.font = VH.fontTitle + 'px ' + FF; ctx.fillStyle = PAL.bannerTitleColor;
+  ctx.fillText(STRINGS.howtoTitle, cx, ty); ty += VH.titleH + VH.titleSpacing;
+  ctx.font = VH.fontBody + 'px ' + FF; ctx.fillStyle = PAL.bannerText;
+  for (var i = 0; i < lines.length; i++) {
+    ctx.fillText(lines[i], cx, ty); ty += VH.lineH + (i < lines.length - 1 ? VH.lineGap : 0);
+  }
+  ty += VH.tapSpacing;
+  ctx.font = VH.fontTap + 'px ' + FF;
+  ctx.fillStyle = (Math.floor(frame / 20) % 2 === 0) ? PAL.tapPromptColor : PAL.transparent;
+  ctx.fillText(STRINGS.howtoTap, cx, ty);
   ctx.restore();
 }
 

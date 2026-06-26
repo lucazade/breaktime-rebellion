@@ -4,6 +4,7 @@ var _pauseActive       = false;  // pause is active (not home-confirm)
 var _homeConfirmActive = false;  // home confirm dialog is open
 var _stateBeforeHome   = null;
 var _creditsActive     = false;
+var _howtoActive       = false;  // first-launch "how to play" overlay (title only)
 var _btnPause          = document.getElementById('btn-pause');
 // Inline SVG to avoid OS-coloured emoji (⏸/▶ render in colour on Android/iOS)
 var _SVG_PAUSE = '<svg viewBox="0 -1 16 16" width="16" height="16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M3 3v10h4V3zm6 0v10h4V3z"/></svg>';
@@ -80,6 +81,18 @@ function hideCredits() {
   if (state === 'playing') GameAudio.resumeMusic();
 }
 
+function dismissHowTo() {
+  _howtoActive = false;
+  try { localStorage.setItem('btr_seen_howto', '1'); } catch (e) {}
+}
+
+// Opens the Play Store listing. On Android (Capacitor WebView) the https link
+// deep-links to the Play Store app; on web it opens the store page in a new tab.
+function openRateApp() {
+  var url = 'https://play.google.com/store/apps/details?id=com.lucazade.breaktime';
+  try { window.open(url, '_blank'); } catch (e) {}
+}
+
 function _pauseCanvasClick(lx, ly) {
   var VP = CONFIG.ui.pauseOverlay;
   var pH = VP.padTop + VP.titleH + VP.titleSpacing + VP.btnH + VP.padBottom;
@@ -101,11 +114,14 @@ function _homeConfirmCanvasClick(lx, ly) {
 function _creditsCanvasClick(lx, ly) {
   var VC = CONFIG.ui.credits;
   var n = _CREDITS_MEMBERS ? _CREDITS_MEMBERS.length : 5;
-  var panH = VC.padTop + VC.titleH + VC.titleSpacing + VC.teamH + VC.teamSpacing + n*(VC.nameH+VC.nameGap+VC.roleH+VC.roleGap) + VC.tapSpacing + VC.btnH + VC.padBottom;
+  var panH = VC.padTop + VC.titleH + VC.titleSpacing + VC.teamH + VC.teamSpacing + n*(VC.nameH+VC.nameGap+VC.roleH+VC.roleGap) + VC.tapSpacing + VC.btnH + VC.rateSpacing + VC.btnH + VC.padBottom;
   var p = _panPos(VC.panW, panH);
-  var btnY = p.by + panH - VC.padBottom - VC.btnH;
+  var okY = p.by + panH - VC.padBottom - VC.btnH;
+  var rateY = okY - VC.rateSpacing - VC.btnH;
+  var rateX = p.bx + Math.round((VC.panW - VC.rateW) / 2);
   var btnX = p.bx + Math.round((VC.panW - VC.btnW) / 2);
-  if (ly >= btnY && ly <= btnY + VC.btnH && lx >= btnX && lx <= btnX + VC.btnW) hideCredits();
+  if (ly >= rateY && ly <= rateY + VC.btnH && lx >= rateX && lx <= rateX + VC.rateW) { openRateApp(); return; }
+  if (ly >= okY && ly <= okY + VC.btnH && lx >= btnX && lx <= btnX + VC.btnW) hideCredits();
 }
 
 // ── Event listeners ───────────────────────────────────────────────────────────
@@ -122,6 +138,10 @@ if (_btnInfo) {
 // ── Keyboard shortcuts (desktop) ──────────────────────────────────────────────
 document.addEventListener('keydown', function(e) {
   if (state === 'title') {
+    if (_howtoActive) {
+      if (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape') { e.preventDefault(); dismissHowTo(); }
+      return;
+    }
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); _tryStart(); }
     return;
   }

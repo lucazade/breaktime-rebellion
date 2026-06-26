@@ -152,6 +152,7 @@ function loop(ts) {
   // Title screen: draw dedicated canvas and skip game rendering
   if (state === 'title') {
     drawTitleScreen();
+    drawHowTo();
     drawDebugOverlay();
     requestAnimationFrame(loop);
     return;

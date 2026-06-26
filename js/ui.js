@@ -278,9 +278,27 @@ CONFIG.ui = {
     nameGap:         2,  // gap between name and role
     roleH:           4,  // role row height
     roleGap:         6,  // gap between role and next name
-    tapSpacing:      6,  // gap above close button
-    btnH:           12,  // close button height
+    tapSpacing:      6,  // gap above rate button
+    rateW:         132,  // rate button width
+    rateSpacing:     8,  // gap between rate and close button
+    btnH:           12,  // rate/close button height
     btnW:           60,  // close button width
+    padBottom:      14,  // bottom padding
+  },
+
+  // First-launch "How to play" overlay (title screen only)
+  howto: {
+    panW:          280,  // panel width
+    fontTitle:       8,  // title font size
+    fontBody:        6,  // control-line font size
+    fontTap:         6,  // "tap to start" font size
+    padTop:         14,  // top padding
+    titleH:         12,  // title row height
+    titleSpacing:   12,  // gap below title
+    lineH:           8,  // control-line height
+    lineGap:         6,  // gap between control lines
+    tapSpacing:     12,  // gap above "tap to start"
+    tapH:           10,  // "tap to start" row height
     padBottom:      14,  // bottom padding
   },
 
