@@ -323,6 +323,26 @@ const GameAudio = (function() {
     _sfxFallback(name, cb);
   }
 
+  // Synthesised score-counting tick — crisp, zero-latency, no sample-overlap muddiness.
+  // Replaces the old sampled 'scoreTick' (hit.ogg) that lagged and stuttered when
+  // fired every few frames during the end-of-level bonus count-up.
+  function playTick() {
+    if (mode === 'mute' || !_audioCtx) return;
+    if (_audioCtx.state === 'suspended') _audioCtx.resume().catch(function() {});
+    var t = _audioCtx.currentTime;
+    var osc = _audioCtx.createOscillator();
+    var gain = _audioCtx.createGain();
+    osc.type = 'square';
+    osc.frequency.setValueAtTime(1320, t);
+    var vol = CONFIG.audio.sfxVolume * 0.35;
+    gain.gain.setValueAtTime(0.0001, t);
+    gain.gain.exponentialRampToValueAtTime(vol, t + 0.004);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.05);
+    osc.connect(gain); gain.connect(_audioCtx.destination);
+    osc.start(t);
+    osc.stop(t + 0.06);
+  }
+
   // Jingles (win/gameover) use WebAudio BufferSource — same pipeline as sfx, no new HTMLMediaElement.
   function playJingle(name) {
     stopJingle();
@@ -350,5 +370,5 @@ const GameAudio = (function() {
   _initWebAudio();
   if (_audioCtx && _audioCtx.state === 'running') _warmupAudio();
 
-  return { primeAudio: primeAudio, playIntro: playIntro, stopIntro: stopIntro, fadeOutIntro: fadeOutIntro, fadeOutMusic: fadeOutMusic, playMusic: playMusic, stopMusic: stopMusic, pauseMusic: pauseMusic, resumeMusic: resumeMusic, playSfx: playSfx, playSfxThen: playSfxThen, playJingle: playJingle, stopJingle: stopJingle, setMode: setMode, getMode: getMode, setMusicRate: setMusicRate };
+  return { primeAudio: primeAudio, playIntro: playIntro, stopIntro: stopIntro, fadeOutIntro: fadeOutIntro, fadeOutMusic: fadeOutMusic, playMusic: playMusic, stopMusic: stopMusic, pauseMusic: pauseMusic, resumeMusic: resumeMusic, playSfx: playSfx, playSfxThen: playSfxThen, playTick: playTick, playJingle: playJingle, stopJingle: stopJingle, setMode: setMode, getMode: getMode, setMusicRate: setMusicRate };
 })();

@@ -297,10 +297,10 @@ function updatePlayer() {
     const _gr0   = s0.x2 > s0.x1;
     const _okUp  = _gr0 ? (K.right && !K.left) : (K.left && !K.right);
     const _okDn  = _gr0 ? (K.left && !K.right) : (K.right && !K.left);
-    // On joystick require dominant vertical (~20°) to avoid accidental stair entry
+    // On joystick require dominant vertical (~30°) to avoid accidental stair entry
     // while walking flat. On desktop K._joyDX is 0 → always allowed.
-    const _upIntent = K.up  && Math.abs(K._joyDY || 999) > Math.abs(K._joyDX || 0) * 0.364;
-    const _dnIntent = K.down && Math.abs(K._joyDY || 999) > Math.abs(K._joyDX || 0) * 0.364;
+    const _upIntent = K.up  && Math.abs(K._joyDY || 999) > Math.abs(K._joyDX || 0) * 0.577;
+    const _dnIntent = K.down && Math.abs(K._joyDY || 999) > Math.abs(K._joyDX || 0) * 0.577;
     if ((nearBottom && _upIntent && _okUp) || (nearTop && _dnIntent && _okDn)) {
       player.onStair = true;
       player.currentStair = s0;

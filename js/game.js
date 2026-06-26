@@ -258,7 +258,7 @@ function loop(ts) {
     var _bt = _endBonusT, _bDELAY = 90, _bTICK = 90, _bGAP = 30;
     var _inTime  = lastTimeBonus  > 0 && _bt > _bDELAY && _bt <= _bDELAY + _bTICK;
     var _inLives = lastLivesBonus > 0 && _bt > _bDELAY + _bTICK + _bGAP && _bt <= _bDELAY + _bTICK + _bGAP + _bTICK;
-    if ((_inTime || _inLives) && _bt % 6 === 0) GameAudio.playSfx('scoreTick');
+    if ((_inTime || _inLives) && _bt % 6 === 0) GameAudio.playTick();
   }
   drawEndScreen();
   drawBonusResult();
