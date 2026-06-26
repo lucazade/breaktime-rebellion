@@ -330,17 +330,19 @@ try{new Function(src);console.log('JS OK');}catch(e){console.log('ERRORE:',e.mes
 
 **Non fare mai deploy se il test restituisce `ERRORE`.**
 
-## Build APK — note importanti
+## Build Android — note importanti
 
-- Lo script `apk` in `package.json` usa `./gradlew clean assembleDebug` (non solo `assembleDebug`).
-- **Motivo:** la cache incrementale di Gradle può skippare `mergeDebugAssets` dopo un `cap sync`, producendo un APK byte-per-byte identico al precedente anche se i file in `www/` sono cambiati. Scoperto con v1.0.14 (25M identico a v1.0.13) dopo l'ottimizzazione audio #191; v1.0.15/v1.0.16 clean build → 18M.
-- Il `clean` aggiunge ~5-10s ma garantisce che gli asset aggiornati siano inclusi.
+- **`npm run apk`** — debug APK (`./gradlew clean assembleDebug`). Per sideload rapido. Firmato con la debug keystore → NON si installa sopra la build del Play Store (firme diverse).
+- **`npm run aab`** — AAB **firmato** per il Play Store / closed testing (`./gradlew clean bundleRelease`). Output copiato in `apks/breaktime-rebellion-v<ver>.aab` e caricato su Drive. Firma da `android/keystore.properties` (keystore `/home/luca/keys/breaktime.jks`, alias `breaktime`). Play App Signing → aggiorna la build dello store senza conflitti.
+- **Sempre `clean`:** la cache incrementale di Gradle può skippare `mergeDebugAssets` dopo un `cap sync`, producendo un build byte-per-byte identico al precedente anche se `www/` è cambiato. Scoperto con v1.0.14 (25M identico a v1.0.13); clean build → 18M. Il `clean` aggiunge ~5-10s ma garantisce asset aggiornati.
+- **Versione = unica fonte `package.json`.** `android/app/build.gradle` legge `version` da `../package.json` via `JsonSlurper`: `versionName` = `version`, `versionCode` = `MAJ*10000 + MIN*100 + PAT` (es. 1.0.51 → 10051, monotòno crescente). **Nessun bump manuale** in build.gradle.
+- `android/` è **git-tracked** (solo sorgenti); `keystore.properties`, `local.properties`, `build/`, `.gradle/`, `*.aab/*.apk` esclusi dal nested `android/.gitignore`.
 
 ## Tooling release
 
-**`npm run check`** — esegue `dev/scripts/check-dead.js`: analisi statica dead code su PAL keys, STRINGS keys, sfx keys, CONFIG.ui subkeys, HTML element IDs, asset files, funzioni globali top-level. Esce con `process.exit(1)` se trova problemi. Eseguire sempre prima di ogni release (è automaticamente prepend a `npm run apk`).
+**`npm run check`** — esegue `dev/scripts/check-dead.js`: analisi statica dead code su PAL keys, STRINGS keys, sfx keys, CONFIG.ui subkeys, HTML element IDs, asset files, funzioni globali top-level. Esce con `process.exit(1)` se trova problemi. Eseguire sempre prima di ogni release (è automaticamente prepend a `npm run apk`/`npm run aab`).
 
-**`npm run apk`** — prepend `npm run check &&` quindi fallisce subito se c'è dead code.
+**`npm run apk` / `npm run aab`** — entrambi prepend `npm run check &&` quindi falliscono subito se c'è dead code.
 
 **`dev/checklists/release-checklist.md`** — checklist completa per ogni release con ownership 🤖 (automatico) / 👤 (manuale). Basta dire "facciamo la release" per avviare il flusso 🤖.
 
@@ -349,9 +351,9 @@ try{new Function(src);console.log('JS OK');}catch(e){console.log('ERRORE:',e.mes
 **Flusso release 🤖:**
 1. `npm run check` — nessun dead code
 2. Verificare flag debug off (`CONFIG.debug.unlockAllLevels`, `godMode`, `showStairZones`, `sightDebug`, `startAtBonus`)
-3. Bump versione in `package.json`
+3. Bump versione in `package.json` (Android `versionName`/`versionCode` derivati automaticamente)
 4. Commit e push
-5. `npm run apk` — build + upload Drive automatico
+5. Build: `npm run aab` (Play Store / closed testing) — o `npm run apk` per sideload — con upload Drive automatico
 6. `CLAUDE.md` — aggiornare se cambiano architettura o convenzioni
 7. Memoria — salvare se emerso qualcosa di non-ovvio
 8. `git tag v<versione>` e push

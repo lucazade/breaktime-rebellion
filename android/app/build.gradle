@@ -1,3 +1,5 @@
+import groovy.json.JsonSlurper
+
 apply plugin: 'com.android.application'
 
 def keystorePropertiesFile = rootProject.file("keystore.properties")
@@ -6,6 +8,13 @@ if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
 
+// Single source of truth for the app version: ../package.json (repo root).
+// versionName mirrors package.json; versionCode is derived as MAJ*10000 + MIN*100 + PAT
+// so it increases monotonically (e.g. 1.0.51 -> 10051). No manual bump in this file.
+def pkgVersionName = new JsonSlurper().parseText(rootProject.file("../package.json").text).version
+def (vMaj, vMin, vPat) = pkgVersionName.tokenize('.').collect { it.toInteger() }
+def pkgVersionCode = vMaj * 10000 + vMin * 100 + vPat
+
 android {
     namespace = "com.lucazade.breaktime"
     compileSdk = rootProject.ext.compileSdkVersion
@@ -13,8 +22,8 @@ android {
         applicationId "com.lucazade.breaktime"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 51
-        versionName "1.0.51"
+        versionCode pkgVersionCode
+        versionName pkgVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
