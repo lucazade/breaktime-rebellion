@@ -8,5 +8,8 @@
 node_modules/
 package-lock.json
 www/
-android/
 apks/
+
+# Native Android project is tracked (source only). Build artifacts and secrets
+# are excluded by android/.gitignore (build/, .gradle/, *.aab/*.apk,
+# local.properties, keystore.properties).
