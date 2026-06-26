@@ -1,0 +1,26 @@
+Release notes — closed testing (Reddit Testers channel)
+Play Console "What's new" field — max 500 chars per language.
+Carica ogni AAB come NUOVA release (non sostituire), incolla la lingua corretta.
+
+================================================================
+v1.0.53  (versionCode 10053)  —  pubblicare 28 giu 2026
+File: apks/breaktime-rebellion-v1.0.53.aab
+----------------------------------------------------------------
+
+[IT]
+Il gioco ora si mette in pausa automaticamente quando passi a un'altra app o blocchi lo schermo: non rischi più di farti beccare mentre sei via.
+
+[EN]
+The game now pauses automatically when you switch to another app or lock the screen, so you no longer risk getting caught while away.
+
+
+================================================================
+v1.0.54  (versionCode 10054)  —  pubblicare 1 lug 2026
+File: apks/breaktime-rebellion-v1.0.54.aab
+----------------------------------------------------------------
+
+[IT]
+Nuovo feedback aptico: una breve vibrazione quando Marco viene catturato, con un effetto più marcato al game over. Incluse le migliorie della versione precedente.
+
+[EN]
+New haptic feedback: a short vibration when Marco gets caught, with a stronger buzz on game over. Also includes the previous version's improvements.
