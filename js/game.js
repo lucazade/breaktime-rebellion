@@ -63,6 +63,15 @@ ctx.imageSmoothingEnabled = false;
 document.addEventListener('pointerdown', function() { GameAudio.primeAudio(); }, {once: true});
 document.addEventListener('keydown',     function() { GameAudio.primeAudio(); }, {once: true});
 
+// Auto-pause when the app goes to the background (tab switch / screen lock / app
+// switch on mobile). Only pauses active gameplay; never auto-resumes — the player
+// resumes manually so they don't return mid-danger. Mirrors triggerPause()'s guard.
+document.addEventListener('visibilitychange', function() {
+  if (document.hidden && state === 'playing' && !_pauseActive && !_homeConfirmActive) {
+    setPaused(true);
+  }
+});
+
 // Pre-load day and night backgrounds; _applyLevelBg() switches based on nightMode
 var _bgDay = null, _bgNight = null;
 (function() {
