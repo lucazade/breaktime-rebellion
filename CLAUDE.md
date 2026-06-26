@@ -337,6 +337,7 @@ try{new Function(src);console.log('JS OK');}catch(e){console.log('ERRORE:',e.mes
 - **Sempre `clean`:** la cache incrementale di Gradle può skippare `mergeDebugAssets` dopo un `cap sync`, producendo un build byte-per-byte identico al precedente anche se `www/` è cambiato. Scoperto con v1.0.14 (25M identico a v1.0.13); clean build → 18M. Il `clean` aggiunge ~5-10s ma garantisce asset aggiornati.
 - **Versione = unica fonte `package.json`.** `android/app/build.gradle` legge `version` da `../package.json` via `JsonSlurper`: `versionName` = `version`, `versionCode` = `MAJ*10000 + MIN*100 + PAT` (es. 1.0.51 → 10051, monotòno crescente). **Nessun bump manuale** in build.gradle.
 - `android/` è **git-tracked** (solo sorgenti); `keystore.properties`, `local.properties`, `build/`, `.gradle/`, `*.aab/*.apk` esclusi dal nested `android/.gitignore`.
+- **`npm run icons`** NON è più incluso in `apk`/`aab` (rigenerava le icone launcher a ogni build sporcando l'albero git ora che `android/` è tracciato). Le icone in `res/mipmap-*/` sono committate; lancia `npm run icons` **manualmente** solo dopo aver cambiato `assets/icons/icon-512.png`.
 
 ## Tooling release
 
