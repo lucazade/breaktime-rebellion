@@ -17,7 +17,7 @@
 
 **1) How did you recruit users for your closed test?**
 
-I mostly went to online groups and communities of people who like retro and arcade games, and I also asked a few friends who are really into that kind of stuff. In the end I had about 25 testers on different Android phones and versions. I didn't just want anyone to install it and forget about it, so I looked for people who would actually play a game like this, and that's the feedback I got back.
+I mostly went to online groups and communities of people who like retro and arcade games, and I also asked a few friends who are really into that kind of stuff. In the end I had about 25 testers on different Android phones and versions. Since they were people who already enjoy this kind of game, they really played it and gave me good, honest feedback.
 
 **2) How easy was it to recruit testers for your app?**
 
@@ -25,23 +25,23 @@ It went pretty smoothly, to be honest. The game has a clear style, so when I pos
 
 **3) Describe the engagement you received from testers during your closed test.**
 
-People actually played it and sent me their thoughts on how it ran, the controls and whether things were clear. The Play Console showed testers active pretty much every day for the whole period, and they were in different countries (Italy, India, Thailand), so the game got tried on a real mix of devices. I got feedback both as a written report and through direct messages. Nobody reported a crash on the phones they used. The one real bug was a joystick that was offset on a Motorola phone, which I fixed, plus a few notes about the first-time controls and the store page that I took care of.
+People actually played it and sent me their thoughts on how it ran, the controls and whether things were clear. The Play Console showed testers active pretty much every day for the whole period, and they were in different countries (Italy, India, Thailand), so the game got tried on a real mix of devices. Most of the feedback came through messages and chats, sometimes with a screenshot when something looked off. Nobody reported a crash on the phones they used. The one real bug was a joystick that was offset on a Motorola phone, which I fixed, plus a few notes about the first-time controls and the store page that I took care of.
 
 **4) Provide a summary of the feedback that you received from testers. Include how you collected the feedback.**
 
-I collected the feedback through a written report and by chatting directly with testers. A few things came up more than once. New players weren't sure how the controls worked at the beginning. There was no way to rate the game from inside the app. The store description and screenshots weren't very clear, so it was hard to tell what the game was about. And some people got caught in the game when they switched to another app or locked their phone, which felt unfair. The game itself was stable, nobody got a crash. I acted on all of these: I added a short "How to play" guide on launch, a "Rate on Play Store" button, rewrote the store description, and made the game pause on its own when it goes to the background.
+I collected the feedback mostly by chatting directly with testers, through messages and the occasional screenshot when something looked wrong. A few things came up more than once. New players weren't sure how the controls worked at the beginning. There was no way to rate the game from inside the app. The store description and screenshots weren't very clear, so it was hard to tell what the game was about. And some people got caught in the game when they switched to another app or locked their phone, which felt unfair. The game itself was stable, nobody got a crash. I acted on all of these: I added a short "How to play" guide on launch, a "Rate on Play Store" button, rewrote the store description, and made the game pause on its own when it goes to the background.
 
 **5) Who is the intended audience for your app?**
 
-It's for people who like retro arcade games and pixel art, mostly students and adults who grew up with 80s and 90s games and feel a bit nostalgic about them. It's single player, works offline, it's free and has no ads, and you play it in short sessions, so it's really for casual players who just want a quick game and not a big time commitment. It's in both English and Italian, which helps reach more people.
+It's for people who like retro arcade games and pixel art, mostly students and adults who grew up with 80s and 90s games and feel a bit nostalgic about them. It's a single player game you play in short sessions, so it's really for casual players who just want a quick game and not a big time commitment. It's in both English and Italian, which helps reach more people.
 
 **6) Describe how your app provides value to the users.**
 
-Breaktime Rebellion is a short retro arcade game with 10 levels I made by hand, each with its own little mission and a stealth part where teachers walk around and can spot you. It's free, no ads, works offline, and it's in English and Italian. Each level is its own quick challenge that you can finish in a few minutes, so it's the kind of game you can pick up for a bit, have some fun and put down again, without spending anything or needing internet.
+Breaktime Rebellion is a short retro arcade game with 10 levels I made by hand, each with its own little mission and a stealth part where teachers walk around and can spot you. Each level is its own quick challenge that you can finish in a few minutes, so it's the kind of game you can pick up for a bit, have some fun and put down again. It's free, there are no ads, and it works offline, so there's really nothing in the way of just playing it.
 
 **7) How many installs do you expect your app to have in your first year?**
 
-Somewhere between 1,000 and 10,000. It's a free indie game made by one person, and I have no money for ads, so I'm trying to stay realistic. I think most installs will come from people finding it on the Play Store or hearing about it from someone else, which is why I spent time on a clear store page and good screenshots instead.
+Somewhere between 1,000 and 10,000. It's a small indie game made by one person, with no budget for ads, so I'm trying to stay realistic. I think most installs will come from people finding it on the Play Store or hearing about it from someone else, which is why I spent time on a clear store page and good screenshots instead.
 
 **8) What changes did you make to your app based on what you learned during your closed test?**
 
@@ -53,7 +53,7 @@ The game ran without crashing on all the phones and Android versions the testers
 
 **10) What did you do differently this time?**
 
-This time I took the test more seriously. I got testers outside of just my close circle, so the game ran on more kinds of phones, and I actually kept track of the feedback instead of just collecting installs. The main difference is that I didn't wait until the end to react. As feedback came in I kept releasing updates to fix things, so by the time I'm applying, the changes I made come from what real people told me, not just from time passing.
+This time I reached testers outside of just my close circle, so the game ran on more kinds of phones, and I kept track of the feedback as it came in. The main thing is that I didn't wait until the end to react. As people told me things, I kept releasing updates to fix them, so by the time I'm applying, the changes I made come from what real players asked for, not just from time passing.
 
 ---
 
